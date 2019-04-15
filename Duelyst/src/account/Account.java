@@ -8,6 +8,12 @@ public class Account {
     private Collection collection;
     private Player player;
     private Deck mainDeck;
+    private ArrayList<Deck> decks;
+
+
+    private void setDeckFromCollection(){
+        decks=(ArrayList<Deck>) collection.getDecks();
+    }
 
     public void setMainDeck(Deck deck){
 
