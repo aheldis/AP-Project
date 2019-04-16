@@ -1,8 +1,13 @@
 package card;
 
+
+import java.util.ArrayList;
+
 public abstract class Card {
-    String name;
-    CardId cardId;
+    private String name;
+    private CardId cardId;
+    private ArrayList <Integer> turnsOfPickingUp = new ArrayList<>();
+
 
     public void setCardIdFromClassCardId(){
     }
@@ -22,15 +27,15 @@ public abstract class Card {
         return name;
     }
 
-    public void setMP(int mp){
-
+    public void setCardId(CardId cardId){
+        this.cardId = cardId;
     }
 
-    public int getMP(){
-
+    public CardId getCardId(){
+        return cardId;
     }
 
-    public void addToTurnOfPickingUp(int turn){
-
+    public void addToTurnsOfPickingUp(int turn){
+        turnsOfPickingUp.add(turn);
     }
 }

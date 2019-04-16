@@ -1,9 +1,11 @@
 package account;
 
+import java.util.ArrayList;
+
 public class Shop {
     public static Shop singleInstance = null;
-    private ArrayList<Card> cards;
-    private ArrayList<Item> items;
+    private ArrayList<Card> cards = new ArrayList<>();;
+    private ArrayList<Item> items = new ArrayList<>();;
 
     private boolean cardOrItemExist(String name){
 
