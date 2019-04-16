@@ -1,6 +1,7 @@
 package account;
 
 public class Shop {
+    public static Shop singleInstance = null;
     private ArrayList<Card> cards;
     private ArrayList<Item> items;
 
@@ -38,5 +39,11 @@ public class Shop {
 
     public static void help(){
 
+    }
+
+    public static Shop getInstance(){
+        if(singleInstance == null)
+            singleInstance = new Shop;
+        return singleInstance;
     }
 }
