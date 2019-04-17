@@ -11,6 +11,10 @@ public class Account {
     private ArrayList<Deck> decks;
 
 
+    public Deck getMainDeck(){
+        return mainDeck;
+    }
+
     private void setDeckFromCollection(){
         decks=(ArrayList<Deck>) collection.getDecks();
     }

@@ -1,10 +1,10 @@
 package account;
 
-import view.*;
+import card.*;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.MissingFormatArgumentException;
+
+import static view.AccountView.*;
 
 public class Collection {
 
@@ -243,10 +243,6 @@ public class Collection {
             System.out.println("you don't have this item in collection");
             return;
         }
-//        if(item.getUsableCardId().getUsableCardIdAsString().equals(usableItemId)){
-//            System.out.println("this item have been exist in this deck");
-//            return;
-//        }
         deck.addItemToDeck(item);
 
 
@@ -327,26 +323,25 @@ public class Collection {
         return false;
     }
 
-    public void showAlldecks() {
-        int counter=0;
-        if (account.mainDeck == null) {
-            for(Deck deck:decks) {
-                System.out.println(counter+" : "+deck.getDekName());
-                counter++;
-            }
+    public void showAlldecks() {//if it has main deck we should show it first
+        Deck deck=account.getMainDeck();
+        if (deck == null) {
 
-        } else {
+            decks.remove(deck);
+            decksView(decks,2);
+            decks.add(account.getMainDeck());
 
-        }
+        } else
+            decksView(decks,1);
 
     }
 
     public void showThisDeck(String deckName) {
-
+        deckView(passTheDeckIfHaveBeenExist(deckName));
     }
 
     public void helpOfCollection() {
-
+        helpViewForCollection();
     }
 
 }
