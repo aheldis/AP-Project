@@ -49,5 +49,13 @@ public class AccountView {
             counter ++;
         }
     }
+    public static void deckView(){
+
+
+    }
+    
+    public static void shopView(){
+
+    }
 
 }
