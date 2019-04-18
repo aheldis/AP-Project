@@ -3,3 +3,5 @@ Mp:0
 ApChanges-TurnOfEffect:4-3
 HpChanges-TurnOfEffect:0-1
 Buffs-TurnOfEffect:DisArm-3
+target:Friend-One-Card
+desc:add 4 to attack power of a friend card in 3 turn but dis arm it

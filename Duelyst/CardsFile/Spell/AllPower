@@ -2,4 +2,6 @@ cost:2000
 Mp:4
 ApChanges-TurnOfEffect:2-Totally
 HpChanges-TurnOfEffect:0-1
-Buffs-TurnOfEffect:Power-4
+Buffs-TurnOfEffect:Power-1
+target:Friend-All-Card
+desc:add 2 to attack power and give them power buff(all friend cards)

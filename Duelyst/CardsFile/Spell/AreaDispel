@@ -3,3 +3,5 @@ Mp:2
 ApChanges-TurnOfEffect:0-1
 HpChanges-TurnOfEffect:0-1
 Buffs-TurnOfEffect:Destroy-1
+target:Square(2*2)
+desc:destroy all negative friend's buff, destroy all positive enemy's buff in the selected cells
