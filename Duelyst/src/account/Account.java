@@ -1,5 +1,7 @@
 package account;
 
+import javafx.css.Match;
+
 public class Account implements Comparable<Account> {
     private String userName;
     private String password;
@@ -67,5 +69,9 @@ public class Account implements Comparable<Account> {
 
     public void addMatch(Match match) {
         matchHistory.add(match);
+    }
+
+    public void showMatchHistory(){
+        //todo
     }
 }
