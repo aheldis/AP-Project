@@ -1,0 +1,6 @@
+type:-
+apChange:*
+HpChange:*
+canMove:true
+canCounterAttack:true
+HpChangeAfterAttack:0

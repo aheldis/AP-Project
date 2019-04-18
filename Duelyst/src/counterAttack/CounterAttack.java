@@ -7,6 +7,7 @@ public abstract class CounterAttack {
     protected String className;
     private Coordinate coordinate;
     private Card card;
+    boolean canCounterAttack=true;//if it has disarm buff it is false
 
 
     public Coordinate getCoordinate() {

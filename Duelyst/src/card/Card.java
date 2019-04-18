@@ -7,6 +7,7 @@ public abstract class Card {
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
+    boolean canMove=true;//if it has stun buff it will be false
 
 
     public void setCardIdFromClassCardId() {
