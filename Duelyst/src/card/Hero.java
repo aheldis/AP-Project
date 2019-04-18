@@ -118,4 +118,8 @@ public class Hero extends Card {
     public void setSellCost(int sellCost) {
         this.sellCost = sellCost;
     }
+
+    public void addNewHeroCard(){
+        //TODO
+    }
 }
