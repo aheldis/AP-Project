@@ -1,5 +1,7 @@
 package account;
 
+import javafx.css.Match;
+
 public class Account implements Comparable<Account> {
     private String userName;
     private String password;
@@ -49,6 +51,10 @@ public class Account implements Comparable<Account> {
         return mainDeck;
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     private void setDeckFromCollection() {
         decks = (ArrayList<Deck>) collection.getDecks();
     }
@@ -68,4 +74,10 @@ public class Account implements Comparable<Account> {
     public void addMatch(Match match) {
         matchHistory.add(match);
     }
+
+    public void showMatchHistory(){
+        //todo
+    }
+
+
 }
