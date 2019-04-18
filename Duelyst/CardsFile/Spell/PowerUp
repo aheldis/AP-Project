@@ -1,0 +1,6 @@
+cost:2500
+Mp:2
+ApChanges-TurnOfEffect:6-1
+HpChanges-TurnOfEffect:0-1
+Buffs-TurnOfEffect:Power-1
+AffectOnSquare-TurnOfEffect:null-1
