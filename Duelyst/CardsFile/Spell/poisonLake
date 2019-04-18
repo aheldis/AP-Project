@@ -2,5 +2,4 @@ cost:900
 Mp:5
 ApChanges-TurnOfEffect:0-1
 HpChanges-TurnOfEffect:0-1
-Buffs-TurnOfEffect:null-1
-AffectOnSquare-TurnOfEffect:Poison-1
+Buffs-TurnOfEffect:Poison-1

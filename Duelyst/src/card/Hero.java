@@ -1,5 +1,7 @@
 package card;
 
+import counterAttack.CounterAttack;
+
 import java.util.ArrayList;
 
 public class Hero extends Card {
