@@ -1,6 +1,6 @@
 package account;
 
-public class Account implements Comparable<Account>{
+public class Account implements Comparable<Account> {
     private String userName;
     private String password;
     private int daric;
@@ -53,19 +53,19 @@ public class Account implements Comparable<Account>{
         decks = (ArrayList<Deck>) collection.getDecks();
     }
 
-    public boolean matchPassword(String password){
+    public boolean matchPassword(String password) {
         return this.password.equals(password);
     }
 
-    public int compareTo(Account account){
+    public int compareTo(Account account) {
         return account.getWins() - this.getWins();
     }
 
-    public void changeValueOfDaric(int number){
+    public void changeValueOfDaric(int number) {
         daric += number;
     }
 
-    public void addMatch(Match match){
+    public void addMatch(Match match) {
         matchHistory.add(match);
     }
 }
