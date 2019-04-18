@@ -1,15 +1,49 @@
 package account;
 
-public class Account {
+public class Account implements Comparable<Account>{
     private String userName;
     private String password;
     private int daric;
+    private int wins;
     private Arraylist<Match> matchHistory;
     private Collection collection;
     private Player player;
     private Deck mainDeck;
     private ArrayList<Deck> decks;
 
+    public Account(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+
+
+    public int getWins() {
+        return wins;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public int getDaric() {
+        return daric;
+    }
+
+    public Arraylist<Match> getMatchHistory() {
+        return matchHistory;
+    }
+
+    public Collection getCollection() {
+        return collection;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public ArrayList<Deck> getDecks() {
+        return decks;
+    }
 
     public Deck getMainDeck() {
         return mainDeck;
@@ -19,54 +53,19 @@ public class Account {
         decks = (ArrayList<Deck>) collection.getDecks();
     }
 
-    public void setMainDeck(Deck deck) {
-
+    public boolean matchPassword(String password){
+        return this.password.equals(password);
     }
 
-    public void setUserName(String userName) {
-
+    public int compareTo(Account account){
+        return account.getWins() - this.getWins();
     }
 
-    public void setPassword(String password) {
-
+    public void changeValueOfDaric(int number){
+        daric += number;
     }
 
-    public void setPlayer(Player player) {
-
-    }
-
-    public String getUserName() {
-
-    }
-
-    public String getPassword() {
-    }
-
-    public int getDaric() {
-
-    }
-
-    public Collection getCollection() {
-
-    }
-
-    public Player getPlayer() {
-
-    }
-
-    public void changeValueOfDaric(int number) {
-
-    }
-
-    public void logOut() {
-
-    }
-
-    public void addMatch(Match match) {
-
-    }
-
-    public Match chooseMatch() {
-
+    public void addMatch(Match match){
+        matchHistory.add(match);
     }
 }

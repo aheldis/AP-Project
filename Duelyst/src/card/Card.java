@@ -3,7 +3,7 @@ package card;
 
 import java.util.ArrayList;
 
-public abstract class usCard {
+public abstract class Card {
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
