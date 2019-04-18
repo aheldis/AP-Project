@@ -6,8 +6,10 @@ import requirment.Coordinate;
 import java.util.ArrayList;
 
 public class Hero extends Card {
+    private String counterAttackclassName;
+    private String specialPowerInfo;
+    private int sellCost;
     private ArrayList<Buff> buffs = new ArrayList<Buff>();
-    ;
     private CounterAttack counterAttack;
     private Coordinate Square;
     private int hp;
@@ -20,8 +22,14 @@ public class Hero extends Card {
     private int attackRange;
     private int numberOfAttacks;
     private int numberOfBeingAttacked;
-    private String specialPowerInfo;
-    private int sellCost;
+
+    public void setCounterAttack(CounterAttack counterAttack) {
+        this.counterAttack = counterAttack;
+        this.counterAttackclassName = counterAttack.getClassName();
+    }
+    public String getCounterAttackclassName(){
+        return counterAttackclassName;
+    }
 
     public ArrayList<Buff> getBuffs() {
         return buffs;

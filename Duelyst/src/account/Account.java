@@ -3,6 +3,7 @@ package account;
 
 import battle.Deck;
 import battle.Match;
+import battle.NormalDeck;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ public class Account implements Comparable<Account> {
     private ArrayList<Match> matchHistory;
     private Collection collection;
     private Player player;
-    private Deck mainDeck;
+    private NormalDeck mainDeck;
     private ArrayList<Deck> decks;
 
     public Account(String userName, String password) {
@@ -51,7 +52,7 @@ public class Account implements Comparable<Account> {
         return decks;
     }
 
-    public Deck getMainDeck() {
+    public NormalDeck getMainDeck() {
         return mainDeck;
     }
 

@@ -3,8 +3,11 @@ package counterAttack;
 import requirment.Coordinate;
 
 public class Ranged extends CounterAttack{
+    public Ranged(){
+        this.className="Ranged";
+    }
 
-    public Boolean checkIfSquereIsWithinRange(Coordinate coordinate){
+    public Boolean checkIfSquareIsWithinRange(Coordinate coordinate){
         return !(Math.abs(this.getCoordinate().getX() - coordinate.getX()) <= 1 &&
                 Math.abs(this.getCoordinate().getY() - coordinate.getY()) <= 1)
     }

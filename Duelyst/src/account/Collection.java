@@ -1,6 +1,8 @@
 package account;
 
+import Item.*;
 import battle.Deck;
+import battle.NormalDeck;
 import card.*;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class Collection {
     }
 
     public void showCardsAndItems() {
-        cardsAndItemsView(spells, minions, minions, heroes, items);
+        cardsAndItemsView(spells, minions, heroes, items);
     }
 
     public void searchCardName(String cardName) {
@@ -35,7 +37,7 @@ public class Collection {
         cards.addAll(minions);
         cards.addAll(heroes);
         for (Card card : cards) {
-            if (card.getCardId.getCardName.equals(cardName)) {
+            if (card.getName().equals(cardName)) {
                 System.out.println(card.getCardId().getCardIdAsString());
                 have = true;
             }
@@ -84,7 +86,7 @@ public class Collection {
             System.out.println("deck Have been exist");
             return;
         }
-        Deck deck = new Deck();
+        Deck deck = new NormalDeck();
         deck.setName(deckName);
         decks.add(deck);
 
@@ -293,11 +295,6 @@ public class Collection {
             System.out.println("you don't have this deck");
             return;
         }
-
-//        if(deck.item!=null){
-//            System.out.println("you have one item in this deck");
-//            return;
-//        }
         Item item = passUsableItemByUsableItemId(usableItemId);
         if (item == null) {
             System.out.println("you don't have this item in collection");
@@ -325,16 +322,12 @@ public class Collection {
     }
 
     public void showAlldecks() {//if it has main deck we should show it first
-        Deck deck = account.getMainDeck();
-        if (deck == null) {
-
+        NormalDeck deck = account.getMainDeck();
+        if (deck != null) {//change the place of main deck to the end and print from last index
             decks.remove(deck);
-            decksView(decks, 2);
-            decks.add(account.getMainDeck());
-
-        } else
-            decksView(decks, 1);
-
+            decks.add(deck);
+        }
+        decksView(decks);
     }
 
     public void showThisDeck(String deckName) {

@@ -1,11 +1,13 @@
 package counterAttack;
 
+import card.Card;
 import requirment.Coordinate;
 
 public abstract class CounterAttack {
+    protected String className;
     private Coordinate coordinate;
     private Card card;
-    private String name;
+
 
     public Coordinate getCoordinate() {
         return coordinate;
@@ -15,8 +17,8 @@ public abstract class CounterAttack {
         return card;
     }
 
-    public String getName() {
-        return name;
+    public String getClassName(){
+        return className;
     }
 
     public void setCoordinate(Coordinate coordinate) {
@@ -27,10 +29,6 @@ public abstract class CounterAttack {
         this.card = card;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void deleteCard(){
         card.removeCounterAttack();
         card = null;
@@ -39,5 +37,5 @@ public abstract class CounterAttack {
 
     public abstract void callFunctionForDefend(Coordinate coordinate);
     public abstract void callFunctionForAttack(Coordinate coordinate);
-    public abstract Boolean checkIfSquereIsWithinRange(Coordinate coordinate);
+    public abstract Boolean checkIfSquareIsWithinRange(Coordinate coordinate);
 }

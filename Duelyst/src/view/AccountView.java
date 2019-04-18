@@ -1,8 +1,9 @@
 package view;
 
 
-import card.Card;
-import card.Hero;
+import Item.Item;
+import battle.Deck;
+import card.*;
 
 import java.util.ArrayList;
 
@@ -74,15 +75,15 @@ public class AccountView {
         );
     }
 
-    public static void decksView(ArrayList<Deck> decks, int counterOfDeck) {
-        int counterOfCards = 1;
+    public static void decksView(ArrayList<Deck> decks) {
+        int counterOfCards = 1,counterOfDeck=1;
         Hero hero;
         Item item;
         ArrayList<Card> cards;
-        for (Deck deck : decks) {
-            System.out.println(counterOfDeck + " : " + deck.getName() + " :");
+        for (int i=decks.size();i>0 ;i++) {
+            System.out.println(counterOfDeck + " : " + decks.get(i).getName() + " :");
 
-            hero = deck.getHero();
+            hero = decks.get(i).getHero();
             System.out.println("     Heroes :");
             if (hero != null) {
                 System.out.print("          ");
@@ -91,14 +92,14 @@ public class AccountView {
             }
 
             System.out.println("     Items :");
-            item = deck.getItem();
+            item = decks.get(i).getItem();
             if (item != null) {
                 System.out.println("          " );
                 showEachItem(item,counterOfCards);
                 System.out.println("\n");
             }
 
-            cards = deck.getCardsOfdeck();
+            cards = decks.get(i).getCardsOfdeck();
             System.out.println("     Cards :");
             if (cards.size() != 0) {
                 for (Card card : cards) {
@@ -120,6 +121,8 @@ public class AccountView {
         }
     }
     public static void deckView(Deck deck) {
+        if(deck==null)
+            return;
         int counterOfCards = 1;
         Hero hero = deck.getHero();
         System.out.println("Heroes :");
