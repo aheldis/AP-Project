@@ -4,7 +4,7 @@ import requirment.Coordinate;
 
 public class Hybrid extends CounterAttack{
 
-    public Boolean checkIfSquereIsWithinRange(Coordinate coordinate){
+    public Boolean checkIfSquareIsWithinRange(Coordinate coordinate){
         return true;
     }
     public void callFunctionForDefend(Coordinate coordinate){

@@ -39,5 +39,5 @@ public abstract class CounterAttack {
 
     public abstract void callFunctionForDefend(Coordinate coordinate);
     public abstract void callFunctionForAttack(Coordinate coordinate);
-    public abstract Boolean checkIfSquereIsWithinRange(Coordinate coordinate);
+    public abstract Boolean checkIfSquareIsWithinRange(Coordinate coordinate);
 }
