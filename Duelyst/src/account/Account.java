@@ -51,6 +51,10 @@ public class Account implements Comparable<Account> {
         return mainDeck;
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     private void setDeckFromCollection() {
         decks = (ArrayList<Deck>) collection.getDecks();
     }
@@ -74,4 +78,6 @@ public class Account implements Comparable<Account> {
     public void showMatchHistory(){
         //todo
     }
+
+
 }
