@@ -324,15 +324,15 @@ public class Collection {
     }
 
     public void showAlldecks() {//if it has main deck we should show it first
-        Deck deck=account.getMainDeck();
+        Deck deck = account.getMainDeck();
         if (deck == null) {
 
             decks.remove(deck);
-            decksView(decks,2);
+            decksView(decks, 2);
             decks.add(account.getMainDeck());
 
         } else
-            decksView(decks,1);
+            decksView(decks, 1);
 
     }
 

@@ -11,49 +11,62 @@ public class Account {
     private ArrayList<Deck> decks;
 
 
-    public Deck getMainDeck(){
+    public Deck getMainDeck() {
         return mainDeck;
     }
 
-    private void setDeckFromCollection(){
-        decks=(ArrayList<Deck>) collection.getDecks();
+    private void setDeckFromCollection() {
+        decks = (ArrayList<Deck>) collection.getDecks();
     }
 
-    public void setMainDeck(Deck deck){
+    public void setMainDeck(Deck deck) {
 
     }
-    public void setUserName(String userName ){
+
+    public void setUserName(String userName) {
 
     }
-    public void setPassword(String password){
+
+    public void setPassword(String password) {
 
     }
-    public void setPlayer(Player player){
+
+    public void setPlayer(Player player) {
 
     }
-    public String getUserName(){
+
+    public String getUserName() {
 
     }
-    public String getPassword(){}
-    public int getDaric(){
+
+    public String getPassword() {
+    }
+
+    public int getDaric() {
 
     }
-    public Collection getCollection(){
+
+    public Collection getCollection() {
 
     }
-    public Player getPlayer(){
+
+    public Player getPlayer() {
 
     }
-    public void changeValueOfDaric(int number){
+
+    public void changeValueOfDaric(int number) {
 
     }
-    public void logOut(){
+
+    public void logOut() {
 
     }
-    public void addMatch(Match match){
+
+    public void addMatch(Match match) {
 
     }
-    public Match chooseMatch(){
+
+    public Match chooseMatch() {
 
     }
 }

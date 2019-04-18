@@ -4,47 +4,49 @@ import java.util.ArrayList;
 
 public class Shop {
     public static Shop singleInstance = null;
-    private ArrayList<Card> cards = new ArrayList<>();;
-    private ArrayList<Item> items = new ArrayList<>();;
+    private ArrayList<Card> cards = new ArrayList<>();
+    ;
+    private ArrayList<Item> items = new ArrayList<>();
+    ;
 
-    private boolean cardOrItemExist(String name){
-
-    }
-
-    private CardId getExistingCardId(String name){
+    private boolean cardOrItemExist(String name) {
 
     }
 
-    private CardId getNewCardId(Card card){
+    private CardId getExistingCardId(String name) {
 
     }
 
-    public void addCard(Card card){
+    private CardId getNewCardId(Card card) {
 
     }
 
-    public void addItem(Item item){
+    public void addCard(Card card) {
 
     }
 
-    public int search(String name){
+    public void addItem(Item item) {
 
     }
 
-    public Card buy(Account account, String name){
+    public int search(String name) {
 
     }
 
-    public void sell(Account account, CardId cardId){
+    public Card buy(Account account, String name) {
 
     }
 
-    public static void help(){
+    public void sell(Account account, CardId cardId) {
 
     }
 
-    public static Shop getInstance(){
-        if(singleInstance == null)
+    public static void help() {
+
+    }
+
+    public static Shop getInstance() {
+        if (singleInstance == null)
             singleInstance = new Shop;
         return singleInstance;
     }

@@ -3,7 +3,8 @@ package card;
 import java.util.ArrayList;
 
 public class Hero extends Card {
-    private ArrayList<Buff> buffs = new ArrayList<>();;
+    private ArrayList<Buff> buffs = new ArrayList<>();
+    ;
     private CounterAttack counterAttack;
     private coordinate Square;
     private int hp;
@@ -103,11 +104,11 @@ public class Hero extends Card {
         return numberOfBeingAttacked;
     }
 
-    public void increaseNumberOfAttacks(){
+    public void increaseNumberOfAttacks() {
         numberOfAttacks++;
     }
 
-    public void increaseNumberOfBeingAttacked(){
+    public void increaseNumberOfBeingAttacked() {
         numberOfBeingAttacked++;
     }
 
@@ -119,7 +120,7 @@ public class Hero extends Card {
         this.sellCost = sellCost;
     }
 
-    public void addNewHeroCard(){
+    public void addNewHeroCard() {
         //TODO
     }
 }
