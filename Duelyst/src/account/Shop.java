@@ -1,5 +1,8 @@
 package account;
 
+import card.Card;
+import card.CardId;
+
 import java.util.ArrayList;
 
 public class Shop {
@@ -47,7 +50,7 @@ public class Shop {
 
     public static Shop getInstance() {
         if (singleInstance == null)
-            singleInstance = new Shop;
+            singleInstance = new Shop();
         return singleInstance;
     }
 }

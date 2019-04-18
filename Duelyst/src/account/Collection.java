@@ -1,5 +1,6 @@
 package account;
 
+import battle.Deck;
 import card.*;
 
 import java.util.ArrayList;

@@ -1,13 +1,17 @@
 package account;
 
-import javafx.css.Match;
+
+import battle.Deck;
+import battle.Match;
+
+import java.util.ArrayList;
 
 public class Account implements Comparable<Account> {
     private String userName;
     private String password;
     private int daric;
     private int wins;
-    private Arraylist<Match> matchHistory;
+    private ArrayList<Match> matchHistory;
     private Collection collection;
     private Player player;
     private Deck mainDeck;
@@ -31,7 +35,7 @@ public class Account implements Comparable<Account> {
         return daric;
     }
 
-    public Arraylist<Match> getMatchHistory() {
+    public ArrayList<Match> getMatchHistory() {
         return matchHistory;
     }
 

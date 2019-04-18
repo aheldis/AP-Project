@@ -1,14 +1,15 @@
 package card;
 
 import counterAttack.CounterAttack;
+import requirment.Coordinate;
 
 import java.util.ArrayList;
 
 public class Hero extends Card {
-    private ArrayList<Buff> buffs = new ArrayList<>();
+    private ArrayList<Buff> buffs = new ArrayList<Buff>();
     ;
     private CounterAttack counterAttack;
-    private coordinate Square;
+    private Coordinate Square;
     private int hp;
     private int ap;
     private Spell spell;
@@ -30,7 +31,7 @@ public class Hero extends Card {
         return counterAttack;
     }
 
-    public coordinate getSquare() {
+    public Coordinate getSquare() {
         return Square;
     }
 

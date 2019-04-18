@@ -1,5 +1,7 @@
 package card;
 
+import land.Square;
+
 import java.util.ArrayList;
 
 public class Spell extends Card {
@@ -58,9 +60,13 @@ public class Spell extends Card {
         System.out.println(description);//todo sout
     }
 
-    public ArrayList<Square> getTargets(){}
+    public ArrayList<Square> getTargets(){
+        return target;
+    }
 
-    public void setTarget(Square square){}
+    public void setTarget(Square square){
+
+    }
 
     public void affect(){
 
