@@ -3,3 +3,5 @@ Mp:5
 ApChanges-TurnOfEffect:0-1
 HpChanges-TurnOfEffect:0-1
 Buffs-TurnOfEffect:Poison-1
+target:Square(3*3)
+desc:affect poison buff on 3*3 cells

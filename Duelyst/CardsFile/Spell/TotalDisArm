@@ -3,3 +3,5 @@ Mp:0
 ApChanges-TurnOfEffect:0-1
 HpChanges-TurnOfEffect:0-1
 Buffs-TurnOfEffect:DisArm-Totally
+target:Enemy-One-Card
+desc:disarm an enemy card for all the game
