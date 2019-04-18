@@ -14,6 +14,62 @@ public class Hero extends Card {
     private int lastTimeSpellUsed;
     private int price;
     private int attackRange;
+    private int numberOfAttacks;
+    private int numberOfBeingAttacked;
+    private String specialPowerInfo;
+    private int sellCost;
+
+    public ArrayList<Buff> getBuffs() {
+        return buffs;
+    }
+
+    public CounterAttack getCounterAttack() {
+        return counterAttack;
+    }
+
+    public coordinate getSquare() {
+        return Square;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getAp() {
+        return ap;
+    }
+
+    public Spell getSpell() {
+        return spell;
+    }
+
+    public int getMpRequiredForSpell() {
+        return mpRequiredForSpell;
+    }
+
+    public int getCoolDown() {
+        return coolDown;
+    }
+
+    public int getLastTimeSpellUsed() {
+        return lastTimeSpellUsed;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getAttackRange() {
+        return attackRange;
+    }
+
+    public String getSpecialPowerInfo() {
+        return specialPowerInfo;
+    }
+
+    public int getSellCost() {
+        return sellCost;
+    }
 
     public void addToBuffsOfHero(Buff buff) {
         buffs.add(buff);
@@ -27,10 +83,6 @@ public class Hero extends Card {
         hp -= number;
     }
 
-    public int getHp() {
-        return hp;
-    }
-
     public void increaseAp(int number) {
         ap += number;
     }
@@ -39,11 +91,31 @@ public class Hero extends Card {
         ap -= number;
     }
 
-    public int getAp() {
-        return ap;
-    }
-
     public void useSpell() {
         //TODO
+    }
+
+    public int getNumberOfAttacks() {
+        return numberOfAttacks;
+    }
+
+    public int getNumberOfBeingAttacked() {
+        return numberOfBeingAttacked;
+    }
+
+    public void increaseNumberOfAttacks(){
+        numberOfAttacks++;
+    }
+
+    public void increaseNumberOfBeingAttacked(){
+        numberOfBeingAttacked++;
+    }
+
+    public void setSpecialPowerInfo(String specialPowerInfo) {
+        this.specialPowerInfo = specialPowerInfo;
+    }
+
+    public void setSellCost(int sellCost) {
+        this.sellCost = sellCost;
     }
 }
