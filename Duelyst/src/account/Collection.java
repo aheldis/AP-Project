@@ -32,6 +32,25 @@ public class Collection {
         accountView.cardsAndItemsView(spells, minions, heroes, items);
     }
 
+    public void addToHeros(Hero hero){
+        heroes.add(hero);
+    }
+    public void addToMinions(Minion minion){
+        minions.add(minion);
+    }
+    public void addToSpells(Spell spell){
+        spells.add(spell);
+    }
+    public boolean addToItems(Item item){
+        for(int i=0;i<3;i++){
+            if(items[i]==null){
+                items[i]=item;
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void searchCardName(String cardName) {
         boolean have = false;
         ArrayList<Card> cards = new ArrayList<>();

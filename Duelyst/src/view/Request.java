@@ -19,6 +19,9 @@ public class Request {
         this.command = scanner.nextLine().trim();
     }
 
+    public String getCommand(){
+        return command;
+    }
     public boolean isValid() {
         RequestType type = getType();
 
