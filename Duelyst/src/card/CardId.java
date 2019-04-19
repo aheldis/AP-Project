@@ -1,23 +1,24 @@
 package card;
 
+import account.Account;
+
 public class CardId {
     String cardId;
-    String cardName;
-    String playerName;
+    Account account;
+    Card card;
 
-    public void CardId(String playerName, String cardName) {//{search for cardName in player cards and make Id}
-        this.playerName=playerName;
-        this.cardName=cardName;
+    public CardId(Account account, Card card) {//{search for cardName in player cards and make Id}
+        this.account = account;
+        this.card = card;
+        card.setCardId(this);
     }
-
 
     public String getCardIdAsString() {
         return cardId;
     }
 
     public void setCardId(int number) {//{number will add to  cardId}
-       this. cardId=this.playerName+this.cardName+number;
-
+        this.cardId = account.getUserName() + "_" + card.getName() + "_" + number;
     }
 
 }
