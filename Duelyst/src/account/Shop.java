@@ -3,15 +3,15 @@ package account;
 import Item.Item;
 import card.Card;
 import card.CardId;
+import view.AccountView;
 
 import java.util.ArrayList;
 
 public class Shop {
     public static Shop singleInstance = null;
     private ArrayList<Card> cards = new ArrayList<>();
-
-    private ArrayList<Item> items = new ArrayList<Item>();
-
+    private ArrayList<Item> items = new ArrayList<>();
+    private static AccountView accountView = AccountView.getInstance();
 
     private boolean cardOrItemExist(String name) {
 
@@ -37,6 +37,11 @@ public class Shop {
 
     }
 
+    public int searchCollection(String name, Account account) {
+        //account.getCollection().searchCardName(name);
+        //account.getCollection().searchItemName(name);
+    }
+
     public Card buy(Account account, String name) {
 
     }
@@ -46,7 +51,7 @@ public class Shop {
     }
 
     public static void help() {
-
+        accountView.viewHelpOfShop();
     }
 
     public static Shop getInstance() {

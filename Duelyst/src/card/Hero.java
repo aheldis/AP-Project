@@ -103,7 +103,7 @@ public class Hero extends Card {
         ap -= number;
     }
 
-    public void useSpell() {
+    public void useSpecialPower() {
         //TODO
     }
 

@@ -216,4 +216,14 @@ public class AccountView {
         System.out.println("logout");
     }
 
+    public void viewHelpOfShop(){
+        System.out.println("show collection");
+        System.out.println("search [item name| card name]");
+        System.out.println("search collection [item name| card name]");
+        System.out.println("buy [item name| card name]");
+        System.out.println("sell [card id]");
+        System.out.println("show");
+        System.out.println("exit");
+    }
+
 }

@@ -32,7 +32,7 @@ public class Collection {
 
     public void searchCardName(String cardName) {
         boolean have = false;
-        ArrayList<Card> cards = new ArrayList<Card>();
+        ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(spells);
         cards.addAll(minions);
         cards.addAll(heroes);
