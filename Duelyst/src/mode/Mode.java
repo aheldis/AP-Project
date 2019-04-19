@@ -1,6 +1,5 @@
 package mode;
 
-import Item.Flag;
 import account.Player;
 import land.Square;
 

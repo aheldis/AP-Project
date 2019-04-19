@@ -1,0 +1,9 @@
+MpChanges: 0
+ApChanges: 0
+HpChanges: 0
+Buffs_TurnOfEffect_numberOfBuffs: null _ 0 _ 0
+target_numberOfTargets_numberOfAttacks: closestEnemy _ 1 _ 8
+numberOfAttacksHit_numberOfAddedAttacks: 0 _ 0
+TypeOfCounterAttack: -
+forWhom: Minion
+desc: a minion attacks 8 times to one of the closest enemies

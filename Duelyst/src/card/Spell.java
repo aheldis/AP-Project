@@ -20,55 +20,60 @@ public class Spell extends Card {
     private int turnForHpChanges;
 
 
-    public void Spell(int cost,int mp,int apChanges,int turnForApChanges,int hpChanges
-            ,int turnForHpChanges, String description,ArrayList<Buff> buffs){
-        this.apChanges=apChanges;
-        this.cost=cost;
-        this.mp=mp;
-        this.turnForApChanges=turnForApChanges;
-        this.hpChanges=hpChanges;
-        this.description=description;
-        this.turnForApChanges=turnForHpChanges;
-        this.buffs=buffs;
+    public void Spell(int cost, int mp, int apChanges, int turnForApChanges, int hpChanges,
+                      int turnForHpChanges, String description, ArrayList<Buff> buffs) {
+        this.apChanges = apChanges;
+        this.cost = cost;
+        this.mp = mp;
+        this.turnForApChanges = turnForApChanges;
+        this.hpChanges = hpChanges;
+        this.description = description;
+        this.turnForApChanges = turnForHpChanges;
+        this.buffs = buffs;
     }
 
-    public int getPlayerNameByNumber(){
+    public int getPlayerNameByNumber() {
         return playerNameByNumber;
     }
 
-    public int getNumberOfAttack(){
+    public int getNumberOfAttack() {
         return numberOfAttack;
     }
 
-    public int getTurn(){
+    public int getTurn() {
         return turn;
     }
-    public ArrayList<Square> getTarget(){
+
+    public ArrayList<Square> getTarget() {
         return target;
     }
-    public int getMp(){
+
+    public int getMp() {
         return mp;
     }
-    public int getCost(){
+
+    public int getCost() {
         return cost;
     }
 
 
-    public String  getDescription(){return description;}
+    public String getDescription() {
+        return description;
+    }
 
-    public void printdesc(){
+    public void printdesc() {
         System.out.println(description);//todo sout
     }
 
-    public ArrayList<Square> getTargets(){
+    public ArrayList<Square> getTargets() {
         return target;
     }
 
-    public void setTarget(Square square){
+    public void setTarget(Square square) {
 
     }
 
-    public void affect(){
+    public void affect() {
 
     }
 
