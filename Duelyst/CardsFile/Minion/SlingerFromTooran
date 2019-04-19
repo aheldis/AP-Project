@@ -1,0 +1,9 @@
+cost: 600
+MP: 1
+HP: 4
+Ap: 2
+nationality: Tooran
+counterAttack: ranged
+attackRange: 7
+specialPower: -
+activationTimeOfSpecialPower: -

@@ -1,0 +1,9 @@
+cost: 500
+MP: 5
+HP: 10
+Ap: 4
+nationality: Genii
+counterAttack: ranged
+attackRange: 4
+specialPower: Minion _ distance(all) _ Power(APChange(1))
+activationTimeOfSpecialPower: passive

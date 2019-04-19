@@ -1,0 +1,9 @@
+cost: 700
+MP: 4
+HP: 6
+Ap: 6
+nationality: Tooran
+counterAttack: melee
+attackRange: 0
+specialPower: Disarm(1) / Poison(4)
+activationTimeOfSpecialPower: attack

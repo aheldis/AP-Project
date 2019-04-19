@@ -1,0 +1,9 @@
+cost: 500
+MP: 6
+HP: 10
+Ap: 14
+nationality: Boar
+counterAttack: melee
+attackRange: 0
+specialPower: Disarm(not)
+activationTimeOfSpecialPower: defend

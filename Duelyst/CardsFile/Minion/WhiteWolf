@@ -1,0 +1,9 @@
+cost: 400
+MP: 5
+HP: 8
+Ap: 2
+nationality: Wolf
+counterAttack: melee
+attackRange: 0
+specialPower: decreaseHP(6) _ turnOfEffect(1) / decreaseHP(4) _ turnOfEffect(2)
+activationTimeOfSpecialPower: attack
