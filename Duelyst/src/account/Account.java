@@ -1,15 +1,13 @@
 package account;
 
-<<<<<<< HEAD
-=======
+
 import battle.Deck;
 import battle.Match;
 import battle.NormalDeck;
 import view.AccountView;
-
 import java.util.ArrayList;
 
->>>>>>> ab2bd4fa7ccbd175edd374239e6971b5dac22cdf
+
 public class Account implements Comparable<Account> {
     private String userName;
     private String password;
