@@ -108,7 +108,7 @@ public class Shop {
             account.changeValueOfDaric(card.getCost());
             Collection collection = account.getCollection();
             if (card instanceof Hero) {
-                collection.addToHeros((Hero) card);
+                collection.addToHeroes((Hero) card);
             } else if (card instanceof Spell) {
                 collection.addToSpells((Spell) card);
             } else if (card instanceof Minion) {

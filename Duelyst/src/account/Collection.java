@@ -2,10 +2,9 @@ package account;
 
 import IDK.ErrorType;
 import Item.*;
-import battle.Deck;
-import battle.NormalDeck;
+import battle.*;
 import card.*;
-import view.AccountView;
+import view.*;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,7 @@ public class Collection {
         accountView.cardsAndItemsView(spells, minions, heroes, items);
     }
 
-    public void addToHeros(Hero hero){
+    public void addToHeroes(Hero hero){
         heroes.add(hero);
     }
     public void addToMinions(Minion minion){
