@@ -4,6 +4,7 @@ package account;
 import battle.Deck;
 import battle.Match;
 import battle.NormalDeck;
+import view.AccountView;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,6 @@ public class Account implements Comparable<Account> {
         this.userName = userName;
         this.password = password;
     }
-
 
     public int getWins() {
         return wins;
@@ -80,9 +80,19 @@ public class Account implements Comparable<Account> {
         matchHistory.add(match);
     }
 
-    public void showMatchHistory(){
-        //todo
-    }
+    public void showMatchHistory() {
+        AccountView accountView = AccountView.getInstance();
+        for (Match match : matchHistory) {
+            ArrayList<Player> players = match.getPlayers();
+            Player opponent;
+            if (players.get(0).getAccount().getUserName().equals(this.getUserName())) {
+                opponent = players.get(1);
+            } else {
+                opponent = players.get(0);
+            }
 
+            accountView.viewAMatch(match, opponent);
+        }
+    }
 
 }
