@@ -59,5 +59,4 @@ public class Square {
     public Object getObject() {
         return object;
     }
-
 }
