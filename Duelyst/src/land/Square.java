@@ -1,10 +1,7 @@
 package land;
 
 import Item.Flag;
-import card.Card;
-import card.Hero;
-import card.Minion;
-import card.Spell;
+import card.*;
 import requirment.Coordinate;
 
 public class Square {
