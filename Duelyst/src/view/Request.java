@@ -1,6 +1,7 @@
 package view;
 
 import IDK.RequestType;
+import model.Product;
 
 import java.util.Scanner;
 
@@ -31,6 +32,7 @@ public class Request {
     }
 
     public RequestType getType() {
+        Product product=new Product();
         if (state.equals("mainMenu")) {
             switch (command.toLowerCase()) {
                 case "enter collection":
@@ -46,6 +48,7 @@ public class Request {
             }
         }
         else if (state.equals("collection")) {
+
             switch (command.toLowerCase()) {
                 case "exit":
                     return RequestType.COLLECTION_EXIT;
@@ -58,23 +61,42 @@ public class Request {
                 case "show all decks":
                     return RequestType.COLLECTION_SHOW_ALL_DECKS;
             }
-            if(command.toLowerCase().matches("search \\w+"))
+            if(command.toLowerCase().matches("search \\w+")) {
+                product.setCardId(command.substring(6));
                 return RequestType.COLLECTION_SEARCH_CARD;
-            else if(command.toLowerCase().matches("create deck \\w+"))
+            }
+            else if(command.toLowerCase().matches("create deck \\w+")) {
+                product.setDeckName(command.substring(11));
                 return RequestType.COLLECTION_CREATE_DECK;
-            else if(command.toLowerCase().matches("delete deck \\w+") )
+            }
+            else if(command.toLowerCase().matches("delete deck \\w+") ) {
+                product.setDeckName(command.substring(11));
                 return RequestType.COLLECTION_DELETE_DECK;
-            else if(command.toLowerCase().matches("add \\w+ to deck \\w+"))
+            }
+            else if(command.toLowerCase().matches("add \\w+ to deck \\w+")) {
+                product.setDeckName(command.split(" ")[4]);
+                product.setCardId(command.substring(4));
                 return RequestType.COLLECTION_ADD_CARD_TO_DECK;
-            else if(command.toLowerCase().matches("remove \\w+ from deck \\w+"))
+            }
+            else if(command.toLowerCase().matches("remove \\w+ from deck \\w+")){
+                product.setDeckName(command.split(" ")[4]);
+                product.setCardId(command.substring(4));
                 return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
-            else if(command.toLowerCase().matches("validate deck \\w+"))
-                return RequestType.COLLECTION_VALIDATE_DECK;
-            else if(command.toLowerCase().matches("select deck \\w+"))
-                return RequestType.COLLECTION_SELECT_DECK;
-            else if(command.toLowerCase().matches("show deck \\w+"))
-                return RequestType.COLLECTION_SHOW_DECK;
+            }
 
+            else if(command.toLowerCase().matches("validate deck \\w+")){
+                product.setDeckName(command.substring(14));
+                return RequestType.COLLECTION_VALIDATE_DECK;
+            }
+
+            else if(command.toLowerCase().matches("select deck \\w+")) {
+                product.setDeckName(command.substring(12));
+                return RequestType.COLLECTION_SELECT_DECK;
+            }
+            else if(command.toLowerCase().matches("show deck \\w+")) {
+                product.setDeckName(command.substring(10));
+                return RequestType.COLLECTION_SHOW_DECK;
+            }
 
         }
         else if (state.equals("shop")) {

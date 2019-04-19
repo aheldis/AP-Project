@@ -1,0 +1,9 @@
+cost: 200
+MP: 4
+HP: 10
+Ap: 6
+nationality: Fars
+counterAttack: melee
+attackRange: 0
+specialPower: -
+activationTimeOfSpecialPower: -

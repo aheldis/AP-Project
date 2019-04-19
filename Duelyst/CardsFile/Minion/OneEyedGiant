@@ -1,0 +1,9 @@
+cost: 500
+MP: 7
+HP: 12
+Ap: 11
+nationality: Giant
+counterAttack: hybrid
+attackRange: 3
+specialPower: Minion(2) _ distance(1) _ turnOfEffect(1)
+activationTimeOfSpecialPower: death

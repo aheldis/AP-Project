@@ -1,0 +1,9 @@
+cost: 800
+MP: 6
+HP: 6
+Ap: 10
+nationality: Tooran
+counterAttack: melee
+attackRange: 0
+specialPower: not(4)
+activationTimeOfSpecialPower: combo
