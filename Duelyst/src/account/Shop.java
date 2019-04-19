@@ -118,7 +118,7 @@ public class Shop {
         if (itemExist(name)) {
             Item item = getItem(name);
             //itemID?
-            if(account.getDaric() < item.getCost()){
+            if (account.getDaric() < item.getCost()) {
                 ErrorType error = ErrorType.NOT_ENOUGH_MONEY;
                 return;
             }
