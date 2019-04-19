@@ -199,4 +199,8 @@ public class AccountView {
         }
         System.out.println(match.getTime()); //todo time-e java ???
     }
+
+    public void allAccountsErrors(Error){
+
+    }
 }

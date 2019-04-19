@@ -1,6 +1,5 @@
 package account;
 
-
 import battle.Deck;
 import battle.Match;
 import battle.NormalDeck;
