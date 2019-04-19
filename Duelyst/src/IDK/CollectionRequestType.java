@@ -1,6 +1,6 @@
 package IDK;
 
-public enum  RequestType {
+public enum CollectionRequestType {
     COLLECTION_SHOW,
     COLLECTION_EXIT,
     COLLECTION_SEARCH_CARD,
