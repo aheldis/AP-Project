@@ -7,6 +7,9 @@ import view.AccountView;
 
 import java.util.ArrayList;
 
+
+//todo SHOW COLLECTION (HAMON SHOW COLLECTION HAST)
+
 public class Shop {
     public static Shop singleInstance = null;
     private ArrayList<Card> cards = new ArrayList<>();
