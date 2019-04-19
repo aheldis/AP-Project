@@ -1,3 +1,5 @@
+package IDK;
+
 public enum ErrorType {
     USER_NAME_NOT_FOUND("User name not found"),
     PASSWORD_DOESNT_MATCH("Password doesn't match"),

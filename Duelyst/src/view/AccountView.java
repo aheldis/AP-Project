@@ -7,8 +7,8 @@ import account.Player;
 import battle.Deck;
 import battle.Match;
 import card.*;
-
 import java.util.ArrayList;
+import IDK.ErrorType;
 
 public class AccountView {
 
@@ -200,7 +200,20 @@ public class AccountView {
         System.out.println(match.getTime()); //todo time-e java ???
     }
 
-    public void allAccountsErrors(Error){
-
+    public void printError(ErrorType error){
+        System.out.println(error.getMessage());
     }
+
+    public void viewAccount(int rank, String userName, int wins){
+        System.out.println(rank + "- UserName: " + userName + " - Wins: " + wins);
+    }
+
+    public void viewHelpOfAccount(){
+        System.out.println("Create Account [user name]");
+        System.out.println("login [user name]");
+        System.out.println("show leaderboard");
+        System.out.println("save");
+        System.out.println("logout");
+    }
+
 }
