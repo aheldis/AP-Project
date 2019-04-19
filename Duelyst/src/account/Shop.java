@@ -1,5 +1,6 @@
 package account;
 
+import IDK.ErrorType;
 import Item.Item;
 import card.Card;
 import card.CardId;
@@ -16,19 +17,40 @@ public class Shop {
     private ArrayList<Item> items = new ArrayList<>();
     private static AccountView accountView = AccountView.getInstance();
 
-    private boolean cardOrItemExist(String name) {
-        for(Card card: cards){
-            if(card.getName().equals(name)){
-                return true;
-            }
-        }
-
-        for(Item item: items){
-            if(item.getName().equals(name)){
+    private boolean itemExist(String name) {
+        for (Item item : items) {
+            if (item.getName().equals(name)) {
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean cardExist(String name) {
+        for (Card card : cards) {
+            if (card.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Card getCard(String name) {
+        for (Card card : cards) {
+            if (card.getName().equals(name)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    private Item getItem(String name) {
+        for (Item item : items) {
+            if (item.getName().equals(name)) {
+                return item;
+            }
+        }
+        return null;
     }
 
     private CardId getExistingCardId(String name) {
@@ -49,20 +71,18 @@ public class Shop {
     }
 
     public void search(Account account, String name) {
-        if(!cardOrItemExist(name)) {
-            accountView.printNoSuchItemOrCardInShop();
+        if (!cardExist(name) && !itemExist(name)) {
+            ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
+            accountView.printError(error);
             return;
         }
-        for(Card card: cards){
-            if(card.getName().equals(name)){
-                //todo
-            }
+        if (cardExist(name)) {
+            Card card = getCard(name);
+            //todo sout what?
         }
-
-        for(Item item: items){
-            if(item.getName().equals(name)){
-                //todo
-            }
+        if (itemExist(name)) {
+            Item item = getItem(name);
+            //todo
         }
     }
 
@@ -73,7 +93,15 @@ public class Shop {
     }
 
     public void buy(Account account, String name) {
-        search(account, name);
+        if (!cardExist(name) && !itemExist(name)) {
+            ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
+            accountView.printError(error);
+        }
+        if (cardExist(name)) {
+            Card card = getCard(name);
+            card.setCardId(new CardId(account, card));
+            account.getCollection().addCardToThisDeck();
+        }
     }
 
     public void sell(Account account, CardId cardId) {
