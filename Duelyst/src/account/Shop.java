@@ -17,36 +17,63 @@ public class Shop {
     private static AccountView accountView = AccountView.getInstance();
 
     private boolean cardOrItemExist(String name) {
+        for(Card card: cards){
+            if(card.getName().equals(name)){
+                return true;
+            }
+        }
 
+        for(Item item: items){
+            if(item.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private CardId getExistingCardId(String name) {
-
+        //todo ??
     }
 
-    private CardId getNewCardId(Card card) {
-
+    private CardId getNewCardId(Account account, Card card) {
+        CardId cardId = new CardId(account, card);
+        return cardId;
     }
 
     public void addCard(Card card) {
-
+        cards.add(card);
     }
 
     public void addItem(Item item) {
-
+        items.add(item);
     }
 
-    public int search(String name) {
+    public void search(Account account, String name) {
+        if(!cardOrItemExist(name)) {
+            accountView.printNoSuchItemOrCardInShop();
+            return;
+        }
+        for(Card card: cards){
+            if(card.getName().equals(name)){
+                //todo
+            }
+        }
 
+        for(Item item: items){
+            if(item.getName().equals(name)){
+                //todo
+            }
+        }
     }
 
-    public int searchCollection(String name, Account account) {
+    public void searchCollection(String name, Account account) {
+        //todo
         //account.getCollection().searchCardName(name);
         //account.getCollection().searchItemName(name);
     }
 
-    public Card buy(Account account, String name) {
-
+    public void buy(Account account, String name) {
+        search(account, name);
     }
 
     public void sell(Account account, CardId cardId) {

@@ -226,4 +226,8 @@ public class AccountView {
         System.out.println("exit");
     }
 
+    public void printNoSuchItemOrCardInShop(){
+        System.out.println("No such item or card in shop");
+    }
+
 }
