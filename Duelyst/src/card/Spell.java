@@ -12,7 +12,6 @@ public class Spell extends Card {
     private ArrayList<Square> target;
     private ArrayList<Buff> buffs;
     private ArrayList<Integer> turnOfBuffs;
-    private int cost;
     private int mp;
     private int apChanges;
     private int turnForApChanges;
@@ -23,7 +22,7 @@ public class Spell extends Card {
     public void Spell(int cost, int mp, int apChanges, int turnForApChanges, int hpChanges,
                       int turnForHpChanges, String description, ArrayList<Buff> buffs) {
         this.apChanges = apChanges;
-        this.cost = cost;
+        setCost(cost);
         this.mp = mp;
         this.turnForApChanges = turnForApChanges;
         this.hpChanges = hpChanges;
@@ -50,10 +49,6 @@ public class Spell extends Card {
 
     public int getMp() {
         return mp;
-    }
-
-    public int getCost() {
-        return cost;
     }
 
 

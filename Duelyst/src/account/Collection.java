@@ -63,9 +63,8 @@ public class Collection {
                 have = true;
             }
         }
-        if (!have)
-        {
-            ErrorType error=ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
+        if (!have) {
+            ErrorType error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
             error.printMessage();
         }
     }
@@ -86,7 +85,7 @@ public class Collection {
                 }
             }
             if (!have) {
-                ErrorType error=ErrorType.HAVE_NOT_ITEM_IN_COLLECTION;
+                ErrorType error = ErrorType.HAVE_NOT_ITEM_IN_COLLECTION;
                 error.printMessage();
             }
         }
@@ -107,7 +106,7 @@ public class Collection {
 
     public void createDeck(String deckName) {
         if (passTheDeckIfHaveBeenExist(deckName) != null) {
-            ErrorType error=ErrorType.DECK_HAVE_BEEN_EXIST;
+            ErrorType error = ErrorType.DECK_HAVE_BEEN_EXIST;
             error.printMessage();
             return;
         }
@@ -122,7 +121,7 @@ public class Collection {
         if (deck != null)
             decks.remove(deck);
         else {
-            ErrorType error=ErrorType.HAVE_NOT_DECK;
+            ErrorType error = ErrorType.HAVE_NOT_DECK;
             error.printMessage();
 
         }
@@ -134,7 +133,7 @@ public class Collection {
                 return item.getCardsOfDeck().size();
             }
         }
-        ErrorType error=ErrorType.HAVE_NOT_DECK;
+        ErrorType error = ErrorType.HAVE_NOT_DECK;
         error.printMessage();
         return 0;
     }
@@ -145,7 +144,7 @@ public class Collection {
                 return item.getItemOfDeck().size();
             }
         }
-        ErrorType error=ErrorType.HAVE_NOT_DECK;
+        ErrorType error = ErrorType.HAVE_NOT_DECK;
         error.printMessage();
         return 0;
     }
@@ -168,7 +167,7 @@ public class Collection {
                 }
             }
         }
-        ErrorType error=ErrorType.HAVE_NOT_DECK;
+        ErrorType error = ErrorType.HAVE_NOT_DECK;
         error.printMessage();
         return false;
     }
@@ -184,7 +183,7 @@ public class Collection {
                 return null;
             }
         }
-        ErrorType error=ErrorType.HAVE_NOT_DECK;
+        ErrorType error = ErrorType.HAVE_NOT_DECK;
         error.printMessage();
         return null;
     }
@@ -218,24 +217,24 @@ public class Collection {
         ErrorType error;
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck == null) {
-            error=ErrorType.HAVE_NOT_DECK;
+            error = ErrorType.HAVE_NOT_DECK;
             error.printMessage();
             return;
         }
 
         if (deck.getCardsOfDeck().size() == 20) {
-            error=ErrorType.CAN_NOT_ADD_CARD;
+            error = ErrorType.CAN_NOT_ADD_CARD;
             error.printMessage();
             return;
         }
 
         Card card = passCardByCardId(cardId);
         if (card == null) {
-            error=ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
+            error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
             error.printMessage();
         } else {
-            if (cardHaveBeenExistInThisDeck(deckName, cardId)!=null) {
-                error=ErrorType.HAVE_CARD_IN_DECK;
+            if (cardHaveBeenExistInThisDeck(deckName, cardId) != null) {
+                error = ErrorType.HAVE_CARD_IN_DECK;
                 error.printMessage();
                 return;
             }
@@ -250,18 +249,18 @@ public class Collection {
             return;
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck == null) {
-            error=ErrorType.HAVE_NOT_DECK;
+            error = ErrorType.HAVE_NOT_DECK;
             error.printMessage();
             return;
         }
         Card card = passCardByCardId(heroId);
         if (card == null) {
-            error=ErrorType.HAVE_NOT_HERO_IN_COLLECTION;
+            error = ErrorType.HAVE_NOT_HERO_IN_COLLECTION;
             error.printMessage();
             return;
         } else {
             if (heroHaveBeenExistInThisDeck(deckName, heroId)) {
-                error=ErrorType.HAVE_HERO_IN_DECK;
+                error = ErrorType.HAVE_HERO_IN_DECK;
                 error.printMessage();
                 return;
             }
@@ -274,19 +273,19 @@ public class Collection {
         ErrorType error;
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck == null) {
-            error=ErrorType.HAVE_NOT_DECK;
+            error = ErrorType.HAVE_NOT_DECK;
             error.printMessage();
             return;
         }
 
         if (deck.item != null) {
-            error=ErrorType.HAVE_ONE_ITEM_IN_DECK;
+            error = ErrorType.HAVE_ONE_ITEM_IN_DECK;
             error.printMessage();
             return;
         }
         Item item = passUsableItemByUsableItemId(usableItemId);
         if (item == null) {
-            error=ErrorType.HAVE_ONE_ITEM_IN_DECK;
+            error = ErrorType.HAVE_ONE_ITEM_IN_DECK;
             error.printMessage();
             return;
         }
@@ -301,13 +300,13 @@ public class Collection {
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
 
         if (deck == null) {
-            error=ErrorType.HAVE_NOT_DECK;
+            error = ErrorType.HAVE_NOT_DECK;
             error.printMessage();
             return;
         }
-        Card card=cardHaveBeenExistInThisDeck(deckName, cardId);
-        if (card==null) {
-            error=ErrorType.HAVE_NOT_CARD_IN_DECK;
+        Card card = cardHaveBeenExistInThisDeck(deckName, cardId);
+        if (card == null) {
+            error = ErrorType.HAVE_NOT_CARD_IN_DECK;
             error.printMessage();
             return;
         }
@@ -318,7 +317,7 @@ public class Collection {
         ErrorType error;
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck == null) {
-            error=ErrorType.HAVE_NOT_DECK;
+            error = ErrorType.HAVE_NOT_DECK;
             error.printMessage();
             return;
         }
@@ -328,7 +327,7 @@ public class Collection {
             deck.removeFromCardsOFDeck(card);
 
         } else {
-            error=ErrorType.HAVE_NOT_HERO_IN_DECK;
+            error = ErrorType.HAVE_NOT_HERO_IN_DECK;
             error.printMessage();
         }
 
@@ -340,20 +339,20 @@ public class Collection {
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
 
         if (deck == null) {
-            error=ErrorType.HAVE_NOT_DECK;
+            error = ErrorType.HAVE_NOT_DECK;
             error.printMessage();
             return;
         }
         Item item = passUsableItemByUsableItemId(usableItemId);
         if (item == null) {
-            error=ErrorType.HAVE_NOT_ITEM_IN_COLLECTION;
+            error = ErrorType.HAVE_NOT_ITEM_IN_COLLECTION;
             error.printMessage();
             return;
         }
         if (item.equalUsableItem(usableItemId)) {
             deck.addItemToDeck(item);
         } else {
-            error=ErrorType.HAVE_NOT_ITEM_IN_DECK;
+            error = ErrorType.HAVE_NOT_ITEM_IN_DECK;
             error.printMessage();
         }
 
@@ -369,7 +368,7 @@ public class Collection {
             else
                 return false;
         }
-        error=ErrorType.HAVE_NOT_DECK;
+        error = ErrorType.HAVE_NOT_DECK;
         error.printMessage();
         return false;
     }
