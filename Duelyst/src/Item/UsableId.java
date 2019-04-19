@@ -1,25 +1,27 @@
 package Item;
 
+import account.Account;
+
 public class UsableId {
     private String usableId;
-    private String itemName;
-    private String playerName;
 
-    public  UsableId(String playerName, String itemName) {
-        this.playerName=playerName;
-        this.itemName=itemName;
+    private Usable usable;
+    private Account account;
 
+    public UsableId(Account account, Usable usable) {
+        this.account = account;
+        this.usable = usable;
+        usable.setUsableId(this);
     }
 
     public void setUsableId(int number) {//{number of that card will add to cardId}
-        usableId=playerName+itemName+number;
+        usableId = account.getUserName() + "_" + usable.getName() + " " + number;
     }
 
     public String getUsableIdAsString() {
         return usableId;
 
     }
-
 
 
 }

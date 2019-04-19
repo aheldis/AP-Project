@@ -1,22 +1,27 @@
 package Item;
 
+import account.Account;
+
 public class CollectableId {
-    private String collectableId;
-    private String itemName;
-    private String playerName;
+    private String usableId;
 
-    public CollectableId(String playerName, String itemName) {
-        this.playerName = playerName;
-        this.itemName = itemName;
+    private Collectable collectable;
+    private Account account;
+
+    public CollectableId(Account account, Collectable collectable) {
+        this.account = account;
+        this.collectable = collectable;
+        collectable.setCollectableId(this);
+    }
+
+    public void setUsableId(int number) {//{number of that card will add to cardId}
+        usableId = account.getUserName() + "_" + collectable.getName() + " " + number;
+    }
+
+    public String getUsableIdAsString() {
+        return usableId;
 
     }
 
-    public void setCollectableId(int number) {//{number of that card will add to cardId}
-        collectableId = playerName + itemName + number;
-    }
-
-    public String getCollectableIdAsString() {
-        return collectableId;
-    }
 
 }
