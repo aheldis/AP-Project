@@ -48,7 +48,7 @@ public class AllAccount {
         if (account.matchPassword(password)) {
             //TODO login
         } else {
-            ErrorType error = ErrorType.PASSWORD_DOESNT_MATCH;
+            ErrorType error = ErrorType.PASSWORD_DOES_NOT_MATCH;
             accountView.printError(error);
             return;
         }
