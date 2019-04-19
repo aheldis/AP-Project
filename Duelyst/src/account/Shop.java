@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 
 //todo SHOW COLLECTION (HAMON SHOW COLLECTION HAST)
+//what?
 
 public class Shop {
     public static Shop singleInstance = null;
@@ -94,6 +95,7 @@ public class Shop {
         //todo
         //account.getCollection().searchCardName(name);
         //account.getCollection().searchItemName(name);
+
     }
 
     private boolean enoughDaricForBuy(Account account, int cost) {
@@ -119,7 +121,7 @@ public class Shop {
                 return;
             Collection collection = account.getCollection();
             if (card instanceof Hero) {
-                collection.addToHeroes((Hero) card);
+                collection.addToHeros((Hero) card);
             } else if (card instanceof Spell) {
                 collection.addToSpells((Spell) card);
             } else if (card instanceof Minion) {
