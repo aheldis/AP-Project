@@ -19,7 +19,9 @@ public enum ErrorType {
     HAVE_NOT_HERO_IN_COLLECTION("you don't have this Hero in your collection"),
     HAVE_NOT_HERO_IN_DECK("you don't have this Hero in your DECK"),
     HAVE_HERO_IN_DECK("Hero have been exist in this deck"),
-    HAVE_ONE_ITEM_IN_DECK("you have one item in this deck");
+    HAVE_ONE_ITEM_IN_DECK("you have one item in this deck"),
+    NO_SUCH_CARD_OR_ITEM_IN_SHOP("There is no such card or item in shop"),
+    NOT_ENOUGH_MONEY("You don't have enough money to buy this card/item");
 
     private String message;
 
