@@ -1,5 +1,6 @@
 package land;
 
+import Item.Flag;
 import card.Card;
 import card.Hero;
 import card.Minion;
