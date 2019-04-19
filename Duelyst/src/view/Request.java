@@ -19,10 +19,6 @@ public class Request {
         this.command = scanner.nextLine();
     }
 
-    public String getCommand() {
-        return command;
-    }
-
     public boolean isValid() {
         RequestType type = getType();
 
@@ -42,7 +38,7 @@ public class Request {
                 case "enter exit":
                     return RequestType.MENU_ENTER_EXIT;
             }
-        else if (state.equals("collection")) {
+        else if (state.equals("collection"))
             switch (command) {
                 case "exit":
                     return RequestType.COLLECTION_EXIT;
@@ -53,9 +49,7 @@ public class Request {
                 case "help:":
                     return RequestType.COLLECTION_HELP;
             }
-
-            //todo check syntax
-        } else if (state.equals("shop"))
+        else if (state.equals("shop"))
             switch (command) {
 
             }
@@ -64,5 +58,4 @@ public class Request {
 
             }
     }
-
 }
