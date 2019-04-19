@@ -2,6 +2,10 @@ package account;
 
 import IDK.ErrorType;
 import Item.Item;
+import Item.Usable;
+import Item.UsableId;
+import Item.Collectable;
+import Item.CollectableId;
 import card.*;
 import view.AccountView;
 
@@ -54,7 +58,7 @@ public class Shop {
     }
 
     private CardId getExistingCardId(String name) {
-        //todo ??
+
     }
 
     private CardId getNewCardId(Account account, Card card) {
@@ -92,6 +96,16 @@ public class Shop {
         //account.getCollection().searchItemName(name);
     }
 
+    private boolean enoughDaricForBuy(Account account, int cost) {
+        if (account.getDaric() < cost) {
+            ErrorType error = ErrorType.NOT_ENOUGH_MONEY;
+            accountView.printError(error);
+            return false;
+        }
+        account.changeValueOfDaric(-cost);
+        return true;
+    }
+
     public void buy(Account account, String name) {
         if (!cardExist(name) && !itemExist(name)) {
             ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
@@ -101,11 +115,8 @@ public class Shop {
         if (cardExist(name)) {
             Card card = getCard(name);
             card.setCardId(new CardId(account, card));
-            if (account.getDaric() < card.getCost()) {
-                ErrorType error = ErrorType.NOT_ENOUGH_MONEY;
+            if (!enoughDaricForBuy(account, card.getCost()))
                 return;
-            }
-            account.changeValueOfDaric(card.getCost());
             Collection collection = account.getCollection();
             if (card instanceof Hero) {
                 collection.addToHeros((Hero) card);
@@ -117,18 +128,30 @@ public class Shop {
         }
         if (itemExist(name)) {
             Item item = getItem(name);
-            //itemID?
-            if (account.getDaric() < item.getCost()) {
-                ErrorType error = ErrorType.NOT_ENOUGH_MONEY;
-                return;
+            if (item instanceof Usable) {
+                UsableId id = new UsableId(account, (Usable) item);
+            } else if (item instanceof Collectable) {
+                CollectableId id = new CollectableId(account, (Collectable) item);
             }
-            account.changeValueOfDaric(item.getCost());
+            if (!enoughDaricForBuy(account, item.getCost()))
+                return;
             account.getCollection().addToItems(item);
         }
     }
 
-    public void sell(Account account, CardId cardId) {
-
+    public void sell(Account account, String id) {
+        Collection collection = account.getCollection();
+        Card card = collection.passCardByCardId(id);
+        Item item = collection.passItemByItemId(id);
+        if (card != null) {
+            collection.removeCard(card);
+        } else if (item != null) {
+            collection.removeItem(item);
+        } else {
+            ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_Collection;
+            accountView.printError(error);
+            return;
+        }
     }
 
     public static void help() {

@@ -8,6 +8,7 @@ import card.*;
 import view.AccountView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class Collection {
@@ -32,19 +33,22 @@ public class Collection {
         accountView.cardsAndItemsView(spells, minions, heroes, items);
     }
 
-    public void addToHeros(Hero hero){
+    public void addToHeros(Hero hero) {
         heroes.add(hero);
     }
-    public void addToMinions(Minion minion){
+
+    public void addToMinions(Minion minion) {
         minions.add(minion);
     }
-    public void addToSpells(Spell spell){
+
+    public void addToSpells(Spell spell) {
         spells.add(spell);
     }
-    public boolean addToItems(Item item){
-        for(int i=0;i<3;i++){
-            if(items[i]==null){
-                items[i]=item;
+
+    public boolean addToItems(Item item) {
+        for (int i = 0; i < 3; i++) {
+            if (items[i] == null) {
+                items[i] = item;
                 return true;
             }
         }
@@ -188,7 +192,7 @@ public class Collection {
         return null;
     }
 
-    private Card passCardByCardId(String cardId) {
+    public Card passCardByCardId(String cardId) {
         for (Hero hero : heroes) {
             if (hero.equals(cardId))
                 return hero;
@@ -200,6 +204,17 @@ public class Collection {
         for (Spell spell : spells) {
             if (spell.equals(cardId))
                 return spell;
+        }
+        return null;
+    }
+
+    public Item passItemByItemId(String itemId) {
+        for (Item item : items) {
+            if (item instanceof Usable) {
+                Usable usable = (Usable) item;
+                if (usable.getUsableId().getUsableIdAsString().equals(itemId))
+                    return item;
+            }
         }
         return null;
     }
@@ -391,6 +406,35 @@ public class Collection {
     public void helpOfCollection() {
         AccountView accountView = AccountView.getInstance();
         accountView.helpViewForCollection();
+    }
+
+    public void removeCard(Card card) {
+        for (Hero hero : heroes) {
+            if (card instanceof Hero && hero.equals(card)) {
+                heroes.remove(hero);
+                break;
+            }
+        }
+        for (Minion minion : minions) {
+            if (card instanceof Minion && minion.equals(card)) {
+                minions.remove(minion);
+            }
+        }
+        for (Spell spell : spells) {
+            if (card instanceof Spell && spell.equals(card)) {
+                spells.remove(spell);
+                break;
+            }
+        }
+    }
+
+    public void removeItem(Item item) {
+        for (int i = 0; i < 3; i++) {
+            if (item.equals(items[i])) {
+                items[i] = null;
+                return;
+            }
+        }
     }
 
 }
