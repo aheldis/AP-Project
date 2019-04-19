@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Hero extends Card {
     private String counterAttackclassName;
     private String specialPowerInfo;
-    private int sellCost;
     private ArrayList<Buff> buffs = new ArrayList<Buff>();
     private CounterAttack counterAttack;
     private Coordinate Square;
@@ -18,7 +17,6 @@ public class Hero extends Card {
     private int mpRequiredForSpell;
     private int coolDown;
     private int lastTimeSpellUsed;
-    private int price;
     private int attackRange;
     private int numberOfAttacks;
     private int numberOfBeingAttacked;
@@ -67,20 +65,12 @@ public class Hero extends Card {
         return lastTimeSpellUsed;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
     public int getAttackRange() {
         return attackRange;
     }
 
     public String getSpecialPowerInfo() {
         return specialPowerInfo;
-    }
-
-    public int getSellCost() {
-        return sellCost;
     }
 
     public void addToBuffsOfHero(Buff buff) {
@@ -125,10 +115,6 @@ public class Hero extends Card {
 
     public void setSpecialPowerInfo(String specialPowerInfo) {
         this.specialPowerInfo = specialPowerInfo;
-    }
-
-    public void setSellCost(int sellCost) {
-        this.sellCost = sellCost;
     }
 
     public void addNewHeroCard() {

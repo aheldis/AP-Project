@@ -2,11 +2,11 @@ package account;
 
 import IDK.ErrorType;
 import Item.Item;
-import card.Card;
-import card.CardId;
+import card.*;
 import view.AccountView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 //todo SHOW COLLECTION (HAMON SHOW COLLECTION HAST)
@@ -96,11 +96,34 @@ public class Shop {
         if (!cardExist(name) && !itemExist(name)) {
             ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
             accountView.printError(error);
+            return;
         }
         if (cardExist(name)) {
             Card card = getCard(name);
             card.setCardId(new CardId(account, card));
-            account.getCollection().addCardToThisDeck();
+            if (account.getDaric() < card.getCost()) {
+                ErrorType error = ErrorType.NOT_ENOUGH_MONEY;
+                return;
+            }
+            account.changeValueOfDaric(card.getCost());
+            Collection collection = account.getCollection();
+            if (card instanceof Hero) {
+                collection.addToHeros((Hero) card);
+            } else if (card instanceof Spell) {
+                collection.addToSpells((Spell) card);
+            } else if (card instanceof Minion) {
+                collection.addToMinions((Minion) card);
+            }
+        }
+        if (itemExist(name)) {
+            Item item = getItem(name);
+            //itemID?
+            if(account.getDaric() < item.getCost()){
+                ErrorType error = ErrorType.NOT_ENOUGH_MONEY;
+                return;
+            }
+            account.changeValueOfDaric(item.getCost());
+            account.getCollection().addToItems(item);
         }
     }
 

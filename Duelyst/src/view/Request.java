@@ -44,7 +44,7 @@ public class Request {
         }
         else if (state.equals("collection")) {
             switch (command) {
-                case "exit \\d+":
+                case "exit":
                     return RequestType.COLLECTION_EXIT;
                 case "show":
                     return RequestType.COLLECTION_SHOW;
