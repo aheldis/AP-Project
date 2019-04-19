@@ -14,17 +14,20 @@ public class Request {
     private Scanner scanner = new Scanner(System.in);
     private String command;
     private String state = "mainMenu";//menu or collection or shop or battle
+    private RequestType type;
 
     public void getNewCommand() {
         this.command = scanner.nextLine().trim();
+        type = getType();
     }
 
     public String getCommand(){
         return command;
     }
     public boolean isValid() {
-        RequestType type = getType();
-
+        if(type==null)
+            return false;
+        return false;
     }
 
     public RequestType getType() {
@@ -43,8 +46,8 @@ public class Request {
             }
         }
         else if (state.equals("collection")) {
-            switch (command) {
-                case "exit \\d+":
+            switch (command.toLowerCase()) {
+                case "exit":
                     return RequestType.COLLECTION_EXIT;
                 case "show":
                     return RequestType.COLLECTION_SHOW;
@@ -52,9 +55,30 @@ public class Request {
                     return RequestType.COLLECTION_SAVE;
                 case "help:":
                     return RequestType.COLLECTION_HELP;
+                case "show all decks":
+                    return RequestType.COLLECTION_SHOW_ALL_DECKS;
             }
+            if(command.toLowerCase().matches("search \\w+"))
+                return RequestType.COLLECTION_SEARCH_CARD;
+            else if(command.toLowerCase().matches("create deck \\w+"))
+                return RequestType.COLLECTION_CREATE_DECK;
+            else if(command.toLowerCase().matches("delete deck \\w+") )
+                return RequestType.COLLECTION_DELETE_DECK;
+            else if(command.toLowerCase().matches("add \\w+ to deck \\w+"))
+                return RequestType.COLLECTION_ADD_CARD_TO_DECK;
+            else if(command.toLowerCase().matches("remove \\w+ from deck \\w+"))
+                return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
+            else if(command.toLowerCase().matches("validate deck \\w+"))
+                return RequestType.COLLECTION_VALIDATE_DECK;
+            else if(command.toLowerCase().matches("select deck \\w+"))
+                return RequestType.COLLECTION_SELECT_DECK;
+            else if(command.toLowerCase().matches("show deck \\w+"))
+                return RequestType.COLLECTION_SHOW_DECK;
+
+
         }
         else if (state.equals("shop")) {
+            //todo eXiT is also true, search khali ke cardID nadare qalate :)))
             if (command.equals("exit"))
                 return RequestType.SHOP_EXIT;
             else if (command.equals("show collection"))
