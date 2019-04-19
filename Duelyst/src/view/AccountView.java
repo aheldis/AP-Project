@@ -1,57 +1,70 @@
 package view;
 
 
-import card.Card;
-import card.Hero;
-
+import Item.Item;
+import account.Account;
+import account.Player;
+import battle.Deck;
+import battle.Match;
+import card.*;
 import java.util.ArrayList;
+import IDK.ErrorType;
 
 public class AccountView {
-    private Hero hero;
+
+    private static AccountView singleInstance = null;
+
+    public static AccountView getInstance() {
+        if (singleInstance == null) {
+            singleInstance = new AccountView();
+        }
+        return singleInstance;
+    }
 
 
-    public static void cardsAndItemsView(ArrayList<Spell> spells, ArrayList<Minion> minions, ArrayList<Hero> heroes, Item[] items) {
+    public void cardsAndItemsView(ArrayList<Spell> spells, ArrayList<Minion> minions, ArrayList<Hero> heroes, Item[] items) {
         int counter = 1;
         System.out.print("Heroes : ");
         for (Hero hero : heroes) {
-            System.out.print("          " );
-            showEachHero(hero,counter);
+            System.out.print("          ");
+            showEachHero(hero, counter);
             System.out.println(". - Sell Cost : " + hero.getSellCost());
             counter++;
         }
         counter = 1;
         for (Item item : items) {
             System.out.print("          ");
-            showEachItem(item,counter);
-            System.out.println(" – Sell Cost : "+item.getSellCost());
+            showEachItem(item, counter);
+            System.out.println(" – Sell Cost : " + item.getSellCost());
             counter++;
         }
         counter = 1;
         for (Spell spell : spells) {
             System.out.print("          ");
-            showEachSpell((Card)spell,counter);
+            showEachSpell((Card) spell, counter);
             System.out.println(" – Sell Cost : " + spell.getCost());
             counter++;
         }
-        counter=1;
+        counter = 1;
         for (Minion minion : minions) {
-            System.out.print("          " );
-            showEachMinion((Card)minion,counter);
+            System.out.print("          ");
+            showEachMinion((Card) minion, counter);
             System.out.println(" – Sell Cost : " + minion.getSellCost());
             counter++;
         }
     }
 
-    private static void showEachHero(Hero hero,int counterOfCard){
-        System.out.print(   counterOfCard+" : Name : " + hero.getName() +
+    private void showEachHero(Hero hero, int counterOfCard) {
+        System.out.print(counterOfCard + " : Name : " + hero.getName() +
                 " - AP : " + hero.getAp() +
                 " – HP : " + hero.getHp() +
                 " – Class : " + hero.getCounterAttackClassName() +
                 " – Special power: " + hero.getSpecialPowerInfo()
         );
     }
-    private static void showEachMinion(Card card,int counterOfCards){
-        System.out.print( counterOfCards + " : Type : Minion");
+
+    private void showEachMinion(Card card, int counterOfCards) {
+        System.out.print(counterOfCards + " : Type : Minion");
         System.out.print(" : Name : " + card.getName() +
                 " – Class: " + card.getCounterAttackClassName() +
                 " - AP : " + card.getAp() +
@@ -61,54 +74,56 @@ public class AccountView {
                 " – Special power: " + card.getSpecialPowerInfo()
         );
     }
-    private static void showEachItem(Item item,int counter){
-        System.out.print( counter+" : Name : " + item.getName() +
+
+    private void showEachItem(Item item, int counter) {
+        System.out.print(counter + " : Name : " + item.getName() +
                 " – Desc : " + item.getDescription()
         );
     }
-    private static void showEachSpell(Card card,int counterOfCards){
-        System.out.print( counterOfCards + " : Type : Spell");
+
+    private void showEachSpell(Card card, int counterOfCards) {
+        System.out.print(counterOfCards + " : Type : Spell");
         System.out.print(" - Name : " + card.getName() +
                 " - MP : " + card.getMp() +
                 " – Desc : " + card.getDescription()
         );
     }
 
-    public static void decksView(ArrayList<Deck> decks, int counterOfDeck) {
-        int counterOfCards = 1;
+    public void decksView(ArrayList<Deck> decks) {
+        int counterOfCards = 1, counterOfDeck = 1;
         Hero hero;
         Item item;
         ArrayList<Card> cards;
-        for (Deck deck : decks) {
-            System.out.println(counterOfDeck + " : " + deck.getName() + " :");
+        for (int i = decks.size(); i > 0; i++) {
+            System.out.println(counterOfDeck + " : " + decks.get(i).getName() + " :");
 
-            hero = deck.getHero();
+            hero = decks.get(i).getHero();
             System.out.println("     Heroes :");
             if (hero != null) {
                 System.out.print("          ");
-                showEachHero(hero,counterOfCards);
+                showEachHero(hero, counterOfCards);
                 System.out.println("\n");
             }
 
             System.out.println("     Items :");
-            item = deck.getItem();
+            item = decks.get(i).getItem();
             if (item != null) {
-                System.out.println("          " );
-                showEachItem(item,counterOfCards);
+                System.out.println("          ");
+                showEachItem(item, counterOfCards);
                 System.out.println("\n");
             }
 
-            cards = deck.getCardsOfdeck();
+            cards = decks.get(i).getCardsOfdeck();
             System.out.println("     Cards :");
             if (cards.size() != 0) {
                 for (Card card : cards) {
                     if (card instanceof Spell) {
                         System.out.print("          ");
-                        showEachSpell(card,counterOfCards);
+                        showEachSpell(card, counterOfCards);
                         System.out.println("\n");
                     } else if (card instanceof Minion) {
-                        System.out.print("          " );
-                        showEachMinion(card,counterOfCards);
+                        System.out.print("          ");
+                        showEachMinion(card, counterOfCards);
                         System.out.println("\n");
                     }
                     counterOfCards++;
@@ -119,21 +134,24 @@ public class AccountView {
 
         }
     }
-    public static void deckView(Deck deck) {
+
+    public void deckView(Deck deck) {
+        if (deck == null)
+            return;
         int counterOfCards = 1;
         Hero hero = deck.getHero();
         System.out.println("Heroes :");
         if (hero != null) {
             System.out.print("     ");
-            showEachHero(hero,counterOfCards);
+            showEachHero(hero, counterOfCards);
             System.out.println("\n");
         }
 
         System.out.println("Items :");
         Item item = deck.getItem();
         if (item != null) {
-            System.out.print("     " );
-            showEachItem(item,counterOfCards);
+            System.out.print("     ");
+            showEachItem(item, counterOfCards);
             System.out.println("\n");
 
         }
@@ -144,12 +162,12 @@ public class AccountView {
             for (Card card : cards) {
                 if (card instanceof Spell) {
                     System.out.print("     ");
-                    showEachSpell(card,counterOfCards);
+                    showEachSpell(card, counterOfCards);
                     System.out.println("\n");
 
                 } else if (card instanceof Minion) {
-                    System.out.print("     " );
-                    showEachMinion(card,counterOfCards);
+                    System.out.print("     ");
+                    showEachMinion(card, counterOfCards);
                     System.out.println("\n");
                 }
                 counterOfCards++;
@@ -157,7 +175,7 @@ public class AccountView {
         }
     }
 
-    public static void helpViewForCollection(){
+    public void helpViewForCollection() {
         System.out.println("exit - exit from collection");
         System.out.println("show - show all cards and items in collection");
         System.out.println("save - save the changes");
@@ -172,8 +190,40 @@ public class AccountView {
 
     }
 
-    public static void shopView() {
+    public void viewAMatch(Match match, Player opponent) {
+        System.out.print(opponent.getAccount.getUserName());
+        if (match.getWinner.equals(opponent)) {
+            System.out.println(" loss ");
+        } else {
+            System.out.println(" win ");
+        }
+        System.out.println(match.getTime()); //todo time-e java ???
+    }
 
+    public void printError(ErrorType error){
+        System.out.println(error.getMessage());
+    }
+
+    public void viewAccount(int rank, String userName, int wins){
+        System.out.println(rank + "- UserName: " + userName + " - Wins: " + wins);
+    }
+
+    public void viewHelpOfAccount(){
+        System.out.println("Create Account [user name]");
+        System.out.println("login [user name]");
+        System.out.println("show leaderboard");
+        System.out.println("save");
+        System.out.println("logout");
+    }
+
+    public void viewHelpOfShop(){
+        System.out.println("show collection");
+        System.out.println("search [item name| card name]");
+        System.out.println("search collection [item name| card name]");
+        System.out.println("buy [item name| card name]");
+        System.out.println("sell [card id]");
+        System.out.println("show");
+        System.out.println("exit");
     }
 
 }

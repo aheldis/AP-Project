@@ -7,6 +7,7 @@ public abstract class Card {
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
+    boolean canMove=true;//if it has stun buff it will be false
 
 
     public void setCardIdFromClassCardId() {
@@ -37,5 +38,18 @@ public abstract class Card {
 
     public void addToTurnsOfPickingUp(int turn) {
         turnsOfPickingUp.add(turn);
+    }
+
+    public void addToTurnOfpickingUp(int number) {
+        turnsOfPickingUp.add(number);
+    }
+
+    public boolean equals(String cardId) {
+        if(this.cardId.getCardIdAsString().equals(cardId))
+            return true;
+        return false;
+    }
+    public void removeCounterAttack(){//TODO
+
     }
 }

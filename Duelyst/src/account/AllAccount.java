@@ -1,10 +1,16 @@
 package account;
 
+import IDK.ErrorType;
+import view.AccountView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class AllAccount {
 
+    //inam singleton bashe? :-?
+
+    public static AccountView accountView = AccountView.getInstance();
     public static ArrayList<Account> accounts;
 
     public static void addToAccounts(Account account) {
@@ -32,34 +38,37 @@ public class AllAccount {
         return false;
     }
 
-    public static void login(String userName, String password) {
+    public static void login(String userName, String password) { //todo ina bayad bere to conroller o ina :-?
         Account account = getAccountByName(userName);
         if (account == null) {
-            System.out.println("Error: User name not found!"); //sout
-            //todo
+            ErrorType error = ErrorType.USER_NAME_NOT_FOUND;
+            accountView.printError(error);
             return;
         }
         if (account.matchPassword(password)) {
             //TODO login
         } else {
-            System.out.println("Error: Password doesn't match."); //sout
+            ErrorType error = ErrorType.PASSWORD_DOESNT_MATCH;
+            accountView.printError(error);
+            return;
         }
     }
 
     public static void showLeaderBoard() {
         Collections.sort(accounts);
         for (int i = 0; i < accounts.size(); i++) {
-            System.out.println(i + 1 + "- UserName: " + accounts.get(i).getUserName() + " - Wins: " + accounts.get(i).getWins()); //sout
+            accountView.viewAccount(i + 1, accounts.get(i).getUserName(), accounts.get(i).getWins());
         }
     }
 
     public static void helpOfAccount() {
-        //todo
+        accountView.viewHelpOfAccount();
     }
 
     public static void createAccount(String userName, String password) {
         if (userNameHaveBeenExist(userName)) {
-            System.out.println("Error: User name already exist."); //sout
+            ErrorType error = ErrorType.USER_NAME_ALREADY_EXIST;
+            accountView.printError(error);
             return;
         }
 

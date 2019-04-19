@@ -1,21 +1,30 @@
 package account;
 
+<<<<<<< HEAD
+=======
+import battle.Deck;
+import battle.Match;
+import battle.NormalDeck;
+import view.AccountView;
+
+import java.util.ArrayList;
+
+>>>>>>> ab2bd4fa7ccbd175edd374239e6971b5dac22cdf
 public class Account implements Comparable<Account> {
     private String userName;
     private String password;
     private int daric;
     private int wins;
-    private Arraylist<Match> matchHistory;
+    private ArrayList<Match> matchHistory;
     private Collection collection;
     private Player player;
-    private Deck mainDeck;
+    private NormalDeck mainDeck;
     private ArrayList<Deck> decks;
 
     public Account(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
-
 
     public int getWins() {
         return wins;
@@ -29,7 +38,7 @@ public class Account implements Comparable<Account> {
         return daric;
     }
 
-    public Arraylist<Match> getMatchHistory() {
+    public ArrayList<Match> getMatchHistory() {
         return matchHistory;
     }
 
@@ -45,7 +54,7 @@ public class Account implements Comparable<Account> {
         return decks;
     }
 
-    public Deck getMainDeck() {
+    public NormalDeck getMainDeck() {
         return mainDeck;
     }
 
@@ -73,9 +82,19 @@ public class Account implements Comparable<Account> {
         matchHistory.add(match);
     }
 
-    public void showMatchHistory(){
-        //todo
-    }
+    public void showMatchHistory() {
+        AccountView accountView = AccountView.getInstance();
+        for (Match match : matchHistory) {
+            ArrayList<Player> players = match.getPlayers();
+            Player opponent;
+            if (players.get(0).getAccount().getUserName().equals(this.getUserName())) {
+                opponent = players.get(1);
+            } else {
+                opponent = players.get(0);
+            }
 
+            accountView.viewAMatch(match, opponent);
+        }
+    }
 
 }

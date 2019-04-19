@@ -1,11 +1,14 @@
 package counterAttack;
 
+import card.Card;
 import requirment.Coordinate;
 
 public abstract class CounterAttack {
+    protected String className;
     private Coordinate coordinate;
     private Card card;
-    private String name;
+    boolean canCounterAttack=true;//if it has disarm buff it is false
+
 
     public Coordinate getCoordinate() {
         return coordinate;
@@ -15,8 +18,8 @@ public abstract class CounterAttack {
         return card;
     }
 
-    public String getName() {
-        return name;
+    public String getClassName(){
+        return className;
     }
 
     public void setCoordinate(Coordinate coordinate) {
@@ -25,10 +28,6 @@ public abstract class CounterAttack {
 
     public void setCard(Card card) {
         this.card = card;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void deleteCard(){
