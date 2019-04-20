@@ -62,7 +62,7 @@ public class Request {
                     return RequestType.COLLECTION_SHOW_ALL_DECKS;
             }
             if(command.toLowerCase().matches("search \\w+")) {
-                product.setCardId(command.substring(6));
+                product.setId(command.substring(6));
                 return RequestType.COLLECTION_SEARCH_CARD;
             }
             else if(command.toLowerCase().matches("create deck \\w+")) {
@@ -75,12 +75,12 @@ public class Request {
             }
             else if(command.toLowerCase().matches("add \\w+ to deck \\w+")) {
                 product.setDeckName(command.split(" ")[4]);
-                product.setCardId(command.substring(4));
+                product.setId(command.substring(4));
                 return RequestType.COLLECTION_ADD_CARD_TO_DECK;
             }
             else if(command.toLowerCase().matches("remove \\w+ from deck \\w+")){
                 product.setDeckName(command.split(" ")[4]);
-                product.setCardId(command.substring(4));
+                product.setId(command.substring(4));
                 return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
             }
 
