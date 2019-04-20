@@ -1,0 +1,9 @@
+MpChanges: 1
+ApChanges: 0
+HpChanges: 0
+Buffs_TurnOfEffect_numberOfBuffs: 
+target_numberOfTargets_numberOfAttacks: 
+numberOfAttacksHit_numberOfAddedAttacks: 
+TypeOfCounterAttack: 
+forWhom: self
+desc: increase mp in first three turn by 1
