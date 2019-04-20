@@ -3,7 +3,9 @@ package card;
 import counterAttack.CounterAttack;
 import requirment.Coordinate;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Hero extends Card {
     private String counterAttackclassName;
@@ -25,7 +27,8 @@ public class Hero extends Card {
         this.counterAttack = counterAttack;
         this.counterAttackclassName = counterAttack.getClassName();
     }
-    public String getCounterAttackclassName(){
+
+    public String getCounterAttackclassName() {
         return counterAttackclassName;
     }
 
@@ -120,4 +123,6 @@ public class Hero extends Card {
     public void addNewHeroCard() {
         //TODO
     }
+
+
 }

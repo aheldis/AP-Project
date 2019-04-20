@@ -9,7 +9,7 @@ public class Ranged extends CounterAttack{
 
     public Boolean checkIfSquareIsWithinRange(Coordinate coordinate){
         return !(Math.abs(this.getCoordinate().getX() - coordinate.getX()) <= 1 &&
-                Math.abs(this.getCoordinate().getY() - coordinate.getY()) <= 1)
+                Math.abs(this.getCoordinate().getY() - coordinate.getY()) <= 1);
     }
 
     public void callFunctionForDefend(Coordinate coordinate){
@@ -25,7 +25,7 @@ public class Ranged extends CounterAttack{
 
     private boolean checkIfSquereIsWithinRangeOfCard(int range, Coordinate coordinate){
         return (Math.abs(this.getCoordinate().getX() - coordinate.getX()) +
-                Math.abs(this.getCoordinate().getY() - coordinate.getY()) <= range)
+                Math.abs(this.getCoordinate().getY() - coordinate.getY()) <= range);
     }
 
 }

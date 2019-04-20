@@ -1,0 +1,9 @@
+cost: 8000
+Mp: 1
+Hp: 50
+Ap: 4
+CoolDown: 2
+counterAttack: melee
+attackRange: -
+specialPower: PowerBuff
+activationTimeOfSpecialPower: -
