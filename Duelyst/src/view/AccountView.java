@@ -1,14 +1,13 @@
 package view;
 
 
-import Item.Item;
-import account.Account;
-import account.Player;
-import battle.Deck;
-import battle.Match;
-import card.*;
+import model.Item.Item;
+import model.account.Player;
+import model.battle.Deck;
+import model.battle.Match;
+import model.card.*;
 import java.util.ArrayList;
-import IDK.ErrorType;
+import view.enums.ErrorType;
 
 public class AccountView {
 
@@ -181,8 +180,8 @@ public class AccountView {
         System.out.println("save - save the changes");
         System.out.println("create deck [deckName] - create a deck");
         System.out.println("delete deck [deckName] - delete a deck");
-        System.out.println("add [cardId|HeroId|ItemId} to deck [deckName] - add card or item to deck");
-        System.out.println("remove [card id|heroId|ItemId] from deck [deckName] - delete a card or item from deck");
+        System.out.println("add [cardId|HeroId|ItemId} to deck [deckName] - add model.card or item to deck");
+        System.out.println("remove [model.card id|heroId|ItemId] from deck [deckName] - delete a model.card or item from deck");
         System.out.println("validate deck [deckName] - have 20 cards and a hero");
         System.out.println("show all decks - show all cards,hero and items of decks in the collection");
         System.out.println("show deck [deckName] - show all cards,hero and items of deck");
@@ -218,16 +217,16 @@ public class AccountView {
 
     public void viewHelpOfShop(){
         System.out.println("show collection");
-        System.out.println("search [item name| card name]");
-        System.out.println("search collection [item name| card name]");
-        System.out.println("buy [item name| card name]");
-        System.out.println("sell [card id]");
+        System.out.println("search [item name| model.card name]");
+        System.out.println("search collection [item name| model.card name]");
+        System.out.println("buy [item name| model.card name]");
+        System.out.println("sell [model.card id]");
         System.out.println("show");
         System.out.println("exit");
     }
 
     public void printNoSuchItemOrCardInShop(){
-        System.out.println("No such item or card in shop");
+        System.out.println("No such item or model.card in shop");
     }
 
 }

@@ -2,7 +2,7 @@ name: Arash
 cost: 10000
 Hp: 30
 Mp: 2
-counterAttack: ranged
+model.counterAttack: ranged
 attackRange: 6
 specialPower: HP
 target: all-in-the-same-row

@@ -4,4 +4,4 @@ ApChanges-TurnOfEffect:0-1
 HpChanges-TurnOfEffect:-6-1
 Buffs-TurnOfEffect:null-1
 target:Enemy-Range(m-m,0-9)-Card
-desc:attack to all enemy's card in one column (ap-6)
+desc:attack to all enemy's model.card in one column (ap-6)

@@ -3,7 +3,7 @@ MP: 7
 HP: 14
 Ap: 8
 nationality: Ashkboos
-counterAttack: melee
+model.counterAttack: melee
 attackRange: 0
 specialPower: Attack(not) _ lessAttackPower
 activationTimeOfSpecialPower: defend

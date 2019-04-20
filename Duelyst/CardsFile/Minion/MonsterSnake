@@ -3,7 +3,7 @@ MP: 8
 HP: 14
 Ap: 7
 nationality: Snake
-counterAttack: ranged
+model.counterAttack: ranged
 attackRange: 5
 specialPower: Minion(1) _ distance(2) _ turnOfEffect(always)
 activationTimeOfSpecialPower: respawn

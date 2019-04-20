@@ -3,7 +3,7 @@ MP: 2
 HP: 6
 Ap: 4
 nationality: Fars
-counterAttack: ranged
+model.counterAttack: ranged
 attackRange: 7
 specialPower: -
 activationTimeOfSpecialPower: -

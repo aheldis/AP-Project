@@ -2,7 +2,7 @@ name: Afsaneh
 cost: 11000
 Hp: 40
 Mp: 3
-counterAttack: ranged
+model.counterAttack: ranged
 attackRange: 3
 specialPower: dispel
 target: enemy - 1

@@ -4,4 +4,4 @@ ApChanges-TurnOfEffect:0-1
 HpChanges-TurnOfEffect:0-1
 Buffs-TurnOfEffect:DisArm-1
 target:Enemy-All-Card
-desc:dis arm an enemy card for one turn
+desc:dis arm an enemy model.card for one turn

@@ -2,7 +2,7 @@ name: Rostam
 cost: 8000
 Hp: 55
 Mp: 7
-counterAttack: hybrid
+model.counterAttack: hybrid
 attackRange: 4
 specialPower: -
 target: -

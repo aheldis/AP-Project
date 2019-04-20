@@ -2,7 +2,7 @@ name: WhiteBeast
 cost: 8000
 Hp: 50
 Mp: 4
-counterAttack: melee
+model.counterAttack: melee
 attackRange: -
 specialPower: power(+4)
 target: self

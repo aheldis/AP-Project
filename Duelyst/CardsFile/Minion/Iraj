@@ -3,7 +3,7 @@ MP: 4
 HP: 6
 Ap: 20
 nationality: Iraj
-counterAttack: ranged
+model.counterAttack: ranged
 attackRange: 3
 specialPower: -
 activationTimeOfSpecialPower: -

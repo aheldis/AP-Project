@@ -1,6 +1,6 @@
 package view;
 
-import IDK.RequestType;
+import view.enums.RequestType;
 import model.Product;
 
 import java.util.Scanner;
@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Request {
     private Scanner scanner = new Scanner(System.in);
     private String command;
-    private String state = "mainMenu";//menu or collection or shop or battle
+    private String state = "mainMenu";//menu or collection or shop or model.battle
     private RequestType type;
 
     public void getNewCommand() {
@@ -39,7 +39,7 @@ public class Request {
                     return RequestType.MENU_ENTER_COLLECTION;
                 case "enter shop":
                     return RequestType.MENU_ENTER_SHOP;
-                case "enter battle":
+                case "enter model.battle":
                     return RequestType.MENU_ENTER_BATTLE;
                 case "enter help":
                     return RequestType.MENU_ENTER_HELP;
@@ -117,7 +117,7 @@ public class Request {
             else if(command.toLowerCase().matches("help"))
                 return  RequestType.SHOP_HELP;
         }
-        else if (state.equals("battle")) {
+        else if (state.equals("model/battle")) {
             switch (command) {
 
             }

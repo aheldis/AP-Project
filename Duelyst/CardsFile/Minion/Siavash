@@ -3,7 +3,7 @@ MP: 4
 HP: 8
 Ap: 5
 nationality: Siavash
-counterAttack: melee
+model.counterAttack: melee
 attackRange: 0
 specialPower: Hero(6) _ turnOfEffect(0)
 activationTimeOfSpecialPower: death

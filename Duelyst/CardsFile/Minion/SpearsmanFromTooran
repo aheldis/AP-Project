@@ -3,7 +3,7 @@ MP: 1
 HP: 4
 Ap: 4
 nationality: Tooran
-counterAttack: hybrid
+model.counterAttack: hybrid
 attackRange: 3
 specialPower: -
 activationTimeOfSpecialPower: -

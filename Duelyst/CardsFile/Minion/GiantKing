@@ -3,7 +3,7 @@ MP: 5
 HP: 10
 Ap: 4
 nationality: Giant
-counterAttack: melee
+model.counterAttack: melee
 attackRange: 0
 specialPower: Disarm(allCombo - 1)
 activationTimeOfSpecialPower: combo

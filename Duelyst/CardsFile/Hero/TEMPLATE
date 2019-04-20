@@ -2,7 +2,7 @@ name:
 cost:
 Hp:
 Mp:
-counterAttack:
+model.counterAttack:
 attackRange:
 specialPower:
 target:

@@ -3,7 +3,7 @@ MP: 9
 HP: 12
 Ap: 12
 nationality: Giant
-counterAttack: ranged
+model.counterAttack: ranged
 attackRange: 7
 specialPower: -
 activationTimeOfSpecialPower: -

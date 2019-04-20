@@ -3,7 +3,7 @@ MP: 2
 HP: 3
 Ap: 10
 nationality: Tooran
-counterAttack: melee
+model.counterAttack: melee
 attackRange: 0
 specialPower: -
 activationTimeOfSpecialPower: -

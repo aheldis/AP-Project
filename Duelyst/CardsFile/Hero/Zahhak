@@ -2,7 +2,7 @@ name: Zahhak
 cost: 10000
 Hp: 50
 Mp: 2
-counterAttack: melee
+model.counterAttack: melee
 attackRange: -
 specialPower: poisen
 target: 1

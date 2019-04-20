@@ -3,7 +3,7 @@ MP: 3
 HP: 1
 Ap: 1
 nationality: SteelChainMail
-counterAttack: melee
+model.counterAttack: melee
 attackRange: 0
 specialPower: Minion(random)
 activationTimeOfSpecialPower: respawn

@@ -3,7 +3,7 @@ MP: 8
 HP: 20
 Ap: 12
 nationality: Piran
-counterAttack: ranged
+model.counterAttack: ranged
 attackRange: 5
 specialPower: Poison(not)
 activationTimeOfSpecialPower: defend

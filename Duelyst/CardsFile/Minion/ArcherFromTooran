@@ -3,7 +3,7 @@ MP: 1
 HP: 3
 Ap: 4
 nationality: Tooran
-counterAttack: ranged
+model.counterAttack: ranged
 attackRange: 5
 specialPower: -
 activationTimeOfSpecialPower: -

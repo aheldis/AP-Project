@@ -3,7 +3,7 @@ MP: 3
 HP: 3
 Ap: 4
 nationality: NaneSarma
-counterAttack: ranged
+model.counterAttack: ranged
 attackRange: 5
 specialPower: Minion _ distance(1) _ Stun(1)
 activationTimeOfSpecialPower: respawn

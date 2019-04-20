@@ -3,7 +3,7 @@ MP: 4
 HP: 6
 Ap: 2
 nationality: Leopard
-counterAttack: melee
+model.counterAttack: melee
 attackRange: 0
 specialPower: Minion _ decreaseHP(8) _ turnOfEffect(1)
 activationTimeOfSpecialPower: attack

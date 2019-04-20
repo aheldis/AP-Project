@@ -3,7 +3,7 @@ MP: 9
 HP: 30
 Ap: 8
 nationality: Giant
-counterAttack: hybrid
+model.counterAttack: hybrid
 attackRange: 2
 specialPower: -
 activationTimeOfSpecialPower: -

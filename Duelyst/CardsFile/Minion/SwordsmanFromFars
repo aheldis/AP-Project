@@ -3,7 +3,7 @@ MP: 2
 HP: 6
 Ap: 4
 nationality: Fars
-counterAttack: melee
+model.counterAttack: melee
 attackRange: 0
 specialPower: stun(1)
 activationTimeOfSpecialPower: passive
