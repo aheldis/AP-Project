@@ -5,7 +5,7 @@ package model;
  * check mikonim k card boode item
  */
 
-public class Product {
+public class ScannerCommand {
     private String cardId = "";
     private String usableItemId = "";
     private String deckName = "";
