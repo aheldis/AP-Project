@@ -9,6 +9,8 @@ import view.*;
 import java.util.ArrayList;
 
 
+//todo name begire cardid bede
+
 public class Collection {
 
     private ArrayList<Spell> spells;
