@@ -1,0 +1,9 @@
+cost: 9000
+Mp: 5
+Hp: 50
+Ap: 4
+CoolDown: 8
+counterAttack: melee
+attackRange: -
+specialPower: stun
+activationTimeOfSpecialPower: 1
