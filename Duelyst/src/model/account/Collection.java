@@ -9,7 +9,6 @@ import view.*;
 import java.util.ArrayList;
 
 
-//todo name begire cardid bede
 
 public class Collection {
 
@@ -22,6 +21,22 @@ public class Collection {
 
     public Collection(Account account) {
         this.account = account;
+    }
+
+    public String passCardIdByName(String name){
+        for(Hero hero : heroes){
+            if(name.equals(hero.getName()))
+                return hero.getCardId().getCardIdAsString();
+        }
+        for(Spell spell : spells){
+            if(name.equals(spell.getName()))
+                return spell.getCardId().getCardIdAsString();
+        }
+        for(Minion minion : minions){
+            if(name.equals(minion.getName()))
+                return minion.getCardId().getCardIdAsString();
+        }
+        return "";
     }
 
     public ArrayList getDecks() {
@@ -208,18 +223,7 @@ public class Collection {
         return null;
     }
 
-    public Item passItemByItemId(String itemId) {
-        for (Item item : items) {
-            if (item instanceof Usable) {
-                Usable usable = (Usable) item;
-                if (usable.getUsableId().getUsableIdAsString().equals(itemId))
-                    return item;
-            }
-        }
-        return null;
-    }
-
-    private Item passUsableItemByUsableItemId(String usableItemId) {
+    public Item passUsableItemByUsableItemId(String usableItemId) {
         for (Item item : items) {
             if (item.getUsableId().getUsableIdAsString().equals(usableItemId)) {
                 return item;
