@@ -1,0 +1,11 @@
+name: Esfandiar
+cost: 12000
+Hp: 35
+Mp: 3
+counterAttack: hybrid
+attackRange: 3
+specialPower: holy
+target: -
+activationTimeOfSpecialPower: 3 continuous
+MpForSpecialPower: -
+coolDown: -

@@ -1,11 +1,11 @@
-name: WhiteBeast
+name: SevenHeadsDragon
 cost: 8000
 Hp: 50
 Mp: 4
 counterAttack: melee
 attackRange: -
-specialPower: power(+4)
-target: self
+specialPower: disarm
+target: 1
 activationTimeOfSpecialPower: -
-MpForSpecialPower: 1
-coolDown: 2
+MpForSpecialPower: 0
+coolDown: 1

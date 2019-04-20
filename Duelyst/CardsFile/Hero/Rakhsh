@@ -1,11 +1,11 @@
-name: WhiteBeast
+name: Rakhsh
 cost: 8000
 Hp: 50
 Mp: 4
 counterAttack: melee
 attackRange: -
-specialPower: power(+4)
-target: self
-activationTimeOfSpecialPower: -
+specialPower: stun
+target: enemy - 1
+activationTimeOfSpecialPower: 1
 MpForSpecialPower: 1
 coolDown: 2

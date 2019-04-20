@@ -1,0 +1,11 @@
+name: Kaveh
+cost: 8000
+Hp: 50
+Mp: 4
+counterAttack: melee
+attackRange: -
+specialPower: holy 
+target: 1
+activationTimeOfSpecialPower: 3
+MpForSpecialPower: 1
+coolDown: 3

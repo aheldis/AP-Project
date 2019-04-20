@@ -1,9 +1,11 @@
+name: Simurgh
 cost: 9000
-Mp: 5
 Hp: 50
-Ap: 4
-CoolDown: 8
+Mp: 4
 counterAttack: melee
 attackRange: -
 specialPower: stun
+target: enemy - all
 activationTimeOfSpecialPower: 1
+MpForSpecialPower: 5
+coolDown: 8

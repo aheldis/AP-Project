@@ -1,0 +1,11 @@
+name: Zahhak
+cost: 10000
+Hp: 50
+Mp: 2
+counterAttack: melee
+attackRange: -
+specialPower: poisen
+target: 1
+activationTimeOfSpecialPower: 3
+MpForSpecialPower: -
+coolDown: -

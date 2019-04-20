@@ -1,0 +1,11 @@
+name: Arash
+cost: 10000
+Hp: 30
+Mp: 2
+counterAttack: ranged
+attackRange: 6
+specialPower: HP
+target: all-in-the-same-row
+activationTimeOfSpecialPower: -
+MpForSpecialPower: 2
+coolDown: 2
