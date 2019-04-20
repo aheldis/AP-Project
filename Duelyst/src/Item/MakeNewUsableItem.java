@@ -1,22 +1,23 @@
-package card;
+package Item;
 
 import java.io.*;
 import java.util.Scanner;
 
-public class MakeNewHero {
-    public static void mainn(String[] args) {
+public class MakeNewUsableItem {
+
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
 
-                FileReader fileReader = new FileReader("../CardsFile/Hero/TEMPLATE");
+                FileReader fileReader = new FileReader("../ItemsFile/Usable/TEMPLATE");
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line = null;
                 System.out.println("name: ");
                 String input = scanner.nextLine();
                 if (input.equals("EXIT"))
                     break;
-                File file = new File("../CardsFile/Hero/" + input);
+                File file = new File("../ItemsFile/Usable/" + input);
                 FileWriter fileWriter = new FileWriter(file);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 while ((line = bufferedReader.readLine()) != null) {
