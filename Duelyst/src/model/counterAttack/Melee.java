@@ -14,13 +14,13 @@ public class Melee extends CounterAttack{
 
     public void callFunctionForDefend(Coordinate coordinate){
         if(checkIfSquareIsWithinRange(coordinate)) {
-
+            //todo
         }
     }
 
     public void callFunctionForAttack(Coordinate coordinate){
         if(checkIfSquareIsWithinRange(coordinate)) {
-
+            //todo
         }
     }
 }

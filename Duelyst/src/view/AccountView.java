@@ -3,7 +3,7 @@ package view;
 
 import model.Item.Item;
 import model.Item.Usable;
-import model.account.Player;
+import model.battle.Player;
 import model.battle.Deck;
 import model.battle.Match;
 import model.card.*;

@@ -1,6 +1,6 @@
 package model.mode;
 
-import model.account.Player;
+import model.battle.Player;
 import model.land.Square;
 
 abstract class Mode {
