@@ -3,20 +3,22 @@ package view;
 import view.enums.RequestType;
 import model.ScannerCommand;
 
+import javax.print.DocFlavor;
 import java.util.Scanner;
-
-
-/**
- * mikhay esmesho bezarim Scanner (to javaDoc neveshtam ke
- * sabz she :o )
- */
 
 public class Request {
     private Scanner scanner = new Scanner(System.in);
     private String command;
-    private String state = "mainMenu";//menu or collection or shop or model.battle
+    private String state ;//menu or collection or shop or model.battle
     private RequestType type;
 
+    public Request(String state){
+        this.state=state;
+    }
+
+    public void getNewLine(){
+       this.command=scanner.nextLine().trim();
+    }
     public void getNewCommand() {
         this.command = scanner.nextLine().trim();
         type = getType();
@@ -31,7 +33,11 @@ public class Request {
         return false;
     }
 
-    public RequestType getType() {
+    public RequestType getRequestType(){
+        return type;
+    }
+
+    private RequestType getType() {
         ScannerCommand scannerCommand =new ScannerCommand();
         if (state.equals("mainMenu")) {
             switch (command.toLowerCase()) {
@@ -116,6 +122,15 @@ public class Request {
                 return RequestType.SHOP_SHOW;
             else if(command.toLowerCase().matches("help"))
                 return  RequestType.SHOP_HELP;
+        }
+        else if(state.equals("login")){
+            switch (command) {
+                case "Login":
+                    return RequestType.LOGIN;
+                case "SignUp":
+                    return RequestType.SIGN_UP;
+            }
+
         }
         else if (state.equals("model/battle")) {
             switch (command) {

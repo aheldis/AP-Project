@@ -10,6 +10,22 @@ public class ScannerCommand {
     private String usableItemId = "";
     private String deckName = "";
     private String id="";
+    String userName="";
+    String password="";
+
+
+    public void setUserName(String userName){
+        this.userName=userName;
+    }
+    public String getPassword(){
+        return password;
+    }
+    public String getUserName(){
+        return userName;
+    }
+    public void setPassword(String password){
+        this.password=password;
+    }
 
 
     public void setId(String id) {

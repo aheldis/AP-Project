@@ -1,12 +1,12 @@
 package view;
 
 public class MenuView {
-    private MenuView singleInstacne = null;
+    private static MenuView singleInstance = null;
 
-    public MenuView getInstance() {
-        if (singleInstacne == null)
-            singleInstacne = new MenuView();
-        return singleInstacne;
+    public static MenuView getInstance() {
+        if (singleInstance == null)
+            singleInstance = new MenuView();
+        return singleInstance;
     }
 
     public void helpForMainMenu(){
