@@ -3,7 +3,7 @@ package model.Item;
 import model.account.Account;
 
 public class CollectableId {
-    private String usableId;
+    private String collectableId;
 
     private Collectable collectable;
     private Account account;
@@ -14,12 +14,12 @@ public class CollectableId {
         collectable.setCollectableId(this);
     }
 
-    public void setUsableId(int number) {//{number of that model.card will add to cardId}
-        usableId = account.getUserName() + "_" + collectable.getName() + " " + number;
+    public void setCollectableId(int number) {//{number of that model.card will add to cardId}
+        collectableId = account.getUserName() + "_" + collectable.getName() + " " + number;
     }
 
-    public String getUsableIdAsString() {
-        return usableId;
+    public String getCollectableIdAsString() {
+        return collectableId;
 
     }
 
