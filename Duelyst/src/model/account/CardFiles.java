@@ -1,6 +1,7 @@
 package model.account;
 
 
+import model.card.Spell;
 import view.NewCardMessages;
 import view.Request;
 
@@ -19,7 +20,7 @@ public class CardFiles {
             NewCardMessages message = NewCardMessages.getInstance();
             request.getNewLine();
             command = request.getCommand();
-            command = command.concat(path);
+            command = path + "\\Spell\\" + command + ".txt";
 
             File file = new File(command);
             if (!file.createNewFile()) {
@@ -27,6 +28,7 @@ public class CardFiles {
                 return;
             }
             FileWriter writer = new FileWriter(file);
+            writer.write("Spell\n");
             do {
                 message.showFormatForSpells("cost");
                 request.getNewLine();
@@ -74,7 +76,7 @@ public class CardFiles {
                 request.getNewLine();
                 command = request.getCommand();
             } while (!command.matches("desc: (\\w+)+"));
-            writer.write(request.getCommand() + "\n");
+            writer.write(request.getCommand());
 
 
             writer.close();
@@ -90,25 +92,49 @@ public class CardFiles {
     }
 
     public void makeCardFromFile(String fileName) {
-        fileName = fileName.concat(path);
+        fileName += ".txt";
         String line = null;
+        String answer;
 
         try {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-            while ((line = bufferedReader.readLine()) != null) {
+            if ((line = bufferedReader.readLine()) != null) {
+                if (line.equals("Spell")) {
+                    Spell spell = new Spell();
+                    answer=line.split(" ")[1];
+                    spell.setCost(Integer.parseInt(answer));
+                    line=bufferedReader.readLine();
+                    answer=line.split(" ")[1];
+                    spell.setMp(Integer.parseInt(answer));
+                    line=bufferedReader.readLine();
+                    answer=line.split(" ")[1];
+                    spell.setApChanges(Integer.parseInt(answer.split(" - ")[0]));
+                    spell.setTurnForApChanges(Integer.parseInt(answer.split(" - ")[1]));
+                    line=bufferedReader.readLine();
+                    answer=line.split(" ")[1];
+                    spell.setHpChanges(Integer.parseInt(answer.split(" - ")[0]));
+                    spell.setTurnForHpChanges(Integer.parseInt(answer.split(" - ")[1]));
+                    //TODO buff
+                    //TODO target
+                    line=bufferedReader.readLine();
+                    answer=line.substring(6);
+                    spell.setDescription(answer);
 
+
+                } else if (line.equals("Minion")) {
+
+                } else if (line.equals("Hero")) {
+
+                }
             }
 
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            System.out.println(
-                    "Unable to open file '" +
-                            fileName + "'");
+            System.out.println("Unable to open file '" + fileName + "'");
+
         } catch (IOException ex) {
-            System.out.println(
-                    "Error reading file '"
-                            + fileName + "'");
+            System.out.println("Error reading file '" + fileName + "'");
             // Or we could just do this:
             // ex.printStackTrace();
         }
