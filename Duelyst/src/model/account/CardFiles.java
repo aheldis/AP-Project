@@ -6,13 +6,15 @@ import view.Request;
 
 import java.io.*;
 
-public class CreateNew {
-    private String path = "D:\\project-Duelyst\\Duelyst";
+public class CardFiles {
+    private String path = "D:\\project-Duelyst\\Duelyst\\CardsFile";
 
     public void makeNewCardByPlayer() throws IOException {
         Request request = new Request("menu");
         request.getNewLine();
         String command = request.getCommand();
+
+
         if (command.equals("Spell")) {
             NewCardMessages message = NewCardMessages.getInstance();
             request.getNewLine();
@@ -86,4 +88,33 @@ public class CreateNew {
 
         }
     }
+
+    public void makeCardFromFile(String fileName) {
+        fileName = fileName.concat(path);
+        String line = null;
+
+        try {
+            FileReader fileReader = new FileReader(fileName);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while ((line = bufferedReader.readLine()) != null) {
+
+            }
+
+            bufferedReader.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println(
+                    "Unable to open file '" +
+                            fileName + "'");
+        } catch (IOException ex) {
+            System.out.println(
+                    "Error reading file '"
+                            + fileName + "'");
+            // Or we could just do this:
+            // ex.printStackTrace();
+        }
+    }
+
 }
+
+
+
