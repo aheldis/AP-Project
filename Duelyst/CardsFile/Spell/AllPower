@@ -1,7 +1,7 @@
-cost:2000
-Mp:4
-ApChanges-TurnOfEffect:2-Totally
-HpChanges-TurnOfEffect:0-1
-Buffs-TurnOfEffect:null-1
-target:Friend-All-Card
-desc:add 2 to attack power and give them power buff(all friend cards)
+cost: 2000
+Mp: 4
+ApChanges-TurnOfEffect: 2 - Totally
+HpChanges-TurnOfEffect: 0 - 1
+Buffs-TurnOfEffect: null - 1
+target: Friend - All - Card
+desc: add 2 to attack power and give them power buff(all friend cards)

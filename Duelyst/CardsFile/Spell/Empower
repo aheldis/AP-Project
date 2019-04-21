@@ -1,7 +1,7 @@
-cost:250
-Mp:1
-ApChanges-TurnOfEffect:2-1
-HpChanges-TurnOfEffect:0-1
-Buffs-TurnOfEffect:null-1
-target:Friend-One-Card
-desc:add 2 to attack power of a friend model.card
+cost: 250
+Mp: 1
+ApChanges-TurnOfEffect: 2 - 1
+HpChanges-TurnOfEffect: 0 - 1
+Buffs-TurnOfEffect: null - 1
+target: Friend - One - Card
+desc: add 2 to attack power of a friend model.card

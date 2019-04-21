@@ -1,7 +1,7 @@
-cost:1200
-Mp:1
-ApChanges-TurnOfEffect:0-1
-HpChanges-TurnOfEffect:0-1
-Buffs-TurnOfEffect:Stun-2
-target:Enemy-One-Card
-desc:stun for 2
+cost: 1200
+Mp: 1
+ApChanges-TurnOfEffect: 0 - 1
+HpChanges-TurnOfEffect: 0 - 1
+Buffs-TurnOfEffect: Stun - 2
+target: Enemy - One - Card
+desc: stun for 2

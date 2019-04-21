@@ -1,7 +1,7 @@
-cost:400
-Mp:1
-ApChanges-TurnOfEffect:0-1
-HpChanges-TurnOfEffect:-4-1
-Buffs-TurnOfEffect:null-1
-target:Enemy-One-Card
-desc:decrease 4 from health of an enemy card
+cost: 400
+Mp: 1
+ApChanges-TurnOfEffect: 0 - 1
+HpChanges-TurnOfEffect: -4 - 1
+Buffs-TurnOfEffect: null - 1
+target: Enemy - One - Card
+desc: decrease 4 from health of an enemy card

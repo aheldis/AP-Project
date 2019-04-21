@@ -1,7 +1,7 @@
-cost:2500
-Mp:2
-ApChanges-TurnOfEffect:6-1
-HpChanges-TurnOfEffect:0-1
-Buffs-TurnOfEffect:null-1
-target:Friend-One-Card
-desc:add 6 to attack power and affect a power buff
+cost: 2500
+Mp: 2
+ApChanges-TurnOfEffect: 6 - 1
+HpChanges-TurnOfEffect: 0 - 1
+Buffs-TurnOfEffect: null - 1
+target: Friend - One - Card
+desc: add 6 to attack power and affect a power buff

@@ -99,18 +99,18 @@ public class Collection {
     public boolean searchItemName(String itemName) {
         boolean have = false;
         for (Usable item : items) {
-            if (item instanceof Usable) {
+            //if (item instanceof Usable) {
                 if (item.getUsableId().getItemName().equals(itemName)) {
                     System.out.println(item.getUsableId().getUsableId());
                     have = true;
                 }
-            }
-            if (item instanceof Collectable) {
-                if (item.getCollectableId().getItemName().equals(itemName)) {
-                    System.out.println(item.getCollectableId().getCollectableId());
-                    have = true;
-                }
-            }
+            //}
+//            if (item instanceof Collectable) {
+//                if (item.getCollectableId().getItemName().equals(itemName)) {
+//                    System.out.println(item.getCollectableId().getCollectableId());
+//                    have = true;
+//                }
+//            }
             if (!have) {
 //                ErrorType error = ErrorType.HAVE_NOT_ITEM_IN_COLLECTION;
 //                error.printMessage();

@@ -81,6 +81,9 @@ public class MenuController {
                         case MENU_ENTER_SHOP:
                             state = "shop";
                             break;
+                        case MENU_ENTER_EXIT:
+                            endProgram=true;
+                            break;
                     }
                     request = new Request(state);
                     request.getNewCommand();
@@ -181,6 +184,14 @@ public class MenuController {
                     request.getNewCommand();
 
                 }
+            }
+
+            if(state.equals("shop")){
+
+            }
+
+            if(state.equals("battle")){
+
             }
 
 
