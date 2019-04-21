@@ -12,6 +12,9 @@ public class Request {
     private String state ;//menu or collection or shop or model.battle
     private RequestType type;
 
+    private String deckName;
+    private String Id;
+
     public Request(String state){
         this.state=state;
     }
@@ -35,6 +38,19 @@ public class Request {
 
     public RequestType getRequestType(){
         return type;
+    }
+
+    public void setId (String Id){
+        this.Id=Id;
+    }
+    public void setDeckName(String deckName){
+        this.deckName=deckName;
+    }
+    public String getId(){
+        return Id;
+    }
+    public String getDeckName(){
+        return deckName;
     }
 
     private RequestType getType() {
@@ -68,39 +84,39 @@ public class Request {
                     return RequestType.COLLECTION_SHOW_ALL_DECKS;
             }
             if(command.toLowerCase().matches("search \\w+")) {
-                scannerCommand.setId(command.substring(6));
+                setId(command.substring(6));
                 return RequestType.COLLECTION_SEARCH_CARD;
             }
             else if(command.toLowerCase().matches("create deck \\w+")) {
-                scannerCommand.setDeckName(command.substring(11));
+                setDeckName(command.substring(11));
                 return RequestType.COLLECTION_CREATE_DECK;
             }
             else if(command.toLowerCase().matches("delete deck \\w+") ) {
-                scannerCommand.setDeckName(command.substring(11));
+                setDeckName(command.substring(11));
                 return RequestType.COLLECTION_DELETE_DECK;
             }
             else if(command.toLowerCase().matches("add \\w+ to deck \\w+")) {
-                scannerCommand.setDeckName(command.split(" ")[4]);
-                scannerCommand.setId(command.substring(4));
+                setDeckName(command.split(" ")[4]);
+                setId(command.substring(4));
                 return RequestType.COLLECTION_ADD_CARD_TO_DECK;
             }
             else if(command.toLowerCase().matches("remove \\w+ from deck \\w+")){
-                scannerCommand.setDeckName(command.split(" ")[4]);
-                scannerCommand.setId(command.substring(4));
+                setDeckName(command.split(" ")[4]);
+                setId(command.substring(4));
                 return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
             }
 
             else if(command.toLowerCase().matches("validate deck \\w+")){
-                scannerCommand.setDeckName(command.substring(14));
+                setDeckName(command.substring(14));
                 return RequestType.COLLECTION_VALIDATE_DECK;
             }
 
             else if(command.toLowerCase().matches("select deck \\w+")) {
-                scannerCommand.setDeckName(command.substring(12));
+                setDeckName(command.substring(12));
                 return RequestType.COLLECTION_SELECT_DECK;
             }
             else if(command.toLowerCase().matches("show deck \\w+")) {
-                scannerCommand.setDeckName(command.substring(10));
+                setDeckName(command.substring(10));
                 return RequestType.COLLECTION_SHOW_DECK;
             }
 

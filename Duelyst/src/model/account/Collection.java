@@ -17,7 +17,7 @@ public class Collection {
     private ArrayList<Minion> minions;
     private Item[] items = new Item[3];
     private Account account;
-    private ArrayList<Deck> decks;
+    private ArrayList<NormalDeck> decks;
 
     public Collection(Account account) {
         this.account = account;
@@ -67,6 +67,17 @@ public class Collection {
         return false;
     }
 
+    public void selectADeckAsMainDeck(String deckName){
+
+        NormalDeck deck=passTheDeckIfHaveBeenExist(deckName);
+        if(deck==null){
+            ErrorType error=ErrorType.HAVE_NOT_DECK;
+            error.printMessage();
+
+        }
+        account.setMainDeck(deck);
+    }
+
     public void searchCardName(String cardName) {
         boolean have = false;
         ArrayList<Card> cards = new ArrayList<>();
@@ -112,8 +123,8 @@ public class Collection {
 
     }
 
-    private Deck passTheDeckIfHaveBeenExist(String deckName) {
-        for (Deck deck : decks) {
+    private NormalDeck passTheDeckIfHaveBeenExist(String deckName) {
+        for (NormalDeck deck : decks) {
             if (decks.getName().equals(deckName))
                 return deck;
         }
@@ -126,14 +137,14 @@ public class Collection {
             error.printMessage();
             return;
         }
-        Deck deck = new NormalDeck();
+        NormalDeck deck = new NormalDeck();
         deck.setName(deckName);
         decks.add(deck);
 
     }
 
     public void deleteDeck(String deckName) {
-        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck != null)
             decks.remove(deck);
         else {
@@ -227,7 +238,7 @@ public class Collection {
 
     public void addCardToThisDeck(String cardId, String deckName) {
         ErrorType error;
-        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
         if(!errorForDeck(deck))
             return ;
 
@@ -256,7 +267,7 @@ public class Collection {
         ErrorType error;
         if (heroHaveBeenExistInThisDeck(deckName, heroId))
             return;
-        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
         if(!errorForDeck(deck))
             return ;
         Card card = passCardByCardId(heroId);
@@ -277,7 +288,7 @@ public class Collection {
 
     public void addItemToThisDeck(String usableItemId, String deckName) {
         ErrorType error;
-        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
         if(!errorForDeck(deck))
             return ;
 
@@ -297,7 +308,7 @@ public class Collection {
 
     }
 
-    public boolean errorForDeck(Deck deck){
+    public boolean errorForDeck(NormalDeck deck){
         ErrorType error;
         if (deck == null) {
             error = ErrorType.HAVE_NOT_DECK;
@@ -309,7 +320,7 @@ public class Collection {
 
     public void removeCardFromDeck(String cardId, String deckName) {
         ErrorType error;
-        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
         if(!errorForDeck(deck))
             return ;
         Card card = cardHaveBeenExistInThisDeck(deckName, cardId);
@@ -323,7 +334,7 @@ public class Collection {
 
     public void removeHeroFromDeck(String heroId, String deckName) {
         ErrorType error;
-        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
         if(!errorForDeck(deck))
             return ;
         Card card = passCardByCardId(heroId);
@@ -341,7 +352,7 @@ public class Collection {
 
     public void removeItemFromDeck(String usableItemId, String deckName) {
         ErrorType error;
-        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
         if(!errorForDeck(deck))
             return ;
         Item item = passUsableItemByUsableItemId(usableItemId);
@@ -362,7 +373,7 @@ public class Collection {
 
     public boolean validateDeck(String deckName) {
         ErrorType error;
-        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck != null) {
             if (deck.validate())
                 return true;
