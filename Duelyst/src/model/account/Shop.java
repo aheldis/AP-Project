@@ -143,7 +143,7 @@ public class Shop {
     public void sell(Account account, String id) {
         Collection collection = account.getCollection();
         Card card = collection.passCardByCardId(id);
-        Item item = collection.passItemByItemId(id);
+        Item item = collection.passUsableItemByUsableItemId(id);
         if (card != null) {
             collection.removeCard(card);
         } else if (item != null) {

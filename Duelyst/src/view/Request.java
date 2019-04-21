@@ -1,22 +1,27 @@
 package view;
 
 import view.enums.RequestType;
-import model.Product;
+import model.ScannerCommand;
 
+import javax.print.DocFlavor;
 import java.util.Scanner;
-
-
-/**
- * mikhay esmesho bezarim Scanner (to javaDoc neveshtam ke
- * sabz she :o )
- */
 
 public class Request {
     private Scanner scanner = new Scanner(System.in);
     private String command;
-    private String state = "mainMenu";//menu or collection or shop or model.battle
+    private String state ;//menu or collection or shop or model.battle
     private RequestType type;
 
+    private String deckName;
+    private String Id;
+
+    public Request(String state){
+        this.state=state;
+    }
+
+    public void getNewLine(){
+       this.command=scanner.nextLine().trim();
+    }
     public void getNewCommand() {
         this.command = scanner.nextLine().trim();
         type = getType();
@@ -31,8 +36,25 @@ public class Request {
         return false;
     }
 
-    public RequestType getType() {
-        Product product=new Product();
+    public RequestType getRequestType(){
+        return type;
+    }
+
+    public void setId (String Id){
+        this.Id=Id;
+    }
+    public void setDeckName(String deckName){
+        this.deckName=deckName;
+    }
+    public String getId(){
+        return Id;
+    }
+    public String getDeckName(){
+        return deckName;
+    }
+
+    private RequestType getType() {
+        ScannerCommand scannerCommand =new ScannerCommand();
         if (state.equals("mainMenu")) {
             switch (command.toLowerCase()) {
                 case "enter collection":
@@ -62,39 +84,39 @@ public class Request {
                     return RequestType.COLLECTION_SHOW_ALL_DECKS;
             }
             if(command.toLowerCase().matches("search \\w+")) {
-                product.setCardId(command.substring(6));
+                setId(command.substring(6));
                 return RequestType.COLLECTION_SEARCH_CARD;
             }
             else if(command.toLowerCase().matches("create deck \\w+")) {
-                product.setDeckName(command.substring(11));
+                setDeckName(command.substring(11));
                 return RequestType.COLLECTION_CREATE_DECK;
             }
             else if(command.toLowerCase().matches("delete deck \\w+") ) {
-                product.setDeckName(command.substring(11));
+                setDeckName(command.substring(11));
                 return RequestType.COLLECTION_DELETE_DECK;
             }
             else if(command.toLowerCase().matches("add \\w+ to deck \\w+")) {
-                product.setDeckName(command.split(" ")[4]);
-                product.setCardId(command.substring(4));
+                setDeckName(command.split(" ")[4]);
+                setId(command.substring(4));
                 return RequestType.COLLECTION_ADD_CARD_TO_DECK;
             }
             else if(command.toLowerCase().matches("remove \\w+ from deck \\w+")){
-                product.setDeckName(command.split(" ")[4]);
-                product.setCardId(command.substring(4));
+                setDeckName(command.split(" ")[4]);
+                setId(command.substring(4));
                 return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
             }
 
             else if(command.toLowerCase().matches("validate deck \\w+")){
-                product.setDeckName(command.substring(14));
+                setDeckName(command.substring(14));
                 return RequestType.COLLECTION_VALIDATE_DECK;
             }
 
             else if(command.toLowerCase().matches("select deck \\w+")) {
-                product.setDeckName(command.substring(12));
+                setDeckName(command.substring(12));
                 return RequestType.COLLECTION_SELECT_DECK;
             }
             else if(command.toLowerCase().matches("show deck \\w+")) {
-                product.setDeckName(command.substring(10));
+                setDeckName(command.substring(10));
                 return RequestType.COLLECTION_SHOW_DECK;
             }
 
@@ -116,6 +138,15 @@ public class Request {
                 return RequestType.SHOP_SHOW;
             else if(command.toLowerCase().matches("help"))
                 return  RequestType.SHOP_HELP;
+        }
+        else if(state.equals("login")){
+            switch (command) {
+                case "Login":
+                    return RequestType.LOGIN;
+                case "SignUp":
+                    return RequestType.SIGN_UP;
+            }
+
         }
         else if (state.equals("model/battle")) {
             switch (command) {

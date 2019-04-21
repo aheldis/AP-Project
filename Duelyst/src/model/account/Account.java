@@ -23,6 +23,9 @@ public class Account implements Comparable<Account> {
         this.userName = userName;
         this.password = password;
     }
+    public void setMainDeck(NormalDeck deck){
+        this.mainDeck=deck;
+    }
 
     public int getWins() {
         return wins;

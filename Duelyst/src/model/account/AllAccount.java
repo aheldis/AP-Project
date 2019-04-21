@@ -38,20 +38,31 @@ public class AllAccount {
         return false;
     }
 
-    public static void login(String userName, String password) { //todo ina bayad bere to conroller o ina :-?
+    public static boolean passwordMatcher(String userName,String password){
         Account account = getAccountByName(userName);
-        if (account == null) {
-            ErrorType error = ErrorType.USER_NAME_NOT_FOUND;
-            accountView.printError(error);
+        if(account==null)
+            return false;
+        if(account.matchPassword(password))
+            return true;
+        return false;
+    }
+
+    public static void login(String userName, String password) { //todo ina bayad bere to conroller o ina :-?
+        //(kheyr)todo controller miyad inja donbalet :))
+        Account account = getAccountByName(userName);
+        if (account == null) {//todo hamishe vojod dare chon to controller check mikonim
+//            ErrorType error = ErrorType.USER_NAME_NOT_FOUND;
+//            accountView.printError(error);
             return;
         }
         if (account.matchPassword(password)) {
             //TODO login
-        } else {
+            return ;
+        }
             ErrorType error = ErrorType.PASSWORD_DOES_NOT_MATCH;
             accountView.printError(error);
-            return;
-        }
+            return ;
+
     }
 
     public static void showLeaderBoard() {
@@ -66,11 +77,11 @@ public class AllAccount {
     }
 
     public static void createAccount(String userName, String password) {
-        if (userNameHaveBeenExist(userName)) {
-            ErrorType error = ErrorType.USER_NAME_ALREADY_EXIST;
-            accountView.printError(error);
-            return;
-        }
+//        if (userNameHaveBeenExist(userName)) {
+//            ErrorType error = ErrorType.USER_NAME_ALREADY_EXIST;
+//            accountView.printError(error);
+//            return;
+//        }
 
         Account account = new Account(userName, password);
         addToAccounts(account);
