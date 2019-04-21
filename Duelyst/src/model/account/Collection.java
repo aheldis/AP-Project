@@ -91,8 +91,6 @@ public class Collection {
             }
         }
         if (!have) {
-//            ErrorType error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
-//            error.printMessage();
             return false;
         }
         return true;

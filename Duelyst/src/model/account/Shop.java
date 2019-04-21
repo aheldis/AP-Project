@@ -1,7 +1,7 @@
 package model.account;
 
 import view.enums.ErrorType;
-import model.Item.Item;
+import model.Item.Usable;
 import model.Item.Usable;
 import model.Item.UsableId;
 import model.Item.Collectable;
@@ -13,16 +13,17 @@ import java.util.ArrayList;
 
 
 //todo SHOW COLLECTION (HAMON SHOW COLLECTION HAST)
+//todo are hamone (zahra)
 //what?
 
 public class Shop {
     public static Shop singleInstance = null;
     private ArrayList<Card> cards = new ArrayList<>();
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Usable> items = new ArrayList<>();
     private static AccountView accountView = AccountView.getInstance();
 
     private boolean itemExist(String name) {
-        for (Item item : items) {
+        for (Usable item : items) {
             if (item.getName().equals(name)) {
                 return true;
             }
@@ -48,8 +49,8 @@ public class Shop {
         return null;
     }
 
-    private Item getItem(String name) {
-        for (Item item : items) {
+    private Usable getItem(String name) {
+        for (Usable item : items) {
             if (item.getName().equals(name)) {
                 return item;
             }
@@ -70,7 +71,7 @@ public class Shop {
         cards.add(card);
     }
 
-    public void addItem(Item item) {
+    public void addItem(Usable item) {
         items.add(item);
     }
 
@@ -85,7 +86,7 @@ public class Shop {
             //todo sout what?
         }
         if (itemExist(name)) {
-            Item item = getItem(name);
+            Usable item = getItem(name);
             //todo
         }
     }
@@ -128,12 +129,12 @@ public class Shop {
             }
         }
         if (itemExist(name)) {
-            Item item = getItem(name);
-            if (item instanceof Usable) {
+            Usable item = getItem(name);
+            //if (item instanceof Usable) { //todo hamishe item hameja bejoz bazi usable hast
                 UsableId id = new UsableId(account, (Usable) item);
-            } else if (item instanceof Collectable) {
-                CollectableId id = new CollectableId(account, (Collectable) item);
-            }
+//            } else if (item instanceof Collectable) {
+//                CollectableId id = new CollectableId(account, (Collectable) item);
+//            }
             if (!enoughDaricForBuy(account, item.getCost()))
                 return;
             account.getCollection().addToItems(item);
@@ -143,7 +144,7 @@ public class Shop {
     public void sell(Account account, String id) {
         Collection collection = account.getCollection();
         Card card = collection.passCardByCardId(id);
-        Item item = collection.passUsableItemByUsableItemId(id);
+        Usable item = collection.passUsableItemByUsableItemId(id);
         if (card != null) {
             collection.removeCard(card);
         } else if (item != null) {
