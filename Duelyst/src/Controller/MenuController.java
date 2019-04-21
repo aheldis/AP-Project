@@ -13,10 +13,7 @@ import view.enums.EnterGameMessages;
 import view.enums.ErrorType;
 import view.enums.RequestType;
 
-//todo in chiza joda joda method nakonim? (svw)
-//tah collection o account o ina gozashti  request.getNewCommand() age mittonim whileshoon ro bardarim get new command ro to hamin while bozorge bezarim
-//ah albate age bekhaim joda joda shoon konim ke hichi
-//??
+
 
 public class MenuController {
     private String state = "login"; //todo esme in ye chiz dige bashe behtar nist? (svw)

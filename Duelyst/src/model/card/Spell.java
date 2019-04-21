@@ -19,6 +19,37 @@ public class Spell extends Card {
     private int turnForHpChanges;
 
 
+    public void setDescription(String description){
+        this.description=description;
+    }
+
+    public void setMp(int mp){
+        this.mp=mp;
+    }
+    public void setApChanges(int apChanges){
+        this.apChanges=apChanges;
+    }
+    public int getApChanges(){
+        return apChanges;
+    }
+    public int getTurnForApChanges(){
+        return turnForApChanges;
+    }
+    public int getHpChanges(){
+        return hpChanges;
+    }
+    public int getTurnForHpChanges(){
+        return turnForHpChanges;
+    }
+    public void setTurnForApChanges(int turnForHpChanges){
+        this.turnForApChanges=turnForHpChanges;
+    }
+    public void setTurnForHpChanges(int turnForHpChanges){
+        this.turnForHpChanges=turnForHpChanges;
+    }
+    public void setHpChanges(int hpChanges ){
+        this.hpChanges=hpChanges;
+    }
     public void Spell(int cost, int mp, int apChanges, int turnForApChanges, int hpChanges,
                       int turnForHpChanges, String description, ArrayList<Buff> buffs) {
         this.apChanges = apChanges;
