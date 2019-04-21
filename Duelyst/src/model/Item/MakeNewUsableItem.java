@@ -20,6 +20,8 @@ public class MakeNewUsableItem {
                 File file = new File("../ItemsFile/Usable/" + input);
                 FileWriter fileWriter = new FileWriter(file);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write("name: " + input);
+                bufferedWriter.newLine();
                 while ((line = bufferedReader.readLine()) != null) {
                     System.out.println(line);
                     input = scanner.nextLine();
