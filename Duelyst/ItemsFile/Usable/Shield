@@ -1,9 +1,0 @@
-MpChanges: 0
-ApChanges: 00
-HpChanges: 0
-Buffs_TurnOfEffect_numberOfBuffs: holy
-target_numberOfTargets_numberOfAttacks: selfHero_0_0
-numberOfAttacksHit_numberOfAddedAttacks: 
-TypeOfCounterAttack: 
-forWhom: self
-desc: enable 12 holy buff in hero
