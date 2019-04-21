@@ -23,4 +23,10 @@ public class Usable extends Item {
     public void affect(){
         //todo
     }
+
+    public boolean equals(String UsableId){
+        if(this.usableId.getUsableIdAsString().equals(usableId))
+            return true;
+        return false;
+    }
 }

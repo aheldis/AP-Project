@@ -1,11 +1,15 @@
 package Controller;
 
 
+import model.Item.Item;
+import model.Item.Usable;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Collection;
+import model.card.Card;
 import view.*;
 import view.enums.EnterGameMessages;
+import view.enums.ErrorType;
 import view.enums.RequestType;
 
 public class MenuController {
@@ -85,7 +89,10 @@ public class MenuController {
 
             if (state.equals("collection")) {//todo id ro check konam ke chiye :)
                 Collection collection=account.getCollection();
-                String deckName,Id;
+                String deckName,id;
+                Card card;
+                Usable item;
+                ErrorType error;
                 while (request.getRequestType() != RequestType.COLLECTION_EXIT) {
                     switch (request.getRequestType()) {
                         case COLLECTION_HELP:
@@ -102,6 +109,22 @@ public class MenuController {
                             collection.showThisDeck(deckName);
                             break;
                         case COLLECTION_ADD_CARD_TO_DECK:
+                            deckName=request.getDeckName();
+                            id=request.getId();
+                            card=collection.passCardByCardId(id);
+                            if(card!=null) {
+                                collection.addCardToThisDeck(card, deckName);
+                                break;
+                            }
+                            item =collection.passUsableItemByUsableItemId(id);
+                            if(item!=null){
+                                collection.addItemToThisDeck(item,deckName);
+                                break;
+                            }
+                            else{
+                                error=ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
+                                error.printMessage();
+                            }
                             break;
                         case COLLECTION_CREATE_DECK:
                             deckName=request.getDeckName();
@@ -112,8 +135,31 @@ public class MenuController {
                             collection.deleteDeck(deckName);
                             break;
                         case COLLECTION_REMOVE_CARD_FROM_DECK:
+                            deckName=request.getDeckName();
+                            id=request.getId();
+                            card=collection.passCardByCardId(id);
+                            if(card!=null){
+                                collection.removeCardFromDeck(card,deckName);
+                                break;
+                            }
+                            item=collection.passUsableItemByUsableItemId(id);
+                            if(item!=null){
+                                collection.removeItemFromDeck(item,deckName);
+                                break;
+                            }
+                            else{
+                                error=ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
+                                error.printMessage();
+                            }
                             break;
                         case COLLECTION_SEARCH_CARD:
+                            id=request.getId();
+                            if(collection.searchCardName(id))
+                                break;
+                            if(collection.searchItemName(id))
+                                break;
+                            error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
+                            error.printMessage();
                             break;
                         case COLLECTION_SELECT_DECK:
                             deckName=request.getDeckName();
@@ -124,6 +170,9 @@ public class MenuController {
                             collection.validateDeck(deckName);
                             break;
                         case COLLECTION_SAVE:
+                            break;
+                        case COLLECTION_EXIT:
+                            state="menu";
                             break;
                     }
 

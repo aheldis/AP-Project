@@ -4,7 +4,7 @@ public abstract class Item {
     private String name;
     private String description;
     private int cost;
-    private int itemID;
+
 
     public int getCost() {
         return cost;
