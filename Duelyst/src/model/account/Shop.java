@@ -130,11 +130,8 @@ public class Shop {
         }
         if (itemExist(name)) {
             Usable item = getItem(name);
-            //if (item instanceof Usable) { //todo hamishe item hameja bejoz bazi usable hast
-                UsableId id = new UsableId(account, (Usable) item);
-//            } else if (item instanceof Collectable) {
-//                CollectableId id = new CollectableId(account, (Collectable) item);
-//            }
+            UsableId id = new UsableId(account, item);
+
             if (!enoughDaricForBuy(account, item.getCost()))
                 return;
             account.getCollection().addToItems(item);

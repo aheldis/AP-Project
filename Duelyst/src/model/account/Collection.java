@@ -8,8 +8,6 @@ import view.*;
 
 import java.util.ArrayList;
 
-
-
 public class Collection {
 
     private ArrayList<Spell> spells;
@@ -318,7 +316,6 @@ public class Collection {
         deck.removeFromCardsOFDeck(card);
     }
 
-
     private Usable passItemifHaveBeenExistInThisDeck(Deck deck,String UsableItem){
         for(int i=0;i<3;i++){
             if(items[i].equals(UsableItem))
@@ -328,6 +325,7 @@ public class Collection {
 
 
     }
+
     public void removeItemFromDeck(Usable usableItem, String deckName) {
         ErrorType error;
         String usableItemId=usableItem.getUsableId().getUsableIdAsString();
