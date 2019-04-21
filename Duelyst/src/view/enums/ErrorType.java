@@ -9,6 +9,7 @@ public enum ErrorType {
     USER_NAME_ALREADY_EXIST("User name already exist"),
     HAVE_NOT_CARD_IN_COLLECTION("You don't have this Card in collection"),
     HAVE_NOT_ITEM_IN_COLLECTION("You don't have this model.Item in collection"),
+    HAVE_NOT_CARD_OR_ITEM_IN_COLLECTION("You don't have this Card or Item in collection"),
     HAVE_NOT_ITEM_IN_DECK("You don't have this model.Item in deck"),
     HAVE_NOT_CARD_IN_DECK("You don't have this model.Item in deck"),
     DECK_HAVE_BEEN_EXIST("deck Have been exist"),

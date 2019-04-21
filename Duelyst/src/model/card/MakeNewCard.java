@@ -1,4 +1,4 @@
-package model.battle;
+package model.card;
 
 public class MakeNewCard {
 

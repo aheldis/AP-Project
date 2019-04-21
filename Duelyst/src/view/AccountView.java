@@ -7,7 +7,9 @@ import model.battle.Player;
 import model.battle.Deck;
 import model.battle.Match;
 import model.card.*;
+
 import java.util.ArrayList;
+
 import view.enums.ErrorType;
 
 public class AccountView {
@@ -191,8 +193,8 @@ public class AccountView {
     }
 
     public void viewAMatch(Match match, Player opponent) {
-        System.out.print(opponent.getAccount.getUserName());
-        if (match.getWinner.equals(opponent)) {
+        System.out.print(opponent.getAccount().getUserName());
+        if (match.getWinner().equals(opponent)) {
             System.out.println(" loss ");
         } else {
             System.out.println(" win ");
@@ -200,15 +202,15 @@ public class AccountView {
         System.out.println(match.getTime()); //todo time-e java ???
     }
 
-    public void printError(ErrorType error){
+    public void printError(ErrorType error) {
         System.out.println(error.getMessage());
     }
 
-    public void viewAccount(int rank, String userName, int wins){
+    public void viewAccount(int rank, String userName, int wins) {
         System.out.println(rank + "- UserName: " + userName + " - Wins: " + wins);
     }
 
-    public void viewHelpOfAccount(){
+    public void viewHelpOfAccount() {
         System.out.println("Create Account [user name]");
         System.out.println("login [user name]");
         System.out.println("show leaderboard");
@@ -216,7 +218,7 @@ public class AccountView {
         System.out.println("logout");
     }
 
-    public void viewHelpOfShop(){
+    public void viewHelpOfShop() {
         System.out.println("show collection");
         System.out.println("search [item name| model.card name]");
         System.out.println("search collection [item name| model.card name]");
@@ -226,8 +228,8 @@ public class AccountView {
         System.out.println("exit");
     }
 
-    public void printNoSuchItemOrCardInShop(){
-        System.out.println("No such item or model.card in shop");
+    public void print(String string) {
+        System.out.println(string);
     }
 
 }

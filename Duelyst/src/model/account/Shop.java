@@ -1,13 +1,10 @@
 package model.account;
 
-import view.enums.ErrorType;
-import model.Item.Usable;
 import model.Item.Usable;
 import model.Item.UsableId;
-import model.Item.Collectable;
-import model.Item.CollectableId;
 import model.card.*;
 import view.AccountView;
+import view.enums.ErrorType;
 
 import java.util.ArrayList;
 
@@ -53,15 +50,6 @@ public class Shop {
         return null;
     }
 
-    private CardId getExistingCardId(String name) {
-
-    }
-
-    private CardId getNewCardId(Account account, Card card) {
-        CardId cardId = new CardId(account, card);
-        return cardId;
-    }
-
     public void addCard(Card card) {
         cards.add(card);
     }
@@ -78,20 +66,23 @@ public class Shop {
         }
         if (cardExist(name)) {
             Card card = getCard(name);
-            //todo sout what?
+            int number = account.getCollection().getNumberOfCardId(card);
+            accountView.print(account.getUserName() + "_" + name + "_" + Integer.toString(number));
         }
         if (itemExist(name)) {
             Usable item = getItem(name);
-            //todo
+            int number = account.getCollection().getNumberOfItemId(item);
+            accountView.print(account.getUserName() + "_" + name + "_" + Integer.toString(number));
         }
     }
 
     public void searchCollection(Account account, String name) {
-        //todo
-        //model.account.getCollection().searchCardName(name);
-        //model.account.getCollection().searchItemName(name);
-
-
+        boolean foundInCards = account.getCollection().searchCardName(name);
+        boolean foundInItems = account.getCollection().searchItemName(name);
+        if (!foundInCards && !foundInItems) {
+            ErrorType error = ErrorType.HAVE_NOT_CARD_OR_ITEM_IN_COLLECTION;
+            accountView.printError(error);
+        }
     }
 
     private boolean enoughDaricForBuy(Account account, int cost) {
@@ -112,7 +103,7 @@ public class Shop {
         }
         if (cardExist(name)) {
             Card card = getCard(name);
-            card.setCardId(new CardId(account, card));
+            new CardId(account, card, account.getCollection().getNumberOfCardId(card));
             if (!enoughDaricForBuy(account, card.getCost()))
                 return;
             Collection collection = account.getCollection();
@@ -126,8 +117,7 @@ public class Shop {
         }
         if (itemExist(name)) {
             Usable item = getItem(name);
-            UsableId id = new UsableId(account, item);
-
+            new UsableId(account, item, account.getCollection().getNumberOfItemId(item));
             if (!enoughDaricForBuy(account, item.getCost()))
                 return;
             account.getCollection().addToItems(item);
@@ -149,30 +139,35 @@ public class Shop {
         }
     }
 
-    private ArrayList<Hero> getHeros() {
-        ArrayList<Hero> heros = new ArrayList<>();
+    private ArrayList<Hero> getHeroes() {
+        ArrayList<Hero> heroes = new ArrayList<>();
         for (Card card : cards) {
-            if(card instanceof Hero)
-                heros.add((Hero) card);
+            if (card instanceof Hero)
+                heroes.add((Hero) card);
         }
+        return heroes;
     }
+
     private ArrayList<Minion> getMinions() {
         ArrayList<Minion> minions = new ArrayList<>();
         for (Card card : cards) {
-            if(card instanceof Minion)
+            if (card instanceof Minion)
                 minions.add((Minion) card);
         }
+        return minions;
     }
+
     private ArrayList<Spell> getSpells() {
         ArrayList<Spell> spells = new ArrayList<>();
         for (Card card : cards) {
-            if(card instanceof Spell)
+            if (card instanceof Spell)
                 spells.add((Spell) card);
         }
+        return spells;
     }
 
     public void show() {
-        accountView.cardsAndItemsView(getSpells(), getMinions(), getHeros(), items);
+        accountView.cardsAndItemsView(getSpells(), getMinions(), getHeroes(), items);
     }
 
     public void help() {
