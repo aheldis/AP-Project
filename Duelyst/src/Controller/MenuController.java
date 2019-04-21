@@ -188,6 +188,7 @@ public class MenuController {
 
             if(state.equals("shop")){
 
+
             }
 
             if(state.equals("battle")){
