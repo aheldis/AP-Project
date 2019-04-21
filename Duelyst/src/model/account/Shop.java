@@ -91,10 +91,11 @@ public class Shop {
         }
     }
 
-    public void searchCollection(String name, Account account) {
+    public void searchCollection(Account account, String name) {
         //todo
         //model.account.getCollection().searchCardName(name);
         //model.account.getCollection().searchItemName(name);
+
 
     }
 
@@ -153,7 +154,33 @@ public class Shop {
         }
     }
 
-    public static void help() {
+    private ArrayList<Hero> getHeros() {
+        ArrayList<Hero> heros = new ArrayList<>();
+        for (Card card : cards) {
+            if(card instanceof Hero)
+                heros.add((Hero) card);
+        }
+    }
+    private ArrayList<Minion> getMinions() {
+        ArrayList<Minion> minions = new ArrayList<>();
+        for (Card card : cards) {
+            if(card instanceof Minion)
+                minions.add((Minion) card);
+        }
+    }
+    private ArrayList<Spell> getSpells() {
+        ArrayList<Spell> spells = new ArrayList<>();
+        for (Card card : cards) {
+            if(card instanceof Spell)
+                spells.add((Spell) card);
+        }
+    }
+
+    public void show() {
+        accountView.cardsAndItemsView(getSpells(), getMinions(), getHeros(), items);
+    }
+
+    public void help() {
         accountView.viewHelpOfShop();
     }
 

@@ -2,6 +2,7 @@ package view;
 
 
 import model.Item.Item;
+import model.Item.Usable;
 import model.account.Player;
 import model.battle.Deck;
 import model.battle.Match;
@@ -21,20 +22,20 @@ public class AccountView {
     }
 
 
-    public void cardsAndItemsView(ArrayList<Spell> spells, ArrayList<Minion> minions, ArrayList<Hero> heroes, Item[] items) {
+    public void cardsAndItemsView(ArrayList<Spell> spells, ArrayList<Minion> minions, ArrayList<Hero> heroes, ArrayList<Usable> items) {
         int counter = 1;
         System.out.print("Heroes : ");
         for (Hero hero : heroes) {
             System.out.print("          ");
             showEachHero(hero, counter);
-            System.out.println(". - Sell Cost : " + hero.getSellCost());
+            System.out.println(". - Sell Cost : " + hero.getCost());
             counter++;
         }
         counter = 1;
-        for (Item item : items) {
+        for (Usable item : items) {
             System.out.print("          ");
             showEachItem(item, counter);
-            System.out.println(" – Sell Cost : " + item.getSellCost());
+            System.out.println(" – Sell Cost : " + item.getCost());
             counter++;
         }
         counter = 1;
@@ -48,7 +49,7 @@ public class AccountView {
         for (Minion minion : minions) {
             System.out.print("          ");
             showEachMinion((Card) minion, counter);
-            System.out.println(" – Sell Cost : " + minion.getSellCost());
+            System.out.println(" – Sell Cost : " + minion.getCost());
             counter++;
         }
     }

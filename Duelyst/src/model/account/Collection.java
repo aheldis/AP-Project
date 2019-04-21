@@ -7,6 +7,7 @@ import model.card.*;
 import view.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Collection {
 
@@ -40,7 +41,7 @@ public class Collection {
 
     public void showCardsAndItems() {
         AccountView accountView = AccountView.getInstance();
-        accountView.cardsAndItemsView(spells, minions, heroes, items);
+        accountView.cardsAndItemsView(spells, minions, heroes, new ArrayList <Usable> (Arrays.asList(items)));
     }
 
     public void addToHeros(Hero hero){
@@ -99,7 +100,7 @@ public class Collection {
         for (Usable item : items) {
             //if (item instanceof Usable) {
                 if (item.getUsableId().getItemName().equals(itemName)) {
-                    System.out.println(item.getUsableId().getUsableId());
+                    System.out.println(item.getUsableId().getUsableId()); //todo sout dari inja baad oon getItemName ro hamoon getName ro item seda ko
                     have = true;
                 }
             //}
