@@ -38,11 +38,11 @@ public class AllAccount {
         return false;
     }
 
-    public static boolean passwordMatcher(String userName,String password){
+    public static boolean passwordMatcher(String userName, String password) {
         Account account = getAccountByName(userName);
-        if(account==null)
+        if (account == null)
             return false;
-        if(account.matchPassword(password))
+        if (account.matchPassword(password))
             return true;
         return false;
     }
@@ -57,11 +57,11 @@ public class AllAccount {
         }
         if (account.matchPassword(password)) {
             //TODO login
-            return ;
+            return;
         }
-            ErrorType error = ErrorType.PASSWORD_DOES_NOT_MATCH;
-            accountView.printError(error);
-            return ;
+        ErrorType error = ErrorType.PASSWORD_DOES_NOT_MATCH;
+        accountView.printError(error);
+        return;
 
     }
 

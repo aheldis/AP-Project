@@ -1,0 +1,9 @@
+name: DamolsArc
+cost: 30000
+changesInMana_forHowManyTurns: 
+buff_howMany: disarm_1
+forWhichCounterAttack(ranged/hybrid/melee): ranged/hybrid
+changesInHp: 
+whom(friend/enemy)_kind(hero/minion)_number_random(true/false): enemy_hero/minion_1_false
+changesInAP: 
+when(attack/death/put): attack

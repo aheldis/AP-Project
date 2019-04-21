@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class MakeNewUsableItem {
 
-    public static void main(String[] args) {
+    public static void mainn(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
@@ -20,6 +20,8 @@ public class MakeNewUsableItem {
                 File file = new File("../ItemsFile/Usable/" + input);
                 FileWriter fileWriter = new FileWriter(file);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write("name: " + input);
+                bufferedWriter.newLine();
                 while ((line = bufferedReader.readLine()) != null) {
                     System.out.println(line);
                     input = scanner.nextLine();

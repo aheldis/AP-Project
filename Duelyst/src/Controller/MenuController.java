@@ -1,64 +1,70 @@
 package Controller;
 
 
-import model.Item.Item;
 import model.Item.Usable;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Collection;
+import model.account.Shop;
 import model.card.Card;
-import view.*;
+import view.MenuView;
+import view.Request;
 import view.enums.EnterGameMessages;
 import view.enums.ErrorType;
 import view.enums.RequestType;
 
+//todo in chiza joda joda method nakonim? (svw)
+//tah collection o account o ina gozashti  request.getNewCommand() age mittonim whileshoon ro bardarim get new command ro to hamin while bozorge bezarim
+//ah albate age bekhaim joda joda shoon konim ke hichi
+//??
+
 public class MenuController {
-    private String state = "login";
+    private String state = "login"; //todo esme in ye chiz dige bashe behtar nist? (svw)
     private boolean endProgram = false;
     private Account account;
 
     public void main() {
-        Request request= new Request(state);// mige signUp ya logIn hast
+        Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
         while (!endProgram) {
 
-            if(state.equals("login")){
+            if (state.equals("login")) {
                 EnterGameMessages enterGameMessages = EnterGameMessages.getInstance();
-                if(request.getRequestType()==RequestType.SIGN_UP){
+                if (request.getRequestType() == RequestType.SIGN_UP) {
 
                     enterGameMessages.showSignUpGetUserName();
                     request.getNewLine();
-                    while (AllAccount.userNameHaveBeenExist(request.getCommand())){
+                    while (AllAccount.userNameHaveBeenExist(request.getCommand())) {
                         enterGameMessages.showSignUpHaveUserName();
                         enterGameMessages.showSignUpGetUserName();
                         request.getNewLine();
                     }
-                    String username=request.getCommand();
+                    String username = request.getCommand();
                     enterGameMessages.showSignUpGetPassword();
                     request.getNewLine();
-                    AllAccount.createAccount(username,request.getCommand());
-                    account=AllAccount.getAccountByName(username);
-                    state="menu";
+                    AllAccount.createAccount(username, request.getCommand());
+                    account = AllAccount.getAccountByName(username);
+                    state = "menu";
                 }
-                if(request.getRequestType()== RequestType.LOGIN){
+                if (request.getRequestType() == RequestType.LOGIN) {
                     enterGameMessages.showLoginGetName();
                     request.getNewLine();
-                    String userName=request.getCommand();
-                    while(!AllAccount.userNameHaveBeenExist(userName)){
+                    String userName = request.getCommand();
+                    while (!AllAccount.userNameHaveBeenExist(userName)) {
                         enterGameMessages.showLoginHaveNotName();
                         enterGameMessages.showLoginGetName();
                         request.getNewLine();
-                        userName=request.getCommand();
+                        userName = request.getCommand();
                     }
                     enterGameMessages.showLoginGetPassword();
                     request.getNewLine();
-                    while (!AllAccount.passwordMatcher(userName,request.getCommand())){
+                    while (!AllAccount.passwordMatcher(userName, request.getCommand())) {
                         enterGameMessages.showLoginGetPassword();
                         request.getNewLine();
                     }
-                    AllAccount.login(userName,request.getCommand());
-                    account=AllAccount.getAccountByName(userName);
-                    state="menu";
+                    AllAccount.login(userName, request.getCommand());
+                    account = AllAccount.getAccountByName(userName);
+                    state = "menu";
 
 
                 }
@@ -71,7 +77,7 @@ public class MenuController {
                             state = "collection";
                             break;
                         case MENU_ENTER_BATTLE:
-                            state="battle";
+                            state = "battle";
                             // TODO: bayad bebarim dakhele ye bazi
                             break;
                         case MENU_ENTER_HELP:
@@ -82,7 +88,7 @@ public class MenuController {
                             state = "shop";
                             break;
                         case MENU_ENTER_EXIT:
-                            endProgram=true;
+                            endProgram = true;
                             break;
                     }
                     request = new Request(state);
@@ -91,8 +97,8 @@ public class MenuController {
             }
 
             if (state.equals("collection")) {//todo id ro check konam ke chiye :)
-                Collection collection=account.getCollection();
-                String deckName,id;
+                Collection collection = account.getCollection();
+                String deckName, id;
                 Card card;
                 Usable item;
                 ErrorType error;
@@ -108,74 +114,72 @@ public class MenuController {
                             collection.showAlldecks();
                             break;
                         case COLLECTION_SHOW_DECK:
-                            deckName=request.getDeckName();
+                            deckName = request.getDeckName();
                             collection.showThisDeck(deckName);
                             break;
                         case COLLECTION_ADD_CARD_TO_DECK:
-                            deckName=request.getDeckName();
-                            id=request.getId();
-                            card=collection.passCardByCardId(id);
-                            if(card!=null) {
+                            deckName = request.getDeckName();
+                            id = request.getId();
+                            card = collection.passCardByCardId(id);
+                            if (card != null) {
                                 collection.addCardToThisDeck(card, deckName);
                                 break;
                             }
-                            item =collection.passUsableItemByUsableItemId(id);
-                            if(item!=null){
-                                collection.addItemToThisDeck(item,deckName);
+                            item = collection.passUsableItemByUsableItemId(id);
+                            if (item != null) {
+                                collection.addItemToThisDeck(item, deckName);
                                 break;
-                            }
-                            else{
-                                error=ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
+                            } else {
+                                error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
                                 error.printMessage();
                             }
                             break;
                         case COLLECTION_CREATE_DECK:
-                            deckName=request.getDeckName();
+                            deckName = request.getDeckName();
                             collection.createDeck(deckName);
                             break;
                         case COLLECTION_DELETE_DECK:
-                            deckName=request.getDeckName();
+                            deckName = request.getDeckName();
                             collection.deleteDeck(deckName);
                             break;
                         case COLLECTION_REMOVE_CARD_FROM_DECK:
-                            deckName=request.getDeckName();
-                            id=request.getId();
-                            card=collection.passCardByCardId(id);
-                            if(card!=null){
-                                collection.removeCardFromDeck(card,deckName);
+                            deckName = request.getDeckName();
+                            id = request.getId();
+                            card = collection.passCardByCardId(id);
+                            if (card != null) {
+                                collection.removeCardFromDeck(card, deckName);
                                 break;
                             }
-                            item=collection.passUsableItemByUsableItemId(id);
-                            if(item!=null){
-                                collection.removeItemFromDeck(item,deckName);
+                            item = collection.passUsableItemByUsableItemId(id);
+                            if (item != null) {
+                                collection.removeItemFromDeck(item, deckName);
                                 break;
-                            }
-                            else{
-                                error=ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
+                            } else {
+                                error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
                                 error.printMessage();
                             }
                             break;
                         case COLLECTION_SEARCH_CARD:
-                            id=request.getId();
-                            if(collection.searchCardName(id))
+                            id = request.getId();
+                            if (collection.searchCardName(id))
                                 break;
-                            if(collection.searchItemName(id))
+                            if (collection.searchItemName(id))
                                 break;
                             error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
                             error.printMessage();
                             break;
                         case COLLECTION_SELECT_DECK:
-                            deckName=request.getDeckName();
+                            deckName = request.getDeckName();
                             collection.selectADeckAsMainDeck(deckName);
                             break;
                         case COLLECTION_VALIDATE_DECK:
-                            deckName=request.getDeckName();
+                            deckName = request.getDeckName();
                             collection.validateDeck(deckName);
                             break;
                         case COLLECTION_SAVE:
                             break;
                         case COLLECTION_EXIT:
-                            state="menu";
+                            state = "menu";
                             break;
                     }
 
@@ -186,12 +190,38 @@ public class MenuController {
                 }
             }
 
-            if(state.equals("shop")){
+            if (state.equals("shop")) {
+                Shop shop = Shop.getInstance();
+                while (request.getRequestType() != RequestType.SHOP_EXIT) {
+                    switch (request.getRequestType()) {
+                        case SHOP_SHOW_COLLECTION:
+                            account.getCollection().showCardsAndItems();
+                            break;
+                        case SHOP_SEARCH_COLLECTION_CARD:
+                            shop.searchCollection(account, request.getId());
+                            break;
+                        case SHOP_SERACH_CARD:
+                            shop.search(account, request.getId());
+                            break;
+                        case SHOP_BUY:
+                            shop.buy(account, request.getId());
+                            break;
+                        case SHOP_SELL:
+                            shop.sell(account, request.getId());
+                            break;
+                        case SHOP_SHOW:
+                            shop.show();
+                            break;
+                        case SHOP_HELP:
+                            shop.help();
 
-
+                    }
+                    request = new Request(state);
+                    request.getNewCommand();
+                }
             }
 
-            if(state.equals("battle")){
+            if (state.equals("battle")) {
 
             }
 

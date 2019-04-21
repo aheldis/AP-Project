@@ -91,10 +91,11 @@ public class Shop {
         }
     }
 
-    public void searchCollection(String name, Account account) {
+    public void searchCollection(Account account, String name) {
         //todo
         //model.account.getCollection().searchCardName(name);
         //model.account.getCollection().searchItemName(name);
+
 
     }
 
@@ -130,11 +131,8 @@ public class Shop {
         }
         if (itemExist(name)) {
             Usable item = getItem(name);
-            //if (item instanceof Usable) { //todo hamishe item hameja bejoz bazi usable hast
-                UsableId id = new UsableId(account, (Usable) item);
-//            } else if (item instanceof Collectable) {
-//                CollectableId id = new CollectableId(account, (Collectable) item);
-//            }
+            UsableId id = new UsableId(account, item);
+
             if (!enoughDaricForBuy(account, item.getCost()))
                 return;
             account.getCollection().addToItems(item);
@@ -156,7 +154,33 @@ public class Shop {
         }
     }
 
-    public static void help() {
+    private ArrayList<Hero> getHeros() {
+        ArrayList<Hero> heros = new ArrayList<>();
+        for (Card card : cards) {
+            if(card instanceof Hero)
+                heros.add((Hero) card);
+        }
+    }
+    private ArrayList<Minion> getMinions() {
+        ArrayList<Minion> minions = new ArrayList<>();
+        for (Card card : cards) {
+            if(card instanceof Minion)
+                minions.add((Minion) card);
+        }
+    }
+    private ArrayList<Spell> getSpells() {
+        ArrayList<Spell> spells = new ArrayList<>();
+        for (Card card : cards) {
+            if(card instanceof Spell)
+                spells.add((Spell) card);
+        }
+    }
+
+    public void show() {
+        accountView.cardsAndItemsView(getSpells(), getMinions(), getHeros(), items);
+    }
+
+    public void help() {
         accountView.viewHelpOfShop();
     }
 
