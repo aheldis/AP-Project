@@ -85,7 +85,8 @@ public class Collection {
         cards.addAll(heroes);
         for (Card card : cards) {
             if (card.getName().equals(cardName)) {
-                System.out.println(card.getCardId().getCardIdAsString());
+                AccountView accountView=AccountView.getInstance();
+                accountView.print(card.getCardId().getCardIdAsString());
                 have = true;
             }
         }
@@ -100,7 +101,10 @@ public class Collection {
         for (Usable item : items) {
             //if (item instanceof Usable) {
             if (item.getUsableId().getItemName().equals(itemName)) {
-                System.out.println(item.getUsableId().getUsableId()); //todo sout dari inja baad oon getItemName ro hamoon getName ro item seda ko
+                AccountView accountView=AccountView.getInstance();
+                accountView.print(item.getUsableId().getUsableId());
+                //todo sout dari inja baad oon getItemName ro hamoon getName ro item seda ko
+                //todo yani chi ??(Zahra )
                 have = true;
             }
             //}
@@ -120,13 +124,10 @@ public class Collection {
 
     }
 
-    public void save() {
-
-    }
 
     private NormalDeck passTheDeckIfHaveBeenExist(String deckName) {
         for (NormalDeck deck : decks) {
-            if (decks.getName().equals(deckName))
+            if (deck.getName().equals(deckName))
                 return deck;
         }
         return null;
@@ -184,11 +185,11 @@ public class Collection {
 
     public boolean heroHaveBeenExistInThisDeck(String deckName, String heroId) {
         for (Deck deck : decks) {
-            if (deck.getName.equals(deckName)) {
-                if (deck.hero == null)
+            if (deck.getName().equals(deckName)) {
+                if (deck.getHero() == null)
                     return false;
                 else {
-                    if (deck.hero.equals(heroId)) {//equal is a function in model.card
+                    if (deck.getHero().equals(heroId)) {//equal is a function in model.card
                         return true;
                     }
                     return true;
@@ -202,8 +203,8 @@ public class Collection {
 
     public Card cardHaveBeenExistInThisDeck(String deckName, String cardId) {
         for (Deck deck : decks) {
-            if (deck.getName.equals(deckName)) {
-                ArrayList<Card> cards = deck.getCardOfDeck();
+            if (deck.getName().equals(deckName)) {
+                ArrayList<Card> cards = deck.getCardsOfDeck();
                 for (Card card : cards) {
                     if (cards.equals(cardId))
                         return card;
@@ -249,7 +250,7 @@ public class Collection {
                 error.printMessage();
                 return;
             }
-            deck.setHero(card);
+            deck.setHero((Hero) card);
             return;
         }
 
@@ -301,7 +302,7 @@ public class Collection {
             return;
 
         if (card instanceof Hero) {
-            if (card.equals(deck.getHero.getCardID().getCardIdAsString))
+            if (card.equals(deck.getHero().getCardID().getCardIdAsString))
                 deck.setHero(null);
             else {
                 error = ErrorType.HAVE_NOT_HERO_IN_DECK;
@@ -314,7 +315,7 @@ public class Collection {
             error.printMessage();
             return;
         }
-        deck.removeFromCardsOFDeck(card);
+        deck.removeFromCardsOfDeck(card);
     }
 
     private Usable passItemifHaveBeenExistInThisDeck(Deck deck, String UsableItem) {
@@ -339,7 +340,7 @@ public class Collection {
             error.printMessage();
             return;
         }
-        deck.removeItem(item);
+        deck.removeItemOfDeck(item);
     }
 
     public boolean validateDeck(String deckName) {
@@ -432,5 +433,10 @@ public class Collection {
             }
         }
         return number;
+    }
+
+
+    public void save() {
+
     }
 }

@@ -3,6 +3,7 @@ package view;
 
 import model.Item.Item;
 import model.Item.Usable;
+import model.battle.NormalDeck;
 import model.battle.Player;
 import model.battle.Deck;
 import model.battle.Match;
@@ -91,7 +92,7 @@ public class AccountView {
         );
     }
 
-    public void decksView(ArrayList<Deck> decks) {
+    public void decksView(ArrayList<NormalDeck> decks) {
         int counterOfCards = 1, counterOfDeck = 1;
         Hero hero;
         Item item;
