@@ -49,19 +49,7 @@ public class AllAccount {
 
     public static void login(String userName, String password) { //todo ina bayad bere to conroller o ina :-?
         //(kheyr)todo controller miyad inja donbalet :))
-        Account account = getAccountByName(userName);
-        if (account == null) {//todo hamishe vojod dare chon to controller check mikonim
-//            ErrorType error = ErrorType.USER_NAME_NOT_FOUND;
-//            accountView.printError(error);
-            return;
-        }
-        if (account.matchPassword(password)) {
             //TODO login
-            return;
-        }
-        ErrorType error = ErrorType.PASSWORD_DOES_NOT_MATCH;
-        accountView.printError(error);
-        return;
 
     }
 
