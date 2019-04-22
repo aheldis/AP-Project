@@ -85,7 +85,7 @@ public class Collection {
         cards.addAll(heroes);
         for (Card card : cards) {
             if (card.getName().equals(cardName)) {
-                AccountView accountView=AccountView.getInstance();
+                AccountView accountView = AccountView.getInstance();
                 accountView.print(card.getCardId().getCardIdAsString());
                 have = true;
             }
@@ -101,7 +101,7 @@ public class Collection {
         for (Usable item : items) {
             //if (item instanceof Usable) {
             if (item.getUsableId().getItemName().equals(itemName)) {
-                AccountView accountView=AccountView.getInstance();
+                AccountView accountView = AccountView.getInstance();
                 accountView.print(item.getUsableId().getUsableId());
                 //todo sout dari inja baad oon getItemName ro hamoon getName ro item seda ko
                 //todo yani chi ??(Zahra )
@@ -201,21 +201,6 @@ public class Collection {
         return false;
     }
 
-    public Card cardHaveBeenExistInThisDeck(String deckName, String cardId) {
-        for (Deck deck : decks) {
-            if (deck.getName().equals(deckName)) {
-                ArrayList<Card> cards = deck.getCardsOfDeck();
-                for (Card card : cards) {
-                    if (cards.equals(cardId))
-                        return card;
-                }
-                return null;
-            }
-        }
-        ErrorType error = ErrorType.HAVE_NOT_DECK;
-        error.printMessage();
-        return null;
-    }
 
     public Card passCardByCardId(String cardId) {
         ArrayList<Card> cards = new ArrayList<>();
@@ -259,12 +244,12 @@ public class Collection {
             error.printMessage();
             return;
         }
-        if (cardHaveBeenExistInThisDeck(deckName, cardId) != null) {
-            error = ErrorType.HAVE_CARD_IN_DECK;
-            error.printMessage();
-            return;
-            deck.addToCardsOfDeck(card);
-        }
+//        if (cardHaveBeenExistInThisDeck(deckName, cardId) != null) {
+//            error = ErrorType.HAVE_CARD_IN_DECK;
+//            error.printMessage();
+//            return;
+//            deck.addToCardsOfDeck(card);
+//        }
 
     }
 
@@ -302,7 +287,7 @@ public class Collection {
             return;
 
         if (card instanceof Hero) {
-            if (card.equals(deck.getHero().getCardID().getCardIdAsString))
+            if (card.equalCard(deck.getHero().getCardID().getCardIdAsString))
                 deck.setHero(null);
             else {
                 error = ErrorType.HAVE_NOT_HERO_IN_DECK;
@@ -310,7 +295,7 @@ public class Collection {
             }
             return;
         }
-        if (cardHaveBeenExistInThisDeck(deckName, cardId) == null) {
+        if (deck.cardHaveBeenExistInThisDeck( cardId) == null) {
             error = ErrorType.HAVE_NOT_CARD_IN_DECK;
             error.printMessage();
             return;

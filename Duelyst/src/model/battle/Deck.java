@@ -4,6 +4,7 @@ import model.Item.Item;
 import model.card.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public abstract class Deck {
     private ArrayList<Card> cardsOfDeck = new ArrayList<>(20);
@@ -65,14 +66,21 @@ public abstract class Deck {
     }
 
     public Card showTheNextCardFromNextTurn() {
-
+        //todo
     }
 
-    public void setRandomOrderForDeck() {
-
+    public void setRandomOrderForDeck() {//faqat shoroye bazi seda kon
+        Collections.shuffle(cardsOfDeck);
 
     }
-
+    public Card cardHaveBeenExistInThisDeck( String cardId) {
+        ArrayList<Card> cards = getCardsOfDeck();
+        for (Card card : cards) {
+            if (cards.equals(cardId))
+                return card;
+        }
+        return null;
+    }
     public abstract void chooseCardsAndAddToCards();
 
     public abstract void chooseOfItemsAndAddToItems();

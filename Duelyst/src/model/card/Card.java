@@ -52,7 +52,7 @@ public abstract class Card {
         turnsOfPickingUp.add(number);
     }
 
-    public boolean equals(String cardId) {
+    public boolean equalCard(String cardId) {
         if (this.cardId.getCardIdAsString().equals(cardId))
             return true;
         return false;
