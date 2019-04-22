@@ -1,20 +1,64 @@
 package model.Item;
 
+import view.NewCardMessages;
+import view.Request;
+
 import java.io.*;
 import java.util.Scanner;
 
 public class MakeNewUsableFile {
 
-    public static void mainn(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    private static boolean checkSyntax(int lineNumber,String input){
+        switch (lineNumber){
+            case 1:
+                if(!input.matches("\\d+"))
+                    return false;
+                break;
+            case 2:
+                if(!input.matches("[\\+|-]?\\d+_\\d+"))
+                    return false;
+                break;
+            case 3:
+                if(!input.matches("\\w+_\\d+"))
+                    return false;
+                break;
+            case 4:
+                if(!input.matches("(ranged|hybrid|melee)"))
+                    return false;
+                break;
+            case 5:
+                if(!input.matches("\\d+"))
+                    return false;
+                break;
+            case 6:
+                if(!input.matches("(friend|enemy)_(hero|minion)_(true_false)"))
+                    return false;
+                break;
+            case 7:
+                if(!input.matches("\\d+"))
+                    return false;
+                break;
+            case 8:
+                if(!input.matches("(attack|death|put)"))
+                    return false;
+                break;
+        }
+        return true;
+    }
+
+    public static void makeUsableFile() {
+        Request request=new Request("item");
+        NewCardMessages newCardMessages=NewCardMessages.getInstance();
+        int lineNumber=1;
         while (true) {
             try {
 
                 FileReader fileReader = new FileReader("../ItemsFile/Usable/TEMPLATE");
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line = null;
-                System.out.println("name: ");
-                String input = scanner.nextLine();
+                newCardMessages.printer("name: ");
+                request.getNewLine();
+                String input = request.getCommand();
                 if (input.equals("EXIT"))
                     break;
                 File file = new File("../ItemsFile/Usable/" + input);
@@ -23,19 +67,22 @@ public class MakeNewUsableFile {
                 bufferedWriter.write("name: " + input);
                 bufferedWriter.newLine();
                 while ((line = bufferedReader.readLine()) != null) {
-                    System.out.println(line);
-                    input = scanner.nextLine();
-
+                    do{
+                        newCardMessages.printer(line);
+                        request.getNewLine();
+                        input = request.getCommand();
+                    }while (checkSyntax(lineNumber,input));
                     bufferedWriter.write(line);
                     bufferedWriter.write(" " + input);
                     bufferedWriter.newLine();
+                    lineNumber++;
                 }
                 bufferedWriter.close();
 
             } catch (FileNotFoundException e) {
-                System.out.println("file not found");
+                newCardMessages.printer("file not found");
             } catch (Exception e) {
-                System.out.println("other error");
+                newCardMessages.printer("other error");
             }
         }
     }
