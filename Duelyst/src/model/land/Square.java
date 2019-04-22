@@ -60,4 +60,6 @@ public class Square {
     public Object getObject() {
         return object;
     }
+
+    //todo hamsayeha
 }

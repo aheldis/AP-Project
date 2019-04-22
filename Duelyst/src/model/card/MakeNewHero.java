@@ -8,7 +8,7 @@ public class MakeNewHero {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
-
+//todo name pass hero
                 FileReader fileReader = new FileReader("../CardsFile/Hero/TEMPLATE");
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line = null;
