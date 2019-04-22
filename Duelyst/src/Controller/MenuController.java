@@ -16,7 +16,7 @@ import view.enums.RequestType;
 
 
 public class MenuController {
-    private String state = "login"; //todo esme in ye chiz dige bashe behtar nist? (svw)
+    private String state = "mainMenu"; //todo esme in ye chiz dige bashe behtar nist? (svw)
     private boolean endProgram = false;
     private Account account;
 
@@ -25,7 +25,7 @@ public class MenuController {
         request.getNewCommand();
         while (!endProgram) {
 
-            if (state.equals("login")) {
+            if (state.equals("mainMenu")) {
                 EnterGameMessages enterGameMessages = EnterGameMessages.getInstance();
                 if (request.getRequestType() == RequestType.SIGN_UP) {
 
@@ -41,7 +41,7 @@ public class MenuController {
                     request.getNewLine();
                     AllAccount.createAccount(username, request.getCommand());
                     account = AllAccount.getAccountByName(username);
-                    state = "menu";
+                    state = "accountMenu";
                 }
                 if (request.getRequestType() == RequestType.LOGIN) {
                     enterGameMessages.showLoginGetName();
@@ -61,13 +61,13 @@ public class MenuController {
                     }
                     AllAccount.login(userName, request.getCommand());
                     account = AllAccount.getAccountByName(userName);
-                    state = "menu";
+                    state = "accountMenu";
 
 
                 }
             }
 
-            if (state.equals("menu")) {
+            if (state.equals("accountMenu")) {
                 while (request.getRequestType() != RequestType.MENU_ENTER_EXIT) {
                     switch (request.getRequestType()) {
                         case MENU_ENTER_COLLECTION:
@@ -78,8 +78,8 @@ public class MenuController {
                             // TODO: bayad bebarim dakhele ye bazi
                             break;
                         case MENU_ENTER_HELP:
-                            MenuView menu = MenuView.getInstance();
-                            menu.helpForMainMenu();
+                            MenuView accountMenu = MenuView.getInstance();
+                            accountMenu.helpForMainMenu();
                             break;
                         case MENU_ENTER_SHOP:
                             state = "shop";
@@ -176,7 +176,7 @@ public class MenuController {
                         case COLLECTION_SAVE:
                             break;
                         case COLLECTION_EXIT:
-                            state = "menu";
+                            state = "accountMenu";
                             break;
                     }
 
