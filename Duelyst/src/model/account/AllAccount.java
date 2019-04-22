@@ -13,7 +13,7 @@ public class AllAccount {
 
     public static AllAccount getInstance() {
         if (singleInstance == null)
-            singleInstance = new Shop();
+            singleInstance = new AllAccount();
         return singleInstance;
     }
 

@@ -18,8 +18,8 @@ import view.enums.RequestType;
 public class MenuController {
     private String state = "mainMenu"; //todo esme in ye chiz dige bashe behtar nist? (svw)
     private boolean endProgram = false;
-    private Account account;
-
+    private Account account ;
+    private AllAccount allAccount=AllAccount.getInstance();
     public void main() {
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
@@ -31,7 +31,7 @@ public class MenuController {
 
                     enterGameMessages.showSignUpGetUserName();
                     request.getNewLine();
-                    while (AllAccount.userNameHaveBeenExist(request.getCommand())) {
+                    while (allAccount.userNameHaveBeenExist(request.getCommand())) {
                         enterGameMessages.showSignUpHaveUserName();
                         enterGameMessages.showSignUpGetUserName();
                         request.getNewLine();
@@ -39,15 +39,15 @@ public class MenuController {
                     String username = request.getCommand();
                     enterGameMessages.showSignUpGetPassword();
                     request.getNewLine();
-                    AllAccount.createAccount(username, request.getCommand());
-                    account = AllAccount.getAccountByName(username);
+                    allAccount.createAccount(username, request.getCommand());
+                    account = allAccount.getAccountByName(username);
                     state = "accountMenu";
                 }
                 if (request.getRequestType() == RequestType.LOGIN) {
                     enterGameMessages.showLoginGetName();
                     request.getNewLine();
                     String userName = request.getCommand();
-                    while (!AllAccount.userNameHaveBeenExist(userName)) {
+                    while (!allAccount.userNameHaveBeenExist(userName)) {
                         enterGameMessages.showLoginHaveNotName();
                         enterGameMessages.showLoginGetName();
                         request.getNewLine();
@@ -55,12 +55,12 @@ public class MenuController {
                     }
                     enterGameMessages.showLoginGetPassword();
                     request.getNewLine();
-                    while (!AllAccount.passwordMatcher(userName, request.getCommand())) {
+                    while (!allAccount.passwordMatcher(userName, request.getCommand())) {
                         enterGameMessages.showLoginGetPassword();
                         request.getNewLine();
                     }
-                    AllAccount.login(userName, request.getCommand());
-                    account = AllAccount.getAccountByName(userName);
+                    allAccount.login(userName, request.getCommand());
+                    account = allAccount.getAccountByName(userName);
                     state = "accountMenu";
 
 
