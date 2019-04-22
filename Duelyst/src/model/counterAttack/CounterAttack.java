@@ -7,7 +7,7 @@ public abstract class CounterAttack {
     protected String className;
     private Coordinate coordinate;
     private Card card;
-    boolean canCounterAttack=true;//if it has disarm buff it is false
+    boolean canCounterAttack = true;//if it has disarm buff it is false
 
 
     public Coordinate getCoordinate() {
@@ -18,7 +18,7 @@ public abstract class CounterAttack {
         return card;
     }
 
-    public String getClassName(){
+    public String getClassName() {
         return className;
     }
 
@@ -30,13 +30,15 @@ public abstract class CounterAttack {
         this.card = card;
     }
 
-    public void deleteCard(){
+    public void deleteCard() {
         card.removeCounterAttack();
         card = null;
     }
 
 
     public abstract void callFunctionForDefend(Coordinate coordinate);
+
     public abstract void callFunctionForAttack(Coordinate coordinate);
+
     public abstract Boolean checkIfSquareIsWithinRange(Coordinate coordinate);
 }

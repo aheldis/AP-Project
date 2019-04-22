@@ -3,6 +3,7 @@ package model.account;
 import model.battle.Deck;
 import model.battle.Match;
 import model.battle.NormalDeck;
+import model.battle.Player;
 import view.AccountView;
 
 import java.util.ArrayList;

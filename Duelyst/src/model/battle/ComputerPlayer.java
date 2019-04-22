@@ -1,4 +1,4 @@
-package model.account;
+package model.battle;
 
 public class ComputerPlayer {
 }

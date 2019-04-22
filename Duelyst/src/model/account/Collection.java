@@ -22,14 +22,14 @@ public class Collection {
         this.account = account;
     }
 
-    public String passCardIdByName(String name){
-        ArrayList<Card> cards=new ArrayList<>();
+    public String passCardIdByName(String name) {
+        ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(spells);
         cards.addAll(heroes);
         cards.addAll(minions);
 
-        for(Card card : cards){
-            if(name.equals(card.getName()))
+        for (Card card : cards) {
+            if (name.equals(card.getName()))
                 return card.getCardId().getCardIdAsString();
         }
         return "";
@@ -41,10 +41,10 @@ public class Collection {
 
     public void showCardsAndItems() {
         AccountView accountView = AccountView.getInstance();
-        accountView.cardsAndItemsView(spells, minions, heroes, new ArrayList <Usable> (Arrays.asList(items)));
+        accountView.cardsAndItemsView(spells, minions, heroes, new ArrayList<Usable>(Arrays.asList(items)));
     }
 
-    public void addToHeros(Hero hero){
+    public void addToHeros(Hero hero) {
         heroes.add(hero);
     }
 
@@ -66,11 +66,11 @@ public class Collection {
         return false;
     }
 
-    public void selectADeckAsMainDeck(String deckName){
+    public void selectADeckAsMainDeck(String deckName) {
 
-        NormalDeck deck=passTheDeckIfHaveBeenExist(deckName);
-        if(deck==null){
-            ErrorType error=ErrorType.HAVE_NOT_DECK;
+        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
+        if (deck == null) {
+            ErrorType error = ErrorType.HAVE_NOT_DECK;
             error.printMessage();
 
         }
@@ -99,10 +99,10 @@ public class Collection {
         boolean have = false;
         for (Usable item : items) {
             //if (item instanceof Usable) {
-                if (item.getUsableId().getItemName().equals(itemName)) {
-                    System.out.println(item.getUsableId().getUsableId()); //todo sout dari inja baad oon getItemName ro hamoon getName ro item seda ko
-                    have = true;
-                }
+            if (item.getUsableId().getItemName().equals(itemName)) {
+                System.out.println(item.getUsableId().getUsableId()); //todo sout dari inja baad oon getItemName ro hamoon getName ro item seda ko
+                have = true;
+            }
             //}
 //            if (item instanceof Collectable) {
 //                if (item.getCollectableId().getItemName().equals(itemName)) {
@@ -217,11 +217,11 @@ public class Collection {
     }
 
     public Card passCardByCardId(String cardId) {
-        ArrayList<Card> cards=new ArrayList<>();
+        ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(heroes);
         cards.addAll(minions);
         cards.addAll(spells);
-        for (Card card: cards) {
+        for (Card card : cards) {
             if (card.equals(cardId))
                 return card;
         }
@@ -240,11 +240,11 @@ public class Collection {
     public void addCardToThisDeck(Card card, String deckName) {
         ErrorType error;
         NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
-        if(!errorForDeck(deck))
-            return ;
+        if (!errorForDeck(deck))
+            return;
 
-        if(card instanceof Hero){
-            if (deck.getHero()!=null) {
+        if (card instanceof Hero) {
+            if (deck.getHero() != null) {
                 error = ErrorType.HAVE_HERO_IN_DECK;
                 error.printMessage();
                 return;
@@ -258,10 +258,10 @@ public class Collection {
             error.printMessage();
             return;
         }
-            if (cardHaveBeenExistInThisDeck(deckName, cardId) != null) {
-                error = ErrorType.HAVE_CARD_IN_DECK;
-                error.printMessage();
-                return;
+        if (cardHaveBeenExistInThisDeck(deckName, cardId) != null) {
+            error = ErrorType.HAVE_CARD_IN_DECK;
+            error.printMessage();
+            return;
             deck.addToCardsOfDeck(card);
         }
 
@@ -270,8 +270,8 @@ public class Collection {
     public void addItemToThisDeck(Usable item, String deckName) {
         ErrorType error;
         NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
-        if(!errorForDeck(deck))
-            return ;
+        if (!errorForDeck(deck))
+            return;
 
         if (deck.item != null) {
             error = ErrorType.HAVE_ONE_ITEM_IN_DECK;
@@ -283,7 +283,7 @@ public class Collection {
 
     }
 
-    public boolean errorForDeck(NormalDeck deck){
+    public boolean errorForDeck(NormalDeck deck) {
         ErrorType error;
         if (deck == null) {
             error = ErrorType.HAVE_NOT_DECK;
@@ -295,13 +295,13 @@ public class Collection {
 
     public void removeCardFromDeck(Card card, String deckName) {
         ErrorType error;
-        String cardId=card.getCardId().getCardIdAsString();
+        String cardId = card.getCardId().getCardIdAsString();
         NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
-        if(!errorForDeck(deck))
-            return ;
+        if (!errorForDeck(deck))
+            return;
 
-        if(card instanceof Hero){
-            if(card.equals(deck.getHero.getCardID().getCardIdAsString))
+        if (card instanceof Hero) {
+            if (card.equals(deck.getHero.getCardID().getCardIdAsString))
                 deck.setHero(null);
             else {
                 error = ErrorType.HAVE_NOT_HERO_IN_DECK;
@@ -309,17 +309,17 @@ public class Collection {
             }
             return;
         }
-        if(cardHaveBeenExistInThisDeck(deckName,cardId)==null){
-            error=ErrorType.HAVE_NOT_CARD_IN_DECK;
+        if (cardHaveBeenExistInThisDeck(deckName, cardId) == null) {
+            error = ErrorType.HAVE_NOT_CARD_IN_DECK;
             error.printMessage();
             return;
         }
         deck.removeFromCardsOFDeck(card);
     }
 
-    private Usable passItemifHaveBeenExistInThisDeck(Deck deck,String UsableItem){
-        for(int i=0;i<3;i++){
-            if(items[i].equals(UsableItem))
+    private Usable passItemifHaveBeenExistInThisDeck(Deck deck, String UsableItem) {
+        for (int i = 0; i < 3; i++) {
+            if (items[i].equals(UsableItem))
                 return items[i];
         }
         return null;
@@ -329,11 +329,11 @@ public class Collection {
 
     public void removeItemFromDeck(Usable usableItem, String deckName) {
         ErrorType error;
-        String usableItemId=usableItem.getUsableId().getUsableIdAsString();
+        String usableItemId = usableItem.getUsableId().getUsableIdAsString();
         NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
-        if(!errorForDeck(deck))
-            return ;
-        Usable item = passItemifHaveBeenExistInThisDeck(deck,usableItemId);
+        if (!errorForDeck(deck))
+            return;
+        Usable item = passItemifHaveBeenExistInThisDeck(deck, usableItemId);
         if (item == null) {
             error = ErrorType.HAVE_NOT_ITEM_IN_DECK;
             error.printMessage();
@@ -405,4 +405,32 @@ public class Collection {
         }
     }
 
+    public ArrayList<Card> getAllCards() {
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.addAll(heroes);
+        cards.addAll(minions);
+        cards.addAll(spells);
+        return cards;
+    }
+
+    public int getNumberOfCardId(Card card) {
+        ArrayList<Card> cards = getAllCards();
+        int number = 1;
+        for (Card card1 : cards) {
+            if (card1.getName().equals(card.getName())) {
+                number++;
+            }
+        }
+        return number;
+    }
+
+    public int getNumberOfItemId(Item item) {
+        int number = 1;
+        for (Item item1 : items) {
+            if (item1.getName().equals(item.getName())) {
+                number++;
+            }
+        }
+        return number;
+    }
 }
