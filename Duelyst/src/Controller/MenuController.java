@@ -13,10 +13,14 @@ import view.enums.EnterGameMessages;
 import view.enums.ErrorType;
 import view.enums.RequestType;
 
+import javax.swing.text.Element;
+import java.util.EventListener;
 
 
 public class MenuController {
     private String state = "mainMenu"; //todo esme in ye chiz dige bashe behtar nist? (svw)
+    // todo masalan chi??(zahra)
+
     private boolean endProgram = false;
     private Account account ;
     private AllAccount allAccount=AllAccount.getInstance();
@@ -27,43 +31,52 @@ public class MenuController {
 
             if (state.equals("mainMenu")) {
                 EnterGameMessages enterGameMessages = EnterGameMessages.getInstance();
-                if (request.getRequestType() == RequestType.SIGN_UP) {
-
-                    enterGameMessages.showSignUpGetUserName();
-                    request.getNewLine();
-                    while (allAccount.userNameHaveBeenExist(request.getCommand())) {
-                        enterGameMessages.showSignUpHaveUserName();
+                switch (request.getRequestType() ){
+                    case MAIN_MENU_SIGN_UP:
                         enterGameMessages.showSignUpGetUserName();
                         request.getNewLine();
-                    }
-                    String username = request.getCommand();
-                    enterGameMessages.showSignUpGetPassword();
-                    request.getNewLine();
-                    allAccount.createAccount(username, request.getCommand());
-                    account = allAccount.getAccountByName(username);
-                    state = "accountMenu";
-                }
-                if (request.getRequestType() == RequestType.LOGIN) {
-                    enterGameMessages.showLoginGetName();
-                    request.getNewLine();
-                    String userName = request.getCommand();
-                    while (!allAccount.userNameHaveBeenExist(userName)) {
-                        enterGameMessages.showLoginHaveNotName();
+                        while (allAccount.userNameHaveBeenExist(request.getCommand())) {
+                            enterGameMessages.showSignUpHaveUserName();
+                            enterGameMessages.showSignUpGetUserName();
+                            request.getNewLine();
+                        }
+                        String username = request.getCommand();
+                        enterGameMessages.showSignUpGetPassword();
+                        request.getNewLine();
+                        allAccount.createAccount(username, request.getCommand());
+                        account = allAccount.getAccountByName(username);
+                        state = "accountMenu";
+                        break;
+                    case MAIN_MENU_LOGIN:
                         enterGameMessages.showLoginGetName();
                         request.getNewLine();
-                        userName = request.getCommand();
-                    }
-                    enterGameMessages.showLoginGetPassword();
-                    request.getNewLine();
-                    while (!allAccount.passwordMatcher(userName, request.getCommand())) {
+                        String userName = request.getCommand();
+                        while (!allAccount.userNameHaveBeenExist(userName)) {
+                            enterGameMessages.showLoginHaveNotName();
+                            enterGameMessages.showLoginGetName();
+                            request.getNewLine();
+                            userName = request.getCommand();
+                        }
                         enterGameMessages.showLoginGetPassword();
                         request.getNewLine();
-                    }
-                    allAccount.login(userName, request.getCommand());
-                    account = allAccount.getAccountByName(userName);
-                    state = "accountMenu";
-
-
+                        while (!allAccount.passwordMatcher(userName, request.getCommand())) {
+                            enterGameMessages.showLoginGetPassword();
+                            request.getNewLine();
+                        }
+                        allAccount.login(userName, request.getCommand());
+                        account = allAccount.getAccountByName(userName);
+                        state = "accountMenu";
+                        break;
+                    case MAIN_MENU_HELP:
+                        MenuView menuView=new MenuView();
+                        menuView.helpForMainMenu();
+                        break;
+                    case MAIN_MENU_LEADER_BOARD:
+                        //TODO: ;)))
+                        break;
+                    case MAIN_MENU_SAVE:
+                        //todo
+                        break;
                 }
             }
 
@@ -79,7 +92,7 @@ public class MenuController {
                             break;
                         case MENU_ENTER_HELP:
                             MenuView accountMenu = MenuView.getInstance();
-                            accountMenu.helpForMainMenu();
+                            accountMenu.helpForAccountMenu();
                             break;
                         case MENU_ENTER_SHOP:
                             state = "shop";
@@ -218,7 +231,7 @@ public class MenuController {
                 }
             }
 
-            if (state.equals("battle")) {
+            if (state.equals("model/battle")) {
 
             }
 

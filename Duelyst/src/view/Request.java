@@ -59,7 +59,7 @@ public class Request {
 
     private RequestType getType() {
         ScannerCommand scannerCommand = new ScannerCommand();
-        if (state.equals("mainMenu")) {
+        if (state.equals("accountMenu")) {
             switch (command.toLowerCase()) {
                 case "enter collection":
                     return RequestType.MENU_ENTER_COLLECTION;
@@ -143,12 +143,19 @@ public class Request {
             else if (command.toLowerCase().matches("help")) {
                 return RequestType.SHOP_HELP;
             }
-        } else if (state.equals("login")) {
-            switch (command) {
+        } else if (state.equals("mainMenu")) {
+            switch (command.toLowerCase()) {
                 case "Login":
-                    return RequestType.LOGIN;
-                case "SignUp":
-                    return RequestType.SIGN_UP;
+                    return RequestType.MAIN_MENU_LOGIN;
+                case "Create account":
+                    return RequestType.MAIN_MENU_SIGN_UP;
+                case "Show leaderBoard" :
+                    return RequestType.MAIN_MENU_LEADER_BOARD;
+                case "Help":
+                    return RequestType.MAIN_MENU_HELP;
+                case "Save":
+                    return getRequestType().MAIN_MENU_SAVE;
+
             }
 
         } else if (state.equals("model/battle")) {

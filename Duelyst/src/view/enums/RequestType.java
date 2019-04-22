@@ -1,8 +1,11 @@
 package view.enums;
 
 public enum RequestType {
-    LOGIN,
-    SIGN_UP,
+    MAIN_MENU_SAVE,
+    MAIN_MENU_HELP,
+    MAIN_MENU_LEADER_BOARD,
+    MAIN_MENU_LOGIN,
+    MAIN_MENU_SIGN_UP,
     MENU_ENTER_COLLECTION,
     MENU_ENTER_SHOP,
     MENU_ENTER_BATTLE,

@@ -1,6 +1,7 @@
 package model.account;
 
 
+import model.card.MakeNewCard;
 import model.card.Spell;
 import view.NewCardMessages;
 import view.Request;
@@ -17,6 +18,8 @@ public class CardFiles {
 
 
         if (command.equals("Spell")) {
+            MakeNewCard.makeNewCardFromFile("Spell");
+
             NewCardMessages message = NewCardMessages.getInstance();
             request.getNewLine();
             command = request.getCommand();
@@ -83,10 +86,13 @@ public class CardFiles {
 
 
         } else if (command.equals("Minion")) {
+            MakeNewCard.makeNewCardFromFile("Minion");
 
         } else if (command.equals("Hero")) {
+            MakeNewCard.makeNewCardFromFile("Hero");
 
         } else if (command.equals("Item")) {
+            //todo
 
         }
     }
