@@ -119,7 +119,7 @@ public class Hero extends Card {
     }
 
     public void addNewHeroCard() {
-        //TODO add new other Card and also items (to removed: MakeNewHero and MakeNewUsableItem)
+        //TODO add new other Card and also items (to removed: MakeNewHero and MakeNewUsable Item)
     }
 
 

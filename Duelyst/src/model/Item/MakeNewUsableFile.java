@@ -3,7 +3,7 @@ package model.Item;
 import java.io.*;
 import java.util.Scanner;
 
-public class MakeNewUsableItem {
+public class MakeNewUsableFile {
 
     public static void mainn(String[] args) {
         Scanner scanner = new Scanner(System.in);

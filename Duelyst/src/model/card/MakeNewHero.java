@@ -10,6 +10,9 @@ public class MakeNewHero {
             try {
 //todo name pass hero
                 //todo hamishe baraye scan az request getNewLine ya getCommand estefade konin
+
+                // todo be dard nemikhore pakeh konam :? (zahra)
+
                 FileReader fileReader = new FileReader("../CardsFile/Hero/TEMPLATE");
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line = null;

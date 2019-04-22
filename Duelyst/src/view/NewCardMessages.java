@@ -13,6 +13,9 @@ public class NewCardMessages {
         System.out.println("Enter the name of card");
     }
 
+    public void printer(String string){
+        System.out.println(string);
+    }
 
     public void showFormatForSpells(String order){
         if(order.equals("cost"))

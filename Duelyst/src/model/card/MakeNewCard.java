@@ -1,19 +1,24 @@
 package model.card;
 
+import view.NewCardMessages;
 import view.Request;
 
 import java.io.*;
 
 public class MakeNewCard {
 
-    public static void makeNewCardFromFile(String filePathName) {
+    private static String checkSyntax(FileWriter fileWriter,String line){
+    }
+
+    public static void makeNewCardFile(String filePathName) {
+        NewCardMessages newCardMessages= NewCardMessages.getInstance();
         Request request=new Request("Card");
         while (true) {
             try {
                 FileReader fileReader = new FileReader("../CardsFile/"+filePathName+"/TEMPLATE");
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line = null;
-                System.out.println("name: ");
+                newCardMessages.printer("name: ");
                 request.getNewLine();
                 String input = request.getCommand();
                 if (input.equals("EXIT"))
@@ -22,10 +27,10 @@ public class MakeNewCard {
                 FileWriter fileWriter = new FileWriter(file);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 while ((line = bufferedReader.readLine()) != null) {
-                    System.out.println(line);
+                    newCardMessages.printer(line);
+
                     request.getNewLine();
                     input = request.getCommand();
-
                     bufferedWriter.write(line);
                     bufferedWriter.write(" " + input);
                     bufferedWriter.newLine();
@@ -33,9 +38,9 @@ public class MakeNewCard {
                 bufferedWriter.close();
 
             } catch (FileNotFoundException e) {
-                System.out.println("file not found");
+                newCardMessages.printer("file not found");
             } catch (Exception e) {
-                System.out.println("other error");
+                newCardMessages.printer("other error");
             }
         }
     }
