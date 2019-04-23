@@ -63,20 +63,20 @@ public class AccountView {
         System.out.print(counterOfCard + " : Name : " + hero.getName() +
                 " - AP : " + hero.getAp() +
                 " – HP : " + hero.getHp() +
-                " – Class : " + hero.getCounterAttackClassName() +
+                " – Class : " + hero.getCounterAttack().getClassName() +
                 " – Special power: " + hero.getSpecialPowerInfo()
         );
     }
 
-    private void showEachMinion(Card card, int counterOfCards) {
+    private void showEachMinion(Minion minion, int counterOfCards) {
         System.out.print(counterOfCards + " : Type : Minion");
         System.out.print(" : Name : " + card.getName() +
-                " – Class: " + card.getCounterAttackClassName() +
-                " - AP : " + card.getAp() +
-                " – HP : " + card.getHp() +
-                " - MP : " + card.getMp() +
-                " – Class : " + card.getCounterAttackClassName() +
-                " – Special power: " + card.getSpecialPowerInfo()
+                " – Class: " + minion.getCounterAttack().getClassName() +
+                " - AP : " + minion.getAp() +
+                " – HP : " + minion.getHp() +
+                " - MP : " + minion.getMp() +
+                " – Class : " + minion.getCounterAttack().getClassName() +
+                " – Special power: " + minion.getSpecialPowerInfo()
         );
     }
 
@@ -86,11 +86,11 @@ public class AccountView {
         );
     }
 
-    private void showEachSpell(Card card, int counterOfCards) {
+    private void showEachSpell(Spell spell, int counterOfCards) {
         System.out.print(counterOfCards + " : Type : Spell");
-        System.out.print(" - Name : " + card.getName() +
-                " - MP : " + card.getMp() +
-                " – Desc : " + card.getDescription()
+        System.out.print(" - Name : " + spell.getName() +
+                " - MP : " + spell.getMp() +
+                " – Desc : " + spell.getDescription()
         );
     }
 

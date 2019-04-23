@@ -4,11 +4,16 @@ import model.account.Account;
 
 public abstract class Player {
     private Account account;
-    private Deck mainDeck;
+    protected Deck mainDeck;
     private Hand hand;
     protected String type;
     private Match match;
     private int turnsPlayed;
+    private GraveYard graveYard;
+
+    public GraveYard getGraveYard() {
+        return graveYard;
+    }
 
     public Account getAccount() {
         return account;

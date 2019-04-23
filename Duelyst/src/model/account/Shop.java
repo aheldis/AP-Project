@@ -133,7 +133,7 @@ public class Shop {
         } else if (item != null) {
             collection.removeItem(item);
         } else {
-            ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_Collection;
+            ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION;
             accountView.printError(error);
             return;
         }
