@@ -2,15 +2,27 @@ package model.battle;
 
 import model.Item.Item;
 import model.card.*;
+import view.BattleView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public abstract class Deck {
+public class Deck {
     private ArrayList<Card> cardsOfDeck = new ArrayList<>(20);
     private String deckName;
     private Item item;
     private Hero hero;
+    private int indexOfCards = 0;
+
+    public void setIndexOfCards(int indexOfCards) {
+        this.indexOfCards = indexOfCards;
+    }
+
+    public void increaseIndexOfCards() {
+        this.indexOfCards++;
+    }
+
+
 
     public Hero getHero() {
         return hero;
@@ -65,23 +77,31 @@ public abstract class Deck {
         this.hero = null;
     }
 
-    public Card showTheNextCardFromNextTurn() {
-        //todo
+    public void showTheNextCardFromNextTurn() {
+        BattleView battleView=BattleView.getInstance();
+       battleView.showNextCardId(passNextCard().getCardId().getCardIdAsString());
     }
 
     public void setRandomOrderForDeck() {//faqat shoroye bazi seda kon
         Collections.shuffle(cardsOfDeck);
 
     }
-    public Card cardHaveBeenExistInThisDeck( String cardId) {
+
+    public Card passNextCard() {
+        return cardsOfDeck.get(indexOfCards);
+
+    }
+
+    public Card cardHaveBeenExistInThisDeck(String cardId) {
         ArrayList<Card> cards = getCardsOfDeck();
         for (Card card : cards) {
-            if (cards.equals(cardId))
+            if (card.equalCard(cardId))
                 return card;
         }
         return null;
     }
-    public abstract void chooseCardsAndAddToCards();
 
-    public abstract void chooseOfItemsAndAddToItems();
+    public void setRandomCardsAndItemsInDeck(){//todo
+
+    }
 }
