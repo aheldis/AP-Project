@@ -1,7 +1,9 @@
 package view;
 
+
 public class ErrorViewer {
     private static ErrorViewer singleInstance = null;
+    private ErrorViewer(){}
 
     public static ErrorViewer getInstance() {
         if (singleInstance == null) {

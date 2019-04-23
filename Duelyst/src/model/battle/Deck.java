@@ -2,6 +2,7 @@ package model.battle;
 
 import model.Item.Item;
 import model.card.*;
+import view.BattleView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,11 +12,14 @@ public abstract class Deck {
     private String deckName;
     private Item item;
     private Hero hero;
-    private int turn =0;
-    //protected int numberOfCardsUsedInDeck=0;
+    private int indexOfCards = 0;
 
-    public void addToTurn(){
-        turn++;
+    public void setIndexOfCards(int indexOfCards) {
+        this.indexOfCards = indexOfCards;
+    }
+
+    public void increaseIndexOfCards() {
+        this.indexOfCards++;
     }
 
     public Hero getHero() {
@@ -72,18 +76,21 @@ public abstract class Deck {
     }
 
     public void showTheNextCardFromNextTurn() {
-        System.out.println(passNextCard().getCardId());//todo sout
+        BattleView battleView=BattleView.getInstance();
+       battleView.showNextCardId(passNextCard().getCardId().getCardIdAsString());
     }
 
     public void setRandomOrderForDeck() {//faqat shoroye bazi seda kon
         Collections.shuffle(cardsOfDeck);
 
     }
-    public Card passNextCard(){
-        //todo
+
+    public Card passNextCard() {
+        return cardsOfDeck.get(indexOfCards);
 
     }
-    public Card cardHaveBeenExistInThisDeck( String cardId) {
+
+    public Card cardHaveBeenExistInThisDeck(String cardId) {
         ArrayList<Card> cards = getCardsOfDeck();
         for (Card card : cards) {
             if (card.equalCard(cardId))
@@ -91,6 +98,7 @@ public abstract class Deck {
         }
         return null;
     }
+
     public abstract void chooseCardsAndAddToCards();
 
     public abstract void chooseOfItemsAndAddToItems();

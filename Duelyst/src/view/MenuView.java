@@ -2,7 +2,7 @@ package view;
 
 public class MenuView {
     private static MenuView singleInstance = null;
-
+    private MenuView(){}
     public static MenuView getInstance() {
         if (singleInstance == null)
             singleInstance = new MenuView();

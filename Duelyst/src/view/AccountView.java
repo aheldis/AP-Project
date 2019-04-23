@@ -17,6 +17,9 @@ public class AccountView {
 
     private static AccountView singleInstance = null;
 
+    private AccountView() {
+    }
+
     public static AccountView getInstance() {
         if (singleInstance == null) {
             singleInstance = new AccountView();
