@@ -28,6 +28,9 @@ public class Account implements Comparable<Account> {
         this.mainDeck=deck;
     }
 
+    public void addToWins() {
+        wins++;
+    }
     public int getWins() {
         return wins;
     }
