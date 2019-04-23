@@ -11,6 +11,12 @@ public abstract class Deck {
     private String deckName;
     private Item item;
     private Hero hero;
+    private int turn =0;
+    //protected int numberOfCardsUsedInDeck=0;
+
+    public void addToTurn(){
+        turn++;
+    }
 
     public Hero getHero() {
         return hero;
@@ -65,18 +71,22 @@ public abstract class Deck {
         this.hero = null;
     }
 
-    public Card showTheNextCardFromNextTurn() {
-        //todo
+    public void showTheNextCardFromNextTurn() {
+        System.out.println(passNextCard().getCardId());//todo sout
     }
 
     public void setRandomOrderForDeck() {//faqat shoroye bazi seda kon
         Collections.shuffle(cardsOfDeck);
 
     }
+    public Card passNextCard(){
+        //todo
+
+    }
     public Card cardHaveBeenExistInThisDeck( String cardId) {
         ArrayList<Card> cards = getCardsOfDeck();
         for (Card card : cards) {
-            if (cards.equals(cardId))
+            if (card.equalCard(cardId))
                 return card;
         }
         return null;
