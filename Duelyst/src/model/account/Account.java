@@ -2,7 +2,6 @@ package model.account;
 
 import model.battle.Deck;
 import model.battle.Match;
-import model.battle.NormalDeck;
 import model.battle.Player;
 import view.AccountView;
 
@@ -17,14 +16,14 @@ public class Account implements Comparable<Account> {
     private ArrayList<Match> matchHistory;
     private Collection collection;
     private Player player;
-    private NormalDeck mainDeck;
+    private Deck mainDeck;
     private ArrayList<Deck> decks;
 
     public Account(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
-    public void setMainDeck(NormalDeck deck){
+    public void setMainDeck(Deck deck){
         this.mainDeck=deck;
     }
 
@@ -56,7 +55,7 @@ public class Account implements Comparable<Account> {
         return decks;
     }
 
-    public NormalDeck getMainDeck() {
+    public Deck getMainDeck() {
         return mainDeck;
     }
 
@@ -65,7 +64,7 @@ public class Account implements Comparable<Account> {
     }
 
     private void setDeckFromCollection() {
-        decks = (ArrayList<Deck>) collection.getDecks();
+        decks =  collection.getDecks();
     }
 
     public boolean matchPassword(String password) {

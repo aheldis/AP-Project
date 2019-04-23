@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Hand {
     private Deck deck;
-    protected ArrayList<Card> gameCards;
-    protected ArrayList<Item> gameUsableItem;
+    private ArrayList<Card> gameCards;
+    private ArrayList<Item> gameUsableItem=new ArrayList<>();
     private final int RAND_NUMBER=11;
 
     public Hand (Deck deck){

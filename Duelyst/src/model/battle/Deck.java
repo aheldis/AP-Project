@@ -7,7 +7,7 @@ import view.BattleView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public abstract class Deck {
+public class Deck {
     private ArrayList<Card> cardsOfDeck = new ArrayList<>(20);
     private String deckName;
     private Item item;
@@ -21,6 +21,8 @@ public abstract class Deck {
     public void increaseIndexOfCards() {
         this.indexOfCards++;
     }
+
+
 
     public Hero getHero() {
         return hero;
@@ -99,7 +101,7 @@ public abstract class Deck {
         return null;
     }
 
-    public abstract void chooseCardsAndAddToCards();
+    public void setRandomCardsAndItemsInDeck(){//todo
 
-    public abstract void chooseOfItemsAndAddToItems();
+    }
 }

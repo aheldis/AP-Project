@@ -16,7 +16,7 @@ public class Collection {
     private ArrayList<Minion> minions;
     private Usable[] items = new Usable[3];
     private Account account;
-    private ArrayList<NormalDeck> decks;
+    private ArrayList<Deck> decks;
 
     public Collection(Account account) {
         this.account = account;
@@ -35,7 +35,7 @@ public class Collection {
         return "";
     }
 
-    public ArrayList getDecks() {
+    public ArrayList<Deck> getDecks() {
         return decks;
     }
 
@@ -68,7 +68,7 @@ public class Collection {
 
     public void selectADeckAsMainDeck(String deckName) {
 
-        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
+        Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck == null) {
             ErrorType error = ErrorType.HAVE_NOT_DECK;
             error.printMessage();
@@ -124,9 +124,8 @@ public class Collection {
 
     }
 
-
-    private NormalDeck passTheDeckIfHaveBeenExist(String deckName) {
-        for (NormalDeck deck : decks) {
+    private Deck passTheDeckIfHaveBeenExist(String deckName) {
+        for (Deck deck : decks) {
             if (deck.getName().equals(deckName))
                 return deck;
         }
@@ -139,14 +138,14 @@ public class Collection {
             error.printMessage();
             return;
         }
-        NormalDeck deck = new NormalDeck();
+        Deck deck = new Deck();
         deck.setName(deckName);
         decks.add(deck);
 
     }
 
     public void deleteDeck(String deckName) {
-        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
+        Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck != null)
             decks.remove(deck);
         else {
@@ -225,7 +224,7 @@ public class Collection {
 
     public void addCardToThisDeck(Card card, String deckName) {
         ErrorType error;
-        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
+        Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (!errorForDeck(deck))
             return;
 
@@ -255,11 +254,11 @@ public class Collection {
 
     public void addItemToThisDeck(Usable item, String deckName) {
         ErrorType error;
-        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
+        Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (!errorForDeck(deck))
             return;
 
-        if (deck.item != null) {
+        if (deck.getItem() != null) {
             error = ErrorType.HAVE_ONE_ITEM_IN_DECK;
             error.printMessage();
             return;
@@ -269,7 +268,7 @@ public class Collection {
 
     }
 
-    public boolean errorForDeck(NormalDeck deck) {
+    public boolean errorForDeck(Deck deck) {
         ErrorType error;
         if (deck == null) {
             error = ErrorType.HAVE_NOT_DECK;
@@ -282,7 +281,7 @@ public class Collection {
     public void removeCardFromDeck(Card card, String deckName) {
         ErrorType error;
         String cardId = card.getCardId().getCardIdAsString();
-        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
+        Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (!errorForDeck(deck))
             return;
 
@@ -316,7 +315,7 @@ public class Collection {
     public void removeItemFromDeck(Usable usableItem, String deckName) {
         ErrorType error;
         String usableItemId = usableItem.getUsableId().getUsableIdAsString();
-        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
+        Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (!errorForDeck(deck))
             return;
         Usable item = passItemifHaveBeenExistInThisDeck(deck, usableItemId);
@@ -330,7 +329,7 @@ public class Collection {
 
     public boolean validateDeck(String deckName) {
         ErrorType error;
-        NormalDeck deck = passTheDeckIfHaveBeenExist(deckName);
+        Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck != null) {
             if (deck.validate())
                 return true;
@@ -343,7 +342,7 @@ public class Collection {
     }
 
     public void showAlldecks() {//if it has main deck we should show it first
-        NormalDeck deck = account.getMainDeck();
+        Deck deck = account.getMainDeck();
         if (deck != null) {//change the place of main deck to the end and print from last index
             decks.remove(deck);
             decks.add(deck);

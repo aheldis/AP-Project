@@ -3,7 +3,6 @@ package view;
 
 import model.Item.Item;
 import model.Item.Usable;
-import model.battle.NormalDeck;
 import model.battle.Player;
 import model.battle.Deck;
 import model.battle.Match;
@@ -95,7 +94,7 @@ public class AccountView {
         );
     }
 
-    public void decksView(ArrayList<NormalDeck> decks) {
+    public void decksView(ArrayList<Deck> decks) {
         int counterOfCards = 1, counterOfDeck = 1;
         Hero hero;
         Item item;
@@ -119,7 +118,7 @@ public class AccountView {
                 System.out.println("\n");
             }
 
-            cards = decks.get(i).getCardsOfdeck();
+            cards = decks.get(i).getCardsOfDeck();
             System.out.println("     Cards :");
             if (cards.size() != 0) {
                 for (Card card : cards) {
@@ -162,7 +161,7 @@ public class AccountView {
 
         }
 
-        ArrayList<Card> cards = deck.getCardsOfdeck();
+        ArrayList<Card> cards = deck.getCardsOfDeck();
         System.out.println("Cards :");
         if (cards.size() != 0) {
             for (Card card : cards) {
