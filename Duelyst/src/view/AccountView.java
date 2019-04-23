@@ -46,14 +46,14 @@ public class AccountView {
         counter = 1;
         for (Spell spell : spells) {
             System.out.print("          ");
-            showEachSpell((Card) spell, counter);
+            showEachSpell(spell, counter);
             System.out.println(" – Sell Cost : " + spell.getCost());
             counter++;
         }
         counter = 1;
         for (Minion minion : minions) {
             System.out.print("          ");
-            showEachMinion((Card) minion, counter);
+            showEachMinion((minion, counter);
             System.out.println(" – Sell Cost : " + minion.getCost());
             counter++;
         }
