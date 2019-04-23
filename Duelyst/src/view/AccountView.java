@@ -70,12 +70,12 @@ public class AccountView {
 
     private void showEachMinion(Minion minion, int counterOfCards) {
         System.out.print(counterOfCards + " : Type : Minion");
-        System.out.print(" : Name : " + card.getName() +
-                " – Class: " + minion.getCounterAttack().getClassName() +
+        System.out.print(" : Name : " + minion.getName() +
+                " – Class: " + minion.getCounterAttackClassName() +
                 " - AP : " + minion.getAp() +
                 " – HP : " + minion.getHp() +
                 " - MP : " + minion.getMp() +
-                " – Class : " + minion.getCounterAttack().getClassName() +
+                " – Class : " + minion.getCounterAttackClassName() +
                 " – Special power: " + minion.getSpecialPowerInfo()
         );
     }
@@ -124,11 +124,11 @@ public class AccountView {
                 for (Card card : cards) {
                     if (card instanceof Spell) {
                         System.out.print("          ");
-                        showEachSpell(card, counterOfCards);
+                        showEachSpell((Spell) card, counterOfCards);
                         System.out.println("\n");
                     } else if (card instanceof Minion) {
                         System.out.print("          ");
-                        showEachMinion(card, counterOfCards);
+                        showEachMinion((Minion) card, counterOfCards);
                         System.out.println("\n");
                     }
                     counterOfCards++;
@@ -167,12 +167,12 @@ public class AccountView {
             for (Card card : cards) {
                 if (card instanceof Spell) {
                     System.out.print("     ");
-                    showEachSpell(card, counterOfCards);
+                    showEachSpell((Spell) card, counterOfCards);
                     System.out.println("\n");
 
                 } else if (card instanceof Minion) {
                     System.out.print("     ");
-                    showEachMinion(card, counterOfCards);
+                    showEachMinion((Minion) card, counterOfCards);
                     System.out.println("\n");
                 }
                 counterOfCards++;
