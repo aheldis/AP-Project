@@ -1,6 +1,7 @@
 package model.account;
 
 
+import model.card.Card;
 import model.card.MakeNewCard;
 import model.card.Spell;
 import view.NewCardMessages;
@@ -96,7 +97,7 @@ public class CardFiles {
         }
     }
 
-    public void makeCardFromFile(String fileName) {
+    public Card makeCardFromFile(String fileName) {
         fileName += ".txt";
         String line = null;
         String answer;
@@ -126,6 +127,7 @@ public class CardFiles {
                     answer=line.substring(6);
                     spell.setDescription(answer);
 
+                    return spell;
 
                 } else if (line.equals("Minion")) {
 

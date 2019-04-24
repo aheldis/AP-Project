@@ -9,7 +9,10 @@ public class LandOfGame {
     }
 
 // we may not use this function
-    public LandOfGame getInstance() {
+
+    //todo fekr konam nabayd singletone bashe chon har matchi ke dorost mikonim yebar bayad besazimesh
+
+    public static LandOfGame getInstance() {
         return LAND_OF_GAME;
     }
 

@@ -12,8 +12,15 @@ public class Square {
     private Coordinate coordinate;
     private Object object;
 
-    Square(Coordinate coordinate) {
+   public Square(Coordinate coordinate) {
         this.coordinate = coordinate;
+    }
+
+    public int getXCoordinate(){
+       return coordinate.getX();
+    }
+    public int getyCoordinate(){
+       return coordinate.getY();
     }
 
     public void setScale(int scale) {
