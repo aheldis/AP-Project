@@ -1,4 +1,4 @@
-package view.enums;
+package view;
 
 public class EnterGameMessages {
     private static EnterGameMessages singleInstance=null;

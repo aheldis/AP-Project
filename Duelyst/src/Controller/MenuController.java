@@ -14,6 +14,8 @@ import view.enums.ErrorType;
 import view.enums.RequestType;
 import view.enums.StateType;
 
+import javax.swing.text.SimpleAttributeSet;
+
 
 public class MenuController {
     private StateType state = StateType.MAIN_MENU; //todo esme in ye chiz dige bashe behtar nist? (svw)
@@ -231,7 +233,14 @@ public class MenuController {
 
             if (state == StateType.BATTLE) {
 
+            }
+            if(state == StateType.GRAVE_YARD){
 
+            }
+            if(state == StateType.SELECT_ITEM){
+
+            }
+            if(state == StateType.SELECT_CARD){
 
             }
 
