@@ -1,6 +1,5 @@
 package model.account;
 
-import view.enums.ErrorType;
 import view.AccountView;
 
 import java.util.ArrayList;

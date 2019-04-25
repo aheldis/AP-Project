@@ -19,6 +19,7 @@ public abstract class Player {
     private int turnsPlayed = 0;
     private GraveYard graveYard=new GraveYard();
     protected Player opponent;
+
     ArrayList<Flag> flags;
     private ArrayList<Card> cardsOnLand = new ArrayList<>();
 
@@ -42,19 +43,20 @@ public abstract class Player {
             card.changeTurnOfCanNotAttack(-1);
             card.changeTurnOfCanNotCounterAttack(-1);
             card.changeTurnOfCanNotMove(-1);
-            if(card.getTurnOfCanNotAttack()<=0)
+            if (card.getTurnOfCanNotAttack() <= 0)
                 card.setCanCounterAttack(true);
-            if(card.getTurnOfCanNotCounterAttack()<=0)
+            if (card.getTurnOfCanNotCounterAttack() <= 0)
                 card.setCanCounterAttack(true);
-            if(card.getTurnOfCanNotMove()<=0)
+            if (card.getTurnOfCanNotMove() <= 0)
                 card.setCanMove(true);
         }
         turnsPlayed ++;
     }
 
-    public void addToCardsOfLand(Card card){
+    public void addToCardsOfLand(Card card) {
         cardsOnLand.add(card);
     }
+
     public GraveYard getGraveYard() {
         return graveYard;
     }
@@ -83,6 +85,13 @@ public abstract class Player {
         return turnsPlayed;
     }
 
+    public void setHand() {
+
+    }
+
+    public void counterAttack(Card card, Card theOneWhoAttacked) {
+
+    }
 
     public abstract void playTurn();
 

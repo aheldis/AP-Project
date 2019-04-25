@@ -1,0 +1,10 @@
+singlePlayer(true/false):
+mode(death/save/collect):
+story(true/false):
+customGame(true/false):
+levelNumber:
+hero:
+spells:
+minions:
+item:
+reward:

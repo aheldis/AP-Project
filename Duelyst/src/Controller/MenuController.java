@@ -7,14 +7,12 @@ import model.account.AllAccount;
 import model.account.Collection;
 import model.account.Shop;
 import model.card.Card;
+import view.EnterGameMessages;
 import view.MenuView;
 import view.Request;
-import view.EnterGameMessages;
 import view.enums.ErrorType;
 import view.enums.RequestType;
 import view.enums.StateType;
-
-import javax.swing.text.SimpleAttributeSet;
 
 
 public class MenuController {
@@ -22,8 +20,9 @@ public class MenuController {
     // todo masalan chi??(zahra)
 
     private boolean endProgram = false;
-    private Account account ;
-    private AllAccount allAccount=AllAccount.getInstance();
+    private Account account;
+    private AllAccount allAccount = AllAccount.getInstance();
+
     public void main() {
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
@@ -31,7 +30,7 @@ public class MenuController {
 
             if (state == StateType.MAIN_MENU) {
                 EnterGameMessages enterGameMessages = EnterGameMessages.getInstance();
-                switch (request.getRequestType() ){
+                switch (request.getRequestType()) {
                     case MAIN_MENU_SIGN_UP:
                         enterGameMessages.showSignUpGetUserName();
                         request.getNewLine();
@@ -65,14 +64,14 @@ public class MenuController {
                         }
                         allAccount.login(userName, request.getCommand());
                         account = allAccount.getAccountByName(userName);
-                        state  = StateType.ACCOUNT_MENU;
+                        state = StateType.ACCOUNT_MENU;
                         break;
                     case MAIN_MENU_HELP:
-                        MenuView menuView=MenuView.getInstance();
+                        MenuView menuView = MenuView.getInstance();
                         menuView.helpForMainMenu();
                         break;
                     case MAIN_MENU_LEADER_BOARD:
-                        //TODO: ;)))
+                        AllAccount.getInstance().showLeaderBoard();
                         break;
                     case MAIN_MENU_SAVE:
                         //todo
@@ -210,7 +209,7 @@ public class MenuController {
                         case SHOP_SEARCH_COLLECTION_CARD:
                             shop.searchCollection(account, request.getId());
                             break;
-                        case SHOP_SERACH_CARD:
+                        case SHOP_SEARCH_CARD:
                             shop.search(account, request.getId());
                             break;
                         case SHOP_BUY:
@@ -234,13 +233,13 @@ public class MenuController {
             if (state == StateType.BATTLE) {
 
             }
-            if(state == StateType.GRAVE_YARD){
+            if (state == StateType.GRAVE_YARD) {
 
             }
-            if(state == StateType.SELECT_ITEM){
+            if (state == StateType.SELECT_ITEM) {
 
             }
-            if(state == StateType.SELECT_CARD){
+            if (state == StateType.SELECT_CARD) {
 
             }
 
