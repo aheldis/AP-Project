@@ -15,6 +15,22 @@ public class Match {
     private LandOfGame land;
     private int whichPlayer = 0; //0--> player 1 /1--> player 2
 
+    public void startMatch() {
+//        players[0].initPlayers();
+//        players[1].initPlayers();
+        initGame();
+        players[0].initPerTurn();
+        players[1].initPerTurn();
+
+        while (true) {
+            players[whichPlayer].playTurn();
+            if (gameEnded()) {
+                break;
+            }
+            whichPlayer = 1 - whichPlayer;
+        }
+    }
+
 
     public Match(Player[] players,String mode){//when we make a match we should have players
         this.players=players;
@@ -23,10 +39,16 @@ public class Match {
     }
 
     public void initGame(){
+
         //set reward
-        //set random hand
-        //make graveyard
-        //add hero of each player to cards of land of them
+
+        players[0].mainDeck.setRandomOrderForDeck();
+        players[0].getHand().setCards();
+        players[1].mainDeck.setRandomOrderForDeck();
+        players[1].getHand().setCards();
+
+        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
+        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
 
     }
 
@@ -76,21 +98,7 @@ public class Match {
         //todo
     }
 
-    public void startMatch() {
-//        players[0].initPlayers();
-//        players[1].initPlayers();
-        initGame();
-        players[0].initPerTurn();
-        players[1].initPerTurn();
 
-        while (true) {
-            players[whichPlayer].playTurn();
-            if (gameEnded()) {
-                break;
-            }
-            whichPlayer = 1 - whichPlayer;
-        }
-    }
 
     public boolean gameEnded() {
         //todo

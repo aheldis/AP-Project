@@ -10,10 +10,14 @@ public class Hand {
     private Deck deck;
     private ArrayList<Card> gameCards;
     private ArrayList<Item> collectableItems=new ArrayList<>();
-    private final int RAND_NUMBER=11;
+    //private final int RAND_NUMBER=11;
 
     public Hand (Deck deck){
         this.deck=deck;
+    }
+
+    public ArrayList<Card> getGameCards(){
+        return gameCards;
     }
 
     public void setCards() {//set cards for start of game after shuttle cards in deck

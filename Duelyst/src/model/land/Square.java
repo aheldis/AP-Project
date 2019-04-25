@@ -1,6 +1,7 @@
 package model.land;
 
 import model.Item.Flag;
+import model.battle.Hand;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
@@ -22,6 +23,9 @@ public class Square {
     }
     public int getYCoordinate(){
        return coordinate.getY();
+    }
+    public Coordinate getCoordinate(){
+       return coordinate;
     }
 
     public void setScale(int scale) {
@@ -59,6 +63,14 @@ public class Square {
     public void removeCardFromSquare() {
         if (object instanceof Card)
             object = null;
+    }
+    public void putCard(Card card){
+       if(card instanceof Spell)
+           putSpell((Spell) card);
+       if(card instanceof Minion)
+           putMinion((Minion) card);
+       if(card instanceof Hero)
+           putHero((Hero)card);
     }
 
     public void setCard(Card card) {

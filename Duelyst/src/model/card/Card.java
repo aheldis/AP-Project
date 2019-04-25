@@ -1,19 +1,43 @@
 package model.card;
 
 
+import model.battle.Target;
+import model.land.LandOfGame;
 import model.land.Square;
+import model.requirment.Coordinate;
 
 import java.util.ArrayList;
 
 public abstract class Card {
-    private Change change=new Change();
+    private Change change=new Change();//HAS-A
+    private Target target;
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
     private int cost;
     private ArrayList <Buff> buffsOnThisCard;
     private Square position;
+    private LandOfGame landOfGame;
 
+    public void setLandOfGame(LandOfGame landOfGame){
+        this.landOfGame=landOfGame;
+    }
+
+    public void move(Coordinate coordinate ){
+        if(withinRange(coordinate)){
+            landOfGame.removeCardFromAnSquare(position.getCoordinate());
+            landOfGame.addCardToAnSquare(coordinate,cardId);//todo
+        }
+
+    }
+
+    public boolean withinRange(Coordinate coordinate){
+
+
+    }
+    public void attack(){
+
+    }
 
     public void changeTurnOfCanNotAttack(int number){
         change.turnOfCanNotAttack +=number;

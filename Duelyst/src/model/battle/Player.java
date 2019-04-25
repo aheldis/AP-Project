@@ -2,7 +2,11 @@ package model.battle;
 
 import model.Item.Flag;
 import model.account.Account;
+import model.account.Collection;
 import model.card.Card;
+import model.land.LandOfGame;
+import model.land.Square;
+import model.requirment.Coordinate;
 
 import java.util.ArrayList;
 
@@ -13,14 +17,27 @@ public abstract class Player {
     protected String type;
     private Match match;
     private int turnsPlayed = 0;
-    private GraveYard graveYard;
+    private GraveYard graveYard=new GraveYard();
     protected Player opponent;
     ArrayList<Flag> flags;
-    ArrayList<Card> cardsOnLand = new ArrayList<>();
+    private ArrayList<Card> cardsOnLand = new ArrayList<>();
+
+    public void putCardOnLand(String cardId, Coordinate coordinate, LandOfGame land){
+        Card playerCard = null;
+        for(Card card : hand.getGameCards()){
+            if(card.equalCard(cardId))
+                playerCard=card;
+        }
+        if(playerCard==null)
+            return;
+        cardsOnLand.add(playerCard);
+        Square[][] squares =land.getSquares();
+        squares[coordinate.getX()][coordinate.getY()] .setCard(playerCard);
+
+    }
 
     public void initPerTurn() {
-        //check hand and add if it is less than 5
-
+        hand.checkTheHandAndAddToIt();
         for (Card card :cardsOnLand){
             card.changeTurnOfCanNotAttack(-1);
             card.changeTurnOfCanNotCounterAttack(-1);
@@ -32,10 +49,7 @@ public abstract class Player {
             if(card.getTurnOfCanNotMove()<=0)
                 card.setCanMove(true);
         }
-
-
-        //turnsplayed ++
-
+        turnsPlayed ++;
     }
 
     public void addToCardsOfLand(Card card){
