@@ -23,6 +23,9 @@ public class Target {
         this.player = player;
         this.land = land;
     }
+    public void setTargets(){
+
+    }
 
     public ArrayList<Square> setTarget(Square square /*squari e ke seda mikone */) {
 

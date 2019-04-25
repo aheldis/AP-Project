@@ -19,15 +19,22 @@ public abstract class Card {
     private Square position;
     private LandOfGame landOfGame;
 
+
+    public void setTarget(){
+
+    }
     public void setLandOfGame(LandOfGame landOfGame){
         this.landOfGame=landOfGame;
     }
 
     public void move(Coordinate coordinate ){
-        if(withinRange(coordinate)){
+        if(change.canMove && withinRange(coordinate)){
             landOfGame.removeCardFromAnSquare(position.getCoordinate());
             landOfGame.addCardToAnSquare(coordinate,cardId);//todo
         }
+        //check asare khane
+        //can move = false
+        //ویژگی هایی که موقع حرکت اعمال میشود
 
     }
 
@@ -36,6 +43,9 @@ public abstract class Card {
 
     }
     public void attack(){
+        // if can attack && within range
+        //counter attack
+        //ویژگی هایی که موقع حمله اعمال میشود
 
     }
 
