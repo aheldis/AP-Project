@@ -9,16 +9,14 @@ import model.account.Shop;
 import model.card.Card;
 import view.MenuView;
 import view.Request;
-import view.enums.EnterGameMessages;
+import view.EnterGameMessages;
 import view.enums.ErrorType;
 import view.enums.RequestType;
-
-import javax.swing.text.Element;
-import java.util.EventListener;
+import view.enums.StateType;
 
 
 public class MenuController {
-    private String state = "mainMenu"; //todo esme in ye chiz dige bashe behtar nist? (svw)
+    private StateType state = StateType.MAIN_MENU; //todo esme in ye chiz dige bashe behtar nist? (svw)
     // todo masalan chi??(zahra)
 
     private boolean endProgram = false;
@@ -29,7 +27,7 @@ public class MenuController {
         request.getNewCommand();
         while (!endProgram) {
 
-            if (state.equals("mainMenu")) {
+            if (state == StateType.MAIN_MENU) {
                 EnterGameMessages enterGameMessages = EnterGameMessages.getInstance();
                 switch (request.getRequestType() ){
                     case MAIN_MENU_SIGN_UP:
@@ -45,7 +43,7 @@ public class MenuController {
                         request.getNewLine();
                         allAccount.createAccount(username, request.getCommand());
                         account = allAccount.getAccountByName(username);
-                        state = "accountMenu";
+                        state = StateType.ACCOUNT_MENU;
                         break;
                     case MAIN_MENU_LOGIN:
                         enterGameMessages.showLoginGetName();
@@ -65,10 +63,10 @@ public class MenuController {
                         }
                         allAccount.login(userName, request.getCommand());
                         account = allAccount.getAccountByName(userName);
-                        state = "accountMenu";
+                        state  = StateType.ACCOUNT_MENU;
                         break;
                     case MAIN_MENU_HELP:
-                        MenuView menuView=new MenuView();
+                        MenuView menuView=MenuView.getInstance();
                         menuView.helpForMainMenu();
                         break;
                     case MAIN_MENU_LEADER_BOARD:
@@ -80,14 +78,14 @@ public class MenuController {
                 }
             }
 
-            if (state.equals("accountMenu")) {
+            if (state == StateType.ACCOUNT_MENU) {
                 while (request.getRequestType() != RequestType.MENU_ENTER_EXIT) {
                     switch (request.getRequestType()) {
                         case MENU_ENTER_COLLECTION:
-                            state = "collection";
+                            state = StateType.COLLECTION;
                             break;
                         case MENU_ENTER_BATTLE:
-                            state = "battle";
+                            state = StateType.BATTLE;
                             // TODO: bayad bebarim dakhele ye bazi
                             break;
                         case MENU_ENTER_HELP:
@@ -95,7 +93,7 @@ public class MenuController {
                             accountMenu.helpForAccountMenu();
                             break;
                         case MENU_ENTER_SHOP:
-                            state = "shop";
+                            state = StateType.SHOP;
                             break;
                         case MENU_ENTER_EXIT:
                             endProgram = true;
@@ -106,7 +104,7 @@ public class MenuController {
                 }
             }
 
-            if (state.equals("collection")) {//todo id ro check konam ke chiye :)
+            if (state == StateType.COLLECTION) {//todo id ro check konam ke chiye :)
                 Collection collection = account.getCollection();
                 String deckName, id;
                 Card card;
@@ -189,7 +187,7 @@ public class MenuController {
                         case COLLECTION_SAVE:
                             break;
                         case COLLECTION_EXIT:
-                            state = "accountMenu";
+                            state = StateType.ACCOUNT_MENU;
                             break;
                     }
 
@@ -200,7 +198,7 @@ public class MenuController {
                 }
             }
 
-            if (state.equals("shop")) {
+            if (state == StateType.SHOP) {
                 Shop shop = Shop.getInstance();
                 while (request.getRequestType() != RequestType.SHOP_EXIT) {
                     switch (request.getRequestType()) {
@@ -231,7 +229,9 @@ public class MenuController {
                 }
             }
 
-            if (state.equals("model/battle")) {
+            if (state == StateType.BATTLE) {
+
+
 
             }
 
