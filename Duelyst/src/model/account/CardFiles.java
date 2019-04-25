@@ -108,23 +108,23 @@ public class CardFiles {
             if ((line = bufferedReader.readLine()) != null) {
                 if (line.equals("Spell")) {
                     Spell spell = new Spell();
-                    answer=line.split(" ")[1];
+                    answer = line.split(" ")[1];
                     spell.setCost(Integer.parseInt(answer));
-                    line=bufferedReader.readLine();
-                    answer=line.split(" ")[1];
+                    line = bufferedReader.readLine();
+                    answer = line.split(" ")[1];
                     spell.setMp(Integer.parseInt(answer));
-                    line=bufferedReader.readLine();
-                    answer=line.split(" ")[1];
+                    line = bufferedReader.readLine();
+                    answer = line.split(" ")[1];
                     spell.setApChanges(Integer.parseInt(answer.split(" - ")[0]));
                     spell.setTurnForApChanges(Integer.parseInt(answer.split(" - ")[1]));
-                    line=bufferedReader.readLine();
-                    answer=line.split(" ")[1];
+                    line = bufferedReader.readLine();
+                    answer = line.split(" ")[1];
                     spell.setHpChanges(Integer.parseInt(answer.split(" - ")[0]));
                     spell.setTurnForHpChanges(Integer.parseInt(answer.split(" - ")[1]));
                     //TODO buff
                     //TODO target
-                    line=bufferedReader.readLine();
-                    answer=line.substring(6);
+                    line = bufferedReader.readLine();
+                    answer = line.substring(6);
                     spell.setDescription(answer);
 
                     return spell;

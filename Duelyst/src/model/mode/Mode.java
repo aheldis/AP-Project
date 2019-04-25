@@ -3,7 +3,7 @@ package model.mode;
 import model.battle.Player;
 import model.land.Square;
 
-abstract class Mode {
+public abstract class Mode {
     private String modeName;
     private Player[] players = new Player[2];
     private int turn;

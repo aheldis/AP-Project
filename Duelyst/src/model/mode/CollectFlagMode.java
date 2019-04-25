@@ -29,7 +29,6 @@ public class CollectFlagMode extends Mode {
                 }
     }*/
 
-    @Override
     public boolean checkForEndOfTheGame() {
         return flagsOnTheGround.size() == 0;
     }

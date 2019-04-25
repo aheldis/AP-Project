@@ -89,16 +89,14 @@ public class Account implements Comparable<Account> {
     public void showMatchHistory() {
         AccountView accountView = AccountView.getInstance();
         for (Match match : matchHistory) {
-            ArrayList<Player> players = match.getPlayers();
+            Player[] players = match.getPlayers();
             Player opponent;
-            if (players.get(0).getAccount().getUserName().equals(this.getUserName())) {
-                opponent = players.get(1);
+            if (players[0].getAccount().getUserName().equals(this.getUserName())) {
+                opponent = players[1];
             } else {
-                opponent = players.get(0);
+                opponent = players[0];
             }
-
             accountView.viewAMatch(match, opponent);
         }
     }
-
 }

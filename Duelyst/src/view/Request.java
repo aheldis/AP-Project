@@ -158,7 +158,7 @@ public class Request {
 
             }
 
-        } else if (state.equals("model/battle")) {
+        } else if (state.equals("battle")) {
             switch (command) {
 
             }

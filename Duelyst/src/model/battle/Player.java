@@ -1,6 +1,7 @@
 package model.battle;
 
 import model.account.Account;
+import model.card.Card;
 
 public abstract class Player {
     private Account account;
@@ -10,6 +11,7 @@ public abstract class Player {
     private Match match;
     private int turnsPlayed;
     private GraveYard graveYard;
+    protected Player opponent;
 
     public GraveYard getGraveYard() {
         return graveYard;
@@ -39,12 +41,28 @@ public abstract class Player {
         return turnsPlayed;
     }
 
+    public void init() {
+
+    }
+
+    public void initPerTurn() {
+
+    }
+
+    public abstract void playTurn();
+
     public abstract void setType();
 
     public abstract void addToAccountWins();
 
     public abstract void setDeck();
 
-    public abstract void setHand();
+    public void setHand() {
+
+    }
+
+    public void counterAttack(Card card, Card theOneWhoAttacked){
+
+    }
 
 }

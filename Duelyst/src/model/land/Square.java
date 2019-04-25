@@ -11,6 +11,7 @@ public class Square {
     private int scaleForEachSquare;
     private Coordinate coordinate;
     private Object object;
+    private Card card;
 
    public Square(Coordinate coordinate) {
         this.coordinate = coordinate;
@@ -19,7 +20,7 @@ public class Square {
     public int getXCoordinate(){
        return coordinate.getX();
     }
-    public int getyCoordinate(){
+    public int getYCoordinate(){
        return coordinate.getY();
     }
 
@@ -58,6 +59,10 @@ public class Square {
     public void removeCardFromSquare() {
         if (object instanceof Card)
             object = null;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
     }
 
     public Coordinate passTheCenterOfSquare() {

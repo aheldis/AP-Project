@@ -2,8 +2,8 @@ package model.mode;
 
 import model.land.Square;
 
-public abstract class DeathMode extends Mode {
-    @Override
+public class DeathMode extends Mode {
+
     public boolean checkForEndOfTheGame() {
         return false;
     }
