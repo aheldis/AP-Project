@@ -9,7 +9,7 @@ import java.util.Random;
 public class Hand {
     private Deck deck;
     private ArrayList<Card> gameCards;
-    private ArrayList<Item> gameUsableItem=new ArrayList<>();
+    private ArrayList<Item> collectableItems=new ArrayList<>();
     private final int RAND_NUMBER=11;
 
     public Hand (Deck deck){
@@ -59,7 +59,7 @@ public class Hand {
     }
 
     public void removeUsedItemFromHand(Item item){
-        gameUsableItem.remove(item);
+        collectableItems.remove(item);
     }
     public Card chooseARandomCard(){
         Random random=new Random();

@@ -5,18 +5,29 @@ import model.land.LandOfGame;
 import model.mode.Mode;
 
 public class Match {
-    private Player[] players = new Player[2];
-    private Mode mode;
+    private Player[] players;
+    private String mode;
     //private Time startTime;
     //private Time endTime;
     private Account winner;
     private Account loser;
     private int reward;
     private LandOfGame land;
-    private int turn = 0;
+    private int whichPlayer = 0; //0--> player 1 /1--> player 2
 
-    public void startGame(){
-        //init game
+
+    public Match(Player[] players,String mode){//when we make a match we should have players
+        this.players=players;
+        land=new LandOfGame();
+        this.mode=mode;
+    }
+
+    public void initGame(){
+        //set reward
+        //set random hand
+        //make graveyard
+
+
     }
 
 
@@ -24,7 +35,7 @@ public class Match {
         return players;
     }
 
-    public Mode getMode() {
+    public String getMode() {
         return mode;
     }
 
@@ -44,13 +55,6 @@ public class Match {
         return land;
     }
 
-    public void setPlayers(Player[] players) {
-        this.players = players;
-    }
-
-    public void setMode(Mode mode) {
-        this.mode = mode;
-    }
 
     public void setWinner(Account winner) {
         this.winner = winner;
@@ -73,15 +77,18 @@ public class Match {
     }
 
     public void startMatch() {
-        players[0].init();
-        players[1].init();
+//        players[0].initPlayers();
+//        players[1].initPlayers();
+        initGame();
+        players[0].initPerTurn();
+        players[1].initPerTurn();
 
         while (true) {
-            players[turn].playTurn();
+            players[whichPlayer].playTurn();
             if (gameEnded()) {
                 break;
             }
-            turn = 1 - turn;
+            whichPlayer = 1 - whichPlayer;
         }
     }
 
