@@ -11,6 +11,7 @@ public class Square {
     private int scaleForEachSquare;
     private Coordinate coordinate;
     private Object object;
+    private Card card;
 
    public Square(Coordinate coordinate) {
         this.coordinate = coordinate;

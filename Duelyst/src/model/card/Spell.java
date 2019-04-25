@@ -99,7 +99,7 @@ public class Spell extends Card {
 
     }
 
-    public void affect(/*square card*/)
+    public void affect(/*target card*/)
     {
 //az tabeye too card estefade kone
     }

@@ -2,8 +2,9 @@ name:
 cost:
 Hp:
 Mp:
-model.counterAttack:
+counterAttack:
 attackRange:
+
 specialPower:
 target:
 activationTimeOfSpecialPower:

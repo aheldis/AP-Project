@@ -9,6 +9,7 @@ public abstract class Card {
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
     private int cost;
     boolean canMove = true;//if it has stun buff it will be false
+    private ArrayList <Buff> buffsOnThisCard;
 
     public int getCost() {
         return cost;
