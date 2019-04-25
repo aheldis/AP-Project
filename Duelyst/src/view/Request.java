@@ -1,7 +1,9 @@
 package view;
 
+import model.requirment.Coordinate;
 import view.enums.RequestType;
 import view.enums.StateType;
+
 import java.util.Scanner;
 
 public class Request {
@@ -9,6 +11,7 @@ public class Request {
     private String command;
     private StateType state;//menu or collection or shop or model.battle
     private RequestType type;
+    private Coordinate coordinate=new Coordinate();
 
     private String deckName;
     private String Id;
@@ -28,6 +31,9 @@ public class Request {
 
     public String getCommand() {
         return command;
+    }
+    public Coordinate getCoordinate(){
+        return coordinate;
     }
 
     public boolean isValid() { //todo in be che dard mikhore? :))  //todo نمیدونم (zahra)
@@ -166,59 +172,81 @@ public class Request {
                 case "show next card":
                     return RequestType.GAME_SHOW_NEXT_CARD;
                 case "enter grave yard":
-                    state=StateType.GRAVE_YARD;
+                    state = StateType.GRAVE_YARD;
                     return RequestType.GAME_ENTER_GRAVE_YARD;
                 case "help":
                     return RequestType.GAME_HELP;
                 case "end game":
                     return RequestType.GAME_END_GAME;
                 case "exit":
-                    state=StateType.ACCOUNT_MENU;
+                    state = StateType.ACCOUNT_MENU;
                     return RequestType.GAME_EXIT;
                 case "show menu":
                     return RequestType.GAME_SHOW_MENU;
 
             }
-            if(command.toLowerCase().matches("select \\w+")){//todo get input
+            if (command.toLowerCase().matches("select card \\w+")) {//todo get input
+                setId(command.substring(12));
                 state = StateType.SELECT_CARD;
                 return RequestType.GAME_SELECT_CARD_ID;
             }
-            if(command.toLowerCase().matches("Show Card info \\W+"))
+            if (command.toLowerCase().matches("show card info \\W+")) {
+                setId(command.substring(15));
                 return RequestType.GAME_SHOW_CARD_INFO;
-
-            if(command.toLowerCase().matches("use special power \\(\\d+,\\d+\\)"))
+            }
+            if (command.toLowerCase().matches("use special power \\(\\d+,\\d+\\)")) {
+                coordinate.setX(Integer.parseInt(command.substring(19, 20)));
+                coordinate.setY(Integer.parseInt(command.substring(21, 22)));
                 return RequestType.GAME_USE_SPECIAL_POWER;
-            if(command.toLowerCase().matches("insert \\w+ in \\(\\d+,\\d+\\)"))
+            }
+            if (command.toLowerCase().matches("insert \\w+ in \\(\\d+,\\d+\\)")) {
+                setId(command.split(" ")[1]);
+                coordinate.setX(Integer.parseInt(command.split(" ")[3].substring(1, 2)));
+                coordinate.setY(Integer.parseInt(command.split(" ")[3].substring(3, 4)));
                 return RequestType.GAME_INSERT;
-            if(command.toLowerCase().matches("select \\d+")) {
-                state=StateType.SELECT_ITEM;
+            }
+            if (command.toLowerCase().matches("select item \\d+")) {
+                setId(command.substring(12));
+                state = StateType.SELECT_ITEM;
                 return RequestType.GAME_SELECT_COLLECTABLE;
             }
 
 
         }
-        if(state==StateType.GRAVE_YARD){
-            if(command.toLowerCase().matches("show info \\w+"))
+        if (state == StateType.GRAVE_YARD) {
+            if (command.toLowerCase().matches("show info \\w+")) {
+                setId(command.substring(10));
                 return RequestType.GAME_GRAVE_YARD_SHOW_INFO;
-            if(command.toLowerCase().matches("show cards"))
+            }
+            if (command.toLowerCase().matches("show cards"))
                 return RequestType.GAME_GRAVE_YARD_SHOW_CARDS;
-            if(command.toLowerCase().matches("exit"))
-                state=StateType.BATTLE;
+            if (command.toLowerCase().matches("exit"))
+                state = StateType.BATTLE;
         }
-        if(state==StateType.SELECT_CARD){
-            if(command.toLowerCase().matches("move to \\d+ \\w+"))
+        if (state == StateType.SELECT_CARD) {
+            if (command.toLowerCase().matches("move to \\(\\d+,\\d+\\)")) {
+                coordinate.setX(Integer.parseInt(command.substring(9,10)));
+                coordinate.setY(Integer.parseInt(command.substring(11, 12)));
                 return RequestType.GAME_MOVE;
-            if(command.toLowerCase().matches("attack \\w+ "))
+            }
+            if (command.toLowerCase().matches("attack \\w+ ")) {
+                setId(command.substring(7));
                 return RequestType.GAME_ATTACK;
-            if(command.toLowerCase().matches("attack combo \\w+ (\\w+)+"))
+            }
+            if (command.toLowerCase().matches("attack combo \\w+ (\\w+)+")) {
+                //TODO: chejori vorodi bgiram ino???? :))))
                 return RequestType.GAME_ATTACK_COMBO;
+            }
 
         }
-        if(state==StateType.SELECT_ITEM){
-            if(command.toLowerCase().matches("show info"))
+        if (state == StateType.SELECT_ITEM) {
+            if (command.toLowerCase().matches("show info"))
                 return RequestType.GAME_ITEM_SHOW_INFO;
-            if(command.toLowerCase().matches("use \\(\\d+,\\d+\\)"))
+            if (command.toLowerCase().matches("use \\(\\d+,\\d+\\)")) {
+                coordinate.setX(Integer.parseInt(command.substring(5,6)));
+                coordinate.setY(Integer.parseInt(command.substring(7,8)));
                 return RequestType.GAME_ITEM_USE;
+            }
 
         }
         return null;
