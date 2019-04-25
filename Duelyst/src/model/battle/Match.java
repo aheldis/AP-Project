@@ -26,7 +26,7 @@ public class Match {
         //set reward
         //set random hand
         //make graveyard
-
+        //add hero of each player to cards of land of them
 
     }
 

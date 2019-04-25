@@ -6,25 +6,64 @@ import model.land.Square;
 import java.util.ArrayList;
 
 public abstract class Card {
+    private Change change=new Change();
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
     private int cost;
     private ArrayList <Buff> buffsOnThisCard;
     private Square position;
-    private boolean canAttack = false;
-    private boolean canMove = true;
 
-    public void setCanAttack(boolean canAttack) {
-        this.canAttack = canAttack;
+
+    public void changeTurnOfCanNotAttack(int number){
+        change.turnOfCanNotAttack +=number;
+    }
+    public void changeTurnOfCanNotCounterAttack(int number){
+        change.turnOfCanNotCounterAttack +=number;
+    }
+    public void changeTurnOfCanNotMove(int number){
+        change.turnOfCanNotMove+= number;
+    }
+
+    public void setTurnOfCanNotAttack(int number){
+        change.turnOfCanNotAttack =number;
+    }
+    public void setTurnofCanNotCounterAttack(int number){
+        change.turnOfCanNotCounterAttack =number;
+    }
+    public void setTurnOfCanNotMove(int number){
+        change.turnOfCanNotMove = number;
+    }
+
+    public int getTurnOfCanNotAttack(){
+        return change.turnOfCanNotAttack ;
+    }
+    public int  getTurnOfCanNotCounterAttack(){
+       return change.turnOfCanNotCounterAttack ;
+    }
+    public int getTurnOfCanNotMove(){
+       return change.turnOfCanNotMove ;
     }
 
     public boolean isCanAttack() {
-        return canAttack;
+        return change.canAttack;
     }
 
     public boolean isCanMove() {
-        return canMove;
+        return change.canMove;
+    }
+
+    public boolean isCanCounterAttack(){
+        return change.canCounterAttack;
+    }
+    public  void setCanMove(boolean bool){
+        change.canMove=bool;
+    }
+    public void setCanCounterAttack(boolean bool){
+        change.canCounterAttack=bool;
+    }
+    public void setCanAttack(boolean bool){
+        change.canAttack=bool;
     }
 
     public Square getPosition() {
@@ -33,10 +72,6 @@ public abstract class Card {
 
     public void setPosition(Square position) {
         this.position = position;
-    }
-
-    public void setCanMove(boolean canMove) {
-        this.canMove = canMove;
     }
 
     public int getCost() {
