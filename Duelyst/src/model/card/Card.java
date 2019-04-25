@@ -1,6 +1,8 @@
 package model.card;
 
 
+import model.land.Square;
+
 import java.util.ArrayList;
 
 public abstract class Card {
@@ -8,8 +10,34 @@ public abstract class Card {
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
     private int cost;
-    boolean canMove = true;//if it has stun buff it will be false
     private ArrayList <Buff> buffsOnThisCard;
+    private Square position;
+    private boolean canAttack = false;
+    private boolean canMove = true;
+
+    public void setCanAttack(boolean canAttack) {
+        this.canAttack = canAttack;
+    }
+
+    public boolean isCanAttack() {
+        return canAttack;
+    }
+
+    public boolean isCanMove() {
+        return canMove;
+    }
+
+    public Square getPosition() {
+        return position;
+    }
+
+    public void setPosition(Square position) {
+        this.position = position;
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
+    }
 
     public int getCost() {
         return cost;

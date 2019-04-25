@@ -9,7 +9,6 @@ public class SaveFlagMode extends Mode {
         flag = new Flag();
     }
 
-    @Override
     public boolean checkForEndOfTheGame() {
         return false;
     }

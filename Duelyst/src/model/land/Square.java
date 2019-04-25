@@ -20,7 +20,7 @@ public class Square {
     public int getXCoordinate(){
        return coordinate.getX();
     }
-    public int getyCoordinate(){
+    public int getYCoordinate(){
        return coordinate.getY();
     }
 
@@ -59,6 +59,10 @@ public class Square {
     public void removeCardFromSquare() {
         if (object instanceof Card)
             object = null;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
     }
 
     public Coordinate passTheCenterOfSquare() {
