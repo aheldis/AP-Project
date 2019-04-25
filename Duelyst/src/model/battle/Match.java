@@ -15,6 +15,11 @@ public class Match {
     private LandOfGame land;
     private int turn = 0;
 
+    public void startGame(){
+        //init game
+    }
+
+
     public Player[] getPlayers() {
         return players;
     }
