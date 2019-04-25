@@ -22,7 +22,9 @@ public class OrdinaryPlayer extends Player {
         mainDeck.setRandomOrderForDeck();
     }
 
-    public void setHand() {
+
+
+    public void playTurn() {
 
     }
 }

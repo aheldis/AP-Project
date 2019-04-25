@@ -12,7 +12,8 @@ public class ComputerPlayer extends Player {
 
     }
 
-    public void setHand() {
+    public void playTurn() {
 
     }
+
 }

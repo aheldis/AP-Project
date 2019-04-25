@@ -10,6 +10,7 @@ public abstract class Player {
     private Match match;
     private int turnsPlayed;
     private GraveYard graveYard;
+    private Player opponent;
 
     public GraveYard getGraveYard() {
         return graveYard;
@@ -39,12 +40,24 @@ public abstract class Player {
         return turnsPlayed;
     }
 
+    public void init() {
+
+    }
+
+    public void initPerTurn() {
+
+    }
+
+    public abstract void playTurn();
+
     public abstract void setType();
 
     public abstract void addToAccountWins();
 
     public abstract void setDeck();
 
-    public abstract void setHand();
+    public void setHand() {
+
+    }
 
 }
