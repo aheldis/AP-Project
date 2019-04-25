@@ -6,5 +6,8 @@ public enum  StateType {
     BATTLE,
     COLLECTION,
     SHOP,
-    SELECT_Card;
+    SELECT_CARD,
+    SELECT_ITEM,
+    GRAVE_YARD;
+
 }
