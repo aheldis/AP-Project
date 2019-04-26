@@ -3,96 +3,90 @@ package model.battle;
 import model.account.Account;
 import view.BattleView;
 import view.enums.ErrorType;
+
 import java.util.ArrayList;
 
 public class Game {
-    private boolean singlePlayer;
+//    private static Game singleInstance = null;
+  /*  private boolean singlePlayer;
     private boolean story;
     private boolean customGame;
-    private String mode;
+    private int mode; //1 -> dead 2 -> saveFlag 3 -> collectFlag
+    private int numberOfFlags;
     private int heroNumber;
     private ArrayList<Integer> spellIds;//todo id ha string hastan
     private ArrayList<Integer> minionIds;
     private int itemNumber;
     private int reward;
     private int levelNumber = -1;
-    private ArrayList<Game> gamesType;
-    private static BattleView  battleView= BattleView.getInstance();
+  */  //private ArrayList<Game> gamesType;
+    private static Match match;
+    private static BattleView battleView = BattleView.getInstance();
 
-    public static boolean gameChecker(Account account){
-        //bayad player deck asli hod ra entekhab karde bashad
-        Deck deck;
-        deck=account.getMainDeck();
-        if(deck==null || !deck.validate()){
-            ErrorType error= ErrorType.SELECTED_INVALID_DECK;
+/*
+    public static Game singleInstance() {
+        return singleInstance;
+    }
+*/
+
+/*    public void makeGames() {
+        //bere az roo file bekhone game besaze berize to gamesType
+    }
+*/
+
+    public static boolean checkPlayerDeck(Account account, int playerNumber) {
+        Deck deck = account.getMainDeck();
+        if (deck == null || !deck.validate()) {
+            ErrorType error;
+            if (playerNumber == 1)
+                error = ErrorType.SELECTED_INVALID_DECK;
+            else
+                error = ErrorType.SELECTED_INVALID_DECK_FOR_PLAYER2
             error.printMessage();
             return false;
         }
-//        Request request=new Request(StateType.BATTLE);
-//        Deck deck;
-//        do {
-//            battleView.print("Enter your mainDeck");
-//            request.getNewLine();
-//            deck=account.getCollection().passTheDeckIfHaveBeenExist(request.getCommand());
-//            if(deck==null){
-//                ErrorType error= ErrorType.SELECTED_INVALID_DECK;
-//                error.printMessage();
-//            }
-//        }while (deck==null);
-//        account.setMainDeck(deck);
-
+        return true;
     }
 
-    public static void makeStoryGame(int level){
-
-    }
-
-    public static  void  makeCustomGame(String deckName,int mode,int numberOfFlags) {
-
-
-        //age mode akhar nabashe numberesho 0 midam
-
-        //init game
-        //set reward
-    }
-    public static boolean makeMultiPlayerGame(String userName,int mode,int numberOfFlags){
-    //if main deck of player 2 is invalid print "selected deck for second player is invalid" and return false
-
-        //age mode akhar nabashe numberesho 0 midam
-    }
-
-
-
-
-    public void makeANewGame(Account account) {
-
+    public static Match makeNewMultiGame(Account firstPlayerAccount, Account secondPlayerAccount, int mode, int numberOfFlags) {
 
         Game game = new Game();
 
-        Player player1 = OrdinaryPlayer.makeNewPlayer(account, account.getMainDeck());
-        if (player1 == null) {
-            return;
-        }
-        Player player2 = null;
-        //todo to controller bere bebine single e ya multi
-        //singlePlayer to por kone;
-        //age single bud story e ya custom
-        //story ro por kone
-        if (story) {
+        Player player1 = new OrdinaryPlayer(firstPlayerAccount, firstPlayerAccount.getMainDeck());
+        Player player2 = new OrdinaryPlayer(secondPlayerAccount, secondPlayerAccount.getMainDeck());
 
-            //age story bood che marhalie -> level
-            int level; //in to begire
-            //bere az too gamefile ha new game e ke sakhtim ro por kone -> arraylist ha va hero va item va reward va mode
-        } else {
-            //age custom bood list deckha (????) namayesh bede entekhab kone bazi kone
-        }
+//        game.singlePlayer = false;
+//        game.mode = mode;
+//        game.numberOfFlags = numberOfFlags;
 
-
-        //baad bere ye deck besaze ba array lista ke toshoon shomare carta o inast...
-
-        //age multi bood bere account entekhab kone va mode
+        Match match = new Match(); //todo
+        return match;
     }
 
-    public void makeGames() {
-        //bere az roo file bekhone game besaze berize to gamesType
+
+    public static Match makeNewStoryGame(Account account, int level) {
+        //todo bere az file level bekhoone oon deckharo ye deck besaze -> secondPlayerDeck
+        Deck secondPlayerDeck = null;
+        Player player1 = new OrdinaryPlayer(account, account.getMainDeck());
+        Player player2 = new ComputerPlayer(secondPlayerDeck);
+
+        Match match = new Match(); //todo
+        return match;
     }
+
+    public static Match makeNewCustomGame(Account account, String deckName, int mode, int numberOfFlags) {
+        //todo deck inam bayad besaziim (how?)
+        Deck secondPlayerDeck = null;
+        Player player1 = new OrdinaryPlayer(account, account.getMainDeck());
+        Player player2 = new ComputerPlayer(secondPlayerDeck);
+
+        Match match = new Match();
+        return match;
+        //age mode akhar nabashe numberesho 0 midam
+        //svw: yani chi?
+
+        //init game
+        //set reward 1000
+    }
+
+}

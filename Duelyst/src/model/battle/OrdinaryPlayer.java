@@ -23,21 +23,21 @@ public class OrdinaryPlayer extends Player {
         getAccount().addToWins();
     }
 
-    public static OrdinaryPlayer makeNewPlayer(Account account, Deck mainDeck) {
-        if (mainDeck == null) {
-            ErrorType error = ErrorType.DONT_HAVE_MAIN_DECK;
-            BattleView.getInstance().printError(error);
-            return null;
-        }
-        if (!mainDeck.validate()) {
-            ErrorType error = ErrorType.INVALID_DECK_FOR_GAME;
-            BattleView.getInstance().printError(error);
-            return null;
-        }
-
-        OrdinaryPlayer player = new OrdinaryPlayer(account, mainDeck);
-        return player;
-    }
+//    public static OrdinaryPlayer makeNewPlayer(Account account, Deck mainDeck) {
+//        if (mainDeck == null) {
+//            ErrorType error = ErrorType.DONT_HAVE_MAIN_DECK;
+//            BattleView.getInstance().printError(error);
+//            return null;
+//        }
+//        if (!mainDeck.validate()) {
+//            ErrorType error = ErrorType.SELECTED_INVALID_DECK;
+//            BattleView.getInstance().printError(error);
+//            return null;
+//        }
+//
+//        OrdinaryPlayer player = new OrdinaryPlayer(account, mainDeck);
+//        return player;
+//    }
 
     public void playTurn() {
 

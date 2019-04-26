@@ -1,5 +1,6 @@
 levelNumber:
-mode(death/save/collect):
+mode(1 -> death/2 -> save/3 -> collect):
+flags:
 hero:
 spells:
 minions:

@@ -2,7 +2,6 @@ package model.battle;
 
 import model.account.Account;
 import model.land.LandOfGame;
-import model.mode.Mode;
 
 import java.util.Date;
 
@@ -37,13 +36,13 @@ public class Match {
     }
 
 
-    public Match(Player[] players,String mode){//when we make a match we should have players
-        this.players=players;
-        land=new LandOfGame();
-        this.mode=mode;
+    public Match(Player[] players, String mode) {//when we make a match we should have players
+        this.players = players;
+        land = new LandOfGame();
+        this.mode = mode;
     }
 
-    public void initGame(){
+    public void initGame() {
 
         //set reward
 
@@ -58,10 +57,10 @@ public class Match {
     }
 
     public boolean gameEnded() {
-        MatchInfo matchInfo=new MatchInfo();
-        matchInfo.winner=this.winner;
-        matchInfo.loser=this.loser;
-        matchInfo.date=date;
+        MatchInfo matchInfo = new MatchInfo();
+        matchInfo.winner = this.winner;
+        matchInfo.loser = this.loser;
+        matchInfo.date = date;
         winner.addToWins();
         winner.addMatchInfo(matchInfo);
         loser.addMatchInfo(matchInfo);
