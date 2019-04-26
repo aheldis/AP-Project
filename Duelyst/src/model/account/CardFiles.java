@@ -13,7 +13,7 @@ public class CardFiles {
     private String path = "D:\\project-Duelyst\\Duelyst\\CardsFile";
 
     public void makeNewCardByPlayer() throws IOException {
-        Request request = new Request(StateType.MAIN_MENU); //todo ghablesh "menu" bood (haniyeh)
+        Request request = new Request("menu"); //todo hamoon menu kardamesh(haniyeh)
         request.getNewLine();
         String command = request.getCommand();
 

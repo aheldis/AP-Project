@@ -13,18 +13,18 @@ public class MenuView {
     }
 
     public void helpForAccountMenu(){
-        System.out.println("Enter Collection - goto your collection");
-        System.out.println("Enter Shop - goto shop");
-        System.out.println("Enter Battle - start a game");
-        System.out.println("Enter Help - show help of main menu");
-        System.out.println("Enter Exit - logout from game");
+        System.out.println("Enter Collection - Go to your collection");
+        System.out.println("Enter Shop - Go to shop");
+        System.out.println("Enter Battle - Start a game");
+        System.out.println("Enter Help - Show help of main menu");
+        System.out.println("Enter Exit - Log out from game");
     }
     public void helpForMainMenu(){
-        System.out.println("Enter Create Account - create a new account");
-        System.out.println("Enter Save - to save ");
+        System.out.println("Enter Create Account - Create a new account");
+        System.out.println("Enter Save - To save ");
         System.out.println("Enter Show LeaderBoard");
-        System.out.println("Enter Login - to login to your account");
-        System.out.println("Enter Help - to show the orders");
+        System.out.println("Enter Login - To log in to your account");
+        System.out.println("Enter Help - To show the orders");
     }
     public void printer(String string){
         System.out.println(string);
@@ -45,8 +45,8 @@ public class MenuView {
     }
     public void showModes(){
         System.out.println("1. Death mode");
-        System.out.println("2. saveFlag for 6 turn");
-        System.out.println("3. collect half if flags");
+        System.out.println("2. SaveFlag for 6 turn");
+        System.out.println("3. Collect half if flags");
 
 
     }

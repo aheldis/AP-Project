@@ -7,15 +7,15 @@ import java.io.*;
 
 public class MakeNewCard {
 
-    private static String checkSyntax(FileWriter fileWriter,String line){
+    private static String checkSyntax(FileWriter fileWriter, String line) {
     }
 
     public static void makeNewCardFile(String filePathName) {
-        NewCardMessages newCardMessages= NewCardMessages.getInstance();
-        Request request=new Request("Card");
+        NewCardMessages newCardMessages = NewCardMessages.getInstance();
+        Request request = new Request("Card");
         while (true) {
             try {
-                FileReader fileReader = new FileReader("../CardsFile/"+filePathName+"/TEMPLATE");
+                FileReader fileReader = new FileReader("../CardsFile/" + filePathName + "/TEMPLATE");
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line = null;
                 newCardMessages.printer("name: ");
@@ -23,7 +23,7 @@ public class MakeNewCard {
                 String input = request.getCommand();
                 if (input.equals("EXIT"))
                     break;
-                File file = new File("../CardsFile/"+filePathName+"/" + input);
+                File file = new File("../CardsFile/" + filePathName + "/" + input);
                 FileWriter fileWriter = new FileWriter(file);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 while ((line = bufferedReader.readLine()) != null) {

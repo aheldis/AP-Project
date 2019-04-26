@@ -185,17 +185,17 @@ public class AccountView {
     }
 
     public void helpViewForCollection() {
-        System.out.println("exit - exit from collection");
-        System.out.println("show - show all cards and items in collection");
-        System.out.println("save - save the changes");
-        System.out.println("create deck [deckName] - create a deck");
-        System.out.println("delete deck [deckName] - delete a deck");
-        System.out.println("add [cardId|HeroId|ItemId} to deck [deckName] - add model.card or item to deck");
-        System.out.println("remove [model.card id|heroId|ItemId] from deck [deckName] - delete a model.card or item from deck");
-        System.out.println("validate deck [deckName] - have 20 cards and a hero");
-        System.out.println("show all decks - show all cards,hero and items of decks in the collection");
-        System.out.println("show deck [deckName] - show all cards,hero and items of deck");
-        System.out.println("help - help of collection");
+        System.out.println("Exit - Exit from collection");
+        System.out.println("Show - Show all cards and items in collection");
+        System.out.println("Save - Save the changes");
+        System.out.println("Create deck [deckName] - Create a deck");
+        System.out.println("Delete deck [deckName] - Delete a deck");
+        System.out.println("Add [cardId|HeroId|ItemId} to deck [deckName] - Add model.card or item to deck");
+        System.out.println("Remove [model.card id|heroId|ItemId] from deck [deckName] - Delete a model.card or item from deck");
+        System.out.println("Validate deck [deckName] - Have 20 cards and a hero");
+        System.out.println("Show all decks - Show all cards,hero and items of decks in the collection");
+        System.out.println("Show deck [deckName] - Show all cards,hero and items of deck");
+        System.out.println("Help - Help of collection");
 
     }
 

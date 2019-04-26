@@ -9,28 +9,29 @@ import model.requirment.Coordinate;
 import java.util.ArrayList;
 
 public abstract class Card {
-    private Change change=new Change();//HAS-A
+    private Change change = new Change();//HAS-A
     private Target target;
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
     private int cost;
-    private ArrayList <Buff> buffsOnThisCard;
+    private ArrayList<Buff> buffsOnThisCard;
     private Square position;
     private LandOfGame landOfGame;
     private int CardNumber; //todo card number dashte bashan oon shomareE ke to doc e vase sakhtan mode ha, albate mitoonan nadashte bashan ba esm besazim game card ha ro :-? item ha ham hamin tor
 
-    public void setTarget(){
+    public void setTarget() {
 
     }
-    public void setLandOfGame(LandOfGame landOfGame){
-        this.landOfGame=landOfGame;
+
+    public void setLandOfGame(LandOfGame landOfGame) {
+        this.landOfGame = landOfGame;
     }
 
-    public void move(Coordinate coordinate ){
-        if(change.canMove && withinRange(coordinate)){
+    public void move(Coordinate coordinate) {
+        if (change.canMove && withinRange(coordinate)) {
             landOfGame.removeCardFromAnSquare(position.getCoordinate());
-            landOfGame.addCardToAnSquare(coordinate,cardId);//todo
+            landOfGame.addCardToAnSquare(coordinate, cardId);//todo
         }
         //check asare khane
         //can move = false
@@ -38,45 +39,52 @@ public abstract class Card {
 
     }
 
-    public boolean withinRange(Coordinate coordinate){
+    public boolean withinRange(Coordinate coordinate) {
 
 
     }
-    public void attack(){
+
+    public void attack() {
         // if can attack && within range
         //counter attack
         //ویژگی هایی که موقع حمله اعمال میشود
 
     }
 
-    public void changeTurnOfCanNotAttack(int number){
-        change.turnOfCanNotAttack +=number;
-    }
-    public void changeTurnOfCanNotCounterAttack(int number){
-        change.turnOfCanNotCounterAttack +=number;
-    }
-    public void changeTurnOfCanNotMove(int number){
-        change.turnOfCanNotMove+= number;
+    public void changeTurnOfCanNotAttack(int number) {
+        change.turnOfCanNotAttack += number;
     }
 
-    public void setTurnOfCanNotAttack(int number){
-        change.turnOfCanNotAttack =number;
+    public void changeTurnOfCanNotCounterAttack(int number) {
+        change.turnOfCanNotCounterAttack += number;
     }
-    public void setTurnofCanNotCounterAttack(int number){
-        change.turnOfCanNotCounterAttack =number;
+
+    public void changeTurnOfCanNotMove(int number) {
+        change.turnOfCanNotMove += number;
     }
-    public void setTurnOfCanNotMove(int number){
+
+    public void setTurnOfCanNotAttack(int number) {
+        change.turnOfCanNotAttack = number;
+    }
+
+    public void setTurnofCanNotCounterAttack(int number) {
+        change.turnOfCanNotCounterAttack = number;
+    }
+
+    public void setTurnOfCanNotMove(int number) {
         change.turnOfCanNotMove = number;
     }
 
-    public int getTurnOfCanNotAttack(){
-        return change.turnOfCanNotAttack ;
+    public int getTurnOfCanNotAttack() {
+        return change.turnOfCanNotAttack;
     }
-    public int  getTurnOfCanNotCounterAttack(){
-       return change.turnOfCanNotCounterAttack ;
+
+    public int getTurnOfCanNotCounterAttack() {
+        return change.turnOfCanNotCounterAttack;
     }
-    public int getTurnOfCanNotMove(){
-       return change.turnOfCanNotMove ;
+
+    public int getTurnOfCanNotMove() {
+        return change.turnOfCanNotMove;
     }
 
     public boolean isCanAttack() {
@@ -87,17 +95,20 @@ public abstract class Card {
         return change.canMove;
     }
 
-    public boolean isCanCounterAttack(){
+    public boolean isCanCounterAttack() {
         return change.canCounterAttack;
     }
-    public  void setCanMove(boolean bool){
-        change.canMove=bool;
+
+    public void setCanMove(boolean bool) {
+        change.canMove = bool;
     }
-    public void setCanCounterAttack(boolean bool){
-        change.canCounterAttack=bool;
+
+    public void setCanCounterAttack(boolean bool) {
+        change.canCounterAttack = bool;
     }
-    public void setCanAttack(boolean bool){
-        change.canAttack=bool;
+
+    public void setCanAttack(boolean bool) {
+        change.canAttack = bool;
     }
 
     public Square getPosition() {
@@ -112,7 +123,7 @@ public abstract class Card {
         return cost;
     }
 
-    public void setCost(int cost){
+    public void setCost(int cost) {
         this.cost = cost;
     }
 

@@ -7,30 +7,30 @@ import java.io.*;
 
 public class MakeNewBuff {
 
-    private static  boolean checkSyntax(int lineNumber,String input){
-        switch (lineNumber){
+    private static boolean checkSyntax(int lineNumber, String input) {
+        switch (lineNumber) {
             case 1:
-                if(!input.matches("\\w+"))
+                if (!input.matches("\\w+"))
                     return false;
                 break;
             case 2:
-                if(!input.matches("\\d+"))
+                if (!input.matches("\\d+"))
                     return false;
                 break;
             case 3:
-                if(!input.matches("\\d+"))
+                if (!input.matches("\\d+"))
                     return false;
                 break;
             case 4:
-                if(!input.matches("(true|false)"))
+                if (!input.matches("(true|false)"))
                     return false;
                 break;
             case 5:
-                if(!input.matches("(true|false)"))
+                if (!input.matches("(true|false)"))
                     return false;
                 break;
             case 6:
-                if(!input.matches("\\d+"))
+                if (!input.matches("\\d+"))
                     return false;
                 break;
         }
@@ -38,9 +38,9 @@ public class MakeNewBuff {
     }
 
     public static void makeNewBuff() {
-        Request request=new Request("buff");
-        NewCardMessages newCardMessages=NewCardMessages.getInstance();
-        int lineNumber=1;
+        Request request = new Request("buff");
+        NewCardMessages newCardMessages = NewCardMessages.getInstance();
+        int lineNumber = 1;
         while (true) {
             try {
 
@@ -58,11 +58,11 @@ public class MakeNewBuff {
                 bufferedWriter.write("name: " + input);
                 bufferedWriter.newLine();
                 while ((line = bufferedReader.readLine()) != null) {
-                    do{
+                    do {
                         newCardMessages.printer(line);
                         request.getNewLine();
                         input = request.getCommand();
-                    }while (checkSyntax(lineNumber,input));
+                    } while (checkSyntax(lineNumber, input));
                     bufferedWriter.write(line);
                     bufferedWriter.write(" " + input);
                     bufferedWriter.newLine();
