@@ -52,6 +52,9 @@ public class Match {
 
     }
 
+    public boolean gameEnded() {
+        //todo
+    }
 
     public Player[] getPlayers() {
         return players;
@@ -77,7 +80,6 @@ public class Match {
         return land;
     }
 
-
     public void setWinner(Account winner) {
         this.winner = winner;
     }
@@ -94,13 +96,5 @@ public class Match {
         this.land = land;
     }
 
-    public void newMatch(){
-        //todo
-    }
 
-
-
-    public boolean gameEnded() {
-        //todo
-    }
 }

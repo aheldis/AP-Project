@@ -1,8 +1,5 @@
-singlePlayer(true/false):
-mode(death/save/collect):
-story(true/false):
-customGame(true/false):
 levelNumber:
+mode(death/save/collect):
 hero:
 spells:
 minions:

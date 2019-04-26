@@ -9,14 +9,14 @@ import java.util.Random;
 public class Hand {
     private Deck deck;
     private ArrayList<Card> gameCards;
-    private ArrayList<Item> collectableItems=new ArrayList<>();
+    private ArrayList<Item> collectableItems = new ArrayList<>();
     //private final int RAND_NUMBER=11;
 
-    public Hand (Deck deck){
-        this.deck=deck;
+    public Hand(Deck deck) {
+        this.deck = deck;
     }
 
-    public ArrayList<Card> getGameCards(){
+    public ArrayList<Card> getGameCards() {
         return gameCards;
     }
 
@@ -34,7 +34,7 @@ public class Hand {
     }
 
     public void checkTheHandAndAddToIt() {//call it after each turn
-        while(gameCards.size() < 5) {
+        while (gameCards.size() < 5) {
             deck.increaseIndexOfCards();
             gameCards.add(deck.passNextCard());
         }
@@ -62,12 +62,13 @@ public class Hand {
         gameCards.remove(card);
     }
 
-    public void removeUsedItemFromHand(Item item){
+    public void removeUsedItemFromHand(Item item) {
         collectableItems.remove(item);
     }
-    public Card chooseARandomCard(){
-        Random random=new Random();
-       return gameCards.get(random.nextInt()%gameCards.size());
+
+    public Card chooseARandomCard() {
+        Random random = new Random();
+        return gameCards.get(random.nextInt() % gameCards.size());
     }
 
 

@@ -14,6 +14,8 @@ public class Shop {
     private ArrayList<Usable> items = new ArrayList<>();
     private static AccountView accountView = AccountView.getInstance();
 
+    //todo bere az har card yedoone besaze
+
     private boolean itemExist(String name) {
         for (Usable item : items) {
             if (item.getName().equals(name)) {

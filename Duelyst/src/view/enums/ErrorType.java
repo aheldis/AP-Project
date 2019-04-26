@@ -27,7 +27,9 @@ public enum ErrorType {
     NOT_ENOUGH_MONEY("You don't have enough money to buy this model.card/item"),
     NO_SUCH_CARD_OR_ITEM_IN_COLLECTION("You don't have this model.card or item in your collection"),
     
-    DONT_HAVE_MAIN_DECK("You don't have a main deck");
+    DONT_HAVE_MAIN_DECK("You don't have a main deck"),
+    INVALID_DECK_FOR_GAME("Selected deck is invalid");
+
 
     private String message;
 
