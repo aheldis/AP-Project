@@ -1,17 +1,8 @@
 package model.battle;
 
 import model.account.Account;
-import model.card.Minion;
-import model.card.Spell;
 import view.BattleView;
-import view.Request;
 import view.enums.ErrorType;
-import view.enums.StateType;
-import model.account.Account;
-
-import javax.xml.stream.events.EntityReference;
-import java.io.FileWriter;
-import java.security.AccessControlContext;
 import java.util.ArrayList;
 
 public class Game {

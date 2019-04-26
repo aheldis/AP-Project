@@ -4,6 +4,8 @@ import model.account.Account;
 import model.land.LandOfGame;
 import model.mode.Mode;
 
+import java.util.Date;
+
 public class Match {
     private Player[] players;
     private String mode;
@@ -14,8 +16,11 @@ public class Match {
     private int reward;
     private LandOfGame land;
     private int whichPlayer = 0; //0--> player 1 /1--> player 2
+    private Date date;
 
     public void startMatch() {
+        date = new Date();
+
 //        players[0].initPlayers();
 //        players[1].initPlayers();
         initGame();
@@ -53,6 +58,13 @@ public class Match {
     }
 
     public boolean gameEnded() {
+        MatchInfo matchInfo=new MatchInfo();
+        matchInfo.winner=this.winner;
+        matchInfo.loser=this.loser;
+        matchInfo.date=date;
+        winner.addMatchInfo(matchInfo);
+        loser.addMatchInfo(matchInfo);
+
         //todo
     }
 

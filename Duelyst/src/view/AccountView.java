@@ -3,6 +3,8 @@ package view;
 
 import model.Item.Item;
 import model.Item.Usable;
+import model.account.Account;
+import model.battle.MatchInfo;
 import model.battle.Player;
 import model.battle.Deck;
 import model.battle.Match;
@@ -195,14 +197,29 @@ public class AccountView {
 
     }
 
-    public void viewAMatch(Match match, Player opponent) {
-        System.out.print(opponent.getAccount().getUserName());
-        if (match.getWinner().equals(opponent)) {
-            System.out.println(" loss ");
-        } else {
-            System.out.println(" win ");
+    public void viewAMatch(MatchInfo matchInfo, Account me) {
+        Account opponent;
+        if(matchInfo.winner==me){
+            opponent=matchInfo.loser;
+            System.out.println(opponent.getUserName());
+            System.out.println("win");
+            System.out.println(matchInfo.date);
         }
-        System.out.println(match.getTime()); //todo time-e java ???
+        else {
+            opponent = matchInfo.winner;
+            System.out.println(opponent.getUserName());
+            System.out.println("loss");
+            System.out.println(matchInfo.date);
+        }
+
+//
+//        System.out.print(opponent.getAccount().getUserName());
+//        if (match.getWinner().equals(opponent)) {
+//            System.out.println(" loss ");
+//        } else {
+//            System.out.println(" win ");
+//        }
+//        System.out.println(match.getTime()); //todo time-e java ???
     }
 
     public void printError(ErrorType error) {

@@ -2,6 +2,7 @@ package model.account;
 
 import model.battle.Deck;
 import model.battle.Match;
+import model.battle.MatchInfo;
 import model.battle.Player;
 import view.AccountView;
 
@@ -13,7 +14,7 @@ public class Account implements Comparable<Account> {
     private String password;
     private int daric;
     private int wins;
-    private ArrayList<Match> matchHistory;
+    private ArrayList<MatchInfo> matchHistory;
     private Collection collection;
     private Player player;
     private Deck mainDeck;
@@ -42,7 +43,7 @@ public class Account implements Comparable<Account> {
         return daric;
     }
 
-    public ArrayList<Match> getMatchHistory() {
+    public ArrayList<MatchInfo> getMatchHistory() {
         return matchHistory;
     }
 
@@ -82,21 +83,14 @@ public class Account implements Comparable<Account> {
         daric += number;
     }
 
-    public void addMatch(Match match) {
-        matchHistory.add(match);
+    public void addMatchInfo(MatchInfo matchInfo) {
+        matchHistory.add(matchInfo);
     }
 
     public void showMatchHistory() {
         AccountView accountView = AccountView.getInstance();
-        for (Match match : matchHistory) {
-            Player[] players = match.getPlayers();
-            Player opponent;
-            if (players[0].getAccount().getUserName().equals(this.getUserName())) {
-                opponent = players[1];
-            } else {
-                opponent = players[0];
-            }
-            accountView.viewAMatch(match, opponent);
+        for (MatchInfo match : matchHistory) {
+            accountView.viewAMatch(match, this);
         }
     }
 }
