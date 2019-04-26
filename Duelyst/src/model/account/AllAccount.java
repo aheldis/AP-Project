@@ -46,9 +46,7 @@ public class AllAccount {
         Account account = getAccountByName(userName);
         if (account == null)
             return false;
-        if (account.matchPassword(password))
-            return true;
-        return false;
+        return account.matchPassword(password);
     }
 
     public void login(String userName, String password) { //todo ina bayad bere to conroller o ina :-?
