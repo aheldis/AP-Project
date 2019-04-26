@@ -13,7 +13,6 @@ public class MenuController {
     private StateType state = StateType.MAIN_MENU; //todo esme in ye chiz dige bashe behtar nist? (svw)
     // todo masalan chi??(zahra)
 
-    private boolean endProgram = false;
     private Account account;
     private AllAccount allAccount = AllAccount.getInstance();
     private MenuView menuView = MenuView.getInstance();
@@ -21,7 +20,7 @@ public class MenuController {
     public void main() {
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
-        while (!endProgram) {
+        while (state != StateType.END_PROGRAM) {
 
             if (state == StateType.MAIN_MENU) {
                 EnterGameMessages enterGameMessages = EnterGameMessages.getInstance();
@@ -93,7 +92,7 @@ public class MenuController {
                             state = StateType.SHOP;
                             break;
                         case MENU_ENTER_EXIT:
-                            endProgram = true;
+                            state = StateType.END_PROGRAM;
                             break;
                     }
                     request = new Request(state);

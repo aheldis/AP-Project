@@ -78,7 +78,6 @@ public class Request {
                     return RequestType.MENU_ENTER_EXIT;
             }
         } else if (state == StateType.COLLECTION) {
-
             switch (command.toLowerCase()) {
                 case "exit":
                     return RequestType.COLLECTION_EXIT;
@@ -94,27 +93,34 @@ public class Request {
             if (command.toLowerCase().matches("search \\w+")) {
                 setId(command.substring(6));
                 return RequestType.COLLECTION_SEARCH_CARD;
-            } else if (command.toLowerCase().matches("create deck \\w+")) {
+            }
+            if (command.toLowerCase().matches("create deck \\w+")) {
                 setDeckName(command.substring(11));
                 return RequestType.COLLECTION_CREATE_DECK;
-            } else if (command.toLowerCase().matches("delete deck \\w+")) {
+            }
+            if (command.toLowerCase().matches("delete deck \\w+")) {
                 setDeckName(command.substring(11));
                 return RequestType.COLLECTION_DELETE_DECK;
-            } else if (command.toLowerCase().matches("add \\w+ to deck \\w+")) {
+            }
+            if (command.toLowerCase().matches("add \\w+ to deck \\w+")) {
                 setDeckName(command.split(" ")[4]);
                 setId(command.substring(4));
                 return RequestType.COLLECTION_ADD_CARD_TO_DECK;
-            } else if (command.toLowerCase().matches("remove \\w+ from deck \\w+")) {
+            }
+            if (command.toLowerCase().matches("remove \\w+ from deck \\w+")) {
                 setDeckName(command.split(" ")[4]);
                 setId(command.substring(4));
                 return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
-            } else if (command.toLowerCase().matches("validate deck \\w+")) {
+            }
+            if (command.toLowerCase().matches("validate deck \\w+")) {
                 setDeckName(command.substring(14));
                 return RequestType.COLLECTION_VALIDATE_DECK;
-            } else if (command.toLowerCase().matches("select deck \\w+")) {
+            }
+            if (command.toLowerCase().matches("select deck \\w+")) {
                 setDeckName(command.substring(12));
                 return RequestType.COLLECTION_SELECT_DECK;
-            } else if (command.toLowerCase().matches("show deck \\w+")) {
+            }
+            if (command.toLowerCase().matches("show deck \\w+")) {
                 setDeckName(command.substring(10));
                 return RequestType.COLLECTION_SHOW_DECK;
             }
@@ -122,36 +128,43 @@ public class Request {
         } else if (state == StateType.SHOP) {
             if (command.toLowerCase().matches("exit")) {
                 return RequestType.SHOP_EXIT;
-            } else if (command.toLowerCase().matches("show collection")) {
+            }
+            if (command.toLowerCase().matches("show collection")) {
                 return RequestType.SHOP_SHOW_COLLECTION;
-            } else if (command.toLowerCase().matches("search collection \\w+")) {
+            }
+            if (command.toLowerCase().matches("search collection \\w+")) {
                 setId(command.substring(18));
                 return RequestType.SHOP_SEARCH_COLLECTION_CARD;
-            } else if (command.toLowerCase().matches("search \\w+")) {
+            }
+            if (command.toLowerCase().matches("search \\w+")) {
                 setId(command.substring(7));
                 return RequestType.SHOP_SEARCH_CARD;
-            } else if (command.toLowerCase().matches("buy \\w+")) {
+            }
+            if (command.toLowerCase().matches("buy \\w+")) {
                 setId(command.substring(4));
                 return RequestType.SHOP_BUY;
-            } else if (command.toLowerCase().matches("sell \\w+")) {
+            }
+            if (command.toLowerCase().matches("sell \\w+")) {
                 setId(command.substring(5));
                 return RequestType.SHOP_SELL;
-            } else if (command.toLowerCase().matches("show")) {
+            }
+            if (command.toLowerCase().matches("show")) {
                 return RequestType.SHOP_SHOW;
-            } else if (command.toLowerCase().matches("help")) {
+            }
+            if (command.toLowerCase().matches("help")) {
                 return RequestType.SHOP_HELP;
             }
         } else if (state == StateType.MAIN_MENU) {
             switch (command.toLowerCase()) {
-                case "Login":
+                case "login":
                     return RequestType.MAIN_MENU_LOGIN;
-                case "Create account":
+                case "create account":
                     return RequestType.MAIN_MENU_SIGN_UP;
-                case "Show leaderBoard":
+                case "show leaderBoard":
                     return RequestType.MAIN_MENU_LEADER_BOARD;
-                case "Help":
+                case "help":
                     return RequestType.MAIN_MENU_HELP;
-                case "Save":
+                case "save":
                     return RequestType.MAIN_MENU_SAVE;
 
             }

@@ -10,6 +10,7 @@ public enum  StateType {
     SELECT_ITEM,
     GRAVE_YARD,
     SELECT_MODE,
-    SINGLE_GAME;
+    SINGLE_GAME,
+    END_PROGRAM
 
 }
