@@ -255,8 +255,12 @@ public class MenuController {
                             }
                         } while (mode != 0);
 
-                        if(Game.makeMultiPlayerGame(userName, mode, numberOfFlags))
+                        if(!Game.makeMultiPlayerGame(userName, mode, numberOfFlags))
+                        {   state=StateType.ACCOUNT_MENU;
+                            break;
+                        }
                             state=StateType.BATTLE;
+
                         break;
                     case MODE_SINGLE_PLAYER:
                         state = StateType.SINGLE_GAME;

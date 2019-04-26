@@ -33,13 +33,21 @@ public class MenuView {
 
     }
     public void showDecksAndModes(Account account){
+        showModes();
+        
 
     }
     public void showAllAccount(){
-        AllAccount.
-
+        AllAccount allAccount=AllAccount.getInstance();
+        for(Account account: allAccount.accounts){
+            System.out.println(account.getUserName());
+        }
     }
     public void showModes(){
+        System.out.println("1. Death mode");
+        System.out.println("2. saveFlag for 6 turn");
+        System.out.println("3. collect half if flags");
+
 
     }
 }

@@ -74,7 +74,6 @@ public class Game {
 
 
     public void makeANewGame(Account account) {
-    public void makeANewGame() {
 
 
         Game game = new Game();
