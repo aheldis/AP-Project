@@ -1,5 +1,6 @@
 package model.battle;
 
+import model.account.Account;
 import model.card.Card;
 import model.land.Square;
 import view.BattleView;
@@ -8,22 +9,34 @@ import view.enums.ErrorType;
 import static java.lang.Math.abs;
 
 public class OrdinaryPlayer extends Player {
-    public void setType() {
-        type = "ordinaryPlayer";
+
+
+    public OrdinaryPlayer(Account account, Deck deck) {
+        this.setAccount(account);
+        this.setMainDeck(deck);
+        this.setType("OrdinaryPlayer");
+        mainDeck.setRandomOrderForDeck();
+        setHand();
     }
 
     public void addToAccountWins() {
         getAccount().addToWins();
     }
 
-    public void setDeck() {
-        mainDeck = getAccount().getMainDeck();
+    public static OrdinaryPlayer makeNewPlayer(Account account, Deck mainDeck) {
         if (mainDeck == null) {
             ErrorType error = ErrorType.DONT_HAVE_MAIN_DECK;
             BattleView.getInstance().printError(error);
+            return null;
+        }
+        if (!mainDeck.validate()) {
+            ErrorType error = ErrorType.INVALID_DECK_FOR_GAME;
+            BattleView.getInstance().printError(error);
+            return null;
         }
 
-        mainDeck.setRandomOrderForDeck();
+        OrdinaryPlayer player = new OrdinaryPlayer(account, mainDeck);
+        return player;
     }
 
     public void playTurn() {

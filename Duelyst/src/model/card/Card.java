@@ -18,7 +18,7 @@ public abstract class Card {
     private ArrayList <Buff> buffsOnThisCard;
     private Square position;
     private LandOfGame landOfGame;
-
+    private int CardNumber; //todo card number dashte bashan oon shomareE ke to doc e vase sakhtan mode ha, albate mitoonan nadashte bashan ba esm besazim game card ha ro :-? item ha ham hamin tor
 
     public void setTarget(){
 

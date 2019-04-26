@@ -4,7 +4,7 @@ public abstract class Item {
     private String name;
     private String description;
     private int cost;
-
+    private int itemNumber; //todo tozih to card
 
     public int getCost() {
         return cost;

@@ -7,6 +7,7 @@ import view.BattleView;
 import view.Request;
 import view.enums.ErrorType;
 import view.enums.StateType;
+import model.account.Account;
 
 import javax.xml.stream.events.EntityReference;
 import java.security.AccessControlContext;
@@ -54,23 +55,32 @@ public class Game {
     }
 
 
+    public void makeANewGame(Account account) {
     public void makeANewGame() {
 
 
         Game game = new Game();
-        //todo to controller bere bebine single e ya multi
-        //age single bud story e ya custom
 
-        //age story bood che marhalie -> level
-        int level;
-        for (Game game1 : gamesType) {
-            if (game1.levelNumber == level) {
-                game = game1;
-            }
+        Player player1 = OrdinaryPlayer.makeNewPlayer(account, account.getMainDeck());
+        if (player1 == null) {
+            return;
         }
-        //baad bere ye deck besaze ba array lista ke toshoon shomare carta o inast...
+        Player player2 = null;
+        //todo to controller bere bebine single e ya multi
+        //singlePlayer to por kone;
+        //age single bud story e ya custom
+        //story ro por kone
+        if (story) {
 
-        //age custom bood list deckha (????) namayesh bede entekhab kone bazi kone
+            //age story bood che marhalie -> level
+            int level; //in to begire
+            //bere az too gamefile ha new game e ke sakhtim ro por kone -> arraylist ha va hero va item va reward va mode
+        } else {
+            //age custom bood list deckha (????) namayesh bede entekhab kone bazi kone
+        }
+
+
+        //baad bere ye deck besaze ba array lista ke toshoon shomare carta o inast...
 
         //age multi bood bere account entekhab kone va mode
     }

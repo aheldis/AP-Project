@@ -17,29 +17,30 @@ public abstract class Player {
     protected String type;
     private Match match;
     private int turnsPlayed = 0;
-    private GraveYard graveYard=new GraveYard();
+    private GraveYard graveYard = new GraveYard();
     protected Player opponent;
 
     ArrayList<Flag> flags;
     private ArrayList<Card> cardsOnLand = new ArrayList<>();
 
-    public void putCardOnLand(String cardId, Coordinate coordinate, LandOfGame land){
+
+    public void putCardOnLand(String cardId, Coordinate coordinate, LandOfGame land) {
         Card playerCard = null;
-        for(Card card : hand.getGameCards()){
-            if(card.equalCard(cardId))
-                playerCard=card;
+        for (Card card : hand.getGameCards()) {
+            if (card.equalCard(cardId))
+                playerCard = card;
         }
-        if(playerCard==null)
+        if (playerCard == null)
             return;
         cardsOnLand.add(playerCard);
-        Square[][] squares =land.getSquares();
-        squares[coordinate.getX()][coordinate.getY()] .setCard(playerCard);
+        Square[][] squares = land.getSquares();
+        squares[coordinate.getX()][coordinate.getY()].setCard(playerCard);
 
     }
 
     public void initPerTurn() {
         hand.checkTheHandAndAddToIt();
-        for (Card card :cardsOnLand){
+        for (Card card : cardsOnLand) {
             card.changeTurnOfCanNotAttack(-1);
             card.changeTurnOfCanNotCounterAttack(-1);
             card.changeTurnOfCanNotMove(-1);
@@ -50,7 +51,7 @@ public abstract class Player {
             if (card.getTurnOfCanNotMove() <= 0)
                 card.setCanMove(true);
         }
-        turnsPlayed ++;
+        turnsPlayed++;
     }
 
     public void addToCardsOfLand(Card card) {
@@ -86,7 +87,8 @@ public abstract class Player {
     }
 
     public void setHand() {
-
+        hand = new Hand(mainDeck);
+        hand.setCards();
     }
 
     public void counterAttack(Card card, Card theOneWhoAttacked) {
@@ -95,10 +97,37 @@ public abstract class Player {
 
     public abstract void playTurn();
 
-    public abstract void setType();
-
     public abstract void addToAccountWins();
 
-    public abstract void setDeck();
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
+    public void setMainDeck(Deck mainDeck) {
+        this.mainDeck = mainDeck;
+    }
+
+    public void setHand(Hand hand) {
+        this.hand = hand;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
+    public void setTurnsPlayed(int turnsPlayed) {
+        this.turnsPlayed = turnsPlayed;
+    }
+
+    public void setGraveYard(GraveYard graveYard) {
+        this.graveYard = graveYard;
+    }
+
+    public void setOpponent(Player opponent) {
+        this.opponent = opponent;
+    }
 }
