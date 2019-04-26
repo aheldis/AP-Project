@@ -11,6 +11,8 @@ import model.battle.Match;
 import model.card.*;
 
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Date;
 
 import view.enums.ErrorType;
 
@@ -199,17 +201,16 @@ public class AccountView {
 
     public void viewAMatch(MatchInfo matchInfo, Account me) {
         Account opponent;
-        if(matchInfo.winner==me){
-            opponent=matchInfo.loser;
+        if (matchInfo.winner == me) {
+            opponent = matchInfo.loser;
             System.out.println(opponent.getUserName());
             System.out.println("win");
-            System.out.println(matchInfo.date);
-        }
-        else {
+            printDate(matchInfo.date);
+        } else {
             opponent = matchInfo.winner;
             System.out.println(opponent.getUserName());
             System.out.println("loss");
-            System.out.println(matchInfo.date);
+            printDate(matchInfo.date);
         }
 
 //
@@ -220,6 +221,56 @@ public class AccountView {
 //            System.out.println(" win ");
 //        }
 //        System.out.println(match.getTime()); //todo time-e java ???
+    }
+
+    private class Duration {
+        long seconds;
+        long minutes;
+        long hours;
+        long days;
+        long months;
+        long years;
+        long milliSecond;
+
+        public Duration(long milliSecond) {//joda joda taqsim she daqiq tare :D
+            this.milliSecond = milliSecond;
+            seconds = milliSecond / 1000 % 60;
+            minutes = milliSecond / (60 * 1000) % 60;
+            hours = milliSecond / (60 * 60 * 1000);
+            days = milliSecond / (1000 * 60 * 60 * 24);
+            months = days / 30;
+            years = months / 12;
+
+
+        }
+    }
+
+    public void printDate(Date date) {
+        Date currentDate = new Date();
+        long diff = date.getTime() - currentDate.getTime();
+        Duration duration = new Duration(diff);
+        if (duration.years != 0) {
+            System.out.println(duration.years + "years ago");
+        } else {
+            if (duration.months != 0) {
+                System.out.println(duration.months + "months ago");
+            } else {
+                if (duration.days != 0) {
+                    System.out.println(duration.days + "days ago");
+                } else {
+                    if (duration.hours != 0) {
+                        System.out.println(duration.hours + " hours ago");
+                    } else {
+                        if (duration.minutes != 0) {
+                            System.out.println(duration.minutes + " minutes ago");
+                        } else {
+                            System.out.println(duration.seconds + "seconds ago");
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     public void printError(ErrorType error) {
