@@ -231,29 +231,29 @@ public class MenuController {
             if (state == StateType.SELECT_MODE) {
                 switch (request.getRequestType()) {
                     case MODE_MULTI_PLAYER:
-                        int mode=0;
+                        int mode = 0;
                         String command;
-                        int numberOfFlags=0;
+                        int numberOfFlags = 0;
                         String userName;
                         menuView.showAllAccount();
-                        do{
+                        do {
                             menuView.printer("Select user [user name]");
                             request.getNewLine();
-                            userName=request.getCommand();
-                        }while (!AllAccount.userNameHaveBeenExist(userName));
+                            userName = request.getCommand();
+                        } while (!AllAccount.userNameHaveBeenExist(userName));
                         menuView.showModes();
-                        do{
+                        do {
                             menuView.printer("Start multiPlayer game [mode] [number of flags] ");
                             request.getNewLine();
-                            command=request.getCommand();
-                            if(!command.matches("Start multiPlayer game \\d (\\d+)*"))
+                            command = request.getCommand();
+                            if (!command.matches("Start multiPlayer game \\d (\\d+)*"))
                                 continue;
-                            mode=Integer.parseInt(command.split(" ")[3]);
-                            if(command.split(" ").length>4){
-                                numberOfFlags=Integer.parseInt(command.split(" ")[4]);
+                            mode = Integer.parseInt(command.split(" ")[3]);
+                            if (command.split(" ").length > 4) {
+                                numberOfFlags = Integer.parseInt(command.split(" ")[4]);
                             }
-                        }while (mode!=0);
-                        Game.makeMultiPlayerGame(userName,mode,numberOfFlags);
+                        } while (mode != 0);
+                        Game.makeMultiPlayerGame(userName, mode, numberOfFlags);
                         break;
                     case MODE_SINGLE_PLAYER:
                         state = StateType.SINGLE_GAME;
@@ -273,13 +273,12 @@ public class MenuController {
                             menuView.printer("Enter Start game [deck name] [mode] [number of flags]");
                             request.getNewLine();
                             command = request.getCommand();
-                            if(!command.matches("Start game \\w+ \\d+ (\\d)*"))
+                            if (!command.matches("Start game \\w+ \\d+ (\\d)*"))
+                                continue;
                             deckName = command.split(" ")[2];
-                            if (command.split(" ")[3].matches("\\d"))
-                                mode = Integer.parseInt(command.split(" ")[3]);
+                            mode = Integer.parseInt(command.split(" ")[3]);
                             if (command.split(" ").length > 4)
-                                if (command.split(" ")[4].matches("\\d+"))
-                                    numberOfFLags = Integer.parseInt(command.split(" ")[4]);
+                                numberOfFLags = Integer.parseInt(command.split(" ")[4]);
                             if (mode != 0 && deckName != null)
                                 valid = true;
 
@@ -288,12 +287,16 @@ public class MenuController {
                         break;
                     case SINGLE_STORY:
                         menuView.showLevelsForStory();
-                        menuView.printer("Enter the level");
+                        int level=0;
                         do {
+                            menuView.printer("Enter the level");
                             request.getNewLine();
+                            if(!request.getCommand().matches("\\d"))
+                                continue;
+                            level=Integer.parseInt(request.getCommand());
 
-                        } while (request.getCommand().matches("\\d") && Integer.parseInt(request.getCommand()) < 4);
-                        Game.makeStoryGame(Integer.parseInt(request.getCommand()));
+                        } while ( level>0 && level<4);
+                        Game.makeStoryGame(level);
                         break;
                 }
             }
