@@ -62,6 +62,7 @@ public class Match {
         matchInfo.winner=this.winner;
         matchInfo.loser=this.loser;
         matchInfo.date=date;
+        winner.addToWins();
         winner.addMatchInfo(matchInfo);
         loser.addMatchInfo(matchInfo);
 

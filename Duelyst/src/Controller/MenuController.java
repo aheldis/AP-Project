@@ -8,9 +8,6 @@ import model.card.*;
 import view.*;
 import view.enums.*;
 
-import java.beans.beancontext.BeanContextServiceRevokedEvent;
-import java.text.BreakIterator;
-
 
 public class MenuController {
     private StateType state = StateType.MAIN_MENU; //todo esme in ye chiz dige bashe behtar nist? (svw)
@@ -65,11 +62,10 @@ public class MenuController {
                         state = StateType.ACCOUNT_MENU;
                         break;
                     case MAIN_MENU_HELP:
-
                         menuView.helpForMainMenu();
                         break;
                     case MAIN_MENU_LEADER_BOARD:
-                        AllAccount.getInstance().showLeaderBoard();
+                        allAccount.showLeaderBoard();
                         break;
                     case MAIN_MENU_SAVE:
                         //todo
