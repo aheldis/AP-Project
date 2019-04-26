@@ -141,35 +141,9 @@ public class Shop {
         }
     }
 
-    private ArrayList<Hero> getHeroes() {
-        ArrayList<Hero> heroes = new ArrayList<>();
-        for (Card card : cards) {
-            if (card instanceof Hero)
-                heroes.add((Hero) card);
-        }
-        return heroes;
-    }
-
-    private ArrayList<Minion> getMinions() {
-        ArrayList<Minion> minions = new ArrayList<>();
-        for (Card card : cards) {
-            if (card instanceof Minion)
-                minions.add((Minion) card);
-        }
-        return minions;
-    }
-
-    private ArrayList<Spell> getSpells() {
-        ArrayList<Spell> spells = new ArrayList<>();
-        for (Card card : cards) {
-            if (card instanceof Spell)
-                spells.add((Spell) card);
-        }
-        return spells;
-    }
 
     public void show() {
-        accountView.cardsAndItemsView(getSpells(), getMinions(), getHeroes(), items);
+    accountView.cardsAndItemsView(Card.getSpells(cards), Card.getMinions(cards), Card.getHeroes(cards), items);
     }
 
     public void help() {

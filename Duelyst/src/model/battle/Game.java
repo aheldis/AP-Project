@@ -1,7 +1,6 @@
 package model.battle;
 
 import model.account.Account;
-import model.mode.Mode;
 import view.BattleView;
 import view.enums.ErrorType;
 
@@ -47,12 +46,12 @@ public class Game {
             if (playerNumber == 1)
                 error = ErrorType.SELECTED_INVALID_DECK;
             else
-                error = ErrorType.SELECTED_INVALID_DECK_FOR_PLAYER2
+                error = ErrorType.SELECTED_INVALID_DECK_FOR_PLAYER2;
             error.printMessage();
             return false;
         }
 
-        players[playerNumber - 2] = new OrdinaryPlayer(account, account.getMainDeck());
+        players[playerNumber - 2] = new OrdinaryPlayer(account, account.getMainDeck(), playerNumber);
         return true;
     }
 

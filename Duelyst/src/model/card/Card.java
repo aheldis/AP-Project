@@ -171,5 +171,33 @@ public abstract class Card {
 
     }
 
+
+    public static ArrayList<Hero> getHeroes(ArrayList<Card> cards) {
+        ArrayList<Hero> heroes = new ArrayList<>();
+        for (Card card : cards) {
+            if (card instanceof Hero)
+                heroes.add((Hero) card);
+        }
+        return heroes;
+    }
+
+    public static ArrayList<Minion> getMinions(ArrayList<Card> cards) {
+        ArrayList<Minion> minions = new ArrayList<>();
+        for (Card card : cards) {
+            if (card instanceof Minion)
+                minions.add((Minion) card);
+        }
+        return minions;
+    }
+
+    public static ArrayList<Spell> getSpells(ArrayList<Card> cards) {
+        ArrayList<Spell> spells = new ArrayList<>();
+        for (Card card : cards) {
+            if (card instanceof Spell)
+                spells.add((Spell) card);
+        }
+        return spells;
+    }
+
     //ye method ke ye square ba card begire khoonehaee ke mikhaim roshoon kari konim ro bede  arraylist
 }

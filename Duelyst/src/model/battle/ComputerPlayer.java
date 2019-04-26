@@ -6,6 +6,7 @@ public class ComputerPlayer extends Player {
         this.setMainDeck(deck);
         this.setType("ComputerPlayer");
         mainDeck.setRandomOrderForDeck();
+        setMana(2);
         setHand();
     }
 
@@ -15,6 +16,9 @@ public class ComputerPlayer extends Player {
     }
 
     public void addToAccountWins() {
+    }
+
+    public void addMatchInfo(MatchInfo matchInfo) {
     }
 
     public void setDeck() {

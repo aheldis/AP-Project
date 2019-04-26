@@ -2,7 +2,6 @@ package model.battle;
 
 import model.Item.Flag;
 import model.account.Account;
-import model.account.Collection;
 import model.card.Card;
 import model.land.LandOfGame;
 import model.land.Square;
@@ -17,9 +16,9 @@ public abstract class Player {
     protected String type;
     private Match match;
     private int turnsPlayed = 0;
+    private int mana;
     private GraveYard graveYard = new GraveYard();
     protected Player opponent;
-
     ArrayList<Flag> flags;
     private ArrayList<Card> cardsOnLand = new ArrayList<>();
 
@@ -52,6 +51,11 @@ public abstract class Player {
                 card.setCanMove(true);
         }
         turnsPlayed++;
+        mana++;
+    }
+
+    public void counterAttack(Card card, Card theOneWhoAttacked) {
+
     }
 
     public void addToCardsOfLand(Card card) {
@@ -91,13 +95,12 @@ public abstract class Player {
         hand.setCards();
     }
 
-    public void counterAttack(Card card, Card theOneWhoAttacked) {
-
-    }
 
     public abstract void playTurn();
 
     public abstract void addToAccountWins();
+
+    public abstract void addMatchInfo(MatchInfo matchInfo);
 
     public void setAccount(Account account) {
         this.account = account;
@@ -129,5 +132,13 @@ public abstract class Player {
 
     public void setOpponent(Player opponent) {
         this.opponent = opponent;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 }

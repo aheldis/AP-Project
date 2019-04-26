@@ -1,18 +1,21 @@
 package model.battle;
 
+import model.Item.Flag;
 import model.account.Account;
 import model.land.LandOfGame;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Match {
     private Player[] players;
     private String mode;
     private int numberOfFlags;
+    private ArrayList<Flag> flags;
     //private Time startTime;
     //private Time endTime;
-    private Account winner;
-    private Account loser;
+    private Player winner;
+    private Player loser;
     private int reward;
     private LandOfGame land;
     private int whichPlayer = 0; //0--> player 1 /1--> player 2
@@ -31,7 +34,7 @@ public class Match {
 
 //        players[0].initPlayers();
 //        players[1].initPlayers();
-        // chera khob? :///
+
         initGame();
         players[0].initPerTurn();
         players[1].initPerTurn();
@@ -39,6 +42,7 @@ public class Match {
         while (true) {
             players[whichPlayer].playTurn();
             if (gameEnded()) {
+                endGame();
                 break;
             }
             whichPlayer = 1 - whichPlayer;
@@ -49,28 +53,49 @@ public class Match {
 
     public void initGame() {
 
-        //set reward
-
+        /* ina to khode player anjam mishe:
         players[0].mainDeck.setRandomOrderForDeck();
         players[0].getHand().setCards();
         players[1].mainDeck.setRandomOrderForDeck();
         players[1].getHand().setCards();
+        */
 
         players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
         players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
 
     }
 
-    public boolean gameEnded() {
+    private boolean gameEnded() {
+        //todo
+        switch (mode) {
+            case "DeathMode": {
+
+                break;
+            }
+            case "SaveFlagMode": {
+
+                break;
+            }
+            case "CollectFlagMode": {
+
+                break;
+            }
+        }
+    }
+
+    private void endGame(){
         MatchInfo matchInfo = new MatchInfo();
-        matchInfo.winner = this.winner;
-        matchInfo.loser = this.loser;
+        if(this.winner instanceof OrdinaryPlayer)
+        matchInfo.winner = this.winner.getAccount();
+        if(this.loser instanceof OrdinaryPlayer)
+        matchInfo.loser = this.loser.getAccount();
         matchInfo.date = date;
-        winner.addToWins();
+
+        winner.addToAccountWins();
         winner.addMatchInfo(matchInfo);
         loser.addMatchInfo(matchInfo);
 
-        //todo
+        //todo ye chizi print kone ke bazi tamoom shode
     }
 
     public Player[] getPlayers() {
