@@ -1,12 +1,20 @@
 package Controller;
 
 
-import model.Item.*;
-import model.account.*;
+import model.Item.Usable;
+import model.account.Account;
+import model.account.AllAccount;
+import model.account.Collection;
+import model.account.Shop;
 import model.battle.Game;
-import model.card.*;
-import view.*;
-import view.enums.*;
+import model.battle.Match;
+import model.card.Card;
+import view.EnterGameMessages;
+import view.MenuView;
+import view.Request;
+import view.enums.ErrorType;
+import view.enums.RequestType;
+import view.enums.StateType;
 
 
 public class MenuController {
@@ -16,6 +24,7 @@ public class MenuController {
     private Account account;
     private AllAccount allAccount = AllAccount.getInstance();
     private MenuView menuView = MenuView.getInstance();
+    private Match match;
 
     public void main() {
         Request request = new Request(state);// mige signUp ya logIn hast
@@ -79,8 +88,8 @@ public class MenuController {
                             state = StateType.COLLECTION;
                             break;
                         case MENU_ENTER_BATTLE:
-                            if(!Game.gameChecker(account))
-                                state=StateType.ACCOUNT_MENU;
+                            if (!Game.checkPlayerDeck(account, 1))
+                                state = StateType.ACCOUNT_MENU;
                             state = StateType.SELECT_MODE;
                             // TODO: bayad bebarim dakhele ye bazi
                             break;
@@ -228,14 +237,18 @@ public class MenuController {
                 switch (request.getRequestType()) {
                     case MODE_MULTI_PLAYER:
                         int mode = 0;
-                        String command;
                         int numberOfFlags = 0;
+                        String command;
                         String userName;
                         menuView.showAllAccount();
                         do {
                             menuView.printer("Select user [user name]");
                             request.getNewLine();
                             userName = request.getCommand();
+                            if (!allAccount.userNameHaveBeenExist(userName)) {
+                                ErrorType error = ErrorType.USER_NAME_NOT_FOUND;
+                                menuView.printError(error);
+                            }
                         } while (!allAccount.userNameHaveBeenExist(userName));
                         menuView.showModes();
                         do {
@@ -248,13 +261,19 @@ public class MenuController {
                             if (command.split(" ").length > 4) {
                                 numberOfFlags = Integer.parseInt(command.split(" ")[4]);
                             }
-                        } while (mode != 0);
+                            //todo in chand khat ham duplicate e
+                        } while (mode != 0); //in vase chie? yejoorie inja
 
-                        if(!Game.makeMultiPlayerGame(userName, mode, numberOfFlags))
-                        {   state=StateType.ACCOUNT_MENU;
+                        Account secondPlayerAccount = AllAccount.getInstance().getAccountByName(userName);
+                        //todo inja aya lazeme ke pass e dovomi ro begirim? be nazar man lazeme
+                        if (!Game.checkPlayerDeck(secondPlayerAccount, 2)) {
+                            state = StateType.ACCOUNT_MENU;
                             break;
                         }
-                            state=StateType.BATTLE;
+
+                        //baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
+                        match = Game.makeNewMultiGame(mode, numberOfFlags);
+                        state = StateType.BATTLE;
 
                         break;
                     case MODE_SINGLE_PLAYER:
@@ -264,13 +283,13 @@ public class MenuController {
             }
             if (state == StateType.SINGLE_GAME) {
                 switch (request.getRequestType()) {
-                    case SINGLE_CUSTOM:
-                        menuView.showDecksAndModes(account);
+                    case SINGLE_CUSTOM: {
                         int mode = 0;
-                        String deckName = null;
                         int numberOfFLags = 0;
                         boolean valid = false;
+                        String deckName = null;
                         String command;
+                        menuView.showDecksAndModes(account);
                         do {
                             menuView.printer("Enter Start game [deck name] [mode] [number of flags]");
                             request.getNewLine();
@@ -285,28 +304,30 @@ public class MenuController {
                                 valid = true;
 
                         } while (!valid);
-                        Game.makeCustomGame(deckName, mode, numberOfFLags);
-                        state=StateType.BATTLE;
+                        match = Game.makeNewCustomGame(account, deckName, mode, numberOfFLags);
+                        state = StateType.BATTLE;
                         break;
-                    case SINGLE_STORY:
+                    }
+                    case SINGLE_STORY: {
                         menuView.showLevelsForStory();
-                        int level=0;
+                        int level = 0;
                         do {
                             menuView.printer("Enter the level");
                             request.getNewLine();
-                            if(!request.getCommand().matches("\\d"))
+                            if (!request.getCommand().matches("\\d"))
                                 continue;
-                            level=Integer.parseInt(request.getCommand());
+                            level = Integer.parseInt(request.getCommand());
 
-                        } while ( level>0 && level<4);
-                        Game.makeStoryGame(level);
-                        state=StateType.BATTLE;
+                        } while (level > 0 && level < 4);
+                        match = Game.makeNewStoryGame(account, level);
+                        state = StateType.BATTLE;
                         break;
+                    }
                 }
             }
 
             if (state == StateType.BATTLE) {
-
+                //match darim
             }
             if (state == StateType.GRAVE_YARD) {
 

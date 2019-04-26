@@ -1,6 +1,7 @@
 package model.mode;
 
 import model.Item.Flag;
+import model.battle.Match;
 
 public class SaveFlagMode extends Mode {
     Flag flag;
@@ -9,7 +10,7 @@ public class SaveFlagMode extends Mode {
         flag = new Flag();
     }
 
-    public boolean checkForEndOfTheGame() {
+    public boolean checkForEndOfTheGame(Match match) {
         return false;
     }
 }

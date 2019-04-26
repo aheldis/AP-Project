@@ -1,6 +1,7 @@
 package model.mode;
 
 import model.Item.Flag;
+import model.battle.Match;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,8 @@ public class CollectFlagMode extends Mode {
                 }
     }*/
 
-    public boolean checkForEndOfTheGame() {
+    public boolean checkForEndOfTheGame(Match match) {
+
         return flagsOnTheGround.size() == 0;
     }
 }

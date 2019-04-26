@@ -1,10 +1,11 @@
 package model.mode;
 
+import model.battle.Match;
 import model.land.Square;
 
 public class DeathMode extends Mode {
 
-    public boolean checkForEndOfTheGame() {
+    public boolean checkForEndOfTheGame(Match match) {
         return false;
     }
 

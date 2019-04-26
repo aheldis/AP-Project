@@ -8,6 +8,7 @@ import java.util.Date;
 public class Match {
     private Player[] players;
     private String mode;
+    private int numberOfFlags;
     //private Time startTime;
     //private Time endTime;
     private Account winner;
@@ -17,11 +18,20 @@ public class Match {
     private int whichPlayer = 0; //0--> player 1 /1--> player 2
     private Date date;
 
+    public Match(Player[] players, String mode, int numberOfFlags, int reward) {//when we make a match we should have players
+        this.players = players;
+        this.mode = mode;
+        this.numberOfFlags = numberOfFlags;
+        this.reward = reward;
+        land = new LandOfGame();
+    }
+
     public void startMatch() {
         date = new Date();
 
 //        players[0].initPlayers();
 //        players[1].initPlayers();
+        // chera khob? :///
         initGame();
         players[0].initPerTurn();
         players[1].initPerTurn();
@@ -36,11 +46,6 @@ public class Match {
     }
 
 
-    public Match(Player[] players, String mode) {//when we make a match we should have players
-        this.players = players;
-        land = new LandOfGame();
-        this.mode = mode;
-    }
 
     public void initGame() {
 

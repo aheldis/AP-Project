@@ -1,5 +1,6 @@
 package model.mode;
 
+import model.battle.Match;
 import model.battle.Player;
 import model.land.Square;
 
@@ -31,5 +32,8 @@ public abstract class Mode {
         return squareOfPlayer.equals(squareOfFlag);
     }
 
-    public abstract boolean checkForEndOfTheGame();
+    public abstract boolean checkForEndOfTheGame(Match match);
+
+
+
 }

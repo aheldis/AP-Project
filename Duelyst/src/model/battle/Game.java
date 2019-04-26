@@ -1,10 +1,11 @@
 package model.battle;
 
 import model.account.Account;
+import model.mode.Mode;
 import view.BattleView;
 import view.enums.ErrorType;
 
-import java.util.ArrayList;
+//todo single instance she ya oon kar Dge
 
 public class Game {
 //    private static Game singleInstance = null;
@@ -20,21 +21,26 @@ public class Game {
     private int reward;
     private int levelNumber = -1;
   */  //private ArrayList<Game> gamesType;
-    private static Match match;
+    private static Player[] players = new Player[2];
+    private static int mode;
+    private static int numberOfFlags = 0;
+    private static int reward = 0;
     private static BattleView battleView = BattleView.getInstance();
 
 /*
+
     public static Game singleInstance() {
         return singleInstance;
     }
 */
+
 
 /*    public void makeGames() {
         //bere az roo file bekhone game besaze berize to gamesType
     }
 */
 
-    public static boolean checkPlayerDeck(Account account, int playerNumber) {
+    public static boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
         Deck deck = account.getMainDeck();
         if (deck == null || !deck.validate()) {
             ErrorType error;
@@ -45,48 +51,47 @@ public class Game {
             error.printMessage();
             return false;
         }
+
+        players[playerNumber - 2] = new OrdinaryPlayer(account, account.getMainDeck());
         return true;
     }
 
-    public static Match makeNewMultiGame(Account firstPlayerAccount, Account secondPlayerAccount, int mode, int numberOfFlags) {
-
-        Game game = new Game();
-
-        Player player1 = new OrdinaryPlayer(firstPlayerAccount, firstPlayerAccount.getMainDeck());
-        Player player2 = new OrdinaryPlayer(secondPlayerAccount, secondPlayerAccount.getMainDeck());
-
-//        game.singlePlayer = false;
-//        game.mode = mode;
-//        game.numberOfFlags = numberOfFlags;
-
-        Match match = new Match(); //todo
+    public static Match makeNewMultiGame(int mode, int numberOfFlags) {
+        Match match = new Match(players, getModeAsString(mode), numberOfFlags, reward);
         return match;
     }
 
 
-    public static Match makeNewStoryGame(Account account, int level) {
-        //todo bere az file level bekhoone oon deckharo ye deck besaze -> secondPlayerDeck
+    public static Match makeNewStoryGame(int level) {
+        //todo bere az file level bekhoone oon deckharo ye deck besaze -> secondPlayerDeck mode -> mode reward -> reward
         Deck secondPlayerDeck = null;
-        Player player1 = new OrdinaryPlayer(account, account.getMainDeck());
-        Player player2 = new ComputerPlayer(secondPlayerDeck);
-
-        Match match = new Match(); //todo
+        players[1] = new ComputerPlayer(secondPlayerDeck);
+        Match match = new Match(players, getModeAsString(mode), numberOfFlags, reward);
         return match;
     }
 
     public static Match makeNewCustomGame(Account account, String deckName, int mode, int numberOfFlags) {
         //todo deck inam bayad besaziim (how?)
         Deck secondPlayerDeck = null;
-        Player player1 = new OrdinaryPlayer(account, account.getMainDeck());
-        Player player2 = new ComputerPlayer(secondPlayerDeck);
-
-        Match match = new Match();
+        players[1] = new ComputerPlayer(secondPlayerDeck);
+        reward = 1000;
+        Match match = new Match(players, getModeAsString(mode), numberOfFlags, reward);
         return match;
         //age mode akhar nabashe numberesho 0 midam
         //svw: yani chi?
 
-        //init game
-        //set reward 1000
+    }
+
+    public static String getModeAsString(int mode) {
+        switch (mode) {
+            case 1:
+                return "DeathMode";
+            case 2:
+                return "SaveFlagMode";
+            case 3:
+                return "CollectFlagMode";
+        }
+        return "invalid";
     }
 
 }
