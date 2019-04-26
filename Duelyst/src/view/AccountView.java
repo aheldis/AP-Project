@@ -57,7 +57,7 @@ public class AccountView {
         counter = 1;
         for (Minion minion : minions) {
             System.out.print("          ");
-            showEachMinion((minion, counter);
+            showEachMinion(minion, counter);
             System.out.println(" – Sell Cost : " + minion.getCost());
             counter++;
         }

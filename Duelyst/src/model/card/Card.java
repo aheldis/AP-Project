@@ -171,6 +171,10 @@ public abstract class Card {
 
     }
 
+    public int getRange() {
+        //todo
+    }
+
 
     public static ArrayList<Hero> getHeroes(ArrayList<Card> cards) {
         ArrayList<Hero> heroes = new ArrayList<>();
