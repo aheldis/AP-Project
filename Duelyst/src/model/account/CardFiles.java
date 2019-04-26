@@ -4,8 +4,8 @@ package model.account;
 import model.card.Card;
 import model.card.MakeNewCard;
 import model.card.Spell;
-import view.NewCardMessages;
 import view.Request;
+import view.enums.StateType;
 
 import java.io.*;
 
@@ -13,13 +13,14 @@ public class CardFiles {
     private String path = "D:\\project-Duelyst\\Duelyst\\CardsFile";
 
     public void makeNewCardByPlayer() throws IOException {
-        Request request = new Request("menu");
+        Request request = new Request(StateType.MAIN_MENU); //todo ghablesh "menu" bood (haniyeh)
         request.getNewLine();
         String command = request.getCommand();
 
 
-        if (command.equals("Spell")) {
-            MakeNewCard.makeNewCardFile("Spell");
+        switch (command) {
+            case "Spell":
+                MakeNewCard.makeNewCardFile("Spell");
 //todo it is for check syntax don't delete these comments
 
 //            NewCardMessages message = NewCardMessages.getInstance();
@@ -86,53 +87,58 @@ public class CardFiles {
 //
 //            writer.close();
 
-        } else if (command.equals("Minion")) {
-            MakeNewCard.makeNewCardFile("Minion");
-
-        } else if (command.equals("Hero")) {
-            MakeNewCard.makeNewCardFile("Hero");
-
-        } else if (command.equals("Item")) {
-            //todo
+                break;
+            case "Minion":
+                MakeNewCard.makeNewCardFile("Minion");
+                break;
+            case "Hero":
+                MakeNewCard.makeNewCardFile("Hero");
+                break;
+            case "Item":
+                //todo
+                break;
         }
     }
 
     public Card makeCardFromFile(String fileName) {
         fileName += ".txt";
-        String line = null;
+        String line;
         String answer;
 
         try {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             if ((line = bufferedReader.readLine()) != null) {
-                if (line.equals("Spell")) {
-                    Spell spell = new Spell();
-                    answer = line.split(" ")[1];
-                    spell.setCost(Integer.parseInt(answer));
-                    line = bufferedReader.readLine();
-                    answer = line.split(" ")[1];
-                    spell.setMp(Integer.parseInt(answer));
-                    line = bufferedReader.readLine();
-                    answer = line.split(" ")[1];
-                    spell.setApChanges(Integer.parseInt(answer.split(" - ")[0]));
-                    spell.setTurnForApChanges(Integer.parseInt(answer.split(" - ")[1]));
-                    line = bufferedReader.readLine();
-                    answer = line.split(" ")[1];
-                    spell.setHpChanges(Integer.parseInt(answer.split(" - ")[0]));
-                    spell.setTurnForHpChanges(Integer.parseInt(answer.split(" - ")[1]));
-                    //TODO buff
-                    //TODO target
-                    line = bufferedReader.readLine();
-                    answer = line.substring(6);
-                    spell.setDescription(answer);
+                switch (line) {
+                    case "Spell":
+                        Spell spell = new Spell();
+                        answer = line.split(" ")[1];
+                        spell.setCost(Integer.parseInt(answer));
+                        line = bufferedReader.readLine();
+                        answer = line.split(" ")[1];
+                        spell.setMp(Integer.parseInt(answer));
+                        line = bufferedReader.readLine();
+                        answer = line.split(" ")[1];
+                        spell.setApChanges(Integer.parseInt(answer.split(" - ")[0]));
+                        spell.setTurnForApChanges(Integer.parseInt(answer.split(" - ")[1]));
+                        line = bufferedReader.readLine();
+                        answer = line.split(" ")[1];
+                        spell.setHpChanges(Integer.parseInt(answer.split(" - ")[0]));
+                        spell.setTurnForHpChanges(Integer.parseInt(answer.split(" - ")[1]));
+                        //TODO buff
+                        //TODO target
+                        line = bufferedReader.readLine();
+                        answer = line.substring(6);
+                        spell.setDescription(answer);
 
-                    return spell;
+                        return spell;
 
-                } else if (line.equals("Minion")) {
+                    case "Minion":
 
-                } else if (line.equals("Hero")) {
+                        break;
+                    case "Hero":
 
+                        break;
                 }
             }
 

@@ -251,15 +251,15 @@ public class Request {
 
         }
         if (state == StateType.SELECT_MODE) {
-            if(command.toLowerCase().matches("single player"))
+            if (command.toLowerCase().matches("single player"))
                 return RequestType.MODE_SINGLE_PLAYER;
-            if(command.toLowerCase().matches("multi player") )
+            if (command.toLowerCase().matches("multi player"))
                 return RequestType.MODE_MULTI_PLAYER;
         }
-        if(state==StateType.SINGLE_GAME){
-            if(command.toLowerCase().matches("custom game"))
+        if (state == StateType.SINGLE_GAME) {
+            if (command.toLowerCase().matches("custom game"))
                 return RequestType.SINGLE_CUSTOM;
-            if(command.toLowerCase().matches("story"))
+            if (command.toLowerCase().matches("story"))
                 return RequestType.SINGLE_STORY;
         }
         return null;
