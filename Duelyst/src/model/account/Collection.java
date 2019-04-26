@@ -66,16 +66,15 @@ public class Collection {
         return false;
     }
 
-    public void selectADeckAsMainDeck(String deckName) {
-
-        Deck deck = passTheDeckIfHaveBeenExist(deckName);
-        if (deck == null) {
-            ErrorType error = ErrorType.HAVE_NOT_DECK;
-            error.printMessage();
-
-        }
-        account.setMainDeck(deck);
-    }
+//    public boolean selectADeckAsMainDeck(String deckName) {
+//
+//        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+//        if (deck == null) {
+//            ErrorType error = ErrorType.HAVE_NOT_DECK;
+//            error.printMessage();
+//
+//        }
+//    }
 
     public boolean searchCardName(String cardName) {
         boolean have = false;
@@ -124,7 +123,7 @@ public class Collection {
 
     }
 
-    private Deck passTheDeckIfHaveBeenExist(String deckName) {
+    public Deck passTheDeckIfHaveBeenExist(String deckName) {
         for (Deck deck : decks) {
             if (deck.getName().equals(deckName))
                 return deck;

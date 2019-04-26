@@ -101,12 +101,4 @@ public abstract class Player {
 
     public abstract void setDeck();
 
-    public void setHand() {
-
-    }
-
-    public void counterAttack(Card card, Card theOneWhoAttacked) {
-
-    }
-
 }

@@ -1,18 +1,15 @@
 package Controller;
 
 
-import model.Item.Usable;
-import model.account.Account;
-import model.account.AllAccount;
-import model.account.Collection;
-import model.account.Shop;
-import model.card.Card;
-import view.EnterGameMessages;
-import view.MenuView;
-import view.Request;
-import view.enums.ErrorType;
-import view.enums.RequestType;
-import view.enums.StateType;
+import model.Item.*;
+import model.account.*;
+import model.battle.Game;
+import model.card.*;
+import view.*;
+import view.enums.*;
+
+import java.beans.beancontext.BeanContextServiceRevokedEvent;
+import java.text.BreakIterator;
 
 
 public class MenuController {
@@ -22,6 +19,7 @@ public class MenuController {
     private boolean endProgram = false;
     private Account account;
     private AllAccount allAccount = AllAccount.getInstance();
+    private MenuView menuView = MenuView.getInstance();
 
     public void main() {
         Request request = new Request(state);// mige signUp ya logIn hast
@@ -67,7 +65,7 @@ public class MenuController {
                         state = StateType.ACCOUNT_MENU;
                         break;
                     case MAIN_MENU_HELP:
-                        MenuView menuView = MenuView.getInstance();
+
                         menuView.helpForMainMenu();
                         break;
                     case MAIN_MENU_LEADER_BOARD:
@@ -86,7 +84,8 @@ public class MenuController {
                             state = StateType.COLLECTION;
                             break;
                         case MENU_ENTER_BATTLE:
-                            state = StateType.BATTLE;
+                            state = StateType.SELECT_MODE;
+                            Game.gameChecker(account);
                             // TODO: bayad bebarim dakhele ye bazi
                             break;
                         case MENU_ENTER_HELP:
@@ -227,6 +226,51 @@ public class MenuController {
                     }
                     request = new Request(state);
                     request.getNewCommand();
+                }
+            }
+            if (state == StateType.SELECT_MODE) {
+                switch (request.getRequestType()) {
+                    case MODE_MULTI_PLAYER:
+                        menuView.showAllAccount();
+                        break;
+                    case MODE_SINGLE_PLAYER:
+                        state = StateType.SINGLE_GAME;
+                        break;
+                }
+            }
+            if (state == StateType.SINGLE_GAME) {
+                switch (request.getRequestType()) {
+                    case SINGLE_CUSTOM:
+                        menuView.showDecksAndModes(account);
+                        int mode = 0;
+                        String deckName = null;
+                        int numberOfFLags = 0;
+                        boolean valid = false;
+                        String command;
+                        do {
+                            request.getNewLine();
+                            command = request.getCommand();
+                            deckName = command.split(" ")[2];
+                            if (command.split(" ")[3].matches("\\d"))
+                                mode = Integer.parseInt(command.split(" ")[3]);
+                            if (command.split(" ").length > 4)
+                                if (command.split(" ")[4].matches("\\d+"))
+                                    numberOfFLags = Integer.parseInt(command.split(" ")[4]);
+                            if (mode != 0 && deckName != null)
+                                valid = true;
+
+                        } while (!valid);
+                        Game.makeCustomGame(deckName, mode, numberOfFLags);
+                        break;
+                    case SINGLE_STORY:
+                        menuView.showLevelsForStory();
+                        menuView.printer("Enter the level");
+                        do {
+                            request.getNewLine();
+
+                        } while (request.getCommand().matches("\\d") && Integer.parseInt(request.getCommand()) < 4);
+                        Game.makeStoryGame(Integer.parseInt(request.getCommand()));
+                        break;
                 }
             }
 

@@ -11,7 +11,7 @@ public class Request {
     private String command;
     private StateType state;//menu or collection or shop or model.battle
     private RequestType type;
-    private Coordinate coordinate=new Coordinate();
+    private Coordinate coordinate = new Coordinate();
 
     private String deckName;
     private String Id;
@@ -32,7 +32,8 @@ public class Request {
     public String getCommand() {
         return command;
     }
-    public Coordinate getCoordinate(){
+
+    public Coordinate getCoordinate() {
         return coordinate;
     }
 
@@ -225,7 +226,7 @@ public class Request {
         }
         if (state == StateType.SELECT_CARD) {
             if (command.toLowerCase().matches("move to \\(\\d+,\\d+\\)")) {
-                coordinate.setX(Integer.parseInt(command.substring(9,10)));
+                coordinate.setX(Integer.parseInt(command.substring(9, 10)));
                 coordinate.setY(Integer.parseInt(command.substring(11, 12)));
                 return RequestType.GAME_MOVE;
             }
@@ -243,11 +244,23 @@ public class Request {
             if (command.toLowerCase().matches("show info"))
                 return RequestType.GAME_ITEM_SHOW_INFO;
             if (command.toLowerCase().matches("use \\(\\d+,\\d+\\)")) {
-                coordinate.setX(Integer.parseInt(command.substring(5,6)));
-                coordinate.setY(Integer.parseInt(command.substring(7,8)));
+                coordinate.setX(Integer.parseInt(command.substring(5, 6)));
+                coordinate.setY(Integer.parseInt(command.substring(7, 8)));
                 return RequestType.GAME_ITEM_USE;
             }
 
+        }
+        if (state == StateType.SELECT_MODE) {
+            if(command.toLowerCase().matches("single player"))
+                return RequestType.MODE_SINGLE_PLAYER;
+            if(command.toLowerCase().matches("multi player") )
+                return RequestType.MODE_MULTI_PLAYER;
+        }
+        if(state==StateType.SINGLE_GAME){
+            if(command.toLowerCase().matches("custom game"))
+                return RequestType.SINGLE_CUSTOM;
+            if(command.toLowerCase().matches("story"))
+                return RequestType.SINGLE_STORY;
         }
         return null;
     }

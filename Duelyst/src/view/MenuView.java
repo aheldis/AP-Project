@@ -1,5 +1,7 @@
 package view;
 
+import model.account.Account;
+
 public class MenuView {
     private static MenuView singleInstance = null;
     private MenuView(){}
@@ -22,5 +24,17 @@ public class MenuView {
         System.out.println("Enter Show LeaderBoard");
         System.out.println("Enter Login - to login to your account");
         System.out.println("Enter Help - to show the orders");
+    }
+    public void printer(String string){
+        System.out.println(string);
+    }
+    public void showLevelsForStory(){
+
+    }
+    public void showDecksAndModes(Account account){
+
+    }
+    public void showAllAccount(){
+
     }
 }

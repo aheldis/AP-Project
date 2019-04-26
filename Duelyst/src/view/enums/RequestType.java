@@ -55,5 +55,9 @@ public enum RequestType {
     GAME_HELP,
     GAME_END_GAME,
     GAME_EXIT,
-    GAME_SHOW_MENU;
+    GAME_SHOW_MENU,
+    MODE_SINGLE_PLAYER,
+    MODE_MULTI_PLAYER,
+    SINGLE_CUSTOM,
+    SINGLE_STORY;
 }
