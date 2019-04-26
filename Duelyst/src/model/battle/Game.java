@@ -53,6 +53,11 @@ public class Game {
         //init game
         //set reward
     }
+    public static void makeMultiPlayerGame(String userName,int mode,int numberOfFlags){
+        //age mode akhar nabashe numberesho 0 midam
+    }
+
+
 
 
     public void makeANewGame(Account account) {

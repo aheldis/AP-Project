@@ -231,7 +231,29 @@ public class MenuController {
             if (state == StateType.SELECT_MODE) {
                 switch (request.getRequestType()) {
                     case MODE_MULTI_PLAYER:
+                        int mode=0;
+                        String command;
+                        int numberOfFlags=0;
+                        String userName;
                         menuView.showAllAccount();
+                        do{
+                            menuView.printer("Select user [user name]");
+                            request.getNewLine();
+                            userName=request.getCommand();
+                        }while (!AllAccount.userNameHaveBeenExist(userName));
+                        menuView.showModes();
+                        do{
+                            menuView.printer("Start multiPlayer game [mode] [number of flags] ");
+                            request.getNewLine();
+                            command=request.getCommand();
+                            if(!command.matches("Start multiPlayer game \\d (\\d+)*"))
+                                continue;
+                            mode=Integer.parseInt(command.split(" ")[3]);
+                            if(command.split(" ").length>4){
+                                numberOfFlags=Integer.parseInt(command.split(" ")[4]);
+                            }
+                        }while (mode!=0);
+                        Game.makeMultiPlayerGame(userName,mode,numberOfFlags);
                         break;
                     case MODE_SINGLE_PLAYER:
                         state = StateType.SINGLE_GAME;
@@ -248,8 +270,10 @@ public class MenuController {
                         boolean valid = false;
                         String command;
                         do {
+                            menuView.printer("Enter Start game [deck name] [mode] [number of flags]");
                             request.getNewLine();
                             command = request.getCommand();
+                            if(!command.matches("Start game \\w+ \\d+ (\\d)*"))
                             deckName = command.split(" ")[2];
                             if (command.split(" ")[3].matches("\\d"))
                                 mode = Integer.parseInt(command.split(" ")[3]);

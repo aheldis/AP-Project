@@ -8,7 +8,7 @@ import java.util.Collections;
 public class AllAccount {
     public static AllAccount singleInstance = null;
     public AccountView accountView = AccountView.getInstance();
-    public ArrayList<Account> accounts;
+    public static ArrayList<Account> accounts;
 
     public static AllAccount getInstance() {
         if (singleInstance == null)
@@ -32,7 +32,7 @@ public class AllAccount {
         return null;
     }
 
-    public boolean userNameHaveBeenExist(String userName) {
+    public static boolean userNameHaveBeenExist(String userName) {
         for (Account account : accounts) {
             if (account.getUserName().equals(userName)) {
                 return true;

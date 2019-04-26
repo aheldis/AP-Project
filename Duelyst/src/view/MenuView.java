@@ -37,4 +37,7 @@ public class MenuView {
     public void showAllAccount(){
 
     }
+    public void showModes(){
+
+    }
 }
