@@ -2,6 +2,7 @@ package view;
 
 import model.account.Account;
 import model.account.AllAccount;
+import view.enums.ErrorType;
 
 public class MenuView {
     private static MenuView singleInstance = null;
@@ -48,6 +49,8 @@ public class MenuView {
         System.out.println("2. saveFlag for 6 turn");
         System.out.println("3. collect half if flags");
 
-
+    }
+    public void printError(ErrorType error) {
+        System.out.println(error.getMessage());
     }
 }
