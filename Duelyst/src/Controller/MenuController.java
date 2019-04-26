@@ -84,8 +84,9 @@ public class MenuController {
                             state = StateType.COLLECTION;
                             break;
                         case MENU_ENTER_BATTLE:
+                            if(!Game.gameChecker(account))
+                                state=StateType.ACCOUNT_MENU;
                             state = StateType.SELECT_MODE;
-                            Game.gameChecker(account);
                             // TODO: bayad bebarim dakhele ye bazi
                             break;
                         case MENU_ENTER_HELP:
@@ -240,7 +241,7 @@ public class MenuController {
                             menuView.printer("Select user [user name]");
                             request.getNewLine();
                             userName = request.getCommand();
-                        } while (!AllAccount.userNameHaveBeenExist(userName));
+                        } while (!allAccount.userNameHaveBeenExist(userName));
                         menuView.showModes();
                         do {
                             menuView.printer("Start multiPlayer game [mode] [number of flags] ");
@@ -253,7 +254,9 @@ public class MenuController {
                                 numberOfFlags = Integer.parseInt(command.split(" ")[4]);
                             }
                         } while (mode != 0);
-                        Game.makeMultiPlayerGame(userName, mode, numberOfFlags);
+
+                        if(Game.makeMultiPlayerGame(userName, mode, numberOfFlags))
+                            state=StateType.BATTLE;
                         break;
                     case MODE_SINGLE_PLAYER:
                         state = StateType.SINGLE_GAME;
@@ -284,6 +287,7 @@ public class MenuController {
 
                         } while (!valid);
                         Game.makeCustomGame(deckName, mode, numberOfFLags);
+                        state=StateType.BATTLE;
                         break;
                     case SINGLE_STORY:
                         menuView.showLevelsForStory();
@@ -297,6 +301,7 @@ public class MenuController {
 
                         } while ( level>0 && level<4);
                         Game.makeStoryGame(level);
+                        state=StateType.BATTLE;
                         break;
                 }
             }

@@ -1,6 +1,7 @@
 package view;
 
 import model.account.Account;
+import model.account.AllAccount;
 
 public class MenuView {
     private static MenuView singleInstance = null;
@@ -35,6 +36,7 @@ public class MenuView {
 
     }
     public void showAllAccount(){
+        AllAccount.
 
     }
     public void showModes(){

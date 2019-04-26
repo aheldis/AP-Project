@@ -10,6 +10,7 @@ import view.enums.StateType;
 import model.account.Account;
 
 import javax.xml.stream.events.EntityReference;
+import java.io.FileWriter;
 import java.security.AccessControlContext;
 import java.util.ArrayList;
 
@@ -27,19 +28,27 @@ public class Game {
     private ArrayList<Game> gamesType;
     private static BattleView  battleView= BattleView.getInstance();
 
-    public static void gameChecker(Account account){
-        Request request=new Request(StateType.BATTLE);
+    public static boolean gameChecker(Account account){
+        //bayad player deck asli hod ra entekhab karde bashad
         Deck deck;
-        do {
-            battleView.print("Enter your mainDeck");
-            request.getNewLine();
-            deck=account.getCollection().passTheDeckIfHaveBeenExist(request.getCommand());
-            if(deck==null){
-                ErrorType error= ErrorType.SELECTED_INVALID_DECK;
-                error.printMessage();
-            }
-        }while (deck==null);
-        account.setMainDeck(deck);
+        deck=account.getMainDeck();
+        if(deck==null || !deck.validate()){
+            ErrorType error= ErrorType.SELECTED_INVALID_DECK;
+            error.printMessage();
+            return false;
+        }
+//        Request request=new Request(StateType.BATTLE);
+//        Deck deck;
+//        do {
+//            battleView.print("Enter your mainDeck");
+//            request.getNewLine();
+//            deck=account.getCollection().passTheDeckIfHaveBeenExist(request.getCommand());
+//            if(deck==null){
+//                ErrorType error= ErrorType.SELECTED_INVALID_DECK;
+//                error.printMessage();
+//            }
+//        }while (deck==null);
+//        account.setMainDeck(deck);
 
     }
 
@@ -47,13 +56,17 @@ public class Game {
 
     }
 
-    public static void makeCustomGame(String deckName,int mode,int numberOfFlags) {
+    public static  void  makeCustomGame(String deckName,int mode,int numberOfFlags) {
+
+
         //age mode akhar nabashe numberesho 0 midam
 
         //init game
         //set reward
     }
-    public static void makeMultiPlayerGame(String userName,int mode,int numberOfFlags){
+    public static boolean makeMultiPlayerGame(String userName,int mode,int numberOfFlags){
+    //if main deck of player 2 is invalid print "selected deck for second player is invalid" and return false
+
         //age mode akhar nabashe numberesho 0 midam
     }
 

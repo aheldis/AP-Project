@@ -66,15 +66,16 @@ public class Collection {
         return false;
     }
 
-//    public boolean selectADeckAsMainDeck(String deckName) {
-//
-//        Deck deck = passTheDeckIfHaveBeenExist(deckName);
-//        if (deck == null) {
-//            ErrorType error = ErrorType.HAVE_NOT_DECK;
-//            error.printMessage();
-//
-//        }
-//    }
+    public boolean selectADeckAsMainDeck(String deckName) {
+
+        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+        if (deck == null) {
+            ErrorType error = ErrorType.HAVE_NOT_DECK;
+            error.printMessage();
+
+        }
+        account.setMainDeck(deck);
+    }
 
     public boolean searchCardName(String cardName) {
         boolean have = false;
