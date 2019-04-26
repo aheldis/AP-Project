@@ -20,6 +20,7 @@ public class Minion extends Card {
     private CounterAttack counterAttack;
     private int attackRange;
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
+    String specialPowerInfo;
 
     int getNumberOfBeingAttacked() {
         return numberOfBeingAttacked;
@@ -33,12 +34,20 @@ public class Minion extends Card {
 
     }
 
+    public int getMp() {
+        return manaPower;
+    }
+
     void decreaseHP(int healthPower) {
         this.healthPower -= healthPower;
     }
 
     void increaseHP(int healthPower) {
         this.healthPower += healthPower;
+    }
+
+    public int getHp() {
+        return healthPower;
     }
 
     void decreaseAP(int attackPower) {
@@ -49,12 +58,20 @@ public class Minion extends Card {
         this.attackPower += attackPower;
     }
 
+    public int getAp() {
+        return attackPower;
+    }
+
     void attack(Square square) {
 
     }
 
     void counterAttack(Square square) {
 
+    }
+
+    public CounterAttack getCounterAttack() {
+        return counterAttack;
     }
 
     void move(Square square) {
@@ -67,6 +84,10 @@ public class Minion extends Card {
 
     void decreaseHPOfTarget() {
 
+    }
+
+    public String getSpecialPowerInfo() {
+        return specialPowerInfo;
     }
 
     void useSpecialPower() {

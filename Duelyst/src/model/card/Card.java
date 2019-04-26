@@ -171,5 +171,9 @@ public abstract class Card {
 
     }
 
+    public int getRange() {
+        //todo
+    }
+
     //ye method ke ye square ba card begire khoonehaee ke mikhaim roshoon kari konim ro bede  arraylist
 }

@@ -62,7 +62,7 @@ public class OrdinaryPlayer extends Player {
         if (!card.isCanAttack()) {
             //todo ERROR cannot attack
         }
-        if (target.getObject() == null || !(target.getObject() instanceof Card) {
+        if (target.getObject() == null || !(target.getObject() instanceof Card)) {
             //todo ERROR cannot attack to this
         }
 
