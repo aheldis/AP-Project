@@ -20,10 +20,10 @@ public class Game {
     private int reward;
     private int levelNumber = -1;
   */  //private ArrayList<Game> gamesType;
-    private static Player[] players = new Player[2];
-    private static int mode;
-    private static int numberOfFlags = 0;
-    private static int reward = 0;
+    private Player[] players = new Player[2];
+    private int mode;
+    private int numberOfFlags = 0;
+    private int reward = 0;
     private static BattleView battleView = BattleView.getInstance();
 
 /*
@@ -39,7 +39,7 @@ public class Game {
     }
 */
 
-    public static boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
+    public boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
         Deck deck = account.getMainDeck();
         if (deck == null || !deck.validate()) {
             ErrorType error;
@@ -55,22 +55,25 @@ public class Game {
         return true;
     }
 
-    public static Match makeNewMultiGame(int mode, int numberOfFlags) {
+    public Match makeNewMultiGame(int mode, int numberOfFlags) {
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }
 
 
-    public static Match makeNewStoryGame(int level) {
+    public Match makeNewStoryGame(int level) {
         //todo bere az file level bekhoone oon deckharo ye deck besaze -> secondPlayerDeck mode -> mode reward -> reward
         Deck secondPlayerDeck = null;
         players[1] = new ComputerPlayer(secondPlayerDeck);
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }
 
-    public static Match makeNewCustomGame(Account account, String deckName, int mode, int numberOfFlags) {
-        //todo deck inam bayad besaziim (how?)
-        // //showAlldecks
-        Deck secondPlayerDeck = null;
+    public Match makeNewCustomGame(Account account, String deckName, int mode, int numberOfFlags) {
+        Deck secondPlayerDeck = account.getCollection().getDeckByName(deckName);
+        if(secondPlayerDeck == null || !secondPlayerDeck.validate()){
+            ErrorType error = ErrorType.SELECTED_INVALID_DECK_FOR_PLAYER2;
+            error.printMessage();
+            return null;
+        }
         players[1] = new ComputerPlayer(secondPlayerDeck);
         reward = 1000;
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);

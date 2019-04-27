@@ -4,17 +4,16 @@ package view;
 import model.Item.Item;
 import model.Item.Usable;
 import model.account.Account;
-import model.battle.MatchInfo;
-import model.battle.Player;
 import model.battle.Deck;
-import model.battle.Match;
-import model.card.*;
+import model.battle.MatchInfo;
+import model.card.Card;
+import model.card.Hero;
+import model.card.Minion;
+import model.card.Spell;
+import view.enums.ErrorType;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.Date;
-
-import view.enums.ErrorType;
 
 public class AccountView {
 
@@ -98,12 +97,18 @@ public class AccountView {
         );
     }
 
+    public void decksNameView(ArrayList<Deck> decks) {
+        for (int i = decks.size() - 1; i >= 0; i++) {
+            System.out.println(decks.get(i).getName());
+        }
+    }
+
     public void decksView(ArrayList<Deck> decks) {
         int counterOfCards = 1, counterOfDeck = 1;
         Hero hero;
         Item item;
         ArrayList<Card> cards;
-        for (int i = decks.size(); i > 0; i++) {
+        for (int i = decks.size() - 1; i >= 0; i++) {
             System.out.println(counterOfDeck + " : " + decks.get(i).getName() + " :");
 
             hero = decks.get(i).getHero();

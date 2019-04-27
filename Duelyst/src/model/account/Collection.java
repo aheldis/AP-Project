@@ -1,10 +1,14 @@
 package model.account;
 
+import model.Item.Item;
+import model.Item.Usable;
+import model.battle.Deck;
+import model.card.Card;
+import model.card.Hero;
+import model.card.Minion;
+import model.card.Spell;
+import view.AccountView;
 import view.enums.ErrorType;
-import model.Item.*;
-import model.battle.*;
-import model.card.*;
-import view.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +21,7 @@ public class Collection {
     private Usable[] items = new Usable[3];
     private Account account;
     private ArrayList<Deck> decks;
+    private AccountView accountView = AccountView.getInstance();
 
     public Collection(Account account) {
         this.account = account;
@@ -40,7 +45,6 @@ public class Collection {
     }
 
     public void showCardsAndItems() {
-        AccountView accountView = AccountView.getInstance();
         accountView.cardsAndItemsView(spells, minions, heroes, new ArrayList<Usable>(Arrays.asList(items)));
     }
 
@@ -85,7 +89,7 @@ public class Collection {
         cards.addAll(heroes);
         for (Card card : cards) {
             if (card.getName().equals(cardName)) {
-                AccountView accountView = AccountView.getInstance();
+
                 accountView.print(card.getCardId().getCardIdAsString());
                 have = true;
             }
@@ -101,7 +105,7 @@ public class Collection {
         for (Usable item : items) {
             //if (item instanceof Usable) {
             if (item.getUsableId().getUsableIdAsString().equals(itemName)) {
-                AccountView accountView = AccountView.getInstance();
+
                 accountView.print(item.getUsableId().getUsableIdAsString());
                 //todo sout dari inja baad oon getItemName ro hamoon getName ro item seda ko
                 //todo yani chi ??(Zahra )
@@ -336,17 +340,27 @@ public class Collection {
             decks.remove(deck);
             decks.add(deck);
         }
-        AccountView accountView = AccountView.getInstance();
+
         accountView.decksView(decks);
     }
 
+
+    public void showAllDecksName() {
+        Deck deck = account.getMainDeck();
+        if (deck != null) {
+            decks.remove(deck);
+            decks.add(deck);
+        }
+        accountView.decksNameView(decks);
+    }
+
     public void showThisDeck(String deckName) {
-        AccountView accountView = AccountView.getInstance();
+
         accountView.deckView(passTheDeckIfHaveBeenExist(deckName));
     }
 
     public void helpOfCollection() {
-        AccountView accountView = AccountView.getInstance();
+
         accountView.helpViewForCollection();
     }
 
@@ -408,6 +422,13 @@ public class Collection {
         return number;
     }
 
+    public Deck getDeckByName(String deckName){
+        for(Deck deck: decks){
+            if(deck.getName().equals(deckName))
+                return deck;
+        }
+        return null;
+    }
 
     public void save() {
 

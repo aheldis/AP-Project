@@ -35,8 +35,7 @@ public class MenuView {
     }
     public void showDecksAndModes(Account account){
         showModes();
-        
-
+        account.getCollection().showAllDecksName();
     }
     public void showAllAccount(){
         AllAccount allAccount=AllAccount.getInstance();

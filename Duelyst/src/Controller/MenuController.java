@@ -24,6 +24,7 @@ public class MenuController {
     private Account account;
     private AllAccount allAccount = AllAccount.getInstance();
     private MenuView menuView = MenuView.getInstance();
+    private Game game;
     private Match match;
 
     public void main() {
@@ -236,6 +237,7 @@ public class MenuController {
             if (state == StateType.SELECT_MODE) {
                 switch (request.getRequestType()) {
                     case MODE_MULTI_PLAYER:
+                        game = new Game();
                         int mode = 0;
                         int numberOfFlags = 0;
                         String command;
@@ -266,13 +268,13 @@ public class MenuController {
 
                         Account secondPlayerAccount = AllAccount.getInstance().getAccountByName(userName);
                         //todo inja aya lazeme ke pass e dovomi ro begirim? be nazar man lazeme
-                        if (!Game.checkPlayerDeck(secondPlayerAccount, 2)) {
+                        if (!game.checkPlayerDeck(secondPlayerAccount, 2)) {
                             state = StateType.ACCOUNT_MENU;
                             break;
                         }
 
                         //baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
-                        match = Game.makeNewMultiGame(mode, numberOfFlags);
+                        match = game.makeNewMultiGame(mode, numberOfFlags);
                         state = StateType.BATTLE;
 
                         break;
@@ -307,7 +309,10 @@ public class MenuController {
                                 valid = true;
 
                         } while (!valid);
-                        match = Game.makeNewCustomGame(account, deckName, mode, numberOfFLags);
+                        match = game.makeNewCustomGame(account, deckName, mode, numberOfFLags);
+                        if (match == null) {
+                            //todo error: inja age deckname e alaki bashe ya valid nabashe match null mishe
+                        }
                         state = StateType.BATTLE;
                         break;
                     }
@@ -322,7 +327,7 @@ public class MenuController {
                             level = Integer.parseInt(request.getCommand());
 
                         } while (level > 0 && level < 4);
-                        match = Game.makeNewStoryGame(account, level);
+                        match = game.makeNewStoryGame(level);
                         state = StateType.BATTLE;
                         break;
                     }
