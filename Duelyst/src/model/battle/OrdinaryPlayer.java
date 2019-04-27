@@ -37,7 +37,7 @@ public class OrdinaryPlayer extends Player {
     }
 
     public void putCardFromHandInLand(Card card, Square square) {
-
+        //TODO :
         //check mana
         //check
     }

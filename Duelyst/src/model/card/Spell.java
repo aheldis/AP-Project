@@ -12,7 +12,8 @@ public class Spell extends Card {
     private ArrayList<Square> target;
     private ArrayList<Buff> buffs;
     private ArrayList<Integer> turnOfBuffs;
-    private int mp;
+
+    //todo in chertaro dorsot kon :|||
     private int apChanges;
     private int turnForApChanges;
     private int hpChanges;

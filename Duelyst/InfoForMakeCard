@@ -1,0 +1,26 @@
+Enter name of your card (one word )
+Enter the cost of this card
+Enter card type ( Spell / Minion / Hero )
+Enter attack point for this card(for spell Enter 0)
+Enter health point for this card(for spell Enter 0)
+Enter mana point for this card
+if it can move at first Enter true , else Enter false
+Enter how many turns it can not move if it can move after put it in land Enter 0
+if it can defend at first Enter true , else Enter false
+Enter how many turns it can not defend if it can move after put it in land Enter 0
+if it can attack at first Enter true , else Enter false
+Enter how many turns it can not attack if it can move after put it in land Enter 0
+Enter health point change after attack to opponent(For example: 2 or -2 )
+Enter attack point change after attack to opponent(For example: 2 or -2 )
+//
+if it has Unti buffs add name
+if it is continuous Enter true
+if it has buffs add them
+Enter Counter Attack type (ranged / melee / hybrid )
+if the target is a one card Enter true else Enter false
+if the target is a row of cells Enter true else Enter false
+if the target is a column of cards Enter true else Enter false
+if the target is a all cards Enter true else Enter false
+if the target is random Enter true else Enter false
+
+}

@@ -9,8 +9,8 @@ import model.requirment.Coordinate;
 import java.util.ArrayList;
 
 public abstract class Card {
-    private Change change = new Change();//HAS-A
-    private Target target;
+    protected Change change = new Change();//HAS-A
+    protected Target target=new Target();
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
@@ -18,7 +18,11 @@ public abstract class Card {
     private ArrayList<Buff> buffsOnThisCard;
     private Square position;
     private LandOfGame landOfGame;
-    private int CardNumber; //todo card number dashte bashan oon shomareE ke to doc e vase sakhtan mode ha, albate mitoonan nadashte bashan ba esm besazim game card ha ro :-? item ha ham hamin tor
+    private int CardNumber;//todo card number dashte bashan oon shomareE ke to doc e vase sakhtan mode ha, albate mitoonan nadashte bashan ba esm besazim game card ha ro :-? item ha ham hamin tor
+    protected int mp;
+    protected int hp;
+    protected int ap;
+
 
     public void setTarget() {
 

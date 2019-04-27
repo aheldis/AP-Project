@@ -2,6 +2,7 @@ package model.Item;
 
 import view.NewCardMessages;
 import view.Request;
+import view.enums.StateType;
 
 import java.io.*;
 import java.util.Scanner;
@@ -47,7 +48,7 @@ public class MakeNewUsableFile {
     }
 
     public static void makeUsableFile() {
-        Request request=new Request("item");
+        Request request=new Request(StateType.BATTLE);//mohem nist chon az get typesh estefade nmikonam
         NewCardMessages newCardMessages=NewCardMessages.getInstance();
         int lineNumber=1;
         while (true) {

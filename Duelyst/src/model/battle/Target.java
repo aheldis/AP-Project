@@ -10,7 +10,7 @@ public class Target {
     private Player player;
     private LandOfGame land;
     private ArrayList<Square> targets = new ArrayList<>();
-    private String counterAttackName; //ranged hybrid melee
+    private String counterAttackType; //ranged hybrid melee
     private String cardType; //minion hero spell
 //    private String number; // 0 <=
     private boolean one;
@@ -18,6 +18,11 @@ public class Target {
     private boolean column;
     private boolean all;
     private boolean random;
+    //distance
+
+    public Target(){
+
+    }
 
     public Target(Player player, LandOfGame land) {
         this.player = player;

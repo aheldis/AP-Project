@@ -279,6 +279,9 @@ public class MenuController {
                     case MODE_SINGLE_PLAYER:
                         state = StateType.SINGLE_GAME;
                         break;
+                    case MODE_HELP:
+
+                        break;
                 }
             }
             if (state == StateType.SINGLE_GAME) {

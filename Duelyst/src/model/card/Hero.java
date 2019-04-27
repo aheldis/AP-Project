@@ -11,8 +11,6 @@ public class Hero extends Card {
     private ArrayList<Buff> buffs = new ArrayList<Buff>();
     private CounterAttack counterAttack;
     private Coordinate Square;
-    private int hp;
-    private int ap;
     private Spell spell;
     private int mpRequiredForSpell;
     private int coolDown;

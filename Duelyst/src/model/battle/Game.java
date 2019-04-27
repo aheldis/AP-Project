@@ -51,13 +51,12 @@ public class Game {
             return false;
         }
 
-        players[playerNumber - 2] = new OrdinaryPlayer(account, account.getMainDeck(), playerNumber);
+        players[playerNumber - 1] = new OrdinaryPlayer(account, account.getMainDeck(), playerNumber);
         return true;
     }
 
     public static Match makeNewMultiGame(int mode, int numberOfFlags) {
-        Match match = new Match(players, getModeAsString(mode), numberOfFlags, reward);
-        return match;
+        return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }
 
 
@@ -65,19 +64,16 @@ public class Game {
         //todo bere az file level bekhoone oon deckharo ye deck besaze -> secondPlayerDeck mode -> mode reward -> reward
         Deck secondPlayerDeck = null;
         players[1] = new ComputerPlayer(secondPlayerDeck);
-        Match match = new Match(players, getModeAsString(mode), numberOfFlags, reward);
-        return match;
+        return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }
 
     public static Match makeNewCustomGame(Account account, String deckName, int mode, int numberOfFlags) {
         //todo deck inam bayad besaziim (how?)
+        // //showAlldecks
         Deck secondPlayerDeck = null;
         players[1] = new ComputerPlayer(secondPlayerDeck);
         reward = 1000;
-        Match match = new Match(players, getModeAsString(mode), numberOfFlags, reward);
-        return match;
-        //age mode akhar nabashe numberesho 0 midam
-        //svw: yani chi?
+        return new Match(players, getModeAsString(mode), numberOfFlags, reward);
 
     }
 

@@ -5,6 +5,9 @@ import model.land.Square;
 
 import java.util.ArrayList;
 
+
+//todo healthPower _> hp    attackPower -> ap to card darimeshon
+
 public class Minion extends Card {
     private int numberOfBeingAttacked;
     private int numberOfAttack;
@@ -15,8 +18,6 @@ public class Minion extends Card {
     private Square square;
     private int price;
     private int manaPower;
-    private int healthPower;
-    private int attackPower;
     private CounterAttack counterAttack;
     private int attackRange;
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;

@@ -55,7 +55,7 @@ public abstract class Player {
     }
 
     public void counterAttack(Card card, Card theOneWhoAttacked) {
-
+//todo
     }
 
     public void addToCardsOfLand(Card card) {

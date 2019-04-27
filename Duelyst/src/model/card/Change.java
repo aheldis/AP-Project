@@ -16,14 +16,12 @@ public class Change {
     protected int turnOfCanNotCounterAttack = 0;
     private int hpChange = 0;
     private int apChange = 0;
-    private int turnOfAffect = 0;
-    private int changeHpInNextTurn = 0;
-    private boolean addToHpAfterCounterAttack = false; //Holy buff
-    private boolean holyBuffDoesNotAffect = false;///shire darande :|
-    private boolean decreaseHpAfterCounterAttack = false;//mare qol peykar
-    private boolean canMoveAtFirst = false;
+    //private int turnOfAffect = 0;
+    private int changeHpInNextTurn = 0;//todo nemidonam chiye line 15 inforForMakeCard tozih bede
+   // private boolean addToHpAfterCounterAttack = false; //Holy buff //todo dar buff handle mikonm(zahra)
     private boolean continuous = false;
     private ArrayList<Buff> buffs;
+    private ArrayList<Buff> untiBuff;
 
 
     public void destroyPositiveEffects() {

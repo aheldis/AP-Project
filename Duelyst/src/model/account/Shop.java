@@ -1,11 +1,13 @@
 package model.account;
 
+import model.Item.Item;
 import model.Item.Usable;
 import model.Item.UsableId;
 import model.card.*;
 import view.AccountView;
 import view.enums.ErrorType;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class Shop {
@@ -154,5 +156,48 @@ public class Shop {
         if (singleInstance == null)
             singleInstance = new Shop();
         return singleInstance;
+    }
+
+    public void  makeNewFromFile(String fileName,String type){
+        Gson gson = new GsonBuilder().create();
+
+        InputStream input = null;
+
+        try{
+
+
+            input = new FileInputStream("D:\\jacksoncore\\src\\main\\"+fileName);//file name
+
+            Reader reader = new InputStreamReader(input);
+            //card - item - game file
+            if(type.equals("card")){
+                Card card = gson.fromJson(reader,Card.class);
+            }
+            if(type.equals("item")){
+                Item item = gson.fromJson(reader,Item.class);
+                //todo cherte in kar :))) item ke change nadare :)
+            }
+            if(type.equals("game file")){
+                // :/
+            }
+
+            int data = input.read();
+            while(data != -1) {
+                //do something with data...
+
+                data = input.read();
+            }
+        }catch(IOException e) {
+            //do something with e... log, perhaps rethrow etc.
+        }
+        finally {
+            try{
+                if(input != null) input.close();
+            } catch(IOException e){
+                //do something, or ignore.
+            }
+        }
+
+
     }
 }
