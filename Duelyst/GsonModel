@@ -1,0 +1,30 @@
+{
+  name:"
+  cost:"
+  cardType:"
+  ap:"
+  hp:"
+  mp:"
+  Change :{
+    canMove:"
+    turnOfCanNotMove:"
+    canCounterAttack:"
+    turnOfCanNotAttack:"
+    canAttack:"
+    turnOfCanNotCounterAttack:"
+    hpChange:"
+    apChange:"
+    changeHpInNextTurn:"
+    untiBuff:[ , ]
+    continuous:"
+    buffs:[ , ]
+  },
+  Target:{
+    counterAttackType:"
+    one:"
+    row:"
+    column:"
+    all:"
+    random:"
+  }
+}
