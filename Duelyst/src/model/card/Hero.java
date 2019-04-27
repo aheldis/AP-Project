@@ -76,20 +76,12 @@ public class Hero extends Card {
         buffs.add(buff);
     }
 
-    public void increaseHp(int number) {
+    public void changeHp(int number) {
         hp += number;
     }
 
-    public void decreaseHp(int number) {
-        hp -= number;
-    }
-
-    public void increaseAp(int number) {
+    public void changeAp(int number) {
         ap += number;
-    }
-
-    public void decreaseAp(int number) {
-        ap -= number;
     }
 
     public void useSpecialPower() {

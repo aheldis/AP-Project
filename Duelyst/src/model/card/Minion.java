@@ -39,28 +39,20 @@ public class Minion extends Card {
         return manaPower;
     }
 
-    void decreaseHP(int healthPower) {
-        this.healthPower -= healthPower;
-    }
-
-    void increaseHP(int healthPower) {
-        this.healthPower += healthPower;
+    void changeHp(int healthPower) {
+        this.hp += healthPower;
     }
 
     public int getHp() {
-        return healthPower;
+        return hp;
     }
 
-    void decreaseAP(int attackPower) {
-        this.attackPower -= attackPower;
-    }
-
-    void increaseAP(int attackPower) {
-        this.attackPower += attackPower;
+    void changeAp(int attackPower) {
+        this.ap -= attackPower;
     }
 
     public int getAp() {
-        return attackPower;
+        return ap;
     }
 
     void attack(Square square) {

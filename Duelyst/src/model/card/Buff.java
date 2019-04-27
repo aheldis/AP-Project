@@ -7,7 +7,12 @@ public class Buff {
     private boolean canMove = true;
     private boolean hpChangeAfterAttack = false;
 
-    public void affect() {
-
+    public void affect(Card card) {
+        if (card instanceof Hero) {
+            Hero hero = (Hero) card;
+            hero.changeAp(apChange);
+            hero.changeHp(hpChange);
+            hero.setCanMove()//Oh gand khord //todo dorost beshe
+        }
     }
 }
