@@ -4,15 +4,15 @@ import model.Item.Item;
 import model.Item.Usable;
 import model.Item.UsableId;
 import model.card.*;
-import view.AccountView;
-import view.enums.ErrorType;
-
+import view.*;
 import java.io.*;
 import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Shop {
     public static Shop singleInstance = null;
-    private ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Card> cards = new ArrayList<>();// todo man ino card haye jahan gereftam (zahra)
     private ArrayList<Usable> items = new ArrayList<>();
     private static AccountView accountView = AccountView.getInstance();
 
@@ -165,28 +165,28 @@ public class Shop {
 
         try{
 
-
             input = new FileInputStream("D:\\jacksoncore\\src\\main\\"+fileName);//file name
 
             Reader reader = new InputStreamReader(input);
             //card - item - game file
             if(type.equals("card")){
                 Card card = gson.fromJson(reader,Card.class);
+                cards.add(card);
             }
             if(type.equals("item")){
-                Item item = gson.fromJson(reader,Item.class);
+                Usable item = gson.fromJson(reader,Usable.class);
+                items.add(item);
                 //todo cherte in kar :))) item ke change nadare :)
             }
             if(type.equals("game file")){
                 // :/
             }
-
-            int data = input.read();
-            while(data != -1) {
-                //do something with data...
-
-                data = input.read();
-            }
+//            int data = input.read();
+//            while(data != -1) {
+//                //do something with data...
+//
+//                data = input.read();
+//            }
         }catch(IOException e) {
             //do something with e... log, perhaps rethrow etc.
         }

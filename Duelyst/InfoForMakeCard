@@ -22,5 +22,3 @@ if the target is a row of cells Enter true else Enter false
 if the target is a column of cards Enter true else Enter false
 if the target is a all cards Enter true else Enter false
 if the target is random Enter true else Enter false
-
-}

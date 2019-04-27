@@ -2,6 +2,7 @@ package model.card;
 
 import view.NewCardMessages;
 import view.Request;
+import view.enums.StateType;
 
 import java.io.*;
 
@@ -12,7 +13,7 @@ public class MakeNewCard {
 
     public static void makeNewCardFile(String filePathName) {
         NewCardMessages newCardMessages = NewCardMessages.getInstance();
-        Request request = new Request("Card");
+        Request request = new Request(StateType.BATTLE);//mohem ni chi bashe mikham az scanneresh estefade konam
         while (true) {
             try {
                 FileReader fileReader = new FileReader("../CardsFile/" + filePathName + "/TEMPLATE");
