@@ -1,22 +1,34 @@
 package model.account;
 
-import model.Item.Item;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.Item.Usable;
 import model.Item.UsableId;
 import model.card.*;
-import view.*;
+import view.AccountView;
+import view.enums.ErrorType;
+
 import java.io.*;
 import java.util.ArrayList;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class Shop {
     public static Shop singleInstance = null;
-    private ArrayList<Card> cards = new ArrayList<>();// todo man ino card haye jahan gereftam (zahra)
+    private ArrayList<Card> cards = new ArrayList<>();// todo man ino card haye jahan gereftam (zahra) bashe :) (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
     private ArrayList<Usable> items = new ArrayList<>();
     private static AccountView accountView = AccountView.getInstance();
+    private String pathOfFiles = "D:\\jacksoncore\\src\\main\\"; //todo: file path doroste? :-?? baad "card"a o "item" o ina ro jode bezarim
+    private String[] type = {"card", "item"};
 
     //todo bere az har card yedoone besaze
+    private void init() {
+        for (int j = 0; j < 2; j++) {
+            File folder = new File(pathOfFiles + type[j]);
+            File[] listOfFiles = folder.listFiles();
+            for (int i = 0; i < listOfFiles.length; i++) {
+                makeNewFromFile(listOfFiles[i].getPath(), type[j]);
+            }
+        }
+    }
 
     private boolean itemExist(String name) {
         for (Usable item : items) {
@@ -118,6 +130,8 @@ public class Shop {
             } else if (card instanceof Minion) {
                 collection.addToMinions((Minion) card);
             }
+            cards.remove(card);
+            makeNewFromFile(pathOfFiles + "card//" + card.getName(), "card"); //todo check lotfan
         }
         if (itemExist(name)) {
             Usable item = getItem(name);
@@ -125,10 +139,12 @@ public class Shop {
             if (!enoughDaricForBuy(account, item.getCost()))
                 return;
             account.getCollection().addToItems(item);
+            items.remove(item);
+            makeNewFromFile(pathOfFiles + "item//" + item.getName(), "item"); //todo check lotfan
         }
     }
 
-    public void sell(Account account, String id) {
+    public void sell(Account account, String id) { //todo in lazeme bargarde be shop?
         Collection collection = account.getCollection();
         Card card = collection.passCardByCardId(id);
         Usable item = collection.passUsableItemByUsableItemId(id);
@@ -145,7 +161,7 @@ public class Shop {
 
 
     public void show() {
-    accountView.cardsAndItemsView(Card.getSpells(cards), Card.getMinions(cards), Card.getHeroes(cards), items);
+        accountView.cardsAndItemsView(Card.getSpells(cards), Card.getMinions(cards), Card.getHeroes(cards), items);
     }
 
     public void help() {
@@ -153,33 +169,36 @@ public class Shop {
     }
 
     public static Shop getInstance() {
-        if (singleInstance == null)
+        if (singleInstance == null) {
             singleInstance = new Shop();
+            singleInstance.init();
+        }
         return singleInstance;
     }
 
-    public void  makeNewFromFile(String fileName,String type){
+    public void makeNewFromFile(String path, String type) {
         Gson gson = new GsonBuilder().create();
 
         InputStream input = null;
 
-        try{
+        try {
 
-            input = new FileInputStream("D:\\jacksoncore\\src\\main\\"+fileName);//file name
+            input = new FileInputStream(path);//file name
 
             Reader reader = new InputStreamReader(input);
             //card - item - game file
-            if(type.equals("card")){
-                Card card = gson.fromJson(reader,Card.class);
-                cards.add(card);
+            if (type.equals(this.type[0])) {
+                Card card = gson.fromJson(reader, Card.class);
+                addCard(card);
             }
-            if(type.equals("item")){
-                Usable item = gson.fromJson(reader,Usable.class);
-                items.add(item);
+            if (type.equals(this.type[1])) {
+                Usable item = gson.fromJson(reader, Usable.class);
+                addItem(item);
                 //todo cherte in kar :))) item ke change nadare :)
             }
-            if(type.equals("game file")){
+            if (type.equals("game file")) {
                 // :/
+                //fekr konam bayad baresh darim az inja
             }
 //            int data = input.read();
 //            while(data != -1) {
@@ -187,13 +206,12 @@ public class Shop {
 //
 //                data = input.read();
 //            }
-        }catch(IOException e) {
+        } catch (IOException e) {
             //do something with e... log, perhaps rethrow etc.
-        }
-        finally {
-            try{
-                if(input != null) input.close();
-            } catch(IOException e){
+        } finally {
+            try {
+                if (input != null) input.close();
+            } catch (IOException e) {
                 //do something, or ignore.
             }
         }
