@@ -31,4 +31,7 @@ public class GraveYard {
         BattleView.getInstance().showCardInfo(card);
     }
 
+    public GraveYard(Player player){
+        this.player = player;
+    }
 }

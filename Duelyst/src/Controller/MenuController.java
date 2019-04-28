@@ -1,11 +1,16 @@
 package Controller;
 
 
-import model.Item.Collectable;
 import model.Item.Usable;
-import model.account.*;
-import model.battle.*;
-import model.card.*;
+import model.account.Account;
+import model.account.AllAccount;
+import model.account.Collection;
+import model.account.Shop;
+import model.battle.Game;
+import model.battle.GraveYard;
+import model.battle.Match;
+import model.battle.Player;
+import model.card.Card;
 import model.requirment.Coordinate;
 import view.EnterGameMessages;
 import view.MenuView;
@@ -20,6 +25,7 @@ public class MenuController {
     private static Account account;
     private static AllAccount allAccount = AllAccount.getInstance();
     private static MenuView menuView = MenuView.getInstance();
+
     private static Game game;
     private static Match match;
 

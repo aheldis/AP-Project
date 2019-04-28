@@ -22,19 +22,20 @@ public class Match {
     private Date date;
 
 
-    public Player passPlayerWithTurn(){
-        if(whichPlayer==0)
+    public Player passPlayerWithTurn() {
+        if (whichPlayer == 0)
             return players[0];
         else
             return players[1];
     }
 
-    public void changeTurn(){
-        if(whichPlayer==0)
-            whichPlayer =1;
+    public void changeTurn() {
+        if (whichPlayer == 0)
+            whichPlayer = 1;
         else
-            whichPlayer=0;
+            whichPlayer = 0;
     }
+
     public Match(Player[] players, String mode, int numberOfFlags, int reward) {//when we make a match we should have players
         this.players = players;
         this.mode = mode;
@@ -59,7 +60,6 @@ public class Match {
             whichPlayer = 1 - whichPlayer;
         }
     }
-
 
 
     public void initGame() {
@@ -94,12 +94,12 @@ public class Match {
         }
     }
 
-    private void endGame(){
+    private void endGame() {
         MatchInfo matchInfo = new MatchInfo();
-        if(this.winner instanceof OrdinaryPlayer)
-        matchInfo.winner = this.winner.getAccount();
-        if(this.loser instanceof OrdinaryPlayer)
-        matchInfo.loser = this.loser.getAccount();
+        if (this.winner instanceof OrdinaryPlayer)
+            matchInfo.winner = this.winner.getAccount();
+        if (this.loser instanceof OrdinaryPlayer)
+            matchInfo.loser = this.loser.getAccount();
         matchInfo.date = date;
 
         winner.addToAccountWins();
@@ -117,11 +117,11 @@ public class Match {
         return mode;
     }
 
-    public Account getWinner() {
+    public Player getWinner() {
         return winner;
     }
 
-    public Account getLoser() {
+    public Player getLoser() {
         return loser;
     }
 

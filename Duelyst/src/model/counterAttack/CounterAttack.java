@@ -4,7 +4,7 @@ import model.card.Card;
 import model.requirment.Coordinate;
 
 public abstract class CounterAttack {
-    protected String className;
+    protected String name;
     private Coordinate coordinate;
     private Card card;
     boolean canCounterAttack = true;//if it has disarm buff it is false
@@ -18,8 +18,8 @@ public abstract class CounterAttack {
         return card;
     }
 
-    public String getClassName() {
-        return className;
+    public String getName() {
+        return name;
     }
 
     public void setCoordinate(Coordinate coordinate) {

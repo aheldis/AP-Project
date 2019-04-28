@@ -22,24 +22,14 @@ public abstract class Card {
     protected int mp;
     protected int hp;
     protected int ap;
-    private  String playerName;
+    private String playerName;
 
-    public int getMp(){
-        return mp;
-    }
-    public int getHp() {
-        return hp;
-    }
-    public int getAp() {
-        return ap;
-    }
     private String description;
 
-
-
-    public  String getPlayerName(){
+    public String getPlayerName() {
         return playerName;
     }
+
     public void setTarget() {
 
     }
@@ -51,7 +41,7 @@ public abstract class Card {
     public void move(Coordinate coordinate) {
         if (change.canMove && withinRange(coordinate)) {
             landOfGame.removeCardFromAnSquare(position.getCoordinate());
-            landOfGame.addCardToAnSquare(coordinate, cardId);//todo
+            landOfGame.addCardToAnSquare(coordinate, this);//todo
         }
         //check asare khane
         //can move = false

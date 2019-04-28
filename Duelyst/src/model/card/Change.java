@@ -1,7 +1,5 @@
 package model.card;
 
-import model.card.Buff;
-
 import java.util.ArrayList;
 
 public class Change {
@@ -16,15 +14,15 @@ public class Change {
     protected int turnOfCanNotCounterAttack = 0;
     private int hpChange = 0;
     private int apChange = 0;
-    //private int turnOfAffect = 0;
-    private int changeHpInNextTurn = 0;//todo nemidonam chiye line 15 inforForMakeCard tozih bede
-   // private boolean addToHpAfterCounterAttack = false; //Holy buff //todo dar buff handle mikonm(zahra)
     private boolean continuous = false;
     private ArrayList<Buff> buffs;
     private ArrayList<Buff> untiBuff;
-
+    //private int changeHpInNextTurn = 0;//todo nemidonam chiye line 15 inforForMakeCard tozih bede
+    // private boolean addToHpAfterCounterAttack = false; //Holy buff //todo dar buff handle mikonm(zahra)
+    //private int turnOfAffect = 0;
 
     public void destroyPositiveEffects() {
 
     }
+
 }

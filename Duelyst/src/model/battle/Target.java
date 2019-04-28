@@ -1,6 +1,8 @@
 package model.battle;
 
 import model.card.Card;
+import model.card.Hero;
+import model.card.Minion;
 import model.land.LandOfGame;
 import model.land.Square;
 
@@ -12,7 +14,7 @@ public class Target {
     private ArrayList<Square> targets = new ArrayList<>();
     private String counterAttackType; //ranged hybrid melee
     private String cardType; //minion hero spell
-//    private String number; // 0 <=
+    //    private String number; // 0 <=
     private boolean one;
     private boolean row;
     private boolean column;
@@ -20,7 +22,7 @@ public class Target {
     private boolean random;
     //distance
 
-    public Target(){
+    public Target() {
 
     }
 
@@ -28,8 +30,39 @@ public class Target {
         this.player = player;
         this.land = land;
     }
-    public void setTargets(){
 
+    public boolean checkIfAttackedCardIsValid(Card attacked) {
+        //check beshe ba sharayet target mikhoone ya na todo kamel nistaa
+        String counterAttackName = null;
+        if (attacked instanceof Minion) {
+            if (cardType != "minion") {
+                return false;
+            }
+            counterAttackName = ((Minion) attacked).getCounterAttack().getName();
+        }
+        if (attacked instanceof Hero) {
+            if (cardType != "hero") {
+                return false;
+            }
+            counterAttackName = ((Hero) attacked).getCounterAttack().getName();
+        }
+
+        if (counterAttackName != null) {
+            if(!counterAttackName.equals(counterAttackType)){
+                return false;
+            }
+            return true;
+
+        }
+        return false;
+    }
+
+    public void setTargets(Card attacker, Card attacked) {
+        if (attacked == null) {
+
+        } else {
+
+        }
     }
 
     public ArrayList<Square> setTarget(Square square /*squari e ke seda mikone */) {

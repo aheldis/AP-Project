@@ -20,7 +20,7 @@ public abstract class Player {
     private Match match;
     private int turnsPlayed = 0;
     private int mana;
-    private GraveYard graveYard = new GraveYard();
+    private GraveYard graveYard = new GraveYard(this);
     protected Player opponent;
     ArrayList<Flag> flags;
     private ArrayList<Card> cardsOnLand = new ArrayList<>();
