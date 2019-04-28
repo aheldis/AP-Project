@@ -2,13 +2,9 @@ package Controller;
 
 
 import model.Item.Usable;
-import model.account.Account;
-import model.account.AllAccount;
-import model.account.Collection;
-import model.account.Shop;
-import model.battle.Game;
-import model.battle.Match;
-import model.card.Card;
+import model.account.*;
+import model.battle.*;
+import model.card.*;
 import view.EnterGameMessages;
 import view.MenuView;
 import view.Request;
@@ -18,16 +14,16 @@ import view.enums.StateType;
 
 
 public class MenuController {
-    private StateType state = StateType.MAIN_MENU; //todo esme in ye chiz dige bashe behtar nist? (svw)
+    private static StateType state = StateType.MAIN_MENU; //todo esme in ye chiz dige bashe behtar nist? (svw)
     // todo masalan chi??(zahra)
 
-    private Account account;
-    private AllAccount allAccount = AllAccount.getInstance();
-    private MenuView menuView = MenuView.getInstance();
-    private Game game;
-    private Match match;
+    private static Account account;
+    private static AllAccount allAccount = AllAccount.getInstance();
+    private static MenuView menuView = MenuView.getInstance();
+    private static Game game;
+    private static Match match;
 
-    public void main() {
+    public static void main() {
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
         while (state != StateType.END_PROGRAM) {
@@ -92,7 +88,6 @@ public class MenuController {
                             if (!Game.checkPlayerDeck(account, 1))
                                 state = StateType.ACCOUNT_MENU;
                             state = StateType.SELECT_MODE;
-                            // TODO: bayad bebarim dakhele ye bazi
                             break;
                         case MENU_ENTER_HELP:
                             MenuView accountMenu = MenuView.getInstance();
@@ -264,10 +259,9 @@ public class MenuController {
                                 numberOfFlags = Integer.parseInt(command.split(" ")[4]);
                             }
                             //todo in chand khat ham duplicate e
-                        } while (mode != 0); //in vase chie? yejoorie inja
+                        } while (mode != 0);
 
-                        Account secondPlayerAccount = AllAccount.getInstance().getAccountByName(userName);
-                        //todo inja aya lazeme ke pass e dovomi ro begirim? be nazar man lazeme
+                        Account secondPlayerAccount = allAccount.getAccountByName(userName);
                         if (!game.checkPlayerDeck(secondPlayerAccount, 2)) {
                             state = StateType.ACCOUNT_MENU;
                             break;

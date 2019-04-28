@@ -4,7 +4,6 @@ import model.account.Account;
 import view.BattleView;
 import view.enums.ErrorType;
 
-//todo single instance she ya oon kar Dge
 
 public class Game {
 //    private static Game singleInstance = null;
@@ -20,26 +19,14 @@ public class Game {
     private int reward;
     private int levelNumber = -1;
   */  //private ArrayList<Game> gamesType;
-    private Player[] players = new Player[2];
+    private static Player[] players = new Player[2];
     private int mode;
     private int numberOfFlags = 0;
     private int reward = 0;
     private static BattleView battleView = BattleView.getInstance();
 
-/*
 
-    public static Game singleInstance() {
-        return singleInstance;
-    }
-*/
-
-
-/*    public void makeGames() {
-        //bere az roo file bekhone game besaze berize to gamesType
-    }
-*/
-
-    public boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
+    public static boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
         Deck deck = account.getMainDeck();
         if (deck == null || !deck.validate()) {
             ErrorType error;
