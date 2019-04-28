@@ -12,7 +12,7 @@ public class Buff {
             Hero hero = (Hero) card;
             hero.changeAp(apChange);
             hero.changeHp(hpChange);
-            hero.setCanMove()//Oh gand khord //todo dorost beshe
+            hero.setCanMove();//Oh gand khord //todo dorost beshe
         }
     }
 }

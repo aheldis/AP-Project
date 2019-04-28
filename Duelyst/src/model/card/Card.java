@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public abstract class Card {
     protected Change change = new Change();//HAS-A
-    protected Target target=new Target();
+    protected Target target = new Target();
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
