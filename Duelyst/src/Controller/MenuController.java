@@ -85,7 +85,8 @@ public class MenuController {
                             state = StateType.COLLECTION;
                             break;
                         case MENU_ENTER_BATTLE:
-                            if (!Game.checkPlayerDeck(account, 1))
+                            game = new Game();
+                            if (!game.checkPlayerDeck(account, 1))
                                 state = StateType.ACCOUNT_MENU;
                             state = StateType.SELECT_MODE;
                             break;
@@ -232,7 +233,6 @@ public class MenuController {
             if (state == StateType.SELECT_MODE) {
                 switch (request.getRequestType()) {
                     case MODE_MULTI_PLAYER:
-                        game = new Game();
                         int mode = 0;
                         int numberOfFlags = 0;
                         String command;

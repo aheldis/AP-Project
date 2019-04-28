@@ -26,7 +26,7 @@ public class Game {
     private static BattleView battleView = BattleView.getInstance();
 
 
-    public static boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
+    public boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
         Deck deck = account.getMainDeck();
         if (deck == null || !deck.validate()) {
             ErrorType error;
