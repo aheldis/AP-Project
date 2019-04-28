@@ -2,6 +2,9 @@ package view;
 
 import model.account.Account;
 import model.account.AllAccount;
+import model.battle.Game;
+import model.battle.Hand;
+import model.battle.Player;
 import view.enums.ErrorType;
 
 public class MenuView {
@@ -51,5 +54,19 @@ public class MenuView {
     }
     public void printError(ErrorType error) {
         System.out.println(error.getMessage());
+    }
+
+    public void printGameInfo(Game game){
+
+    }
+    public void showMyMinions(Player player){
+
+    }
+    public void showHand(){
+        //to hand function showNextCard baraye card badi darim :D
+
+    }
+    public void showNextCard(Hand hand){
+
     }
 }

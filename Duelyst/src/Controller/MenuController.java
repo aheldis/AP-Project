@@ -260,17 +260,23 @@ public class MenuController {
                             }
                             //todo in chand khat ham duplicate e
                         } while (mode != 0);
-
                         Account secondPlayerAccount = allAccount.getAccountByName(userName);
-                        if (!game.checkPlayerDeck(secondPlayerAccount, 2)) {
-                            state = StateType.ACCOUNT_MENU;
-                            break;
-                        }
+                        menuView.printer("Enter your passWord");
+                        request.getNewLine();
+                       if( secondPlayerAccount.checkPassword(request.getCommand())) {
+                           if (!game.checkPlayerDeck(secondPlayerAccount, 2)) {
+                               state = StateType.ACCOUNT_MENU;
+                               break;
+                           }
 
-                        //baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
-                        match = game.makeNewMultiGame(mode, numberOfFlags);
-                        state = StateType.BATTLE;
-
+                           //baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
+                           match = game.makeNewMultiGame(mode, numberOfFlags);
+                           state = StateType.BATTLE;
+                       }
+                       else
+                       {
+                           menuView.printer("Select your mode");
+                       }
                         break;
                     case MODE_SINGLE_PLAYER:
                         state = StateType.SINGLE_GAME;
@@ -329,11 +335,81 @@ public class MenuController {
             }
 
             if (state == StateType.BATTLE) {
+                Player player=match.passPlayerWithTurn();
+                switch (request.getRequestType()){
+                    case GAME_GAME_INFO:
+                        menuView.printGameInfo(game);
+                        break;
+                    case GAME_SHOW_MY_MINION:
+                        menuView.showMyMinions(player);
+                        break;
+                    case GAME_SHOW_OPPONENT_MINION:
+                        menuView.showMyMinions(player.getOpponent());
+                        break;
+                    case GAME_SHOW_HAND:
+                        menuView.showHand();
+                        break;
+                    case GAME_END_TURN:
+                        match.changeTurn();
+                        break;
+                    case GAME_SHOW_COLLECTABLES:
+
+                        break;
+                    case GAME_SHOW_NEXT_CARD:
+                        menuView.showNextCard(player.getHand());
+                        break;
+                    case GAME_ENTER_GRAVE_YARD:
+
+                        break;
+                    case GAME_HELP:
+                        break;
+                    case GAME_END_GAME:
+                        break;
+                    case GAME_SHOW_MENU:
+                        break;
+                    case GAME_EXIT:
+                        break;
+                    case GAME_SELECT_CARD_ID:
+                        break;
+                    case GAME_SHOW_CARD_INFO:
+                        break;
+                    case GAME_USE_SPECIAL_POWER:
+                        break;
+                    case GAME_INSERT:
+                        break;
+                    case GAME_SELECT_COLLECTABLE:
+                        break;
+                }
+
                 //match darim
             }
             if (state == StateType.GRAVE_YARD) {
+                GraveYard graveYard;
+                graveYard = match.passPlayerWithTurn().getGraveYard();
+                switch (request.getRequestType()) {
+
+                    case GAME_GRAVE_YARD_SHOW_INFO:
+
+                        request.getNewLine();
+                        String command = request.getCommand();
+
+                        Card card=graveYard.cardHaveBeenExistInGraveYard(command);
+                        if (card != null) {
+                            graveYard.showInfo(card);
+                        }
+                        else {
+                            ErrorType error;
+                            error = ErrorType.INVALID_CARD_ID;
+                            error.printMessage();
+                        }
+                        break;
+                    case GAME_GRAVE_YARD_SHOW_CARDS:
+                        graveYard.showGraveYard();
+                        break;
+                }
 
             }
+
             if (state == StateType.SELECT_ITEM) {
 
             }

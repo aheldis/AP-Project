@@ -28,7 +28,8 @@ public enum ErrorType {
     NO_SUCH_CARD_OR_ITEM_IN_COLLECTION("You don't have this model.card or item in your collection"),
     SELECTED_INVALID_DECK("Selected deck is invalid"),
     SELECTED_INVALID_DECK_FOR_PLAYER2("Selected deck for second player is invalid"),
-    DONT_HAVE_MAIN_DECK("You don't have a main deck");
+    DONT_HAVE_MAIN_DECK("You don't have a main deck"),
+    INVALID_CARD_ID("you do not have this card in grave yard");
 
     private String message;
 

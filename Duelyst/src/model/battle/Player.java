@@ -23,6 +23,9 @@ public abstract class Player {
     private ArrayList<Card> cardsOnLand = new ArrayList<>();
 
 
+    public Player getOpponent(){
+        return opponent;
+    }
     public void putCardOnLand(String cardId, Coordinate coordinate, LandOfGame land) {
         Card playerCard = null;
         for (Card card : hand.getGameCards()) {

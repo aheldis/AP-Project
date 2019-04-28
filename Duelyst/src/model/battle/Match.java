@@ -20,7 +20,19 @@ public class Match {
     private LandOfGame land;
     private int whichPlayer = 0; //0--> player 1 /1--> player 2
     private Date date;
+    public Player passPlayerWithTurn(){
+        if(whichPlayer==0)
+            return players[0];
+        else
+            return players[1];
+    }
 
+    public void changeTurn(){
+        if(whichPlayer==0)
+            whichPlayer =1;
+        else
+            whichPlayer=0;
+    }
     public Match(Player[] players, String mode, int numberOfFlags, int reward) {//when we make a match we should have players
         this.players = players;
         this.mode = mode;
@@ -31,9 +43,6 @@ public class Match {
 
     public void startMatch() {
         date = new Date();
-
-//        players[0].initPlayers();
-//        players[1].initPlayers();
 
         initGame();
         players[0].initPerTurn();

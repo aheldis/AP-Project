@@ -28,6 +28,12 @@ public class Account implements Comparable<Account> {
         this.mainDeck=deck;
     }
 
+    public boolean checkPassword(String password){
+        if(password.equals(this.password))
+            return true;
+        return false;
+    }
+
     public void addToWins() {
         wins++;
     }

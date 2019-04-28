@@ -19,14 +19,14 @@ public class Game {
     private int reward;
     private int levelNumber = -1;
   */  //private ArrayList<Game> gamesType;
-    private static Player[] players = new Player[2];
+    private  Player[] players = new Player[2];
     private int mode;
     private int numberOfFlags = 0;
     private int reward = 0;
     private static BattleView battleView = BattleView.getInstance();
 
 
-    public boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
+    public  boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
         Deck deck = account.getMainDeck();
         if (deck == null || !deck.validate()) {
             ErrorType error;
