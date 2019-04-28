@@ -16,9 +16,7 @@ import view.enums.StateType;
 
 
 public class MenuController {
-    private static StateType state = StateType.MAIN_MENU; //todo esme in ye chiz dige bashe behtar nist? (svw)
-    // todo masalan chi??(zahra)
-
+    private static StateType state = StateType.MAIN_MENU;
     private static Account account;
     private static AllAccount allAccount = AllAccount.getInstance();
     private static MenuView menuView = MenuView.getInstance();

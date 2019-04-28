@@ -8,7 +8,6 @@ public class Spell extends Card {
     private int playerNameByNumber;//{player1 or 2}
     private int numberOfAttack;
     private int turn;
-    private String description;
     private ArrayList<Square> target;
     private ArrayList<Buff> buffs;
     private ArrayList<Integer> turnOfBuffs;
@@ -19,10 +18,6 @@ public class Spell extends Card {
     private int hpChanges;
     private int turnForHpChanges;
 
-
-    public void setDescription(String description){
-        this.description=description;
-    }
 
     public void setMp(int mp){
         this.mp=mp;
@@ -58,7 +53,7 @@ public class Spell extends Card {
         this.mp = mp;
         this.turnForApChanges = turnForApChanges;
         this.hpChanges = hpChanges;
-        this.description = description;
+        setDescription(description);
         this.turnForApChanges = turnForHpChanges;
         this.buffs = buffs;
     }
@@ -79,6 +74,11 @@ public class Spell extends Card {
         return target;
     }
 
+
+
+//    public void printdesc() {
+//        System.out.println(getDescription());//todo sout
+//    }
     public String getDescription() {
         return description;
     }

@@ -17,11 +17,15 @@ public class Minion extends Card {
     private int forWhichPlayer;
     private Square square;
     private int price;
-    private int manaPower;
     private CounterAttack counterAttack;
     private int attackRange;
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
+    private boolean comboAbility;
     String specialPowerInfo;
+
+    public boolean isComboAbility() {
+        return comboAbility;
+    }
 
     int getNumberOfBeingAttacked() {
         return numberOfBeingAttacked;

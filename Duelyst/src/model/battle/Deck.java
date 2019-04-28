@@ -80,7 +80,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
 
     public void showTheNextCardFromNextTurn() {
         BattleView battleView=BattleView.getInstance();
-       battleView.showNextCardId(passNextCard().getCardId().getCardIdAsString());
+       battleView.showCardId(passNextCard().getCardId().getCardIdAsString());
     }
 
     public void setRandomOrderForDeck() {//faqat shoroye bazi seda kon
