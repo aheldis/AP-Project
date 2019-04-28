@@ -1,8 +1,8 @@
 package model.battle;
 
 import model.card.Card;
-import model.card.CardId;
 import view.AccountView;
+import view.BattleView;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class GraveYard {
     }
 
     public void showInfo(Card card) {
-
+        BattleView.getInstance().showCardInfo(card);
     }
 
 }

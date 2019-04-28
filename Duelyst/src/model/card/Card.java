@@ -23,6 +23,8 @@ public abstract class Card {
     protected int hp;
     protected int ap;
 
+    private String description;
+
 
     public void setTarget() {
 
@@ -205,6 +207,40 @@ public abstract class Card {
                 spells.add((Spell) card);
         }
         return spells;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getAp() {
+        return ap;
+    }
+
+
+    public void changeHp(int number) {
+        hp += number;
+    }
+
+    public void changeAp(int number) {
+        ap += number;
+    }
+
+    public void setMp(int mp) {
+        this.mp = mp;
+    }
+
+    public int getMp() {
+        return mp;
     }
 
     //ye method ke ye square ba card begire khoonehaee ke mikhaim roshoon kari konim ro bede  arraylist

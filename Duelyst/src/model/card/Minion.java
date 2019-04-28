@@ -17,11 +17,15 @@ public class Minion extends Card {
     private int forWhichPlayer;
     private Square square;
     private int price;
-    private int manaPower;
     private CounterAttack counterAttack;
     private int attackRange;
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
+    private boolean comboAbility;
     String specialPowerInfo;
+
+    public boolean isComboAbility() {
+        return comboAbility;
+    }
 
     int getNumberOfBeingAttacked() {
         return numberOfBeingAttacked;
@@ -35,25 +39,6 @@ public class Minion extends Card {
 
     }
 
-    public int getMp() {
-        return manaPower;
-    }
-
-    void changeHp(int healthPower) {
-        this.hp += healthPower;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    void changeAp(int attackPower) {
-        this.ap -= attackPower;
-    }
-
-    public int getAp() {
-        return ap;
-    }
 
     void attack(Square square) {
 

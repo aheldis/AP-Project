@@ -18,7 +18,6 @@ public class Hero extends Card {
     private int attackRange;
     private int numberOfAttacks;
     private int numberOfBeingAttacked;
-
     public void setCounterAttack(CounterAttack counterAttack) {
         this.counterAttack = counterAttack;
         this.counterAttackClassName = counterAttack.getClassName();
@@ -40,13 +39,6 @@ public class Hero extends Card {
         return Square;
     }
 
-    public int getHp() {
-        return hp;
-    }
-
-    public int getAp() {
-        return ap;
-    }
 
     public Spell getSpell() {
         return spell;
@@ -76,13 +68,6 @@ public class Hero extends Card {
         buffs.add(buff);
     }
 
-    public void changeHp(int number) {
-        hp += number;
-    }
-
-    public void changeAp(int number) {
-        ap += number;
-    }
 
     public void useSpecialPower() {
         //TODO

@@ -2,9 +2,15 @@ package Controller;
 
 
 import model.Item.Usable;
-import model.account.*;
-import model.battle.*;
-import model.card.*;
+import model.account.Account;
+import model.account.AllAccount;
+import model.account.Collection;
+import model.account.Shop;
+import model.battle.Game;
+import model.battle.GraveYard;
+import model.battle.Match;
+import model.battle.Player;
+import model.card.Card;
 import view.EnterGameMessages;
 import view.MenuView;
 import view.Request;
@@ -14,9 +20,7 @@ import view.enums.StateType;
 
 
 public class MenuController {
-    private static StateType state = StateType.MAIN_MENU; //todo esme in ye chiz dige bashe behtar nist? (svw)
-    // todo masalan chi??(zahra)
-
+    private static StateType state = StateType.MAIN_MENU;
     private static Account account;
     private static AllAccount allAccount = AllAccount.getInstance();
     private static MenuView menuView = MenuView.getInstance();
@@ -263,20 +267,18 @@ public class MenuController {
                         Account secondPlayerAccount = allAccount.getAccountByName(userName);
                         menuView.printer("Enter your passWord");
                         request.getNewLine();
-                       if( secondPlayerAccount.checkPassword(request.getCommand())) {
-                           if (!game.checkPlayerDeck(secondPlayerAccount, 2)) {
-                               state = StateType.ACCOUNT_MENU;
-                               break;
-                           }
+                        if (secondPlayerAccount.checkPassword(request.getCommand())) {
+                            if (!game.checkPlayerDeck(secondPlayerAccount, 2)) {
+                                state = StateType.ACCOUNT_MENU;
+                                break;
+                            }
 
-                           //baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
-                           match = game.makeNewMultiGame(mode, numberOfFlags);
-                           state = StateType.BATTLE;
-                       }
-                       else
-                       {
-                           menuView.printer("Select your mode");
-                       }
+                            //baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
+                            match = game.makeNewMultiGame(mode, numberOfFlags);
+                            state = StateType.BATTLE;
+                        } else {
+                            menuView.printer("Select your mode");
+                        }
                         break;
                     case MODE_SINGLE_PLAYER:
                         state = StateType.SINGLE_GAME;
@@ -335,8 +337,8 @@ public class MenuController {
             }
 
             if (state == StateType.BATTLE) {
-                Player player=match.passPlayerWithTurn();
-                switch (request.getRequestType()){
+                Player player = match.passPlayerWithTurn();
+                switch (request.getRequestType()) {
                     case GAME_GAME_INFO:
                         menuView.printGameInfo(game);
                         break;
@@ -380,8 +382,6 @@ public class MenuController {
                     case GAME_SELECT_COLLECTABLE:
                         break;
                 }
-
-                //match darim
             }
             if (state == StateType.GRAVE_YARD) {
                 GraveYard graveYard;
@@ -393,11 +393,10 @@ public class MenuController {
                         request.getNewLine();
                         String command = request.getCommand();
 
-                        Card card=graveYard.cardHaveBeenExistInGraveYard(command);
+                        Card card = graveYard.cardHaveBeenExistInGraveYard(command);
                         if (card != null) {
                             graveYard.showInfo(card);
-                        }
-                        else {
+                        } else {
                             ErrorType error;
                             error = ErrorType.INVALID_CARD_ID;
                             error.printMessage();
