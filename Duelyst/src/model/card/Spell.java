@@ -79,11 +79,6 @@ public class Spell extends Card {
         return target;
     }
 
-    public int getMp() {
-        return mp;
-    }
-
-
     public String getDescription() {
         return description;
     }

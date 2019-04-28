@@ -1,10 +1,12 @@
 package Controller;
 
 
+import model.Item.Collectable;
 import model.Item.Usable;
 import model.account.*;
 import model.battle.*;
 import model.card.*;
+import model.requirment.Coordinate;
 import view.EnterGameMessages;
 import view.MenuView;
 import view.Request;
@@ -24,6 +26,7 @@ public class MenuController {
     private static Match match;
 
     public static void main() {
+        String id="";
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
         while (state != StateType.END_PROGRAM) {
@@ -108,7 +111,7 @@ public class MenuController {
 
             if (state == StateType.COLLECTION) {//todo id ro check konam ke chiye :)
                 Collection collection = account.getCollection();
-                String deckName, id;
+                String deckName;
                 Card card;
                 Usable item;
                 ErrorType error;
@@ -263,20 +266,18 @@ public class MenuController {
                         Account secondPlayerAccount = allAccount.getAccountByName(userName);
                         menuView.printer("Enter your passWord");
                         request.getNewLine();
-                       if( secondPlayerAccount.checkPassword(request.getCommand())) {
-                           if (!game.checkPlayerDeck(secondPlayerAccount, 2)) {
-                               state = StateType.ACCOUNT_MENU;
-                               break;
-                           }
+                        if (secondPlayerAccount.checkPassword(request.getCommand())) {
+                            if (!game.checkPlayerDeck(secondPlayerAccount, 2)) {
+                                state = StateType.ACCOUNT_MENU;
+                                break;
+                            }
 
-                           //baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
-                           match = game.makeNewMultiGame(mode, numberOfFlags);
-                           state = StateType.BATTLE;
-                       }
-                       else
-                       {
-                           menuView.printer("Select your mode");
-                       }
+                            //baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
+                            match = game.makeNewMultiGame(mode, numberOfFlags);
+                            state = StateType.BATTLE;
+                        } else {
+                            menuView.printer("Select your mode");
+                        }
                         break;
                     case MODE_SINGLE_PLAYER:
                         state = StateType.SINGLE_GAME;
@@ -335,8 +336,8 @@ public class MenuController {
             }
 
             if (state == StateType.BATTLE) {
-                Player player=match.passPlayerWithTurn();
-                switch (request.getRequestType()){
+                Player player = match.passPlayerWithTurn();
+                switch (request.getRequestType()) {
                     case GAME_GAME_INFO:
                         menuView.printGameInfo(game);
                         break;
@@ -353,35 +354,58 @@ public class MenuController {
                         match.changeTurn();
                         break;
                     case GAME_SHOW_COLLECTABLES:
-
+                        menuView.showCollectableItems(player);
                         break;
                     case GAME_SHOW_NEXT_CARD:
                         menuView.showNextCard(player.getHand());
                         break;
                     case GAME_ENTER_GRAVE_YARD:
-
+                        state = StateType.GRAVE_YARD;
                         break;
                     case GAME_HELP:
+                        //todo
                         break;
                     case GAME_END_GAME:
+                        state = StateType.ACCOUNT_MENU;
                         break;
                     case GAME_SHOW_MENU:
-                        break;
-                    case GAME_EXIT:
+                        menuView.showBattleMenu();
                         break;
                     case GAME_SELECT_CARD_ID:
+                        id = request.getId();
+                        if (player.passCardInGame(id) != null)
+                            state = StateType.SELECT_CARD;
                         break;
                     case GAME_SHOW_CARD_INFO:
-                        break;
-                    case GAME_USE_SPECIAL_POWER:
+                        id = request.getId();
+                        menuView.showCardInfo(player.passCardInGame(id));
                         break;
                     case GAME_INSERT:
+                        ErrorType error;
+                        id = request.getId();
+                        Card card = player.getHand().passCardInHand(id);
+                        Coordinate coordinate = request.getCoordinate();
+                        if (card == null) {
+                            error = ErrorType.INVALID_CARD_ID;
+                            error.printMessage();
+                        }
+                        if (player.getMana() < card.getMp()) {
+                            error = ErrorType.HAVE_NOT_ENOUGH_MANA;
+                            error.printMessage();
+                            break;
+                        }
+                        player.putCardOnLand(card, coordinate, match.getLand());
                         break;
                     case GAME_SELECT_COLLECTABLE:
+                        id = request.getId();
+                        if (player.getHand().passCollectableInHand(id) == null) {
+                            error = ErrorType.INVALID_ITEM;
+                            error.printMessage();
+                        }
+                        state = StateType.SELECT_ITEM;
                         break;
                 }
 
-                //match darim
             }
             if (state == StateType.GRAVE_YARD) {
                 GraveYard graveYard;
@@ -393,11 +417,10 @@ public class MenuController {
                         request.getNewLine();
                         String command = request.getCommand();
 
-                        Card card=graveYard.cardHaveBeenExistInGraveYard(command);
+                        Card card = graveYard.cardHaveBeenExistInGraveYard(command);
                         if (card != null) {
                             graveYard.showInfo(card);
-                        }
-                        else {
+                        } else {
                             ErrorType error;
                             error = ErrorType.INVALID_CARD_ID;
                             error.printMessage();
@@ -411,10 +434,41 @@ public class MenuController {
             }
 
             if (state == StateType.SELECT_ITEM) {
+                Player player = match.passPlayerWithTurn();
+                switch (request.getRequestType()){
+                    case GAME_ITEM_SHOW_INFO:
+                        menuView.showItemInfo(player.getHand(),id);
+                        break;
+                    case GAME_ITEM_USE:
+                        //todo
+                        break;
+                }
 
             }
             if (state == StateType.SELECT_CARD) {
+                Player player = match.passPlayerWithTurn();
+                switch (request.getRequestType()) {
 
+                    case GAME_USE_SPECIAL_POWER:
+                        ErrorType error;
+                        if (player.getMana() < player.getHero().getMpRequiredForSpell()) {
+                            error = ErrorType.NOT_ENOUGH_MANA;
+                            error.printMessage();
+                        }
+                        //todo
+                        break;
+                    case GAME_MOVE:
+                        //todo
+                        break;
+                    case GAME_ATTACK_COMBO:
+                        //todo
+                        break;
+                    case GAME_ATTACK:
+                        //todo
+                        break;
+
+
+                }
             }
 
 

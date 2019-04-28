@@ -20,6 +20,8 @@ public class Match {
     private LandOfGame land;
     private int whichPlayer = 0; //0--> player 1 /1--> player 2
     private Date date;
+
+
     public Player passPlayerWithTurn(){
         if(whichPlayer==0)
             return players[0];

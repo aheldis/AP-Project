@@ -1,11 +1,14 @@
 package model.battle;
 
+import model.Item.Collectable;
 import model.Item.Flag;
 import model.account.Account;
 import model.card.Card;
+import model.card.Hero;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
+import view.enums.ErrorType;
 
 import java.util.ArrayList;
 
@@ -22,18 +25,40 @@ public abstract class Player {
     ArrayList<Flag> flags;
     private ArrayList<Card> cardsOnLand = new ArrayList<>();
 
+    public Hero getHero(){
+        return mainDeck.getHero();
+
+    }
+    public void addItemToCollectables(Collectable collectable){
+        hand.getCollectableItems().add(collectable);
+    }
+    public Card  passCardInGame(String cardId){
+        Card card =hand.passCardInHand(cardId);
+        if(card !=null)
+            return card;
+        ArrayList<Card> cards=new ArrayList<>();
+        cards.addAll(cardsOnLand);
+        for(Card outPutCard:cards){
+            if(outPutCard.equalCard(cardId) && outPutCard.getPlayerName().equals(account.getUserName()))
+                card=outPutCard;
+        }
+        return card;
+    }
 
     public Player getOpponent(){
         return opponent;
     }
-    public void putCardOnLand(String cardId, Coordinate coordinate, LandOfGame land) {
-        Card playerCard = null;
-        for (Card card : hand.getGameCards()) {
-            if (card.equalCard(cardId))
-                playerCard = card;
-        }
+
+    public boolean checkPutCard(){//by distance with other squares
+
+    }
+    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
         if (playerCard == null)
             return;
+        if(!checkPutCard()){
+            ErrorType error = ErrorType.INVALID_TARGET;
+        }
+
         cardsOnLand.add(playerCard);
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setCard(playerCard);

@@ -196,9 +196,6 @@ public class Request {
                     return RequestType.GAME_HELP;
                 case "end game":
                     return RequestType.GAME_END_GAME;
-                case "exit":
-                    state = StateType.ACCOUNT_MENU;
-                    return RequestType.GAME_EXIT;
                 case "show menu":
                     return RequestType.GAME_SHOW_MENU;
 
@@ -212,11 +209,7 @@ public class Request {
                 setId(command.substring(15));
                 return RequestType.GAME_SHOW_CARD_INFO;
             }
-            if (command.toLowerCase().matches("use special power \\(\\d+,\\d+\\)")) {
-                coordinate.setX(Integer.parseInt(command.substring(19, 20)));
-                coordinate.setY(Integer.parseInt(command.substring(21, 22)));
-                return RequestType.GAME_USE_SPECIAL_POWER;
-            }
+
             if (command.toLowerCase().matches("insert \\w+ in \\(\\d+,\\d+\\)")) {
                 setId(command.split(" ")[1]);
                 coordinate.setX(Integer.parseInt(command.split(" ")[3].substring(1, 2)));
@@ -254,6 +247,11 @@ public class Request {
             if (command.toLowerCase().matches("attack combo \\w+ (\\w+)+")) {
                 //TODO: chejori vorodi bgiram ino???? :))))
                 return RequestType.GAME_ATTACK_COMBO;
+            }
+            if (command.toLowerCase().matches("use special power \\(\\d+,\\d+\\)")) {
+                coordinate.setX(Integer.parseInt(command.substring(19, 20)));
+                coordinate.setY(Integer.parseInt(command.substring(21, 22)));
+                return RequestType.GAME_USE_SPECIAL_POWER;
             }
 
         }

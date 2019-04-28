@@ -22,8 +22,22 @@ public abstract class Card {
     protected int mp;
     protected int hp;
     protected int ap;
+    private  String playerName;
+
+    public int getMp(){
+        return mp;
+    }
+    public int getHp() {
+        return hp;
+    }
+    public int getAp() {
+        return ap;
+    }
 
 
+    public  String getPlayerName(){
+        return playerName;
+    }
     public void setTarget() {
 
     }

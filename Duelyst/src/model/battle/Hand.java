@@ -1,19 +1,39 @@
 package model.battle;
 
+import model.Item.Collectable;
 import model.Item.Item;
 import model.card.*;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.zip.CheckedOutputStream;
 
 public class Hand {
     private Deck deck;
     private ArrayList<Card> gameCards;
-    private ArrayList<Item> collectableItems = new ArrayList<>();
+    private ArrayList<Collectable> collectableItems = new ArrayList<>();
     //private final int RAND_NUMBER=11;
 
     public Hand(Deck deck) {
         this.deck = deck;
+    }
+
+    public Card passCardInHand(String cardId) {
+        for (Card card : gameCards) {
+            if (card.equalCard(cardId))
+                return card;
+        }
+        return null;
+    }
+
+    public Collectable passCollectableInHand(String CollectableId) {
+        for (Collectable collectable : collectableItems) {
+            if (collectable.getCollectableId().getCollectableIdAsString().equals(CollectableId))
+                return collectable;
+        }
+
+        return null;
+
     }
 
     public ArrayList<Card> getGameCards() {
@@ -31,6 +51,10 @@ public class Hand {
 //        }
         this.gameCards = new ArrayList<>(deck.getCardsOfDeck().subList(0, 4));
         deck.setIndexOfCards(5);
+    }
+
+    public ArrayList<Collectable> getCollectableItems() {
+        return collectableItems;
     }
 
     public void checkTheHandAndAddToIt() {//call it after each turn

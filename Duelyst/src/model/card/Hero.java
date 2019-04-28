@@ -40,14 +40,6 @@ public class Hero extends Card {
         return Square;
     }
 
-    public int getHp() {
-        return hp;
-    }
-
-    public int getAp() {
-        return ap;
-    }
-
     public Spell getSpell() {
         return spell;
     }

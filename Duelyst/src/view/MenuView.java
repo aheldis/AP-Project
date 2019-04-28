@@ -5,6 +5,7 @@ import model.account.AllAccount;
 import model.battle.Game;
 import model.battle.Hand;
 import model.battle.Player;
+import model.card.Card;
 import view.enums.ErrorType;
 
 public class MenuView {
@@ -67,6 +68,18 @@ public class MenuView {
 
     }
     public void showNextCard(Hand hand){
+
+    }
+    public void showCollectableItems(Player player){
+
+    }
+    public void showBattleMenu(){
+
+    }
+    public void showCardInfo(Card card){
+
+    }
+    public void showItemInfo(Hand hand ,String collectableId){
 
     }
 }
