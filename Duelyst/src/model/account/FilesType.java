@@ -15,4 +15,12 @@ public enum FilesType {
     FilesType(String name) {
         this.name = name;
     }
+
+    public static FilesType getEnum(String input){
+        for(FilesType type: FilesType.values()){
+            if(type.getName().equals(input))
+                return type;
+        }
+        return null;
+    }
 }

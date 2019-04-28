@@ -14,7 +14,7 @@ public class NewCardMessages {
     }
 
 
-    public void printer(String string) {
+    public void printLine(String string) {
         System.out.println(string);
     }
 

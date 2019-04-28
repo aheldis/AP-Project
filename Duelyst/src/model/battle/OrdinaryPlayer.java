@@ -43,7 +43,7 @@ public class OrdinaryPlayer extends Player {
     }
 
     public void attack(Card card, Square target) {
-        if (/*check range*/) {
+        if (true/*check range*/) {
             //todo ERROR not within range attack
         }
         if (!card.isCanAttack()) {

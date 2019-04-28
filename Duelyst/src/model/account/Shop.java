@@ -15,19 +15,23 @@ public class Shop {
     public static Shop singleInstance = null;
     private ArrayList<Card> cards = new ArrayList<>();// todo man ino card haye jahan gereftam (zahra) bashe :) (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
     private ArrayList<Usable> items = new ArrayList<>();
-    private static AccountView accountView = AccountView.getInstance();
-    private String pathOfFiles = "D:\\jacksoncore\\src\\main\\"; //todo: file path doroste? :-?? baad "card"a o "item" o ina ro jode bezarim
+    private AccountView accountView = AccountView.getInstance();
+    private static String pathOfFiles = "D:\\jacksoncore\\src\\main\\"; //todo: file path doroste? :-?? ghalate ghataan
 //    private String[] type = {"hero", "minion", "spell", "item"}; //ina ye enumi chizi mibood behtar mibood
 
     //todo bere az har card yedoone besaze
     private void init() {
-        for (FilesType typeOfCard : FilesType.values()) {
-            File folder = new File(pathOfFiles + typeOfCard.getName());
+        for (FilesType typeOfFile : FilesType.values()) {
+            File folder = new File(pathOfFiles + typeOfFile.getName());
             File[] listOfFiles = folder.listFiles();
             for (int i = 0; i < listOfFiles.length; i++) {
-                makeNewFromFile(listOfFiles[i].getPath(), typeOfCard);
+                makeNewFromFile(listOfFiles[i].getPath(), typeOfFile);
             }
         }
+    }
+
+    public static String getPathOfFiles() {
+        return pathOfFiles;
     }
 
     private boolean itemExist(String name) {
@@ -123,18 +127,18 @@ public class Shop {
             if (!enoughDaricForBuy(account, card.getCost()))
                 return;
             Collection collection = account.getCollection();
-            FilesType typeOfCard = null;
+            FilesType typeOfFile = null;
             if (card instanceof Hero) {
                 collection.addToHeros((Hero) card);
-                typeOfCard = FilesType.HERO;
+                typeOfFile = FilesType.HERO;
             } else if (card instanceof Spell) {
                 collection.addToSpells((Spell) card);
-                typeOfCard = FilesType.SPELL;
+                typeOfFile = FilesType.SPELL;
             } else if (card instanceof Minion) {
                 collection.addToMinions((Minion) card);
-                typeOfCard = FilesType.MINION;
+                typeOfFile = FilesType.MINION;
             }
-            makeNewFromFile(pathOfFiles + typeOfCard + card.getName(), typeOfCard); //todo check lotfan
+            makeNewFromFile(pathOfFiles + typeOfFile + card.getName(), typeOfFile); //todo check lotfan
             cards.remove(card);
         }
         if (itemExist(name)) {
