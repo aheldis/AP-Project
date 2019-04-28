@@ -2,6 +2,7 @@ package model.account;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import model.Item.Item;
 import model.Item.Usable;
 import model.Item.UsableId;
 import model.card.*;
@@ -183,14 +184,26 @@ public class Shop {
 
         try {
 
-            input = new FileInputStream(path);//file name
+            input = new FileInputStream(path);//file name//todo nabayad chizi be path ezafe she?
 
             Reader reader = new InputStreamReader(input);
-            //card - item - game file
-            if (type.equals(this.type[0])) {
-                Card card = gson.fromJson(reader, Card.class);
-                addCard(card);
+            if(type.equals("spell")){
+                Spell spell = gson.fromJson(reader,Spell.class);
+                addCard(spell);
             }
+            if(type.equals("hero")){
+                Hero hero = gson.fromJson(reader,Hero.class);
+                addCard(hero);
+            }
+            if(type.equals("minion")){
+                Minion minion = gson.fromJson(reader,Minion.class);
+                addCard(minion);
+            }
+
+//            if (type.equals(this.type[0])) {
+//                Card card = gson.fromJson(reader,Card.class);
+//                addCard(card);
+//            }
             if (type.equals(this.type[1])) {
                 Usable item = gson.fromJson(reader, Usable.class);
                 addItem(item);

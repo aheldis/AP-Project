@@ -13,11 +13,12 @@ public class MakeNewCard {
     private static String checkSyntax(FileWriter fileWriter, String line) {
     }
 
-    public static void makeNewCardFile() {
+    public static Card makeNewCardFile() {
         NewCardMessages newCardMessages = NewCardMessages.getInstance();
         Request request = new Request(StateType.BATTLE);//mohem ni chi bashe mikham az scanneresh estefade konam
         while (true) {
             try {
+
                 FileReader fileReader = new FileReader("../InfoForMakeCard/");
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
 
@@ -29,22 +30,24 @@ public class MakeNewCard {
                 if (input.equals("EXIT"))
                     break;
 
+                Card card = new Card() ;
+
                 File file = new File("../CardsFile/"   + input);
-                Files.copy(Paths.get("../Duelyst/GsonModel"),file.toPath());//mesle form khaliye tosho por mikonim
 
                 FileWriter fileWriter = new FileWriter(file);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 while ((line = bufferedReader.readLine()) != null) {
                     newCardMessages.printer(line);
 
-                    if(line==1 || line==8 ||line==21 ||line==22 ||line==29 ||line==30)
-                        buffered
                     request.getNewLine();
+                    //todo reflector
                     input = request.getCommand();
-                    bufferedWriter.append(input+"\",");
-                    bufferedWriter.newLine();
+
+
+
+
+                    //todo GsonBuilder . prety prnting . create .
                 }
-                bufferedWriter.close();
+                fileWriter.close();
 
             } catch (FileNotFoundException e) {
                 newCardMessages.printer("file not found");
@@ -52,6 +55,7 @@ public class MakeNewCard {
                 newCardMessages.printer("other error");
             }
         }
+        fileWriter.write(gson.toJson(card));
     }
 
 }
