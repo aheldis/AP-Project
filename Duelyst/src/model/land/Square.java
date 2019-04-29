@@ -2,16 +2,23 @@ package model.land;
 
 import model.Item.Flag;
 import model.battle.Hand;
-import model.card.Card;
-import model.card.Hero;
-import model.card.Minion;
-import model.card.Spell;
+import model.card.*;
 import model.requirment.Coordinate;
+
+import java.util.ArrayList;
 
 public class Square {
     private int scaleForEachSquare;
     private Coordinate coordinate;
     private Object object;
+    private ArrayList<Buff> buffs=new ArrayList<>();
+
+    public void putBuffOnSquare(Buff buff){
+        buffs.add(buff);
+    }
+    public ArrayList<Buff> getBuffs(){
+        return buffs;
+    }
 
    public Square(Coordinate coordinate) {
         this.coordinate = coordinate;
@@ -42,37 +49,6 @@ public class Square {
             return (Hero) object;
         return null;
     }
-
-//    public void putMinion(Minion minion) {
-//        object = minion;
-//    }
-//
-//    public void putHero(Hero hero) {
-//        object = hero;
-//    }
-//
-//    public void putSpell(Spell spell) {
-//        object = spell;
-//    }
-//
-//    public void putFlag(Flag flag) {
-//        object = flag;
-//    }
-
-//    public void removeObjectFromRhisSquare() {
-//        if (object instanceof Card)
-//            object = null;
-//    }
-//
-
-//    public void putCard(Card card){
-//       if(card instanceof Spell)
-//           putSpell((Spell) card);
-//       if(card instanceof Minion)
-//           putMinion((Minion) card);
-//       if(card instanceof Hero)
-//           putHero((Hero)card);
-//    }
 
     public static Square findSquare(Coordinate coordinate) {
        Square[][] squares = LandOfGame.getInstance().getSquares();

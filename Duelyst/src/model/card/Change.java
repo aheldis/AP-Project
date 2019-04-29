@@ -20,20 +20,20 @@ public class Change {
     private ArrayList<Buff> buffs;
     private ArrayList<Buff> untiBuffs;
 
-    public void makeChangeInCard(Card opponentCard) {//change e hamle konnande ro roye opponent seda mikonm
-        opponentCard.setCanMove(this.opponentCanMove);
-        opponentCard.setCanCounterAttack(this.opponentCanCounterAttack);
-        opponentCard.setCanAttack(this.opponentCanAttack);
-        opponentCard.setTurnOfCanNotMove(Math.max(opponentCard.getTurnOfCanNotMove(), this.turnOfCanNotMoveForOpponent));
-        opponentCard.setTurnOfCanNotAttack(Math.max(opponentCard.getTurnOfCanNotAttack(), this.turnOfCanNotAttackForOpponent));
-        opponentCard.setTurnofCanNotCounterAttack(Math.max(opponentCard.getTurnOfCanNotCounterAttack(), this.turnOfCanNotCounterAttackForOpponent));
-        opponentCard.changeAp(apChange);
-        opponentCard.changeAp(hpChange);
+    public void makeChangeInTargetCard(Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
+        targetCard.setCanMove(this.opponentCanMove);
+        targetCard.setCanCounterAttack(this.opponentCanCounterAttack);
+        targetCard.setCanAttack(this.opponentCanAttack);
+        targetCard.setTurnOfCanNotMove(Math.max(targetCard.getTurnOfCanNotMove(), this.turnOfCanNotMoveForOpponent));
+        targetCard.setTurnOfCanNotAttack(Math.max(targetCard.getTurnOfCanNotAttack(), this.turnOfCanNotAttackForOpponent));
+        targetCard.setTurnofCanNotCounterAttack(Math.max(targetCard.getTurnOfCanNotCounterAttack(), this.turnOfCanNotCounterAttackForOpponent));
+        targetCard.changeAp(apChange);
+        targetCard.changeAp(hpChange);
         for(Buff buff : buffs){
-            buff.affect(opponentCard);
+            buff.affect(targetCard);
         }
         for(Buff buff : untiBuffs){
-            buff.unAffect(opponentCard);
+            buff.unAffect(targetCard);
         }
     }
     public void affect(ArrayList <Square> targets){
