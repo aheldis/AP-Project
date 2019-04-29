@@ -64,19 +64,19 @@ public abstract class Card {
     }
 
     public void move(Coordinate coordinate) {
-        if (!change.canMove) {
+        if (!canMove) {
             ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
             return;
         }
         if (canMoveToCoordination(this, coordinate) && withinRange(coordinate)) {
             position.setObject(null);
-            position = Square.findSquare(coordinate);
+            position = landOfGame.passSquareInThisCoordinate(coordinate);
             if (position != null) {
                 position.setObject(this);//todo
             }
             RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + coordinate.getX() + coordinate.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
-            change.canMove = false;
+            canMove = false;
             //todo check if RequestSuccessionType works correctly
         } else
             ErrorType.INVALID_TARGET.printMessage();
