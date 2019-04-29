@@ -1,6 +1,8 @@
 package model.card;
 
 
+import model.Item.Collectable;
+import model.Item.Flag;
 import model.battle.Player;
 import model.counterAttack.CounterAttack;
 import model.counterAttack.Hybrid;
@@ -21,7 +23,8 @@ public abstract class Card {
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
-    CounterAttack counterAttack;
+    private String counterAttack;
+    private int attackRange;
     private int cost;
     private ArrayList<Buff> buffsOnThisCard;
     private Square position;
@@ -63,18 +66,32 @@ public abstract class Card {
         this.landOfGame = landOfGame;
     }
 
-    public void move(Coordinate coordinate) {
+    public void move(Coordinate newCoordination) {
+        Square newPosition = landOfGame.passSquareInThisCoordinate(newCoordination);
         if (!canMove) {
             ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
             return;
         }
-        if (canMoveToCoordination(this, coordinate) && withinRange(coordinate)) {
-            position.setObject(null);
-            position = landOfGame.passSquareInThisCoordinate(coordinate);
-            if (position != null) {
-                position.setObject(this);//todo
+        if (canMoveToCoordination(this, newCoordination) && withinRange(newCoordination, 2)) {
+            if (this instanceof Minion) {
+                if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_RESPAWN) {
+                    setTarget(this, newPosition);
+
+                    //todo AffectSpecialPower
+                }
             }
-            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + coordinate.getX() + coordinate.getY());
+            if (newPosition.getObject() instanceof Flag) {
+                player.addToFlags((Flag) newPosition.getObject());
+                player.setFlagSaver(this);
+                player.addToTurnForSavingFlag();//todo dead
+            }
+            if (newPosition.getObject() instanceof Collectable) {
+                player.getHand().addToCollectableItem((Collectable) newPosition.getObject());
+            }
+            setPosition(newPosition);
+            newPosition.setObject(this);
+            position.setObject(null);
+            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + newCoordination.getX() + newCoordination.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
             canMove = false;
             //todo check if RequestSuccessionType works correctly
@@ -86,8 +103,8 @@ public abstract class Card {
 
     }
 
-    public boolean withinRange(Coordinate coordinate) {
-        return getDistance(coordinate) <= 2;
+    public boolean withinRange(Coordinate coordinate, int range) {
+        return getDistance(coordinate) <= range;
     }
 
     public void attack(Player opponent, String cardId) {
@@ -99,7 +116,7 @@ public abstract class Card {
         if (this instanceof Spell) {
             return;
         }
-        if (getDistance(attackedCard.position.getCoordinate()) > attackRange) {
+        if (!withinRange(attackedCard.position.getCoordinate(), attackRange)) {
             ErrorType.UNAVAILABLE_OPPONENT.printMessage();
             return;
         }
@@ -267,6 +284,14 @@ public abstract class Card {
         return description;
     }
 
+    public String getCounterAttack() {
+        return counterAttack;
+    }
+
+    public void setCounterAttack(String counterAttack) {
+        this.counterAttack = counterAttack;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -362,6 +387,30 @@ public abstract class Card {
         //todo khone haye to range ro be onvane arrayList bede be ma
         //todo ArrayList e target ro to classe target bere bezare
 
+    }
+
+    public void useSpecialPower() {
+        ErrorType error;
+        if (this instanceof Spell) {
+            error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;
+            error.printMessage();
+            return;
+        }
+        if (this instanceof Minion) {
+            if (((Minion) this).getHaveSpecialPower()) {
+                //todo AffectSpecialPower
+                return;
+            }
+
+        }
+        if (this instanceof Hero) {
+            if (((Hero) this).getHaveSpecialPower()) {
+                //todo AffectSpecialPower
+                return;
+            }
+        }
+        error = ErrorType.DO_NOT_HAVE_SPECIAL_POWER;
+        error.printMessage();
     }
 
     //ye method ke ye square ba card begire khoonehaee ke mikhaim roshoon kari konim ro bede  arraylist

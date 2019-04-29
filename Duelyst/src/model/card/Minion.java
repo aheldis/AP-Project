@@ -58,20 +58,12 @@ public class Minion extends Card {
         getBuffsOnThisCard().add(buff);
     }
 
-    public CounterAttack getCounterAttack() {
-        return counterAttack;
-    }
-
     void setTarget(Square square) {
         this.square = square;
     }
 
     public String getSpecialPowerInfo() {
         return specialPowerInfo;
-    }
-
-    void useSpecialPower() {
-
     }
 
 }

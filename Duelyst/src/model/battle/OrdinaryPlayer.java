@@ -40,34 +40,10 @@ public class OrdinaryPlayer extends Player {
 
     }
 
-    public void useSpecialPower(Card card) {
-        ErrorType error;
-        if (card instanceof Spell) {
-            error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;
-            error.printMessage();
-            return;
-        }
-        if (card instanceof Minion) {
-            if (((Minion) card).getHaveSpecialPower()) {
-                //todo AffectSpecialPower
-                return;
-            }
-
-        }
-        if (card instanceof Hero) {
-            if (((Hero) card).getHaveSpecialPower()) {
-                //todo AffectSpecialPower
-                return;
-            }
-        }
-        error = ErrorType.DO_NOT_HAVE_SPECIAL_POWER;
-        error.printMessage();
-    }
-
     public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
         ErrorType error;
         if (playerCard == null) {
-            error=ErrorType.INVALID_CARD_ID;
+            error = ErrorType.INVALID_CARD_ID;
             error.printMessage();
             return;
         }
@@ -76,14 +52,14 @@ public class OrdinaryPlayer extends Player {
             error.printMessage();
             return;
         }
-        Square square=land.passSquareInThisCoordinate(coordinate);
-        if(square==null){
-            error=ErrorType.INVALID_SQUARE;
+        Square square = land.passSquareInThisCoordinate(coordinate);
+        if (square == null) {
+            error = ErrorType.INVALID_SQUARE;
             error.printMessage();
             return;
         }
-        ArrayList<Buff> buffsOfSquare=square.getBuffs();
-        for(Buff buff : buffsOfSquare){
+        ArrayList<Buff> buffsOfSquare = square.getBuffs();
+        for (Buff buff : buffsOfSquare) {
             buff.affect(playerCard);
         }
         cardsOnLand.add(playerCard);
@@ -92,6 +68,7 @@ public class OrdinaryPlayer extends Player {
 
     }
 
+/*
     public void move(Card card, Square newPosition) {
         ErrorType error;
         if (!withinRange(card.getPosition(), newPosition, 2)) {
@@ -105,8 +82,8 @@ public class OrdinaryPlayer extends Player {
             return;
         }
 
-        ArrayList<Buff> buffsOfSquare=newPosition.getBuffs();
-        for(Buff buff : buffsOfSquare){
+        ArrayList<Buff> buffsOfSquare = newPosition.getBuffs();
+        for (Buff buff : buffsOfSquare) {
             buff.affect(card);
         }
 
@@ -127,20 +104,21 @@ public class OrdinaryPlayer extends Player {
         }
         card.setPosition(newPosition);
         newPosition.setObject(card);
-    }
+    }*/
 
-    @Override
+
+   /* @Override
     public void attack(Card card, Square target) {
 
-    }
+    }*/
 
-    public boolean withinRange(Square square1, Square square2, int range) {
+    /*public boolean withinRange(Square square1, Square square2, int range) {
         if (abs(square1.getXCoordinate() - square2.getXCoordinate()) +
                 abs(square1.getYCoordinate() - square2.getYCoordinate()) <= range) {
             return true;
         }
         return false;
-    }
+    }*/
 //    public static OrdinaryPlayer makeNewPlayer(Account account, Deck mainDeck) {
 //        if (mainDeck == null) {
 //            ErrorType error = ErrorType.DONT_HAVE_MAIN_DECK;

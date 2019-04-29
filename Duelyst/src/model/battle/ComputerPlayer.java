@@ -1,5 +1,9 @@
 package model.battle;
 
+import model.card.Card;
+import model.land.LandOfGame;
+import model.requirment.Coordinate;
+
 public class ComputerPlayer extends Player {
 
     public ComputerPlayer(Deck deck) {
@@ -23,6 +27,11 @@ public class ComputerPlayer extends Player {
 
     public void setDeck() {
 
+    }
+
+    @Override
+    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
+        //todo
     }
 
     public void playTurn() {

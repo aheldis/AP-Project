@@ -26,16 +26,8 @@ public class Hero extends Card {
         return haveSpecialPower;
     }
 
-    public void setCounterAttack(CounterAttack counterAttack) {
-        this.counterAttack = counterAttack;
-    }
-
     public ArrayList<Buff> getBuffs() {
         return buffs;
-    }
-
-    public CounterAttack getCounterAttack() {
-        return counterAttack;
     }
 
     public Coordinate getSquare() {
