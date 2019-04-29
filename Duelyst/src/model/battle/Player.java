@@ -43,6 +43,9 @@ public abstract class Player {
     }
 
 
+    public int getNumberOfFlagsSaved(){
+        return flags.size();
+    }
     public void addItemToCollectables(Collectable collectable) {
         hand.getCollectableItems().add(collectable);
     }

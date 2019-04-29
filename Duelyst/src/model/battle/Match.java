@@ -74,28 +74,46 @@ public class Match {
 
     }
 
+    private void setWinnerAndLoser(Player winner, Player loser) {
+        this.winner = winner;
+        this.loser = loser;
+    }
+
+
     private boolean gameEnded() {
         //todo
         switch (mode) {
             case "DeathMode": {
-               if( players[0].getHero().getHp() == 0) {
-                   winner=players[1];
-                   loser=players[0];
-                   return true;
-               }
-               if(players[1].getHero().getHp() == 0){
-                   winner=players[0];
-                   loser=players[1];
-                   return true;
-               }
+                if (players[0].getHero().getHp() == 0) {
+                    setWinnerAndLoser(players[1], players[0]);
+                    return true;
+                }
+                if (players[1].getHero().getHp() == 0) {
+                    setWinnerAndLoser(players[0], players[1]);
+                    return true;
+                }
                 break;
             }
             case "SaveFlagMode": {
-
+                if (players[0].turnForSavingFlag == 6) {
+                    setWinnerAndLoser(players[0], players[1]);
+                    return true;
+                }
+                if (players[1].turnForSavingFlag == 6) {
+                    setWinnerAndLoser(players[1], players[0]);
+                    return true;
+                }
                 break;
             }
             case "CollectFlagMode": {
-
+                if (players[0].getNumberOfFlagsSaved() >= numberOfFlags / 2) {
+                    setWinnerAndLoser(players[0], players[1]);
+                    return true;
+                }
+                if (players[1].getNumberOfFlagsSaved() >= numberOfFlags / 2) {
+                    setWinnerAndLoser(players[1], players[2]);
+                    return true;
+                }
                 break;
             }
         }
@@ -139,14 +157,6 @@ public class Match {
 
     public LandOfGame getLand() {
         return land;
-    }
-
-    public void setWinner(Account winner) {
-        this.winner = winner;
-    }
-
-    public void setLoser(Account loser) {
-        this.loser = loser;
     }
 
     public void setReward(int reward) {

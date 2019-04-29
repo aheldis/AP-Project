@@ -62,9 +62,10 @@ public abstract class Card {
             ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
             return;
         }
-        if (canMoveToCoordination(position.getCoordinate(), coordinate) && withinRange(coordinate)) {
-            landOfGame.removeCardFromAnSquare(position.getCoordinate());
-            landOfGame.addCardToAnSquare(coordinate, this);//todo
+        if (canMoveToCoordination(this, coordinate) && withinRange(coordinate)) {
+            position.setObject(null);
+            position = Square.findSquare(coordinate);
+            position.setObject(this);//todo
             RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + coordinate.getX() + coordinate.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
             change.canMove = false;
@@ -91,8 +92,16 @@ public abstract class Card {
             ErrorType.UNAVAILABLE_OPPONENT.printMessage();
             return;
         }
+        if (true/*check range*/) {
+            //todo ERROR not within range attack
+        }
+        if (!isCanAttack()) {
+            //todo ERROR cannot attack
+        }
+        //todo instance spell nabashad
         attackedCard.changeHp(-ap);
         attackedCard.counterAttack(this);
+
         // if can attack && within range
         //counter attack
         //ویژگی هایی که موقع حمله اعمال میشود
@@ -320,17 +329,17 @@ public abstract class Card {
             if (Math.abs(distanceOfX) == 2 || Math.abs(distanceOfY) == 2) {
                 x -= distanceOfX / 2;
                 y -= distanceOfY / 2;
-                Square square = LandOfGame.getInstance().getSquares()[x][y];
+                Square square = landOfGame.getSquares()[x][y];
                 if (square.getObject() != null)
                     return false;
             }
             else {
                 x += distanceOfX;
-                Square square = LandOfGame.getInstance().getSquares()[x][y];
+                Square square = landOfGame.getSquares()[x][y];
                 if (square.getObject() != null) {
                     x -= distanceOfX;
                     y += distanceOfY;
-                    square = LandOfGame.getInstance().getSquares()[x][y];
+                    square = landOfGame.getSquares()[x][y];
                     if (square.getObject() != null)
                         return false;
                 }
