@@ -63,27 +63,27 @@ public abstract class Card {
         this.landOfGame = landOfGame;
     }
 
-    public void move(Coordinate coordinate) {
-//        todo canMove
-        if (!change.canMove) {
-            ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
-            return;
-        }
-        if (canMoveToCoordination(this, coordinate) && withinRange(coordinate)) {
-            position.setObject(null);
-            position = Square.findSquare(coordinate);
-            position.setObject(this);//todo
-            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + coordinate.getX() + coordinate.getY());
-            RequestSuccessionType.MOVE_TO.printMessage();
-            change.canMove = false;
-            //todo check if RequestSuccessionType works correctly
-        } else
-            ErrorType.INVALID_TARGET.printMessage();
-        //check asare khane
-        //can move = false
-        //ویژگی هایی که موقع حرکت اعمال میشود
-
-    }
+//    public void move(Coordinate coordinate) {
+////        todo canMove
+//        if (!canMove) {
+//            ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
+//            return;
+//        }
+//        if (canMoveToCoordination(this, coordinate) && withinRange(coordinate)) {
+//            position.setObject(null);
+//            position = landOfGame.passSquareInThisCoordinate(coordinate);
+//            position.setObject(this);//todo
+//            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + coordinate.getX() + coordinate.getY());
+//            RequestSuccessionType.MOVE_TO.printMessage();
+//            change.canMove = false;
+//            //todo check if RequestSuccessionType works correctly
+//        } else
+//            ErrorType.INVALID_TARGET.printMessage();
+//        //check asare khane
+//        //can move = false
+//        //ویژگی هایی که موقع حرکت اعمال میشود
+//
+//    }
 
     public boolean withinRange(Coordinate coordinate) {
         return getDistance(coordinate) <= 2;
@@ -130,7 +130,7 @@ public abstract class Card {
         turnOfCanNotAttack = number;
     }
 
-    public void setTurnofCanNotCounterAttack(int number) {
+    public void setTurnOfCanNotCounterAttack(int number) {
         turnOfCanNotCounterAttack = number;
     }
 
@@ -352,7 +352,7 @@ public abstract class Card {
                 }
             }
         }
-        return Objects.requireNonNull(Square.findSquare(destination)).getObject() == null;
+        return Objects.requireNonNull(landOfGame.passSquareInThisCoordinate(destination)).getObject() == null;
     }
 
     public void setTarget(Card card, Square CardSquare) {

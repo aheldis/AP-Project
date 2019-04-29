@@ -26,7 +26,7 @@ public class Change {
         targetCard.setCanAttack(this.opponentCanAttack);
         targetCard.setTurnOfCanNotMove(Math.max(targetCard.getTurnOfCanNotMove(), this.turnOfCanNotMoveForOpponent));
         targetCard.setTurnOfCanNotAttack(Math.max(targetCard.getTurnOfCanNotAttack(), this.turnOfCanNotAttackForOpponent));
-        targetCard.setTurnofCanNotCounterAttack(Math.max(targetCard.getTurnOfCanNotCounterAttack(), this.turnOfCanNotCounterAttackForOpponent));
+        targetCard.setTurnOfCanNotCounterAttack(Math.max(targetCard.getTurnOfCanNotCounterAttack(), this.turnOfCanNotCounterAttackForOpponent));
         targetCard.changeAp(apChange);
         targetCard.changeAp(hpChange);
         for(Buff buff : buffs){
