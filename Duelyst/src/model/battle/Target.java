@@ -66,7 +66,8 @@ public class Target {
     }
 
     public ArrayList<Square> setTarget(Square square /*squari e ke seda mikone */) {
-
+        //todo
+        return null;
     }
 
 

@@ -21,7 +21,7 @@ public class Hero extends Card {
     private int numberOfBeingAttacked;
     public void setCounterAttack(CounterAttack counterAttack) {
         this.counterAttack = counterAttack;
-        this.counterAttackClassName = GetClass.getInstance().getClass(counterAttack).getName();
+        this.counterAttackClassName = counterAttack.getClassName();
     }
 
     public String getCounterAttackClassName() {
