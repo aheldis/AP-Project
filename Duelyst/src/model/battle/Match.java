@@ -20,11 +20,17 @@ public class Match {
     private Date date;
 
 
-    public Player passPlayerWithTurn() {//for multiple game
+    public Player passPlayerWithTurn() {
         if (whichPlayer == 0)
             return players[0];
         else
             return players[1];
+    }
+    public Player passAnotherPlayerWithOutTurn(){//midonam esmesh cherte (zahra)
+        if (whichPlayer == 0)
+            return players[1];
+        else
+            return players[0];
     }
 
     public void changeTurn() {
@@ -34,7 +40,8 @@ public class Match {
             whichPlayer = 0;
     }
 
-    public Match(Player[] players, String mode, int numberOfFlags, int reward) {//when we make a match we should have players
+    public Match(Player[] players, String mode, int numberOfFlags, int reward) {
+        //when we make a match we should have players
         this.players = players;
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;

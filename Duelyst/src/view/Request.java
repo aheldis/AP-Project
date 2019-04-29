@@ -5,6 +5,8 @@ import view.enums.RequestType;
 import view.enums.StateType;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Request {
     private Scanner scanner = new Scanner(System.in);
@@ -244,7 +246,7 @@ public class Request {
                 setId(command.substring(7));
                 return RequestType.GAME_ATTACK;
             }
-            if (command.toLowerCase().matches("attack combo \\w+ (\\w+)+")) {
+            if (command.toLowerCase().matches("attack combo (\\w+) (\\w+)+")) {
                 //TODO: chejori vorodi bgiram ino???? :))))
                 return RequestType.GAME_ATTACK_COMBO;
             }

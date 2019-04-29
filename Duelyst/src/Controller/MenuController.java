@@ -20,6 +20,8 @@ import view.enums.ErrorType;
 import view.enums.RequestType;
 import view.enums.StateType;
 
+import java.util.ArrayList;
+
 
 public class MenuController {
     private static StateType state = StateType.MAIN_MENU;
@@ -484,7 +486,25 @@ public class MenuController {
                         player.move(card, square);
                         break;
                     case GAME_ATTACK_COMBO:
-                        //todo
+                        Player player2= match.passAnotherPlayerWithOutTurn();
+                        id=request.getCommand().split(" ")[1];
+                        Card opponentCard= player2.passCardInGame(id);
+                        if(opponentCard ==  null){
+                            error=ErrorType.INVALID_CARD_ID;
+                            error.printMessage();
+                            return;
+                        }
+                        String[] cardIds=request.getCommand().split(" ")[2].split(" ");
+                        for(String cardId : cardIds){
+                            card=player.passCardInGame(cardId);
+                            if(card ==null){
+                                error=ErrorType.INVALID_CARD_ID;
+                                error.printMessage();
+                            }
+                            else{
+                                card.attack();
+                            }
+                        }
                         break;
                     case GAME_ATTACK:
                         square = match.getLand().passSquareInThisCoordinate(request.getCoordinate());
