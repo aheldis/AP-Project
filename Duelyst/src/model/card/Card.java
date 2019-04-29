@@ -21,9 +21,7 @@ public abstract class Card {
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
-    private String counterAttack;
-    private boolean canCounterAttack;
-    private int attackRange;
+    CounterAttack counterAttack;
     private int cost;
     private ArrayList<Buff> buffsOnThisCard;
     private Square position;
@@ -33,6 +31,13 @@ public abstract class Card {
     protected int hp;
     protected int ap;
     private Player player;
+    private boolean canMove = false;
+    private boolean canAttack = false;
+    private boolean canCounterAttack = true;
+    protected int turnOfCanNotMove = 0;
+    protected int turnOfCanNotAttack = 0;
+    protected int turnOfCanNotCounterAttack = 0;
+
     //todo
     private String playerName;
 
@@ -43,7 +48,7 @@ public abstract class Card {
     }
 
     public boolean isCanMove() {//maybe it have stun buff and can not move
-        return this.change.canMove;
+        return canMove;
     }
 
     public String getPlayerName() {
@@ -107,55 +112,55 @@ public abstract class Card {
     }
 
     public void changeTurnOfCanNotAttack(int number) {
-        change.turnOfCanNotAttack += number;
+        turnOfCanNotAttack += number;
     }
 
     public void changeTurnOfCanNotCounterAttack(int number) {
-        change.turnOfCanNotCounterAttack += number;
+        turnOfCanNotCounterAttack += number;
     }
 
     public void changeTurnOfCanNotMove(int number) {
-        change.turnOfCanNotMove += number;
+        turnOfCanNotMove += number;
     }
 
     public void setTurnOfCanNotAttack(int number) {
-        change.turnOfCanNotAttack = number;
+        turnOfCanNotAttack = number;
     }
 
-    public void setTurnofCanNotCounterAttack(int number) {
-        change.turnOfCanNotCounterAttack = number;
+    public void setTurnOfCanNotCounterAttack(int number) {
+        turnOfCanNotCounterAttack = number;
     }
 
     public void setTurnOfCanNotMove(int number) {
-        change.turnOfCanNotMove = number;
+        turnOfCanNotMove = number;
     }
 
     public int getTurnOfCanNotAttack() {
-        return change.turnOfCanNotAttack;
+        return turnOfCanNotAttack;
     }
 
     public int getTurnOfCanNotCounterAttack() {
-        return change.turnOfCanNotCounterAttack;
+        return turnOfCanNotCounterAttack;
     }
 
     public int getTurnOfCanNotMove() {
-        return change.turnOfCanNotMove;
+        return turnOfCanNotMove;
     }
 
     public boolean isCanAttack() {
-        return change.canAttack;
+        return canAttack;
     }
 
     public boolean isCanCounterAttack() {
-        return change.canCounterAttack;
+        return canCounterAttack;
     }
 
     public void setCanCounterAttack(boolean bool) {
-        change.canCounterAttack = bool;
+        canCounterAttack = bool;
     }
 
     public void setCanAttack(boolean bool) {
-        change.canAttack = bool;
+        canAttack = bool;
     }
 
     public Square getPosition() {
@@ -267,11 +272,11 @@ public abstract class Card {
     }
 
     public void setCanMove(boolean canMove) {
-        change.canMove = canMove;
+        canMove = canMove;
     }
 
     public Boolean getCanMove() {
-        return change.canMove;
+        return canMove;
     }
 
     public int getHp() {
@@ -334,8 +339,7 @@ public abstract class Card {
                 Square square = landOfGame.getSquares()[x][y];
                 if (square.getObject() != null)
                     return false;
-            }
-            else {
+            } else {
                 x += distanceOfX;
                 Square square = landOfGame.getSquares()[x][y];
                 if (square.getObject() != null) {
@@ -347,15 +351,17 @@ public abstract class Card {
                 }
             }
         }
-        return Objects.requireNonNull(Square.findSquare(destination)).getObject() == null;
+        return Objects.requireNonNull(landOfGame.passSquareInThisCoordinate(destination)).getObject() == null;
     }
 
     public void setTarget(Card card, Square CardSquare) {
+        //todo checkIfAttackedCardIsValid to class target
         //todo check kone ke to classe targete card (one/all/column/row) hast
         //todo age square hast ya distance dare check kone
         //todo bere range ro nega kone har kodoom ke bashe aval bege to range hast ya na
         //todo khone haye to range ro be onvane arrayList bede be ma
-        //todo ArrayList e target ro to classe taget bere bezare
+        //todo ArrayList e target ro to classe target bere bezare
+
     }
 
     //ye method ke ye square ba card begire khoonehaee ke mikhaim roshoon kari konim ro bede  arraylist

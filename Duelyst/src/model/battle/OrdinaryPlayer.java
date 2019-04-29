@@ -9,7 +9,10 @@ import model.land.Square;
 import model.requirment.Coordinate;
 import view.enums.ErrorType;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.abs;
+import static java.lang.Math.sqrt;
 
 public class OrdinaryPlayer extends Player {
 
@@ -62,12 +65,27 @@ public class OrdinaryPlayer extends Player {
     }
 
     public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
-        if (playerCard == null)
+        ErrorType error;
+        if (playerCard == null) {
+            error=ErrorType.INVALID_CARD_ID;
+            error.printMessage();
             return;
-        if (!playerCard.canMoveToCoordination(playerCard, coordinate)) {
-            ErrorType error = ErrorType.INVALID_TARGET;
         }
-
+        if (!playerCard.canMoveToCoordination(playerCard, coordinate)) {
+            error = ErrorType.INVALID_TARGET;
+            error.printMessage();
+            return;
+        }
+        Square square=land.passSquareInThisCoordinate(coordinate);
+        if(square==null){
+            error=ErrorType.INVALID_SQUARE;
+            error.printMessage();
+            return;
+        }
+        ArrayList<Buff> buffsOfSquare=square.getBuffs();
+        for(Buff buff : buffsOfSquare){
+            buff.affect(playerCard);
+        }
         cardsOnLand.add(playerCard);
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
@@ -86,11 +104,17 @@ public class OrdinaryPlayer extends Player {
             error.printMessage();
             return;
         }
+
+        ArrayList<Buff> buffsOfSquare=newPosition.getBuffs();
+        for(Buff buff : buffsOfSquare){
+            buff.affect(card);
+        }
+
         if (card instanceof Minion) {
             if (((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_RESPAWN) {
                 card.setTarget(card, newPosition);
 
-                //todo AffectSpecialpower
+                //todo AffectSpecialPower
             }
         }
         if (newPosition.getObject() instanceof Flag) {

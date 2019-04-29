@@ -15,7 +15,7 @@ public class Buff {
             hero.setCanMove();//Oh gand khord //todo dorost beshe
         }
     }
-    public void unAffect(){
+    public void unAffect(Card card){
 
     }
 
