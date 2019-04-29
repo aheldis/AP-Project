@@ -57,7 +57,12 @@ public abstract class Card {
     }
 
     public void move(Coordinate coordinate) {
-        if (canMoveToCoordination(coordinate) && withinRange(coordinate)) {
+//        todo canMove
+        if (!change.canMove) {
+            ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
+            return;
+        }
+        if (canMoveToCoordination(position.getCoordinate(), coordinate) && withinRange(coordinate)) {
             landOfGame.removeCardFromAnSquare(position.getCoordinate());
             landOfGame.addCardToAnSquare(coordinate, this);//todo
             RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + coordinate.getX() + coordinate.getY());
@@ -77,7 +82,6 @@ public abstract class Card {
     }
 
     public void attack(Player opponent, String cardId) {
-        //todo canMove
         Card attackedCard = getCardById(cardId, opponent.getCardsOnLand());
         if (attackedCard == null) {
             ErrorType.INVALID_CARD_ID.printMessage();
@@ -92,7 +96,6 @@ public abstract class Card {
         // if can attack && within range
         //counter attack
         //ویژگی هایی که موقع حمله اعمال میشود
-
     }
 
     public void changeTurnOfCanNotAttack(int number) {
@@ -308,8 +311,32 @@ public abstract class Card {
             theOneWhoAttacked.changeHp(-ap);
     }
 
-    public boolean canMoveToCoordination(Coordinate coordinate) {
-        return Objects.requireNonNull(Square.findSquare(coordinate)).getObject() == null;
+    public boolean canMoveToCoordination(Card card, Coordinate destination) {
+        if (card.getDistance(destination) == 2) {
+            int x = card.position.getXCoordinate();
+            int y = card.position.getYCoordinate();
+            int distanceOfX = destination.getX() - card.position.getXCoordinate();
+            int distanceOfY = destination.getY() - card.position.getYCoordinate();
+            if (Math.abs(distanceOfX) == 2 || Math.abs(distanceOfY) == 2) {
+                x -= distanceOfX / 2;
+                y -= distanceOfY / 2;
+                Square square = LandOfGame.getInstance().getSquares()[x][y];
+                if (square.getObject() != null)
+                    return false;
+            }
+            else {
+                x += distanceOfX;
+                Square square = LandOfGame.getInstance().getSquares()[x][y];
+                if (square.getObject() != null) {
+                    x -= distanceOfX;
+                    y += distanceOfY;
+                    square = LandOfGame.getInstance().getSquares()[x][y];
+                    if (square.getObject() != null)
+                        return false;
+                }
+            }
+        }
+        return Objects.requireNonNull(Square.findSquare(destination)).getObject() == null;
     }
 
     public void setTarget(Card card, Square CardSquare) {

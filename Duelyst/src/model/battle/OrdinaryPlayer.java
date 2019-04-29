@@ -9,10 +9,7 @@ import model.land.Square;
 import model.requirment.Coordinate;
 import view.enums.ErrorType;
 
-import javax.accessibility.AccessibleTable;
-
 import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
 
 public class OrdinaryPlayer extends Player {
 
@@ -100,12 +97,12 @@ public class OrdinaryPlayer extends Player {
     public void move(Card card, Square newPosition) {
         ErrorType error;
         if (!withinRange(card.getPosition(), newPosition, 2)) {
-            error=ErrorType.CAN_NOT_MOVE;
+            error=ErrorType.CAN_NOT_MOVE_IN_SQUARE;
             error.printMessage();
             return;
         }
         if (!card.isCanMove() && card.canMoveToCoordination(newPosition.getCoordinate())) {
-            error=ErrorType.CAN_NOT_MOVE;
+            error=ErrorType.CAN_NOT_MOVE_IN_SQUARE;
             error.printMessage();
             return;
         }

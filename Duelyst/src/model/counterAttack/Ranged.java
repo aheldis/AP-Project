@@ -19,12 +19,12 @@ public class Ranged extends CounterAttack {
     }
 
     public void callFunctionForAttack(Coordinate coordinate) {
-        if (checkIfSquereIsWithinRangeOfCard(this.getCard().getRange(), coordinate) && checkIfSquareIsWithinRange(coordinate)) {
+        if (checkIfSquareIsWithinRangeOfCard(this.getCard().getRange(), coordinate) && checkIfSquareIsWithinRange(coordinate)) {
 
         }
     }
 
-    private boolean checkIfSquereIsWithinRangeOfCard(int range, Coordinate coordinate) {
+    private boolean checkIfSquareIsWithinRangeOfCard(int range, Coordinate coordinate) {
         return (Math.abs(this.getCoordinate().getX() - coordinate.getX()) +
                 Math.abs(this.getCoordinate().getY() - coordinate.getY()) <= range);
     }
