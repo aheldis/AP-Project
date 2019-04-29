@@ -21,9 +21,15 @@ public class Change {
     private ArrayList<Buff> untiBuffs;
 
     public void makeChangeInTargetCard(Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
-        targetCard.setCanMove(this.opponentCanMove);
-        targetCard.setCanCounterAttack(this.opponentCanCounterAttack);
-        targetCard.setCanAttack(this.opponentCanAttack);
+        if(!this.opponentCanMove)
+        targetCard.setCanMove(false);
+
+        if(!this.opponentCanCounterAttack)
+        targetCard.setCanCounterAttack(false);
+
+        if(!this.opponentCanAttack)
+        targetCard.setCanAttack(false);
+
         targetCard.setTurnOfCanNotMove(Math.max(targetCard.getTurnOfCanNotMove(), this.turnOfCanNotMoveForOpponent));
         targetCard.setTurnOfCanNotAttack(Math.max(targetCard.getTurnOfCanNotAttack(), this.turnOfCanNotAttackForOpponent));
         targetCard.setTurnOfCanNotCounterAttack(Math.max(targetCard.getTurnOfCanNotCounterAttack(), this.turnOfCanNotCounterAttackForOpponent));
