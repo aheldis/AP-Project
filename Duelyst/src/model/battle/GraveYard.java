@@ -11,6 +11,10 @@ public class GraveYard {
     private ArrayList<Card> cards;
     private Player player;
 
+    public GraveYard(Player player){
+        this.player = player;
+    }
+
     public Card cardHaveBeenExistInGraveYard(String cardId){
         for(Card card : cards){
             if(card.getCardId().getCardIdAsString().equals(cardId))
@@ -24,14 +28,13 @@ public class GraveYard {
     }
 
     public void showGraveYard() {
-        AccountView.getInstance().cardsAndItemsView(Card.getSpells(cards), Card.getMinions(cards), Card.getHeroes(cards), new ArrayList<> ());
+        AccountView.getInstance().cardsAndItemsView(Card.getSpells(cards),
+                Card.getMinions(cards), Card.getHeroes(cards), new ArrayList<> ());
     }
 
     public void showInfo(Card card) {
         BattleView.getInstance().showCardInfo(card);
     }
 
-    public GraveYard(Player player){
-        this.player = player;
-    }
+
 }

@@ -2,9 +2,16 @@ package model.battle;
 
 import model.account.Account;
 import model.card.Card;
+import model.card.Hero;
+import model.card.Minion;
+import model.card.Spell;
+import model.land.LandOfGame;
 import model.land.Square;
+import model.requirment.Coordinate;
+import view.enums.ErrorType;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.sqrt;
 
 public class OrdinaryPlayer extends Player {
 
@@ -32,17 +39,49 @@ public class OrdinaryPlayer extends Player {
 
     }
 
-    public void useSpecialPowerHero() {
+    public void useSpecialPower(Card card) {
+        ErrorType error;
+        if (card instanceof Spell) {
+            error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;
+            error.printMessage();
+            return;
+        }
+        if (card instanceof Minion) {
+            if(((Minion) card).getHaveSpecialPower()){
+               //todo useSpecialPower
+                return;
+            }
+
+        }
+        if (card instanceof Hero) {
+            if(((Hero) card).getHaveSpecialPower()){
+                //todo useSpecialPower
+                return;
+            }
+        }
+        error=ErrorType.DO_NOT_HAVE_SPECTIAL_POWER;
+
 
     }
 
-    public void putCardFromHandInLand(Card card, Square square) {
-        //TODO :
-        //check mana
-        //check
+    public boolean checkPutCard() {//by distance with other squares
+        //todo
     }
 
-    public void attack(Card card, Square target) {
+    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
+        if (playerCard == null)
+            return;
+        if (!checkPutCard()) {
+            ErrorType error = ErrorType.INVALID_TARGET;
+        }
+
+        cardsOnLand.add(playerCard);
+        Square[][] squares = land.getSquares();
+        squares[coordinate.getX()][coordinate.getY()].setCard(playerCard);
+
+    }
+
+    public void attack(Card card,Square target) {
         if (true/*check range*/) {
             //todo ERROR not within range attack
         }
@@ -63,6 +102,7 @@ public class OrdinaryPlayer extends Player {
     }
 
     public void move(Card card, Square newPosition) {
+        //todo write a function to change square to coordinate
         if (!withinRange(card.getPosition(), newPosition, 2)) {
             //todo ERROR not within range move
         }

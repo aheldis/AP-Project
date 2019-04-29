@@ -13,10 +13,10 @@ import java.util.ArrayList;
 
 public class Shop {
     public static Shop singleInstance = null;
-    private ArrayList<Card> cards = new ArrayList<>();// todo man ino card haye jahan gereftam (zahra) bashe :) (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
+    private ArrayList<Card> cards = new ArrayList<>();// todo (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
     private ArrayList<Usable> items = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
-    private static String pathOfFiles = "D:\\jacksoncore\\src\\main\\"; //todo: file path doroste? :-?? ghalate ghataan
+    private static String pathOfFiles = "../Duelyst";
 //    private String[] type = {"hero", "minion", "spell", "item"}; //ina ye enumi chizi mibood behtar mibood
 
     //todo bere az har card yedoone besaze

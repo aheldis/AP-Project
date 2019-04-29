@@ -17,6 +17,9 @@ public class LandOfGame {
 //        return LAND_OF_GAME;
 //    }
 
+    public Square passSquarithCoordinate(Coordinate coordinate){
+       return squares[coordinate.getX()][coordinate.getY()];
+    }
     public void removeCardFromAnSquare(Coordinate coordinate){
         squares[coordinate.getX()][coordinate.getY()].removeCardFromSquare();
     }

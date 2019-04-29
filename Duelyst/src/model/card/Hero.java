@@ -18,6 +18,15 @@ public class Hero extends Card {
     private int attackRange;
     private int numberOfAttacks;
     private int numberOfBeingAttacked;
+    private boolean haveSpecialPower;
+
+    public void setHaveSpecialPower(boolean haveSpecialPower) {
+        this.haveSpecialPower = haveSpecialPower;
+    }
+    public boolean getHaveSpecialPower(){
+        return haveSpecialPower;
+    }
+
     public void setCounterAttack(CounterAttack counterAttack) {
         this.counterAttack = counterAttack;
         this.counterAttackClassName = counterAttack.getClassName();

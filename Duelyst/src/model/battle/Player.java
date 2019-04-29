@@ -23,47 +23,44 @@ public abstract class Player {
     private GraveYard graveYard = new GraveYard(this);
     protected Player opponent;
     ArrayList<Flag> flags;
-    private ArrayList<Card> cardsOnLand = new ArrayList<>();
+    protected ArrayList<Card> cardsOnLand = new ArrayList<>();
 
-    public Hero getHero(){
+    public abstract void move(Card card, Square newPosition);
+    public abstract void attack(Card card, Square target);
+    public abstract void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land);
+    public abstract void useSpecialPower(Card card);
+
+    public Hero getHero() {
         return mainDeck.getHero();
 
     }
-    public void addItemToCollectables(Collectable collectable){
+
+    public void putCollectableItemOnLand(Coordinate coordinate,String  collectableItemId) {
+        //todo
+    }
+
+    public void addItemToCollectables(Collectable collectable) {
         hand.getCollectableItems().add(collectable);
     }
-    public Card  passCardInGame(String cardId){
-        Card card =hand.passCardInHand(cardId);
-        if(card !=null)
+
+    public Card passCardInGame(String cardId) {
+        Card card = hand.passCardInHand(cardId);
+        if (card != null)
             return card;
-        ArrayList<Card> cards=new ArrayList<>();
+        ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(cardsOnLand);
-        for(Card outPutCard:cards){
-            if(outPutCard.equalCard(cardId) && outPutCard.getPlayerName().equals(account.getUserName()))
-                card=outPutCard;
+        for (Card outPutCard : cards) {
+            if (outPutCard.equalCard(cardId) && outPutCard.getPlayerName().equals(account.getUserName()))
+                card = outPutCard;
         }
         return card;
     }
 
-    public Player getOpponent(){
+    public Player getOpponent() {
         return opponent;
     }
 
-    public boolean checkPutCard(){//by distance with other squares
 
-    }
-    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
-        if (playerCard == null)
-            return;
-        if(!checkPutCard()){
-            ErrorType error = ErrorType.INVALID_TARGET;
-        }
-
-        cardsOnLand.add(playerCard);
-        Square[][] squares = land.getSquares();
-        squares[coordinate.getX()][coordinate.getY()].setCard(playerCard);
-
-    }
 
     public void initPerTurn() {
         hand.checkTheHandAndAddToIt();

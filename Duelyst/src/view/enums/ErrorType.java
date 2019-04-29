@@ -29,11 +29,13 @@ public enum ErrorType {
     SELECTED_INVALID_DECK("Selected deck is invalid"),
     SELECTED_INVALID_DECK_FOR_PLAYER2("Selected deck for second player is invalid"),
     DONT_HAVE_MAIN_DECK("You don't have a main deck"),
-    INVALID_CARD_ID("ivalid card name"),
-    NOT_ENOUGH_MANA("you don't have enough mana"),
-    INVALID_TARGET("you can not put it here"),
-    HAVE_NOT_ENOUGH_MANA("you don't have enough mana"),
-    INVALID_ITEM("you don't have this collectable Item");
+    INVALID_CARD_ID("Invalid card name"),
+    NOT_ENOUGH_MANA("You don't have enough mana"),
+    INVALID_TARGET("You can not put it here"),
+    HAVE_NOT_ENOUGH_MANA("You don't have enough mana"),
+    INVALID_ITEM("You don't have this collectable Item"),
+    CAN_NOT_USE_SPECIAL_POWER("Can not use special power for this card"),
+    DO_NOT_HAVE_SPECTIAL_POWER("This card doesn't have special power");
 
     private String message;
 

@@ -22,6 +22,14 @@ public class Minion extends Card {
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
     private boolean comboAbility;
     String specialPowerInfo;
+    private boolean haveSpecialPower;
+
+    public void setHaveSpecialPower(boolean haveSpecialPower) {
+        this.haveSpecialPower = haveSpecialPower;
+    }
+    public boolean getHaveSpecialPower(){
+        return haveSpecialPower;
+    }
 
     public boolean isComboAbility() {
         return comboAbility;

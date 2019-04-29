@@ -1,10 +1,10 @@
 package model.account;
 
 public enum FilesType {
-    HERO("hero"),
-    MINION("minion"),
-    SPELL("spell"),
-    ITEM("item");
+    HERO("Hero"),
+    MINION("Minion"),
+    SPELL("Spell"),
+    ITEM("Item");
 
     private String name;
 
@@ -17,9 +17,15 @@ public enum FilesType {
     }
 
     public static FilesType getEnum(String input){
-        for(FilesType type: FilesType.values()){
-            if(type.getName().equals(input))
-                return type;
+        switch (input){
+            case "Spell":
+                return FilesType.SPELL;
+            case "Hero":
+                return FilesType.HERO;
+            case "Minion":
+                return FilesType.MINION;
+            case "Item":
+                return FilesType.ITEM;
         }
         return null;
     }

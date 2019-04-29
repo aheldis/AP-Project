@@ -12,8 +12,6 @@ public class Match {
     private String mode;
     private int numberOfFlags;
     private ArrayList<Flag> flags;
-    //private Time startTime;
-    //private Time endTime;
     private Player winner;
     private Player loser;
     private int reward;
@@ -22,7 +20,7 @@ public class Match {
     private Date date;
 
 
-    public Player passPlayerWithTurn() {
+    public Player passPlayerWithTurn() {//for multiple game
         if (whichPlayer == 0)
             return players[0];
         else
