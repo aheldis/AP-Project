@@ -3,9 +3,6 @@ package model.card;
 
 import model.battle.Player;
 import model.counterAttack.CounterAttack;
-import model.counterAttack.Hybrid;
-import model.counterAttack.Melee;
-import model.counterAttack.Ranged;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -13,6 +10,7 @@ import view.enums.ErrorType;
 import view.enums.RequestSuccessionType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public abstract class Card {
@@ -23,7 +21,8 @@ public abstract class Card {
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
     CounterAttack counterAttack;
     private int cost;
-    private ArrayList<Buff> buffsOnThisCard;
+    //private ArrayList<Buff> buffsOnThisCard;
+    private HashMap<Buff, Integer> buffsOnThisCard;
     private Square position;
     private LandOfGame landOfGame;
     private int CardNumber;//todo card number dashte bashan oon shomareE ke to doc e vase sakhtan mode ha, albate mitoonan nadashte bashan ba esm besazim game card ha ro :-? item ha ham hamin tor
@@ -37,6 +36,11 @@ public abstract class Card {
     protected int turnOfCanNotMove = 0;
     protected int turnOfCanNotAttack = 0;
     protected int turnOfCanNotCounterAttack = 0;
+
+    public void addBuff(Buff buff, int forHowManyTurn){
+        if(buffsOnThisCard.containsKey(buff))
+        buffsOnThisCard.put(buff, forHowManyTurn)
+    }
 
     //todo
     private String playerName;
@@ -108,7 +112,7 @@ public abstract class Card {
         }
         attackedCard.changeHp(-ap);
         attackedCard.counterAttack(this);
-        setCanAttack(false);
+        setCanAttack(false, 1);
     }
 
     public void changeTurnOfCanNotAttack(int number) {
@@ -155,12 +159,25 @@ public abstract class Card {
         return canCounterAttack;
     }
 
-    public void setCanCounterAttack(boolean bool) {
-        canCounterAttack = bool;
+    public void setCanMove(boolean canMove, int forHowManyTurn) {
+        this.canMove = canMove;
+        if (canMove == false) {
+            setTurnOfCanNotMove(Math.max(getTurnOfCanNotMove(), forHowManyTurn));
+        }
     }
 
-    public void setCanAttack(boolean bool) {
+    public void setCanCounterAttack(boolean bool, int forHowManyTurn) {
+        canCounterAttack = bool;
+        if (bool == false) {
+            setTurnOfCanNotCounterAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
+        }
+    }
+
+    public void setCanAttack(boolean bool, int forHowManyTurn) {
         canAttack = bool;
+        if (bool == false) {
+            setTurnOfCanNotAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
+        }
     }
 
     public Square getPosition() {
@@ -271,9 +288,6 @@ public abstract class Card {
         this.description = description;
     }
 
-    public void setCanMove(boolean canMove) {
-        canMove = canMove;
-    }
 
     public Boolean getCanMove() {
         return canMove;
