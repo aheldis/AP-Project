@@ -1,10 +1,8 @@
 package model.card;
 
 import model.land.Square;
-import model.requirment.Coordinate;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Change {
 
@@ -25,6 +23,10 @@ public class Change {
     // private boolean addToHpAfterCounterAttack = false; //Holy buff //todo dar buff handle mikonm(zahra)
     //private int turnOfAffect = 0;
 
+    public void affect(ArrayList <Square> targets){
+        //todo target ha ghablan bayad salahiateshoon check shode bashe
+        //todo hame chizaee ke inja hast ro bere ro targeta asar bede
+    }
 
 
     public void destroyPositiveEffects() {

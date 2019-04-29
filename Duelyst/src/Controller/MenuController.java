@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 
 import model.Item.Usable;
@@ -6,7 +6,10 @@ import model.account.Account;
 import model.account.AllAccount;
 import model.account.Collection;
 import model.account.Shop;
-import model.battle.*;
+import model.battle.Game;
+import model.battle.GraveYard;
+import model.battle.Match;
+import model.battle.Player;
 import model.card.Card;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -28,7 +31,7 @@ public class MenuController {
     private static Match match;
 
     public static void main() {
-        String id="";
+        String id = "";
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
         while (state != StateType.END_PROGRAM) {
@@ -274,7 +277,7 @@ public class MenuController {
                                 break;
                             }
 
-                            //baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
+                            //todo baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
                             match = game.makeNewMultiGame(mode, numberOfFlags);
                             state = StateType.BATTLE;
                         } else {
@@ -314,7 +317,7 @@ public class MenuController {
                         } while (!valid);
                         match = game.makeNewCustomGame(account, deckName, mode, numberOfFLags);
                         if (match == null) {
-                            //todo error: inja age deckname e alaki bashe ya valid nabashe match null mishe
+                            state = StateType.ACCOUNT_MENU;
                         }
                         state = StateType.BATTLE;
                         break;
@@ -437,13 +440,13 @@ public class MenuController {
 
             if (state == StateType.SELECT_ITEM) {
                 Player player = match.passPlayerWithTurn();
-                switch (request.getRequestType()){
+                switch (request.getRequestType()) {
                     case GAME_ITEM_SHOW_INFO:
-                        menuView.showItemInfo(player.getHand(),id);
+                        menuView.showItemInfo(player.getHand(), id);
                         break;
                     case GAME_ITEM_USE:
-                        Coordinate coordinate=request.getCoordinate();
-                        player.putCollectableItemOnLand(coordinate,id);
+                        Coordinate coordinate = request.getCoordinate();
+                        player.putCollectableItemOnLand(coordinate, id);
                         break;
                 }
 
@@ -462,37 +465,37 @@ public class MenuController {
                             break;
                         }
                         card = player.passCardInGame(request.getId());
-                        if(card==null){
-                            error=ErrorType.INVALID_CARD_ID;
+                        if (card == null) {
+                            error = ErrorType.INVALID_CARD_ID;
                             error.printMessage();
                             break;
                         }
                         player.useSpecialPower(card);
                         break;
                     case GAME_MOVE:
-                        card= player.passCardInGame(id);
-                        square =match.getLand().passSquareInThisCoordinate(request.getCoordinate());
-                        if(card==null){
-                            ErrorType errorType=ErrorType.INVALID_CARD_ID;
+                        card = player.passCardInGame(id);
+                        square = match.getLand().passSquareInThisCoordinate(request.getCoordinate());
+                        if (card == null) {
+                            ErrorType errorType = ErrorType.INVALID_CARD_ID;
                             errorType.printMessage();
                             break;
 
                         }
-                        player.move(card,square);
+                        player.move(card, square);
                         break;
                     case GAME_ATTACK_COMBO:
                         //todo
                         break;
                     case GAME_ATTACK:
-                        square =match.getLand().passSquareInThisCoordinate(request.getCoordinate());
-                        id=request.getId();
-                        card=player.passCardInGame(id);
-                        if(card==null){
-                            ErrorType errorType=ErrorType.INVALID_CARD_ID;
+                        square = match.getLand().passSquareInThisCoordinate(request.getCoordinate());
+                        id = request.getId();
+                        card = player.passCardInGame(id);
+                        if (card == null) {
+                            ErrorType errorType = ErrorType.INVALID_CARD_ID;
                             errorType.printMessage();
                             break;
                         }
-                        player.attack(card,square);
+                        player.attack(card, square);
                         break;
                 }
             }

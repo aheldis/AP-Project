@@ -38,13 +38,13 @@ public class Target {
         //check beshe ba sharayet target mikhoone ya na todo kamel nistaa
         String counterAttackName = null;
         if (attacked instanceof Minion) {
-            if (cardType != "minion") {
+            if (!cardType.equals("minion")) {
                 return false;
             }
             counterAttackName = ((Minion) attacked).getCounterAttack().getName();
         }
         if (attacked instanceof Hero) {
-            if (cardType != "hero") {
+            if (!cardType.equals("hero")) {
                 return false;
             }
             counterAttackName = ((Hero) attacked).getCounterAttack().getName();
