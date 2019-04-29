@@ -28,6 +28,14 @@ public class Minion extends Card {
     String specialPowerInfo;
     private boolean haveSpecialPower;
 
+    public void setActivationTimeOfSpecialPower(ActivationTimeOfSpecialPower activationTimeOfSpecialPower) {
+        this.activationTimeOfSpecialPower = activationTimeOfSpecialPower;
+    }
+
+    public ActivationTimeOfSpecialPower getActivationTimeOfSpecialPower() {
+        return activationTimeOfSpecialPower;
+    }
+
     public void setHaveSpecialPower(boolean haveSpecialPower) {
         this.haveSpecialPower = haveSpecialPower;
     }

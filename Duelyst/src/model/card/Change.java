@@ -25,6 +25,8 @@ public class Change {
     // private boolean addToHpAfterCounterAttack = false; //Holy buff //todo dar buff handle mikonm(zahra)
     //private int turnOfAffect = 0;
 
+
+
     public void destroyPositiveEffects() {
 
     }

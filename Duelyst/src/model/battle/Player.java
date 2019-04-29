@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public abstract class Player {
     private Account account;
     protected Deck mainDeck;
-    private Hand hand;
+    protected Hand hand;
     protected String type;
     private Match match;
     private int turnsPlayed = 0;
@@ -24,6 +24,7 @@ public abstract class Player {
     protected Player opponent;
     ArrayList<Flag> flags;
     protected ArrayList<Card> cardsOnLand = new ArrayList<>();
+    //collectable Item to hand ast :D
 
     public abstract void move(Card card, Square newPosition);
     public abstract void attack(Card card, Square target);

@@ -1,7 +1,6 @@
 package model.card;
 
 
-import model.battle.Target;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -29,11 +28,19 @@ public abstract class Card {
 
     private String description;
 
+    public Target getTargetClass() {
+        return target;
+    }
+
+    public boolean isCanMove(){//maybe it have stun buff and can not move
+       return this.change.canMove;
+    }
+
     public String getPlayerName() {
         return playerName;
     }
 
-    public void setTarget() {
+    public void setTargetClass() {
 
     }
 
@@ -267,8 +274,16 @@ public abstract class Card {
     }
 
 
-    boolean canMoveToCoordination(Coordinate coordinate) {
+    public boolean canMoveToCoordination(Coordinate coordinate) {
         return Objects.requireNonNull(Square.findSquare(coordinate)).getObject() == null;
+    }
+
+    public void setTarget(Card card ,Square CardSquare){
+        //todo check kone ke to classe targete card (one/all/column/row) hast
+        //todo age square hast ya distance dare check kone
+        //todo bere range ro nega kone har kodoom ke bashe aval bege to range hast ya na
+        //todo khone haye to range ro be onvane arrayList bede be ma
+        //todo ArrayList e target ro to classe taget bere bezare
     }
 
     //ye method ke ye square ba card begire khoonehaee ke mikhaim roshoon kari konim ro bede  arraylist

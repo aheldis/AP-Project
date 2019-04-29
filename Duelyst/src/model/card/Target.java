@@ -1,8 +1,6 @@
-package model.battle;
+package model.card;
 
-import model.card.Card;
-import model.card.Hero;
-import model.card.Minion;
+import model.battle.Player;
 import model.land.LandOfGame;
 import model.land.Square;
 
@@ -21,6 +19,11 @@ public class Target {
     private boolean all;
     private boolean random;
     //distance
+
+
+    public void setTargets(ArrayList<Square> targets) {
+        this.targets = targets;
+    }
 
     public Target() {
 
@@ -57,13 +60,13 @@ public class Target {
         return false;
     }
 
-    public void setTargets(Card attacker, Card attacked) {
-        if (attacked == null) {
-
-        } else {
-
-        }
-    }
+//    public void setTargets(Card attacker, Card attacked) {
+//        if (attacked == null) {
+//
+//        } else {
+//
+//        }
+//    }
 
     public ArrayList<Square> setTarget(Square square /*squari e ke seda mikone */) {
         //todo

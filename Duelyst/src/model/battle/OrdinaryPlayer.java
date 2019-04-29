@@ -1,14 +1,14 @@
 package model.battle;
 
+import model.Item.Collectable;
 import model.account.Account;
-import model.card.Card;
-import model.card.Hero;
-import model.card.Minion;
-import model.card.Spell;
+import model.card.*;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.enums.ErrorType;
+
+import javax.accessibility.AccessibleTable;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -48,30 +48,25 @@ public class OrdinaryPlayer extends Player {
         }
         if (card instanceof Minion) {
             if(((Minion) card).getHaveSpecialPower()){
-               //todo useSpecialPower
+               //todo AffectSpecialPower
                 return;
             }
 
         }
         if (card instanceof Hero) {
             if(((Hero) card).getHaveSpecialPower()){
-                //todo useSpecialPower
+                //todo AffectSpecialPower
                 return;
             }
         }
-        error=ErrorType.DO_NOT_HAVE_SPECTIAL_POWER;
-
-
-    }
-
-    public boolean checkPutCard() {//by distance with other squares
-        //todo
+        error=ErrorType.DO_NOT_HAVE_SPECIAL_POWER;
+        error.printMessage();
     }
 
     public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
         if (playerCard == null)
             return;
-        if (!checkPutCard()) {
+        if (!playerCard.canMoveToCoordination(coordinate)) {
             ErrorType error = ErrorType.INVALID_TARGET;
         }
 
@@ -102,23 +97,36 @@ public class OrdinaryPlayer extends Player {
     }
 
     public void move(Card card, Square newPosition) {
-        //todo write a function to change square to coordinate
+        ErrorType error;
         if (!withinRange(card.getPosition(), newPosition, 2)) {
-            //todo ERROR not within range move
+            error=ErrorType.CAN_NOT_MOVE;
+            error.printMessage();
+            return;
         }
-        if (!card.isCanMove()) {
-            //todo ERROR cannot move
+        if (!card.isCanMove() && card.canMoveToCoordination(newPosition.getCoordinate())) {
+            error=ErrorType.CAN_NOT_MOVE;
+            error.printMessage();
+            return;
         }
-        //todo age vijegish mogheye move anjam mishe
+        if(card instanceof Minion){
+            if(((Minion) card).getActivationTimeOfSpecialPower()== ActivationTimeOfSpecialPower.ON_RESPAWN){
+                card.setTarget(card,newPosition);
 
+                //todo AffectSpecialpower
+            }
+        }
         card.getPosition().removeCardFromSquare();
         card.setPosition(newPosition);
         newPosition.setCard(card);
-        //todo age item collactable dasht
+        if(newPosition.getObject() instanceof Collectable){
+            hand.addToCollectableItem((Collectable) newPosition.getObject());
+
+        }
     }
 
     public boolean withinRange(Square square1, Square square2, int range) {
-        if (abs(square1.getXCoordinate() - square2.getXCoordinate()) + abs(square1.getYCoordinate() - square2.getYCoordinate()) <= range) {
+        if (abs(square1.getXCoordinate() - square2.getXCoordinate()) +
+                abs(square1.getYCoordinate() - square2.getYCoordinate()) <= range) {
             return true;
         }
         return false;

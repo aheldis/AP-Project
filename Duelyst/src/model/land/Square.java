@@ -12,7 +12,6 @@ public class Square {
     private int scaleForEachSquare;
     private Coordinate coordinate;
     private Object object;
-    private Card card;
 
    public Square(Coordinate coordinate) {
         this.coordinate = coordinate;
@@ -44,34 +43,36 @@ public class Square {
         return null;
     }
 
-    public void putMinion(Minion minion) {
-        object = minion;
-    }
+//    public void putMinion(Minion minion) {
+//        object = minion;
+//    }
+//
+//    public void putHero(Hero hero) {
+//        object = hero;
+//    }
+//
+//    public void putSpell(Spell spell) {
+//        object = spell;
+//    }
+//
+//    public void putFlag(Flag flag) {
+//        object = flag;
+//    }
 
-    public void putHero(Hero hero) {
-        object = hero;
-    }
+//    public void removeObjectFromRhisSquare() {
+//        if (object instanceof Card)
+//            object = null;
+//    }
+//
 
-    public void putSpell(Spell spell) {
-        object = spell;
-    }
-
-    public void putFlag(Flag flag) {
-        object = flag;
-    }
-
-    public void removeCardFromSquare() {
-        if (object instanceof Card)
-            object = null;
-    }
-    public void putCard(Card card){
-       if(card instanceof Spell)
-           putSpell((Spell) card);
-       if(card instanceof Minion)
-           putMinion((Minion) card);
-       if(card instanceof Hero)
-           putHero((Hero)card);
-    }
+//    public void putCard(Card card){
+//       if(card instanceof Spell)
+//           putSpell((Spell) card);
+//       if(card instanceof Minion)
+//           putMinion((Minion) card);
+//       if(card instanceof Hero)
+//           putHero((Hero)card);
+//    }
 
     public static Square findSquare(Coordinate coordinate) {
        Square[][] squares = LandOfGame.getInstance().getSquares();
@@ -84,8 +85,8 @@ public class Square {
        return null;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setObject(Object object) {
+        this.object = object;
     }
 
     public Coordinate passTheCenterOfSquare() {

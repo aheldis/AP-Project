@@ -6,7 +6,6 @@ import model.card.*;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.zip.CheckedOutputStream;
 
 public class Hand {
     private Deck deck;
@@ -17,6 +16,11 @@ public class Hand {
     public Hand(Deck deck) {
         this.deck = deck;
     }
+
+    public void addToCollectableItem(Collectable item){
+        collectableItems.add(item);
+    }
+
 
     public Card passCardInHand(String cardId) {
         for (Card card : gameCards) {
@@ -31,9 +35,7 @@ public class Hand {
             if (collectable.getCollectableId().getCollectableIdAsString().equals(CollectableId))
                 return collectable;
         }
-
         return null;
-
     }
 
     public ArrayList<Card> getGameCards() {

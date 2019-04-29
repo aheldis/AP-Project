@@ -8,7 +8,6 @@ public class Spell extends Card {
     private int playerNameByNumber;//{player1 or 2}
     private int numberOfAttack;
     private int turn;
-    private ArrayList<Square> target;
     private ArrayList<Buff> buffs;
     private ArrayList<Integer> turnOfBuffs;
 
@@ -73,10 +72,6 @@ public class Spell extends Card {
 
     public int getTurn() {
         return turn;
-    }
-
-    public ArrayList<Square> getTarget() {
-        return target;
     }
 
 

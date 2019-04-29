@@ -36,7 +36,9 @@ public enum ErrorType {
     INVALID_ITEM("You don't have this collectable Item"),
     UNAVAILABLE_OPPONENT("Opponent minion is unavailable for attack"),
     CAN_NOT_USE_SPECIAL_POWER("Can not use special power for this card"),
-    DO_NOT_HAVE_SPECTIAL_POWER("This card doesn't have special power");
+    DO_NOT_HAVE_SPECIAL_POWER("This card doesn't have special power"),
+    CAN_NOT_MOVE("You can not move in this square");
+
 
     private String message;
 
