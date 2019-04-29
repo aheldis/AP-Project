@@ -5,8 +5,11 @@ import model.battle.Target;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
+import view.enums.ErrorType;
+import view.enums.RequestSuccessionType;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Card {
     protected Change change = new Change();//HAS-A
@@ -39,10 +42,15 @@ public abstract class Card {
     }
 
     public void move(Coordinate coordinate) {
-        if (change.canMove && withinRange(coordinate)) {
+        if (canMoveToCoordination(coordinate) && withinRange(coordinate)) {
             landOfGame.removeCardFromAnSquare(position.getCoordinate());
             landOfGame.addCardToAnSquare(coordinate, this);//todo
+            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + coordinate.getX() + coordinate.getY());
+            RequestSuccessionType.MOVE_TO.printMessage();
+            //todo check if RequestSuccessionType works correctly
         }
+        else
+            ErrorType.INVALID_TARGET.printMessage();
         //check asare khane
         //can move = false
         //ویژگی هایی که موقع حرکت اعمال میشود
@@ -50,8 +58,7 @@ public abstract class Card {
     }
 
     public boolean withinRange(Coordinate coordinate) {
-
-
+        return Math.abs(coordinate.getX() - position.getXCoordinate()) + Math.abs(coordinate.getY() - position.getYCoordinate()) <= 2;
     }
 
     public void attack() {
@@ -101,16 +108,8 @@ public abstract class Card {
         return change.canAttack;
     }
 
-    public boolean isCanMove() {
-        return change.canMove;
-    }
-
     public boolean isCanCounterAttack() {
         return change.canCounterAttack;
-    }
-
-    public void setCanMove(boolean bool) {
-        change.canMove = bool;
     }
 
     public void setCanCounterAttack(boolean bool) {
@@ -131,6 +130,10 @@ public abstract class Card {
 
     public int getCost() {
         return cost;
+    }
+
+    public ArrayList<Buff> getBuffsOnThisCard() {
+        return buffsOnThisCard;
     }
 
     public void setCost(int cost) {
@@ -183,6 +186,7 @@ public abstract class Card {
 
     public int getRange() {
         //todo
+        return 0;
     }
 
 
@@ -221,6 +225,13 @@ public abstract class Card {
         this.description = description;
     }
 
+    public void setCanMove(boolean canMove) {
+        change.canMove = canMove;
+    }
+
+    public Boolean getCanMove() {
+        return change.canMove;
+    }
 
     public int getHp() {
         return hp;
@@ -245,6 +256,19 @@ public abstract class Card {
 
     public int getMp() {
         return mp;
+    }
+
+    public static Card getCardById(String cardId, ArrayList<Card> cards) {
+        for (Card card : cards) {
+            if (card.getCardId().equals(cardId))
+                return card;
+        }
+        return null;
+    }
+
+
+    boolean canMoveToCoordination(Coordinate coordinate) {
+        return Objects.requireNonNull(Square.findSquare(coordinate)).getObject() == null;
     }
 
     //ye method ke ye square ba card begire khoonehaee ke mikhaim roshoon kari konim ro bede  arraylist

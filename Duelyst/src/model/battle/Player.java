@@ -25,37 +25,41 @@ public abstract class Player {
     ArrayList<Flag> flags;
     private ArrayList<Card> cardsOnLand = new ArrayList<>();
 
-    public Hero getHero(){
+    public Hero getHero() {
         return mainDeck.getHero();
 
     }
-    public void addItemToCollectables(Collectable collectable){
+
+    public void addItemToCollectables(Collectable collectable) {
         hand.getCollectableItems().add(collectable);
     }
-    public Card  passCardInGame(String cardId){
-        Card card =hand.passCardInHand(cardId);
-        if(card !=null)
+
+    public Card passCardInGame(String cardId) {
+        Card card = hand.passCardInHand(cardId);
+        if (card != null)
             return card;
-        ArrayList<Card> cards=new ArrayList<>();
+        ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(cardsOnLand);
-        for(Card outPutCard:cards){
-            if(outPutCard.equalCard(cardId) && outPutCard.getPlayerName().equals(account.getUserName()))
-                card=outPutCard;
+        for (Card outPutCard : cards) {
+            if (outPutCard.equalCard(cardId) && outPutCard.getPlayerName().equals(account.getUserName()))
+                card = outPutCard;
         }
         return card;
     }
 
-    public Player getOpponent(){
+    public Player getOpponent() {
         return opponent;
     }
 
-    public boolean checkPutCard(){//by distance with other squares
-
+    public boolean checkPutCard() {//by distance with other squares
+        //todo
+        return true;
     }
+
     public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
         if (playerCard == null)
             return;
-        if(!checkPutCard()){
+        if (!checkPutCard()) {
             ErrorType error = ErrorType.INVALID_TARGET;
         }
 
@@ -168,5 +172,9 @@ public abstract class Player {
 
     public void setMana(int mana) {
         this.mana = mana;
+    }
+
+    public ArrayList<Card> getCardsOnLand() {
+        return cardsOnLand;
     }
 }
