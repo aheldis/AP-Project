@@ -1,7 +1,12 @@
 package model.card;
 
+import model.battle.Player;
 import model.counterAttack.CounterAttack;
 import model.land.Square;
+import model.requirment.Coordinate;
+import view.Request;
+import view.enums.ErrorType;
+import view.enums.RequestSuccessionType;
 
 import java.util.ArrayList;
 
@@ -12,7 +17,6 @@ public class Minion extends Card {
     private int numberOfBeingAttacked;
     private int numberOfAttack;
     private String playerName;
-    private ArrayList<Buff> buffs;
     private int turn;
     private int forWhichPlayer;
     private Square square;
@@ -43,45 +47,46 @@ public class Minion extends Card {
         return numberOfAttack;
     }
 
-    void addToBuffsOfHero(Buff buff) {
-
+    // todo momkene buff tekrari bashe?
+    void addToBuffsOfMinion(Buff buff) {
+        getBuffsOnThisCard().add(buff);
     }
 
-
-    void changeHp(int healthPower) {
-        this.hp += healthPower;
-    }
-
-
-
-    void changeAp(int attackPower) {
-        this.ap -= attackPower;
-    }
-
-
-
-    void attack(Square square) {
-
+    void attack(Player opponent, String cardId) {
+        Card card = getCardById(cardId, opponent.getCardsOnLand());
+        if (card == null) {
+            ErrorType.INVALID_CARD_ID.printMessage();
+            return;
+        }
+        if (!withinRange(card.getPosition().getCoordinate())) {
+            ErrorType.UNAVAILABLE_OPPONENT.printMessage();
+            return;
+        }
+        Minion minion = card.getPosition().squareHasMinionAndPassIt();
+        if (minion != null) {
+            //todo
+            return;
+        }
+        Hero hero = card.getPosition().squareHasHeroAndPassIt();
+        if (hero != null) {
+            //todo
+        }
     }
 
     void counterAttack(Square square) {
-
+        //todo
     }
 
     public CounterAttack getCounterAttack() {
         return counterAttack;
     }
 
-    void move(Square square) {
-
-    }
-
     void setTarget(Square square) {
-
+        this.square = square;
     }
 
     void decreaseHPOfTarget() {
-
+        //todo
     }
 
     public String getSpecialPowerInfo() {

@@ -19,33 +19,38 @@ public class Spell extends Card {
     private int turnForHpChanges;
 
 
-    public void setMp(int mp){
-        this.mp=mp;
+    public void setApChanges(int apChanges) {
+        this.apChanges = apChanges;
     }
-    public void setApChanges(int apChanges){
-        this.apChanges=apChanges;
-    }
-    public int getApChanges(){
+
+    public int getApChanges() {
         return apChanges;
     }
-    public int getTurnForApChanges(){
+
+    public int getTurnForApChanges() {
         return turnForApChanges;
     }
-    public int getHpChanges(){
+
+    public int getHpChanges() {
         return hpChanges;
     }
-    public int getTurnForHpChanges(){
+
+    public int getTurnForHpChanges() {
         return turnForHpChanges;
     }
-    public void setTurnForApChanges(int turnForHpChanges){
-        this.turnForApChanges=turnForHpChanges;
+
+    public void setTurnForApChanges(int turnForHpChanges) {
+        this.turnForApChanges = turnForHpChanges;
     }
-    public void setTurnForHpChanges(int turnForHpChanges){
-        this.turnForHpChanges=turnForHpChanges;
+
+    public void setTurnForHpChanges(int turnForHpChanges) {
+        this.turnForHpChanges = turnForHpChanges;
     }
-    public void setHpChanges(int hpChanges ){
-        this.hpChanges=hpChanges;
+
+    public void setHpChanges(int hpChanges) {
+        this.hpChanges = hpChanges;
     }
+
     public void Spell(int cost, int mp, int apChanges, int turnForApChanges, int hpChanges,
                       int turnForHpChanges, String description, ArrayList<Buff> buffs) {
         this.apChanges = apChanges;
@@ -75,16 +80,12 @@ public class Spell extends Card {
     }
 
 
-
 //    public void printdesc() {
 //        System.out.println(getDescription());//todo sout
 //    }
-    public String getDescription() {
-        return description;
-    }
 
     public void printdesc() {
-        System.out.println(description);//todo sout
+        System.out.println(getDescription());//todo sout
     }
 
     public ArrayList<Square> getTargets() {
@@ -95,8 +96,7 @@ public class Spell extends Card {
 
     }
 
-    public void affect(/*target card*/)
-    {
+    public void affect(/*target card*/) {
 //az tabeye too card estefade kone
     }
 

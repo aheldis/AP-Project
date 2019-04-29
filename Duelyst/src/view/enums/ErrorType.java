@@ -1,6 +1,6 @@
 package view.enums;
 
-import view.ErrorViewer;
+import view.MessageViewer;
 
 public enum ErrorType {
     HAVE_NOT_THIS_CARD_FILE("You have not this card definition"),
@@ -29,11 +29,12 @@ public enum ErrorType {
     SELECTED_INVALID_DECK("Selected deck is invalid"),
     SELECTED_INVALID_DECK_FOR_PLAYER2("Selected deck for second player is invalid"),
     DONT_HAVE_MAIN_DECK("You don't have a main deck"),
-    INVALID_CARD_ID("Invalid card name"),
+    INVALID_CARD_ID("Invalid card id"),
     NOT_ENOUGH_MANA("You don't have enough mana"),
     INVALID_TARGET("You can not put it here"),
     HAVE_NOT_ENOUGH_MANA("You don't have enough mana"),
     INVALID_ITEM("You don't have this collectable Item"),
+    UNAVAILABLE_OPPONENT("Opponent minion is unavailable for attack"),
     CAN_NOT_USE_SPECIAL_POWER("Can not use special power for this card"),
     DO_NOT_HAVE_SPECTIAL_POWER("This card doesn't have special power");
 
@@ -44,8 +45,8 @@ public enum ErrorType {
     }
 
     public void printMessage() {
-        ErrorViewer errorViewer = ErrorViewer.getInstance();
-        errorViewer.collectionError(message);
+        MessageViewer errorViewer = MessageViewer.getInstance();
+        errorViewer.collectionMessage(message);
     }
 
     ErrorType(String message) {

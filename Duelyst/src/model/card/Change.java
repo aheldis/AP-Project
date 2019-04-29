@@ -1,14 +1,18 @@
 package model.card;
 
+import model.land.Square;
+import model.requirment.Coordinate;
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Change {
 
     // todo setter hasho to card gozashtam ke dastresish rahat tar she :D (zahra)
 
-    protected boolean canMove = true;
     protected boolean canCounterAttack = true; //Disarm buff
     protected boolean canAttack = true;
+    protected boolean canMove = true;
     protected int turnOfCanNotMove = 0;
     protected int turnOfCanNotAttack = 0;
     protected int turnOfCanNotCounterAttack = 0;

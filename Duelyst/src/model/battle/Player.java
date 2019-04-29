@@ -39,6 +39,7 @@ public abstract class Player {
         //todo
     }
 
+
     public void addItemToCollectables(Collectable collectable) {
         hand.getCollectableItems().add(collectable);
     }
@@ -165,5 +166,9 @@ public abstract class Player {
 
     public void setMana(int mana) {
         this.mana = mana;
+    }
+
+    public ArrayList<Card> getCardsOnLand() {
+        return cardsOnLand;
     }
 }

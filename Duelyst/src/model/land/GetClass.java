@@ -8,13 +8,13 @@ import model.counterAttack.Hybrid;
 import model.counterAttack.Melee;
 import model.counterAttack.Ranged;
 
-class GetClass {
+public class GetClass {
     private static final GetClass GET_CLASS = new GetClass();
     private GetClass() {
 
     }
 
-    public GetClass getInstance() {
+    public static GetClass getInstance() {
         return GET_CLASS;
     }
 

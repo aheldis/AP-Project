@@ -1,6 +1,7 @@
 package model.card;
 
 import model.counterAttack.CounterAttack;
+import model.land.GetClass;
 import model.requirment.Coordinate;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class Hero extends Card {
 
     public void setCounterAttack(CounterAttack counterAttack) {
         this.counterAttack = counterAttack;
-        this.counterAttackClassName = counterAttack.getClassName();
+        this.counterAttackClassName = GetClass.getInstance().getClass(counterAttack).getName();
     }
 
     public String getCounterAttackClassName() {
