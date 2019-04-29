@@ -1,6 +1,11 @@
 package model.card;
 
 
+import model.battle.Player;
+import model.counterAttack.CounterAttack;
+import model.counterAttack.Hybrid;
+import model.counterAttack.Melee;
+import model.counterAttack.Ranged;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -16,6 +21,7 @@ public abstract class Card {
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
+    CounterAttack counterAttack;
     private int cost;
     private ArrayList<Buff> buffsOnThisCard;
     private Square position;
@@ -24,6 +30,8 @@ public abstract class Card {
     protected int mp;
     protected int hp;
     protected int ap;
+    private Player player;
+    //todo
     private String playerName;
 
     private String description;
@@ -32,8 +40,8 @@ public abstract class Card {
         return target;
     }
 
-    public boolean isCanMove(){//maybe it have stun buff and can not move
-       return this.change.canMove;
+    public boolean isCanMove() {//maybe it have stun buff and can not move
+        return this.change.canMove;
     }
 
     public String getPlayerName() {
@@ -54,9 +62,9 @@ public abstract class Card {
             landOfGame.addCardToAnSquare(coordinate, this);//todo
             RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + coordinate.getX() + coordinate.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
+            change.canMove = false;
             //todo check if RequestSuccessionType works correctly
-        }
-        else
+        } else
             ErrorType.INVALID_TARGET.printMessage();
         //check asare khane
         //can move = false
@@ -65,10 +73,22 @@ public abstract class Card {
     }
 
     public boolean withinRange(Coordinate coordinate) {
-        return Math.abs(coordinate.getX() - position.getXCoordinate()) + Math.abs(coordinate.getY() - position.getYCoordinate()) <= 2;
+        return getDistance(coordinate) <= 2;
     }
 
-    public void attack() {
+    public void attack(Player opponent, String cardId) {
+        //todo canMove
+        Card attackedCard = getCardById(cardId, opponent.getCardsOnLand());
+        if (attackedCard == null) {
+            ErrorType.INVALID_CARD_ID.printMessage();
+            return;
+        }
+        if (!withinRange(attackedCard.getPosition().getCoordinate())) {
+            ErrorType.UNAVAILABLE_OPPONENT.printMessage();
+            return;
+        }
+        attackedCard.changeHp(-ap);
+        attackedCard.counterAttack(this);
         // if can attack && within range
         //counter attack
         //ویژگی هایی که موقع حمله اعمال میشود
@@ -191,8 +211,11 @@ public abstract class Card {
 
     }
 
+    public int getDistance(Coordinate coordinate) {
+        return Math.abs(coordinate.getX() - position.getXCoordinate()) + Math.abs(coordinate.getY() - position.getYCoordinate());
+    }
+
     public int getRange() {
-        //todo
         return 0;
     }
 
@@ -251,6 +274,8 @@ public abstract class Card {
 
     public void changeHp(int number) {
         hp += number;
+        if (hp <= 0)
+            player.removeCard(this);
     }
 
     public void changeAp(int number) {
@@ -273,12 +298,21 @@ public abstract class Card {
         return null;
     }
 
+    public void counterAttack(Card theOneWhoAttacked) {
+        boolean canCounterAttack = counterAttack instanceof Melee && getDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
+        if (!canCounterAttack)
+            canCounterAttack = counterAttack instanceof Ranged && getDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
+        if (!canCounterAttack)
+            canCounterAttack = counterAttack instanceof Hybrid;
+        if (canCounterAttack)
+            theOneWhoAttacked.changeHp(-ap);
+    }
 
     public boolean canMoveToCoordination(Coordinate coordinate) {
         return Objects.requireNonNull(Square.findSquare(coordinate)).getObject() == null;
     }
 
-    public void setTarget(Card card ,Square CardSquare){
+    public void setTarget(Card card, Square CardSquare) {
         //todo check kone ke to classe targete card (one/all/column/row) hast
         //todo age square hast ya distance dare check kone
         //todo bere range ro nega kone har kodoom ke bashe aval bege to range hast ya na

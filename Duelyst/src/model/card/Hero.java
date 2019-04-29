@@ -7,10 +7,8 @@ import model.requirment.Coordinate;
 import java.util.ArrayList;
 
 public class Hero extends Card {
-    private String counterAttackClassName;
     private String specialPowerInfo;
     private ArrayList<Buff> buffs = new ArrayList<Buff>();
-    private CounterAttack counterAttack;
     private Coordinate Square;
     private Spell spell;
     private int mpRequiredForSpell;
@@ -30,11 +28,6 @@ public class Hero extends Card {
 
     public void setCounterAttack(CounterAttack counterAttack) {
         this.counterAttack = counterAttack;
-        this.counterAttackClassName = counterAttack.getClassName();
-    }
-
-    public String getCounterAttackClassName() {
-        return counterAttackClassName;
     }
 
     public ArrayList<Buff> getBuffs() {

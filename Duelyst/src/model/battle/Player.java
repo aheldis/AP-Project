@@ -36,7 +36,6 @@ public abstract class Player {
 
     public Hero getHero() {
         return mainDeck.getHero();
-
     }
 
     public void putCollectableItemOnLand(Coordinate coordinate,String  collectableItemId) {
@@ -84,10 +83,6 @@ public abstract class Player {
         mana++;
     }
 
-    public void counterAttack(Card card, Card theOneWhoAttacked) {
-//todo
-    }
-
     public void addToCardsOfLand(Card card) {
         cardsOnLand.add(card);
     }
@@ -125,6 +120,9 @@ public abstract class Player {
         hand.setCards();
     }
 
+    public void removeCard(Card card) {
+        cardsOnLand.remove(card);
+    }
 
     public abstract void playTurn();
 

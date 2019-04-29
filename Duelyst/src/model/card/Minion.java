@@ -21,7 +21,6 @@ public class Minion extends Card {
     private int forWhichPlayer;
     private Square square;
     private int price;
-    private CounterAttack counterAttack;
     private int attackRange;
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
     private boolean comboAbility;
@@ -58,31 +57,6 @@ public class Minion extends Card {
     // todo momkene buff tekrari bashe?
     void addToBuffsOfMinion(Buff buff) {
         getBuffsOnThisCard().add(buff);
-    }
-
-    void attack(Player opponent, String cardId) {
-        Card card = getCardById(cardId, opponent.getCardsOnLand());
-        if (card == null) {
-            ErrorType.INVALID_CARD_ID.printMessage();
-            return;
-        }
-        if (!withinRange(card.getPosition().getCoordinate())) {
-            ErrorType.UNAVAILABLE_OPPONENT.printMessage();
-            return;
-        }
-        Minion minion = card.getPosition().squareHasMinionAndPassIt();
-        if (minion != null) {
-            //todo
-            return;
-        }
-        Hero hero = card.getPosition().squareHasHeroAndPassIt();
-        if (hero != null) {
-            //todo
-        }
-    }
-
-    void counterAttack(Square square) {
-        //todo
     }
 
     public CounterAttack getCounterAttack() {

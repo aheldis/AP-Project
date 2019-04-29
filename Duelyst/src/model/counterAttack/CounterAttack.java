@@ -5,6 +5,7 @@ import model.requirment.Coordinate;
 
 public abstract class CounterAttack {
     protected String name;
+    //    todo "comment" name hamoon esme class nist?
     private Coordinate coordinate;
     private Card card;
     boolean canCounterAttack = true;//if it has disarm buff it is false
@@ -41,4 +42,12 @@ public abstract class CounterAttack {
     public abstract void callFunctionForAttack(Coordinate coordinate);
 
     public abstract Boolean checkIfSquareIsWithinRange(Coordinate coordinate);
+
+    public String getClassName() {
+        if (this instanceof Hybrid)
+            return "Hybrid";
+        if (this instanceof Melee)
+            return "Melee";
+        return "Ranged";
+    }
 }
