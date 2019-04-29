@@ -13,9 +13,10 @@ public class Square {
     private Object object;
     private ArrayList<Buff> buffs=new ArrayList<>();
 
-    public void putBuffOnSquare(Buff buff){
+    public void addBuffToSquare(Buff buff){
         buffs.add(buff);
     }
+
     public ArrayList<Buff> getBuffs(){
         return buffs;
     }
@@ -49,19 +50,6 @@ public class Square {
             return (Hero) object;
         return null;
     }
-
-//    public static Square findSquare(Coordinate coordinate) {
-//       Square[][] squares = LandOfGame.getInstance().getSquares();
-//       for (int i = 0; i < LandOfGame.getInstance().getNumberOfRows(); i++) {
-//           for (int j = 0; j < LandOfGame.getInstance().getNumberOfColumns(); j++) {
-//               if (squares[i][j].coordinate.getX() == coordinate.getX()
-//                       && squares[i][j].coordinate.getY() == coordinate.getY())
-//                   return squares[i][j];
-//           }
-//       }
-//       return null;
-//    }
-    //bejash to land ye tabeye passSquareInThisCoordinate darim inja classe land ro avaz kardim accessesh bad mishod
 
     public void setObject(Object object) {
         this.object = object;

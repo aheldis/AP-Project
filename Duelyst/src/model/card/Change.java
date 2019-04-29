@@ -8,6 +8,7 @@ public class Change {
 
     // todo setter hasho to card gozashtam ke dastresish rahat tar she :D (zahra)
 
+    private String targetType;
     private boolean opponentCanMove = true; //Disarm buff
     private boolean opponentCanAttack = true;
     private boolean opponentCanCounterAttack = true;
@@ -20,7 +21,7 @@ public class Change {
     private ArrayList<Buff> buffs;
     private ArrayList<Buff> untiBuffs;
 
-    public void makeChangeInTargetCard(Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
+    private void makeChangeInTargetCard(Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
         if(!this.opponentCanMove)
         targetCard.setCanMove(false);
 
@@ -43,8 +44,17 @@ public class Change {
         }
     }
     public void affect(ArrayList <Square> targets){
-        //todo target ha ghablan bayad salahiateshoon check shode bashe
-        //todo hame chizaee ke inja hast ro bere ro targeta asar bede
+        if(targetType.equals("Square")){
+            for(Square square : targets){
+                for(Buff buff :buffs)
+                    square.addBuffToSquare(buff);
+            }
+        }
+        if(targetType.equals("Card")){
+            for(Square square : targets){
+                makeChangeInTargetCard((Card)square.getObject());
+            }
+        }
     }
 
 
