@@ -21,7 +21,9 @@ public abstract class Card {
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
-    CounterAttack counterAttack;
+    private String counterAttack;
+    private boolean canCounterAttack;
+    private int attackRange;
     private int cost;
     private ArrayList<Buff> buffsOnThisCard;
     private Square position;
@@ -57,7 +59,6 @@ public abstract class Card {
     }
 
     public void move(Coordinate coordinate) {
-//        todo canMove
         if (!change.canMove) {
             ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
             return;
@@ -65,7 +66,9 @@ public abstract class Card {
         if (canMoveToCoordination(this, coordinate) && withinRange(coordinate)) {
             position.setObject(null);
             position = Square.findSquare(coordinate);
-            position.setObject(this);//todo
+            if (position != null) {
+                position.setObject(this);//todo
+            }
             RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + coordinate.getX() + coordinate.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
             change.canMove = false;
@@ -88,23 +91,19 @@ public abstract class Card {
             ErrorType.INVALID_CARD_ID.printMessage();
             return;
         }
-        if (!withinRange(attackedCard.getPosition().getCoordinate())) {
+        if (this instanceof Spell) {
+            return;
+        }
+        if (getDistance(attackedCard.position.getCoordinate()) > attackRange) {
             ErrorType.UNAVAILABLE_OPPONENT.printMessage();
             return;
         }
-        if (true/*check range*/) {
-            //todo ERROR not within range attack
-        }
         if (!isCanAttack()) {
-            //todo ERROR cannot attack
+            ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
         }
-        //todo instance spell nabashad
         attackedCard.changeHp(-ap);
         attackedCard.counterAttack(this);
-
-        // if can attack && within range
-        //counter attack
-        //ویژگی هایی که موقع حمله اعمال میشود
+        setCanAttack(false);
     }
 
     public void changeTurnOfCanNotAttack(int number) {
@@ -286,8 +285,11 @@ public abstract class Card {
 
     public void changeHp(int number) {
         hp += number;
-        if (hp <= 0)
-            player.removeCard(this);
+        if (hp <= 0) {
+            player.getGraveYard().addCardToGraveYard(this);
+            position.setObject(null);
+            position = null;
+        }
     }
 
     public void changeAp(int number) {
@@ -304,19 +306,19 @@ public abstract class Card {
 
     public static Card getCardById(String cardId, ArrayList<Card> cards) {
         for (Card card : cards) {
-            if (card.getCardId().equals(cardId))
+            if (card.getCardId().getCardIdAsString().equals(cardId))
                 return card;
         }
         return null;
     }
 
     public void counterAttack(Card theOneWhoAttacked) {
-        boolean canCounterAttack = counterAttack instanceof Melee && getDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
+        boolean canCounterAttack = counterAttack.equals("Melee") && getDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
         if (!canCounterAttack)
-            canCounterAttack = counterAttack instanceof Ranged && getDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
+            canCounterAttack = counterAttack.equals("Ranged") && getDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
         if (!canCounterAttack)
-            canCounterAttack = counterAttack instanceof Hybrid;
-        if (canCounterAttack)
+            canCounterAttack = counterAttack.equals("Hybrid");
+        if (this.canCounterAttack && canCounterAttack)
             theOneWhoAttacked.changeHp(-ap);
     }
 

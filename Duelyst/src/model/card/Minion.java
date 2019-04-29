@@ -21,7 +21,6 @@ public class Minion extends Card {
     private int forWhichPlayer;
     private Square square;
     private int price;
-    private int attackRange;
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
     private boolean comboAbility;
     String specialPowerInfo;
@@ -65,10 +64,6 @@ public class Minion extends Card {
 
     void setTarget(Square square) {
         this.square = square;
-    }
-
-    void decreaseHPOfTarget() {
-        //todo
     }
 
     public String getSpecialPowerInfo() {
