@@ -21,7 +21,6 @@ public class Hand {
         collectableItems.add(item);
     }
 
-
     public Card passCardInHand(String cardId) {
         for (Card card : gameCards) {
             if (card.equalCard(cardId))

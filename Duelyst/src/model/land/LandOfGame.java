@@ -19,15 +19,15 @@ public class LandOfGame {
         return LAND_OF_GAME;
     }
 
-    public Square passSquarithCoordinate(Coordinate coordinate){
+    public Square passSquareInThisCoordinate(Coordinate coordinate){
        return squares[coordinate.getX()][coordinate.getY()];
     }
-    public void removeCardFromAnSquare(Coordinate coordinate){
-        squares[coordinate.getX()][coordinate.getY()].removeCardFromSquare();
-    }
-    public void addCardToAnSquare(Coordinate coordinate, Card card){
-        squares[coordinate.getX()][coordinate.getY()].putCard(card);
-    }
+//    public void removeCardFromAnSquare(Coordinate coordinate){
+//        squares[coordinate.getX()][coordinate.getY()].removeCardFromSquare();
+//    }
+//    public void addCardToAnSquare(Coordinate coordinate, Card card){
+//        squares[coordinate.getX()][coordinate.getY()].putCard(card);
+//    }
 
     public Square[][] getSquares() {
         return squares;

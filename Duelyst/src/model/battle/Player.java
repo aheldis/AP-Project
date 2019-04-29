@@ -5,6 +5,7 @@ import model.Item.Flag;
 import model.account.Account;
 import model.card.Card;
 import model.card.Hero;
+import model.card.Minion;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -24,6 +25,8 @@ public abstract class Player {
     protected Player opponent;
     ArrayList<Flag> flags;
     protected ArrayList<Card> cardsOnLand = new ArrayList<>();
+    protected Card flagSaver;
+    protected int turnForSavingFlag=0;
     //collectable Item to hand ast :D
 
     public abstract void move(Card card, Square newPosition);

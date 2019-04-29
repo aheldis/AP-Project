@@ -471,7 +471,7 @@ public class MenuController {
                         break;
                     case GAME_MOVE:
                         card= player.passCardInGame(id);
-                        square =match.getLand().passSquarithCoordinate(request.getCoordinate());
+                        square =match.getLand().passSquareInThisCoordinate(request.getCoordinate());
                         if(card==null){
                             ErrorType errorType=ErrorType.INVALID_CARD_ID;
                             errorType.printMessage();
@@ -484,7 +484,7 @@ public class MenuController {
                         //todo
                         break;
                     case GAME_ATTACK:
-                        square =match.getLand().passSquarithCoordinate(request.getCoordinate());
+                        square =match.getLand().passSquareInThisCoordinate(request.getCoordinate());
                         id=request.getId();
                         card=player.passCardInGame(id);
                         if(card==null){

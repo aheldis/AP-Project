@@ -78,7 +78,16 @@ public class Match {
         //todo
         switch (mode) {
             case "DeathMode": {
-
+               if( players[0].getHero().getHp() == 0) {
+                   winner=players[1];
+                   loser=players[0];
+                   return true;
+               }
+               if(players[1].getHero().getHp() == 0){
+                   winner=players[0];
+                   loser=players[1];
+                   return true;
+               }
                 break;
             }
             case "SaveFlagMode": {
@@ -90,6 +99,7 @@ public class Match {
                 break;
             }
         }
+        return false;
     }
 
     private void endGame() {

@@ -1,6 +1,7 @@
 package model.battle;
 
 import model.Item.Collectable;
+import model.Item.Flag;
 import model.account.Account;
 import model.card.*;
 import model.land.LandOfGame;
@@ -72,7 +73,7 @@ public class OrdinaryPlayer extends Player {
 
         cardsOnLand.add(playerCard);
         Square[][] squares = land.getSquares();
-        squares[coordinate.getX()][coordinate.getY()].setCard(playerCard);
+        squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
 
     }
 
@@ -115,13 +116,16 @@ public class OrdinaryPlayer extends Player {
                 //todo AffectSpecialpower
             }
         }
-        card.getPosition().removeCardFromSquare();
-        card.setPosition(newPosition);
-        newPosition.setCard(card);
+        if(newPosition.getObject() instanceof Flag){
+            flags.add((Flag) newPosition.getObject());
+            flagSaver=card;
+            turnForSavingFlag++;
+        }
         if(newPosition.getObject() instanceof Collectable){
             hand.addToCollectableItem((Collectable) newPosition.getObject());
-
         }
+        card.setPosition(newPosition);
+        newPosition.setObject(card);
     }
 
     public boolean withinRange(Square square1, Square square2, int range) {
