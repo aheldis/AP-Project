@@ -356,11 +356,13 @@ public abstract class Card {
     }
 
     public void setTarget(Card card, Square CardSquare) {
+        //todo checkIfAttackedCardIsValid to class target
         //todo check kone ke to classe targete card (one/all/column/row) hast
         //todo age square hast ya distance dare check kone
         //todo bere range ro nega kone har kodoom ke bashe aval bege to range hast ya na
         //todo khone haye to range ro be onvane arrayList bede be ma
-        //todo ArrayList e target ro to classe taget bere bezare
+        //todo ArrayList e target ro to classe target bere bezare
+
     }
 
     //ye method ke ye square ba card begire khoonehaee ke mikhaim roshoon kari konim ro bede  arraylist

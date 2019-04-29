@@ -1,10 +1,8 @@
 package model.card;
 
 import model.land.Square;
-import model.requirment.Coordinate;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Change {
 
@@ -37,6 +35,10 @@ public class Change {
         for(Buff buff : untiBuffs){
             buff.unAffect(opponentCard);
         }
+    }
+    public void affect(ArrayList <Square> targets){
+        //todo target ha ghablan bayad salahiateshoon check shode bashe
+        //todo hame chizaee ke inja hast ro bere ro targeta asar bede
     }
 
 
