@@ -10,21 +10,34 @@ public class Change {
 
     // todo setter hasho to card gozashtam ke dastresish rahat tar she :D (zahra)
 
-    protected boolean canCounterAttack = true; //Disarm buff
-    protected boolean canAttack = true;
-    protected boolean canMove = true;
-    protected int turnOfCanNotMove = 0;
-    protected int turnOfCanNotAttack = 0;
-    protected int turnOfCanNotCounterAttack = 0;
+    private boolean opponentCanMove = true; //Disarm buff
+    private boolean opponentCanAttack = true;
+    private boolean opponentCanCounterAttack = true;
+    private int turnOfCanNotMoveForOpponent = 0;
+    private int turnOfCanNotAttackForOpponent = 0;
+    private int turnOfCanNotCounterAttackForOpponent = 0;
     private int hpChange = 0;
     private int apChange = 0;
     private boolean continuous = false;
     private ArrayList<Buff> buffs;
-    private ArrayList<Buff> untiBuff;
-    //private int changeHpInNextTurn = 0;//todo nemidonam chiye line 15 inforForMakeCard tozih bede
-    // private boolean addToHpAfterCounterAttack = false; //Holy buff //todo dar buff handle mikonm(zahra)
-    //private int turnOfAffect = 0;
+    private ArrayList<Buff> untiBuffs;
 
+    public void makeChangeInCard(Card opponentCard) {//change e hamle konnande ro roye opponent seda mikonm
+        opponentCard.setCanMove(this.opponentCanMove);
+        opponentCard.setCanCounterAttack(this.opponentCanCounterAttack);
+        opponentCard.setCanAttack(this.opponentCanAttack);
+        opponentCard.setTurnOfCanNotMove(Math.max(opponentCard.getTurnOfCanNotMove(), this.turnOfCanNotMoveForOpponent));
+        opponentCard.setTurnOfCanNotAttack(Math.max(opponentCard.getTurnOfCanNotAttack(), this.turnOfCanNotAttackForOpponent));
+        opponentCard.setTurnofCanNotCounterAttack(Math.max(opponentCard.getTurnOfCanNotCounterAttack(), this.turnOfCanNotCounterAttackForOpponent));
+        opponentCard.changeAp(apChange);
+        opponentCard.changeAp(hpChange);
+        for(Buff buff : buffs){
+            buff.affect(opponentCard);
+        }
+        for(Buff buff : untiBuffs){
+            buff.unAffect(opponentCard);
+        }
+    }
 
 
     public void destroyPositiveEffects() {

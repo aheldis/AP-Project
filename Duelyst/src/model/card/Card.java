@@ -31,6 +31,13 @@ public abstract class Card {
     protected int hp;
     protected int ap;
     private Player player;
+    private boolean canMove=false;
+    private boolean canAttack=false;
+    private boolean canCounterAttack=true;
+    protected int turnOfCanNotMove = 0;
+    protected int turnOfCanNotAttack = 0;
+    protected int turnOfCanNotCounterAttack = 0;
+
     //todo
     private String playerName;
 
@@ -41,7 +48,7 @@ public abstract class Card {
     }
 
     public boolean isCanMove() {//maybe it have stun buff and can not move
-        return this.change.canMove;
+        return canMove;
     }
 
     public String getPlayerName() {
@@ -108,55 +115,55 @@ public abstract class Card {
     }
 
     public void changeTurnOfCanNotAttack(int number) {
-        change.turnOfCanNotAttack += number;
+        turnOfCanNotAttack += number;
     }
 
     public void changeTurnOfCanNotCounterAttack(int number) {
-        change.turnOfCanNotCounterAttack += number;
+        turnOfCanNotCounterAttack += number;
     }
 
     public void changeTurnOfCanNotMove(int number) {
-        change.turnOfCanNotMove += number;
+        turnOfCanNotMove += number;
     }
 
     public void setTurnOfCanNotAttack(int number) {
-        change.turnOfCanNotAttack = number;
+        turnOfCanNotAttack = number;
     }
 
     public void setTurnofCanNotCounterAttack(int number) {
-        change.turnOfCanNotCounterAttack = number;
+        turnOfCanNotCounterAttack = number;
     }
 
     public void setTurnOfCanNotMove(int number) {
-        change.turnOfCanNotMove = number;
+        turnOfCanNotMove = number;
     }
 
     public int getTurnOfCanNotAttack() {
-        return change.turnOfCanNotAttack;
+        return turnOfCanNotAttack;
     }
 
     public int getTurnOfCanNotCounterAttack() {
-        return change.turnOfCanNotCounterAttack;
+        return turnOfCanNotCounterAttack;
     }
 
     public int getTurnOfCanNotMove() {
-        return change.turnOfCanNotMove;
+        return turnOfCanNotMove;
     }
 
     public boolean isCanAttack() {
-        return change.canAttack;
+        return canAttack;
     }
 
     public boolean isCanCounterAttack() {
-        return change.canCounterAttack;
+        return canCounterAttack;
     }
 
     public void setCanCounterAttack(boolean bool) {
-        change.canCounterAttack = bool;
+        canCounterAttack = bool;
     }
 
     public void setCanAttack(boolean bool) {
-        change.canAttack = bool;
+        canAttack = bool;
     }
 
     public Square getPosition() {
@@ -268,11 +275,11 @@ public abstract class Card {
     }
 
     public void setCanMove(boolean canMove) {
-        change.canMove = canMove;
+        canMove = canMove;
     }
 
     public Boolean getCanMove() {
-        return change.canMove;
+        return canMove;
     }
 
     public int getHp() {
