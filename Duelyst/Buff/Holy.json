@@ -1,0 +1,14 @@
+{
+  "@type": "BuffCopy",
+  "@val": {
+    "name": "Holy",
+    "goodBuff": true,
+    "haveUnAffect": false,
+    "apChange": 0,
+    "hpChange": 0,
+    "canMove": false,
+    "canAttack": false,
+    "canCounterAttack": false,
+    "hpChangeAfterAttack": true
+  }
+}

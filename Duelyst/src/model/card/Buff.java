@@ -18,6 +18,7 @@ public class Buff {
     private boolean canAttack = true;
     private boolean canCounterAttack = true;
     private boolean hpChangeAfterAttack = false;
+    private boolean firstTime = true;
 
     static {
         File folder = new File(pathOfFiles);
@@ -29,8 +30,11 @@ public class Buff {
 
     static public Buff getByName(String name) {
         for (Buff buff : buffs) {
-            if (buff.getName().equals(name))
+            if (buff.getName().equals(name)) {
+                makeNewFromFile(pathOfFiles + "/" + buff.getName());
+                buffs.remove(buff);
                 return buff;
+            }
         }
         return null;
     }
@@ -58,8 +62,11 @@ public class Buff {
     }
 
     public void affect(Card card) {
-        card.changeAp(apChange);
-        card.changeHp(hpChange);
+        if(firstTime) {
+            card.changeAp(apChange);
+            card.changeHp(hpChange);
+            firstTime = false;
+        }
         if (canMove == false)
             card.setCanMove(false, 1);
         if (canAttack == false)
