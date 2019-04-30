@@ -18,7 +18,7 @@ public class OrdinaryPlayer extends Player {
         this.setAccount(account);
         this.setMainDeck(deck);
         this.setType("OrdinaryPlayer");
-        mainDeck.setRandomOrderForDeck();
+        getMainDeck().setRandomOrderForDeck();
         setMana(mana);
         setHand();
     }
@@ -51,7 +51,7 @@ public class OrdinaryPlayer extends Player {
             setFlagSaver(playerCard);
             addToTurnForSavingFlag();
         }
-        cardsOnLand.add(playerCard);
+        getCardsOnLand().add(playerCard);
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
 

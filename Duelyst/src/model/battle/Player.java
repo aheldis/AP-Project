@@ -40,6 +40,10 @@ public abstract class Player {
         this.turnForSavingFlag = turnForSavingFlag;
     }
 
+    public int getTurnForSavingFlag(){
+        return turnForSavingFlag;
+    }
+
     public ArrayList<Flag> getFlags() {
         return flags;
     }

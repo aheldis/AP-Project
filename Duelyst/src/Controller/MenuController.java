@@ -369,7 +369,7 @@ public class MenuController {
                         menuView.showMyMinions(player.getOpponent());
                         break;
                     case GAME_SHOW_HAND:
-                        menuView.showHand(player.getHand());
+                        menuView.showHand(player);
                         break;
                     case GAME_END_TURN:
                         match.changeTurn();
@@ -378,7 +378,7 @@ public class MenuController {
                         menuView.showCollectableItems(player);
                         break;
                     case GAME_SHOW_NEXT_CARD:
-                        menuView.showNextCard(player.getHand());
+                        menuView.showNextCard(player.getMainDeck());
                         break;
                     case GAME_ENTER_GRAVE_YARD:
                         state = StateType.GRAVE_YARD;

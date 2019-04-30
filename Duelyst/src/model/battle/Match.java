@@ -103,11 +103,11 @@ public class Match {
                 break;
             }
             case "SaveFlagMode": {
-                if (players[0].turnForSavingFlag == 6) {
+                if (players[0].getTurnForSavingFlag() == 6) {
                     setWinnerAndLoser(players[0], players[1]);
                     return true;
                 }
-                if (players[1].turnForSavingFlag == 6) {
+                if (players[1].getTurnForSavingFlag() == 6) {
                     setWinnerAndLoser(players[1], players[0]);
                     return true;
                 }

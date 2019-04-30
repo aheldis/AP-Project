@@ -9,7 +9,7 @@ public class ComputerPlayer extends Player {
     public ComputerPlayer(Deck deck) {
         this.setMainDeck(deck);
         this.setType("ComputerPlayer");
-        mainDeck.setRandomOrderForDeck();
+        getMainDeck().setRandomOrderForDeck();
         setMana(2);
         setHand();
     }
