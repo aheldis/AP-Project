@@ -174,23 +174,37 @@ public class MenuController {
                                 collection.removeCardFromDeck(card, deckName);
                                 break;
                             }
+                            else {
+                                error = ErrorType.HAVE_NOT_CARD_IN_DECK;
+                                error.printMessage();
+                            }
+                            break;
+                        case COLLECTION_REMOVE_ITEM_FROM_DECK:
+                            deckName = request.getDeckName();
+                            id = request.getId();
                             item = collection.passUsableItemByUsableItemId(id);
                             if (item != null) {
                                 collection.removeItemFromDeck(item, deckName);
-                                break;
-                            } else {
+                            }
+                            else {
+                                error = ErrorType.HAVE_NOT_ITEM_IN_DECK;
+                                error.printMessage();
+                            }
+
+                            break;
+                        case COLLECTION_SEARCH_CARD:
+                            id = request.getId();
+                            if (! collection.searchCardName(id)) {
                                 error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
                                 error.printMessage();
                             }
                             break;
-                        case COLLECTION_SEARCH_CARD:
+                        case COLLECTION_SEARCH_ITEM:
                             id = request.getId();
-                            if (collection.searchCardName(id))
-                                break;
-                            if (collection.searchItemName(id))
-                                break;
-                            error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
-                            error.printMessage();
+                            if(! collection.searchItemName(id)){
+                                error = ErrorType.HAVE_NOT_ITEM_IN_COLLECTION;
+                                error.printMessage();
+                            }
                             break;
                         case COLLECTION_SELECT_DECK:
                             deckName = request.getDeckName();
@@ -201,6 +215,7 @@ public class MenuController {
                             collection.validateDeck(deckName);
                             break;
                         case COLLECTION_SAVE:
+                            //todo
                             break;
                         case COLLECTION_EXIT:
                             state = StateType.ACCOUNT_MENU;

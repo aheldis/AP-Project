@@ -52,13 +52,17 @@ public class Request {
                     return RequestType.COLLECTION_SHOW;
                 case "save":
                     return RequestType.COLLECTION_SAVE;
-                case "help:":
+                case "help":
                     return RequestType.COLLECTION_HELP;
                 case "show all decks":
                     return RequestType.COLLECTION_SHOW_ALL_DECKS;
             }
-            if (command.toLowerCase().matches("search \\w+")) {
-                setId(command.substring(6));
+            if (command.toLowerCase().matches("search item \\w+")) {
+                setId(command.split(" ")[2]);
+                return RequestType.COLLECTION_SEARCH_ITEM;
+            }
+            if(command.toLowerCase().matches("search card \\w+")){
+                setId(command.split(" ")[2]);
                 return RequestType.COLLECTION_SEARCH_CARD;
             }
             if (command.toLowerCase().matches("create deck \\w+")) {
@@ -74,9 +78,14 @@ public class Request {
                 setId(command.substring(4));
                 return RequestType.COLLECTION_ADD_CARD_TO_DECK;
             }
-            if (command.toLowerCase().matches("remove \\w+ from deck \\w+")) {
-                setDeckName(command.split(" ")[4]);
-                setId(command.substring(4));
+            if (command.toLowerCase().matches("remove card \\w+ from deck \\w+")) {
+                setDeckName(command.split(" ")[5]);
+                setId(command.substring(2));
+                return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
+            }
+            if (command.toLowerCase().matches("remove item \\w+ from deck \\w+")) {
+                setDeckName(command.split(" ")[5]);
+                setId(command.substring(2));
                 return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
             }
             if (command.toLowerCase().matches("validate deck \\w+")) {
