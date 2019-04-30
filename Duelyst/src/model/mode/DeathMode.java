@@ -5,12 +5,12 @@ import model.land.Square;
 
 public class DeathMode extends Mode {
 
-    public boolean checkForEndOfTheGame(Match match) {
+    @Override
+    public boolean playerGotTheFlag(Square squareOfPlayer, Square SquareOfFlag) {
         return false;
     }
 
-    @Override
-    public boolean playerGotTheFlag(Square squareOfPlayer, Square SquareOfFlag) {
+    public boolean checkForEndOfTheGame(Match match) {
         return false;
     }
 }

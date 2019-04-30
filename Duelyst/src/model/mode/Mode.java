@@ -9,17 +9,7 @@ public abstract class Mode {
     private Player[] players = new Player[2];
     private int turn;
 
-    public void setModeName(String modeName) {
-        this.modeName = modeName;
-    }
-
-    public String getModeName() {
-        return modeName;
-    }
-
-    public Player[] getPlayers() {
-        return players;
-    }
+    public abstract boolean checkForEndOfTheGame(Match match);
 
     public void addPlayer(Player player) {
         if (players[0] == null)
@@ -32,8 +22,17 @@ public abstract class Mode {
         return squareOfPlayer.equals(squareOfFlag);
     }
 
-    public abstract boolean checkForEndOfTheGame(Match match);
+    public String getModeName() {
+        return modeName;
+    }
 
+    public void setModeName(String modeName) {
+        this.modeName = modeName;
+    }
+
+    public Player[] getPlayers() {
+        return players;
+    }
 
 
 }

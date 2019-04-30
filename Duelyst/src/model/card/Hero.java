@@ -1,7 +1,5 @@
 package model.card;
 
-import model.counterAttack.CounterAttack;
-import model.land.GetClass;
 import model.requirment.Coordinate;
 
 import java.util.ArrayList;
@@ -19,11 +17,32 @@ public class Hero extends Card {
     private int numberOfBeingAttacked;
     private boolean haveSpecialPower;
 
+    public void addToBuffsOfHero(Buff buff) {
+        buffs.add(buff);
+    }
+
+    public void useSpecialPower(Coordinate coordinate) {
+        //TODO fkr konam niyaz nadashte bashim
+    }
+
+    public void increaseNumberOfAttacks() {
+        numberOfAttacks++;
+    }
+
+    public void increaseNumberOfBeingAttacked() {
+        numberOfBeingAttacked++;
+    }
+
+    public void addNewHeroCard() {
+        //TODO add new other Card and also items (to removed: Make NewHero and MakeNewUsable Item)
+    }
+
+    public boolean getHaveSpecialPower() {
+        return haveSpecialPower;
+    }
+
     public void setHaveSpecialPower(boolean haveSpecialPower) {
         this.haveSpecialPower = haveSpecialPower;
-    }
-    public boolean getHaveSpecialPower(){
-        return haveSpecialPower;
     }
 
     public ArrayList<Buff> getBuffs() {
@@ -33,7 +52,6 @@ public class Hero extends Card {
     public Coordinate getSquare() {
         return Square;
     }
-
 
     public Spell getSpell() {
         return spell;
@@ -59,13 +77,8 @@ public class Hero extends Card {
         return specialPowerInfo;
     }
 
-    public void addToBuffsOfHero(Buff buff) {
-        buffs.add(buff);
-    }
-
-
-    public void useSpecialPower() {
-        //TODO
+    public void setSpecialPowerInfo(String specialPowerInfo) {
+        this.specialPowerInfo = specialPowerInfo;
     }
 
     public int getNumberOfAttacks() {
@@ -74,22 +87,6 @@ public class Hero extends Card {
 
     public int getNumberOfBeingAttacked() {
         return numberOfBeingAttacked;
-    }
-
-    public void increaseNumberOfAttacks() {
-        numberOfAttacks++;
-    }
-
-    public void increaseNumberOfBeingAttacked() {
-        numberOfBeingAttacked++;
-    }
-
-    public void setSpecialPowerInfo(String specialPowerInfo) {
-        this.specialPowerInfo = specialPowerInfo;
-    }
-
-    public void addNewHeroCard() {
-        //TODO add new other Card and also items (to removed: Make NewHero and MakeNewUsable Item)
     }
 
 

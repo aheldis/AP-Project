@@ -29,40 +29,6 @@ public class Request {
         type = getType();
     }
 
-    public String getCommand() {
-        return command;
-    }
-
-    public Coordinate getCoordinate() {
-        return coordinate;
-    }
-
-    public boolean isValid() { //todo in be che dard mikhore? :))  //todo نمیدونم (zahra)
-        if (type == null)
-            return false;
-        return false;
-    }
-
-    public RequestType getRequestType() {
-        return type;
-    }
-
-    public void setId(String Id) {
-        this.Id = Id;
-    }
-
-    public void setDeckName(String deckName) {
-        this.deckName = deckName;
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public String getDeckName() {
-        return deckName;
-    }
-
     private RequestType getType() {
         if (state == StateType.ACCOUNT_MENU) {
             switch (command.toLowerCase()) {
@@ -77,8 +43,7 @@ public class Request {
                 case "enter exit":
                     return RequestType.MENU_ENTER_EXIT;
             }
-        }
-        else if (state == StateType.COLLECTION) {
+        } else if (state == StateType.COLLECTION) {
             switch (command.toLowerCase()) {
                 case "exit":
                     return RequestType.COLLECTION_EXIT;
@@ -126,8 +91,7 @@ public class Request {
                 return RequestType.COLLECTION_SHOW_DECK;
             }
 
-        }
-        else if (state == StateType.SHOP) {
+        } else if (state == StateType.SHOP) {
             if (command.toLowerCase().matches("exit")) {
                 return RequestType.SHOP_EXIT;
             }
@@ -156,8 +120,7 @@ public class Request {
             if (command.toLowerCase().matches("help")) {
                 return RequestType.SHOP_HELP;
             }
-        }
-        else if (state == StateType.MAIN_MENU) {
+        } else if (state == StateType.MAIN_MENU) {
             switch (command.toLowerCase()) {
                 case "login":
                     return RequestType.MAIN_MENU_LOGIN;
@@ -172,8 +135,7 @@ public class Request {
 
             }
 
-        }
-        else if (state == StateType.BATTLE) {
+        } else if (state == StateType.BATTLE) {
             switch (command.toLowerCase()) {
                 case "game Info":
                     return RequestType.GAME_GAME_INFO;
@@ -199,6 +161,9 @@ public class Request {
                 case "show menu":
                     return RequestType.GAME_SHOW_MENU;
 
+            }
+            if (command.toLowerCase().matches("attack combo (\\w+) (\\w+)+")) {
+                return RequestType.GAME_ATTACK_COMBO;
             }
             if (command.toLowerCase().matches("select card \\w+")) {//todo get input
                 setId(command.substring(12));
@@ -244,10 +209,7 @@ public class Request {
                 setId(command.substring(7));
                 return RequestType.GAME_ATTACK;
             }
-            if (command.toLowerCase().matches("attack combo \\w+ (\\w+)+")) {
-                //TODO: chejori vorodi bgiram ino???? :))))
-                return RequestType.GAME_ATTACK_COMBO;
-            }
+
             if (command.toLowerCase().matches("use special power \\(\\d+,\\d+\\)")) {
                 coordinate.setX(Integer.parseInt(command.substring(19, 20)));
                 coordinate.setY(Integer.parseInt(command.substring(21, 22)));
@@ -278,5 +240,39 @@ public class Request {
                 return RequestType.SINGLE_STORY;
         }
         return null;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public boolean isValid() { //todo in be che dard mikhore? :))  //todo نمیدونم (zahra)
+        if (type == null)
+            return false;
+        return false;
+    }
+
+    public RequestType getRequestType() {
+        return type;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String Id) {
+        this.Id = Id;
+    }
+
+    public String getDeckName() {
+        return deckName;
+    }
+
+    public void setDeckName(String deckName) {
+        this.deckName = deckName;
     }
 }

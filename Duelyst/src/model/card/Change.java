@@ -1,5 +1,6 @@
 package model.card;
 
+import model.battle.Player;
 import model.land.Square;
 
 import java.util.ArrayList;
@@ -19,12 +20,27 @@ public class Change {
     private int hpChange = 0;
     private int apChange = 0;
     private boolean continuous = false;
-    private HashMap<Buff, Integer> buffs; //in az har baff yedoone toosh mitoone dashte bashe ke okeye fekr konam age nist begin
-    private ArrayList<Buff> untiBuffs;
+    private HashMap<String, Integer> buffs; //in az har baff yedoone toosh mitoone dashte bashe ke okeye fekr konam age nist begin
+    //private ArrayList<Buff> untiBuffs;
+    private boolean unaffactBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
 
-    private void makeChangeInTargetCard(Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
+    public void affect(Player player, ArrayList<Square> targets) {
+        if (targetType.equals("Square")) {
+            for (Square square : targets) {
+                for (String buffName : buffs.keySet())
+                    square.addBuffToSquare(Buff.getByName(buffName));
+            }
+        }
+        if (targetType.equals("Card")) {
+            for (Square square : targets) {
+                makeChangeInTargetCard(player, (Card) square.getObject());
+            }
+        }
+    }
+
+    private void makeChangeInTargetCard(Player player, Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
         if (!this.opponentCanMove)
-            targetCard.setCanMove(false, this.turnOfCanNotMoveForOpponent));
+            targetCard.setCanMove(false, this.turnOfCanNotMoveForOpponent);
 
         if (!this.opponentCanCounterAttack)
             targetCard.setCanCounterAttack(false, this.turnOfCanNotCounterAttackForOpponent);
@@ -38,30 +54,16 @@ public class Change {
 //        targetCard.setTurnOfCanNotCounterAttack(Math.max(targetCard.getTurnOfCanNotCounterAttack(), this.turnOfCanNotCounterAttackForOpponent));
         targetCard.changeAp(apChange);
         targetCard.changeHp(hpChange);
-        for (Buff buff : buffs.keySet()) {
-            buff.affect(targetCard);
-            //buff.affect(targetCard, buffs.get(buff));
-            //todo inja nabayad bere buff ro add kone be buffuye carde bad affect ro to init per turn seda konim?
+        for (String buffName : buffs.keySet()) {
+            targetCard.addBuff(Buff.getByName(buffName), buffs.get(buffName));
         }
-        for (Buff buff : untiBuffs) {
-            buff.unAffect(targetCard);
-        }
-    }
-
-    public void affect(ArrayList<Square> targets) {
-        if (targetType.equals("Square")) {
-            for (Square square : targets) {
-                for (Buff buff : buffs.keySet())
-                    square.addBuffToSquare(buff);
-            }
-        }
-        if (targetType.equals("Card")) {
-            for (Square square : targets) {
-                makeChangeInTargetCard((Card) square.getObject());
-            }
+        if (unaffactBuffs) {
+            if (targetCard.getPlayer().equals(player)) {
+                targetCard.removeBuffs(true);
+            } else
+                targetCard.removeBuffs(false);
         }
     }
-
 
     public void destroyPositiveEffects() {
 

@@ -3,7 +3,9 @@ package view;
 
 public class MessageViewer {
     private static MessageViewer singleInstance = null;
-    private MessageViewer(){}
+
+    private MessageViewer() {
+    }
 
     public static MessageViewer getInstance() {
         if (singleInstance == null) {
@@ -12,7 +14,7 @@ public class MessageViewer {
         return singleInstance;
     }
 
-    public void collectionMessage(String message){
+    public void collectionMessage(String message) {
         System.out.println(message);
     }
 }

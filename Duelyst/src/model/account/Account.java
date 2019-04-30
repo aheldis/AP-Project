@@ -1,7 +1,6 @@
 package model.account;
 
 import model.battle.Deck;
-import model.battle.Match;
 import model.battle.MatchInfo;
 import model.battle.Player;
 import view.AccountView;
@@ -24,21 +23,29 @@ public class Account implements Comparable<Account> {
         this.userName = userName;
         this.password = password;
     }
-    public void setMainDeck(Deck deck){
-        this.mainDeck=deck;
+
+    public Collection getCollection() {
+        return collection;
     }
 
-    public boolean checkPassword(String password){
-        if(password.equals(this.password))
-            return true;
-        return false;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void addToWins() {
-        wins++;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
-    public int getWins() {
-        return wins;
+
+    public ArrayList<Deck> getDecks() {
+        return decks;
+    }
+
+    public Deck getMainDeck() {
+        return mainDeck;
+    }
+
+    public void setMainDeck(Deck deck) {
+        this.mainDeck = deck;
     }
 
     public String getUserName() {
@@ -53,28 +60,12 @@ public class Account implements Comparable<Account> {
         return matchHistory;
     }
 
-    public Collection getCollection() {
-        return collection;
+    public boolean checkPassword(String password) {
+        return password.equals(this.password);
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public ArrayList<Deck> getDecks() {
-        return decks;
-    }
-
-    public Deck getMainDeck() {
-        return mainDeck;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    private void setDeckFromCollection() {
-        decks =  collection.getDecks();
+    public void addToWins() {
+        wins++;
     }
 
     public boolean matchPassword(String password) {
@@ -83,6 +74,10 @@ public class Account implements Comparable<Account> {
 
     public int compareTo(Account account) {
         return account.getWins() - this.getWins();
+    }
+
+    public int getWins() {
+        return wins;
     }
 
     public void changeValueOfDaric(int number) {
@@ -98,5 +93,9 @@ public class Account implements Comparable<Account> {
         for (MatchInfo match : matchHistory) {
             accountView.viewAMatch(match, this);
         }
+    }
+
+    private void setDeckFromCollection() {
+        decks = collection.getDecks();
     }
 }

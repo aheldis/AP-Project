@@ -6,6 +6,11 @@ public abstract class Item {
     private int cost;
     private int itemNumber; //todo tozih to card
 
+    //    TODO print
+    public void printDescription() {
+
+    }
+
     public int getCost() {
         return cost;
     }
@@ -14,25 +19,20 @@ public abstract class Item {
         this.cost = cost;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public String getName() {
         return name;
     }
 
-//    TODO print
-    public void printDescription() {
-
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

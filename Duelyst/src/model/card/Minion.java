@@ -1,19 +1,12 @@
 package model.card;
 
-import model.battle.Player;
-import model.counterAttack.CounterAttack;
 import model.land.Square;
-import model.requirment.Coordinate;
-import view.Request;
-import view.enums.ErrorType;
-import view.enums.RequestSuccessionType;
-
-import java.util.ArrayList;
 
 
-//todo healthPower _> hp    attackPower -> ap to card darimeshon
+//todo // healthPower _> hp    attackPower -> ap to card darimeshon
 
 public class Minion extends Card {
+    String specialPowerInfo;
     private int numberOfBeingAttacked;
     private int numberOfAttack;
     private String playerName;
@@ -22,22 +15,31 @@ public class Minion extends Card {
     private Square square;
     private int price;
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
-    String specialPowerInfo;
+    private boolean comboAbility;
     private boolean haveSpecialPower;
 
-    public void setActivationTimeOfSpecialPower(ActivationTimeOfSpecialPower activationTimeOfSpecialPower) {
-        this.activationTimeOfSpecialPower = activationTimeOfSpecialPower;
+    void setTarget(Square square) {
+        this.square = square;
     }
 
     public ActivationTimeOfSpecialPower getActivationTimeOfSpecialPower() {
         return activationTimeOfSpecialPower;
     }
 
+    public void setActivationTimeOfSpecialPower(ActivationTimeOfSpecialPower activationTimeOfSpecialPower) {
+        this.activationTimeOfSpecialPower = activationTimeOfSpecialPower;
+    }
+
+    public boolean getHaveSpecialPower() {
+        return haveSpecialPower;
+    }
+
     public void setHaveSpecialPower(boolean haveSpecialPower) {
         this.haveSpecialPower = haveSpecialPower;
     }
-    public boolean getHaveSpecialPower(){
-        return haveSpecialPower;
+
+    public boolean isComboAbility() {
+        return comboAbility;
     }
 
     int getNumberOfBeingAttacked() {
@@ -46,15 +48,6 @@ public class Minion extends Card {
 
     int getNumberOfAttack() {
         return numberOfAttack;
-    }
-
-    // todo momkene buff tekrari bashe?
-    void addToBuffsOfMinion(Buff buff) {
-        getBuffsOnThisCard().add(buff);
-    }
-
-    void setTarget(Square square) {
-        this.square = square;
     }
 
     public String getSpecialPowerInfo() {

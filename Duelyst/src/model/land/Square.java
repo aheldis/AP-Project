@@ -1,8 +1,8 @@
 package model.land;
 
-import model.Item.Flag;
-import model.battle.Hand;
-import model.card.*;
+import model.card.Buff;
+import model.card.Hero;
+import model.card.Minion;
 import model.requirment.Coordinate;
 
 import java.util.ArrayList;
@@ -11,32 +11,14 @@ public class Square {
     private int scaleForEachSquare;
     private Coordinate coordinate;
     private Object object;
-    private ArrayList<Buff> buffs=new ArrayList<>();
+    private ArrayList<Buff> buffs = new ArrayList<>();
 
-    public void addBuffToSquare(Buff buff){
-        buffs.add(buff);
-    }
-
-    public ArrayList<Buff> getBuffs(){
-        return buffs;
-    }
-
-   public Square(Coordinate coordinate) {
+    public Square(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
 
-    public int getXCoordinate(){
-       return coordinate.getX();
-    }
-    public int getYCoordinate(){
-       return coordinate.getY();
-    }
-    public Coordinate getCoordinate(){
-       return coordinate;
-    }
-
-    public void setScale(int scale) {
-        scaleForEachSquare = scale;
+    public void addBuffToSquare(Buff buff) {
+        buffs.add(buff);
     }
 
     public Minion squareHasMinionAndPassIt() {
@@ -51,16 +33,36 @@ public class Square {
         return null;
     }
 
-    public void setObject(Object object) {
-        this.object = object;
+    public Coordinate passTheCenterOfSquare() {
+        return coordinate;
     }
 
-    public Coordinate passTheCenterOfSquare() {
+    public void setScale(int scale) {
+        scaleForEachSquare = scale;
+    }
+
+    public ArrayList<Buff> getBuffs() {
+        return buffs;
+    }
+
+    public int getXCoordinate() {
+        return coordinate.getX();
+    }
+
+    public int getYCoordinate() {
+        return coordinate.getY();
+    }
+
+    public Coordinate getCoordinate() {
         return coordinate;
     }
 
     public Object getObject() {
         return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
     }
 
     //todo hamsayeha

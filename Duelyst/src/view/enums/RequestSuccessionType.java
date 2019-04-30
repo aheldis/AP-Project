@@ -10,11 +10,8 @@ public enum RequestSuccessionType {
 
     }
 
-    public void setMessage(String message){
+    RequestSuccessionType(String message) {
         this.message = message;
-    }
-    public String getMessage() {
-        return message;
     }
 
     public void printMessage() {
@@ -22,7 +19,11 @@ public enum RequestSuccessionType {
         messageViewer.collectionMessage(message);
     }
 
-    RequestSuccessionType(String message) {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
         this.message = message;
     }
 }

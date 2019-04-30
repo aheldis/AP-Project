@@ -1,11 +1,54 @@
-package model.card;
+package model.card.makeFile;
 
 import view.NewCardMessages;
 import view.Request;
+import view.enums.RequestType;
+import view.enums.StateType;
 
 import java.io.*;
 
 public class MakeNewBuff {
+
+    public static void makeNewBuff() {
+        Request request = new Request(StateType.ACCOUNT_MENU);//MOHM NI CHI BASHE STATE
+        NewCardMessages newCardMessages = NewCardMessages.getInstance();
+        int lineNumber = 1;
+        while (true) {
+            try {
+
+                FileReader fileReader = new FileReader("../BuffsFile/TEMPLATE");
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String line = null;
+                newCardMessages.printLine("name: ");
+                request.getNewLine();
+                String input = request.getCommand();
+                if (input.equals("EXIT"))
+                    break;
+                File file = new File("../BuffsFile/" + input);
+                FileWriter fileWriter = new FileWriter(file);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write("name: " + input);
+                bufferedWriter.newLine();
+                while ((line = bufferedReader.readLine()) != null) {
+                    do {
+                        newCardMessages.printLine(line);
+                        request.getNewLine();
+                        input = request.getCommand();
+                    } while (checkSyntax(lineNumber, input));
+                    bufferedWriter.write(line);
+                    bufferedWriter.write(" " + input);
+                    bufferedWriter.newLine();
+                    lineNumber++;
+                }
+                bufferedWriter.close();
+
+            } catch (FileNotFoundException e) {
+                newCardMessages.printLine("file not found");
+            } catch (Exception e) {
+                newCardMessages.printLine("other error");
+            }
+        }
+    }
 
     private static boolean checkSyntax(int lineNumber, String input) {
         switch (lineNumber) {
@@ -35,47 +78,6 @@ public class MakeNewBuff {
                 break;
         }
         return true;
-    }
-
-    public static void makeNewBuff() {
-        Request request = new Request("buff");
-        NewCardMessages newCardMessages = NewCardMessages.getInstance();
-        int lineNumber = 1;
-        while (true) {
-            try {
-
-                FileReader fileReader = new FileReader("../BuffsFile/TEMPLATE");
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
-                String line = null;
-                newCardMessages.printer("name: ");
-                request.getNewLine();
-                String input = request.getCommand();
-                if (input.equals("EXIT"))
-                    break;
-                File file = new File("../BuffsFile/" + input);
-                FileWriter fileWriter = new FileWriter(file);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write("name: " + input);
-                bufferedWriter.newLine();
-                while ((line = bufferedReader.readLine()) != null) {
-                    do {
-                        newCardMessages.printer(line);
-                        request.getNewLine();
-                        input = request.getCommand();
-                    } while (checkSyntax(lineNumber, input));
-                    bufferedWriter.write(line);
-                    bufferedWriter.write(" " + input);
-                    bufferedWriter.newLine();
-                    lineNumber++;
-                }
-                bufferedWriter.close();
-
-            } catch (FileNotFoundException e) {
-                newCardMessages.printer("file not found");
-            } catch (Exception e) {
-                newCardMessages.printer("other error");
-            }
-        }
     }
 
 }

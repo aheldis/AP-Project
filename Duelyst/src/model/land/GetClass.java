@@ -10,6 +10,7 @@ import model.counterAttack.Ranged;
 
 public class GetClass {
     private static final GetClass GET_CLASS = new GetClass();
+
     private GetClass() {
 
     }

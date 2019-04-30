@@ -8,16 +8,12 @@ public enum FilesType {
 
     private String name;
 
-    public String getName() {
-        return name;
-    }
-
     FilesType(String name) {
         this.name = name;
     }
 
-    public static FilesType getEnum(String input){
-        switch (input){
+    public static FilesType getEnum(String input) {
+        switch (input) {
             case "Spell":
                 return FilesType.SPELL;
             case "Hero":
@@ -28,5 +24,9 @@ public enum FilesType {
                 return FilesType.ITEM;
         }
         return null;
+    }
+
+    public String getName() {
+        return name;
     }
 }

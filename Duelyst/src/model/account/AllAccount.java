@@ -7,30 +7,20 @@ import java.util.Collections;
 
 public class AllAccount {
     public static AllAccount singleInstance = null;
+    public ArrayList<Account> accounts;
     private AccountView accountView = AccountView.getInstance();
-    public  ArrayList<Account> accounts;
 
-    private AllAccount(){}
+    private AllAccount() {
+    }
+
     public static AllAccount getInstance() {
         if (singleInstance == null)
             singleInstance = new AllAccount();
         return singleInstance;
     }
 
-    public void addToAccounts(Account account) {
-        accounts.add(account);
-    }
-
     public ArrayList<Account> getAccountsArrayList() {
         return accounts;
-    }
-
-    public Account getAccountByName(String userName) {
-        for (Account account : accounts) {
-            if (account.getUserName().equals(userName))
-                return account;
-        }
-        return null;
     }
 
     public boolean userNameHaveBeenExist(String userName) {
@@ -49,10 +39,12 @@ public class AllAccount {
         return account.matchPassword(password);
     }
 
-    public void login(String userName, String password) { //todo ina bayad bere to conroller o ina :-?
-        //(kheyr)todo controller miyad inja donbalet :))
-            //TODO login
-
+    public Account getAccountByName(String userName) {
+        for (Account account : accounts) {
+            if (account.getUserName().equals(userName))
+                return account;
+        }
+        return null;
     }
 
     public void showLeaderBoard() {
@@ -76,6 +68,16 @@ public class AllAccount {
         Account account = new Account(userName, password);
         addToAccounts(account);
         login(userName, password);
+    }
+
+    public void addToAccounts(Account account) {
+        accounts.add(account);
+    }
+
+    public void login(String userName, String password) { //todo ina bayad bere to conroller o ina :-?
+        //(kheyr)todo controller miyad inja donbalet :))
+        //TODO login
+
     }
 
 }

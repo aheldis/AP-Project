@@ -1,32 +1,69 @@
 package model.card;
 
+import java.util.ArrayList;
+
 public class Buff {
-    private String type;
+    private static ArrayList<Buff> buffs;
+    private String name;
+    private boolean goodBuff;
+    private boolean haveUnAffect;
     private int apChange = 0;
     private int hpChange = 0;
     private boolean canMove = true;
+    private boolean canAttack = true;
     private boolean canCounterAttack = true;
     private boolean hpChangeAfterAttack = false;
 
-
-    //todo dont touch please
 
     //todo harbar seda nashe tahash unaffecct beshe
     //to change check she ke doroste
     //ye chizayee mesle holy buff ok she
     //in ke age chandta buff e moshabeh emal shan chi mishe check she
+
     public void affect(Card card) {
         card.changeAp(apChange);
         card.changeHp(hpChange);
         if (canMove == false)
             card.setCanMove(false, 1);
+        if (canAttack == false)
+            card.setCanAttack(false, 1);
         if (canCounterAttack == false)
             card.setCanCounterAttack(false, 1);
+        if (hpChangeAfterAttack == true)
+            card.setHpChangeAfterAttack(1);
     }
 
     public void unAffect(Card card) {
-        //lazeme? :-?
-        //todo bayad to khode cardha ke darim baraye chand bar ye buff ro daran bar darim bafe ro mesalan
+        card.changeAp(-apChange);
+        card.changeHp(-hpChange);
+        //in chiza too khod player handle mishe
+/*        if (canMove == false)
+            card.setCanMove(true, 1);
+        if (canAttack == false)
+            card.setCanAttack(true, 1);
+        if (canCounterAttack == false)
+            card.setCanCounterAttack(true, 1);*/
+        if (hpChangeAfterAttack == true)
+            card.setHpChangeAfterAttack(-1);
     }
 
+    public boolean isGoodBuff() {
+        return goodBuff;
+    }
+
+    public boolean isHaveUnAffect() {
+        return haveUnAffect;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    static public Buff getByName(String name){
+        for(Buff buff: buffs){
+            if(buff.getName().equals(name))
+                return buff;
+        }
+        return null;
+    }
 }

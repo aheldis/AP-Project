@@ -6,6 +6,10 @@ public class Collectable extends Item {
     private CollectableId collectableId;
     private Square square;
 
+    void affect() {
+
+    }
+
     public CollectableId getCollectableId() {
         return collectableId;
     }
@@ -14,15 +18,11 @@ public class Collectable extends Item {
         this.collectableId = collectableId;
     }
 
-    void setSquare(Square square) {
-        this.square = square;
-    }
-
     Square getSquare() {
         return square;
     }
 
-    void affect() {
-
+    void setSquare(Square square) {
+        this.square = square;
     }
 }

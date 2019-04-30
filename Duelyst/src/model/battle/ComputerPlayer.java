@@ -19,15 +19,7 @@ public class ComputerPlayer extends Player {
         return player;
     }
 
-    public void addToAccountWins() {
-    }
 
-    public void addMatchInfo(MatchInfo matchInfo) {
-    }
-
-    public void setDeck() {
-
-    }
 
     @Override
     public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
@@ -37,6 +29,16 @@ public class ComputerPlayer extends Player {
     public void playTurn() {
 
         //yeseri kar random anjam bede
+    }
+
+    public void addToAccountWins() {
+    }
+
+    public void addMatchInfo(MatchInfo matchInfo) {
+    }
+
+    public void setDeck() {
+
     }
 
 }
