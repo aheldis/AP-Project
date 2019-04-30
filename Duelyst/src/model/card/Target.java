@@ -21,6 +21,10 @@ public class Target {
     //distance
 
 
+    public ArrayList<Square> getTargets() {
+        return targets;
+    }
+
     public void setTargets(ArrayList<Square> targets) {
         this.targets = targets;
     }

@@ -29,10 +29,10 @@ public abstract class Player {
     protected int turnForSavingFlag=0;
     //collectable Item to hand ast :D
 
-    public abstract void move(Card card, Square newPosition);
-    public abstract void attack(Card card, Square target);
+//    public abstract void move(Card card, Square newPosition);
+//    public abstract void attack(Card card, Square target);
     public abstract void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land);
-    public abstract void useSpecialPower(Card card);
+//    public abstract void useSpecialPower(Card card);
 
     public Hero getHero() {
         return mainDeck.getHero();
@@ -67,8 +67,6 @@ public abstract class Player {
         return opponent;
     }
 
-
-
     public void initPerTurn() {
         hand.checkTheHandAndAddToIt();
         for (Card card : cardsOnLand) {
@@ -88,6 +86,18 @@ public abstract class Player {
 
     public void addToCardsOfLand(Card card) {
         cardsOnLand.add(card);
+    }
+
+    public void addToFlags(Flag flag) {
+        flags.add(flag);
+    }
+
+    public void addToTurnForSavingFlag() {
+        turnForSavingFlag++;
+    }
+
+    public void setFlagSaver(Card card){
+        flagSaver = card;
     }
 
     public GraveYard getGraveYard() {
