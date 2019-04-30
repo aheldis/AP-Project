@@ -29,7 +29,7 @@ public class MakeNewFile {
 
         String input = null;
         do {
-            newCardMessages.printLine("type: (Hero/Minion/Spell/Buff)");
+            newCardMessages.printLine("type: (Hero/Minion/Spell/Buff/Item)");
             request.getNewLine();
             input = request.getCommand();
         } while (FilesType.getEnum(input) == null);
@@ -45,9 +45,12 @@ public class MakeNewFile {
         Object object = null;
         if (typeOfFile == FilesType.BUFF) {
             object = fillObject("BuffCopy");
-        } else { //minion hero spell
+        } else { //minion hero spell item
 
-            object = fillObject("CardCopy");
+            if(typeOfFile == FilesType.ITEM)
+                object = fillObject("ItemCopy");
+            else
+                object = fillObject("CardCopy");
             Object change = fillObject("ChangeCopy");
             Object target = fillObject("TargetCopy");
 

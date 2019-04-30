@@ -28,8 +28,8 @@ public class CardCopy {
 //    public boolean canCounterAttack = true;
 //    public int hpChangeAfterAttack = 0; //todo mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
     public String description;
-    public ChangeCopy change = new ChangeCopy();//HAS-A
-    public TargetCopy target = new TargetCopy();
+    private ChangeCopy change = new ChangeCopy();//HAS-A
+    private TargetCopy target = new TargetCopy();
 
     public void setChange(ChangeCopy change) {
         this.change = change;

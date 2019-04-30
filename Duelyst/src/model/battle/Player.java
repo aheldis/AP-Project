@@ -65,7 +65,7 @@ public abstract class Player {
         ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(cardsOnLand);
         for (Card outPutCard : cards) {
-            if (outPutCard.equalCard(cardId) && outPutCard.getPlayerName().equals(account.getUserName()))
+            if (outPutCard.equalCard(cardId) && outPutCard.getPlayer().getAccount().equals(account))
                 card = outPutCard;
         }
         return card;

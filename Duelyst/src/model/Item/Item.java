@@ -1,15 +1,15 @@
 package model.Item;
 
+import model.card.Change;
+import model.card.Target;
+
 public abstract class Item {
     private String name;
     private String description;
     private int cost;
-    private int itemNumber; //todo tozih to card
-
-    //    TODO print
-    public void printDescription() {
-
-    }
+    private int itemNumber;
+    private Target target;
+    private Change change;
 
     public int getCost() {
         return cost;

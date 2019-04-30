@@ -28,22 +28,22 @@ public class GraveYard {
     }
 
     public void addCardToGraveYard(Card card, Square position) {
-        if(card instanceof Minion){
-            if(((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_DEATH){
-               card.setTarget(card,position);
-               card.getChange().affect(player,card.getTargetClass().getTargets());
+        if (card instanceof Minion) {
+            if (((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_DEATH) {
+                card.setTarget(card, position);
+                card.getChange().affect(player, card.getTargetClass().getTargets());
             }
         }
         ArrayList<Flag> flags = player.getFlags();
         String mode = player.getMatch().getMode();
         position.setObject(null);
-        switch (mode){
+        switch (mode) {
             case "DeathMode":
 
                 break;
-            case "SaveFlagMode":
-                for(Flag flag : flags){
-                    if(flag.getOwnerCard().equalCard(card.getCardId().getCardIdAsString())){
+            case "SaveFlagMode": //todo in ro kolan nemikhad vase in mode bezari be nazaram faghat hamoon birron bashe :-?
+                for (Flag flag : flags) {
+                    if (flag.getOwnerCard().equalCard(card.getCardId().getCardIdAsString())) {
                         player.setTurnForSavingFlag(0);
                         position.setObject(flag);
                         break;

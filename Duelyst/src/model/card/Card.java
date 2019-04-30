@@ -69,9 +69,6 @@ public abstract class Card {
         buffsOnThisCard.remove(buff);
     }
 
-    public void setTargetClass() {
-
-    }
 
     public void move(Coordinate newCoordination) {
         Square newPosition = landOfGame.passSquareInThisCoordinate(newCoordination);
@@ -165,6 +162,14 @@ public abstract class Card {
         if (this instanceof Spell) {
             return;
         }
+
+        if(this instanceof Minion) {
+            if(((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK){
+                setTarget(this, position);
+                getChange().affect(player, this.getTargetClass().getTargets());
+            }
+        }
+
         if (!withinRange(attackedCard.position.getCoordinate(), attackRange)) {
             ErrorType.UNAVAILABLE_OPPONENT.printMessage();
             return;
@@ -172,7 +177,7 @@ public abstract class Card {
         if (!isCanAttack()) {
             ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
         }
-        attackedCard.changeHp(-ap);
+        attackedCard.changeHp(-ap + hpChangeAfterAttack);
         attackedCard.counterAttack(this);
         setCanAttack(false, 1);
     }
@@ -373,10 +378,6 @@ public abstract class Card {
 
     public boolean isCanMove() {//maybe it have stun buff and can not move
         return canMove;
-    }
-
-    public String getPlayerName() {
-        return playerName;
     }
 
     public int getTurnOfCanNotCounterAttack() {

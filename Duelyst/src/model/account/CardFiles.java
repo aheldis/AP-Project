@@ -1,18 +1,8 @@
 package model.account;
 
 
-import model.card.Card;
-import model.card.makeFile.MakeNewFile;
-import model.card.Spell;
-import view.Request;
-import view.enums.StateType;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
 public class CardFiles {
+    /*
     private String path = "D:\\project-Duelyst\\Duelyst\\CardsFile"; //todo svw: in ghalate - in class e kolan vase chie in vasat? :)
 
     public void makeNewCardByPlayer() throws IOException {
@@ -156,6 +146,7 @@ public class CardFiles {
             // ex.printStackTrace();
         }
     }
+    */
 
 }
 

@@ -1,14 +1,7 @@
 package model.land;
 
-import model.card.Buff;
-import model.card.Hero;
-import model.card.Minion;
-import model.card.Spell;
-import model.counterAttack.Hybrid;
-import model.counterAttack.Melee;
-import model.counterAttack.Ranged;
-
 public class GetClass {
+    /*
     private static final GetClass GET_CLASS = new GetClass();
 
     private GetClass() {
@@ -36,4 +29,5 @@ public class GetClass {
             return Ranged.class;
         return null;
     }
+    */
 }
