@@ -59,8 +59,7 @@ public class Game {
     }
 
     public Match makeNewStoryGame(int level) {
-        //todo bere az file level bekhoone oon deckharo ye deck besaze -> secondPlayerDeck mode -> mode reward -> reward
-        Deck secondPlayerDeck = null;
+        Deck secondPlayerDeck = Deck.getDeckForStoryMode(level);
         mode = level;
         switch (level){
             case 1:
