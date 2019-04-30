@@ -1,0 +1,39 @@
+{
+  "@type": "CardCopy",
+  "@val": {
+    "name": "WhiteBeast",
+    "CardNumber": 1,
+    "cost": 8000,
+    "mp": 1,
+    "hp": 50,
+    "ap": 4,
+    "counterAttack": "melee",
+    "attackRange": 0,
+    "description": "power buff with 4 unit",
+    "change": {
+      "targetType": "ranged",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": false,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 3,
+      "turnOfCanNotCounterAttackForOpponent": 3,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": true,
+      "buffs": {
+        "power": 2
+      },
+      "unaffactBuffs": true
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "hero",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

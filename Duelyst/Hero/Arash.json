@@ -1,0 +1,37 @@
+{
+  "@type": "CardCopy",
+  "@val": {
+    "name": "Arash",
+    "CardNumber": 7,
+    "cost": 10000,
+    "mp": 2,
+    "hp": 30,
+    "ap": 2,
+    "counterAttack": "ranges",
+    "attackRange": 6,
+    "description": "attack to the row of hero 4 units",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -4,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "hero",
+      "one": false,
+      "row": true,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

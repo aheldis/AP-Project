@@ -1,0 +1,37 @@
+{
+  "@type": "CardCopy",
+  "@val": {
+    "name": "Afsaneh",
+    "CardNumber": 8,
+    "cost": 11000,
+    "mp": 1,
+    "hp": 40,
+    "ap": 3,
+    "counterAttack": "ranged",
+    "attackRange": 3,
+    "description": "dispel an opponent minion",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": false,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": true
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "hero",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}
