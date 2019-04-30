@@ -35,7 +35,7 @@ public class BattleView {
         }
 
         if (card instanceof Minion) {
-            System.out.println("Combo-ability: " + ((Minion) card).isComboAbility());
+            System.out.println("Combo-ability: " + ((Minion) card).getActivationTimeOfSpecialPower());
         }
     }
 

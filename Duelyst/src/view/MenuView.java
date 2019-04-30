@@ -1,5 +1,6 @@
 package view;
 
+import model.Item.Collectable;
 import model.Item.Flag;
 import model.Item.Item;
 import model.account.Account;
@@ -10,6 +11,8 @@ import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
 import view.enums.ErrorType;
+
+import java.sql.SQLOutput;
 
 public class MenuView {
     private static MenuView singleInstance = null;
@@ -141,6 +144,8 @@ public class MenuView {
     }*/
 
     public void showItemInfo(Hand hand, String collectableId) {
-
+        System.out.println("Item : ");
+        Collectable collectable = hand.passCollectableInHand(collectableId);
+        AccountView.getInstance().showEachItem(collectable, NOT_VALID);
     }
 }

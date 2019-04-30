@@ -10,7 +10,7 @@ import java.util.Random;
 public class Hand {
     private Deck deck;
     private ArrayList<Card> gameCards;
-    private ArrayList<Collectable> collectableItems = new ArrayList<>();
+    private ArrayList<Item> collectableItems = new ArrayList<>();
     //private final int RAND_NUMBER=11;
 
     public Hand(Deck deck) {
@@ -18,9 +18,9 @@ public class Hand {
     }
 
     public Collectable passCollectableInHand(String CollectableId) {
-        for (Collectable collectable : collectableItems) {
-            if (collectable.getCollectableId().getCollectableIdAsString().equals(CollectableId))
-                return collectable;
+        for (Item collectable : collectableItems) {
+            if (((Collectable) collectable).getCollectableId().getCollectableIdAsString().equals(CollectableId))
+                return (Collectable) collectable;
         }
         return null;
     }
