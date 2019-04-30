@@ -42,7 +42,7 @@ public abstract class Card {
 
     public void addBuff(Buff buff, int forHowManyTurn){
         if(buffsOnThisCard.containsKey(buff))
-        buffsOnThisCard.put(buff, forHowManyTurn)
+        buffsOnThisCard.put(buff, forHowManyTurn);
     }
 
     //todo
@@ -111,8 +111,7 @@ public abstract class Card {
         return getDistance(coordinate) <= range;
     }
 
-    public void attack(Player opponent, String cardId) {
-        Card attackedCard = getCardById(cardId, opponent.getCardsOnLand());
+    public void attack(Card attackedCard) {
         if (attackedCard == null) {
             ErrorType.INVALID_CARD_ID.printMessage();
             return;
@@ -403,7 +402,7 @@ public abstract class Card {
 
     }
 
-    public void useSpecialPower() {
+    public void useSpecialPower(Coordinate coordinate) {
         ErrorType error;
         if (this instanceof Spell) {
             error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;
@@ -426,6 +425,7 @@ public abstract class Card {
         error = ErrorType.DO_NOT_HAVE_SPECIAL_POWER;
         error.printMessage();
     }
+
 
     //ye method ke ye square ba card begire khoonehaee ke mikhaim roshoon kari konim ro bede  arraylist
 }

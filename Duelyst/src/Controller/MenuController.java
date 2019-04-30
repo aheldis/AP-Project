@@ -1,26 +1,15 @@
-package controller;
+package Controller;
 
-
-import model.Item.Usable;
-import model.account.Account;
-import model.account.AllAccount;
-import model.account.Collection;
-import model.account.Shop;
-import model.battle.Game;
-import model.battle.GraveYard;
-import model.battle.Match;
-import model.battle.Player;
+import model.Item.*;
+import model.account.*;
+import model.battle.*;
 import model.card.Card;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.EnterGameMessages;
 import view.MenuView;
 import view.Request;
-import view.enums.ErrorType;
-import view.enums.RequestType;
-import view.enums.StateType;
-
-import java.util.ArrayList;
+import view.enums.*;
 
 
 public class MenuController {
@@ -33,10 +22,12 @@ public class MenuController {
     private static Match match;
 
     public static void main() {
-        String id = "";
+        String id ;
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
         while (state != StateType.END_PROGRAM) {
+            Card selectedCard = null;
+            Item selectedItem = null;
 
             if (state == StateType.MAIN_MENU) {
                 EnterGameMessages enterGameMessages = EnterGameMessages.getInstance();
@@ -343,6 +334,7 @@ public class MenuController {
             }
 
             if (state == StateType.BATTLE) {
+                ErrorType error;
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
                     case GAME_GAME_INFO:
@@ -380,15 +372,35 @@ public class MenuController {
                         break;
                     case GAME_SELECT_CARD_ID:
                         id = request.getId();
-                        if (player.passCardInGame(id) != null)
+                        selectedCard = player.passCardInGame(id);
+                        if (selectedCard != null)
                             state = StateType.SELECT_CARD;
+                        break;
+                    case GAME_ATTACK_COMBO:
+                        Player player2 = match.passAnotherPlayerWithOutTurn();
+                        id = request.getCommand().split(" ")[1];
+                        Card opponentCard = player2.passCardInGame(id);
+                        if (opponentCard == null) {
+                            error = ErrorType.INVALID_CARD_ID;
+                            error.printMessage();
+                            return;
+                        }
+                        String[] cardIds = request.getCommand().split(" ")[2].split(" ");
+                        for (String cardId : cardIds) {
+                            selectedCard = player.passCardInGame(cardId);
+                            if (selectedCard == null) {
+                                error = ErrorType.INVALID_CARD_ID;
+                                error.printMessage();
+                            } else {
+                                selectedCard.attack(opponentCard);
+                            }
+                        }
                         break;
                     case GAME_SHOW_CARD_INFO:
                         id = request.getId();
                         menuView.showCardInfo(player.passCardInGame(id));
                         break;
                     case GAME_INSERT:
-                        ErrorType error;
                         id = request.getId();
                         Card card = player.getHand().passCardInHand(id);
                         Coordinate coordinate = request.getCoordinate();
@@ -405,7 +417,8 @@ public class MenuController {
                         break;
                     case GAME_SELECT_COLLECTABLE:
                         id = request.getId();
-                        if (player.getHand().passCollectableInHand(id) == null) {
+                        selectedItem = player.getHand().passCollectableInHand(id);
+                        if (selectedItem == null) {
                             error = ErrorType.INVALID_ITEM;
                             error.printMessage();
                         }
@@ -442,9 +455,10 @@ public class MenuController {
 
             if (state == StateType.SELECT_ITEM) {
                 Player player = match.passPlayerWithTurn();
+                id=((Collectable) selectedItem).getCollectableId().getCollectableIdAsString();
                 switch (request.getRequestType()) {
                     case GAME_ITEM_SHOW_INFO:
-                        menuView.showItemInfo(player.getHand(), id);
+                            menuView.showItemInfo(player.getHand(), id);
                         break;
                     case GAME_ITEM_USE:
                         Coordinate coordinate = request.getCoordinate();
@@ -454,7 +468,6 @@ public class MenuController {
 
             }
             if (state == StateType.SELECT_CARD) {
-                Card card;
                 Square square;
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
@@ -466,47 +479,19 @@ public class MenuController {
                             error.printMessage();
                             break;
                         }
-                        card = player.passCardInGame(request.getId());
-                        if (card == null) {
-                            error = ErrorType.INVALID_CARD_ID;
-                            error.printMessage();
-                            break;
-                        }
-                        player.useSpecialPower(card);
+                        selectedCard.useSpecialPower(request.getCoordinate());
                         break;
                     case GAME_MOVE:
-                        card = player.passCardInGame(id);
-                        square = match.getLand().passSquareInThisCoordinate(request.getCoordinate());
-                        if (card == null) {
+                        if (selectedCard == null) {
                             ErrorType errorType = ErrorType.INVALID_CARD_ID;
                             errorType.printMessage();
                             break;
 
                         }
-                        player.move(card, square);
-                        break;
-                    case GAME_ATTACK_COMBO:
-                        Player player2= match.passAnotherPlayerWithOutTurn();
-                        id=request.getCommand().split(" ")[1];
-                        Card opponentCard= player2.passCardInGame(id);
-                        if(opponentCard ==  null){
-                            error=ErrorType.INVALID_CARD_ID;
-                            error.printMessage();
-                            return;
-                        }
-                        String[] cardIds=request.getCommand().split(" ")[2].split(" ");
-                        for(String cardId : cardIds){
-                            card=player.passCardInGame(cardId);
-                            if(card ==null){
-                                error=ErrorType.INVALID_CARD_ID;
-                                error.printMessage();
-                            }
-                            else{
-                                card.attack();
-                            }
-                        }
+                        selectedCard.move(request.getCoordinate());
                         break;
                     case GAME_ATTACK:
+                        Card card;
                         square = match.getLand().passSquareInThisCoordinate(request.getCoordinate());
                         id = request.getId();
                         card = player.passCardInGame(id);
@@ -515,7 +500,7 @@ public class MenuController {
                             errorType.printMessage();
                             break;
                         }
-                        player.attack(card, square);
+                        selectedCard.attack(card);
                         break;
                 }
             }

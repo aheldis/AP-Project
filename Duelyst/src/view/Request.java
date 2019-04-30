@@ -202,6 +202,10 @@ public class Request {
                     return RequestType.GAME_SHOW_MENU;
 
             }
+            if (command.toLowerCase().matches("attack combo (\\w+) (\\w+)+")) {
+                //TODO: chejori vorodi bgiram ino???? :))))
+                return RequestType.GAME_ATTACK_COMBO;
+            }
             if (command.toLowerCase().matches("select card \\w+")) {//todo get input
                 setId(command.substring(12));
                 state = StateType.SELECT_CARD;
@@ -246,10 +250,7 @@ public class Request {
                 setId(command.substring(7));
                 return RequestType.GAME_ATTACK;
             }
-            if (command.toLowerCase().matches("attack combo (\\w+) (\\w+)+")) {
-                //TODO: chejori vorodi bgiram ino???? :))))
-                return RequestType.GAME_ATTACK_COMBO;
-            }
+
             if (command.toLowerCase().matches("use special power \\(\\d+,\\d+\\)")) {
                 coordinate.setX(Integer.parseInt(command.substring(19, 20)));
                 coordinate.setY(Integer.parseInt(command.substring(21, 22)));

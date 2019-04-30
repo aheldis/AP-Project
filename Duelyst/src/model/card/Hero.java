@@ -64,8 +64,8 @@ public class Hero extends Card {
     }
 
 
-    public void useSpecialPower() {
-        //TODO
+    public void useSpecialPower(Coordinate coordinate) {
+        //TODO fkr konam niyaz nadashte bashim
     }
 
     public int getNumberOfAttacks() {
