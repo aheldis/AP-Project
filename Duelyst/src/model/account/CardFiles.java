@@ -13,9 +13,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CardFiles {
-    private String path = "D:\\project-Duelyst\\Duelyst\\CardsFile";
+    private String path = "D:\\project-Duelyst\\Duelyst\\CardsFile"; //todo svw: in ghalate - in class e kolan vase chie in vasat? :)
 
     public void makeNewCardByPlayer() throws IOException {
+        //Todo in la
         Request request = new Request(StateType.ACCOUNT_MENU); //todo hamoon menu kardamesh(haniyeh)
         request.getNewLine();
         String command = request.getCommand();

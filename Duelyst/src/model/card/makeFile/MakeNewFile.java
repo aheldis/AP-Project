@@ -24,11 +24,12 @@ public class MakeNewFile {
 //    private static String checkSyntax(FileWriter fileWriter, String line) {
 //    }
 
+
     public static void makeNewCardFile() {
 
         String input = null;
         do {
-            newCardMessages.printLine("type: (Hero/Minion/Spell)");
+            newCardMessages.printLine("type: (Hero/Minion/Spell/Buff)");
             request.getNewLine();
             input = request.getCommand();
         } while (FilesType.getEnum(input) == null);
@@ -41,22 +42,28 @@ public class MakeNewFile {
 
         path = Shop.getPathOfFiles() + typeOfFile.getName() + "/" + nameOfFile + ".json";
 
-        //String className = typeOfFile.getName() + "Copy";
-        Object card = fillObject("CardCopy");
-        Object change = fillObject("ChangeCopy");
-        Object target = fillObject("TargetCopy");
+        Object object = null;
+        if (typeOfFile == FilesType.BUFF) {
+            object = fillObject("BuffCopy");
+        } else { //minion hero spell
 
-        ((CardCopy) card).setChange((ChangeCopy) change);
-        ((CardCopy) card).setTarget((TargetCopy) target);
+            object = fillObject("CardCopy");
+            Object change = fillObject("ChangeCopy");
+            Object target = fillObject("TargetCopy");
+
+            ((CardCopy) object).setChange((ChangeCopy) change);
+            ((CardCopy) object).setTarget((TargetCopy) target);
+        }
 
         try {
             YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
             FileWriter fileWriter = new FileWriter(path);
-            altMapper.toJson(card, fileWriter);
+            altMapper.toJson(object, fileWriter);
             fileWriter.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+           newCardMessages.printLine(e.getMessage());
         }
+
     }
 
     public static Object fillObject(String className) {
@@ -68,7 +75,7 @@ public class MakeNewFile {
             Object object = constructor.newInstance();
 
             for (Field field : fields) {
-                System.out.println("enter " + field.getName() + " (" + field.getAnnotatedType().getType().getTypeName() + "):");
+               newCardMessages.printLine("enter " + field.getName() + " (" + field.getAnnotatedType().getType().getTypeName() + "):");
                 try {
                     AnnotatedType annotatedType = field.getAnnotatedType();
 
@@ -79,9 +86,8 @@ public class MakeNewFile {
                         request.getNewLine();
                         field.set(object, Boolean.parseBoolean(request.getCommand()));
                     } else if (annotatedType.getType().getTypeName().equals("java.util.ArrayList<java.lang.String>")) {
-                        System.out.println("array");
                         ArrayList<String> arr = new ArrayList<>();
-                        System.out.println("enter number of array items: ");
+                       newCardMessages.printLine("enter number of array items: ");
                         request.getNewLine();
                         int number = Integer.parseInt(request.getCommand());
                         for (int i = 0; i < number; i++) {
@@ -93,15 +99,15 @@ public class MakeNewFile {
                         request.getNewLine();
                         field.set(object, request.getCommand());
                     } else if (annotatedType.getType().getTypeName().equals("java.util.HashMap<java.lang.String, java.lang.Integer>")) {
-                        System.out.println("enter number of buffs: ");
+                       newCardMessages.printLine("enter number of buffs: ");
                         request.getNewLine();
                         HashMap<String, Integer> hashMap = new HashMap<>();
                         int number = Integer.parseInt(request.getCommand());
                         for (int i = 0; i < number; i++) {
-                            System.out.println("enter buff name(holy/power/poison/weakness/stun/disarm) CORRECTLY");
+                           newCardMessages.printLine("enter buff name(holy/power/poison/weakness/stun/disarm) CORRECTLY");
                             request.getNewLine();
                             String buffName = request.getCommand();
-                            System.out.println("for How Many Turn");
+                           newCardMessages.printLine("for How Many Turn");
                             request.getNewLine();
                             int num = Integer.parseInt(request.getCommand());
                             hashMap.put(buffName, num);
@@ -110,15 +116,15 @@ public class MakeNewFile {
                     }
 
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                   newCardMessages.printLine(e.getMessage());
                 }
             }
 
             return object;
 
         } catch (Exception e) {
-            System.out.println("other error");
-            System.out.println(e.getMessage());
+           newCardMessages.printLine("other error");
+           newCardMessages.printLine(e.getMessage());
         }
         return null;
     }
