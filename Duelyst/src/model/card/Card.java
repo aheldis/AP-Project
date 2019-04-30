@@ -109,7 +109,7 @@ public abstract class Card {
     }
 
     public boolean canMoveToCoordination(Card card, Coordinate destination) {
-        if (card.getDistance(destination) == 2) {
+        if (card.getManhatanDistance(destination) == 2) {
             int x = card.position.getXCoordinate();
             int y = card.position.getYCoordinate();
             int distanceOfX = destination.getX() - card.position.getXCoordinate();
@@ -136,7 +136,7 @@ public abstract class Card {
     }
 
     public boolean withinRange(Coordinate coordinate, int range) {
-        return getDistance(coordinate) <= range;
+        return getManhatanDistance(coordinate) <= range;
     }
 
     public void setTarget(Card card, Square CardSquare) {
@@ -147,9 +147,15 @@ public abstract class Card {
 
     }
 
-    public int getDistance(Coordinate coordinate) {
+    public int getManhatanDistance(Coordinate coordinate) {
         return Math.abs(coordinate.getX() - position.getXCoordinate()) +
                 Math.abs(coordinate.getY() - position.getYCoordinate());
+    }
+
+    public int getNormalDistance(Coordinate coordinate) {
+        if (Math.abs(coordinate.getX() - position.getXCoordinate()) >= Math.abs(coordinate.getY() - position.getYCoordinate()))
+            return Math.abs(coordinate.getX() - position.getXCoordinate());
+        return Math.abs(coordinate.getY() - position.getYCoordinate());
     }
 
     public void attack(Card attackedCard) {
@@ -161,8 +167,8 @@ public abstract class Card {
             return;
         }
 
-        if(this instanceof Minion) {
-            if(((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK){
+        if (this instanceof Minion) {
+            if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
                 setTarget(this, position);
                 getChange().affect(player, this.getTargetClass().getTargets());
             }
@@ -187,15 +193,15 @@ public abstract class Card {
     public void changeHp(int number) {
         hp += number;
         if (hp <= 0) {
-            player.getGraveYard().addCardToGraveYard(this,position);
+            player.getGraveYard().addCardToGraveYard(this, position);
             position = null;
         }
     }
 
     public void counterAttack(Card theOneWhoAttacked) {
-        boolean canCounterAttack = counterAttack.equals("Melee") && getDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
+        boolean canCounterAttack = counterAttack.equals("Melee") && getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
         if (!canCounterAttack)
-            canCounterAttack = counterAttack.equals("Ranged") && getDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
+            canCounterAttack = counterAttack.equals("Ranged") && getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
         if (!canCounterAttack)
             canCounterAttack = counterAttack.equals("Hybrid");
         if (this.canCounterAttack && canCounterAttack)

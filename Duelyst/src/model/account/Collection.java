@@ -347,12 +347,13 @@ public class Collection {
     }
 
     public void showThisDeck(String deckName) {
-
-        accountView.deckView(passTheDeckIfHaveBeenExist(deckName));
+        Deck deck = passTheDeckIfHaveBeenExist(deckName);
+        if (deck == null)
+            return;
+        accountView.DeckAndHandView(deck.getHero(), deck.getItem(), deck.getCardsOfDeck());
     }
 
     public void helpOfCollection() {
-
         accountView.helpViewForCollection();
     }
 

@@ -14,6 +14,7 @@ import model.battle.Player;
 import model.card.*;
 import model.land.Square;
 import model.requirment.Coordinate;
+import view.BattleView;
 import view.EnterGameMessages;
 import view.MenuView;
 import view.Request;
@@ -361,7 +362,7 @@ public class MenuController {
                         menuView.showMyMinions(player.getOpponent());
                         break;
                     case GAME_SHOW_HAND:
-                        menuView.showHand();
+                        menuView.showHand(player.getHand());
                         break;
                     case GAME_END_TURN:
                         match.changeTurn();
@@ -419,7 +420,7 @@ public class MenuController {
                         break;
                     case GAME_SHOW_CARD_INFO:
                         id = request.getId();
-                        menuView.showCardInfo(player.passCardInGame(id));
+                        BattleView.getInstance().showCardInfo(player.passCardInGame(id));
                         break;
                     case GAME_INSERT:
                         id = request.getId();

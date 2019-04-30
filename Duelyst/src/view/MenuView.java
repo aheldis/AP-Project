@@ -8,6 +8,9 @@ import model.battle.Hand;
 import model.battle.Match;
 import model.battle.Player;
 import model.card.Card;
+import model.card.Hero;
+import model.card.Minion;
+import model.card.Spell;
 import view.enums.ErrorType;
 
 public class MenuView {
@@ -95,16 +98,36 @@ private void printInfoForEachPlayer(Player player,Match match){
     }
 
     public void showMyMinions(Player player) {
-
+        for (Card card : player.getCardsOnLand()) {
+            if (card instanceof Minion) {
+                System.out.printf("%s: %s, health: %d, location: (%d, %d), power: %d\n",
+                        card.getCardId(), card.getName(), card.getHp(),
+                        card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
+                        card.getAp());
+            }
+        }
     }
 
-    public void showHand() {
+    public void showHand(Hand hand) {
         //to hand function showNextCard baraye card badi darim :D
+        AccountView.getInstance().DeckAndHandView(null, null, hand.getGameCards());
+        showNextCard(hand);
 
     }
 
     public void showNextCard(Hand hand) {
-
+        System.out.println("Next card :");
+//        if (card instanceof Spell) {
+//            System.out.print("     ");
+//            AccountView.getInstance().showEachSpell((Spell) card, counterOfCards);
+//            System.out.println("\n");
+//
+//        } else if (card instanceof Minion) {
+//            System.out.print("     ");
+//            AccountView.getInstance().showEachMinion((Minion) card, counterOfCards);
+//            System.out.println("\n");
+//        }
+        //todo
     }
 
     public void showCollectableItems(Player player) {
@@ -115,9 +138,8 @@ private void printInfoForEachPlayer(Player player,Match match){
 
     }
 
-    public void showCardInfo(Card card) {
-
-    }
+    /*public void showCardInfo(Card card) {
+    }*/
 
     public void showItemInfo(Hand hand, String collectableId) {
 

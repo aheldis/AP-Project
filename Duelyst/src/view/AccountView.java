@@ -92,7 +92,7 @@ public class AccountView {
         );
     }
 
-    private void showEachSpell(Spell spell, int counterOfCards) {
+    public void showEachSpell(Spell spell, int counterOfCards) {
         System.out.print(counterOfCards + " : Type : Spell");
         System.out.print(" - Name : " + spell.getName() +
                 " - MP : " + spell.getMp() +
@@ -100,7 +100,7 @@ public class AccountView {
         );
     }
 
-    private void showEachMinion(Minion minion, int counterOfCards) {
+    public void showEachMinion(Minion minion, int counterOfCards) {
         System.out.print(counterOfCards + " : Type : Minion");
         System.out.print(" : Name : " + minion.getName() +
                 " – Class: " + minion.getCounterAttackName() +
@@ -164,11 +164,8 @@ public class AccountView {
         }
     }
 
-    public void deckView(Deck deck) {
-        if (deck == null)
-            return;
+    public void DeckAndHandView(Hero hero, Item item, ArrayList<Card> cards) {
         int counterOfCards = 1;
-        Hero hero = deck.getHero();
         System.out.println("Heroes :");
         if (hero != null) {
             System.out.print("     ");
@@ -177,15 +174,12 @@ public class AccountView {
         }
 
         System.out.println("Items :");
-        Item item = deck.getItem();
         if (item != null) {
             System.out.print("     ");
             showEachItem(item, counterOfCards);
             System.out.println("\n");
-
         }
 
-        ArrayList<Card> cards = deck.getCardsOfDeck();
         System.out.println("Cards :");
         if (cards.size() != 0) {
             for (Card card : cards) {
