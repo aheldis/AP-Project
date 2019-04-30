@@ -1,18 +1,14 @@
 package model.battle;
 
-import model.Item.Collectable;
-import model.Item.Flag;
 import model.account.Account;
-import model.card.*;
+import model.card.Buff;
+import model.card.Card;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.enums.ErrorType;
 
 import java.util.ArrayList;
-
-import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
 
 public class OrdinaryPlayer extends Player {
 
@@ -24,20 +20,6 @@ public class OrdinaryPlayer extends Player {
         mainDeck.setRandomOrderForDeck();
         setMana(mana);
         setHand();
-    }
-
-    public void addToAccountWins() {
-        getAccount().addToWins();
-    }
-
-    public void addMatchInfo(MatchInfo matchInfo) {
-        getAccount().addMatchInfo(matchInfo);
-    }
-
-    public void playTurn() {
-
-        //bere request begire
-
     }
 
     public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
@@ -66,6 +48,20 @@ public class OrdinaryPlayer extends Player {
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
 
+    }
+
+    public void playTurn() {
+
+        //bere request begire
+
+    }
+
+    public void addToAccountWins() {
+        getAccount().addToWins();
+    }
+
+    public void addMatchInfo(MatchInfo matchInfo) {
+        getAccount().addMatchInfo(matchInfo);
     }
 
 /*

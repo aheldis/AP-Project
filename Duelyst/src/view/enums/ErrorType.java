@@ -44,8 +44,8 @@ public enum ErrorType {
 
     private String message;
 
-    public String getMessage() {
-        return message;
+    ErrorType(String message) {
+        this.message = message;
     }
 
     public void printMessage() {
@@ -53,7 +53,7 @@ public enum ErrorType {
         errorViewer.collectionMessage(message);
     }
 
-    ErrorType(String message) {
-        this.message = message;
+    public String getMessage() {
+        return message;
     }
 }

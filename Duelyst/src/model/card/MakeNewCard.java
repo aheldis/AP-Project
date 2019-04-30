@@ -8,7 +8,9 @@ import view.NewCardMessages;
 import view.Request;
 import view.enums.StateType;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
@@ -36,7 +38,7 @@ public class MakeNewCard {
             String nameOfFile = input;
 
 
-            File file = new File(Shop.getPathOfFiles() + typeOfFile.getName() + nameOfFile+".txt");
+            File file = new File(Shop.getPathOfFiles() + typeOfFile.getName() + nameOfFile + ".txt");
 
             String className = typeOfFile.getName();
             Field[] fields = Class.forName(className).getFields();

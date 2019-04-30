@@ -7,36 +7,6 @@ import java.io.*;
 
 public class MakeNewBuff {
 
-    private static boolean checkSyntax(int lineNumber, String input) {
-        switch (lineNumber) {
-            case 1:
-                if (!input.matches("\\w+"))
-                    return false;
-                break;
-            case 2:
-                if (!input.matches("\\d+"))
-                    return false;
-                break;
-            case 3:
-                if (!input.matches("\\d+"))
-                    return false;
-                break;
-            case 4:
-                if (!input.matches("(true|false)"))
-                    return false;
-                break;
-            case 5:
-                if (!input.matches("(true|false)"))
-                    return false;
-                break;
-            case 6:
-                if (!input.matches("\\d+"))
-                    return false;
-                break;
-        }
-        return true;
-    }
-
     public static void makeNewBuff() {
         Request request = new Request("buff");
         NewCardMessages newCardMessages = NewCardMessages.getInstance();
@@ -76,6 +46,36 @@ public class MakeNewBuff {
                 newCardMessages.printer("other error");
             }
         }
+    }
+
+    private static boolean checkSyntax(int lineNumber, String input) {
+        switch (lineNumber) {
+            case 1:
+                if (!input.matches("\\w+"))
+                    return false;
+                break;
+            case 2:
+                if (!input.matches("\\d+"))
+                    return false;
+                break;
+            case 3:
+                if (!input.matches("\\d+"))
+                    return false;
+                break;
+            case 4:
+                if (!input.matches("(true|false)"))
+                    return false;
+                break;
+            case 5:
+                if (!input.matches("(true|false)"))
+                    return false;
+                break;
+            case 6:
+                if (!input.matches("\\d+"))
+                    return false;
+                break;
+        }
+        return true;
     }
 
 }

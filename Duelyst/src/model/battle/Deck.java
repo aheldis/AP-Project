@@ -1,7 +1,8 @@
 package model.battle;
 
 import model.Item.Item;
-import model.card.*;
+import model.card.Card;
+import model.card.Hero;
 import view.BattleView;
 
 import java.util.ArrayList;
@@ -19,18 +20,8 @@ public class Deck {//if it is normal deck you had initialize it in collection
         this.indexOfCards = indexOfCards;
     }
 
-    public void increaseIndexOfCards() {
-        this.indexOfCards++;
-    }
-
-
-
     public Hero getHero() {
         return hero;
-    }
-
-    public Item getItem() {
-        return item;
     }
 
     public void setHero(Hero hero) {
@@ -38,8 +29,8 @@ public class Deck {//if it is normal deck you had initialize it in collection
             this.hero = hero;
     }
 
-    public ArrayList<Card> getCardsOfDeck() {
-        return cardsOfDeck;
+    public Item getItem() {
+        return item;
     }
 
     public String getName() {
@@ -50,10 +41,12 @@ public class Deck {//if it is normal deck you had initialize it in collection
         this.deckName = deckName;
     }
 
+    public void increaseIndexOfCards() {
+        this.indexOfCards++;
+    }
+
     public boolean validate() {//have 20 cards and 1 hero
-        if (cardsOfDeck.size() == 20 && hero != null)
-            return true;
-        return false;
+        return cardsOfDeck.size() == 20 && hero != null;
     }
 
     public void addToCardsOfDeck(Card card) {
@@ -79,17 +72,17 @@ public class Deck {//if it is normal deck you had initialize it in collection
     }
 
     public void showTheNextCardFromNextTurn() {
-        BattleView battleView=BattleView.getInstance();
-       battleView.showCardId(passNextCard().getCardId().getCardIdAsString());
-    }
-
-    public void setRandomOrderForDeck() {//faqat shoroye bazi seda kon
-        Collections.shuffle(cardsOfDeck);
+        BattleView battleView = BattleView.getInstance();
+        battleView.showCardId(passNextCard().getCardId().getCardIdAsString());
     }
 
     public Card passNextCard() {
         return cardsOfDeck.get(indexOfCards);
 
+    }
+
+    public void setRandomOrderForDeck() {//faqat shoroye bazi seda kon
+        Collections.shuffle(cardsOfDeck);
     }
 
     public Card cardHaveBeenExistInThisDeck(String cardId) {
@@ -101,7 +94,11 @@ public class Deck {//if it is normal deck you had initialize it in collection
         return null;
     }
 
-    public void setRandomCardsAndItemsInDeck(){//todo
+    public ArrayList<Card> getCardsOfDeck() {
+        return cardsOfDeck;
+    }
+
+    public void setRandomCardsAndItemsInDeck() {//todo
 
     }
 }

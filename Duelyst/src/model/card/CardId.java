@@ -16,12 +16,12 @@ public class CardId {
         setCardId();
     }
 
-    public String getCardIdAsString() {
-        return cardId;
-    }
-
     public void setCardId() {//{number will add to  cardId}
         this.cardId = account.getUserName() + "_" + card.getName() + "_" + number;
+    }
+
+    public String getCardIdAsString() {
+        return cardId;
     }
 
 }

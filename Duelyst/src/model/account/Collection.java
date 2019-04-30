@@ -27,6 +27,10 @@ public class Collection {
         this.account = account;
     }
 
+    public ArrayList<Deck> getDecks() {
+        return decks;
+    }
+
     public String passCardIdByName(String name) {
         ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(spells);
@@ -38,10 +42,6 @@ public class Collection {
                 return card.getCardId().getCardIdAsString();
         }
         return "";
-    }
-
-    public ArrayList<Deck> getDecks() {
-        return decks;
     }
 
     public void showCardsAndItems() {
@@ -81,6 +81,14 @@ public class Collection {
         account.setMainDeck(deck);
     }
 
+    public Deck passTheDeckIfHaveBeenExist(String deckName) {
+        for (Deck deck : decks) {
+            if (deck.getName().equals(deckName))
+                return deck;
+        }
+        return null;
+    }
+
     public boolean searchCardName(String cardName) {
         boolean have = false;
         ArrayList<Card> cards = new ArrayList<>();
@@ -94,10 +102,7 @@ public class Collection {
                 have = true;
             }
         }
-        if (!have) {
-            return false;
-        }
-        return true;
+        return have;
     }
 
     public boolean searchItemName(String itemName) {
@@ -126,14 +131,6 @@ public class Collection {
         }
         return true;
 
-    }
-
-    public Deck passTheDeckIfHaveBeenExist(String deckName) {
-        for (Deck deck : decks) {
-            if (deck.getName().equals(deckName))
-                return deck;
-        }
-        return null;
     }
 
     public void createDeck(String deckName) {
@@ -193,7 +190,6 @@ public class Collection {
         return false;
     }
 
-
     public Card passCardByCardId(String cardId) {
         ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(heroes);
@@ -245,6 +241,16 @@ public class Collection {
 
     }
 
+    public boolean errorForDeck(Deck deck) {
+        ErrorType error;
+        if (deck == null) {
+            error = ErrorType.HAVE_NOT_DECK;
+            error.printMessage();
+            return false;
+        }
+        return true;
+    }
+
     public void addItemToThisDeck(Usable item, String deckName) {
         ErrorType error;
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
@@ -259,16 +265,6 @@ public class Collection {
         deck.addItemToDeck(item);
 
 
-    }
-
-    public boolean errorForDeck(Deck deck) {
-        ErrorType error;
-        if (deck == null) {
-            error = ErrorType.HAVE_NOT_DECK;
-            error.printMessage();
-            return false;
-        }
-        return true;
     }
 
     public void removeCardFromDeck(Card card, String deckName) {
@@ -287,22 +283,12 @@ public class Collection {
             }
             return;
         }
-        if (deck.cardHaveBeenExistInThisDeck( cardId) == null) {
+        if (deck.cardHaveBeenExistInThisDeck(cardId) == null) {
             error = ErrorType.HAVE_NOT_CARD_IN_DECK;
             error.printMessage();
             return;
         }
         deck.removeFromCardsOfDeck(card);
-    }
-
-    private Usable passItemIfHaveBeenExistInThisDeck(Deck deck, String UsableItem) {
-        for (int i = 0; i < 3; i++) {
-            if (items[i].equals(UsableItem))
-                return items[i];
-        }
-        return null;
-
-
     }
 
     public void removeItemFromDeck(Usable usableItem, String deckName) {
@@ -320,14 +306,21 @@ public class Collection {
         deck.removeItemOfDeck(item);
     }
 
+    private Usable passItemIfHaveBeenExistInThisDeck(Deck deck, String UsableItem) {
+        for (int i = 0; i < 3; i++) {
+            if (items[i].equals(UsableItem))
+                return items[i];
+        }
+        return null;
+
+
+    }
+
     public boolean validateDeck(String deckName) {
         ErrorType error;
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck != null) {
-            if (deck.validate())
-                return true;
-            else
-                return false;
+            return deck.validate();
         }
         error = ErrorType.HAVE_NOT_DECK;
         error.printMessage();
@@ -343,7 +336,6 @@ public class Collection {
 
         accountView.decksView(decks);
     }
-
 
     public void showAllDecksName() {
         Deck deck = account.getMainDeck();
@@ -393,14 +385,6 @@ public class Collection {
         }
     }
 
-    public ArrayList<Card> getAllCards() {
-        ArrayList<Card> cards = new ArrayList<>();
-        cards.addAll(heroes);
-        cards.addAll(minions);
-        cards.addAll(spells);
-        return cards;
-    }
-
     public int getNumberOfCardId(Card card) {
         ArrayList<Card> cards = getAllCards();
         int number = 1;
@@ -410,6 +394,14 @@ public class Collection {
             }
         }
         return number;
+    }
+
+    public ArrayList<Card> getAllCards() {
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.addAll(heroes);
+        cards.addAll(minions);
+        cards.addAll(spells);
+        return cards;
     }
 
     public int getNumberOfItemId(Item item) {
@@ -422,9 +414,9 @@ public class Collection {
         return number;
     }
 
-    public Deck getDeckByName(String deckName){
-        for(Deck deck: decks){
-            if(deck.getName().equals(deckName))
+    public Deck getDeckByName(String deckName) {
+        for (Deck deck : decks) {
+            if (deck.getName().equals(deckName))
                 return deck;
         }
         return null;

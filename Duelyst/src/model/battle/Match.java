@@ -1,7 +1,6 @@
 package model.battle;
 
 import model.Item.Flag;
-import model.account.Account;
 import model.land.LandOfGame;
 
 import java.util.ArrayList;
@@ -20,13 +19,23 @@ public class Match {
     private Date date;
 
 
+    public Match(Player[] players, String mode, int numberOfFlags, int reward) {
+        //when we make a match we should have players
+        this.players = players;
+        this.mode = mode;
+        this.numberOfFlags = numberOfFlags;
+        this.reward = reward;
+        land = new LandOfGame();
+    }
+
     public Player passPlayerWithTurn() {
         if (whichPlayer == 0)
             return players[0];
         else
             return players[1];
     }
-    public Player passAnotherPlayerWithOutTurn(){//midonam esmesh cherte (zahra)
+
+    public Player passAnotherPlayerWithOutTurn() {//midonam esmesh cherte (zahra)
         if (whichPlayer == 0)
             return players[1];
         else
@@ -38,15 +47,6 @@ public class Match {
             whichPlayer = 1;
         else
             whichPlayer = 0;
-    }
-
-    public Match(Player[] players, String mode, int numberOfFlags, int reward) {
-        //when we make a match we should have players
-        this.players = players;
-        this.mode = mode;
-        this.numberOfFlags = numberOfFlags;
-        this.reward = reward;
-        land = new LandOfGame();
     }
 
     public void startMatch() {
@@ -80,12 +80,6 @@ public class Match {
         players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
 
     }
-
-    private void setWinnerAndLoser(Player winner, Player loser) {
-        this.winner = winner;
-        this.loser = loser;
-    }
-
 
     private boolean gameEnded() {
         //todo
@@ -142,6 +136,11 @@ public class Match {
         //todo ye chizi print kone ke bazi tamoom shode
     }
 
+    private void setWinnerAndLoser(Player winner, Player loser) {
+        this.winner = winner;
+        this.loser = loser;
+    }
+
     public Player[] getPlayers() {
         return players;
     }
@@ -162,12 +161,12 @@ public class Match {
         return reward;
     }
 
-    public LandOfGame getLand() {
-        return land;
-    }
-
     public void setReward(int reward) {
         this.reward = reward;
+    }
+
+    public LandOfGame getLand() {
+        return land;
     }
 
     public void setLand(LandOfGame land) {

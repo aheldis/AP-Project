@@ -12,8 +12,6 @@ public class Buff {
     private boolean hpChangeAfterAttack = false;
 
 
-    //todo dont touch please
-
     //todo harbar seda nashe tahash unaffecct beshe
     //to change check she ke doroste
     //ye chizayee mesle holy buff ok she

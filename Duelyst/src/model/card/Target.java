@@ -21,14 +21,6 @@ public class Target {
     //distance
 
 
-    public ArrayList<Square> getTargets() {
-        return targets;
-    }
-
-    public void setTargets(ArrayList<Square> targets) {
-        this.targets = targets;
-    }
-
     public Target() {
 
     }
@@ -45,23 +37,29 @@ public class Target {
             if (!cardType.equals("minion")) {
                 return false;
             }
-            counterAttackName = ((Minion) attacked).getCounterAttack().getName();
+            counterAttackName = attacked.getCounterAttack();
         }
         if (attacked instanceof Hero) {
             if (!cardType.equals("hero")) {
                 return false;
             }
-            counterAttackName = ((Hero) attacked).getCounterAttack().getName();
+            counterAttackName = attacked.getCounterAttack().getName();
         }
 
         if (counterAttackName != null) {
-            if(!counterAttackName.equals(counterAttackType)){
-                return false;
-            }
-            return true;
+            return counterAttackName.equals(counterAttackType);
 
         }
         return false;
+    }
+
+    public ArrayList<Square> setTarget(Square square /*squari e ke seda mikone */) {
+        //todo
+        return null;
+    }
+
+    public ArrayList<Square> getTargets() {
+        return targets;
     }
 
 //    public void setTargets(Card attacker, Card attacked) {
@@ -72,9 +70,8 @@ public class Target {
 //        }
 //    }
 
-    public ArrayList<Square> setTarget(Square square /*squari e ke seda mikone */) {
-        //todo
-        return null;
+    public void setTargets(ArrayList<Square> targets) {
+        this.targets = targets;
     }
 
 

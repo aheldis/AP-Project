@@ -9,13 +9,6 @@ import view.enums.ErrorType;
 public class BattleView {
     private static BattleView singleInstance = null;
 
-    public static BattleView getInstance() {
-        if (singleInstance == null) {
-            singleInstance = new BattleView();
-        }
-        return singleInstance;
-    }
-
     public void printError(ErrorType error) {
         System.out.println(error.getMessage());
     }
@@ -42,8 +35,15 @@ public class BattleView {
         }
 
         if (card instanceof Minion) {
-            System.out.println("Combo-ability: " + ((Minion)card).isComboAbility());
+            System.out.println("Combo-ability: " + ((Minion) card).isComboAbility());
         }
+    }
+
+    public static BattleView getInstance() {
+        if (singleInstance == null) {
+            singleInstance = new BattleView();
+        }
+        return singleInstance;
     }
 
 

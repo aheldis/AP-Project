@@ -2,7 +2,7 @@ package model.battle;
 
 import model.Item.Collectable;
 import model.Item.Item;
-import model.card.*;
+import model.card.Card;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,7 +17,15 @@ public class Hand {
         this.deck = deck;
     }
 
-    public void addToCollectableItem(Collectable item){
+    public Collectable passCollectableInHand(String CollectableId) {
+        for (Collectable collectable : collectableItems) {
+            if (collectable.getCollectableId().getCollectableIdAsString().equals(CollectableId))
+                return collectable;
+        }
+        return null;
+    }
+
+    public void addToCollectableItem(Collectable item) {
         collectableItems.add(item);
     }
 
@@ -27,18 +35,6 @@ public class Hand {
                 return card;
         }
         return null;
-    }
-
-    public Collectable passCollectableInHand(String CollectableId) {
-        for (Collectable collectable : collectableItems) {
-            if (collectable.getCollectableId().getCollectableIdAsString().equals(CollectableId))
-                return collectable;
-        }
-        return null;
-    }
-
-    public ArrayList<Card> getGameCards() {
-        return gameCards;
     }
 
     public void setCards() {//set cards for start of game after shuttle cards in deck
@@ -52,10 +48,6 @@ public class Hand {
 //        }
         this.gameCards = new ArrayList<>(deck.getCardsOfDeck().subList(0, 4));
         deck.setIndexOfCards(5);
-    }
-
-    public ArrayList<Collectable> getCollectableItems() {
-        return collectableItems;
     }
 
     public void checkTheHandAndAddToIt() {//call it after each turn
@@ -94,6 +86,14 @@ public class Hand {
     public Card chooseARandomCard() {
         Random random = new Random();
         return gameCards.get(random.nextInt() % gameCards.size());
+    }
+
+    public ArrayList<Card> getGameCards() {
+        return gameCards;
+    }
+
+    public ArrayList<Collectable> getCollectableItems() {
+        return collectableItems;
     }
 
 

@@ -1,15 +1,25 @@
 package Controller;
 
-import model.Item.*;
-import model.account.*;
-import model.battle.*;
+import model.Item.Collectable;
+import model.Item.Item;
+import model.Item.Usable;
+import model.account.Account;
+import model.account.AllAccount;
+import model.account.Collection;
+import model.account.Shop;
+import model.battle.Game;
+import model.battle.GraveYard;
+import model.battle.Match;
+import model.battle.Player;
 import model.card.Card;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.EnterGameMessages;
 import view.MenuView;
 import view.Request;
-import view.enums.*;
+import view.enums.ErrorType;
+import view.enums.RequestType;
+import view.enums.StateType;
 
 
 public class MenuController {
@@ -22,7 +32,7 @@ public class MenuController {
     private static Match match;
 
     public static void main() {
-        String id ;
+        String id;
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
         while (state != StateType.END_PROGRAM) {
@@ -455,10 +465,10 @@ public class MenuController {
 
             if (state == StateType.SELECT_ITEM) {
                 Player player = match.passPlayerWithTurn();
-                id=((Collectable) selectedItem).getCollectableId().getCollectableIdAsString();
+                id = ((Collectable) selectedItem).getCollectableId().getCollectableIdAsString();
                 switch (request.getRequestType()) {
                     case GAME_ITEM_SHOW_INFO:
-                            menuView.showItemInfo(player.getHand(), id);
+                        menuView.showItemInfo(player.getHand(), id);
                         break;
                     case GAME_ITEM_USE:
                         Coordinate coordinate = request.getCoordinate();

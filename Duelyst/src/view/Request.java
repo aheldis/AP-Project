@@ -5,8 +5,6 @@ import view.enums.RequestType;
 import view.enums.StateType;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Request {
     private Scanner scanner = new Scanner(System.in);
@@ -31,40 +29,6 @@ public class Request {
         type = getType();
     }
 
-    public String getCommand() {
-        return command;
-    }
-
-    public Coordinate getCoordinate() {
-        return coordinate;
-    }
-
-    public boolean isValid() { //todo in be che dard mikhore? :))  //todo نمیدونم (zahra)
-        if (type == null)
-            return false;
-        return false;
-    }
-
-    public RequestType getRequestType() {
-        return type;
-    }
-
-    public void setId(String Id) {
-        this.Id = Id;
-    }
-
-    public void setDeckName(String deckName) {
-        this.deckName = deckName;
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public String getDeckName() {
-        return deckName;
-    }
-
     private RequestType getType() {
         if (state == StateType.ACCOUNT_MENU) {
             switch (command.toLowerCase()) {
@@ -79,8 +43,7 @@ public class Request {
                 case "enter exit":
                     return RequestType.MENU_ENTER_EXIT;
             }
-        }
-        else if (state == StateType.COLLECTION) {
+        } else if (state == StateType.COLLECTION) {
             switch (command.toLowerCase()) {
                 case "exit":
                     return RequestType.COLLECTION_EXIT;
@@ -128,8 +91,7 @@ public class Request {
                 return RequestType.COLLECTION_SHOW_DECK;
             }
 
-        }
-        else if (state == StateType.SHOP) {
+        } else if (state == StateType.SHOP) {
             if (command.toLowerCase().matches("exit")) {
                 return RequestType.SHOP_EXIT;
             }
@@ -158,8 +120,7 @@ public class Request {
             if (command.toLowerCase().matches("help")) {
                 return RequestType.SHOP_HELP;
             }
-        }
-        else if (state == StateType.MAIN_MENU) {
+        } else if (state == StateType.MAIN_MENU) {
             switch (command.toLowerCase()) {
                 case "login":
                     return RequestType.MAIN_MENU_LOGIN;
@@ -174,8 +135,7 @@ public class Request {
 
             }
 
-        }
-        else if (state == StateType.BATTLE) {
+        } else if (state == StateType.BATTLE) {
             switch (command.toLowerCase()) {
                 case "game Info":
                     return RequestType.GAME_GAME_INFO;
@@ -281,5 +241,39 @@ public class Request {
                 return RequestType.SINGLE_STORY;
         }
         return null;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public boolean isValid() { //todo in be che dard mikhore? :))  //todo نمیدونم (zahra)
+        if (type == null)
+            return false;
+        return false;
+    }
+
+    public RequestType getRequestType() {
+        return type;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String Id) {
+        this.Id = Id;
+    }
+
+    public String getDeckName() {
+        return deckName;
+    }
+
+    public void setDeckName(String deckName) {
+        this.deckName = deckName;
     }
 }

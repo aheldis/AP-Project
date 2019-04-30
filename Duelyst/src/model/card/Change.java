@@ -24,9 +24,23 @@ public class Change {
     //private ArrayList<Buff> untiBuffs;
     private boolean unaffactBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
 
+    public void affect(Player player, ArrayList<Square> targets) {
+        if (targetType.equals("Square")) {
+            for (Square square : targets) {
+                for (Buff buff : buffs.keySet())
+                    square.addBuffToSquare(buff);
+            }
+        }
+        if (targetType.equals("Card")) {
+            for (Square square : targets) {
+                makeChangeInTargetCard(player, (Card) square.getObject());
+            }
+        }
+    }
+
     private void makeChangeInTargetCard(Player player, Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
         if (!this.opponentCanMove)
-            targetCard.setCanMove(false, this.turnOfCanNotMoveForOpponent));
+            targetCard.setCanMove(false, this.turnOfCanNotMoveForOpponent))
 
         if (!this.opponentCanCounterAttack)
             targetCard.setCanCounterAttack(false, this.turnOfCanNotCounterAttackForOpponent);
@@ -50,21 +64,6 @@ public class Change {
                 targetCard.removeBuffs(false);
         }
     }
-
-    public void affect(Player player, ArrayList<Square> targets) {
-        if (targetType.equals("Square")) {
-            for (Square square : targets) {
-                for (Buff buff : buffs.keySet())
-                    square.addBuffToSquare(buff);
-            }
-        }
-        if (targetType.equals("Card")) {
-            for (Square square : targets) {
-                makeChangeInTargetCard(player, (Card) square.getObject());
-            }
-        }
-    }
-
 
     public void destroyPositiveEffects() {
 

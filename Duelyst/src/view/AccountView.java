@@ -29,6 +29,27 @@ public class AccountView {
         return singleInstance;
     }
 
+    private class Duration {
+        long seconds;
+        long minutes;
+        long hours;
+        long days;
+        long months;
+        long years;
+        long milliSecond;
+
+        public Duration(long milliSecond) {//joda joda taqsim she daqiq tare :D
+            this.milliSecond = milliSecond;
+            seconds = milliSecond / 1000 % 60;
+            minutes = milliSecond / (60 * 1000) % 60;
+            hours = milliSecond / (60 * 60 * 1000);
+            days = milliSecond / (1000 * 60 * 60 * 24);
+            months = days / 30;
+            years = months / 12;
+
+
+        }
+    }
 
     public void cardsAndItemsView(ArrayList<Spell> spells, ArrayList<Minion> minions, ArrayList<Hero> heroes, ArrayList<Usable> items) {
         int counter = 1;
@@ -71,18 +92,6 @@ public class AccountView {
         );
     }
 
-    private void showEachMinion(Minion minion, int counterOfCards) {
-        System.out.print(counterOfCards + " : Type : Minion");
-        System.out.print(" : Name : " + minion.getName() +
-                " – Class: " + minion.getCounterAttack().getClassName() +
-                " - AP : " + minion.getAp() +
-                " – HP : " + minion.getHp() +
-                " - MP : " + minion.getMp() +
-                " – Class : " + minion.getCounterAttack().getClassName() +
-                " – Special power: " + minion.getSpecialPowerInfo()
-        );
-    }
-
     private void showEachItem(Item item, int counter) {
         System.out.print(counter + " : Name : " + item.getName() +
                 " – Desc : " + item.getDescription()
@@ -94,6 +103,18 @@ public class AccountView {
         System.out.print(" - Name : " + spell.getName() +
                 " - MP : " + spell.getMp() +
                 " – Desc : " + spell.getDescription()
+        );
+    }
+
+    private void showEachMinion(Minion minion, int counterOfCards) {
+        System.out.print(counterOfCards + " : Type : Minion");
+        System.out.print(" : Name : " + minion.getName() +
+                " – Class: " + minion.getCounterAttack().getClassName() +
+                " - AP : " + minion.getAp() +
+                " – HP : " + minion.getHp() +
+                " - MP : " + minion.getMp() +
+                " – Class : " + minion.getCounterAttack().getClassName() +
+                " – Special power: " + minion.getSpecialPowerInfo()
         );
     }
 
@@ -226,28 +247,6 @@ public class AccountView {
 //            System.out.println(" win ");
 //        }
 //        System.out.println(match.getTime()); //todo time-e java ???
-    }
-
-    private class Duration {
-        long seconds;
-        long minutes;
-        long hours;
-        long days;
-        long months;
-        long years;
-        long milliSecond;
-
-        public Duration(long milliSecond) {//joda joda taqsim she daqiq tare :D
-            this.milliSecond = milliSecond;
-            seconds = milliSecond / 1000 % 60;
-            minutes = milliSecond / (60 * 1000) % 60;
-            hours = milliSecond / (60 * 60 * 1000);
-            days = milliSecond / (1000 * 60 * 60 * 24);
-            months = days / 30;
-            years = months / 12;
-
-
-        }
     }
 
     public void printDate(Date date) {

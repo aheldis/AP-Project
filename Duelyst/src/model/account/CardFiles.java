@@ -7,7 +7,10 @@ import model.card.Spell;
 import view.Request;
 import view.enums.StateType;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class CardFiles {
     private String path = "D:\\project-Duelyst\\Duelyst\\CardsFile";

@@ -17,39 +17,6 @@ public class Spell extends Card {
     private int hpChanges;
     private int turnForHpChanges;
 
-
-    public void setApChanges(int apChanges) {
-        this.apChanges = apChanges;
-    }
-
-    public int getApChanges() {
-        return apChanges;
-    }
-
-    public int getTurnForApChanges() {
-        return turnForApChanges;
-    }
-
-    public int getHpChanges() {
-        return hpChanges;
-    }
-
-    public int getTurnForHpChanges() {
-        return turnForHpChanges;
-    }
-
-    public void setTurnForApChanges(int turnForHpChanges) {
-        this.turnForApChanges = turnForHpChanges;
-    }
-
-    public void setTurnForHpChanges(int turnForHpChanges) {
-        this.turnForHpChanges = turnForHpChanges;
-    }
-
-    public void setHpChanges(int hpChanges) {
-        this.hpChanges = hpChanges;
-    }
-
     public void Spell(int cost, int mp, int apChanges, int turnForApChanges, int hpChanges,
                       int turnForHpChanges, String description, ArrayList<Buff> buffs) {
         this.apChanges = apChanges;
@@ -61,6 +28,55 @@ public class Spell extends Card {
         this.turnForApChanges = turnForHpChanges;
         this.buffs = buffs;
     }
+
+    public void printdesc() {
+        System.out.println(getDescription());//todo sout
+    }
+
+    public void affect(/*target card*/) {
+//az tabeye too card estefade kone
+    }
+
+    public void setTarget(Square square) {
+
+    }
+
+    public int getApChanges() {
+        return apChanges;
+    }
+
+    public void setApChanges(int apChanges) {
+        this.apChanges = apChanges;
+    }
+
+    public int getTurnForApChanges() {
+        return turnForApChanges;
+    }
+
+    public void setTurnForApChanges(int turnForHpChanges) {
+        this.turnForApChanges = turnForHpChanges;
+    }
+
+    public int getHpChanges() {
+        return hpChanges;
+    }
+
+    public void setHpChanges(int hpChanges) {
+        this.hpChanges = hpChanges;
+    }
+
+    public int getTurnForHpChanges() {
+        return turnForHpChanges;
+    }
+
+    public void setTurnForHpChanges(int turnForHpChanges) {
+        this.turnForHpChanges = turnForHpChanges;
+    }
+
+
+//    public void printdesc() {
+//        System.out.println(getDescription());//todo sout
+//    }
 
     public int getPlayerNameByNumber() {
         return playerNameByNumber;
@@ -74,25 +90,8 @@ public class Spell extends Card {
         return turn;
     }
 
-
-//    public void printdesc() {
-//        System.out.println(getDescription());//todo sout
-//    }
-
-    public void printdesc() {
-        System.out.println(getDescription());//todo sout
-    }
-
     public ArrayList<Square> getTargets() {
         return target;
-    }
-
-    public void setTarget(Square square) {
-
-    }
-
-    public void affect(/*target card*/) {
-//az tabeye too card estefade kone
     }
 
 }

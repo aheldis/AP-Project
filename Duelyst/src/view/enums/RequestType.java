@@ -60,5 +60,5 @@ public enum RequestType {
     MODE_MULTI_PLAYER,
     SINGLE_CUSTOM,
     SINGLE_STORY,
-    MODE_HELP;
+    MODE_HELP
 }

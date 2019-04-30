@@ -10,76 +10,93 @@ import view.enums.ErrorType;
 
 public class MenuView {
     private static MenuView singleInstance = null;
-    private MenuView(){}
+
+    private MenuView() {
+    }
+
     public static MenuView getInstance() {
         if (singleInstance == null)
             singleInstance = new MenuView();
         return singleInstance;
     }
 
-    public void helpForAccountMenu(){
+    public void helpForAccountMenu() {
         System.out.println("Enter Collection - Go to your collection");
         System.out.println("Enter Shop - Go to shop");
         System.out.println("Enter Battle - Start a game");
         System.out.println("Enter Help - Show help of main menu");
         System.out.println("Enter Exit - Log out from game");
     }
-    public void helpForMainMenu(){
+
+    public void helpForMainMenu() {
         System.out.println("Enter Create Account - Create a new account");
         System.out.println("Enter Save - To save ");
         System.out.println("Enter Show LeaderBoard");
         System.out.println("Enter Login - To log in to your account");
         System.out.println("Enter Help - To show the orders");
     }
-    public void printer(String string){
+
+    public void printer(String string) {
         System.out.println(string);
     }
-    public void showLevelsForStory(){
+
+    public void showLevelsForStory() {
 
     }
-    public void showDecksAndModes(Account account){
+
+    public void showDecksAndModes(Account account) {
         showModes();
         account.getCollection().showAllDecksName();
     }
-    public void showAllAccount(){
-        AllAccount allAccount=AllAccount.getInstance();
-        for(Account account: allAccount.accounts){
-            System.out.println(account.getUserName());
-        }
-    }
-    public void showModes(){
+
+    public void showModes() {
         System.out.println("1. Death mode");
         System.out.println("2. SaveFlag for 6 turn");
         System.out.println("3. Collect half if flags");
 
     }
+
+    public void showAllAccount() {
+        AllAccount allAccount = AllAccount.getInstance();
+        for (Account account : allAccount.accounts) {
+            System.out.println(account.getUserName());
+        }
+    }
+
     public void printError(ErrorType error) {
         System.out.println(error.getMessage());
     }
 
-    public void printGameInfo(Game game){
+    public void printGameInfo(Game game) {
 
     }
-    public void showMyMinions(Player player){
+
+    public void showMyMinions(Player player) {
 
     }
-    public void showHand(){
+
+    public void showHand() {
         //to hand function showNextCard baraye card badi darim :D
 
     }
-    public void showNextCard(Hand hand){
+
+    public void showNextCard(Hand hand) {
 
     }
-    public void showCollectableItems(Player player){
+
+    public void showCollectableItems(Player player) {
 
     }
-    public void showBattleMenu(){
+
+    public void showBattleMenu() {
 
     }
-    public void showCardInfo(Card card){
+
+    public void showCardInfo(Card card) {
 
     }
-    public void showItemInfo(Hand hand ,String collectableId){
+
+    public void showItemInfo(Hand hand, String collectableId) {
 
     }
 }

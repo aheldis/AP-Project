@@ -7,8 +7,8 @@ public class LandOfGame {
     private static final int NUMBER_OF_COLUMNS = 9;
     private Square[][] squares = new Square[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
 
-    public Square passSquareInThisCoordinate(Coordinate coordinate){
-       return squares[coordinate.getX()][coordinate.getY()];
+    public Square passSquareInThisCoordinate(Coordinate coordinate) {
+        return squares[coordinate.getX()][coordinate.getY()];
     }
 //    public void removeCardFromAnSquare(Coordinate coordinate){
 //        squares[coordinate.getX()][coordinate.getY()].removeCardFromSquare();

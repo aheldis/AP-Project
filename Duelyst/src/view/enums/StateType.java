@@ -1,6 +1,6 @@
 package view.enums;
 
-public enum  StateType {
+public enum StateType {
     MAIN_MENU,
     ACCOUNT_MENU,
     BATTLE,
