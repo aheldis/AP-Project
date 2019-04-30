@@ -71,14 +71,13 @@ public class Deck {//if it is normal deck you had initialize it in collection
         this.hero = null;
     }
 
-    public void showTheNextCardFromNextTurn() {
-        BattleView battleView = BattleView.getInstance();
-        battleView.showCardId(passNextCard().getCardId().getCardIdAsString());
-    }
+//    public void showTheNextCardFromNextTurn() {
+//        BattleView battleView = BattleView.getInstance();
+//        battleView.showCardId(passNextCard().getCardId().getCardIdAsString());
+//    }
 
     public Card passNextCard() {
         return cardsOfDeck.get(indexOfCards);
-
     }
 
     public void setRandomOrderForDeck() {//faqat shoroye bazi seda kon

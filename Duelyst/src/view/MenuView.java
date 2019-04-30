@@ -1,12 +1,10 @@
 package view;
 
 import model.Item.Flag;
+import model.Item.Item;
 import model.account.Account;
 import model.account.AllAccount;
-import model.battle.Game;
-import model.battle.Hand;
-import model.battle.Match;
-import model.battle.Player;
+import model.battle.*;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
@@ -15,6 +13,7 @@ import view.enums.ErrorType;
 
 public class MenuView {
     private static MenuView singleInstance = null;
+    private static final int NOT_VALID = -1;
 
     private MenuView() {
     }
@@ -108,30 +107,30 @@ public class MenuView {
         }
     }
 
-    public void showHand(Hand hand) {
+    public void showHand(Player player) {
         //to hand function showNextCard baraye card badi darim :D
-        AccountView.getInstance().DeckAndHandView(null, null, hand.getGameCards());
-        showNextCard(hand);
+        AccountView.getInstance().DeckAndHandView(null, null, player.getHand().getGameCards());
+        showNextCard(player.getMainDeck());
 
     }
 
-    public void showNextCard(Hand hand) {
+    public void showNextCard(Deck deck) {
         System.out.println("Next card :");
-//        if (card instanceof Spell) {
-//            System.out.print("     ");
-//            AccountView.getInstance().showEachSpell((Spell) card, counterOfCards);
-//            System.out.println("\n");
-//
-//        } else if (card instanceof Minion) {
-//            System.out.print("     ");
-//            AccountView.getInstance().showEachMinion((Minion) card, counterOfCards);
-//            System.out.println("\n");
-//        }
-        //todo
+        Card nextCard = deck.passNextCard();
+        if (nextCard instanceof Spell) {
+            System.out.print("     ");
+            AccountView.getInstance().showEachSpell((Spell) nextCard, NOT_VALID);
+            System.out.println("\n");
+
+        } else if (nextCard instanceof Minion) {
+            System.out.print("     ");
+            AccountView.getInstance().showEachMinion((Minion) nextCard, NOT_VALID);
+            System.out.println("\n");
+        }
     }
 
     public void showCollectableItems(Player player) {
-
+        AccountView.getInstance().DeckAndHandView(null, player.getHand().getCollectableItems(), null);
     }
 
     public void showBattleMenu() {

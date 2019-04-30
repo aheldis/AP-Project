@@ -6,12 +6,14 @@ import model.battle.Deck;
 import model.battle.MatchInfo;
 import model.card.*;
 import view.enums.ErrorType;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class AccountView {
 
     private static AccountView singleInstance = null;
+    private static final int NOT_VALID = -1;
 
     private AccountView() {
     }
@@ -86,14 +88,16 @@ public class AccountView {
         );
     }
 
-    private void showEachItem(Item item, int counter) {
+    public void showEachItem(Item item, int counter) {
         System.out.print(counter + " : Name : " + item.getName() +
                 " – Desc : " + item.getDescription()
         );
     }
 
     public void showEachSpell(Spell spell, int counterOfCards) {
-        System.out.print(counterOfCards + " : Type : Spell");
+        if (counterOfCards != NOT_VALID)
+            System.out.print(counterOfCards);
+        System.out.print(" : Type : Spell");
         System.out.print(" - Name : " + spell.getName() +
                 " - MP : " + spell.getMp() +
                 " – Desc : " + spell.getDescription()
@@ -101,7 +105,9 @@ public class AccountView {
     }
 
     public void showEachMinion(Minion minion, int counterOfCards) {
-        System.out.print(counterOfCards + " : Type : Minion");
+        if (counterOfCards != NOT_VALID)
+            System.out.print(counterOfCards);
+        System.out.print(" : Type : Minion");
         System.out.print(" : Name : " + minion.getName() +
                 " – Class: " + minion.getCounterAttackName() +
                 " - AP : " + minion.getAp() +
@@ -164,7 +170,7 @@ public class AccountView {
         }
     }
 
-    public void DeckAndHandView(Hero hero, Item item, ArrayList<Card> cards) {
+    public void DeckAndHandView(Hero hero, ArrayList<Item> items, ArrayList<Card> cards) {
         int counterOfCards = 1;
         System.out.println("Heroes :");
         if (hero != null) {
@@ -174,14 +180,16 @@ public class AccountView {
         }
 
         System.out.println("Items :");
-        if (item != null) {
-            System.out.print("     ");
-            showEachItem(item, counterOfCards);
-            System.out.println("\n");
+        if (items != null && items.size() != 0) {
+            for (Item item : items) {
+                System.out.print("     ");
+                showEachItem(item, counterOfCards);
+                System.out.println("\n");
+            }
         }
 
         System.out.println("Cards :");
-        if (cards.size() != 0) {
+        if (cards != null && cards.size() != 0) {
             for (Card card : cards) {
                 if (card instanceof Spell) {
                     System.out.print("     ");

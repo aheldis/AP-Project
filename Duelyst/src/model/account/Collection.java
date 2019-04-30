@@ -350,7 +350,9 @@ public class Collection {
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck == null)
             return;
-        accountView.DeckAndHandView(deck.getHero(), deck.getItem(), deck.getCardsOfDeck());
+        ArrayList<Item> items = new ArrayList<>();
+        items.add(deck.getItem());
+        accountView.DeckAndHandView(deck.getHero(), items, deck.getCardsOfDeck());
     }
 
     public void helpOfCollection() {

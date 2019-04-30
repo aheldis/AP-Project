@@ -12,14 +12,14 @@ import model.requirment.Coordinate;
 import java.util.ArrayList;
 
 public abstract class Player {
-    protected Deck mainDeck;
-    protected Hand hand;
+    private Deck mainDeck;
+    private Hand hand;
     protected String type;
-    protected Player opponent;
-    protected ArrayList<Card> cardsOnLand = new ArrayList<>();
-    protected Card flagSaver;
-    protected int turnForSavingFlag = 0;
-    ArrayList<Flag> flags;
+    private Player opponent;
+    private ArrayList<Card> cardsOnLand = new ArrayList<>();
+    private Card flagSaver;
+    private int turnForSavingFlag = 0;
+    private ArrayList<Flag> flags;
     private Account account;
     private Match match;
     private int turnsPlayed = 0;

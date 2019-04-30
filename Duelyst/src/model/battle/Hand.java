@@ -92,7 +92,7 @@ public class Hand {
         return gameCards;
     }
 
-    public ArrayList<Collectable> getCollectableItems() {
+    public ArrayList<Item> getCollectableItems() {
         return collectableItems;
     }
 
