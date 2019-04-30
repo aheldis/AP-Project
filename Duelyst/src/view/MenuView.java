@@ -74,27 +74,27 @@ public class MenuView {
         System.out.println("third level : hero:arash / mode:collect flag mode");
     }
 
-private void printInfoForEachPlayer(Player player,Match match){
-    System.out.println("player : UserName: "+player.getUserName());
-    System.out.println("mana : "+ player.getMana());
-    switch (match.getMode()){
-        case "DeathMode":
-            System.out.println("health point : "+player.getHero().getHp());
-            break;
-        case "SaveFlagMode":
+    private void printInfoForEachPlayer(Player player, Match match) {
+        System.out.println("player : UserName: " + player.getUserName());
+        System.out.println("mana : " + player.getMana());
+        switch (match.getMode()) {
+            case "DeathMode":
+                System.out.println("health point : " + player.getHero().getHp());
+                break;
+            case "SaveFlagMode":
 
-            break;
-        case "CollectFlagMode":
-            for(Flag flag : match.getFlags()){
-                System.out.println(flag.getOwnerCard().getName());
-            }
-            break;
+                break;
+            case "CollectFlagMode":
+                for (Flag flag : match.getFlags()) {
+                    System.out.println(flag.getOwnerCard().getName());
+                }
+                break;
+        }
     }
-}
 
     public void printGameInfo(Match match) {
-        printInfoForEachPlayer(match.getPlayers()[0],match);
-        printInfoForEachPlayer(match.getPlayers()[1],match);
+        printInfoForEachPlayer(match.getPlayers()[0], match);
+        printInfoForEachPlayer(match.getPlayers()[1], match);
     }
 
     public void showMyMinions(Player player) {
