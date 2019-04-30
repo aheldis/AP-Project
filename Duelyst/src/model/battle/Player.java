@@ -15,18 +15,18 @@ import java.util.ArrayList;
 
 public abstract class Player {
     private Account account;
-    protected Deck mainDeck;
-    protected Hand hand;
+    private Deck mainDeck;
+    private Hand hand;
     protected String type;
     private Match match;
     private int turnsPlayed = 0;
     private int mana;
     private GraveYard graveYard = new GraveYard(this);
-    protected Player opponent;
-    ArrayList<Flag> flags;
-    protected ArrayList<Card> cardsOnLand = new ArrayList<>();
-    protected Card flagSaver;
-    protected int turnForSavingFlag=0;
+    private Player opponent;
+    private ArrayList<Flag> flags;
+    private ArrayList<Card> cardsOnLand = new ArrayList<>();
+    private Card flagSaver;
+    private int turnForSavingFlag=0;
     //collectable Item to hand ast :D
 
 //    public abstract void move(Card card, Square newPosition);

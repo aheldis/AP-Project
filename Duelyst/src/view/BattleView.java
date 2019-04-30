@@ -43,6 +43,7 @@ public class BattleView {
 
         if (card instanceof Minion) {
             System.out.println("Combo-ability: " + ((Minion)card).isComboAbility());
+            //todo baraye sba comboAbility ro daram az card hazf mikonam ba activationTime kar kon
         }
     }
 

@@ -22,7 +22,6 @@ public class Minion extends Card {
     private Square square;
     private int price;
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
-    private boolean comboAbility;
     String specialPowerInfo;
     private boolean haveSpecialPower;
 
@@ -39,10 +38,6 @@ public class Minion extends Card {
     }
     public boolean getHaveSpecialPower(){
         return haveSpecialPower;
-    }
-
-    public boolean isComboAbility() {
-        return comboAbility;
     }
 
     int getNumberOfBeingAttacked() {

@@ -4,7 +4,6 @@ package model.card;
 import model.Item.Collectable;
 import model.Item.Flag;
 import model.battle.Player;
-import model.counterAttack.CounterAttack;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -42,7 +41,7 @@ public abstract class Card {
 
     public void addBuff(Buff buff, int forHowManyTurn){
         if(buffsOnThisCard.containsKey(buff))
-        buffsOnThisCard.put(buff, forHowManyTurn)
+        buffsOnThisCard.put(buff, forHowManyTurn);
     }
 
     //todo
@@ -92,9 +91,9 @@ public abstract class Card {
             if (newPosition.getObject() instanceof Collectable) {
                 player.getHand().addToCollectableItem((Collectable) newPosition.getObject());
             }
+            position.setObject(null);
             setPosition(newPosition);
             newPosition.setObject(this);
-            position.setObject(null);
             RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + newCoordination.getX() + newCoordination.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
             canMove = false;
@@ -209,7 +208,7 @@ public abstract class Card {
         return cost;
     }
 
-    public ArrayList<Buff> getBuffsOnThisCard() {
+    public HashMap<Buff, Integer> getBuffsOnThisCard() {
         return buffsOnThisCard;
     }
 
@@ -357,9 +356,11 @@ public abstract class Card {
     }
 
     public void counterAttack(Card theOneWhoAttacked) {
-        boolean canCounterAttack = counterAttack.equals("Melee") && getDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
+        boolean canCounterAttack = counterAttack.equals("Melee") &&
+                getDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
         if (!canCounterAttack)
-            canCounterAttack = counterAttack.equals("Ranged") && getDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
+            canCounterAttack = counterAttack.equals("Ranged") &&
+                    getDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
         if (!canCounterAttack)
             canCounterAttack = counterAttack.equals("Hybrid");
         if (this.canCounterAttack && canCounterAttack)
@@ -394,11 +395,10 @@ public abstract class Card {
     }
 
     public void setTarget(Card card, Square CardSquare) {
+        ArrayList<Square> targets = new ArrayList<>();
         //todo checkIfAttackedCardIsValid to class target
         //todo check kone ke to classe targete card (one/all/column/row) hast
         //todo age square hast ya distance dare check kone
-        //todo bere range ro nega kone har kodoom ke bashe aval bege to range hast ya na
-        //todo khone haye to range ro be onvane arrayList bede be ma
         //todo ArrayList e target ro to classe target bere bezare
 
     }
