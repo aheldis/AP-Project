@@ -134,14 +134,15 @@ public class Request {
                 case "save":
                     return RequestType.MAIN_MENU_SAVE;
                 case "exit":
-                    return RequestType.MAIN_MUNU_EXIT;
+                    return RequestType.MAIN_MENU_EXIT;
             }
             if(command.toLowerCase().matches("create account \\w+")){
 
                 return RequestType.MAIN_MENU_SIGN_UP;
             }
 
-        } else if (state == StateType.BATTLE) {
+        }
+        else if (state == StateType.BATTLE) {
             switch (command.toLowerCase()) {
                 case "game Info":
                     return RequestType.GAME_GAME_INFO;
