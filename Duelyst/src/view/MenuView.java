@@ -30,7 +30,7 @@ public class MenuView {
         System.out.println("Enter Shop - Go to shop");
         System.out.println("Enter Battle - Start a game");
         System.out.println("Enter Help - Show help of main menu");
-        System.out.println("Enter Exit - Log out from game");
+        System.out.println("Enter Exit - Log out from your account");
     }
 
     public void helpForMainMenu() {

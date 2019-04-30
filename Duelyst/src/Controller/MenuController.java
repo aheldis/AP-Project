@@ -1,25 +1,15 @@
 package Controller;
 
-import model.Item.Collectable;
-import model.Item.Item;
-import model.Item.Usable;
-import model.account.Account;
-import model.account.AllAccount;
-import model.account.Collection;
-import model.account.Shop;
-import model.battle.Game;
-import model.battle.GraveYard;
-import model.battle.Match;
-import model.battle.Player;
+import model.Item.*;
+import model.account.*;
+import model.battle.*;
 import model.card.*;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.BattleView;
 import view.MenuView;
 import view.Request;
-import view.enums.ErrorType;
-import view.enums.RequestType;
-import view.enums.StateType;
+import view.enums.*;
 
 
 public class MenuController {
@@ -40,6 +30,8 @@ public class MenuController {
             Item selectedItem = null;
 
             if(request.getRequestType() ==null){
+                request = new Request(state);
+                request.getNewCommand();
                 continue;
             }
             if (state == StateType.MAIN_MENU) {
@@ -100,14 +92,12 @@ public class MenuController {
                     case MAIN_MENU_SAVE:
                         //todo
                         break;
-                    case MAIN_MUNU_EXIT:
+                    case MAIN_MENU_EXIT:
                         return;
                 }
-                request = new Request(state);
-                request.getNewCommand();
             }
 
-            if (state == StateType.ACCOUNT_MENU) {
+            else if (state == StateType.ACCOUNT_MENU) {
                     switch (request.getRequestType()) {
                         case MENU_ENTER_COLLECTION:
                             state = StateType.COLLECTION;
@@ -131,7 +121,7 @@ public class MenuController {
                 }
             }
 
-            if (state == StateType.COLLECTION) {//todo id ro check konam ke chiye :)
+           else if (state == StateType.COLLECTION) {//todo id ro check konam ke chiye :)
                 Collection collection = account.getCollection();
                 String deckName;
                 Card card;
@@ -219,7 +209,7 @@ public class MenuController {
 
             }
 
-            if (state == StateType.SHOP) {
+           else if (state == StateType.SHOP) {
                 Shop shop = Shop.getInstance();
                     switch (request.getRequestType()) {
                         case SHOP_SHOW_COLLECTION:
@@ -247,7 +237,7 @@ public class MenuController {
                 }
             }
 
-            if (state == StateType.SELECT_MODE) {
+           else if (state == StateType.SELECT_MODE) {
                 switch (request.getRequestType()) {
                     case MODE_MULTI_PLAYER:
                         int mode = 0;
@@ -301,7 +291,8 @@ public class MenuController {
                         break;
                 }
             }
-            if (state == StateType.SINGLE_GAME) {
+
+           else if (state == StateType.SINGLE_GAME) {
                 switch (request.getRequestType()) {
                     case SINGLE_CUSTOM: {
                         int mode = 0;
@@ -349,7 +340,7 @@ public class MenuController {
                 }
             }
 
-            if (state == StateType.BATTLE) {
+           else if (state == StateType.BATTLE) {
                 ErrorType error;
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
@@ -450,7 +441,8 @@ public class MenuController {
                 }
 
             }
-            if (state == StateType.GRAVE_YARD) {
+
+           else if (state == StateType.GRAVE_YARD) {
                 GraveYard graveYard;
                 graveYard = match.passPlayerWithTurn().getGraveYard();
                 switch (request.getRequestType()) {
@@ -476,7 +468,7 @@ public class MenuController {
 
             }
 
-            if (state == StateType.SELECT_ITEM) {
+           else if (state == StateType.SELECT_ITEM) {
                 Player player = match.passPlayerWithTurn();
                 id = ((Collectable) selectedItem).getCollectableId().getCollectableIdAsString();
                 switch (request.getRequestType()) {
@@ -490,7 +482,8 @@ public class MenuController {
                 }
 
             }
-            if (state == StateType.SELECT_CARD) {
+
+           else if (state == StateType.SELECT_CARD) {
                 Square square;
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
