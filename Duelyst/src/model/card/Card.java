@@ -4,7 +4,6 @@ package model.card;
 import model.Item.Collectable;
 import model.Item.Flag;
 import model.battle.Player;
-import model.counterAttack.CounterAttack;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -25,10 +24,10 @@ public abstract class Card {
     private int attackRange;
     private int cost;
     //private ArrayList<Buff> buffsOnThisCard;
-    private HashMap<Buff, Integer> buffsOnThisCard;
+    private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
     private Square position;
     private LandOfGame landOfGame;
-    private int CardNumber;//todo card number dashte bashan oon shomareE ke to doc e vase sakhtan mode ha, albate mitoonan nadashte bashan ba esm besazim game card ha ro :-? item ha ham hamin tor
+    private int CardNumber;// card number dashte bashan oon shomareE ke to doc e vase sakhtan mode ha, albate mitoonan nadashte bashan ba esm besazim game card ha ro :-? item ha ham hamin tor
     protected int mp;
     protected int hp;
     protected int ap;
@@ -39,16 +38,40 @@ public abstract class Card {
     protected int turnOfCanNotMove = 0;
     protected int turnOfCanNotAttack = 0;
     protected int turnOfCanNotCounterAttack = 0;
+    private int hpChangeAfterAttack =  0; //todo mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
+    private String playerName;
+    private String description;
+    //todo
 
-    public void addBuff(Buff buff, int forHowManyTurn){
-        if(buffsOnThisCard.containsKey(buff))
-        buffsOnThisCard.put(buff, forHowManyTurn);
+    public void addBuff(Buff buff, int forHowManyTurn) {
+        if (!buffsOnThisCard.containsKey(buff))
+            buffsOnThisCard.put(buff, new ArrayList<>());
+        buffsOnThisCard.get(buff).add(forHowManyTurn);
     }
 
-    //todo
-    private String playerName;
+    public void removeBuffs(boolean goodBuff){
+        ArrayList<Buff> buffsWhichAreGoingToDeleted = new ArrayList<>();
+        for(Buff buff: buffsOnThisCard.keySet()){
+            if(buff.isGoodBuff() == goodBuff)
+                buffsWhichAreGoingToDeleted.add(buff);
+        }
+        for(Buff buff: buffsWhichAreGoingToDeleted){
+            buffsOnThisCard.remove(buff);
+        }
+    }
 
-    private String description;
+    public void removeBuff(Buff buff){
+        //kar dige e ke lazem nist? ye check beshe baad
+        buffsOnThisCard.remove(buff);
+    }
+
+    public void setHpChangeAfterAttack(int number){
+        hpChangeAfterAttack += number;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
 
     public Target getTargetClass() {
         return target;
@@ -208,7 +231,7 @@ public abstract class Card {
         return cost;
     }
 
-    public ArrayList<Buff> getBuffsOnThisCard() {
+    public HashMap<Buff, ArrayList<Integer>> getBuffsOnThisCard() {
         return buffsOnThisCard;
     }
 

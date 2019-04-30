@@ -1,5 +1,6 @@
 package model.card;
 
+import model.battle.Player;
 import model.land.Square;
 
 import java.util.ArrayList;
@@ -20,9 +21,10 @@ public class Change {
     private int apChange = 0;
     private boolean continuous = false;
     private HashMap<Buff, Integer> buffs; //in az har baff yedoone toosh mitoone dashte bashe ke okeye fekr konam age nist begin
-    private ArrayList<Buff> untiBuffs;
+    //private ArrayList<Buff> untiBuffs;
+    private boolean unaffactBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
 
-    private void makeChangeInTargetCard(Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
+    private void makeChangeInTargetCard(Player player, Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
         if (!this.opponentCanMove)
             targetCard.setCanMove(false, this.turnOfCanNotMoveForOpponent));
 
@@ -39,16 +41,17 @@ public class Change {
         targetCard.changeAp(apChange);
         targetCard.changeHp(hpChange);
         for (Buff buff : buffs.keySet()) {
-            buff.affect(targetCard);
-            //buff.affect(targetCard, buffs.get(buff));
-            //todo inja nabayad bere buff ro add kone be buffuye carde bad affect ro to init per turn seda konim?
+            targetCard.addBuff(buff, buffs.get(buff));
         }
-        for (Buff buff : untiBuffs) {
-            buff.unAffect(targetCard);
+        if (unaffactBuffs) {
+            if (targetCard.getPlayer().equals(player)) {
+                targetCard.removeBuffs(true);
+            } else
+                targetCard.removeBuffs(false);
         }
     }
 
-    public void affect(ArrayList<Square> targets) {
+    public void affect(Player player, ArrayList<Square> targets) {
         if (targetType.equals("Square")) {
             for (Square square : targets) {
                 for (Buff buff : buffs.keySet())
@@ -57,7 +60,7 @@ public class Change {
         }
         if (targetType.equals("Card")) {
             for (Square square : targets) {
-                makeChangeInTargetCard((Card) square.getObject());
+                makeChangeInTargetCard(player, (Card) square.getObject());
             }
         }
     }
