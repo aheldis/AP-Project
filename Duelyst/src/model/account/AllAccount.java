@@ -7,7 +7,7 @@ import java.util.Collections;
 
 public class AllAccount {
     public static AllAccount singleInstance = null;
-    public ArrayList<Account> accounts;
+    public ArrayList<Account> accounts = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
 
     private AllAccount() {

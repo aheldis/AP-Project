@@ -7,11 +7,28 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.google.code.gson:gson:2.8.5" level="project" />
+    <orderEntry type="library" exported="" name="com.google.code.gson:gson:2.8.5" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.8.51" level="project" />
+    <orderEntry type="library" exported="" name="java" level="project" />
     <orderEntry type="module-library">
       <library>
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../yagson-master.zip!/yagson-master/extras/src/main/java" />
+          <root url="jar://$MODULE_DIR$/../yagson-master.zip!/yagson-master/extras/src/test/java" />
+          <root url="jar://$MODULE_DIR$/../yagson-master.zip!/yagson-master/gson/src/main/java" />
+          <root url="jar://$MODULE_DIR$/../yagson-master.zip!/yagson-master/gson/src/main/java-templates" />
+          <root url="jar://$MODULE_DIR$/../yagson-master.zip!/yagson-master/gson/src/testJ8/java" />
+          <root url="jar://$MODULE_DIR$/../yagson-master.zip!/yagson-master/gson/src/test/java" />
+          <root url="jar://$MODULE_DIR$/../yagson-master.zip!/yagson-master/metrics/src/main/java" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/yagson-master/yagson-0.5.jar!/" />
+          <root url="jar://$MODULE_DIR$/../yagson-0.5.jar" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

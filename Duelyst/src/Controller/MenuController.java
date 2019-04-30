@@ -15,14 +15,11 @@ import model.card.*;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.BattleView;
-import view.EnterGameMessages;
 import view.MenuView;
 import view.Request;
 import view.enums.ErrorType;
 import view.enums.RequestType;
 import view.enums.StateType;
-
-import javax.xml.parsers.SAXParser;
 
 
 public class MenuController {
@@ -42,43 +39,57 @@ public class MenuController {
             Card selectedCard = null;
             Item selectedItem = null;
 
+            if(request.getRequestType() ==null){
+                continue;
+            }
             if (state == StateType.MAIN_MENU) {
-                EnterGameMessages enterGameMessages = EnterGameMessages.getInstance();
+                String userName;
                 switch (request.getRequestType()) {
                     case MAIN_MENU_SIGN_UP:
-                        enterGameMessages.showSignUpGetUserName();
+                        userName = request.getCommand().split(" ")[2];
+                        if (allAccount.userNameHaveBeenExist(userName)) {
+                            menuView.printer("UserName have been exist");
+                            break;
+                        }menuView.printer("Enter your password");
                         request.getNewLine();
-                        while (allAccount.userNameHaveBeenExist(request.getCommand())) {
-                            enterGameMessages.showSignUpHaveUserName();
-                            enterGameMessages.showSignUpGetUserName();
-                            request.getNewLine();
-                        }
-                        String username = request.getCommand();
-                        enterGameMessages.showSignUpGetPassword();
-                        request.getNewLine();
-                        allAccount.createAccount(username, request.getCommand());
-                        account = allAccount.getAccountByName(username);
-                        state = StateType.ACCOUNT_MENU;
-                        break;
-                    case MAIN_MENU_LOGIN:
-                        enterGameMessages.showLoginGetName();
-                        request.getNewLine();
-                        String userName = request.getCommand();
-                        while (!allAccount.userNameHaveBeenExist(userName)) {
-                            enterGameMessages.showLoginHaveNotName();
-                            enterGameMessages.showLoginGetName();
-                            request.getNewLine();
-                            userName = request.getCommand();
-                        }
-                        enterGameMessages.showLoginGetPassword();
-                        request.getNewLine();
-                        while (!allAccount.passwordMatcher(userName, request.getCommand())) {
-                            enterGameMessages.showLoginGetPassword();
-                            request.getNewLine();
-                        }
-                        allAccount.login(userName, request.getCommand());
+                        allAccount.createAccount(userName, request.getCommand());
                         account = allAccount.getAccountByName(userName);
                         state = StateType.ACCOUNT_MENU;
+                        menuView.printer("you have signed up ");
+                        break;
+                    case MAIN_MENU_LOGIN:
+                        menuView.printer("Enter you UserName");
+                        request.getNewLine();
+                        userName = request.getCommand();
+                        boolean breaker=false;
+                        while (!allAccount.userNameHaveBeenExist(userName)) {
+                            menuView.printer("This name have not  been exist");
+                            menuView.printer("Enter you UserName");
+                            request.getNewLine();
+                            userName = request.getCommand();
+                            if(userName .equals("exit")){
+                                breaker = true;
+                                break;
+                            }
+                        }
+                        if(!breaker) {
+                            menuView.printer("Enter your password");
+                            request.getNewLine();
+                            breaker = false;
+                            while (!allAccount.passwordMatcher(userName, request.getCommand())) {
+                                menuView.printer("Enter your password");
+                                request.getNewLine();
+                                if (request.getCommand().equals("exit")) {
+                                    breaker = true;
+                                    break;
+                                }
+                            }
+                            if(!breaker) {
+                                allAccount.login(userName, request.getCommand());
+                                account = allAccount.getAccountByName(userName);
+                                state = StateType.ACCOUNT_MENU;
+                            }
+                        }
                         break;
                     case MAIN_MENU_HELP:
                         menuView.helpForMainMenu();
@@ -89,13 +100,14 @@ public class MenuController {
                     case MAIN_MENU_SAVE:
                         //todo
                         break;
+                    case MAIN_MUNU_EXIT:
+                        return;
                 }
                 request = new Request(state);
                 request.getNewCommand();
             }
 
             if (state == StateType.ACCOUNT_MENU) {
-                while (request.getRequestType() != RequestType.MENU_ENTER_EXIT) {
                     switch (request.getRequestType()) {
                         case MENU_ENTER_COLLECTION:
                             state = StateType.COLLECTION;
@@ -114,11 +126,8 @@ public class MenuController {
                             state = StateType.SHOP;
                             break;
                         case MENU_ENTER_EXIT:
-                            state = StateType.END_PROGRAM;
+                            state = StateType.MAIN_MENU;
                             break;
-                    }
-                    request = new Request(state);
-                    request.getNewCommand();
                 }
             }
 
@@ -128,7 +137,6 @@ public class MenuController {
                 Card card;
                 Usable item;
                 ErrorType error;
-                while (request.getRequestType() != RequestType.COLLECTION_EXIT) {
                     switch (request.getRequestType()) {
                         case COLLECTION_HELP:
                             collection.helpOfCollection();
@@ -209,16 +217,10 @@ public class MenuController {
                             break;
                     }
 
-
-                    request = new Request(state);
-                    request.getNewCommand();
-
-                }
             }
 
             if (state == StateType.SHOP) {
                 Shop shop = Shop.getInstance();
-                while (request.getRequestType() != RequestType.SHOP_EXIT) {
                     switch (request.getRequestType()) {
                         case SHOP_SHOW_COLLECTION:
                             account.getCollection().showCardsAndItems();
@@ -240,12 +242,11 @@ public class MenuController {
                             break;
                         case SHOP_HELP:
                             shop.help();
-
-                    }
-                    request = new Request(state);
-                    request.getNewCommand();
+                        case SHOP_EXIT:
+                            state = StateType.ACCOUNT_MENU;
                 }
             }
+
             if (state == StateType.SELECT_MODE) {
                 switch (request.getRequestType()) {
                     case MODE_MULTI_PLAYER:
@@ -526,6 +527,8 @@ public class MenuController {
                         break;
                 }
             }
+            request = new Request(state);
+            request.getNewCommand();
         }
     }
 }

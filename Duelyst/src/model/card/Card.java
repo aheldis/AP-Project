@@ -199,9 +199,11 @@ public abstract class Card {
     }
 
     public void counterAttack(Card theOneWhoAttacked) {
-        boolean canCounterAttack = counterAttack.equals("Melee") && getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
+        boolean canCounterAttack = counterAttack.equals("Melee") &&
+                getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
         if (!canCounterAttack)
-            canCounterAttack = counterAttack.equals("Ranged") && getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
+            canCounterAttack = counterAttack.equals("Ranged") &&
+                    getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
         if (!canCounterAttack)
             canCounterAttack = counterAttack.equals("Hybrid");
         if (this.canCounterAttack && canCounterAttack)
@@ -210,7 +212,7 @@ public abstract class Card {
 
     public void setCanAttack(boolean bool, int forHowManyTurn) {
         canAttack = bool;
-        if (bool == false) {
+        if (!bool ) {
             setTurnOfCanNotAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
         }
     }
@@ -245,7 +247,7 @@ public abstract class Card {
 
     public void setCanMove(boolean canMove, int forHowManyTurn) {
         this.canMove = canMove;
-        if (canMove == false) {
+        if (!canMove) {
             setTurnOfCanNotMove(Math.max(getTurnOfCanNotMove(), forHowManyTurn));
         }
     }
@@ -260,7 +262,7 @@ public abstract class Card {
 
     public void setCanCounterAttack(boolean bool, int forHowManyTurn) {
         canCounterAttack = bool;
-        if (bool == false) {
+        if (!bool ) {
             setTurnOfCanNotCounterAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
         }
     }

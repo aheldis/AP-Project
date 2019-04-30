@@ -36,14 +36,15 @@ public class Request {
                     return RequestType.MENU_ENTER_COLLECTION;
                 case "enter shop":
                     return RequestType.MENU_ENTER_SHOP;
-                case "enter model.battle":
+                case "enter battle":
                     return RequestType.MENU_ENTER_BATTLE;
                 case "enter help":
                     return RequestType.MENU_ENTER_HELP;
                 case "enter exit":
                     return RequestType.MENU_ENTER_EXIT;
             }
-        } else if (state == StateType.COLLECTION) {
+        }
+        else if (state == StateType.COLLECTION) {
             switch (command.toLowerCase()) {
                 case "exit":
                     return RequestType.COLLECTION_EXIT;
@@ -91,7 +92,8 @@ public class Request {
                 return RequestType.COLLECTION_SHOW_DECK;
             }
 
-        } else if (state == StateType.SHOP) {
+        }
+        else if (state == StateType.SHOP) {
             if (command.toLowerCase().matches("exit")) {
                 return RequestType.SHOP_EXIT;
             }
@@ -120,19 +122,23 @@ public class Request {
             if (command.toLowerCase().matches("help")) {
                 return RequestType.SHOP_HELP;
             }
-        } else if (state == StateType.MAIN_MENU) {
+        }
+        else if (state == StateType.MAIN_MENU) {
             switch (command.toLowerCase()) {
                 case "login":
                     return RequestType.MAIN_MENU_LOGIN;
-                case "create account":
-                    return RequestType.MAIN_MENU_SIGN_UP;
                 case "show leaderBoard":
                     return RequestType.MAIN_MENU_LEADER_BOARD;
                 case "help":
                     return RequestType.MAIN_MENU_HELP;
                 case "save":
                     return RequestType.MAIN_MENU_SAVE;
+                case "exit":
+                    return RequestType.MAIN_MUNU_EXIT;
+            }
+            if(command.toLowerCase().matches("create account \\w+")){
 
+                return RequestType.MAIN_MENU_SIGN_UP;
             }
 
         } else if (state == StateType.BATTLE) {
@@ -256,7 +262,8 @@ public class Request {
         return false;
     }
 
-    public RequestType getRequestType() {
+    public RequestType getRequestType()
+    {
         return type;
     }
 
