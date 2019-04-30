@@ -87,7 +87,7 @@ public class AccountView {
         System.out.print(counterOfCard + " : Name : " + hero.getName() +
                 " - AP : " + hero.getAp() +
                 " – HP : " + hero.getHp() +
-                " – Class : " + hero.getCounterAttack().getClassName() +
+                " – Class : " + hero.getCounterAttackName() +
                 " – Special power: " + hero.getSpecialPowerInfo()
         );
     }
@@ -109,11 +109,11 @@ public class AccountView {
     private void showEachMinion(Minion minion, int counterOfCards) {
         System.out.print(counterOfCards + " : Type : Minion");
         System.out.print(" : Name : " + minion.getName() +
-                " – Class: " + minion.getCounterAttack().getClassName() +
+                " – Class: " + minion.getCounterAttackName() +
                 " - AP : " + minion.getAp() +
                 " – HP : " + minion.getHp() +
                 " - MP : " + minion.getMp() +
-                " – Class : " + minion.getCounterAttack().getClassName() +
+                " – Class : " + minion.getCounterAttackName() +
                 " – Special power: " + minion.getSpecialPowerInfo()
         );
     }

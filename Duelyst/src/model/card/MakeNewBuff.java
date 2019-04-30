@@ -2,13 +2,15 @@ package model.card;
 
 import view.NewCardMessages;
 import view.Request;
+import view.enums.RequestType;
+import view.enums.StateType;
 
 import java.io.*;
 
 public class MakeNewBuff {
 
     public static void makeNewBuff() {
-        Request request = new Request("buff");
+        Request request = new Request(StateType.ACCOUNT_MENU);//MOHM NI CHI BASHE STATE
         NewCardMessages newCardMessages = NewCardMessages.getInstance();
         int lineNumber = 1;
         while (true) {
@@ -17,7 +19,7 @@ public class MakeNewBuff {
                 FileReader fileReader = new FileReader("../BuffsFile/TEMPLATE");
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line = null;
-                newCardMessages.printer("name: ");
+                newCardMessages.printLine("name: ");
                 request.getNewLine();
                 String input = request.getCommand();
                 if (input.equals("EXIT"))
@@ -29,7 +31,7 @@ public class MakeNewBuff {
                 bufferedWriter.newLine();
                 while ((line = bufferedReader.readLine()) != null) {
                     do {
-                        newCardMessages.printer(line);
+                        newCardMessages.printLine(line);
                         request.getNewLine();
                         input = request.getCommand();
                     } while (checkSyntax(lineNumber, input));
@@ -41,9 +43,9 @@ public class MakeNewBuff {
                 bufferedWriter.close();
 
             } catch (FileNotFoundException e) {
-                newCardMessages.printer("file not found");
+                newCardMessages.printLine("file not found");
             } catch (Exception e) {
-                newCardMessages.printer("other error");
+                newCardMessages.printLine("other error");
             }
         }
     }

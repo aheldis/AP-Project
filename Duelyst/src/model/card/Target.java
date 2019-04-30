@@ -43,7 +43,7 @@ public class Target {
             if (!cardType.equals("hero")) {
                 return false;
             }
-            counterAttackName = attacked.getCounterAttack().getName();
+            counterAttackName = attacked.getCounterAttack().getCName();
         }
 
         if (counterAttackName != null) {
