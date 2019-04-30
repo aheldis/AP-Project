@@ -20,15 +20,15 @@ public class Change {
     private int hpChange = 0;
     private int apChange = 0;
     private boolean continuous = false;
-    private HashMap<Buff, Integer> buffs; //in az har baff yedoone toosh mitoone dashte bashe ke okeye fekr konam age nist begin
+    private HashMap<String, Integer> buffs; //in az har baff yedoone toosh mitoone dashte bashe ke okeye fekr konam age nist begin
     //private ArrayList<Buff> untiBuffs;
     private boolean unaffactBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
 
     public void affect(Player player, ArrayList<Square> targets) {
         if (targetType.equals("Square")) {
             for (Square square : targets) {
-                for (Buff buff : buffs.keySet())
-                    square.addBuffToSquare(buff);
+                for (String buffName : buffs.keySet())
+                    square.addBuffToSquare(Buff.getByName(buffName));
             }
         }
         if (targetType.equals("Card")) {
@@ -54,8 +54,8 @@ public class Change {
 //        targetCard.setTurnOfCanNotCounterAttack(Math.max(targetCard.getTurnOfCanNotCounterAttack(), this.turnOfCanNotCounterAttackForOpponent));
         targetCard.changeAp(apChange);
         targetCard.changeHp(hpChange);
-        for (Buff buff : buffs.keySet()) {
-            targetCard.addBuff(buff, buffs.get(buff));
+        for (String buffName : buffs.keySet()) {
+            targetCard.addBuff(Buff.getByName(buffName), buffs.get(buffName));
         }
         if (unaffactBuffs) {
             if (targetCard.getPlayer().equals(player)) {

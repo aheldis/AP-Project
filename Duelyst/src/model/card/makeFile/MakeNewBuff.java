@@ -1,4 +1,4 @@
-package model.card;
+package model.card.makeFile;
 
 import view.NewCardMessages;
 import view.Request;

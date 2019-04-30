@@ -2,7 +2,7 @@ package model.account;
 
 
 import model.card.Card;
-import model.card.MakeNewCard;
+import model.card.makeFile.MakeNewFile;
 import model.card.Spell;
 import view.Request;
 import view.enums.StateType;
@@ -23,7 +23,7 @@ public class CardFiles {
 
         switch (command) {
             case "Spell":
-                MakeNewCard.makeNewCardFile("Spell");
+                MakeNewFile.makeNewCardFile("Spell");
 //todo it is for check syntax don't delete these comments
 
 //            NewCardMessages message = NewCardMessages.getInstance();
@@ -92,10 +92,10 @@ public class CardFiles {
 
                 break;
             case "Minion":
-                MakeNewCard.makeNewCardFile("Minion");
+                MakeNewFile.makeNewCardFile("Minion");
                 break;
             case "Hero":
-                MakeNewCard.makeNewCardFile("Hero");
+                MakeNewFile.makeNewCardFile("Hero");
                 break;
             case "Item":
                 //todo

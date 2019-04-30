@@ -1,6 +1,9 @@
 package model.card;
 
+import java.util.ArrayList;
+
 public class Buff {
+    private static ArrayList<Buff> buffs;
     private String name;
     private boolean goodBuff;
     private boolean haveUnAffect;
@@ -50,5 +53,17 @@ public class Buff {
 
     public boolean isHaveUnAffect() {
         return haveUnAffect;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    static public Buff getByName(String name){
+        for(Buff buff: buffs){
+            if(buff.getName().equals(name))
+                return buff;
+        }
+        return null;
     }
 }

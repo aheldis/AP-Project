@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Shop {
     public static Shop singleInstance = null;
-    private static String pathOfFiles = "../Duelyst";
+    private static String pathOfFiles = "../Duelyst/";
     private ArrayList<Card> cards = new ArrayList<>();// todo (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
     private ArrayList<Usable> items = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
