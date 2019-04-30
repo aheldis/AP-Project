@@ -71,31 +71,38 @@ public class MakeNewFile {
                 System.out.println("enter " + field.getName() + " (" + field.getAnnotatedType().getType().getTypeName() + "):");
                 try {
                     AnnotatedType annotatedType = field.getAnnotatedType();
-                    request.getNewLine();
+
                     if (annotatedType.getType().getTypeName().equals("int")) {
-                        field.set(object, request.getCommand());
+                        request.getNewLine();
                         field.set(object, Integer.parseInt(request.getCommand()));
                     } else if (annotatedType.getType().getTypeName().equals("boolean")) {
+                        request.getNewLine();
                         field.set(object, Boolean.parseBoolean(request.getCommand()));
                     } else if (annotatedType.getType().getTypeName().equals("java.util.ArrayList<java.lang.String>")) {
                         System.out.println("array");
                         ArrayList<String> arr = new ArrayList<>();
                         System.out.println("enter number of array items: ");
+                        request.getNewLine();
                         int number = Integer.parseInt(request.getCommand());
                         for (int i = 0; i < number; i++) {
+                            request.getNewLine();
                             arr.add(request.getCommand());
                         }
                         field.set(object, arr);
                     } else if (annotatedType.getType().getTypeName().equals("java.lang.String")) {
+                        request.getNewLine();
                         field.set(object, request.getCommand());
                     } else if (annotatedType.getType().getTypeName().equals("java.util.HashMap<java.lang.String, java.lang.Integer>")) {
                         System.out.println("enter number of buffs: ");
+                        request.getNewLine();
                         HashMap<String, Integer> hashMap = new HashMap<>();
                         int number = Integer.parseInt(request.getCommand());
                         for (int i = 0; i < number; i++) {
                             System.out.println("enter buff name(holy/power/poison/weakness/stun/disarm) CORRECTLY");
+                            request.getNewLine();
                             String buffName = request.getCommand();
                             System.out.println("for How Many Turn");
+                            request.getNewLine();
                             int num = Integer.parseInt(request.getCommand());
                             hashMap.put(buffName, num);
                         }

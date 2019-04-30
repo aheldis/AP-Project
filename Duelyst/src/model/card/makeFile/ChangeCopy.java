@@ -4,20 +4,20 @@ import java.util.HashMap;
 
 public class ChangeCopy {
 
-    // todo setter hasho to card gozashtam ke dastresish rahat tar she :D (zahra)
+    public String targetType;
+    public boolean opponentCanMove = true; //Disarm buff
+    public boolean opponentCanAttack = true;
+    public boolean opponentCanCounterAttack = true;
+    public int turnOfCanNotMoveForOpponent = 0;
+    public int turnOfCanNotAttackForOpponent = 0;
+    public int turnOfCanNotCounterAttackForOpponent = 0;
+    public int hpChange = 0;
+    public int apChange = 0;
+    public boolean continuous = false;
+    public HashMap<String, Integer> buffs; //in az har baff yedoone toosh mitoone dashte bashe ke okeye fekr konam age nist begin
+    //public ArrayList<Buff> untiBuffs;
+    public boolean unaffactBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
 
-    private String targetType;
-    private boolean opponentCanMove = true; //Disarm buff
-    private boolean opponentCanAttack = true;
-    private boolean opponentCanCounterAttack = true;
-    private int turnOfCanNotMoveForOpponent = 0;
-    private int turnOfCanNotAttackForOpponent = 0;
-    private int turnOfCanNotCounterAttackForOpponent = 0;
-    private int hpChange = 0;
-    private int apChange = 0;
-    private boolean continuous = false;
-    private HashMap<String, Integer> buffs; //in az har baff yedoone toosh mitoone dashte bashe ke okeye fekr konam age nist begin
-    //private ArrayList<Buff> untiBuffs;
-    private boolean unaffactBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
-
+    public ChangeCopy() {
+    }
 }
