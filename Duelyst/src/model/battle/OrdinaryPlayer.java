@@ -1,5 +1,6 @@
 package model.battle;
 
+import model.Item.Flag;
 import model.account.Account;
 import model.card.Buff;
 import model.card.Card;
@@ -43,6 +44,12 @@ public class OrdinaryPlayer extends Player {
         ArrayList<Buff> buffsOfSquare = square.getBuffs();
         for (Buff buff : buffsOfSquare) {
             buff.affect(playerCard);
+        }
+        if (square.getObject() instanceof Flag) {
+            ((Flag) square.getObject()).setOwnerCard(playerCard);
+            addToFlags((Flag) square.getObject());
+            setFlagSaver(playerCard);
+            addToTurnForSavingFlag();
         }
         cardsOnLand.add(playerCard);
         Square[][] squares = land.getSquares();

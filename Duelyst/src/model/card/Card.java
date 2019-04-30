@@ -44,7 +44,9 @@ public abstract class Card {
     //todo
 
 
-
+    public Change getChange() {
+        return change;
+    }
 
     public void addBuff(Buff buff, int forHowManyTurn) {
         if (!buffsOnThisCard.containsKey(buff))
@@ -87,6 +89,7 @@ public abstract class Card {
                 }
             }
             if (newPosition.getObject() instanceof Flag) {
+                ((Flag) newPosition.getObject()).setOwnerCard(this);
                 player.addToFlags((Flag) newPosition.getObject());
                 player.setFlagSaver(this);
                 player.addToTurnForSavingFlag();//todo dead
@@ -141,7 +144,6 @@ public abstract class Card {
     }
 
     public void setTarget(Card card, Square CardSquare) {
-        if()
         //todo checkIfAttackedCardIsValid to class target
         //todo check kone ke to classe targete card (one/all/column/row) hast
         //todo age square hast ya distance dare check kone
@@ -183,8 +185,7 @@ public abstract class Card {
     public void changeHp(int number) {
         hp += number;
         if (hp <= 0) {
-            player.getGraveYard().addCardToGraveYard(this);
-            position.setObject(null);
+            player.getGraveYard().addCardToGraveYard(this,position);
             position = null;
         }
     }

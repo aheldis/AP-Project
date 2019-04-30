@@ -32,6 +32,18 @@ public abstract class Player {
     public abstract void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land);
 //    public abstract void useSpecialPower(Card card);
 
+    public String getUserName(){
+        return account.getUserName();
+    }
+
+    public void setTurnForSavingFlag(int turnForSavingFlag) {
+        this.turnForSavingFlag = turnForSavingFlag;
+    }
+
+    public ArrayList<Flag> getFlags() {
+        return flags;
+    }
+
     public abstract void playTurn();
 
     public abstract void addToAccountWins();

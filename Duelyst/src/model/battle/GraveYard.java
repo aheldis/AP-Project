@@ -1,6 +1,10 @@
 package model.battle;
 
+import model.Item.Flag;
+import model.card.ActivationTimeOfSpecialPower;
 import model.card.Card;
+import model.card.Minion;
+import model.land.Square;
 import view.AccountView;
 import view.BattleView;
 
@@ -23,7 +27,33 @@ public class GraveYard {
         return null;
     }
 
-    public void addCardToGraveYard(Card card) {
+    public void addCardToGraveYard(Card card, Square position) {
+        if(card instanceof Minion){
+            if(((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_DEATH){
+               card.setTarget(card,position);
+               card.getChange().affect(player,card.getTargetClass().getTargets());
+            }
+        }
+        ArrayList<Flag> flags = player.getFlags();
+        String mode = player.getMatch().getMode();
+        position.setObject(null);
+        switch (mode){
+            case "DeathMode":
+
+                break;
+            case "SaveFlagMode":
+                for(Flag flag : flags){
+                    if(flag.getOwnerCard().equalCard(card.getCardId().getCardIdAsString())){
+                        player.setTurnForSavingFlag(0);
+                        position.setObject(flag);
+                        break;
+                    }
+                }
+                break;
+            case "CollectFlagMode":
+
+                break;
+        }
         cards.add(card);
     }
 
