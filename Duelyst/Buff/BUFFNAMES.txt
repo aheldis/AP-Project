@@ -1,0 +1,6 @@
+Holy
+Power
+Poison
+Weakness
+Stun
+Disarm
