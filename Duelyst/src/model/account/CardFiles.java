@@ -23,7 +23,7 @@ public class CardFiles {
 
         switch (command) {
             case "Spell":
-                MakeNewFile.makeNewCardFile("Spell");
+                MakeNewFile.makeNewCardFile(FilesType.SPELL);
 //todo it is for check syntax don't delete these comments
 
 //            NewCardMessages message = NewCardMessages.getInstance();

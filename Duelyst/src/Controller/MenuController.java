@@ -11,7 +11,7 @@ import model.battle.Game;
 import model.battle.GraveYard;
 import model.battle.Match;
 import model.battle.Player;
-import model.card.Card;
+import model.card.*;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.EnterGameMessages;
@@ -20,6 +20,8 @@ import view.Request;
 import view.enums.ErrorType;
 import view.enums.RequestType;
 import view.enums.StateType;
+
+import javax.xml.parsers.SAXParser;
 
 
 public class MenuController {
@@ -348,7 +350,7 @@ public class MenuController {
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
                     case GAME_GAME_INFO:
-                        menuView.printGameInfo(game);
+                        menuView.printGameInfo(match);
                         break;
                     case GAME_SHOW_MY_MINION:
                         menuView.showMyMinions(player);
@@ -401,9 +403,16 @@ public class MenuController {
                             if (selectedCard == null) {
                                 error = ErrorType.INVALID_CARD_ID;
                                 error.printMessage();
-                            } else {
-                                selectedCard.attack(opponentCard);
+                            }else if(selectedCard instanceof Minion ){
+                                if(((Minion) selectedCard).getActivationTimeOfSpecialPower()==
+                                        ActivationTimeOfSpecialPower.COMBOO)
+                                    selectedCard.attack(opponentCard);
                             }
+                            else{
+                                error= ErrorType.CAN_NOT_COMBO_ATTACK;
+                                error.printMessage();
+                            }
+
                         }
                         break;
                     case GAME_SHOW_CARD_INFO:

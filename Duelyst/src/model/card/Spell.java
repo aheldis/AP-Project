@@ -90,8 +90,5 @@ public class Spell extends Card {
         return turn;
     }
 
-    public ArrayList<Square> getTargets() {
-        return target;
-    }
 
 }

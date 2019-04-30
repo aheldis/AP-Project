@@ -1,10 +1,20 @@
 package model.Item;
 
+import model.card.Card;
 import model.land.Square;
 
 public class Flag extends Item {
     private boolean isOnTheGround = true;
     private Square square;
+    private Card OwnerCard;
+
+    public void setOwnerCard(Card ownerCard) {
+        OwnerCard = ownerCard;
+    }
+
+    public Card getOwnerCard() {
+        return OwnerCard;
+    }
 
     public Square getSquare() {
         return square;

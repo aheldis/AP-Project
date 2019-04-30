@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Match {
     private Player[] players;
-    private String mode;
+    private String mode;//DeathMode - SaveFlagMode - CollectFlagMode
     private int numberOfFlags;
     private ArrayList<Flag> flags;
     private Player winner;
@@ -18,6 +18,13 @@ public class Match {
     private int whichPlayer = 0; //0--> player 1 /1--> player 2
     private Date date;
 
+
+    public void setFlagsRandomly(){
+        //todo
+    }
+    public ArrayList<Flag> getFlags(){
+        return flags;
+    }
 
     public Match(Player[] players, String mode, int numberOfFlags, int reward) {
         //when we make a match we should have players

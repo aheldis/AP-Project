@@ -3,7 +3,7 @@ package model.card;
 import model.land.Square;
 
 
-//todo healthPower _> hp    attackPower -> ap to card darimeshon
+//todo // healthPower _> hp    attackPower -> ap to card darimeshon
 
 public class Minion extends Card {
     String specialPowerInfo;

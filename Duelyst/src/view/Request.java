@@ -163,7 +163,6 @@ public class Request {
 
             }
             if (command.toLowerCase().matches("attack combo (\\w+) (\\w+)+")) {
-                //TODO: chejori vorodi bgiram ino???? :))))
                 return RequestType.GAME_ATTACK_COMBO;
             }
             if (command.toLowerCase().matches("select card \\w+")) {//todo get input

@@ -1,9 +1,11 @@
 package view;
 
+import model.Item.Flag;
 import model.account.Account;
 import model.account.AllAccount;
 import model.battle.Game;
 import model.battle.Hand;
+import model.battle.Match;
 import model.battle.Player;
 import model.card.Card;
 import view.enums.ErrorType;
@@ -40,10 +42,6 @@ public class MenuView {
         System.out.println(string);
     }
 
-    public void showLevelsForStory() {
-
-    }
-
     public void showDecksAndModes(Account account) {
         showModes();
         account.getCollection().showAllDecksName();
@@ -67,8 +65,33 @@ public class MenuView {
         System.out.println(error.getMessage());
     }
 
-    public void printGameInfo(Game game) {
+    public void showLevelsForStory() {
+        System.out.println("first level : hero:whiteBeast / mode:Death mode ");
+        System.out.println("second level : hero:zahak / mode:save flag mode");
+        System.out.println("third level : hero:arash / mode:collect flag mode");
+    }
 
+private void printInfoForEachPlayer(Player player,Match match){
+    System.out.println("player : UserName: "+player.getUserName());
+    System.out.println("mana : "+ player.getMana());
+    switch (match.getMode()){
+        case "DeathMode":
+            System.out.println("health point : "+player.getHero().getHp());
+            break;
+        case "SaveFlagMode":
+
+            break;
+        case "CollectFlagMode":
+            for(Flag flag : match.getFlags()){
+                System.out.println(flag.getOwnerCard().getName());
+            }
+            break;
+    }
+}
+
+    public void printGameInfo(Match match) {
+        printInfoForEachPlayer(match.getPlayers()[0],match);
+        printInfoForEachPlayer(match.getPlayers()[1],match);
     }
 
     public void showMyMinions(Player player) {

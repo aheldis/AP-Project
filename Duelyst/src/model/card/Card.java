@@ -43,6 +43,10 @@ public abstract class Card {
     //todo
 
 
+    public Change getChange() {
+        return change;
+    }
+
     public void addBuff(Buff buff, int forHowManyTurn) {
         if (!buffsOnThisCard.containsKey(buff))
             buffsOnThisCard.put(buff, new ArrayList<>());
@@ -84,6 +88,7 @@ public abstract class Card {
                 }
             }
             if (newPosition.getObject() instanceof Flag) {
+                ((Flag) newPosition.getObject()).setOwnerCard(this);
                 player.addToFlags((Flag) newPosition.getObject());
                 player.setFlagSaver(this);
                 player.addToTurnForSavingFlag();//todo dead
@@ -148,7 +153,8 @@ public abstract class Card {
     }
 
     public int getDistance(Coordinate coordinate) {
-        return Math.abs(coordinate.getX() - position.getXCoordinate()) + Math.abs(coordinate.getY() - position.getYCoordinate());
+        return Math.abs(coordinate.getX() - position.getXCoordinate()) +
+                Math.abs(coordinate.getY() - position.getYCoordinate());
     }
 
     public void attack(Card attackedCard) {
@@ -178,8 +184,7 @@ public abstract class Card {
     public void changeHp(int number) {
         hp += number;
         if (hp <= 0) {
-            player.getGraveYard().addCardToGraveYard(this);
-            position.setObject(null);
+            player.getGraveYard().addCardToGraveYard(this,position);
             position = null;
         }
     }
@@ -290,7 +295,7 @@ public abstract class Card {
         }
         if (this instanceof Minion) {
             if (((Minion) this).getHaveSpecialPower()) {
-                //todo AffectSpecialPower
+                //todo AffectSpecialPower - lastTimeSpellUsed in hero
                 return;
             }
 
@@ -418,7 +423,7 @@ public abstract class Card {
         this.description = description;
     }
 
-    public String getCounterAttack() {
+    public String getCounterAttackName() {
         return counterAttack;
     }
 

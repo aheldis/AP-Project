@@ -39,7 +39,8 @@ public enum ErrorType {
     DO_NOT_HAVE_SPECIAL_POWER("This card doesn't have special power"),
     CAN_NOT_MOVE_IN_SQUARE("You can not move in this square"),
     CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION("This card is exhausted"),
-    INVALID_SQUARE("Invalid square");
+    INVALID_SQUARE("Invalid square"),
+    CAN_NOT_COMBO_ATTACK("can con combo attack");
 
 
     private String message;

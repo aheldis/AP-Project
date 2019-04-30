@@ -37,13 +37,13 @@ public class Target {
             if (!cardType.equals("minion")) {
                 return false;
             }
-            counterAttackName = attacked.getCounterAttack();
+            counterAttackName = attacked.getCounterAttackName();
         }
         if (attacked instanceof Hero) {
             if (!cardType.equals("hero")) {
                 return false;
             }
-            counterAttackName = attacked.getCounterAttack().getName();
+            counterAttackName = attacked.getCounterAttackName();
         }
 
         if (counterAttackName != null) {
