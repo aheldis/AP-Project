@@ -15,12 +15,12 @@ import java.util.Arrays;
 
 public class Collection {
 
-    private ArrayList<Spell> spells;
-    private ArrayList<Hero> heroes;
-    private ArrayList<Minion> minions;
+    private ArrayList<Spell> spells = new ArrayList<>();
+    private ArrayList<Hero> heroes = new ArrayList<>();
+    private ArrayList<Minion> minions = new ArrayList<>();
     private Usable[] items = new Usable[3];
     private Account account;
-    private ArrayList<Deck> decks;
+    private ArrayList<Deck> decks = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
 
     public Collection(Account account) {
@@ -97,7 +97,6 @@ public class Collection {
         cards.addAll(heroes);
         for (Card card : cards) {
             if (card.getName().equals(cardName)) {
-
                 accountView.print(card.getCardId().getCardIdAsString());
                 have = true;
             }
@@ -108,28 +107,14 @@ public class Collection {
     public boolean searchItemName(String itemName) {
         boolean have = false;
         for (Usable item : items) {
-            //if (item instanceof Usable) {
+            if (item == null)
+                continue;
             if (item.getUsableId().getUsableIdAsString().equals(itemName)) {
-
                 accountView.print(item.getUsableId().getUsableIdAsString());
-                //todo sout dari inja baad oon getItemName ro hamoon getName ro item seda ko
-                //todo yani chi ??(Zahra )
                 have = true;
             }
-            //}
-//            if (item instanceof Collectable) {
-//                if (item.getCollectableId().getItemName().equals(itemName)) {
-//                    System.out.println(item.getCollectableId().getCollectableId());
-//                    have = true;
-//                }
-//            }
-            if (!have) {
-//                ErrorType error = ErrorType.HAVE_NOT_ITEM_IN_COLLECTION;
-//                error.printMessage();
-                return false;
-            }
         }
-        return true;
+        return have;
 
     }
 
@@ -348,8 +333,11 @@ public class Collection {
 
     public void showThisDeck(String deckName) {
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
-        if (deck == null)
+        if (deck == null) {
+            ErrorType error = ErrorType.HAVE_NOT_DECK;
+            error.printMessage();
             return;
+        }
         ArrayList<Item> items = new ArrayList<>();
         items.add(deck.getItem());
         accountView.DeckAndHandView(deck.getHero(), items, deck.getCardsOfDeck());

@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="yagson-master">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Downloads/yagson-master" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/Downloads/yagson-master/extras/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/yagson-master/extras/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/yagson-master/gson/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/yagson-master/gson/src/main/java-templates" />
+      <root url="file://$USER_HOME$/Downloads/yagson-master/gson/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/yagson-master/gson/src/testJ8/java" />
+      <root url="file://$USER_HOME$/Downloads/yagson-master/metrics/src/main/java" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Downloads/yagson-master" recursive="false" />
+  </library>
+</component>

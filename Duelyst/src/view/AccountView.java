@@ -6,7 +6,6 @@ import model.battle.Deck;
 import model.battle.MatchInfo;
 import model.card.*;
 import view.enums.ErrorType;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -49,37 +48,47 @@ public class AccountView {
 
     public void cardsAndItemsView(ArrayList<Spell> spells, ArrayList<Minion> minions, ArrayList<Hero> heroes, ArrayList<Usable> items) {
         int counter = 1;
-        System.out.print("Heroes : ");
+        System.out.println("Heroes : ");
         for (Hero hero : heroes) {
             System.out.print("          ");
             showEachHero(hero, counter);
-            System.out.println(". - Sell Cost : " + hero.getCost());
+            if (hero != null)
+                System.out.println(". - Sell Cost : " + hero.getCost());
             counter++;
         }
         counter = 1;
+        System.out.println("Items : ");
         for (Usable item : items) {
+            if (item == null)
+                continue;
             System.out.print("          ");
             showEachItem(item, counter);
             System.out.println(" – Sell Cost : " + item.getCost());
             counter++;
         }
         counter = 1;
+        System.out.println("Spells : ");
         for (Spell spell : spells) {
             System.out.print("          ");
             showEachSpell(spell, counter);
-            System.out.println(" – Sell Cost : " + spell.getCost());
+            if (spell != null)
+                System.out.println(" – Sell Cost : " + spell.getCost());
             counter++;
         }
         counter = 1;
+        System.out.println("Minion : ");
         for (Minion minion : minions) {
             System.out.print("          ");
             showEachMinion(minion, counter);
-            System.out.println(" – Sell Cost : " + minion.getCost());
+            if (minion != null)
+                System.out.println(" – Sell Cost : " + minion.getCost());
             counter++;
         }
     }
 
     private void showEachHero(Hero hero, int counterOfCard) {
+        if (hero == null)
+            return;
         System.out.print(counterOfCard + " : Name : " + hero.getName() +
                 " - AP : " + hero.getAp() +
                 " – HP : " + hero.getHp() +
@@ -89,6 +98,8 @@ public class AccountView {
     }
 
     public void showEachItem(Item item, int counter) {
+        if (item == null)
+            return;
         System.out.print(counter + " : Name : " + item.getName() +
                 " – Desc : " + item.getDescription()
         );
@@ -98,6 +109,9 @@ public class AccountView {
         if (counterOfCards != NOT_VALID)
             System.out.print(counterOfCards);
         System.out.print(" : Type : Spell");
+        if (spell == null)
+            return;
+        System.out.print(counterOfCards + " : Type : Spell");
         System.out.print(" - Name : " + spell.getName() +
                 " - MP : " + spell.getMp() +
                 " – Desc : " + spell.getDescription()
@@ -108,6 +122,9 @@ public class AccountView {
         if (counterOfCards != NOT_VALID)
             System.out.print(counterOfCards);
         System.out.print(" : Type : Minion");
+        if (minion == null)
+            return;
+        System.out.print(counterOfCards + " : Type : Minion");
         System.out.print(" : Name : " + minion.getName() +
                 " – Class: " + minion.getCounterAttackName() +
                 " - AP : " + minion.getAp() +
@@ -212,8 +229,9 @@ public class AccountView {
         System.out.println("Save - Save the changes");
         System.out.println("Create deck [deckName] - Create a deck");
         System.out.println("Delete deck [deckName] - Delete a deck");
-        System.out.println("Add [cardId|HeroId|ItemId} to deck [deckName] - Add model.card or item to deck");
-        System.out.println("Remove [model.card id|heroId|ItemId] from deck [deckName] - Delete a model.card or item from deck");
+        System.out.println("Add [cardId|HeroId|ItemId} to deck [deckName] - Add card or item to deck");
+        System.out.println("Remove card [card id] from deck [deckName] - Delete a card from deck");
+        System.out.println("Remove item [item id] from deck [deckName] - Delete an item from deck");
         System.out.println("Validate deck [deckName] - Have 20 cards and a hero");
         System.out.println("Show all decks - Show all cards,hero and items of decks in the collection");
         System.out.println("Show deck [deckName] - Show all cards,hero and items of deck");

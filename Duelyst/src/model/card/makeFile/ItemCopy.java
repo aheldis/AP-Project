@@ -1,25 +1,22 @@
 package model.card.makeFile;
 
-import model.card.Change;
-import model.card.Target;
-
 public class ItemCopy {
     public String name;
     public String type;
     public String description;
     public int cost;
     public int itemNumber;
-    private Target target;
-    private Change change;
+    private TargetCopy target;
+    private ChangeCopy change;
 
     public ItemCopy() {
     }
 
-    public void setTarget(Target target) {
+    public void setTarget(TargetCopy target) {
         this.target = target;
     }
 
-    public void setChange(Change change) {
+    public void setChange(ChangeCopy change) {
         this.change = change;
     }
 }

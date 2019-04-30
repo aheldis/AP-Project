@@ -9,7 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="com.google.code.gson:gson:2.8.5" level="project" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.51" level="project" />
-    <orderEntry type="library" exported="" name="java" level="project" />
+    <orderEntry type="library" name="java" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES />
@@ -25,7 +25,7 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../yagson-0.5.jar" />
@@ -34,5 +34,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="yagson-master" level="project" />
   </component>
 </module>

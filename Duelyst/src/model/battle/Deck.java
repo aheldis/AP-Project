@@ -1,10 +1,14 @@
 package model.battle;
 
 import model.Item.Item;
+import model.account.FilesType;
+import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
 import view.BattleView;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -99,5 +103,32 @@ public class Deck {//if it is normal deck you had initialize it in collection
 
     public void setRandomCardsAndItemsInDeck() {//todo
 
+    }
+
+    public static Deck getDeckForStoryMode(int level) {
+        Deck deck = new Deck();
+        try {
+            FileReader fileReader = new FileReader(Shop.getPathOfFiles() + "Game/" + level + ".txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            String type = "Hero";
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.charAt(0) == '_') {
+                    type = line.substring(1);
+                } else {
+                    if (FilesType.HERO.getName().equals(type)) {
+                        deck.setHero((Hero) Shop.getInstance().getNewCardByName(line.trim()));
+                    } else if (FilesType.ITEM.getName().equals(type)) {
+                        deck.addItemToDeck(Shop.getInstance().getNewItemByName(line.trim()));
+                    } else {
+                        deck.addToCardsOfDeck(Shop.getInstance().getNewCardByName(line.trim()));
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return deck;
     }
 }

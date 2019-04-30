@@ -1,7 +1,7 @@
 package model.account;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.gilecode.yagson.YaGson;
+import model.Item.Item;
 import model.Item.Usable;
 import model.Item.UsableId;
 import model.card.*;
@@ -38,38 +38,31 @@ public class Shop {
     }
 
     public void makeNewFromFile(String path, FilesType type) {
-        Gson gson = new GsonBuilder().create();
-
-        InputStream input = null;
-
         try {
-
-            input = new FileInputStream(path);//file name//todo nabayad chizi be path ezafe she? na
-
+            InputStream input = new FileInputStream(path);
             Reader reader = new InputStreamReader(input);
+            YaGson mapper = new YaGson();
 
             if (type.equals(FilesType.HERO)) {
-                Hero hero = gson.fromJson(reader, Hero.class);
+                Hero hero = mapper.fromJson(reader, Hero.class);
                 addCard(hero);
             }
             if (type.equals(FilesType.MINION)) {
-                Minion minion = gson.fromJson(reader, Minion.class);
+                Minion minion = mapper.fromJson(reader, Minion.class);
                 addCard(minion);
             }
             if (type.equals(FilesType.SPELL)) {
-                Spell spell = gson.fromJson(reader, Spell.class);
+                Spell spell = mapper.fromJson(reader, Spell.class);
                 addCard(spell);
             }
             if (type.equals(FilesType.ITEM)) {
-                Usable item = gson.fromJson(reader, Usable.class);
+                Usable item = mapper.fromJson(reader, Usable.class);
                 addItem(item);
             }
 
         } catch (IOException e) {
-            //do something with e... log, perhaps rethrow etc.
+            System.out.println(e.getMessage());
         }
-
-
     }
 
     public void addCard(Card card) {
@@ -208,6 +201,31 @@ public class Shop {
             return;
         }
     }
+
+
+    //todo for making story game
+    public Card getNewCardByName(String name) {
+        Card card = getCard(name);
+        FilesType typeOfFile = null;
+        if (card instanceof Hero) {
+            typeOfFile = FilesType.HERO;
+        } else if (card instanceof Spell) {
+            typeOfFile = FilesType.SPELL;
+        } else if (card instanceof Minion) {
+            typeOfFile = FilesType.MINION;
+        }
+        makeNewFromFile(pathOfFiles + typeOfFile + card.getName(), typeOfFile);
+        cards.remove(card);
+        return card;
+    }
+
+    public Item getNewItemByName(String name) {
+        Usable item = getItem(name);
+        makeNewFromFile(pathOfFiles + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM);
+        items.remove(item);
+        return item;
+    }
+
 
     public void show() {
         accountView.cardsAndItemsView(Card.getSpells(cards), Card.getMinions(cards), Card.getHeroes(cards), items);

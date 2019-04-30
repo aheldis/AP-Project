@@ -14,7 +14,7 @@ public class Account implements Comparable<Account> {
     private int daric;
     private int wins;
     private ArrayList<MatchInfo> matchHistory;
-    private Collection collection;
+    private Collection collection=new Collection(this);
     private Player player;
     private Deck mainDeck;
     private ArrayList<Deck> decks;
