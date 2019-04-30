@@ -40,7 +40,7 @@ public class Change {
 
     private void makeChangeInTargetCard(Player player, Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
         if (!this.opponentCanMove)
-            targetCard.setCanMove(false, this.turnOfCanNotMoveForOpponent))
+            targetCard.setCanMove(false, this.turnOfCanNotMoveForOpponent);
 
         if (!this.opponentCanCounterAttack)
             targetCard.setCanCounterAttack(false, this.turnOfCanNotCounterAttackForOpponent);
