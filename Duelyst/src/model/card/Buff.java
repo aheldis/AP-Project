@@ -1,9 +1,14 @@
 package model.card;
 
+import com.gilecode.yagson.YaGson;
+import model.account.Shop;
+
+import java.io.*;
 import java.util.ArrayList;
 
 public class Buff {
     private static ArrayList<Buff> buffs;
+    private static String pathOfFiles = Shop.getPathOfFiles() + "Buff";
     private String name;
     private boolean goodBuff;
     private boolean haveUnAffect;
@@ -14,11 +19,43 @@ public class Buff {
     private boolean canCounterAttack = true;
     private boolean hpChangeAfterAttack = false;
 
+    static {
+        File folder = new File(pathOfFiles);
+        File[] listOfFiles = folder.listFiles();
+        for (int i = 0; i < listOfFiles.length; i++) {
+            makeNewFromFile(listOfFiles[i].getPath());
+        }
+    }
+
+    static public Buff getByName(String name) {
+        for (Buff buff : buffs) {
+            if (buff.getName().equals(name))
+                return buff;
+        }
+        return null;
+    }
 
     //todo harbar seda nashe tahash unaffecct beshe
     //to change check she ke doroste
     //ye chizayee mesle holy buff ok she
     //in ke age chandta buff e moshabeh emal shan chi mishe check she
+
+    public String getName() {
+        return name;
+    }
+
+    public static void makeNewFromFile(String path) {
+        try {
+            InputStream input = new FileInputStream(path);
+            Reader reader = new InputStreamReader(input);
+
+            YaGson mapper = new YaGson();
+            Buff buff = mapper.fromJson(reader, Buff.class);
+            buffs.add(buff);
+        } catch (Exception e) {
+
+        }
+    }
 
     public void affect(Card card) {
         card.changeAp(apChange);
@@ -53,17 +90,5 @@ public class Buff {
 
     public boolean isHaveUnAffect() {
         return haveUnAffect;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    static public Buff getByName(String name){
-        for(Buff buff: buffs){
-            if(buff.getName().equals(name))
-                return buff;
-        }
-        return null;
     }
 }

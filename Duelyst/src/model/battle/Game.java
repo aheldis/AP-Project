@@ -62,7 +62,7 @@ public class Game {
         //todo bere az file level bekhoone oon deckharo ye deck besaze -> secondPlayerDeck mode -> mode reward -> reward
         switch (level){
             case 1:
-                reward= 500;
+                reward = 500;
                 break ;
             case 2:
                 reward =1000;

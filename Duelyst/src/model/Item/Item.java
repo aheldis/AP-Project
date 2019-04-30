@@ -5,6 +5,7 @@ import model.card.Target;
 
 public abstract class Item {
     private String name;
+    private String type; //usable collectable
     private String description;
     private int cost;
     private int itemNumber;

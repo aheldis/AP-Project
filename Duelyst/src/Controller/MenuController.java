@@ -89,6 +89,8 @@ public class MenuController {
                         //todo
                         break;
                 }
+                request = new Request(state);
+                request.getNewCommand();
             }
 
             if (state == StateType.ACCOUNT_MENU) {

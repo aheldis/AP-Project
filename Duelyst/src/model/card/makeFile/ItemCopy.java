@@ -5,6 +5,7 @@ import model.card.Target;
 
 public class ItemCopy {
     public String name;
+    public String type;
     public String description;
     public int cost;
     public int itemNumber;
