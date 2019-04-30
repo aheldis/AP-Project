@@ -27,7 +27,6 @@ public class Shop {
         return singleInstance;
     }
 
-    //todo bere az har card yedoone besaze
     private void init() {
         for (FilesType typeOfFile : FilesType.values()) {
             File folder = new File(pathOfFiles + typeOfFile.getName());
@@ -64,26 +63,10 @@ public class Shop {
             if (type.equals(FilesType.ITEM)) {
                 Usable item = gson.fromJson(reader, Usable.class);
                 addItem(item);
-                //todo cherte in kar :))) item ke change nadare :)
             }
-            if (type.equals("game file")) {
-                // :/
-                //fekr konam bayad baresh darim az inja
-            }
-//            int data = input.read();
-//            while(data != -1) {
-//                //do something with data...
-//
-//                data = input.read();
-//            }
+
         } catch (IOException e) {
             //do something with e... log, perhaps rethrow etc.
-        } finally {
-            try {
-                if (input != null) input.close();
-            } catch (IOException e) {
-                //do something, or ignore.
-            }
         }
 
 

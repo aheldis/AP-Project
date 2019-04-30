@@ -60,6 +60,8 @@ public class Game {
 
     public Match makeNewStoryGame(int level) {
         //todo bere az file level bekhoone oon deckharo ye deck besaze -> secondPlayerDeck mode -> mode reward -> reward
+        Deck secondPlayerDeck = null;
+        mode = level;
         switch (level){
             case 1:
                 reward = 500;
@@ -72,7 +74,7 @@ public class Game {
                 break;
 
         }
-        Deck secondPlayerDeck = null;
+
         players[1] = new ComputerPlayer(secondPlayerDeck);
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }
