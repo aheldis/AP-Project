@@ -199,6 +199,8 @@ public class AccountView {
         System.out.println("Items :");
         if (items != null && items.size() != 0) {
             for (Item item : items) {
+                if(item == null )
+                    continue;
                 System.out.print("     ");
                 showEachItem(item, counterOfCards);
                 System.out.println("\n");
@@ -308,13 +310,13 @@ public class AccountView {
     }
 
     public void viewHelpOfShop() {
-        System.out.println("show collection");
-        System.out.println("search [item name| model.card name]");
-        System.out.println("search collection [item name| model.card name]");
-        System.out.println("buy [item name| model.card name]");
-        System.out.println("sell [model.card id]");
-        System.out.println("show");
-        System.out.println("exit");
+        System.out.println("show collection - show cards and items in collection");
+        System.out.println("search [item name| card name]");
+        System.out.println("search collection [item name| card name]");
+        System.out.println("buy [item name| card name]");
+        System.out.println("sell [card id]");
+        System.out.println("show - show all cards and items");
+        System.out.println("exit - exit from shop");
     }
 
     public void print(String string) {

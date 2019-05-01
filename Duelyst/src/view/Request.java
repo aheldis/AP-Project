@@ -66,11 +66,11 @@ public class Request {
                 return RequestType.COLLECTION_SEARCH_CARD;
             }
             if (command.toLowerCase().matches("create deck \\w+")) {
-                setDeckName(command.substring(11));
+                setDeckName(command.split(" ")[2]);
                 return RequestType.COLLECTION_CREATE_DECK;
             }
             if (command.toLowerCase().matches("delete deck \\w+")) {
-                setDeckName(command.substring(11));
+                setDeckName(command.split(" ")[2]);
                 return RequestType.COLLECTION_DELETE_DECK;
             }
             if (command.toLowerCase().matches("add \\w+ to deck \\w+")) {
@@ -89,15 +89,15 @@ public class Request {
                 return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
             }
             if (command.toLowerCase().matches("validate deck \\w+")) {
-                setDeckName(command.substring(14));
+                setDeckName(command.split(" ")[2]);
                 return RequestType.COLLECTION_VALIDATE_DECK;
             }
             if (command.toLowerCase().matches("select deck \\w+")) {
-                setDeckName(command.substring(12));
+                setDeckName(command.split(" ")[2]);
                 return RequestType.COLLECTION_SELECT_DECK;
             }
             if (command.toLowerCase().matches("show deck \\w+")) {
-                setDeckName(command.substring(10));
+                setDeckName(command.split(" ")[2]);
                 return RequestType.COLLECTION_SHOW_DECK;
             }
 

@@ -31,6 +31,8 @@ public class Shop {
         for (FilesType typeOfFile : FilesType.values()) {
             File folder = new File(pathOfFiles + typeOfFile.getName());
             File[] listOfFiles = folder.listFiles();
+            if(listOfFiles ==null)
+                return;
             for (int i = 0; i < listOfFiles.length; i++) {
                 makeNewFromFile(listOfFiles[i].getPath(), typeOfFile);
             }
@@ -228,7 +230,9 @@ public class Shop {
 
 
     public void show() {
-        accountView.cardsAndItemsView(Card.getSpells(cards), Card.getMinions(cards), Card.getHeroes(cards), items);
+        accountView.cardsAndItemsView(Card.getSpells(cards),
+                Card.getMinions(cards),
+                Card.getHeroes(cards), items);
     }
 
     public void help() {

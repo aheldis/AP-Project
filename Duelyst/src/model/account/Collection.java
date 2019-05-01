@@ -83,8 +83,10 @@ public class Collection {
 
     public Deck passTheDeckIfHaveBeenExist(String deckName) {
         for (Deck deck : decks) {
-            if (deck.getName().equals(deckName))
+            System.out.println(deck.getName());
+            if (deck.getName().equals(deckName)) {
                 return deck;
+            }
         }
         return null;
     }
@@ -189,6 +191,8 @@ public class Collection {
 
     public Usable passUsableItemByUsableItemId(String usableItemId) {
         for (Usable item : items) {
+            if(item == null)
+                continue;
             if (item.getUsableId().getUsableIdAsString().equals(usableItemId)) {
                 return item;
             }

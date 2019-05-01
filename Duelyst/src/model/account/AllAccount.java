@@ -67,17 +67,11 @@ public class AllAccount {
 
         Account account = new Account(userName, password);
         addToAccounts(account);
-        login(userName, password);
     }
 
     public void addToAccounts(Account account) {
         accounts.add(account);
     }
 
-    public void login(String userName, String password) { //todo ina bayad bere to conroller o ina :-?
-        //(kheyr)todo controller miyad inja donbalet :))
-        //TODO login
-
-    }
 
 }

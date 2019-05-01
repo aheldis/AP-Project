@@ -35,5 +35,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="yagson-master" level="project" />
+    <orderEntry type="library" name="com.gilecode.yagson:yagson:0.5" level="project" />
   </component>
 </module>

@@ -77,7 +77,6 @@ public class MenuController {
                                 }
                             }
                             if(!breaker) {
-                                allAccount.login(userName, request.getCommand());
                                 account = allAccount.getAccountByName(userName);
                                 state = StateType.ACCOUNT_MENU;
                             }
@@ -121,7 +120,7 @@ public class MenuController {
                 }
             }
 
-           else if (state == StateType.COLLECTION) {//todo id ro check konam ke chiye :)
+           else if (state == StateType.COLLECTION) {
                 Collection collection = account.getCollection();
                 String deckName;
                 Card card;
@@ -247,6 +246,7 @@ public class MenuController {
                             break;
                         case SHOP_HELP:
                             shop.help();
+                            break;
                         case SHOP_EXIT:
                             state = StateType.ACCOUNT_MENU;
                 }
@@ -280,7 +280,6 @@ public class MenuController {
                             if (command.split(" ").length > 4) {
                                 numberOfFlags = Integer.parseInt(command.split(" ")[4]);
                             }
-                            //todo in chand khat ham duplicate e
                         } while (mode != 0);
                         Account secondPlayerAccount = allAccount.getAccountByName(userName);
                         menuView.printer("Enter your passWord");
@@ -290,9 +289,11 @@ public class MenuController {
                                 state = StateType.ACCOUNT_MENU;
                                 break;
                             }
-
-                            //todo baad gofte be andaze pool e taeen shode vali nagofte pool taeen konim :-?
-                            match = game.makeNewMultiGame(mode, numberOfFlags);
+                            do {
+                                menuView.printer("Enter reward");
+                                request.getNewLine();
+                            }while(request.getCommand().matches("\\d+"));
+                            match = game.makeNewMultiGame(mode, numberOfFlags,Integer.parseInt(request.getCommand()));
                             state = StateType.BATTLE;
                         } else {
                             menuView.printer("Select your mode");

@@ -42,7 +42,7 @@ public class Game {
         return true;
     }
 
-    public Match makeNewMultiGame(int mode, int numberOfFlags) {
+    public Match makeNewMultiGame(int mode, int numberOfFlags,int reward) {
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }
 
