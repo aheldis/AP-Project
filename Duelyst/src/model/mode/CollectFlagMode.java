@@ -1,6 +1,6 @@
 package model.mode;
 
-import model.Item.Flag;
+import model.item.Flag;
 import model.battle.Match;
 
 import java.util.ArrayList;

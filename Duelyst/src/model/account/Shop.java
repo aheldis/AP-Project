@@ -1,9 +1,9 @@
 package model.account;
 
 import com.gilecode.yagson.YaGson;
-import model.Item.Item;
-import model.Item.Usable;
-import model.Item.UsableId;
+import model.item.Item;
+import model.item.Usable;
+import model.item.UsableId;
 import model.card.*;
 import view.AccountView;
 import view.enums.ErrorType;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Shop {
     public static Shop singleInstance = null;
-    private static String pathOfFiles = "../Duelyst/";
+    private static String pathOfFiles = "Duelyst/";
     private ArrayList<Card> cards = new ArrayList<>();// todo (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
     private ArrayList<Usable> items = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
@@ -31,10 +31,10 @@ public class Shop {
         for (FilesType typeOfFile : FilesType.values()) {
             File folder = new File(pathOfFiles + typeOfFile.getName());
             File[] listOfFiles = folder.listFiles();
-            if(listOfFiles ==null)
-                return;
-            for (int i = 0; i < listOfFiles.length; i++) {
-                makeNewFromFile(listOfFiles[i].getPath(), typeOfFile);
+            if (!(listOfFiles == null || typeOfFile == FilesType.BUFF)) {
+                for (int i = 0; i < listOfFiles.length; i++) {
+                    makeNewFromFile(listOfFiles[i].getPath(), typeOfFile);
+                }
             }
         }
     }
@@ -46,22 +46,21 @@ public class Shop {
             YaGson mapper = new YaGson();
 
             if (type.equals(FilesType.HERO)) {
-                Hero hero = mapper.fromJson(reader, Hero.class);
+                Hero hero = mapper.fromJson(reader, model.card.Hero.class);
                 addCard(hero);
             }
             if (type.equals(FilesType.MINION)) {
-                Minion minion = mapper.fromJson(reader, Minion.class);
+                Minion minion = mapper.fromJson(reader, model.card.Minion.class);
                 addCard(minion);
             }
             if (type.equals(FilesType.SPELL)) {
-                Spell spell = mapper.fromJson(reader, Spell.class);
+                Spell spell = mapper.fromJson(reader, model.card.Spell.class);
                 addCard(spell);
             }
             if (type.equals(FilesType.ITEM)) {
-                Usable item = mapper.fromJson(reader, Usable.class);
+                Usable item = mapper.fromJson(reader, model.item.Usable.class);
                 addItem(item);
             }
-
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

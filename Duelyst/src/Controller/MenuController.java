@@ -1,6 +1,6 @@
 package Controller;
 
-import model.Item.*;
+import model.item.*;
 import model.account.*;
 import model.battle.*;
 import model.card.*;

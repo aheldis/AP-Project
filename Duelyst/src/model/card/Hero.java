@@ -34,7 +34,7 @@ public class Hero extends Card {
     }
 
     public void addNewHeroCard() {
-        //TODO add new other Card and also items (to removed: Make NewHero and MakeNewUsable Item)
+        //TODO add new other Card and also items (to removed: Make NewHero and MakeNewUsable item)
     }
 
     public boolean getHaveSpecialPower() {

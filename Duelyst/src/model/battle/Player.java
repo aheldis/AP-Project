@@ -1,7 +1,7 @@
 package model.battle;
 
-import model.Item.Collectable;
-import model.Item.Flag;
+import model.item.Collectable;
+import model.item.Flag;
 import model.account.Account;
 import model.card.Buff;
 import model.card.Card;
@@ -25,7 +25,7 @@ public abstract class Player {
     private int turnsPlayed = 0;
     private int mana;
     private GraveYard graveYard = new GraveYard(this);
-    //collectable Item to hand ast :D
+    //collectable item to hand ast :D
 
     //    public abstract void move(Card card, Square newPosition);
 //    public abstract void attack(Card card, Square target);

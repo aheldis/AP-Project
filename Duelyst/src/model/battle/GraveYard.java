@@ -1,6 +1,6 @@
 package model.battle;
 
-import model.Item.Flag;
+import model.item.Flag;
 import model.card.ActivationTimeOfSpecialPower;
 import model.card.Card;
 import model.card.Minion;

@@ -1,7 +1,7 @@
 package model.account;
 
-import model.Item.Item;
-import model.Item.Usable;
+import model.item.Item;
+import model.item.Usable;
 import model.battle.Deck;
 import model.card.Card;
 import model.card.Hero;

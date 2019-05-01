@@ -1,4 +1,4 @@
-package model.Item;
+package model.item;
 
 import model.card.Card;
 import model.land.Square;

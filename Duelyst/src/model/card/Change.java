@@ -24,6 +24,7 @@ public class Change {
     //private ArrayList<Buff> untiBuffs;
     private boolean unaffactBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
 
+
     public void affect(Player player, ArrayList<Square> targets) {
         if (targetType.equals("Square")) {
             for (Square square : targets) {

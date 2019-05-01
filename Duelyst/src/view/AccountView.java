@@ -1,6 +1,6 @@
 package view;
 
-import model.Item.*;
+import model.item.*;
 import model.account.Account;
 import model.battle.Deck;
 import model.battle.MatchInfo;

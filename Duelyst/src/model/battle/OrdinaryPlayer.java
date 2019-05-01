@@ -1,6 +1,6 @@
 package model.battle;
 
-import model.Item.Flag;
+import model.item.Flag;
 import model.account.Account;
 import model.card.Buff;
 import model.card.Card;

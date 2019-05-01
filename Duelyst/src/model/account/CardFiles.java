@@ -88,7 +88,7 @@ public class CardFiles {
             case "Hero":
                 MakeNewFile.makeNewCardFile("Hero");
                 break;
-            case "Item":
+            case "item":
                 //todo
                 break;
         }

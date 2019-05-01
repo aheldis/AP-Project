@@ -1,7 +1,7 @@
 package model.battle;
 
-import model.Item.Collectable;
-import model.Item.Item;
+import model.item.Collectable;
+import model.item.Item;
 import model.card.Card;
 
 import java.util.ArrayList;

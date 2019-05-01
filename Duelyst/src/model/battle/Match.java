@@ -1,6 +1,6 @@
 package model.battle;
 
-import model.Item.Flag;
+import model.item.Flag;
 import model.land.LandOfGame;
 
 import java.util.ArrayList;

@@ -1,11 +1,10 @@
 package model.battle;
 
-import model.Item.Item;
+import model.item.Item;
 import model.account.FilesType;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
-import view.BattleView;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -1,8 +1,8 @@
 package model.card;
 
 
-import model.Item.Collectable;
-import model.Item.Flag;
+import model.item.Collectable;
+import model.item.Flag;
 import model.battle.Player;
 import model.land.LandOfGame;
 import model.land.Square;
@@ -41,7 +41,6 @@ public abstract class Card {
     private int hpChangeAfterAttack = 0; //todo mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
     private String description;
     //todo
-
 
     public Change getChange() {
         return change;
