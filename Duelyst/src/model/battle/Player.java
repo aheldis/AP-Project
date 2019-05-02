@@ -1,11 +1,11 @@
 package model.battle;
 
-import model.item.Collectible;
-import model.item.Flag;
 import model.account.Account;
 import model.card.Buff;
 import model.card.Card;
 import model.card.Hero;
+import model.item.Collectible;
+import model.item.Flag;
 import model.land.LandOfGame;
 import model.requirment.Coordinate;
 
@@ -23,7 +23,7 @@ public abstract class Player {
     private Account account;
     private Match match;
     private int turnsPlayed = 0;
-    private int mana;
+    private int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
     private GraveYard graveYard = new GraveYard(this);
     //Collectible item to hand ast :D
 
@@ -32,7 +32,7 @@ public abstract class Player {
     public abstract void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land);
 //    public abstract void useSpecialPower(Card card);
 
-    public String getUserName(){
+    public String getUserName() {
         return account.getUserName();
     }
 
@@ -40,7 +40,7 @@ public abstract class Player {
         this.turnForSavingFlag = turnForSavingFlag;
     }
 
-    public int getTurnForSavingFlag(){
+    public int getTurnForSavingFlag() {
         return turnForSavingFlag;
     }
 
@@ -106,7 +106,10 @@ public abstract class Player {
             }
         }
         turnsPlayed++;
-        mana++;
+        if (manaOfThisTurn < 9) {
+            manaOfThisTurn++;
+            mana = manaOfThisTurn;
+        }
     }
 
     public void addToCardsOfLand(Card card) {
