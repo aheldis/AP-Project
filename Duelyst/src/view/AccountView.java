@@ -111,7 +111,6 @@ public class AccountView {
         System.out.print(" : Type : Spell");
         if (spell == null)
             return;
-        System.out.print(counterOfCards + " : Type : Spell");
         System.out.print(" - Name : " + spell.getName() +
                 " - MP : " + spell.getMp() +
                 " – Desc : " + spell.getDescription()
@@ -124,7 +123,6 @@ public class AccountView {
         System.out.print(" : Type : Minion");
         if (minion == null)
             return;
-        System.out.print(counterOfCards + " : Type : Minion");
         System.out.print(" : Name : " + minion.getName() +
                 " – Class: " + minion.getCounterAttackName() +
                 " - AP : " + minion.getAp() +
