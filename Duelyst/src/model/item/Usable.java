@@ -1,16 +1,7 @@
 package model.item;
 
-import model.land.Square;
-
-import java.util.ArrayList;
-
 public class Usable extends Item {
     private UsableId usableId;
-    private ArrayList<Square> target;
-
-    public void addTotarget(Square square) {
-        target.add(square);
-    }
 
     public void affect() {
         //todo

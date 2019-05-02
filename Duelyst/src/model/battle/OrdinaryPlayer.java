@@ -102,8 +102,8 @@ public class OrdinaryPlayer extends Player {
             flagSaver = card;
             turnForSavingFlag++;//todo dead
         }
-        if (newPosition.getObject() instanceof Collectable) {
-            hand.addToCollectableItem((Collectable) newPosition.getObject());
+        if (newPosition.getObject() instanceof Collectible) {
+            hand.addToCollectibleItem((Collectible) newPosition.getObject());
         }
         card.setPosition(newPosition);
         newPosition.setObject(card);

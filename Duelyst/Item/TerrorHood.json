@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "TerrorHood",
-    "type": "usable",
+    "type": "Usable",
     "description": "weakness buff(ap-2) for a random minion",
     "cost": 5000,
     "itemNumber": 12,

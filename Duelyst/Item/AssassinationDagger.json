@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "AssassinationDagger",
-    "type": "usable",
+    "type": "Usable",
     "description": "hp change for all opponent cards",
     "cost": 15000,
     "itemNumber": 15,

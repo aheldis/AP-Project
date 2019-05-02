@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "CrownOfKnowledge",
-    "type": "usable",
+    "type": "Usable",
     "description": "add to mana for  turns",
     "cost": 300,
     "itemNumber": 1,

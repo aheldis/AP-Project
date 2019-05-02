@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "KingWisdom",
-    "type": "usable",
+    "type": "Usable",
     "description": "add to mana each turn",
     "cost": 9000,
     "itemNumber": 14,

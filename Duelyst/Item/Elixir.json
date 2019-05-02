@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Collectible",
   "@val": {
     "name": "Elixir",
-    "type": "collectibe",
+    "type": "Collectible",
     "description": "hp + 3 power buff(ap+3)",
     "cost": 0,
     "itemNumber": 7,

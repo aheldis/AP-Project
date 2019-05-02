@@ -3,6 +3,7 @@ package view;
 import model.requirment.Coordinate;
 import view.enums.RequestType;
 import view.enums.StateType;
+
 import java.util.Scanner;
 
 public class Request {
@@ -20,9 +21,9 @@ public class Request {
         this.state = state;
     }
 
-    public void getNewLine() throws  Exception{
-        String st=Main.br.readLine();
-        if(st==null)
+    public void getNewLine() throws Exception {
+        String st = Main.br.readLine();
+        if (st == null)
             return;
         this.command = st;
 
@@ -30,8 +31,8 @@ public class Request {
     }
 
     public void getNewCommand() throws Exception {
-        String st=Main.br.readLine();
-        if(st==null)
+        String st = Main.br.readLine();
+        if (st == null)
             return;
         this.command = st;
         //this.command = scanner.nextLine().trim();
@@ -171,8 +172,8 @@ public class Request {
                     return RequestType.GAME_SHOW_HAND;
                 case "end turn":
                     return RequestType.GAME_END_TURN;
-                case "show collectables":
-                    return RequestType.GAME_SHOW_COLLECTABLES;
+                case "show Collectibles":
+                    return RequestType.GAME_SHOW_CollectibleS;
                 case "show next card":
                     return RequestType.GAME_SHOW_NEXT_CARD;
                 case "enter grave yard":
@@ -208,7 +209,7 @@ public class Request {
             if (command.toLowerCase().matches("select item \\d+")) {
                 setId(command.substring(12));
                 state = StateType.SELECT_ITEM;
-                return RequestType.GAME_SELECT_COLLECTABLE;
+                return RequestType.GAME_SELECT_Collectible;
             }
 
 
@@ -256,7 +257,7 @@ public class Request {
                 return RequestType.MODE_SINGLE_PLAYER;
             if (command.toLowerCase().matches("multi player"))
                 return RequestType.MODE_MULTI_PLAYER;
-            if(command.toLowerCase().matches("exit")){
+            if (command.toLowerCase().matches("exit")) {
                 return RequestType.SELECT_MODE_EXIT;
             }
         }

@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "Baptism",
-    "type": "usable",
+    "type": "Usable",
     "description": "have 2 turns holy buff for a minion",
     "cost": 20000,
     "itemNumber": 19,

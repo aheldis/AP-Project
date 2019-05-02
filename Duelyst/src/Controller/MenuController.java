@@ -393,8 +393,8 @@ public class MenuController {
                     case GAME_END_TURN:
                         match.changeTurn();
                         break;
-                    case GAME_SHOW_COLLECTABLES:
-                        menuView.showCollectableItems(player);
+                    case GAME_SHOW_CollectibleS:
+                        menuView.showCollectibleItems(player);
                         break;
                     case GAME_SHOW_NEXT_CARD:
                         menuView.showNextCard(player.getMainDeck());
@@ -463,9 +463,9 @@ public class MenuController {
                         }
                         player.putCardOnLand(card, coordinate, match.getLand());
                         break;
-                    case GAME_SELECT_COLLECTABLE:
+                    case GAME_SELECT_Collectible:
                         id = request.getId();
-                        selectedItem = player.getHand().passCollectableInHand(id);
+                        selectedItem = player.getHand().passCollectibleInHand(id);
                         if (selectedItem == null) {
                             error = ErrorType.INVALID_ITEM;
                             error.printMessage();
@@ -504,14 +504,14 @@ public class MenuController {
 
            else if (state == StateType.SELECT_ITEM) {
                 Player player = match.passPlayerWithTurn();
-                id = ((Collectable) selectedItem).getCollectableId().getCollectableIdAsString();
+                id = ((Collectible) selectedItem).getCollectibleId().getCollectibleIdAsString();
                 switch (request.getRequestType()) {
                     case GAME_ITEM_SHOW_INFO:
                         menuView.showItemInfo(player.getHand(), id);
                         break;
                     case GAME_ITEM_USE:
                         Coordinate coordinate = request.getCoordinate();
-                        player.putCollectableItemOnLand(coordinate, id);
+                        player.putCollectibleItemOnLand(coordinate, id);
                         break;
                 }
 

@@ -5,12 +5,12 @@ import model.card.Target;
 
 public abstract class Item {
     private String name;
-    private String type; //usable collectable
+    private String type; //usable Collectible
     private String description;
     private int cost;
     private int itemNumber;
-    private Target target = new Target();
-    private Change change = new Change();
+    protected Target target = new Target();
+    protected Change change = new Change();
 
     public Item(){
 

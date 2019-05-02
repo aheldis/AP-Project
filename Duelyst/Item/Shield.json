@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "Shield",
-    "type": "usable",
+    "type": "Usable",
     "description": "12 holy buff to your minion",
     "cost": 4000,
     "itemNumber": 2,

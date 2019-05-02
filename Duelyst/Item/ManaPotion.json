@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Collectible",
   "@val": {
     "name": "ManaPotion",
-    "type": "collectible",
+    "type": "Collectible",
     "description": "add to mana 3 units",
     "cost": 0,
     "itemNumber": 8,

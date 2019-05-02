@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "DamolsArc",
-    "type": "usable",
+    "type": "Usable",
     "description": "disarm opponent hero for one turn",
     "cost": 3000,
     "itemNumber": 3,

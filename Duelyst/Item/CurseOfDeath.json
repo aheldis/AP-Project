@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Collectible",
   "@val": {
     "name": "CurseOfDeath",
-    "type": "collectible",
+    "type": "Collectible",
     "description": "a random minion decrease hp ON_DEATH 8 units",
     "cost": 0,
     "itemNumber": 10,

@@ -1,6 +1,6 @@
 package view;
 
-import model.item.Collectable;
+import model.item.Collectible;
 import model.item.Flag;
 import model.account.Account;
 import model.account.AllAccount;
@@ -128,8 +128,8 @@ public class MenuView {
         }
     }
 
-    public void showCollectableItems(Player player) {
-        AccountView.getInstance().DeckAndHandView(null, player.getHand().getCollectableItems(), null);
+    public void showCollectibleItems(Player player) {
+        AccountView.getInstance().DeckAndHandView(null, player.getHand().getCollectibleItems(), null);
     }
 
     public void showBattleMenu() {
@@ -139,10 +139,10 @@ public class MenuView {
     /*public void showCardInfo(Card card) {
     }*/
 
-    public void showItemInfo(Hand hand, String collectableId) {
+    public void showItemInfo(Hand hand, String CollectibleId) {
         System.out.println("item : ");
-        Collectable collectable = hand.passCollectableInHand(collectableId);
-        AccountView.getInstance().showEachItem(collectable, NOT_VALID);
+        Collectible collectible = hand.passCollectibleInHand(CollectibleId);
+        AccountView.getInstance().showEachItem(collectible, NOT_VALID);
     }
 
     public void helpForSelectMode(){

@@ -1,5 +1,5 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Collectible",
   "@val": {
     "name": "RevengeousPotion",
     "type": "collectible",

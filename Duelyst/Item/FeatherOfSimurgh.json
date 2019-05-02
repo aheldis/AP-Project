@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "FeatherOfSimurgh",
-    "type": "usable",
+    "type": "Usable",
     "description": "ap - 2 for hybrid or ranged hero",
     "cost": 3500,
     "itemNumber": 6,

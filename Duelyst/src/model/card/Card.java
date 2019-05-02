@@ -1,7 +1,7 @@
 package model.card;
 
 
-import model.item.Collectable;
+import model.item.Collectible;
 import model.item.Flag;
 import model.battle.Player;
 import model.land.LandOfGame;
@@ -89,8 +89,8 @@ public abstract class Card {
                 player.setFlagSaver(this);
                 player.addToTurnForSavingFlag();//todo dead
             }
-            if (newPosition.getObject() instanceof Collectable) {
-                player.getHand().addToCollectableItem((Collectable) newPosition.getObject());
+            if (newPosition.getObject() instanceof Collectible) {
+                player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             }
             setPosition(newPosition);
             newPosition.setObject(this);

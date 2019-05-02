@@ -33,7 +33,7 @@ public enum ErrorType {
     NOT_ENOUGH_MANA("You don't have enough mana"),
     INVALID_TARGET("You can not put it here"),
     HAVE_NOT_ENOUGH_MANA("You don't have enough mana"),
-    INVALID_ITEM("You don't have this collectable item"),
+    INVALID_ITEM("You don't have this Collectible item"),
     UNAVAILABLE_OPPONENT("Opponent minion is unavailable for attack"),
     CAN_NOT_USE_SPECIAL_POWER("Can not use special power for this card"),
     DO_NOT_HAVE_SPECIAL_POWER("This card doesn't have special power"),

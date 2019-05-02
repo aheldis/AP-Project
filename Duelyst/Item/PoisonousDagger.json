@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "PoisonousDagger",
-    "type": "usable",
+    "type": "Usable",
     "description": "poison buff for a random opponent minion",
     "cost": 7000,
     "itemNumber": 16,

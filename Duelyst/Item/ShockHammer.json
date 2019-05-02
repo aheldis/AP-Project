@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "ShockHammer",
-    "type": "usable",
+    "type": "Usable",
     "description": "disarm a random opponent minion",
     "cost": 15000,
     "itemNumber": 17,

@@ -1,8 +1,8 @@
 {
-  "@type": "model.item.Item",
+  "@type": "model.item.Usable",
   "@val": {
     "name": "SoulEater",
-    "type": "usable",
+    "type": "Usable",
     "description": "power buff on your minion (ap+1)",
     "cost": 2500,
     "itemNumber": 18,

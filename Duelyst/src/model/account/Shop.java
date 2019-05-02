@@ -1,6 +1,7 @@
 package model.account;
 
 import com.gilecode.yagson.YaGson;
+import model.item.Collectible;
 import model.item.Item;
 import model.item.Usable;
 import model.item.UsableId;
@@ -16,6 +17,7 @@ public class Shop {
     private static String pathOfFiles = "Duelyst/";
     private ArrayList<Card> cards = new ArrayList<>();// todo (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
     private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Item> Collectibles = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
 //    private String[] type = {"hero", "minion", "spell", "item"}; //ina ye enumi chizi mibood behtar mibood
 
@@ -58,8 +60,17 @@ public class Shop {
                 addCard(spell);
             }
             if (type.equals(FilesType.ITEM)) {
-                Item item = mapper.fromJson(reader, model.item.Item.class);
-                addItem(item);
+                System.out.println(path);
+                try {
+                    Usable item = mapper.fromJson(reader, model.item.Usable.class);
+                    addUsable(item);
+                }catch (Exception e){
+                }
+                try {
+                    Collectible item = mapper.fromJson(reader, Collectible.class);
+                    addCollectible(item);
+                }catch (Exception e){
+                }
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -70,8 +81,12 @@ public class Shop {
         cards.add(card);
     }
 
-    public void addItem(Item item) {
+    public void addUsable(Item item) {
         items.add(item);
+    }
+
+    public void addCollectible(Collectible item) {
+        Collectibles.add(item);
     }
 
     public static String getPathOfFiles() {
@@ -227,8 +242,12 @@ public class Shop {
         return item;
     }
 
+    public ArrayList<Item> getCollectibles() {
+        return Collectibles;
+    }
 
     public void show() {
+        System.out.println();
         accountView.cardsAndItemsView(Card.getSpells(cards),
                 Card.getMinions(cards),
                 Card.getHeroes(cards), items);

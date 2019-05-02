@@ -1,6 +1,6 @@
 package model.battle;
 
-import model.item.Collectable;
+import model.item.Collectible;
 import model.item.Flag;
 import model.account.Account;
 import model.card.Buff;
@@ -25,7 +25,7 @@ public abstract class Player {
     private int turnsPlayed = 0;
     private int mana;
     private GraveYard graveYard = new GraveYard(this);
-    //collectable item to hand ast :D
+    //Collectible item to hand ast :D
 
     //    public abstract void move(Card card, Square newPosition);
 //    public abstract void attack(Card card, Square target);
@@ -54,12 +54,12 @@ public abstract class Player {
 
     public abstract void addMatchInfo(MatchInfo matchInfo);
 
-    public void putCollectableItemOnLand(Coordinate coordinate, String collectableItemId) {
+    public void putCollectibleItemOnLand(Coordinate coordinate, String CollectibleItemId) {
         //todo
     }
 
-    public void addItemToCollectables(Collectable collectable) {
-        hand.getCollectableItems().add(collectable);
+    public void addItemToCollectibles(Collectible collectible) {
+        hand.getCollectibleItems().add(collectible);
     }
 
     public Card passCardInGame(String cardId) {
