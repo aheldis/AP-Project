@@ -7,19 +7,6 @@ import view.enums.ErrorType;
 
 public class Game {
     private static BattleView battleView = BattleView.getInstance();
-    //    private static Game singleInstance = null;
-  /*  private boolean singlePlayer;
-    private boolean story;
-    private boolean customGame;
-    private int mode; //1 -> dead 2 -> saveFlag 3 -> collectFlag
-    private int numberOfFlags;
-    private int heroNumber;
-    private ArrayList<Integer> spellIds;//todo id ha string hastan
-    private ArrayList<Integer> minionIds;
-    private int itemNumber;
-    private int reward;
-    private int levelNumber = -1;
-  */  //private ArrayList<Game> gamesType;
     private Player[] players = new Player[2];
     private int mode;
     private int numberOfFlags = 0;

@@ -1,10 +1,16 @@
 package model.battle;
 
+import Controller.MenuController;
 import model.item.Flag;
 import model.land.LandOfGame;
+import model.land.Square;
+import view.BattleView;
+import view.MenuView;
+import view.enums.StateType;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class Match {
     private Player[] players;
@@ -19,10 +25,26 @@ public class Match {
     private Date date;
 
 
-    public void setFlagsRandomly(){
-        //todo
+    public void setFlagsRandomly() {
+        flags = new ArrayList<>();
+        Flag flag;
+        Random random = new Random();
+        Square[][] squares = land.getSquares();
+        int randomX, randomY;
+        for (int i = 0; i < numberOfFlags; i++) {
+            randomX =random.nextInt(4);
+            randomY = random.nextInt(8);
+            if(squares[randomX][randomY].getObject() !=null ){
+               i --;
+               continue;
+            }
+            flag = new Flag();
+            flags.add(flag);
+            squares[randomX][randomY].setObject(flag);
+        }
     }
-    public ArrayList<Flag> getFlags(){
+
+    public ArrayList<Flag> getFlags() {
         return flags;
     }
 
@@ -33,6 +55,11 @@ public class Match {
         this.numberOfFlags = numberOfFlags;
         this.reward = reward;
         land = new LandOfGame();
+
+        date = new Date();
+        initGame();
+        players[0].initPerTurn();
+      //  players[1].initPerTurn();
     }
 
     public Player passPlayerWithTurn() {
@@ -50,28 +77,36 @@ public class Match {
     }
 
     public void changeTurn() {
-        if (whichPlayer == 0)
-            whichPlayer = 1;
-        else
-            whichPlayer = 0;
-    }
-
-    public void startMatch() {
-        date = new Date();
-
-        initGame();
-        players[0].initPerTurn();
-        players[1].initPerTurn();
-
-        while (true) {
-            players[whichPlayer].playTurn();
-            if (gameEnded()) {
-                endGame();
-                break;
-            }
-            whichPlayer = 1 - whichPlayer;
+        if (gameEnded()) {
+            endGame();
+            MenuController.state = StateType.ACCOUNT_MENU;
+            return;
         }
+        if(whichPlayer == 0){
+            players[1].initPerTurn();
+        }
+        if(whichPlayer == 1){
+            players[0].initPerTurn();
+        }
+        whichPlayer = 1 - whichPlayer;
     }
+
+//    public void startMatch() {
+//        date = new Date();
+//
+//        initGame();
+//        players[0].initPerTurn();
+//        players[1].initPerTurn();
+//
+//        while (true) {
+//            players[whichPlayer].playTurn();
+//            if (gameEnded()) {
+//                endGame();
+//                break;
+//            }
+//            whichPlayer = 1 - whichPlayer;
+//        }
+//    }
 
 
     public void initGame() {
@@ -89,7 +124,6 @@ public class Match {
     }
 
     private boolean gameEnded() {
-        //todo
         switch (mode) {
             case "DeathMode": {
                 if (players[0].getHero().getHp() == 0) {
@@ -139,8 +173,10 @@ public class Match {
         winner.addToAccountWins();
         winner.addMatchInfo(matchInfo);
         loser.addMatchInfo(matchInfo);
+        winner.getAccount().changeValueOfDaric(reward);
 
-        //todo ye chizi print kone ke bazi tamoom shode
+        BattleView battleView = BattleView.getInstance();
+        battleView.endGameView(this);
     }
 
     private void setWinnerAndLoser(Player winner, Player loser) {
@@ -168,9 +204,6 @@ public class Match {
         return reward;
     }
 
-    public void setReward(int reward) {
-        this.reward = reward;
-    }
 
     public LandOfGame getLand() {
         return land;

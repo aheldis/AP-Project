@@ -13,7 +13,7 @@ import view.enums.*;
 
 
 public class MenuController {
-    private static StateType state = StateType.MAIN_MENU;
+    public static StateType state = StateType.MAIN_MENU;
     private static Account account;
     private static AllAccount allAccount = AllAccount.getInstance();
     private static MenuView menuView = MenuView.getInstance();
