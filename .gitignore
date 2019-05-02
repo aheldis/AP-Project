@@ -28,3 +28,5 @@ hs_err_pid*
 .idea/libraries/com_google_code_gson_gson_2_8_51.xml
 .idea/libraries/java.xml
 out/production/Duelyst/META-INF/
+.idea/libraries/com_gilecode_yagson_yagson_0_5.xml
+.idea/libraries/com_gilecode_yagson_yagson_0_51.xml
