@@ -144,7 +144,7 @@ public class AccountView {
         Hero hero;
         Item item;
         ArrayList<Card> cards;
-        for (int i = decks.size() - 1; i >= 0; i++) {
+        for (int i = decks.size() - 1; i >= 0; i--) {
             System.out.println(counterOfDeck + " : " + decks.get(i).getName() + " :");
 
             hero = decks.get(i).getHero();

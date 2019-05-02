@@ -74,12 +74,12 @@ public class Request {
             }
             if (command.toLowerCase().matches("add \\w+ to deck \\w+")) {
                 setDeckName(command.split(" ")[4]);
-                setId(command.substring(4));
+                setId(command.split(" ")[1]);
                 return RequestType.COLLECTION_ADD_CARD_TO_DECK;
             }
             if (command.toLowerCase().matches("remove card \\w+ from deck \\w+")) {
                 setDeckName(command.split(" ")[5]);
-                setId(command.substring(2));
+                setId(command.split(" ")[2]);
                 return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
             }
             if (command.toLowerCase().matches("remove item \\w+ from deck \\w+")) {
@@ -111,19 +111,19 @@ public class Request {
                 return RequestType.SHOP_SHOW_COLLECTION;
             }
             if (command.toLowerCase().matches("search collection \\w+")) {
-                setId(command.substring(18));
+                setId(command.split(" ")[2]);
                 return RequestType.SHOP_SEARCH_COLLECTION_CARD;
             }
             if (command.toLowerCase().matches("search \\w+")) {
-                setId(command.substring(7));
+                setId(command.split(" ")[1]);
                 return RequestType.SHOP_SEARCH_CARD;
             }
             if (command.toLowerCase().matches("buy \\w+")) {
-                setId(command.substring(4));
+                setId(command.split(" ")[1]);
                 return RequestType.SHOP_BUY;
             }
             if (command.toLowerCase().matches("sell \\w+")) {
-                setId(command.substring(5));
+                setId(command.split(" ")[1]);
                 return RequestType.SHOP_SELL;
             }
             if (command.toLowerCase().matches("show")) {

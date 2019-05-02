@@ -211,7 +211,11 @@ public class MenuController {
                             break;
                         case COLLECTION_VALIDATE_DECK:
                             deckName = request.getDeckName();
-                            collection.validateDeck(deckName);
+                            boolean output= collection.validateDeck(deckName);
+                            if(output)
+                                menuView.printer(deckName+" is validate");
+                            else
+                                menuView.printer(deckName+" is not validate");
                             break;
                         case COLLECTION_SAVE:
                             //todo

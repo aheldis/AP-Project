@@ -10,6 +10,7 @@ import model.card.Spell;
 import view.AccountView;
 import view.enums.ErrorType;
 
+import javax.xml.stream.events.EntityReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -73,17 +74,17 @@ public class Collection {
     public void selectADeckAsMainDeck(String deckName) {
 
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
-        if (deck == null) {
-            ErrorType error = ErrorType.HAVE_NOT_DECK;
-            error.printMessage();
-
+        if(errorForDeck(deck)) {
+            if (!deck.validate()) {
+                ErrorType error=ErrorType.SELECTED_INVALID_DECK;
+                error.printMessage();
+            }
+            account.setMainDeck(deck);
         }
-        account.setMainDeck(deck);
     }
 
     public Deck passTheDeckIfHaveBeenExist(String deckName) {
         for (Deck deck : decks) {
-            System.out.println(deck.getName());
             if (deck.getName().equals(deckName)) {
                 return deck;
             }
@@ -222,12 +223,8 @@ public class Collection {
             error.printMessage();
             return;
         }
-//        if (cardHaveBeenExistInThisDeck(deckName, cardId) != null) {
-//            error = ErrorType.HAVE_CARD_IN_DECK;
-//            error.printMessage();
-//            return;
-//            deck.addToCardsOfDeck(card);
-//        }
+        deck.addToCardsOfDeck(card);
+
 
     }
 
