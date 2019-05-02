@@ -43,8 +43,7 @@ public class Request {
                 case "enter exit":
                     return RequestType.MENU_ENTER_EXIT;
             }
-        }
-        else if (state == StateType.COLLECTION) {
+        } else if (state == StateType.COLLECTION) {
             switch (command.toLowerCase()) {
                 case "exit":
                     return RequestType.COLLECTION_EXIT;
@@ -61,7 +60,7 @@ public class Request {
                 setId(command.split(" ")[2]);
                 return RequestType.COLLECTION_SEARCH_ITEM;
             }
-            if(command.toLowerCase().matches("search card \\w+")){
+            if (command.toLowerCase().matches("search card \\w+")) {
                 setId(command.split(" ")[2]);
                 return RequestType.COLLECTION_SEARCH_CARD;
             }
@@ -101,8 +100,10 @@ public class Request {
                 return RequestType.COLLECTION_SHOW_DECK;
             }
 
-        }
-        else if (state == StateType.SHOP) {
+        } else if (state == StateType.SHOP) {
+            if (command.toLowerCase().equals("show daric")) {
+                return RequestType.SHOP_SHOW_DARIC;
+            }
             if (command.toLowerCase().matches("exit")) {
                 return RequestType.SHOP_EXIT;
             }
@@ -131,8 +132,7 @@ public class Request {
             if (command.toLowerCase().matches("help")) {
                 return RequestType.SHOP_HELP;
             }
-        }
-        else if (state == StateType.MAIN_MENU) {
+        } else if (state == StateType.MAIN_MENU) {
             switch (command.toLowerCase()) {
                 case "login":
                     return RequestType.MAIN_MENU_LOGIN;
@@ -145,13 +145,12 @@ public class Request {
                 case "exit":
                     return RequestType.MAIN_MENU_EXIT;
             }
-            if(command.toLowerCase().matches("create account \\w+")){
+            if (command.toLowerCase().matches("create account \\w+")) {
 
                 return RequestType.MAIN_MENU_SIGN_UP;
             }
 
-        }
-        else if (state == StateType.BATTLE) {
+        } else if (state == StateType.BATTLE) {
             switch (command.toLowerCase()) {
                 case "game Info":
                     return RequestType.GAME_GAME_INFO;
@@ -272,8 +271,7 @@ public class Request {
         return false;
     }
 
-    public RequestType getRequestType()
-    {
+    public RequestType getRequestType() {
         return type;
     }
 

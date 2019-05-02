@@ -142,11 +142,6 @@ public class Shop {
     }
 
     public void buy(Account account, String name) {
-        if (!cardExist(name) && !itemExist(name)) {
-            ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
-            accountView.printError(error);
-            return;
-        }
         if (cardExist(name)) {
             Card card = getCard(name);
             new CardId(account, card, account.getCollection().getNumberOfCardId(card));
@@ -164,18 +159,22 @@ public class Shop {
                 collection.addToMinions((Minion) card);
                 typeOfFile = FilesType.MINION;
             }
-            makeNewFromFile(pathOfFiles + typeOfFile + card.getName(), typeOfFile); //todo check lotfan
+            makeNewFromFile(pathOfFiles + typeOfFile+ "/" + card.getName()+".json", typeOfFile); //todo check lotfan
             cards.remove(card);
+            return;
         }
-        if (itemExist(name)) {
+        else if (itemExist(name)) {
             Usable item = getItem(name);
             new UsableId(account, item, account.getCollection().getNumberOfItemId(item));
             if (!enoughDaricForBuy(account, item.getCost()))
                 return;
             account.getCollection().addToItems(item);
             items.remove(item);
-            makeNewFromFile(pathOfFiles + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM); //todo check lotfan
+            makeNewFromFile(pathOfFiles +"/"+ FilesType.ITEM.getName() + item.getName(), FilesType.ITEM); //todo check lotfan
+            return;
         }
+        ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
+        accountView.printError(error);
     }
 
     private boolean enoughDaricForBuy(Account account, int cost) {
@@ -188,18 +187,19 @@ public class Shop {
         return true;
     }
 
-    public void sell(Account account, String id) { //todo in lazeme bargarde be shop?
+    public void sell(Account account, String id) {
         Collection collection = account.getCollection();
         Card card = collection.passCardByCardId(id);
         Usable item = collection.passUsableItemByUsableItemId(id);
         if (card != null) {
+            account.changeValueOfDaric(card.getCost());
             collection.removeCard(card);
         } else if (item != null) {
+            account.changeValueOfDaric(card.getCost());
             collection.removeItem(item);
         } else {
             ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION;
             accountView.printError(error);
-            return;
         }
     }
 

@@ -35,6 +35,7 @@ public enum RequestType {
     SHOP_SELL,
     SHOP_SHOW,
     SHOP_HELP,
+    SHOP_SHOW_DARIC,
     GAME_GAME_INFO,
     GAME_SHOW_MY_MINION,
     GAME_SHOW_OPPONENT_MINION,

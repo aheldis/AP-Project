@@ -182,9 +182,10 @@ public class Collection {
         cards.addAll(heroes);
         cards.addAll(minions);
         cards.addAll(spells);
-        for (Card card : cards) {
-            if (card.equals(cardId))
-                return card;
+        for (int i=0;i< cards.size();i++) {
+            if (cards.get(i).equalCard(cardId)) {
+                return cards.get(i);
+            }
         }
         return null;
     }
@@ -352,21 +353,28 @@ public class Collection {
     }
 
     public void removeCard(Card card) {
-        for (Hero hero : heroes) {
-            if (card instanceof Hero && hero.equals(card)) {
-                heroes.remove(hero);
-                break;
+        if(card instanceof Hero) {
+            for (Hero hero : heroes) {
+                if ( hero.equals(card)) {
+                    heroes.remove(hero);
+                    return;
+                }
             }
         }
-        for (Minion minion : minions) {
-            if (card instanceof Minion && minion.equals(card)) {
-                minions.remove(minion);
+        if(card instanceof Minion) {
+            for (Minion minion : minions) {
+                if ( minion.equals(card)) {
+                    minions.remove(minion);
+                    return;
+                }
             }
         }
-        for (Spell spell : spells) {
-            if (card instanceof Spell && spell.equals(card)) {
-                spells.remove(spell);
-                break;
+        if(card instanceof Spell) {
+            for (Spell spell : spells) {
+                if (spell.equals(card)) {
+                    spells.remove(spell);
+                    return;
+                }
             }
         }
     }

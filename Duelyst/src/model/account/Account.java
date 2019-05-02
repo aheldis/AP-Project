@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Account implements Comparable<Account> {
     private String userName;
     private String password;
-    private int daric;
+    private int daric=15000;
     private int wins;
     private ArrayList<MatchInfo> matchHistory;
     private Collection collection=new Collection(this);

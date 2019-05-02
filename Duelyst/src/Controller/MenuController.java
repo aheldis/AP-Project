@@ -238,6 +238,9 @@ public class MenuController {
                         case SHOP_BUY:
                             shop.buy(account, request.getId());
                             break;
+                        case SHOP_SHOW_DARIC:
+                            menuView.printer(account.getDaric()+"");
+                            break;
                         case SHOP_SELL:
                             shop.sell(account, request.getId());
                             break;

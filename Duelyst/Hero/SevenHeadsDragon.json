@@ -1,7 +1,7 @@
 {
   "@type": "model.card.Hero",
   "@val": {
-    "name": "SevenHeadDragon",
+    "name": "SevenHeadsDragon",
     "CardNumber": 3,
     "cost": 8000,
     "mp": 0,
