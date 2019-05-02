@@ -46,7 +46,7 @@ public class Collection {
     }
 
     public void showCardsAndItems() {
-        accountView.cardsAndItemsView(spells, minions, heroes, new ArrayList<Usable>(Arrays.asList(items)));
+        accountView.cardsAndItemsView(spells, minions, heroes, new ArrayList<>(Arrays.asList(items)));
     }
 
     public void addToHeros(Hero hero) {

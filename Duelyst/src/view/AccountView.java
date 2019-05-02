@@ -46,7 +46,7 @@ public class AccountView {
         }
     }
 
-    public void cardsAndItemsView(ArrayList<Spell> spells, ArrayList<Minion> minions, ArrayList<Hero> heroes, ArrayList<Usable> items) {
+    public void cardsAndItemsView(ArrayList<Spell> spells, ArrayList<Minion> minions, ArrayList<Hero> heroes, ArrayList<Item> items) {
         int counter = 1;
         System.out.println("Heroes : ");
         for (Hero hero : heroes) {
@@ -58,13 +58,15 @@ public class AccountView {
         }
         counter = 1;
         System.out.println("Items : ");
-        for (Usable item : items) {
+        for (Item item : items) {
             if (item == null)
                 continue;
-            System.out.print("          ");
-            showEachItem(item, counter);
-            System.out.println(" – Sell Cost : " + item.getCost());
-            counter++;
+            if(item instanceof Usable) {
+                System.out.print("          ");
+                showEachItem(item, counter);
+                System.out.println(" – Sell Cost : " + item.getCost());
+                counter++;
+            }
         }
         counter = 1;
         System.out.println("Spells : ");

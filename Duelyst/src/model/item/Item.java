@@ -9,8 +9,12 @@ public abstract class Item {
     private String description;
     private int cost;
     private int itemNumber;
-    private Target target;
-    private Change change;
+    private Target target = new Target();
+    private Change change = new Change();
+
+    public Item(){
+
+    }
 
     public int getCost() {
         return cost;

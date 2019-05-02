@@ -15,7 +15,7 @@ public class Shop {
     public static Shop singleInstance = null;
     private static String pathOfFiles = "Duelyst/";
     private ArrayList<Card> cards = new ArrayList<>();// todo (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
-    private ArrayList<Usable> items = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
 //    private String[] type = {"hero", "minion", "spell", "item"}; //ina ye enumi chizi mibood behtar mibood
 
@@ -58,7 +58,7 @@ public class Shop {
                 addCard(spell);
             }
             if (type.equals(FilesType.ITEM)) {
-                Usable item = mapper.fromJson(reader, model.item.Usable.class);
+                Item item = mapper.fromJson(reader, model.item.Item.class);
                 addItem(item);
             }
         } catch (IOException e) {
@@ -70,7 +70,7 @@ public class Shop {
         cards.add(card);
     }
 
-    public void addItem(Usable item) {
+    public void addItem(Item item) {
         items.add(item);
     }
 
@@ -106,7 +106,7 @@ public class Shop {
     }
 
     private boolean itemExist(String name) {
-        for (Usable item : items) {
+        for (Item item : items) {
             if (item.getName().equals(name)) {
                 return true;
             }
@@ -124,9 +124,9 @@ public class Shop {
     }
 
     private Usable getItem(String name) {
-        for (Usable item : items) {
-            if (item.getName().equals(name)) {
-                return item;
+        for (Item item : items) {
+            if (item instanceof Usable && item.getName().equals(name)) {
+                return (Usable) item;
             }
         }
         return null;

@@ -6,7 +6,6 @@ public enum FilesType {
     SPELL("Spell"),
     ITEM("item"),
     BUFF("Buff");
-
     private String name;
 
     FilesType(String name) {
