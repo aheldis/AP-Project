@@ -144,4 +144,9 @@ public class MenuView {
         Collectable collectable = hand.passCollectableInHand(collectableId);
         AccountView.getInstance().showEachItem(collectable, NOT_VALID);
     }
+
+    public void helpForSelectMode(){
+        System.out.println("Enter single player");
+        System.out.println("Enter multi player");
+    }
 }

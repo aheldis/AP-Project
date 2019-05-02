@@ -21,7 +21,7 @@ public class MenuController {
     private static Game game;
     private static Match match;
 
-    public static void main() {
+    public static void main() throws Exception {
         String id;
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
@@ -39,7 +39,7 @@ public class MenuController {
                 switch (request.getRequestType()) {
                     case MAIN_MENU_SIGN_UP:
                         userName = request.getCommand().split(" ")[2];
-                        if (allAccount.userNameHaveBeenExist(userName)) {
+                        if (allAccount.userNameHaveBeenExist(userName)!=null) {
                             menuView.printer("UserName have been exist");
                             break;
                         }menuView.printer("Enter your password");
@@ -54,7 +54,7 @@ public class MenuController {
                         request.getNewLine();
                         userName = request.getCommand();
                         boolean breaker=false;
-                        while (!allAccount.userNameHaveBeenExist(userName)) {
+                        while (allAccount.userNameHaveBeenExist(userName)==null) {
                             menuView.printer("This name have not  been exist");
                             menuView.printer("Enter you UserName");
                             request.getNewLine();
@@ -105,6 +105,7 @@ public class MenuController {
                             game = new Game();
                             if (!game.checkPlayerDeck(account, 1))
                                 state = StateType.ACCOUNT_MENU;
+                            menuView.printer("select mode");
                             state = StateType.SELECT_MODE;
                             break;
                         case MENU_ENTER_HELP:
@@ -267,27 +268,34 @@ public class MenuController {
                         String command;
                         String userName;
                         menuView.showAllAccount();
+                        Account account;
                         do {
                             menuView.printer("Select user [user name]");
                             request.getNewLine();
                             userName = request.getCommand();
-                            if (!allAccount.userNameHaveBeenExist(userName)) {
+                            account = allAccount.userNameHaveBeenExist(userName);
+                            if (account == null) {
                                 ErrorType error = ErrorType.USER_NAME_NOT_FOUND;
                                 menuView.printError(error);
                             }
-                        } while (!allAccount.userNameHaveBeenExist(userName));
+                        } while (account == null);
+                        if(account.getMainDeck()== null){
+                            ErrorType error = ErrorType.SELECTED_INVALID_DECK_FOR_PLAYER2;
+                            error.printMessage();
+                            break;
+                        }
                         menuView.showModes();
                         do {
                             menuView.printer("Start multiPlayer game [mode] [number of flags] ");
                             request.getNewLine();
                             command = request.getCommand();
-                            if (!command.matches("Start multiPlayer game \\d (\\d+)*"))
+                            if (!command.matches("Start multiPlayer game \\d (\\d+)"))
                                 continue;
                             mode = Integer.parseInt(command.split(" ")[3]);
                             if (command.split(" ").length > 4) {
                                 numberOfFlags = Integer.parseInt(command.split(" ")[4]);
                             }
-                        } while (mode != 0);
+                        } while (mode == 0);
                         Account secondPlayerAccount = allAccount.getAccountByName(userName);
                         menuView.printer("Enter your passWord");
                         request.getNewLine();
@@ -299,7 +307,7 @@ public class MenuController {
                             do {
                                 menuView.printer("Enter reward");
                                 request.getNewLine();
-                            }while(request.getCommand().matches("\\d+"));
+                            }while(! request.getCommand().matches("\\d+"));
                             match = game.makeNewMultiGame(mode, numberOfFlags,Integer.parseInt(request.getCommand()));
                             state = StateType.BATTLE;
                         } else {
@@ -310,7 +318,10 @@ public class MenuController {
                         state = StateType.SINGLE_GAME;
                         break;
                     case MODE_HELP:
-
+                        menuView.helpForSelectMode();
+                        break;
+                    case SELECT_MODE_EXIT:
+                        state = StateType.BATTLE;
                         break;
                 }
             }

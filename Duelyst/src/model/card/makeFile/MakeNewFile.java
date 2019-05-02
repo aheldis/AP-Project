@@ -21,11 +21,9 @@ public class MakeNewFile {
     private static Request request = new Request(StateType.BATTLE);//mohem ni chi bashe mikham az scanneresh estefade konam
     private static String path;
 
-//    private static String checkSyntax(FileWriter fileWriter, String line) {
-//    }
 
 
-    public static void makeNewCardFile() {
+    public static void makeNewCardFile() throws  Exception{
 
         String input = null;
         do {

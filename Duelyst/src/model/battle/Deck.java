@@ -28,8 +28,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
     }
 
     public void setHero(Hero hero) {
-        if (hero == null)
-            this.hero = hero;
+        this.hero = hero;
     }
 
     public Item getItem() {

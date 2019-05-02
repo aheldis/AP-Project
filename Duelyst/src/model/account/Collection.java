@@ -223,6 +223,11 @@ public class Collection {
             error.printMessage();
             return;
         }
+        if(deck.cardHaveBeenExistInThisDeck(card.getCardId().getCardIdAsString())!=null){
+            error=ErrorType.HAVE_CARD_IN_DECK;
+            error.printMessage();
+            return;
+        }
         deck.addToCardsOfDeck(card);
 
 

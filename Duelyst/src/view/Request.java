@@ -3,7 +3,6 @@ package view;
 import model.requirment.Coordinate;
 import view.enums.RequestType;
 import view.enums.StateType;
-
 import java.util.Scanner;
 
 public class Request {
@@ -16,16 +15,26 @@ public class Request {
     private String deckName;
     private String Id;
 
+
     public Request(StateType state) {
         this.state = state;
     }
 
-    public void getNewLine() {
-        this.command = scanner.nextLine().trim();
+    public void getNewLine() throws  Exception{
+        String st=Main.br.readLine();
+        if(st==null)
+            return;
+        this.command = st;
+
+//this.command = scanner.nextLine().trim();
     }
 
-    public void getNewCommand() {
-        this.command = scanner.nextLine().trim();
+    public void getNewCommand() throws Exception {
+        String st=Main.br.readLine();
+        if(st==null)
+            return;
+        this.command = st;
+        //this.command = scanner.nextLine().trim();
         type = getType();
     }
 
@@ -247,6 +256,9 @@ public class Request {
                 return RequestType.MODE_SINGLE_PLAYER;
             if (command.toLowerCase().matches("multi player"))
                 return RequestType.MODE_MULTI_PLAYER;
+            if(command.toLowerCase().matches("exit")){
+                return RequestType.SELECT_MODE_EXIT;
+            }
         }
         if (state == StateType.SINGLE_GAME) {
             if (command.toLowerCase().matches("custom game"))

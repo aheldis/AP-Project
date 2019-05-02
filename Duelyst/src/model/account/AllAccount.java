@@ -23,13 +23,13 @@ public class AllAccount {
         return accounts;
     }
 
-    public boolean userNameHaveBeenExist(String userName) {
+    public Account userNameHaveBeenExist(String userName) {
         for (Account account : accounts) {
             if (account.getUserName().equals(userName)) {
-                return true;
+                return account;
             }
         }
-        return false;
+        return null;
     }
 
     public boolean passwordMatcher(String userName, String password) {
