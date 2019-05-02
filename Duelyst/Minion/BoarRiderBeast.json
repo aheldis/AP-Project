@@ -1,0 +1,38 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "BoarRiderBeast",
+    "CardNumber": 16,
+    "cost": 300,
+    "mp": 6,
+    "hp": 16,
+    "ap": 8,
+    "counterAttack": "melee",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "description": "-",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

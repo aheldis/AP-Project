@@ -1,0 +1,42 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "Sorcerer",
+    "CardNumber": 25,
+    "cost": 550,
+    "mp": 4,
+    "hp": 5,
+    "ap": 4,
+    "counterAttack": "ranged",
+    "attackRange": 3,
+    "ActivationTimeOfSpecialPower": "PASSIVE",
+    "description": "power buff with 2 units hp and weakness buff with 1 unit hp",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -1,
+      "apChange": 2,
+      "continuous": false,
+      "buffs": {
+        "weakness": 1,
+        "power": 1
+      },
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "neighbor": true
+    }
+  }
+}

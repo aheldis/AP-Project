@@ -1,0 +1,40 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "WhiteWolf",
+    "CardNumber": 22,
+    "cost": 400,
+    "mp": 5,
+    "hp": 8,
+    "ap": 2,
+    "counterAttack": "melee",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "description": "when attacks decrease hp for next turn 6 units and 4 units for the next one",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -6,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "DecreaserHp" : 1
+      },
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "Siavash",
+    "CardNumber": 38,
+    "cost": 350,
+    "mp": 4,
+    "hp": 8,
+    "ap": 5,
+    "counterAttack": "melee",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "ON_DEATH",
+    "description": "decrease hp of hero on death",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -6,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

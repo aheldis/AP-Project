@@ -1,0 +1,38 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "SpearsmanFromFars",
+    "CardNumber": 3,
+    "cost": 500,
+    "mp": 1,
+    "hp": 5,
+    "ap": 3,
+    "counterAttack": "hybrid",
+    "attackRange": 3,
+    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "description": "-",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "hybrid",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}
