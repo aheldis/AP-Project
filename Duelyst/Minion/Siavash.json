@@ -12,7 +12,7 @@
     "ActivationTimeOfSpecialPower": "ON_DEATH",
     "description": "decrease hp of hero on death",
     "change": {
-      "targetType": "card",
+      "targetType": "hero",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

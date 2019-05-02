@@ -1,0 +1,35 @@
+{
+  "@type": "model.item.Item",
+  "@val": {
+    "name": "Shield",
+    "type": "usable",
+    "description": "12 holy buff to your minion",
+    "cost": 4000,
+    "itemNumber": 2,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "item",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    },
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "holy": 1
+      },
+      "unaffactBuffs": false
+    }
+  }
+}

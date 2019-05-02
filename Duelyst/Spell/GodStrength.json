@@ -12,7 +12,7 @@
     "ActivationTimeOfSpecialPower": "-",
     "description": "add 4 units to ap of hero",
     "change": {
-      "targetType": "card",
+      "targetType": "hero",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

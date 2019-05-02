@@ -12,7 +12,7 @@
     "ActivationTimeOfSpecialPower": "-",
     "description": "decrease hp of an opponent minion 8 units",
     "change": {
-      "targetType": "spell",
+      "targetType": "hero",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

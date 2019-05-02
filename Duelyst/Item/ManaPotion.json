@@ -1,0 +1,35 @@
+{
+  "@type": "model.item.Item",
+  "@val": {
+    "name": "ManaPotion",
+    "type": "collectible",
+    "description": "add to mana 3 units",
+    "cost": 0,
+    "itemNumber": 8,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "item",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    },
+    "change": {
+      "targetType": "player",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 3,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "mana": 1
+      },
+      "unaffactBuffs": false
+    }
+  }
+}
