@@ -6,6 +6,8 @@ import model.account.Shop;
 import java.io.*;
 import java.util.ArrayList;
 
+//todo check saba
+
 public class Buff {
     private static ArrayList<Buff> buffs;
     private static String pathOfFiles = Shop.getPathOfFiles() + "Buff";
@@ -28,7 +30,7 @@ public class Buff {
         }
     }
 
-    static public Buff getByName(String name) {
+    static public Buff getNewBuffByName(String name) {
         for (Buff buff : buffs) {
             if (buff.getName().equals(name)) {
                 makeNewFromFile(pathOfFiles + "/" + buff.getName());
@@ -39,6 +41,13 @@ public class Buff {
         return null;
     }
 
+    public void setApChange(int apChange) {
+        this.apChange = apChange;
+    }
+
+    public void setHpChange(int hpChange) {
+        this.hpChange = hpChange;
+    }
 
     public String getName() {
         return name;

@@ -24,9 +24,11 @@
       "apChange": 0,
       "continuous": true,
       "buffs": {
-        "power": [2]
+        "power": [1]
       },
-      "unaffactBuffs": true
+      "unaffactBuffs": true,
+      "apOrHpForPower": "ap",
+      "changeInApOrHpForPower": 4
     },
     "target": {
       "counterAttackType": "ranged",

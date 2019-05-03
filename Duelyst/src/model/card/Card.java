@@ -1,9 +1,9 @@
 package model.card;
 
 
+import model.battle.Player;
 import model.item.Collectible;
 import model.item.Flag;
-import model.battle.Player;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -61,9 +61,13 @@ public abstract class Card {
         }
     }
 
-    public void removeBuff(Buff buff) {
-        //kar dige e ke lazem nist? ye check beshe baad
-        buffsOnThisCard.remove(buff);
+    public void removeBuff(String buffName) {
+        for (Buff buff : buffsOnThisCard.keySet()) {
+            if (buff.getName().equals(buffName)) {
+                buffsOnThisCard.remove(buff);
+                return;
+            }
+        }
     }
 
 
@@ -90,7 +94,7 @@ public abstract class Card {
             if (newPosition.getObject() instanceof Collectible) {
                 player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             }
-           // if(newPosition.getObject() instanceof ) todo asare khane
+            // if(newPosition.getObject() instanceof ) todo asare khane
 
             setPosition(newPosition);
             newPosition.setObject(this);
@@ -99,8 +103,7 @@ public abstract class Card {
                     "moved to" + newCoordination.getX() + newCoordination.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
             canMove = false;
-        }
-        else
+        } else
             ErrorType.INVALID_TARGET.printMessage();
 
     }
@@ -133,7 +136,7 @@ public abstract class Card {
     }
 
     public boolean withinRange(Coordinate coordinate, int range) {
-        if(counterAttack.equals("Ranged") && getNormalDistance(coordinate) == 1)
+        if (counterAttack.equals("Ranged") && getNormalDistance(coordinate) == 1)
             return false;
         return getManhatanDistance(coordinate) <= range;
     }
@@ -165,7 +168,7 @@ public abstract class Card {
         if (this instanceof Spell) {
             return;
         }
-        if(!canAttack) {
+        if (!canAttack) {
             ErrorType.CAN_NOT_ATTACK.printMessage();
             return;
         }
@@ -212,14 +215,14 @@ public abstract class Card {
             if (((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
                 //todo affect special power
                 //setTarget(theOneWhoAttacked, position);
-               // getChange().affect(, this.getTargetClass().getTargets());//todo chert momkene bashe
+                // getChange().affect(, this.getTargetClass().getTargets());//todo chert momkene bashe
             }
         }
     }
 
     public void setCanAttack(boolean bool, int forHowManyTurn) {
         canAttack = bool;
-        if (!bool ) {
+        if (!bool) {
             setTurnOfCanNotAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
         }
     }
@@ -269,7 +272,7 @@ public abstract class Card {
 
     public void setCanCounterAttack(boolean bool, int forHowManyTurn) {
         canCounterAttack = bool;
-        if (!bool ) {
+        if (!bool) {
             setTurnOfCanNotCounterAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
         }
     }
@@ -321,7 +324,7 @@ public abstract class Card {
         }
         if (this instanceof Hero) {
             if (((Hero) this).getHaveSpecialPower()) {
-                if(((Hero) this).getTurnNotUsedSpecialPower() <= ((Hero) this).getCoolDown()){
+                if (((Hero) this).getTurnNotUsedSpecialPower() <= ((Hero) this).getCoolDown()) {
                     //todo AffectSpecialPower
                     return;
                 }

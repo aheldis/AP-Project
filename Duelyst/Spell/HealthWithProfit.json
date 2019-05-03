@@ -31,7 +31,9 @@
           3
         ]
       },
-      "unaffactBuffs": false
+      "unaffactBuffs": false,
+      "apOrHpForWeakness": "hp",
+      "changeInApOrHpForWeakness": -6
     },
     "target": {
       "counterAttackType": "-",

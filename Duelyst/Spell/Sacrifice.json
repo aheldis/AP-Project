@@ -26,7 +26,11 @@
         "weackness": [1],
         "power": [1]
       },
-      "unaffactBuffs": false
+      "unaffactBuffs": false,
+      "apOrHpForWeakness": "hp",
+      "changeInApOrHpForWeakness": -6,
+      "apOrHpForPower": "ap",
+      "changeInApOrHpForPower": 8
     },
     "target": {
       "counterAttackType": "-",
