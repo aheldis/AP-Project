@@ -24,7 +24,7 @@
       "apChange": 0,
       "continuous": true,
       "buffs": {
-        "power": 2
+        "power": [2]
       },
       "unaffactBuffs": true
     },

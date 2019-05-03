@@ -23,7 +23,7 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {
-        "stun": 2
+        "stun": [2]
       },
       "unaffactBuffs": false
     },

@@ -23,7 +23,9 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {
-        "DecreaserHp" : 1
+        "DecreaserHp" : [
+          1
+        ]
       },
       "unaffactBuffs": false
     },

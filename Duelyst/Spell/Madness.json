@@ -23,8 +23,8 @@
       "apChange": 4,
       "continuous": false,
       "buffs": {
-        "power": 3,
-        "disarm": 3
+        "power": [3],
+        "disarm": [3]
       },
       "unaffactBuffs": false
     },

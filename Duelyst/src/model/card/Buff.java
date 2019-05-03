@@ -39,10 +39,6 @@ public class Buff {
         return null;
     }
 
-    //todo harbar seda nashe tahash unaffecct beshe
-    //to change check she ke doroste
-    //ye chizayee mesle holy buff ok she
-    //in ke age chandta buff e moshabeh emal shan chi mishe check she
 
     public String getName() {
         return name;

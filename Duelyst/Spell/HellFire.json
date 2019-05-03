@@ -23,7 +23,7 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {
-        "fire": 2
+        "fire": [2]
       },
       "unaffactBuffs": false
     },

@@ -23,8 +23,13 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {
-        "weakness": 1,
-        "holy": 3
+        "weakness": [
+          1
+        ],
+        "holy": [
+          3,
+          3
+        ]
       },
       "unaffactBuffs": false
     },

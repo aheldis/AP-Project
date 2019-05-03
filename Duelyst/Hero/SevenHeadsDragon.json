@@ -24,7 +24,9 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {
-        "disarm": 1
+        "disarm": [
+          1
+        ]
       },
       "unaffactBuffs": false
     },

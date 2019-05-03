@@ -23,7 +23,7 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {
-        "poison": 1
+        "poison": [1]
       },
       "unaffactBuffs": false
     },

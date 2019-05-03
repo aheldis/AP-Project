@@ -20,7 +20,8 @@ public class Change {
     private int hpChange = 0;
     private int apChange = 0;
     private boolean continuous = false;
-    private HashMap<String, Integer> buffs; //in az har baff yedoone toosh mitoone dashte bashe ke okeye fekr konam age nist begin
+    private HashMap<String, ArrayList<Integer>> buffs = new HashMap<>();
+//    private HashMap<String, Integer> buffs; //in az har baff yedoone toosh mitoone dashte bashe ke okeye fekr konam age nist begin
     private boolean unaffactBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
 
 
@@ -48,15 +49,15 @@ public class Change {
         if (!this.opponentCanAttack)
             targetCard.setCanAttack(false, this.turnOfCanNotAttackForOpponent);
 
-        //ina ro to khod seta dadam
-//        targetCard.setTurnOfCanNotMove(Math.max(targetCard.getTurnOfCanNotMove(), this.turnOfCanNotMoveForOpponent));
-//        targetCard.setTurnOfCanNotAttack(Math.max(targetCard.getTurnOfCanNotAttack(), this.turnOfCanNotAttackForOpponent));
-//        targetCard.setTurnOfCanNotCounterAttack(Math.max(targetCard.getTurnOfCanNotCounterAttack(), this.turnOfCanNotCounterAttackForOpponent));
         targetCard.changeAp(apChange);
         targetCard.changeHp(hpChange);
+
         for (String buffName : buffs.keySet()) {
-            targetCard.addBuff(Buff.getByName(buffName), buffs.get(buffName));
+            for (int forHowManyTurn: buffs.get(buffName)) {
+                targetCard.addBuff(Buff.getByName(buffName), forHowManyTurn);
+            }
         }
+
         if (unaffactBuffs) {
             if (targetCard.getPlayer().equals(player)) {
                 targetCard.removeBuffs(true);

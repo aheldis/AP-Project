@@ -27,7 +27,7 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {
-        "mana": 3
+        "mana": [3]
       },
       "unaffactBuffs": false
     }

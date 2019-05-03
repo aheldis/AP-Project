@@ -24,7 +24,7 @@
       "apChange": 0,
       "continuous": true,
       "buffs": {
-        "holy": -1
+        "holy": [1]
       },
       "unaffactBuffs": false
     },

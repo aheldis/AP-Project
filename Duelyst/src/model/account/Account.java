@@ -1,13 +1,10 @@
 package model.account;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import model.battle.Deck;
 import model.battle.MatchInfo;
 import model.battle.OrdinaryPlayer;
 import model.battle.Player;
 import view.AccountView;
 
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 

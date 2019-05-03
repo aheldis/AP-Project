@@ -23,8 +23,8 @@
       "apChange": 8,
       "continuous": false,
       "buffs": {
-        "weackness": 1,
-        "power": 1
+        "weackness": [1],
+        "power": [1]
       },
       "unaffactBuffs": false
     },

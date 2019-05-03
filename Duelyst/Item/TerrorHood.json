@@ -27,7 +27,7 @@
       "apChange": -2,
       "continuous": false,
       "buffs": {
-        "weakness": 1
+        "weakness": [1]
       },
       "unaffactBuffs": false
     }
