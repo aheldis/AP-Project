@@ -240,7 +240,6 @@ public abstract class Card {
         if (this instanceof Minion) {
             if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
                 //todo affect special power
-                setTarget(this, position);
                 setTarget(position);
                 getChange().affect(player, this.getTargetClass().getTargets());
             }
