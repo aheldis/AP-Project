@@ -20,7 +20,6 @@ public class AllAccount {
     public static AllAccount getInstance() {
         if (singleInstance == null){
             try{
-                singleInstance = new AllAccount();
                 FileReader fr = new FileReader("D:\\project-Duelyst\\Duelyst\\AccountSaver\\AccountUser.txt");
                 Gson gson = new GsonBuilder().create();
                 singleInstance = gson.fromJson(fr, AllAccount.class);
