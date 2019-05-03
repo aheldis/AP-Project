@@ -79,9 +79,6 @@ public class Hand {
         gameCards.remove(card);
     }
 
-    public void removeUsedItemFromHand(Item item) {
-        CollectibleItems.remove(item);
-    }
 
     public Card chooseARandomCard() {
         Random random = new Random();

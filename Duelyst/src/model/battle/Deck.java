@@ -101,6 +101,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
 
     public void setRandomCardsAndItemsInDeck() {//todo
 
+
     }
 
     public static Deck getDeckForStoryMode(int level) {

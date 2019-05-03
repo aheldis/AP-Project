@@ -1,7 +1,9 @@
 package view;
 
+import model.battle.ComputerPlayer;
 import model.battle.Game;
 import model.battle.Match;
+import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
@@ -50,13 +52,22 @@ public class BattleView {
         }
     }
 
-    public void endGameView(Match match){
+    public void endGameView(Match match) {
         System.out.println("GAME ENDED");
-        System.out.println(match.getWinner() + " is winner");
-        System.out.println(match.getLoser() + " is loser");
+        Player winner = match.getWinner();
+        Player loser = match.getLoser();
+        if (!(winner instanceof ComputerPlayer)) {
+            System.out.println(match.getWinner().getUserName() + " is winner");
+        } else {
+            System.out.println("Computer is winner");
+        }
+
+        if (!(loser instanceof ComputerPlayer)) {
+            System.out.println(match.getWinner().getUserName() + " is winner");
+        } else {
+            System.out.println("Computer is loser");
+        }
     }
-
-
 
 
 }

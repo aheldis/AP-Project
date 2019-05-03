@@ -11,6 +11,7 @@ import view.enums.ErrorType;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Shop {
     public static Shop singleInstance = null;
@@ -28,6 +29,26 @@ public class Shop {
         }
         return singleInstance;
     }
+
+//    public ArrayList<Card> passDeckForComputer(){
+//        Collections.shuffle(cards);
+//        ArrayList<Card> computerCards = new ArrayList<>();
+//        FilesType typeOfFile = null;
+//        for(int i=0 ; i<19 ; i++){
+//            if(cards.get(i) instanceof Minion)
+//                typeOfFile = FilesType.MINION;
+//            if(cards.get(i) instanceof Spell)
+//                typeOfFile = FilesType.HERO;
+//            if(!( cards.get(i) instanceof Hero)){
+//                new CardId(account, cards.get(i), account.getCollection().getNumberOfCardId(cards.get(i)));
+//                makeNewFromFile(pathOfFiles + typeOfFile+ "/" + card.getName()+".json", typeOfFile);
+//                computerCards.add(cards.get(i));
+//                cards.remove(computerCards.get(i));
+//            }
+//        }
+//        return computerCards;
+//    }
+
 
     private void init() {
         for (FilesType typeOfFile : FilesType.values()) {
@@ -60,7 +81,6 @@ public class Shop {
                 addCard(spell);
             }
             if (type.equals(FilesType.ITEM)) {
-                System.out.println(path);
                 try {
                     Usable item = mapper.fromJson(reader, model.item.Usable.class);
                     addUsable(item);

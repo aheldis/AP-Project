@@ -393,7 +393,7 @@ public class MenuController {
                     case GAME_END_TURN:
                         match.changeTurn();
                         break;
-                    case GAME_SHOW_CollectibleS:
+                    case GAME_SHOW_CollECTIBLES:
                         menuView.showCollectibleItems(player);
                         break;
                     case GAME_SHOW_NEXT_CARD:
@@ -405,7 +405,9 @@ public class MenuController {
                     case GAME_HELP:
                         //todo
                         break;
-                    case GAME_END_GAME:
+                    case GAME_END_GAME://انصراف از بازی
+                        match.setLoser(player);
+                        match.setWinner(player.getOpponent());
                         state = StateType.ACCOUNT_MENU;
                         break;
                     case GAME_SHOW_MENU:
@@ -455,6 +457,7 @@ public class MenuController {
                         if (card == null) {
                             error = ErrorType.INVALID_CARD_ID;
                             error.printMessage();
+                            break;
                         }
                         if (player.getMana() < card.getMp()) {
                             error = ErrorType.HAVE_NOT_ENOUGH_MANA;

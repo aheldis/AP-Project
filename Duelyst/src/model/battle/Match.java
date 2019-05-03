@@ -1,7 +1,10 @@
 package model.battle;
 
 import Controller.MenuController;
+import model.account.Shop;
+import model.item.Collectible;
 import model.item.Flag;
+import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
 import view.BattleView;
@@ -23,43 +26,77 @@ public class Match {
     private LandOfGame land;
     private int whichPlayer = 0; //0--> player 1 /1--> player 2
     private Date date;
+    private int BOUND_FOR_COLLECTIBLES = 4;
+    private ArrayList<Collectible> collectibles = new ArrayList<>();
 
 
-    public void setFlagsRandomly() {
+    public ArrayList<Flag> getFlags() {
+        return flags;
+    }
+
+    public void addToGameFlags(Flag flag){
+        this.flags.add(flag);
+    }
+
+    private void setFlagsRandomly(int mode) {
         flags = new ArrayList<>();
         Flag flag;
         Random random = new Random();
         Square[][] squares = land.getSquares();
         int randomX, randomY;
         for (int i = 0; i < numberOfFlags; i++) {
-            randomX =random.nextInt(4);
+            randomX = random.nextInt(4);
             randomY = random.nextInt(8);
-            if(squares[randomX][randomY].getObject() !=null ){
-               i --;
-               continue;
+            if (squares[randomX][randomY].getObject() != null) {
+                i--;
+                continue;
             }
             flag = new Flag();
             flags.add(flag);
             squares[randomX][randomY].setObject(flag);
+            if(mode==2)
+                return;
         }
     }
 
-    public ArrayList<Flag> getFlags() {
-        return flags;
+    private void setCollectiblesRandomly(){
+        Random random = new Random();
+        int numberOfCollectiblesOnLand = random.nextInt( BOUND_FOR_COLLECTIBLES );
+        int randomX,randomY,randomItem;
+        ArrayList<Item> collectibles = Shop.getInstance().getCollectibles();
+        Collectible collectible;
+        Square[][] squares = land.getSquares();
+        for (int i = 0; i < numberOfCollectiblesOnLand; i++) {
+            randomX = random.nextInt(4);
+            randomY = random.nextInt(8);
+            randomItem = random.nextInt(collectibles.size()-1);
+            if (squares[randomX][randomY].getObject() != null) {
+                i--;
+                continue;
+            }
+            collectible = (Collectible) collectibles.get(randomItem);
+            this.collectibles.add(collectible);
+            squares[randomX][randomY].setObject(collectible);
+        }
     }
 
     public Match(Player[] players, String mode, int numberOfFlags, int reward) {
-        //when we make a match we should have players
         this.players = players;
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;
         this.reward = reward;
         land = new LandOfGame();
-
+        land.getSquares()[2][0].setObject( players[0].getHero());
+        land.getSquares()[2][8].setObject( players[1].getHero());
+        if(mode.equals(Game.getModeAsString(3))){
+            setFlagsRandomly(3);
+        }
+        if(mode.equals(Game.getModeAsString(2))){
+            setFlagsRandomly(2);
+        }
+        setCollectiblesRandomly();
         date = new Date();
         initGame();
-        players[0].initPerTurn();
-      //  players[1].initPerTurn();
     }
 
     public Player passPlayerWithTurn() {
@@ -82,12 +119,7 @@ public class Match {
             MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
-        if(whichPlayer == 0){
-            players[1].initPerTurn();
-        }
-        if(whichPlayer == 1){
-            players[0].initPerTurn();
-        }
+        players[whichPlayer].initPerTurn();
         whichPlayer = 1 - whichPlayer;
     }
 
@@ -110,14 +142,6 @@ public class Match {
 
 
     public void initGame() {
-
-        /* ina to khode player anjam mishe:
-        players[0].mainDeck.setRandomOrderForDeck();
-        players[0].getHand().setCards();
-        players[1].mainDeck.setRandomOrderForDeck();
-        players[1].getHand().setCards();
-        */
-
         players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
         players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
 
@@ -196,22 +220,20 @@ public class Match {
         return winner;
     }
 
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public void setLoser(Player loser) {
+        this.loser = loser;
+    }
+
     public Player getLoser() {
         return loser;
     }
 
-    public int getReward() {
-        return reward;
-    }
-
-
     public LandOfGame getLand() {
         return land;
     }
-
-    public void setLand(LandOfGame land) {
-        this.land = land;
-    }
-
 
 }

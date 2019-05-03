@@ -133,11 +133,30 @@ public class MenuView {
     }
 
     public void showBattleMenu() {
-
+        System.out.println("Game info - show manas and flags");
+        System.out.println("Show my minions - show minions info");
+        System.out.println("Show opponent minions - show opponent minions info");
+        System.out.println("Show card info [card id]");
+        System.out.println("Select card [card id] - select s card for move or attack ");
+        System.out.println("Move to ([x], [y]) - move selected card");
+        System.out.println("Attack [opponent card id] - attack selected card to opponent");
+        System.out.println("Attack combo [opponent card id] [my card id] [my card id] [...] - attack combo");
+        System.out.println("Use special power (x, y) - use special power for hero or minion");
+        System.out.println("Show hand  - show your hand");
+        System.out.println("Insert [card name] in (x, y) - put a card on land");
+        System.out.println("End turn");
+        System.out.println("Show collectables - show collectable items");
+        System.out.println("Select item [collectable id] - select an item");
+        System.out.println("show info - show item info after select it");
+        System.out.println("Use [location x, y] - use item after select it");
+        System.out.println("Show Next Card - show next card in hand");
+        System.out.println("Enter graveyard - graveYard:your dead card is here");
+        System.out.println("Show info [card id] - show card info in the graveYard ");
+        System.out.println("Show cards - show all cards in graveYard");
+        System.out.println("Help - show what you can do");
+        System.out.println("End Game - dispense with game");
+        System.out.println("show menu - show help for battle");
     }
-
-    /*public void showCardInfo(Card card) {
-    }*/
 
     public void showItemInfo(Hand hand, String CollectibleId) {
         System.out.println("item : ");

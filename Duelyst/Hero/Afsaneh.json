@@ -14,7 +14,7 @@
     "change": {
       "targetType": "card",
       "opponentCanMove": true,
-      "opponentCanAttack": false,
+      "opponentCanAttack": true,
       "opponentCanCounterAttack": true,
       "turnOfCanNotMoveForOpponent": 0,
       "turnOfCanNotAttackForOpponent": 0,

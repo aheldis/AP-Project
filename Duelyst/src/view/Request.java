@@ -173,7 +173,7 @@ public class Request {
                 case "end turn":
                     return RequestType.GAME_END_TURN;
                 case "show Collectibles":
-                    return RequestType.GAME_SHOW_CollectibleS;
+                    return RequestType.GAME_SHOW_CollECTIBLES;
                 case "show next card":
                     return RequestType.GAME_SHOW_NEXT_CARD;
                 case "enter grave yard":

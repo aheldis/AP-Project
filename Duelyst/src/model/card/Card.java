@@ -85,9 +85,9 @@ public abstract class Card {
             }
             if (newPosition.getObject() instanceof Flag) {
                 ((Flag) newPosition.getObject()).setOwnerCard(this);
-                player.addToFlags((Flag) newPosition.getObject());
+                player.addToOwnFlags((Flag) newPosition.getObject());
                 player.setFlagSaver(this);
-                player.addToTurnForSavingFlag();//todo dead
+                player.addToTurnForSavingFlag();
             }
             if (newPosition.getObject() instanceof Collectible) {
                 player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());

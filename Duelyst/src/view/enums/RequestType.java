@@ -48,7 +48,7 @@ public enum RequestType {
     GAME_SHOW_HAND,
     GAME_INSERT,
     GAME_END_TURN,
-    GAME_SHOW_CollectibleS,
+    GAME_SHOW_CollECTIBLES,
     GAME_SELECT_Collectible,
     GAME_ITEM_SHOW_INFO,
     GAME_ITEM_USE,

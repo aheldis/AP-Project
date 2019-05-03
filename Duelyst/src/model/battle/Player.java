@@ -7,30 +7,67 @@ import model.card.Hero;
 import model.item.Collectible;
 import model.item.Flag;
 import model.land.LandOfGame;
+import model.land.Square;
 import model.requirment.Coordinate;
+import view.enums.ErrorType;
 
 import java.util.ArrayList;
 
 public abstract class Player {
-    private Deck mainDeck;
-    private Hand hand;
+    Deck mainDeck;
+    Hand hand;
     protected String type;
     private Player opponent;
-    private ArrayList<Card> cardsOnLand = new ArrayList<>();
+    ArrayList<Card> cardsOnLand = new ArrayList<>();
     private Card flagSaver;
     private int turnForSavingFlag = 0;
-    private ArrayList<Flag> flags;
+    private ArrayList<Flag> ownFlags;
     private Account account;
-    private Match match;
+    Match match;
     private int turnsPlayed = 0;
-    private int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
+    int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
     private GraveYard graveYard = new GraveYard(this);
     //Collectible item to hand ast :D
 
     //    public abstract void move(Card card, Square newPosition);
 //    public abstract void attack(Card card, Square target);
-    public abstract void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land);
 //    public abstract void useSpecialPower(Card card);
+
+    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
+        ErrorType error;
+        if (playerCard == null) {
+            error = ErrorType.INVALID_CARD_ID;
+            error.printMessage();
+            return;
+        }
+        if (!playerCard.canMoveToCoordination(playerCard, coordinate)) {
+            error = ErrorType.INVALID_TARGET;
+            error.printMessage();
+            return;
+        }
+        Square square = land.passSquareInThisCoordinate(coordinate);
+        if (square == null) {
+            error = ErrorType.INVALID_SQUARE;
+            error.printMessage();
+            return;
+        }
+        ArrayList<Buff> buffsOfSquare = square.getBuffs();
+        for (Buff buff : buffsOfSquare) {
+            buff.affect(playerCard);
+        }
+        if (square.getObject() instanceof Flag) {
+            ((Flag) square.getObject()).setOwnerCard(playerCard);
+            match.addToGameFlags((Flag) square.getObject());
+            setFlagSaver(playerCard);
+            addToTurnForSavingFlag();
+        }
+        mana -= playerCard.getMp();
+        hand.removeUsedCardsFromHand(playerCard);
+        getCardsOnLand().add(playerCard);
+        Square[][] squares = land.getSquares();
+        squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
+
+    }
 
     public String getUserName() {
         return account.getUserName();
@@ -44,11 +81,10 @@ public abstract class Player {
         return turnForSavingFlag;
     }
 
-    public ArrayList<Flag> getFlags() {
-        return flags;
+    public ArrayList<Flag> getOwnFlags() {
+        return ownFlags;
     }
 
-    public abstract void playTurn();
 
     public abstract void addToAccountWins();
 
@@ -116,8 +152,8 @@ public abstract class Player {
         cardsOnLand.add(card);
     }
 
-    public void addToFlags(Flag flag) {
-        flags.add(flag);
+    public void addToOwnFlags(Flag flag) {
+        ownFlags.add(flag);
     }
 
     public void addToTurnForSavingFlag() {
@@ -142,7 +178,7 @@ public abstract class Player {
     }
 
     public int getNumberOfFlagsSaved() {
-        return flags.size();
+        return ownFlags.size();
     }
 
     public Player getOpponent() {
