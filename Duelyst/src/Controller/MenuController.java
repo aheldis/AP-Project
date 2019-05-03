@@ -98,7 +98,6 @@ public class MenuController {
                         account.accountSave();
                         break;
                     case MAIN_MENU_EXIT:
-                        AllAccount.getInstance().allAccountSaver();
                         return;
                 }
             } else if (state == StateType.ACCOUNT_MENU) {

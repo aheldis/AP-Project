@@ -117,4 +117,17 @@ public class Account implements Comparable<Account> {
         }
 
     }
+
+//    public static void makeLastAccount(){
+//        Account account = new Account();
+//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//        try {
+//            FileWriter file = new FileWriter("D:\\hw1\\ali.txt");
+//            file.write(gson.toJson(account));
+//            file.close();
+//
+//        }
+//        catch (Exception e) {
+//        }
+//    }
 }
