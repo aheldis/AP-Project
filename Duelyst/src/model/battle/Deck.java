@@ -13,10 +13,10 @@ import java.util.Collections;
 
 public class Deck {//if it is normal deck you had initialize it in collection
     // else call setRandomCardsAndItemsInDeck()
-    private ArrayList<Card> cardsOfDeck = new ArrayList<>(20);
+    private ArrayList<Card> cardsOfDeck = new ArrayList<>(20);//minon spell
     private String deckName;
     private Item item;
-    private Hero hero;
+    private Hero hero = null;
     private int indexOfCards = 0;
 
     public void setIndexOfCards(int indexOfCards) {
@@ -48,11 +48,11 @@ public class Deck {//if it is normal deck you had initialize it in collection
     }
 
     public boolean validate() {//have 20 cards and 1 hero
-        return cardsOfDeck.size() == 20 && hero != null;
+        return cardsOfDeck.size() == 20 && hero!= null;
     }
 
     public void addToCardsOfDeck(Card card) {
-        cardsOfDeck.add(card);
+            cardsOfDeck.add(card);
     }
 
     public void removeFromCardsOfDeck(Card card) {

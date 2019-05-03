@@ -11,6 +11,8 @@ import view.MenuView;
 import view.Request;
 import view.enums.*;
 
+import java.nio.file.FileAlreadyExistsException;
+
 
 public class MenuController {
     public static StateType state = StateType.MAIN_MENU;
@@ -29,42 +31,45 @@ public class MenuController {
             Card selectedCard = null;
             Item selectedItem = null;
 
-            if(request.getRequestType() ==null){
+            if (request.getRequestType() == null) {
                 request = new Request(state);
                 request.getNewCommand();
                 continue;
             }
             if (state == StateType.MAIN_MENU) {
+
                 String userName;
                 switch (request.getRequestType()) {
-                    case MAIN_MENU_SIGN_UP:
+                    case MAIN_MENU_SIGN_UP: {
                         userName = request.getCommand().split(" ")[2];
-                        if (allAccount.userNameHaveBeenExist(userName)!=null) {
+                        if (allAccount.userNameHaveBeenExist(userName) != null) {
                             menuView.printer("UserName have been exist");
                             break;
-                        }menuView.printer("Enter your password");
+                        }
+                        menuView.printer("Enter your password");
                         request.getNewLine();
                         allAccount.createAccount(userName, request.getCommand());
                         account = allAccount.getAccountByName(userName);
                         state = StateType.ACCOUNT_MENU;
                         menuView.printer("you have signed up ");
-                        break;
-                    case MAIN_MENU_LOGIN:
+                    }
+                    break;
+                    case MAIN_MENU_LOGIN: {
                         menuView.printer("Enter you UserName");
                         request.getNewLine();
                         userName = request.getCommand();
-                        boolean breaker=false;
-                        while (allAccount.userNameHaveBeenExist(userName)==null) {
+                        boolean breaker = false;
+                        while (allAccount.userNameHaveBeenExist(userName) == null) {
                             menuView.printer("This name have not  been exist");
                             menuView.printer("Enter you UserName");
                             request.getNewLine();
                             userName = request.getCommand();
-                            if(userName .equals("exit")){
+                            if (userName.equals("exit")) {
                                 breaker = true;
                                 break;
                             }
                         }
-                        if(!breaker) {
+                        if (!breaker) {
                             menuView.printer("Enter your password");
                             request.getNewLine();
                             breaker = false;
@@ -76,12 +81,13 @@ public class MenuController {
                                     break;
                                 }
                             }
-                            if(!breaker) {
+                            if (!breaker) {
                                 account = allAccount.getAccountByName(userName);
                                 state = StateType.ACCOUNT_MENU;
                             }
                         }
-                        break;
+                    }
+                    break;
                     case MAIN_MENU_HELP:
                         menuView.helpForMainMenu();
                         break;
@@ -89,180 +95,171 @@ public class MenuController {
                         allAccount.showLeaderBoard();
                         break;
                     case MAIN_MENU_SAVE:
-                        //todo
+                        account.accountSave();
                         break;
                     case MAIN_MENU_EXIT:
+                        AllAccount.getInstance().allAccountSaver();
                         return;
                 }
-            }
-
-            else if (state == StateType.ACCOUNT_MENU) {
-                    switch (request.getRequestType()) {
-                        case MENU_ENTER_COLLECTION:
-                            state = StateType.COLLECTION;
-                            break;
-                        case MENU_ENTER_BATTLE:
-                            game = new Game();
-                            if (!game.checkPlayerDeck(account, 1))
-                                state = StateType.ACCOUNT_MENU;
-                            menuView.printer("select mode");
-                            state = StateType.SELECT_MODE;
-                            break;
-                        case MENU_ENTER_HELP:
-                            MenuView accountMenu = MenuView.getInstance();
-                            accountMenu.helpForAccountMenu();
-                            break;
-                        case MENU_ENTER_SHOP:
-                            state = StateType.SHOP;
-                            break;
-                        case MENU_ENTER_EXIT:
-                            state = StateType.MAIN_MENU;
-                            break;
+            } else if (state == StateType.ACCOUNT_MENU) {
+                switch (request.getRequestType()) {
+                    case MENU_ENTER_COLLECTION:
+                        state = StateType.COLLECTION;
+                        break;
+                    case MENU_ENTER_BATTLE:
+                        game = new Game();
+                        if (!game.checkPlayerDeck(account, 1))
+                            state = StateType.ACCOUNT_MENU;
+                        menuView.printer("select mode");
+                        state = StateType.SELECT_MODE;
+                        break;
+                    case MENU_ENTER_HELP:
+                        MenuView accountMenu = MenuView.getInstance();
+                        accountMenu.helpForAccountMenu();
+                        break;
+                    case MENU_ENTER_SHOP:
+                        state = StateType.SHOP;
+                        break;
+                    case MENU_ENTER_EXIT:
+                        state = StateType.MAIN_MENU;
+                        break;
                 }
-            }
-
-           else if (state == StateType.COLLECTION) {
+            } else if (state == StateType.COLLECTION) {
                 Collection collection = account.getCollection();
                 String deckName;
                 Card card;
                 Usable item;
                 ErrorType error;
-                    switch (request.getRequestType()) {
-                        case COLLECTION_HELP:
-                            collection.helpOfCollection();
-                            break;
-                        case COLLECTION_SHOW:
-                            collection.showCardsAndItems();
-                            break;
-                        case COLLECTION_SHOW_ALL_DECKS:
-                            collection.showAlldecks();
-                            break;
-                        case COLLECTION_SHOW_DECK:
-                            deckName = request.getDeckName();
-                            collection.showThisDeck(deckName);
-                            break;
-                        case COLLECTION_ADD_CARD_TO_DECK:
-                            deckName = request.getDeckName();
-                            id = request.getId();
-                            card = collection.passCardByCardId(id);
-                            if (card != null) {
-                                collection.addCardToThisDeck(card, deckName);
-                                break;
-                            }
-                            item = collection.passUsableItemByUsableItemId(id);
-                            if (item != null) {
-                                collection.addItemToThisDeck(item, deckName);
-                                break;
-                            } else {
-                                error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
-                                error.printMessage();
-                            }
-                            break;
-                        case COLLECTION_CREATE_DECK:
-                            deckName = request.getDeckName();
-                            collection.createDeck(deckName);
-                            break;
-                        case COLLECTION_DELETE_DECK:
-                            deckName = request.getDeckName();
-                            collection.deleteDeck(deckName);
-                            break;
-                        case COLLECTION_REMOVE_CARD_FROM_DECK:
-                            deckName = request.getDeckName();
-                            id = request.getId();
-                            card = collection.passCardByCardId(id);
-                            if (card != null) {
-                                collection.removeCardFromDeck(card, deckName);
-                                break;
-                            }
-                            else {
-                                error = ErrorType.HAVE_NOT_CARD_IN_DECK;
-                                error.printMessage();
-                            }
-                            break;
-                        case COLLECTION_REMOVE_ITEM_FROM_DECK:
-                            deckName = request.getDeckName();
-                            id = request.getId();
-                            item = collection.passUsableItemByUsableItemId(id);
-                            if (item != null) {
-                                collection.removeItemFromDeck(item, deckName);
-                            }
-                            else {
-                                error = ErrorType.HAVE_NOT_ITEM_IN_DECK;
-                                error.printMessage();
-                            }
-
-                            break;
-                        case COLLECTION_SEARCH_CARD:
-                            id = request.getId();
-                            if (! collection.searchCardName(id)) {
-                                error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
-                                error.printMessage();
-                            }
-                            break;
-                        case COLLECTION_SEARCH_ITEM:
-                            id = request.getId();
-                            if(! collection.searchItemName(id)){
-                                error = ErrorType.HAVE_NOT_ITEM_IN_COLLECTION;
-                                error.printMessage();
-                            }
-                            break;
-                        case COLLECTION_SELECT_DECK:
-                            deckName = request.getDeckName();
-                            collection.selectADeckAsMainDeck(deckName);
-                            break;
-                        case COLLECTION_VALIDATE_DECK:
-                            deckName = request.getDeckName();
-                            boolean output= collection.validateDeck(deckName);
-                            if(output)
-                                menuView.printer(deckName+" is validate");
-                            else
-                                menuView.printer(deckName+" is not validate");
-                            break;
-                        case COLLECTION_SAVE:
-                            //todo
-                            break;
-                        case COLLECTION_EXIT:
-                            state = StateType.ACCOUNT_MENU;
-                            break;
-                    }
-
-            }
-
-           else if (state == StateType.SHOP) {
-                Shop shop = Shop.getInstance();
-                    switch (request.getRequestType()) {
-                        case SHOP_SHOW_COLLECTION:
-                            account.getCollection().showCardsAndItems();
-                            break;
-                        case SHOP_SEARCH_COLLECTION_CARD:
-                            shop.searchCollection(account, request.getId());
-                            break;
-                        case SHOP_SEARCH_CARD:
-                            shop.search(account, request.getId());
-                            break;
-                        case SHOP_BUY:
-                            shop.buy(account, request.getId());
-                            break;
-                        case SHOP_SHOW_DARIC:
-                            menuView.printer(account.getDaric()+"");
-                            break;
-                        case SHOP_SELL:
-                            shop.sell(account, request.getId());
-                            break;
-                        case SHOP_SHOW:
-                            shop.show();
-                            break;
-                        case SHOP_HELP:
-                            shop.help();
-                            break;
-                        case SHOP_EXIT:
-                            state = StateType.ACCOUNT_MENU;
-                }
-            }
-
-           else if (state == StateType.SELECT_MODE) {
                 switch (request.getRequestType()) {
-                    case MODE_MULTI_PLAYER:
+                    case COLLECTION_HELP:
+                        collection.helpOfCollection();
+                        break;
+                    case COLLECTION_SHOW:
+                        collection.showCardsAndItems();
+                        break;
+                    case COLLECTION_SHOW_ALL_DECKS:
+                        collection.showAlldecks();
+                        break;
+                    case COLLECTION_SHOW_DECK:
+                        deckName = request.getDeckName();
+                        collection.showThisDeck(deckName);
+                        break;
+                    case COLLECTION_ADD_CARD_TO_DECK:
+                        deckName = request.getDeckName();
+                        id = request.getId();
+                        card = collection.passCardByCardId(id);
+                        if (card != null) {
+                            collection.addCardToThisDeck(card, deckName);
+                            break;
+                        }
+                        item = collection.passUsableItemByUsableItemId(id);
+                        if (item != null) {
+                            collection.addItemToThisDeck(item, deckName);
+                            break;
+                        } else {
+                            error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
+                            error.printMessage();
+                        }
+                        break;
+                    case COLLECTION_CREATE_DECK:
+                        deckName = request.getDeckName();
+                        collection.createDeck(deckName);
+                        break;
+                    case COLLECTION_DELETE_DECK:
+                        deckName = request.getDeckName();
+                        collection.deleteDeck(deckName);
+                        break;
+                    case COLLECTION_REMOVE_CARD_FROM_DECK:
+                        deckName = request.getDeckName();
+                        id = request.getId();
+                        card = collection.passCardByCardId(id);
+                        if (card != null) {
+                            collection.removeCardFromDeck(card, deckName);
+                            break;
+                        } else {
+                            error = ErrorType.HAVE_NOT_CARD_IN_DECK;
+                            error.printMessage();
+                        }
+                        break;
+                    case COLLECTION_REMOVE_ITEM_FROM_DECK:
+                        deckName = request.getDeckName();
+                        id = request.getId();
+                        item = collection.passUsableItemByUsableItemId(id);
+                        if (item != null) {
+                            collection.removeItemFromDeck(item, deckName);
+                        } else {
+                            error = ErrorType.HAVE_NOT_ITEM_IN_DECK;
+                            error.printMessage();
+                        }
+
+                        break;
+                    case COLLECTION_SEARCH_CARD:
+                        id = request.getId();
+                        if (!collection.searchCardName(id)) {
+                            error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
+                            error.printMessage();
+                        }
+                        break;
+                    case COLLECTION_SEARCH_ITEM:
+                        id = request.getId();
+                        if (!collection.searchItemName(id)) {
+                            error = ErrorType.HAVE_NOT_ITEM_IN_COLLECTION;
+                            error.printMessage();
+                        }
+                        break;
+                    case COLLECTION_SELECT_DECK:
+                        deckName = request.getDeckName();
+                        collection.selectADeckAsMainDeck(deckName);
+                        break;
+                    case COLLECTION_VALIDATE_DECK:
+                        deckName = request.getDeckName();
+                        boolean output = collection.validateDeck(deckName);
+                        if (output)
+                            menuView.printer(deckName + " is validate");
+                        else
+                            menuView.printer(deckName + " is not validate");
+                        break;
+                    case COLLECTION_SAVE:
+                        //todo
+                        break;
+                    case COLLECTION_EXIT:
+                        state = StateType.ACCOUNT_MENU;
+                        break;
+                }
+
+            } else if (state == StateType.SHOP) {
+                Shop shop = Shop.getInstance();
+                switch (request.getRequestType()) {
+                    case SHOP_SHOW_COLLECTION:
+                        account.getCollection().showCardsAndItems();
+                        break;
+                    case SHOP_SEARCH_COLLECTION_CARD:
+                        shop.searchCollection(account, request.getId());
+                        break;
+                    case SHOP_SEARCH_CARD:
+                        shop.search(account, request.getId());
+                        break;
+                    case SHOP_BUY:
+                        shop.buy(account, request.getId());
+                        break;
+                    case SHOP_SHOW_DARIC:
+                        menuView.printer(account.getDaric() + "");
+                        break;
+                    case SHOP_SELL:
+                        shop.sell(account, request.getId());
+                        break;
+                    case SHOP_SHOW:
+                        shop.show();
+                        break;
+                    case SHOP_HELP:
+                        shop.help();
+                        break;
+                    case SHOP_EXIT:
+                        state = StateType.ACCOUNT_MENU;
+                }
+            } else if (state == StateType.SELECT_MODE) {
+                switch (request.getRequestType()) {
+                    case MODE_MULTI_PLAYER: {
                         int mode = 0;
                         int numberOfFlags = 0;
                         String command;
@@ -279,7 +276,7 @@ public class MenuController {
                                 menuView.printError(error);
                             }
                         } while (account == null);
-                        if(account.getMainDeck()== null){
+                        if (account.getMainDeck() == null) {
                             ErrorType error = ErrorType.SELECTED_INVALID_DECK_FOR_PLAYER2;
                             error.printMessage();
                             break;
@@ -307,13 +304,15 @@ public class MenuController {
                             do {
                                 menuView.printer("Enter reward");
                                 request.getNewLine();
-                            }while(! request.getCommand().matches("\\d+"));
-                            match = game.makeNewMultiGame(mode, numberOfFlags,Integer.parseInt(request.getCommand()));
+                            } while (!request.getCommand().matches("\\d+"));
+                            match = game.makeNewMultiGame(mode, numberOfFlags,
+                                    Integer.parseInt(request.getCommand()));
                             state = StateType.BATTLE;
                         } else {
                             menuView.printer("Select your mode");
                         }
-                        break;
+                    }
+                    break;
                     case MODE_SINGLE_PLAYER:
                         state = StateType.SINGLE_GAME;
                         break;
@@ -324,9 +323,7 @@ public class MenuController {
                         state = StateType.BATTLE;
                         break;
                 }
-            }
-
-           else if (state == StateType.SINGLE_GAME) {
+            } else if (state == StateType.SINGLE_GAME) {
                 switch (request.getRequestType()) {
                     case SINGLE_CUSTOM: {
                         int mode = 0;
@@ -372,9 +369,7 @@ public class MenuController {
                         break;
                     }
                 }
-            }
-
-           else if (state == StateType.BATTLE) {
+            } else if (state == StateType.BATTLE) {
                 ErrorType error;
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
@@ -434,13 +429,12 @@ public class MenuController {
                             if (selectedCard == null) {
                                 error = ErrorType.INVALID_CARD_ID;
                                 error.printMessage();
-                            }else if(selectedCard instanceof Minion ){
-                                if(((Minion) selectedCard).getActivationTimeOfSpecialPower()==
+                            } else if (selectedCard instanceof Minion) {
+                                if (((Minion) selectedCard).getActivationTimeOfSpecialPower() ==
                                         ActivationTimeOfSpecialPower.COMBOO)
                                     selectedCard.attack(opponentCard);
-                            }
-                            else{
-                                error= ErrorType.CAN_NOT_COMBO_ATTACK;
+                            } else {
+                                error = ErrorType.CAN_NOT_COMBO_ATTACK;
                                 error.printMessage();
                             }
 
@@ -477,9 +471,7 @@ public class MenuController {
                         break;
                 }
 
-            }
-
-           else if (state == StateType.GRAVE_YARD) {
+            } else if (state == StateType.GRAVE_YARD) {
                 GraveYard graveYard;
                 graveYard = match.passPlayerWithTurn().getGraveYard();
                 switch (request.getRequestType()) {
@@ -503,9 +495,7 @@ public class MenuController {
                         break;
                 }
 
-            }
-
-           else if (state == StateType.SELECT_ITEM) {
+            } else if (state == StateType.SELECT_ITEM) {
                 Player player = match.passPlayerWithTurn();
                 id = ((Collectible) selectedItem).getCollectibleId().getCollectibleIdAsString();
                 switch (request.getRequestType()) {
@@ -518,9 +508,7 @@ public class MenuController {
                         break;
                 }
 
-            }
-
-           else if (state == StateType.SELECT_CARD) {
+            } else if (state == StateType.SELECT_CARD) {
                 Square square;
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {

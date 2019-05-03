@@ -7,6 +7,7 @@ import model.item.Flag;
 import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
+import model.requirment.Coordinate;
 import view.BattleView;
 import view.MenuView;
 import view.enums.StateType;
@@ -16,7 +17,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class Match {
-    private Player[] players;
+    private Player[] players ;
     private String mode;//DeathMode - SaveFlagMode - CollectFlagMode
     private int numberOfFlags;
     private ArrayList<Flag> flags;
@@ -86,8 +87,9 @@ public class Match {
         this.numberOfFlags = numberOfFlags;
         this.reward = reward;
         land = new LandOfGame();
-        land.getSquares()[2][0].setObject( players[0].getHero());
-        land.getSquares()[2][8].setObject( players[1].getHero());
+        Square[][] square = land.getSquares();
+        square[2][0].setObject( players[0].mainDeck.getHero());
+        square[2][8].setObject( players[1].mainDeck.getHero());
         if(mode.equals(Game.getModeAsString(3))){
             setFlagsRandomly(3);
         }

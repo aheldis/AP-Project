@@ -34,7 +34,7 @@ public class GraveYard {
                 card.getChange().affect(player, card.getTargetClass().getTargets());
             }
         }
-        ArrayList<Flag> flags = player.getFlags();
+        ArrayList<Flag> flags = player.getOwnFlags();
         String mode = player.getMatch().getMode();
         position.setObject(null);
         switch (mode) {

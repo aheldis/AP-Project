@@ -5,6 +5,7 @@ import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ComputerPlayer extends Player {
@@ -126,7 +127,9 @@ public class ComputerPlayer extends Player {
         }
 
         if (random.nextInt() % RANDOM_NUMBER_FOR_ATTACK == 0) {
-            //todo
+            ArrayList<Card> cards= getOpponent().getCardsOnLand();
+            int randomIndex = random.nextInt(cards.size()-1);
+            cardsOnLand.get(random.nextInt(cardsOnLand.size()-1)).attack(cards.get(randomIndex));
         }
     }
 

@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 public class OrdinaryPlayer extends Player {
 
+    public OrdinaryPlayer(){
+    }
 
     public OrdinaryPlayer(Account account, Deck deck, int mana) {
         this.setAccount(account);

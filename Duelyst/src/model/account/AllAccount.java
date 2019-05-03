@@ -1,21 +1,35 @@
 package model.account;
 
+import com.gilecode.yagson.com.google.gson.Gson;
+import com.gilecode.yagson.com.google.gson.GsonBuilder;
 import view.AccountView;
 
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class AllAccount {
     public static AllAccount singleInstance = null;
-    public ArrayList<Account> accounts = new ArrayList<>();
-    private AccountView accountView = AccountView.getInstance();
+    public static ArrayList<Account> accounts = new ArrayList<>();
+
 
     private AllAccount() {
     }
 
     public static AllAccount getInstance() {
-        if (singleInstance == null)
-            singleInstance = new AllAccount();
+        if (singleInstance == null){
+            try{
+                singleInstance = new AllAccount();
+                FileReader fr = new FileReader("D:\\project-Duelyst\\Duelyst\\AccountSaver\\AccountUser.txt");
+                Gson gson = new GsonBuilder().create();
+                singleInstance = gson.fromJson(fr, AllAccount.class);
+            }
+            catch (Exception e){
+                System.out.println("can't find");
+                //todo mitonim errore khas bedim :D
+            }
+        }
         return singleInstance;
     }
 
@@ -48,23 +62,14 @@ public class AllAccount {
     }
 
     public void showLeaderBoard() {
+        AccountView accountView = AccountView.getInstance();
         Collections.sort(accounts);
         for (int i = 0; i < accounts.size(); i++) {
             accountView.viewAccount(i + 1, accounts.get(i).getUserName(), accounts.get(i).getWins());
         }
     }
 
-    public void helpOfAccount() {
-        accountView.viewHelpOfAccount();
-    }
-
     public void createAccount(String userName, String password) {
-//        if (userNameHaveBeenExist(userName)) {
-//            ErrorType error = ErrorType.USER_NAME_ALREADY_EXIST;
-//            accountView.printError(error);
-//            return;
-//        }
-
         Account account = new Account(userName, password);
         addToAccounts(account);
     }
@@ -73,5 +78,16 @@ public class AllAccount {
         accounts.add(account);
     }
 
+    public void allAccountSaver(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            FileWriter file = new FileWriter("D:\\project-Duelyst\\Duelyst\\AccountSaver\\AccountUser.txt");
+            file.write(gson.toJson(this));
+            file.close();
+
+        } catch (Exception e) {
+            //todo ye errori bede
+        }
+    }
 
 }

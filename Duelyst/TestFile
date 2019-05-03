@@ -1,5 +1,7 @@
 create account ali
 12
+save
+enter exit
 enter shop
 buy Kaveh
 buy ArcherFromFars
@@ -51,6 +53,7 @@ add ali_HorsemanFromFars_5 to deck zizi
 add ali_HorsemanFromFars_6 to deck zizi
 select deck zizi
 exit
+save
 enter exit
 create Account zahra
 123
