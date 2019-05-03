@@ -1,7 +1,5 @@
 create account ali
 12
-save
-enter exit
 enter shop
 buy Kaveh
 buy ArcherFromFars
@@ -118,3 +116,7 @@ Start multiPlayer game 0 0
 Start multiPlayer game 1 0
 12
 1345
+game info
+show my minions
+show hand
+show card info ali_ArcherFromTooran_1

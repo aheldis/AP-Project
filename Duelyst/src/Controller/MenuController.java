@@ -11,6 +11,7 @@ import view.MenuView;
 import view.Request;
 import view.enums.*;
 
+import javax.swing.plaf.nimbus.State;
 import java.nio.file.FileAlreadyExistsException;
 
 
@@ -95,7 +96,7 @@ public class MenuController {
                         allAccount.showLeaderBoard();
                         break;
                     case MAIN_MENU_SAVE:
-                        account.accountSave();
+                      // account.accountSave();
                         break;
                     case MAIN_MENU_EXIT:
                         return;
@@ -307,6 +308,8 @@ public class MenuController {
                             match = game.makeNewMultiGame(mode, numberOfFlags,
                                     Integer.parseInt(request.getCommand()));
                             state = StateType.BATTLE;
+                            menuView.printer("game started");
+                            break;
                         } else {
                             menuView.printer("Select your mode");
                         }
@@ -410,8 +413,13 @@ public class MenuController {
                     case GAME_SELECT_CARD_ID:
                         id = request.getId();
                         selectedCard = player.passCardInGame(id);
-                        if (selectedCard != null)
+                        if (selectedCard != null) {
                             state = StateType.SELECT_CARD;
+                        }
+                        if(player.getMainDeck().getHero().getCardId().getCardIdAsString().equals(id)){
+                            selectedCard = player.getMainDeck().getHero();
+                            state = StateType.SELECT_CARD;
+                        }
                         break;
                     case GAME_ATTACK_COMBO:
                         Player player2 = match.passAnotherPlayerWithOutTurn();

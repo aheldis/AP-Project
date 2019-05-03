@@ -10,5 +10,6 @@
     <orderEntry type="library" exported="" name="com.google.code.gson:gson:2.8.5" level="project" />
     <orderEntry type="library" exported="" name="yagson-master" level="project" />
     <orderEntry type="library" name="com.gilecode.yagson:yagson:0.51" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.8.52" level="project" />
   </component>
 </module>

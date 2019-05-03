@@ -162,9 +162,9 @@ public class Request {
 
         } else if (state == StateType.BATTLE) {
             switch (command.toLowerCase()) {
-                case "game Info":
+                case "game info":
                     return RequestType.GAME_GAME_INFO;
-                case "Show my minions":
+                case "show my minions":
                     return RequestType.GAME_SHOW_MY_MINION;
                 case "show opponent minions":
                     return RequestType.GAME_SHOW_OPPONENT_MINION;
@@ -172,7 +172,7 @@ public class Request {
                     return RequestType.GAME_SHOW_HAND;
                 case "end turn":
                     return RequestType.GAME_END_TURN;
-                case "show Collectibles":
+                case "show collectibles":
                     return RequestType.GAME_SHOW_CollECTIBLES;
                 case "show next card":
                     return RequestType.GAME_SHOW_NEXT_CARD;
@@ -187,20 +187,20 @@ public class Request {
                     return RequestType.GAME_SHOW_MENU;
 
             }
-            if (command.toLowerCase().matches("attack combo (\\w+) (\\w+)+")) {
+            if (command.matches("attack combo (\\w+) (\\w+)+")) {
                 return RequestType.GAME_ATTACK_COMBO;
             }
-            if (command.toLowerCase().matches("select card \\w+")) {//todo get input
+            if (command.matches("select card \\w+")) {//todo get input
                 setId(command.substring(12));
                 state = StateType.SELECT_CARD;
                 return RequestType.GAME_SELECT_CARD_ID;
             }
-            if (command.toLowerCase().matches("show card info \\W+")) {
-                setId(command.substring(15));
+            if (command.matches("show card info \\W+")) {
+                setId(command.split(" ")[3]);
                 return RequestType.GAME_SHOW_CARD_INFO;
             }
 
-            if (command.toLowerCase().matches("insert \\w+ in \\(\\d+,\\d+\\)")) {
+            if (command.matches("insert \\w+ in \\(\\d+,\\d+\\)")) {
                 setId(command.split(" ")[1]);
                 coordinate.setX(Integer.parseInt(command.split(" ")[3].substring(1, 2)));
                 coordinate.setY(Integer.parseInt(command.split(" ")[3].substring(3, 4)));

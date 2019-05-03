@@ -1,28 +1,26 @@
 package model.account;
-
-import com.gilecode.yagson.com.google.gson.Gson;
-import com.gilecode.yagson.com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.battle.Deck;
 import model.battle.MatchInfo;
 import model.battle.OrdinaryPlayer;
 import model.battle.Player;
 import view.AccountView;
 
-import javax.swing.*;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
 
 public class Account implements Comparable<Account> {
-    public String userName;
-    public String password;
-    public int daric = 15000;
-    public int wins;
-    public ArrayList<MatchInfo> matchHistory;
-    public Collection collection = new Collection(this);
-    public Deck mainDeck = new Deck();
-    public Player player = new OrdinaryPlayer();
-    public ArrayList<Deck> decks = new ArrayList<>();
+    private String userName;
+    private String password;
+    private int daric = 15000;
+    private int wins;
+    private ArrayList<MatchInfo> matchHistory;
+    private Collection collection = new Collection(this);
+    private Deck mainDeck = new Deck();
+    private Player player = new OrdinaryPlayer();
+    private ArrayList<Deck> decks = new ArrayList<>();
 
     public Account(String userName, String password) {
         this.userName = userName;
@@ -104,30 +102,26 @@ public class Account implements Comparable<Account> {
         decks = collection.getDecks();
     }
 
-    public void accountSave() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try {
-            FileWriter file = new FileWriter("D:\\project-Duelyst\\Duelyst\\AccountSaver\\" + userName + ".txt");
-            file.write(gson.toJson(this));
-            file.close();
-
-        } catch (Exception e) {
-            System.out.println("account save");
-            //todo ye errori bede
-        }
-
-    }
-
-//    public static void makeLastAccount(){
-//        Account account = new Account();
-//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//    public void accountSave() {
 //        try {
-//            FileWriter file = new FileWriter("D:\\hw1\\ali.txt");
-//            file.write(gson.toJson(account));
+//            FileWriter file = new FileWriter("D:\\project-Duelyst\\Duelyst\\AccountSaver\\AccountUser.txt");
+//            file.append("\n"+userName);
 //            file.close();
+//        }
+//        catch (Exception e){
 //
 //        }
-//        catch (Exception e) {
+//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//        try {
+//            FileWriter file = new FileWriter("D:\\project-Duelyst\\Duelyst\\AccountSaver\\" + userName + ".txt");
+//            file.write(gson.toJson(this));
+//            file.close();
+//
+//        } catch (Exception e) {
+//            System.out.println(e);
+//            //todo ye errori bede
 //        }
-//    }
+//
+//    }//todo for save don't delete
+
 }

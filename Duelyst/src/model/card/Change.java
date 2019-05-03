@@ -21,7 +21,6 @@ public class Change {
     private int apChange = 0;
     private boolean continuous = false;
     private HashMap<String, Integer> buffs; //in az har baff yedoone toosh mitoone dashte bashe ke okeye fekr konam age nist begin
-    //private ArrayList<Buff> untiBuffs;
     private boolean unaffactBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
 
 
@@ -65,9 +64,4 @@ public class Change {
                 targetCard.removeBuffs(false);
         }
     }
-
-    public void destroyPositiveEffects() {
-
-    }
-
 }

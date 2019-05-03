@@ -10,6 +10,8 @@ import model.card.Minion;
 import model.card.Spell;
 import view.enums.ErrorType;
 
+import java.util.ArrayList;
+
 public class MenuView {
     private static MenuView singleInstance = null;
     private static final int NOT_VALID = -1;
@@ -80,11 +82,17 @@ public class MenuView {
                 System.out.println("health point : " + player.getHero().getHp());
                 break;
             case "SaveFlagMode":
-
+                Flag flag1 = match.getFlags().get(0);
+                System.out.println("in cell x: "+flag1.getSquare().getXCoordinate()+
+                        " y: "+flag1.getSquare().getYCoordinate());
+                if(flag1.getOwnerCard() !=null){
+                    System.out.println(flag1.getOwnerCard().getCardId());
+                }
                 break;
             case "CollectFlagMode":
                 for (Flag flag : match.getFlags()) {
                     System.out.println(flag.getOwnerCard().getName());
+                    System.out.println(flag.getOwnerCard().getCardId().getCardIdAsString().split("_")[0]);
                 }
                 break;
         }
@@ -107,10 +115,25 @@ public class MenuView {
     }
 
     public void showHand(Player player) {
-        //to hand function showNextCard baraye card badi darim :D
-        AccountView.getInstance().DeckAndHandView(null, null, player.getHand().getGameCards());
-        showNextCard(player.getMainDeck());
+        //nmikham hero o ina on balash bashe mosalaman :|
+        int counterOfCards =0;
+        ArrayList<Card> cards =player.getHand().getGameCards();
+        if (cards != null && cards.size() != 0) {
+            for (Card card : cards) {
+                if (card instanceof Spell) {
+                    System.out.print("     ");
+                    AccountView.getInstance().showEachSpell((Spell) card, counterOfCards);
+                    System.out.println("\n");
 
+                } else if (card instanceof Minion) {
+                    System.out.print("     ");
+                    AccountView.getInstance().showEachMinion((Minion) card, counterOfCards);
+                    System.out.println("\n");
+                }
+                counterOfCards++;
+            }
+        }
+        showNextCard(player.getMainDeck());
     }
 
     public void showNextCard(Deck deck) {

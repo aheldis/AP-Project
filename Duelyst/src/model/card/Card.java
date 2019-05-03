@@ -27,7 +27,7 @@ public abstract class Card {
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
     private String counterAttack;
-    private int attackRange;
+    protected int attackRange;
     private int cost;
     private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
     private Square position;
@@ -313,14 +313,19 @@ public abstract class Card {
         }
         if (this instanceof Minion) {
             if (((Minion) this).getHaveSpecialPower()) {
-                //todo AffectSpecialPower - lastTimeSpellUsed in hero
+
+                //todo AffectSpecialPower
                 return;
             }
 
         }
         if (this instanceof Hero) {
             if (((Hero) this).getHaveSpecialPower()) {
-                //todo AffectSpecialPower
+                if(((Hero) this).getTurnNotUsedSpecialPower() <= ((Hero) this).getCoolDown()){
+                    //todo AffectSpecialPower
+                    return;
+                }
+                ((Hero) this).setTurnNotUsedSpecialPower(0);
                 return;
             }
         }

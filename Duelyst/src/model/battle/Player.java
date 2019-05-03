@@ -146,6 +146,7 @@ public abstract class Player {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
         }
+        mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
     }
 
     public void addToCardsOfLand(Card card) {
