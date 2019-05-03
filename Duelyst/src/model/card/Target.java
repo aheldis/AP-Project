@@ -24,8 +24,8 @@ public class Target {
     //default
     private int attackPower;
     private boolean self;
-    private boolean Enemy;
-    private boolean Ally;
+    private boolean enemy;
+    private boolean ally;
 
 
     public Target() {
@@ -61,6 +61,26 @@ public class Target {
 
         }
         return false;
+    }
+
+    public boolean checkIsEnemy(Player me, Square check) {
+        if (!enemy)
+            return false;
+        //todo
+        return true;
+    }
+
+    public boolean checkIsAlly(Player me, Square check) {
+        if (!ally)
+            return false;
+        //todo
+        return true;
+    }
+
+    public boolean checkDistance(Card forWitchCard, Square squareOfTarget) {
+        if (distance == DEFAULT)
+            return true;
+        return forWitchCard.withinRange(squareOfTarget.getCoordinate(), distance);
     }
 
     public ArrayList<Square> getTarget(Square square /*squari e ke seda mikone */) {
@@ -110,11 +130,11 @@ public class Target {
 
     //todo isAlly and isEnemy
     public boolean isAlly() {
-        return Ally;
+        return ally;
     }
 
     public boolean isEnemy() {
-        return Enemy;
+        return enemy;
     }
 
     public String getCardType() {
@@ -126,6 +146,8 @@ public class Target {
     }
 
     public boolean checkNotItSelf(int y, int x, Square position) {
-        return y == position.getYCoordinate() && x == position.getXCoordinate();
+        if (self)
+            return !(y == position.getYCoordinate() && x == position.getXCoordinate());
+        return true;
     }
 }

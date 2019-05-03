@@ -150,33 +150,49 @@ public abstract class Card {
         boolean isCard = change.getTargetType().equals("Card");
         ArrayList<Square> targets = new ArrayList<>();
 //      todo check i va j shomare deraye ya shomare deraye * scale?
-//      todo nirooye khodi va doshman
         if (isSquare)
             targets.add(cardSquare);
         else if (isCard) {
+
             if (target.isOne() && target.checkIfAttackedCardIsValid(cardSquare.getObject()) &&
-                    (target.getDistance() == DEFAULT || withinRange(cardSquare.getCoordinate(), target.getDistance()))) {
+                    target.checkDistance(this, cardSquare) && target.checkIsEnemy(player, cardSquare) &&
+                    target.checkIsAlly(player, cardSquare)) {
                 targets.add(cardSquare);
+
             } else if (target.isAll()) {
+
                 for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
-                    for (int j = 0; j < landOfGame.getNumberOfColumns(); j++)
-                        if (target.checkIfAttackedCardIsValid(landOfGame.getSquares()[i][j].getObject()) &&
-                                target.checkNotItSelf(i, j, position) && (target.getDistance() == DEFAULT ||
-                                        withinRange(landOfGame.getSquares()[i][j].getCoordinate(), target.getDistance())))
-                            targets.add(landOfGame.getSquares()[i][j]);
+                    for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
+                        Square check = landOfGame.getSquares()[i][j];
+                        if (target.checkIfAttackedCardIsValid(check.getObject()) && target.checkDistance(this, check) &&
+                                target.checkIsEnemy(player, check) && target.checkIsAlly(player, check))
+                            targets.add(check);
+                    }
+
             } else if (target.isRow()) {
-                for (int j = 0; j < landOfGame.getNumberOfColumns(); j++)
-                    if (target.checkIfAttackedCardIsValid(landOfGame.getSquares()[cardSquare.getYCoordinate()][j].getObject()) &&
-                             target.checkNotItSelf(cardSquare.getYCoordinate(), j, position) && (target.getDistance() == DEFAULT ||
-                                    withinRange(landOfGame.getSquares()[cardSquare.getYCoordinate()][j].getCoordinate(), target.getDistance())))
-                        targets.add(landOfGame.getSquares()[cardSquare.getYCoordinate()][j]);
+
+                for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
+                    Square check = landOfGame.getSquares()[cardSquare.getYCoordinate()][j];
+                    if (target.checkIfAttackedCardIsValid(check.getObject()) &&
+                            target.checkNotItSelf(cardSquare.getYCoordinate(), j, position) &&
+                            target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
+                            target.checkIsAlly(player, check))
+                        targets.add(check);
+                }
+
             } else if (target.isColumn()) {
-                for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
-                    if (target.checkIfAttackedCardIsValid(landOfGame.getSquares()[i][cardSquare.getXCoordinate()].getObject()) &&
-                            target.checkNotItSelf(i, cardSquare.getXCoordinate(), position) && target.getDistance() == DEFAULT ||
-                                    withinRange(landOfGame.getSquares()[i][cardSquare.getXCoordinate()].getCoordinate(), target.getDistance()))
-                        targets.add(landOfGame.getSquares()[i][cardSquare.getXCoordinate()]);
+
+                for (int i = 0; i < landOfGame.getNumberOfRows(); i++) {
+                    Square check = landOfGame.getSquares()[i][cardSquare.getXCoordinate()];
+                    if (target.checkIfAttackedCardIsValid(check.getObject()) &&
+                            target.checkNotItSelf(i, cardSquare.getXCoordinate(), position) &&
+                            target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
+                            target.checkIsAlly(player, check))
+                        targets.add(check);
+                }
+
             } else if (target.isRandom()) {
+
                 int i, j;
                 Random random = new Random();
                 if (target.getDistance() != DEFAULT) {
@@ -190,14 +206,11 @@ public abstract class Card {
                     i = position.getYCoordinate() + random.nextInt(landOfGame.getNumberOfRows());
                     j = position.getXCoordinate() + random.nextInt(landOfGame.getNumberOfColumns());
                 }
-
                 targets.add(landOfGame.getSquares()[i][j]);
-            } else if (target.isSelf()) {
-                targets.add(position);
+
             }
         }
         target.setTargets(targets);
-        //todo checkIfAttackedCardIsValid to class target
 
     }
 
