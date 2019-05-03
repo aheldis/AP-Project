@@ -13,6 +13,7 @@ import view.enums.RequestSuccessionType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 public abstract class Card {
     protected Change change = new Change();//HAS-A
@@ -20,9 +21,9 @@ public abstract class Card {
     protected int mp;
     protected int hp;
     protected int ap;
-    protected int turnOfCanNotMove = 0;
-    protected int turnOfCanNotAttack = 0;
-    protected int turnOfCanNotCounterAttack = 0;
+    private int turnOfCanNotMove = 0;
+    private int turnOfCanNotAttack = 0;
+    private int turnOfCanNotCounterAttack = 0;
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
@@ -40,6 +41,7 @@ public abstract class Card {
     private boolean canCounterAttack = true;
     private int hpChangeAfterAttack = 0; //todo mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
     private String description;
+    private static final int DEFAULT = -1;
     //todo
 
 
@@ -78,8 +80,8 @@ public abstract class Card {
         }
         if (canMoveToCoordination(this, newCoordination) && withinRange(newCoordination, 2)) {
             if (this instanceof Minion) {
-                if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_RESPAWN) {
-                    setTarget(this, newPosition);
+                if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
+                    setTarget(newPosition);
 
                     //todo AffectSpecialPower
                 }
@@ -139,11 +141,59 @@ public abstract class Card {
         return getManhatanDistance(coordinate) <= range;
     }
 
-    public void setTarget(Card card, Square CardSquare) {
+    public void setTarget(Square cardSquare) {
+        boolean isSquare = change.getTargetType().equals("Square");
+        boolean isCard = change.getTargetType().equals("Card");
+        ArrayList<Square> targets = new ArrayList<>();
+//      todo check i va j shomare deraye ya shomare deraye * scale?
+//      todo nirooye khodi va doshman
+        if (isSquare)
+            targets.add(cardSquare);
+        else if (isCard) {
+            if (target.isOne() && target.checkIfAttackedCardIsValid(cardSquare.getObject()) &&
+                    (target.getDistance() == DEFAULT || withinRange(cardSquare.getCoordinate(), target.getDistance()))) {
+                targets.add(cardSquare);
+            } else if (target.isAll()) {
+                for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
+                    for (int j = 0; j < landOfGame.getNumberOfColumns(); j++)
+                        if (target.checkIfAttackedCardIsValid(landOfGame.getSquares()[i][j].getObject()) &&
+                                target.checkNotItSelf(i, j, position) && (target.getDistance() == DEFAULT ||
+                                        withinRange(landOfGame.getSquares()[i][j].getCoordinate(), target.getDistance())))
+                            targets.add(landOfGame.getSquares()[i][j]);
+            } else if (target.isRow()) {
+                for (int j = 0; j < landOfGame.getNumberOfColumns(); j++)
+                    if (target.checkIfAttackedCardIsValid(landOfGame.getSquares()[cardSquare.getYCoordinate()][j].getObject()) &&
+                             target.checkNotItSelf(cardSquare.getYCoordinate(), j, position) && (target.getDistance() == DEFAULT ||
+                                    withinRange(landOfGame.getSquares()[cardSquare.getYCoordinate()][j].getCoordinate(), target.getDistance())))
+                        targets.add(landOfGame.getSquares()[cardSquare.getYCoordinate()][j]);
+            } else if (target.isColumn()) {
+                for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
+                    if (target.checkIfAttackedCardIsValid(landOfGame.getSquares()[i][cardSquare.getXCoordinate()].getObject()) &&
+                            target.checkNotItSelf(i, cardSquare.getXCoordinate(), position) && target.getDistance() == DEFAULT ||
+                                    withinRange(landOfGame.getSquares()[i][cardSquare.getXCoordinate()].getCoordinate(), target.getDistance()))
+                        targets.add(landOfGame.getSquares()[i][cardSquare.getXCoordinate()]);
+            } else if (target.isRandom()) {
+                int i, j;
+                Random random = new Random();
+                if (target.getDistance() != DEFAULT) {
+                    i = position.getYCoordinate() + random.nextInt(2 * target.getDistance() + 1) - 1;
+                    j = position.getXCoordinate() + random.nextInt(2 * target.getDistance() + 1) - 1;
+                    if (i == -1) i += 2;
+                    if (j == -1) j += 2;
+                    if (i == landOfGame.getNumberOfRows()) i -= 2;
+                    if (j == landOfGame.getNumberOfColumns()) j -= 2;
+                } else {
+                    i = position.getYCoordinate() + random.nextInt(landOfGame.getNumberOfRows());
+                    j = position.getXCoordinate() + random.nextInt(landOfGame.getNumberOfColumns());
+                }
+
+                targets.add(landOfGame.getSquares()[i][j]);
+            } else if (target.isSelf()) {
+                targets.add(position);
+            }
+        }
+        target.setTargets(targets);
         //todo checkIfAttackedCardIsValid to class target
-        //todo check kone ke to classe targete card (one/all/column/row) hast
-        //todo age square hast ya distance dare check kone
-        //todo ArrayList e target ro to classe target bere bezare
 
     }
 
@@ -169,7 +219,7 @@ public abstract class Card {
 
         if (this instanceof Minion) {
             if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
-                setTarget(this, position);
+                setTarget(position);
                 getChange().affect(player, this.getTargetClass().getTargets());
             }
         }
@@ -212,7 +262,7 @@ public abstract class Card {
 
     public void setCanAttack(boolean bool, int forHowManyTurn) {
         canAttack = bool;
-        if (!bool ) {
+        if (!bool) {
             setTurnOfCanNotAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
         }
     }
@@ -262,7 +312,7 @@ public abstract class Card {
 
     public void setCanCounterAttack(boolean bool, int forHowManyTurn) {
         canCounterAttack = bool;
-        if (!bool ) {
+        if (!bool) {
             setTurnOfCanNotCounterAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
         }
     }

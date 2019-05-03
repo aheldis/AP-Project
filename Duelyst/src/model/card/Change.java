@@ -69,4 +69,7 @@ public class Change {
 
     }
 
+    public String getTargetType() {
+        return targetType;
+    }
 }
