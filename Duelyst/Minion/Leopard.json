@@ -8,7 +8,7 @@
     "hp": 6,
     "ap": 2,
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "ActivationTimeOfSpecialPower": "ON_ATTACK",
     "description": "decrease hp for next turn 8 units",
     "change": {

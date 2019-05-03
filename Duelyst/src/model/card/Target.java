@@ -12,13 +12,12 @@ public class Target {
     private ArrayList<Square> targets = new ArrayList<>();
     private String counterAttackType; //ranged hybrid melee
     private String cardType; //minion hero spell
-    //    private String number; // 0 <=
     private boolean one;
     private boolean row;
     private boolean column;
     private boolean all;
     private boolean random;
-    //distance
+    private boolean neighbor;
 
 
     public Target() {

@@ -8,7 +8,7 @@
     "hp": 24,
     "ap": 6,
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "ActivationTimeOfSpecialPower": "ON_ATTACK",
     "description": "attack 5 units more than times that this minions have been attacked y GladiatorFromFars",
     "change": {

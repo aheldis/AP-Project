@@ -256,4 +256,8 @@ public abstract class Player {
     public ArrayList<Card> getCardsOnLand() {
         return cardsOnLand;
     }
+
+    public void playTurnForComputer(){
+        //write nothing here for access to this function in computer
+    }
 }

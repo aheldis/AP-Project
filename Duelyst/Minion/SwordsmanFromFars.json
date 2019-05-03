@@ -8,7 +8,7 @@
     "hp": 6,
     "ap": 4,
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "ActivationTimeOfSpecialPower": "ON_ATTACK",
     "description": "when attacks stun the minion for this turn",
     "change": {

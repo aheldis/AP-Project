@@ -7,6 +7,7 @@
     "mp": 0,
     "hp": 35,
     "ap": 3,
+    "coolDown": 0,
     "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "hybrid",
     "attackRange": 3,

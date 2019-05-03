@@ -8,7 +8,7 @@
     "hp": 12,
     "ap": 4,
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "ActivationTimeOfSpecialPower": "COMBO",
     "description": "combo",
     "change": {

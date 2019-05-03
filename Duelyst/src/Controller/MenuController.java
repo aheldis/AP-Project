@@ -545,7 +545,6 @@ public class MenuController {
                         break;
                     case GAME_ATTACK:
                         Card card;
-                        square = match.getLand().passSquareInThisCoordinate(request.getCoordinate());
                         id = request.getId();
                         card = player.passCardInGame(id);
                         if (card == null) {

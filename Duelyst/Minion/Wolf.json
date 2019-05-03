@@ -8,7 +8,7 @@
     "hp": 6,
     "ap": 1,
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "ActivationTimeOfSpecialPower": "ON_ATTACK",
     "description": "decrease 6 units from hp of minion in next turn",
     "change": {

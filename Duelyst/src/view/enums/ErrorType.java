@@ -40,7 +40,8 @@ public enum ErrorType {
     CAN_NOT_MOVE_IN_SQUARE("You can not move in this square"),
     CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION("This card is exhausted"),
     INVALID_SQUARE("Invalid square"),
-    CAN_NOT_COMBO_ATTACK("Can con combo attack");
+    CAN_NOT_COMBO_ATTACK("Can con combo attack"),
+    CAN_NOT_ATTACK("Can not attack");
 
 
     private String message;

@@ -7,7 +7,7 @@
     "mp": 7,
     "hp": 12,
     "ap": 11,
-    "counterAttack": "hubrid",
+    "counterAttack": "hybrid",
     "attackRange": 3,
     "ActivationTimeOfSpecialPower": "ON_DEATH",
     "description": "decrease hp of minions in 8 neighbor cells 2 units",

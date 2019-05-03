@@ -29,18 +29,16 @@ public abstract class Card {
     private String counterAttack;
     private int attackRange;
     private int cost;
-    //private ArrayList<Buff> buffsOnThisCard;
     private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
     private Square position;
     private LandOfGame landOfGame;
-    private int CardNumber;// card number dashte bashan oon shomareE ke to doc e vase sakhtan mode ha, albate mitoonan nadashte bashan ba esm besazim game card ha ro :-? item ha ham hamin tor
+    private int CardNumber;
     private Player player;
     private boolean canMove = false;
     private boolean canAttack = false;
     private boolean canCounterAttack = true;
     private int hpChangeAfterAttack = 0; //todo mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
     private String description;
-    //todo
 
     public Change getChange() {
         return change;
@@ -92,18 +90,18 @@ public abstract class Card {
             if (newPosition.getObject() instanceof Collectible) {
                 player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             }
+           // if(newPosition.getObject() instanceof ) todo asare khane
+
             setPosition(newPosition);
             newPosition.setObject(this);
             position.setObject(null);
-            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + newCoordination.getX() + newCoordination.getY());
+            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() +
+                    "moved to" + newCoordination.getX() + newCoordination.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
             canMove = false;
-            //todo check if RequestSuccessionType works correctly
-        } else
+        }
+        else
             ErrorType.INVALID_TARGET.printMessage();
-        //check asare khane
-        //can move = false
-        //ویژگی هایی که موقع حرکت اعمال میشود
 
     }
 
@@ -135,6 +133,8 @@ public abstract class Card {
     }
 
     public boolean withinRange(Coordinate coordinate, int range) {
+        if(counterAttack.equals("Ranged") && getNormalDistance(coordinate) == 1)
+            return false;
         return getManhatanDistance(coordinate) <= range;
     }
 
@@ -165,9 +165,13 @@ public abstract class Card {
         if (this instanceof Spell) {
             return;
         }
-
+        if(!canAttack) {
+            ErrorType.CAN_NOT_ATTACK.printMessage();
+            return;
+        }
         if (this instanceof Minion) {
             if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
+                //todo affect special power
                 setTarget(this, position);
                 getChange().affect(player, this.getTargetClass().getTargets());
             }
@@ -176,9 +180,6 @@ public abstract class Card {
         if (!withinRange(attackedCard.position.getCoordinate(), attackRange)) {
             ErrorType.UNAVAILABLE_OPPONENT.printMessage();
             return;
-        }
-        if (!isCanAttack()) {
-            ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
         }
         attackedCard.changeHp(-ap + hpChangeAfterAttack);
         attackedCard.counterAttack(this);
@@ -207,6 +208,13 @@ public abstract class Card {
             canCounterAttack = counterAttack.equals("Hybrid");
         if (this.canCounterAttack && canCounterAttack)
             theOneWhoAttacked.changeHp(-ap);
+        if (theOneWhoAttacked instanceof Minion) {
+            if (((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
+                //todo affect special power
+                //setTarget(theOneWhoAttacked, position);
+               // getChange().affect(, this.getTargetClass().getTargets());//todo chert momkene bashe
+            }
+        }
     }
 
     public void setCanAttack(boolean bool, int forHowManyTurn) {

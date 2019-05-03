@@ -113,14 +113,26 @@ public class Match {
             return players[0];
     }
 
-    public void changeTurn() {
+    public void changeTurn() {//age bazi ba computer bashe turn avaz nemishe
         if (gameEnded()) {
             endGame();
             MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
-        players[whichPlayer].initPerTurn();
-        whichPlayer = 1 - whichPlayer;
+        if(passComputerPlayer() == -1) {
+            players[whichPlayer].initPerTurn();
+            whichPlayer = 1 - whichPlayer;
+        }
+        else{
+            players[whichPlayer].initPerTurn();
+            players[passComputerPlayer()].playTurnForComputer();
+            players[1-whichPlayer].initPerTurn();//init for computer
+            if (gameEnded()) {
+                endGame();
+                MenuController.state = StateType.ACCOUNT_MENU;
+                return;
+            }
+        }
     }
 
 //    public void startMatch() {
@@ -140,6 +152,14 @@ public class Match {
 //        }
 //    }
 
+    private int passComputerPlayer(){
+        if(players[0] instanceof ComputerPlayer)
+            return 0;
+        if(players[1] instanceof ComputerPlayer)
+            return 1;
+        else
+            return -1;
+    }
 
     public void initGame() {
         players[0].addToCardsOfLand(players[0].getMainDeck().getHero());

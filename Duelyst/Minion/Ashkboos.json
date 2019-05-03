@@ -8,7 +8,7 @@
     "hp": 14,
     "ap": 8,
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "ActivationTimeOfSpecialPower": "ON_DEFEND",
     "description": "can't be attacked from minions which have less ap",
     "change": {

@@ -8,7 +8,7 @@
     "hp": 10,
     "ap": 14,
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "ActivationTimeOfSpecialPower": "ON_DEFEND",
     "description": "won't be disarm",
     "change": {

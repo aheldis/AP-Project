@@ -8,7 +8,7 @@
     "hp": 1,
     "ap": 1,
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "ActivationTimeOfSpecialPower": "PASSIVE",
     "description": "have 12 holy buff passive",
     "change": {

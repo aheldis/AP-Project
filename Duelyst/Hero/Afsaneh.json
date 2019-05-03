@@ -7,6 +7,7 @@
     "mp": 1,
     "hp": 40,
     "ap": 3,
+    "coolDown": 2,
     "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "ranged",
     "attackRange": 3,

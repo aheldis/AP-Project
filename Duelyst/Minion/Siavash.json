@@ -8,7 +8,7 @@
     "hp": 8,
     "ap": 5,
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "ActivationTimeOfSpecialPower": "ON_DEATH",
     "description": "decrease hp of hero on death",
     "change": {
