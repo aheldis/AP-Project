@@ -35,6 +35,7 @@ public enum RequestType {
     SHOP_SELL,
     SHOP_SHOW,
     SHOP_HELP,
+    SHOP_SHOW_DARIC,
     GAME_GAME_INFO,
     GAME_SHOW_MY_MINION,
     GAME_SHOW_OPPONENT_MINION,
@@ -47,8 +48,8 @@ public enum RequestType {
     GAME_SHOW_HAND,
     GAME_INSERT,
     GAME_END_TURN,
-    GAME_SHOW_COLLECTABLES,
-    GAME_SELECT_COLLECTABLE,
+    GAME_SHOW_CollECTIBLES,
+    GAME_SELECT_Collectible,
     GAME_ITEM_SHOW_INFO,
     GAME_ITEM_USE,
     GAME_SHOW_NEXT_CARD,
@@ -63,5 +64,6 @@ public enum RequestType {
     MODE_MULTI_PLAYER,
     SINGLE_CUSTOM,
     SINGLE_STORY,
-    MODE_HELP
+    MODE_HELP,
+    SELECT_MODE_EXIT
 }

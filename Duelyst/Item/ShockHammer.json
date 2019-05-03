@@ -1,0 +1,35 @@
+{
+  "@type": "model.item.Usable",
+  "@val": {
+    "name": "ShockHammer",
+    "type": "Usable",
+    "description": "disarm a random opponent minion",
+    "cost": 15000,
+    "itemNumber": 17,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "item",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": true
+    },
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "disarm": [1]
+      },
+      "unaffactBuffs": false
+    }
+  }
+}

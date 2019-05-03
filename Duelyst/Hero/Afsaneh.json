@@ -1,5 +1,5 @@
 {
-  "@type": "CardCopy",
+  "@type": "model.card.Hero",
   "@val": {
     "name": "Afsaneh",
     "CardNumber": 8,
@@ -7,13 +7,15 @@
     "mp": 1,
     "hp": 40,
     "ap": 3,
+    "coolDown": 2,
+    "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "ranged",
     "attackRange": 3,
     "description": "dispel an opponent minion",
     "change": {
       "targetType": "card",
       "opponentCanMove": true,
-      "opponentCanAttack": false,
+      "opponentCanAttack": true,
       "opponentCanCounterAttack": true,
       "turnOfCanNotMoveForOpponent": 0,
       "turnOfCanNotAttackForOpponent": 0,

@@ -6,47 +6,12 @@ package model;
  */
 
 public class ScannerCommand {
-    String userName = "";
-    String password = "";
-    private String cardId = "";
-    private String usableItemId = "";
-    private String deckName = "";
-    private String id = "";
+    String userName ;
+    private String cardId ;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getUserName() {
         return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUsableItemId() {
-        return usableItemId;
-    }
-
-    public void setUsableItemId(String usableItemId) {
-        this.usableItemId = usableItemId;
-    }
-
-    public String getDeckName() {
-        return deckName;
-    }
-
-    public void setDeckName(String deckName) {
-        this.deckName = deckName;
     }
 
     public String getCardId() {

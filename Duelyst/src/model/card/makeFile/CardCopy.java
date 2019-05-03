@@ -16,6 +16,13 @@ public class CardCopy {
 //    public ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
     public String counterAttack;
     public int attackRange;
+    public String ActivationTimeOfSpecialPower;
+    //    ON_RESPAWN,
+    //    PASSIVE,
+    //    ON_DEATH,
+    //    ON_ATTACK,
+    //    ON_DEFEND,
+    //    COMBOO;
 
     //public ArrayList<Buff> buffsOnThisCard;
 //    public HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone

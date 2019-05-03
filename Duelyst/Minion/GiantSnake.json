@@ -1,0 +1,41 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "GiantSnake",
+    "CardNumber": 21,
+    "cost": 500,
+    "mp": 8,
+    "hp": 14,
+    "ap": 7,
+    "counterAttack": "ranged",
+    "attackRange": 5,
+    "ActivationTimeOfSpecialPower": "ON_SPAWWN",
+    "description": "unti holy buff",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "holy": [1]
+      },
+      "unaffactBuffs": true
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "neighbor": true
+    }
+  }
+}

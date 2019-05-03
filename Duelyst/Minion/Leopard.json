@@ -1,0 +1,40 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "Leopard",
+    "CardNumber": 23,
+    "cost": 400,
+    "mp": 4,
+    "hp": 6,
+    "ap": 2,
+    "counterAttack": "melee",
+    "attackRange": 1,
+    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "description": "decrease hp for next turn 8 units",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -8,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "DecreaserHp" : [1]
+      },
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

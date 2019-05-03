@@ -1,0 +1,38 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "GeneralFromFars",
+    "CardNumber": 6,
+    "cost": 800,
+    "mp": 7,
+    "hp": 12,
+    "ap": 4,
+    "counterAttack": "melee",
+    "attackRange": 1,
+    "ActivationTimeOfSpecialPower": "COMBO",
+    "description": "combo",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

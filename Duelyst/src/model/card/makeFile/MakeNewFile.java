@@ -21,15 +21,13 @@ public class MakeNewFile {
     private static Request request = new Request(StateType.BATTLE);//mohem ni chi bashe mikham az scanneresh estefade konam
     private static String path;
 
-//    private static String checkSyntax(FileWriter fileWriter, String line) {
-//    }
 
 
-    public static void makeNewCardFile() {
+    public static void makeNewCardFile() throws  Exception{
 
         String input = null;
         do {
-            newCardMessages.printLine("type: (Hero/Minion/Spell/Buff/Item)");
+            newCardMessages.printLine("type: (Hero/Minion/Spell/Buff/item)");
             request.getNewLine();
             input = request.getCommand();
         } while (FilesType.getEnum(input) == null);
@@ -47,7 +45,7 @@ public class MakeNewFile {
             object = fillObject("BuffCopy");
         } else { //minion hero spell item
 
-            if(typeOfFile == FilesType.ITEM)
+            if (typeOfFile == FilesType.ITEM)
                 object = fillObject("ItemCopy");
             else
                 object = fillObject("CardCopy");
@@ -64,7 +62,7 @@ public class MakeNewFile {
             altMapper.toJson(object, fileWriter);
             fileWriter.close();
         } catch (Exception e) {
-           newCardMessages.printLine(e.getMessage());
+            newCardMessages.printLine(e.getMessage());
         }
 
     }
@@ -78,7 +76,7 @@ public class MakeNewFile {
             Object object = constructor.newInstance();
 
             for (Field field : fields) {
-               newCardMessages.printLine("enter " + field.getName() + " (" + field.getAnnotatedType().getType().getTypeName() + "):");
+                newCardMessages.printLine("enter " + field.getName() + " (" + field.getAnnotatedType().getType().getTypeName() + "):");
                 try {
                     AnnotatedType annotatedType = field.getAnnotatedType();
 
@@ -90,7 +88,7 @@ public class MakeNewFile {
                         field.set(object, Boolean.parseBoolean(request.getCommand()));
                     } else if (annotatedType.getType().getTypeName().equals("java.util.ArrayList<java.lang.String>")) {
                         ArrayList<String> arr = new ArrayList<>();
-                       newCardMessages.printLine("enter number of array items: ");
+                        newCardMessages.printLine("enter number of array items: ");
                         request.getNewLine();
                         int number = Integer.parseInt(request.getCommand());
                         for (int i = 0; i < number; i++) {
@@ -102,15 +100,15 @@ public class MakeNewFile {
                         request.getNewLine();
                         field.set(object, request.getCommand());
                     } else if (annotatedType.getType().getTypeName().equals("java.util.HashMap<java.lang.String, java.lang.Integer>")) {
-                       newCardMessages.printLine("enter number of buffs: ");
+                        newCardMessages.printLine("enter number of buffs: ");
                         request.getNewLine();
                         HashMap<String, Integer> hashMap = new HashMap<>();
                         int number = Integer.parseInt(request.getCommand());
                         for (int i = 0; i < number; i++) {
-                           newCardMessages.printLine("enter buff name(holy/power/poison/weakness/stun/disarm) CORRECTLY");
+                            newCardMessages.printLine("enter buff name(holy/power/poison/weakness/stun/disarm) CORRECTLY");
                             request.getNewLine();
                             String buffName = request.getCommand();
-                           newCardMessages.printLine("for How Many Turn");
+                            newCardMessages.printLine("for How Many Turn");
                             request.getNewLine();
                             int num = Integer.parseInt(request.getCommand());
                             hashMap.put(buffName, num);
@@ -119,15 +117,15 @@ public class MakeNewFile {
                     }
 
                 } catch (Exception e) {
-                   newCardMessages.printLine(e.getMessage());
+                    newCardMessages.printLine(e.getMessage());
                 }
             }
 
             return object;
 
         } catch (Exception e) {
-           newCardMessages.printLine("other error");
-           newCardMessages.printLine(e.getMessage());
+            newCardMessages.printLine("other error");
+            newCardMessages.printLine(e.getMessage());
         }
         return null;
     }

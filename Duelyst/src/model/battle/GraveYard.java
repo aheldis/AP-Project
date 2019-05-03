@@ -1,6 +1,6 @@
 package model.battle;
 
-import model.Item.Flag;
+import model.item.Flag;
 import model.card.ActivationTimeOfSpecialPower;
 import model.card.Card;
 import model.card.Minion;
@@ -34,7 +34,7 @@ public class GraveYard {
                 card.getChange().affect(player, card.getTargetClass().getTargets());
             }
         }
-        ArrayList<Flag> flags = player.getFlags();
+        ArrayList<Flag> flags = player.getOwnFlags();
         String mode = player.getMatch().getMode();
         position.setObject(null);
         switch (mode) {

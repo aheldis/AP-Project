@@ -1,0 +1,38 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "FierceLion",
+    "CardNumber": 20,
+    "cost": 600,
+    "mp": 2,
+    "hp": 1,
+    "ap": 8,
+    "counterAttack": "melee",
+    "attackRange": 1,
+    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "description": "holy buff does not affect on it's attack",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "Madness",
+    "CardNumber": 9,
+    "cost": 650,
+    "mp": 0,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "decrease ap of a minion 4 units for 3 turns with disarm",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 4,
+      "continuous": false,
+      "buffs": {
+        "power": [3],
+        "disarm": [3]
+      },
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

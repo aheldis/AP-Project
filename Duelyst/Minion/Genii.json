@@ -1,0 +1,42 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "Genii",
+    "CardNumber": 27,
+    "cost": 500,
+    "mp": 5,
+    "hp": 10,
+    "ap": 4,
+    "counterAttack": "ranged",
+    "attackRange": 4,
+    "ActivationTimeOfSpecialPower": "ON_TURN",
+    "description": "power buff (ap+1) countinuous",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 1,
+      "continuous": true,
+      "buffs": {
+        "power": [1]
+      },
+      "unaffactBuffs": false,
+      "apOrHpForPower": "ap",
+      "changeInApOrHpForPower": 1
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": true,
+      "random": false
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "PoisonousSnake",
+    "CardNumber": 13,
+    "cost": 300,
+    "mp": 4,
+    "hp": 5,
+    "ap": 6,
+    "counterAttack": "ranged",
+    "attackRange": 4,
+    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "description": "poison buff for 3 turns",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "poison": [3]
+      },
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "minion",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

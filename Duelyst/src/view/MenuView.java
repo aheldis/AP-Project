@@ -1,18 +1,16 @@
 package view;
 
-import model.Item.Collectable;
-import model.Item.Flag;
-import model.Item.Item;
+import model.item.Collectible;
+import model.item.Flag;
 import model.account.Account;
 import model.account.AllAccount;
 import model.battle.*;
 import model.card.Card;
-import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
 import view.enums.ErrorType;
 
-import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 public class MenuView {
     private static MenuView singleInstance = null;
@@ -84,11 +82,17 @@ public class MenuView {
                 System.out.println("health point : " + player.getHero().getHp());
                 break;
             case "SaveFlagMode":
-
+                Flag flag1 = match.getFlags().get(0);
+                System.out.println("in cell x: "+flag1.getSquare().getXCoordinate()+
+                        " y: "+flag1.getSquare().getYCoordinate());
+                if(flag1.getOwnerCard() !=null){
+                    System.out.println(flag1.getOwnerCard().getCardId());
+                }
                 break;
             case "CollectFlagMode":
                 for (Flag flag : match.getFlags()) {
                     System.out.println(flag.getOwnerCard().getName());
+                    System.out.println(flag.getOwnerCard().getCardId().getCardIdAsString().split("_")[0]);
                 }
                 break;
         }
@@ -111,10 +115,25 @@ public class MenuView {
     }
 
     public void showHand(Player player) {
-        //to hand function showNextCard baraye card badi darim :D
-        AccountView.getInstance().DeckAndHandView(null, null, player.getHand().getGameCards());
-        showNextCard(player.getMainDeck());
+        //nmikham hero o ina on balash bashe mosalaman :|
+        int counterOfCards =0;
+        ArrayList<Card> cards =player.getHand().getGameCards();
+        if (cards != null && cards.size() != 0) {
+            for (Card card : cards) {
+                if (card instanceof Spell) {
+                    System.out.print("     ");
+                    AccountView.getInstance().showEachSpell((Spell) card, counterOfCards);
+                    System.out.println("\n");
 
+                } else if (card instanceof Minion) {
+                    System.out.print("     ");
+                    AccountView.getInstance().showEachMinion((Minion) card, counterOfCards);
+                    System.out.println("\n");
+                }
+                counterOfCards++;
+            }
+        }
+        showNextCard(player.getMainDeck());
     }
 
     public void showNextCard(Deck deck) {
@@ -132,20 +151,44 @@ public class MenuView {
         }
     }
 
-    public void showCollectableItems(Player player) {
-        AccountView.getInstance().DeckAndHandView(null, player.getHand().getCollectableItems(), null);
+    public void showCollectibleItems(Player player) {
+        AccountView.getInstance().DeckAndHandView(null, player.getHand().getCollectibleItems(), null);
     }
 
     public void showBattleMenu() {
-
+        System.out.println("Game info - show manas and flags");
+        System.out.println("Show my minions - show minions info");
+        System.out.println("Show opponent minions - show opponent minions info");
+        System.out.println("Show card info [card id]");
+        System.out.println("Select card [card id] - select s card for move or attack ");
+        System.out.println("Move to ([x], [y]) - move selected card");
+        System.out.println("Attack [opponent card id] - attack selected card to opponent");
+        System.out.println("Attack combo [opponent card id] [my card id] [my card id] [...] - attack combo");
+        System.out.println("Use special power (x, y) - use special power for hero or minion");
+        System.out.println("Show hand  - show your hand");
+        System.out.println("Insert [card name] in (x, y) - put a card on land");
+        System.out.println("End turn");
+        System.out.println("Show collectables - show collectable items");
+        System.out.println("Select item [collectable id] - select an item");
+        System.out.println("show info - show item info after select it");
+        System.out.println("Use [location x, y] - use item after select it");
+        System.out.println("Show Next Card - show next card in hand");
+        System.out.println("Enter graveyard - graveYard:your dead card is here");
+        System.out.println("Show info [card id] - show card info in the graveYard ");
+        System.out.println("Show cards - show all cards in graveYard");
+        System.out.println("Help - show what you can do");
+        System.out.println("End Game - dispense with game");
+        System.out.println("show menu - show help for battle");
     }
 
-    /*public void showCardInfo(Card card) {
-    }*/
+    public void showItemInfo(Hand hand, String CollectibleId) {
+        System.out.println("item : ");
+        Collectible collectible = hand.passCollectibleInHand(CollectibleId);
+        AccountView.getInstance().showEachItem(collectible, NOT_VALID);
+    }
 
-    public void showItemInfo(Hand hand, String collectableId) {
-        System.out.println("Item : ");
-        Collectable collectable = hand.passCollectableInHand(collectableId);
-        AccountView.getInstance().showEachItem(collectable, NOT_VALID);
+    public void helpForSelectMode(){
+        System.out.println("Enter single player");
+        System.out.println("Enter multi player");
     }
 }

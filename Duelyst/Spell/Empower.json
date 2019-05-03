@@ -1,0 +1,38 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "Empower",
+    "CardNumber": 3,
+    "cost": 250,
+    "mp": 1,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "add 2 unit to hp on a minion",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 2,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false,
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

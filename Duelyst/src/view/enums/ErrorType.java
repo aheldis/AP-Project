@@ -9,10 +9,10 @@ public enum ErrorType {
     USER_NAME_ALREADY_EXIST("User name already exist"),
 
     HAVE_NOT_CARD_IN_COLLECTION("You don't have this Card in collection"),
-    HAVE_NOT_ITEM_IN_COLLECTION("You don't have this Item in collection"),
-    HAVE_NOT_CARD_OR_ITEM_IN_COLLECTION("You don't have this Card or Item in collection"),
+    HAVE_NOT_ITEM_IN_COLLECTION("You don't have this item in collection"),
+    HAVE_NOT_CARD_OR_ITEM_IN_COLLECTION("You don't have this Card or item in collection"),
 
-    HAVE_NOT_ITEM_IN_DECK("You don't have this Item in deck"),
+    HAVE_NOT_ITEM_IN_DECK("You don't have this item in deck"),
     HAVE_NOT_CARD_IN_DECK("You don't have this Card in deck"),
     DECK_HAVE_BEEN_EXIST("Deck Have been exist"),
     HAVE_NOT_DECK("You don't have this deck"),
@@ -33,14 +33,15 @@ public enum ErrorType {
     NOT_ENOUGH_MANA("You don't have enough mana"),
     INVALID_TARGET("You can not put it here"),
     HAVE_NOT_ENOUGH_MANA("You don't have enough mana"),
-    INVALID_ITEM("You don't have this collectable Item"),
+    INVALID_ITEM("You don't have this Collectible item"),
     UNAVAILABLE_OPPONENT("Opponent minion is unavailable for attack"),
     CAN_NOT_USE_SPECIAL_POWER("Can not use special power for this card"),
     DO_NOT_HAVE_SPECIAL_POWER("This card doesn't have special power"),
     CAN_NOT_MOVE_IN_SQUARE("You can not move in this square"),
     CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION("This card is exhausted"),
     INVALID_SQUARE("Invalid square"),
-    CAN_NOT_COMBO_ATTACK("Can con combo attack");
+    CAN_NOT_COMBO_ATTACK("Can con combo attack"),
+    CAN_NOT_ATTACK("Can not attack");
 
 
     private String message;

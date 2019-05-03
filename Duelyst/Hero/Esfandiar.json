@@ -1,5 +1,5 @@
 {
-  "@type": "CardCopy",
+  "@type": "model.card.Hero",
   "@val": {
     "name": "Esfandiar",
     "CardNumber": 9,
@@ -7,6 +7,8 @@
     "mp": 0,
     "hp": 35,
     "ap": 3,
+    "coolDown": 0,
+    "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "hybrid",
     "attackRange": 3,
     "description": "have 3 holyBuff countinuesly",
@@ -22,7 +24,7 @@
       "apChange": 0,
       "continuous": true,
       "buffs": {
-        "holy": -1
+        "holy": [1]
       },
       "unaffactBuffs": false
     },

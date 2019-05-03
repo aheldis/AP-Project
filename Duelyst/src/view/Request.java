@@ -16,16 +16,26 @@ public class Request {
     private String deckName;
     private String Id;
 
+
     public Request(StateType state) {
         this.state = state;
     }
 
-    public void getNewLine() {
-        this.command = scanner.nextLine().trim();
+    public void getNewLine() throws Exception {
+        String st = Main.br.readLine();
+        if (st == null)
+            return;
+        this.command = st;
+
+//this.command = scanner.nextLine().trim();
     }
 
-    public void getNewCommand() {
-        this.command = scanner.nextLine().trim();
+    public void getNewCommand() throws Exception {
+        String st = Main.br.readLine();
+        if (st == null)
+            return;
+        this.command = st;
+        //this.command = scanner.nextLine().trim();
         type = getType();
     }
 
@@ -43,8 +53,7 @@ public class Request {
                 case "enter exit":
                     return RequestType.MENU_ENTER_EXIT;
             }
-        }
-        else if (state == StateType.COLLECTION) {
+        } else if (state == StateType.COLLECTION) {
             switch (command.toLowerCase()) {
                 case "exit":
                     return RequestType.COLLECTION_EXIT;
@@ -61,26 +70,26 @@ public class Request {
                 setId(command.split(" ")[2]);
                 return RequestType.COLLECTION_SEARCH_ITEM;
             }
-            if(command.toLowerCase().matches("search card \\w+")){
+            if (command.toLowerCase().matches("search card \\w+")) {
                 setId(command.split(" ")[2]);
                 return RequestType.COLLECTION_SEARCH_CARD;
             }
             if (command.toLowerCase().matches("create deck \\w+")) {
-                setDeckName(command.substring(11));
+                setDeckName(command.split(" ")[2]);
                 return RequestType.COLLECTION_CREATE_DECK;
             }
             if (command.toLowerCase().matches("delete deck \\w+")) {
-                setDeckName(command.substring(11));
+                setDeckName(command.split(" ")[2]);
                 return RequestType.COLLECTION_DELETE_DECK;
             }
             if (command.toLowerCase().matches("add \\w+ to deck \\w+")) {
                 setDeckName(command.split(" ")[4]);
-                setId(command.substring(4));
+                setId(command.split(" ")[1]);
                 return RequestType.COLLECTION_ADD_CARD_TO_DECK;
             }
             if (command.toLowerCase().matches("remove card \\w+ from deck \\w+")) {
                 setDeckName(command.split(" ")[5]);
-                setId(command.substring(2));
+                setId(command.split(" ")[2]);
                 return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
             }
             if (command.toLowerCase().matches("remove item \\w+ from deck \\w+")) {
@@ -89,20 +98,22 @@ public class Request {
                 return RequestType.COLLECTION_REMOVE_CARD_FROM_DECK;
             }
             if (command.toLowerCase().matches("validate deck \\w+")) {
-                setDeckName(command.substring(14));
+                setDeckName(command.split(" ")[2]);
                 return RequestType.COLLECTION_VALIDATE_DECK;
             }
             if (command.toLowerCase().matches("select deck \\w+")) {
-                setDeckName(command.substring(12));
+                setDeckName(command.split(" ")[2]);
                 return RequestType.COLLECTION_SELECT_DECK;
             }
             if (command.toLowerCase().matches("show deck \\w+")) {
-                setDeckName(command.substring(10));
+                setDeckName(command.split(" ")[2]);
                 return RequestType.COLLECTION_SHOW_DECK;
             }
 
-        }
-        else if (state == StateType.SHOP) {
+        } else if (state == StateType.SHOP) {
+            if (command.toLowerCase().equals("show daric")) {
+                return RequestType.SHOP_SHOW_DARIC;
+            }
             if (command.toLowerCase().matches("exit")) {
                 return RequestType.SHOP_EXIT;
             }
@@ -110,19 +121,19 @@ public class Request {
                 return RequestType.SHOP_SHOW_COLLECTION;
             }
             if (command.toLowerCase().matches("search collection \\w+")) {
-                setId(command.substring(18));
+                setId(command.split(" ")[2]);
                 return RequestType.SHOP_SEARCH_COLLECTION_CARD;
             }
             if (command.toLowerCase().matches("search \\w+")) {
-                setId(command.substring(7));
+                setId(command.split(" ")[1]);
                 return RequestType.SHOP_SEARCH_CARD;
             }
             if (command.toLowerCase().matches("buy \\w+")) {
-                setId(command.substring(4));
+                setId(command.split(" ")[1]);
                 return RequestType.SHOP_BUY;
             }
             if (command.toLowerCase().matches("sell \\w+")) {
-                setId(command.substring(5));
+                setId(command.split(" ")[1]);
                 return RequestType.SHOP_SELL;
             }
             if (command.toLowerCase().matches("show")) {
@@ -131,8 +142,7 @@ public class Request {
             if (command.toLowerCase().matches("help")) {
                 return RequestType.SHOP_HELP;
             }
-        }
-        else if (state == StateType.MAIN_MENU) {
+        } else if (state == StateType.MAIN_MENU) {
             switch (command.toLowerCase()) {
                 case "login":
                     return RequestType.MAIN_MENU_LOGIN;
@@ -145,17 +155,16 @@ public class Request {
                 case "exit":
                     return RequestType.MAIN_MENU_EXIT;
             }
-            if(command.toLowerCase().matches("create account \\w+")){
+            if (command.toLowerCase().matches("create account \\w+")) {
 
                 return RequestType.MAIN_MENU_SIGN_UP;
             }
 
-        }
-        else if (state == StateType.BATTLE) {
+        } else if (state == StateType.BATTLE) {
             switch (command.toLowerCase()) {
-                case "game Info":
+                case "game info":
                     return RequestType.GAME_GAME_INFO;
-                case "Show my minions":
+                case "show my minions":
                     return RequestType.GAME_SHOW_MY_MINION;
                 case "show opponent minions":
                     return RequestType.GAME_SHOW_OPPONENT_MINION;
@@ -163,8 +172,8 @@ public class Request {
                     return RequestType.GAME_SHOW_HAND;
                 case "end turn":
                     return RequestType.GAME_END_TURN;
-                case "show collectables":
-                    return RequestType.GAME_SHOW_COLLECTABLES;
+                case "show collectibles":
+                    return RequestType.GAME_SHOW_CollECTIBLES;
                 case "show next card":
                     return RequestType.GAME_SHOW_NEXT_CARD;
                 case "enter grave yard":
@@ -178,20 +187,20 @@ public class Request {
                     return RequestType.GAME_SHOW_MENU;
 
             }
-            if (command.toLowerCase().matches("attack combo (\\w+) (\\w+)+")) {
+            if (command.matches("attack combo (\\w+) (\\w+)+")) {
                 return RequestType.GAME_ATTACK_COMBO;
             }
-            if (command.toLowerCase().matches("select card \\w+")) {//todo get input
+            if (command.matches("select card \\w+")) {//todo get input
                 setId(command.substring(12));
                 state = StateType.SELECT_CARD;
                 return RequestType.GAME_SELECT_CARD_ID;
             }
-            if (command.toLowerCase().matches("show card info \\W+")) {
-                setId(command.substring(15));
+            if (command.matches("show card info \\W+")) {
+                setId(command.split(" ")[3]);
                 return RequestType.GAME_SHOW_CARD_INFO;
             }
 
-            if (command.toLowerCase().matches("insert \\w+ in \\(\\d+,\\d+\\)")) {
+            if (command.matches("insert \\w+ in \\(\\d+,\\d+\\)")) {
                 setId(command.split(" ")[1]);
                 coordinate.setX(Integer.parseInt(command.split(" ")[3].substring(1, 2)));
                 coordinate.setY(Integer.parseInt(command.split(" ")[3].substring(3, 4)));
@@ -200,7 +209,7 @@ public class Request {
             if (command.toLowerCase().matches("select item \\d+")) {
                 setId(command.substring(12));
                 state = StateType.SELECT_ITEM;
-                return RequestType.GAME_SELECT_COLLECTABLE;
+                return RequestType.GAME_SELECT_Collectible;
             }
 
 
@@ -248,6 +257,9 @@ public class Request {
                 return RequestType.MODE_SINGLE_PLAYER;
             if (command.toLowerCase().matches("multi player"))
                 return RequestType.MODE_MULTI_PLAYER;
+            if (command.toLowerCase().matches("exit")) {
+                return RequestType.SELECT_MODE_EXIT;
+            }
         }
         if (state == StateType.SINGLE_GAME) {
             if (command.toLowerCase().matches("custom game"))
@@ -272,8 +284,7 @@ public class Request {
         return false;
     }
 
-    public RequestType getRequestType()
-    {
+    public RequestType getRequestType() {
         return type;
     }
 

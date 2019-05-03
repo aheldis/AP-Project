@@ -1,0 +1,33 @@
+{
+  "@type": "model.item.Usable",
+  "@val": {
+    "name": "FeatherOfSimurgh",
+    "type": "Usable",
+    "description": "ap - 2 for hybrid or ranged hero",
+    "cost": 3500,
+    "itemNumber": 6,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "item",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    },
+    "change": {
+      "targetType": "hero",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": -2,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    }
+  }
+}

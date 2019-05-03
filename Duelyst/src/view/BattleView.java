@@ -1,5 +1,9 @@
 package view;
 
+import model.battle.ComputerPlayer;
+import model.battle.Game;
+import model.battle.Match;
+import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
@@ -8,6 +12,15 @@ import view.enums.ErrorType;
 
 public class BattleView {
     private static BattleView singleInstance = null;
+    private BattleView(){
+
+    }
+    public static BattleView getInstance() {
+        if (singleInstance == null) {
+            singleInstance = new BattleView();
+        }
+        return singleInstance;
+    }
 
     public void printError(ErrorType error) {
         System.out.println(error.getMessage());
@@ -39,11 +52,21 @@ public class BattleView {
         }
     }
 
-    public static BattleView getInstance() {
-        if (singleInstance == null) {
-            singleInstance = new BattleView();
+    public void endGameView(Match match) {
+        System.out.println("GAME ENDED");
+        Player winner = match.getWinner();
+        Player loser = match.getLoser();
+        if (!(winner instanceof ComputerPlayer)) {
+            System.out.println(match.getWinner().getUserName() + " is winner");
+        } else {
+            System.out.println("Computer is winner");
         }
-        return singleInstance;
+
+        if (!(loser instanceof ComputerPlayer)) {
+            System.out.println(match.getWinner().getUserName() + " is winner");
+        } else {
+            System.out.println("Computer is loser");
+        }
     }
 
 

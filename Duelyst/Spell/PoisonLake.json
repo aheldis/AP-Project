@@ -1,0 +1,40 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "PoisonLake",
+    "CardNumber": 8,
+    "cost": 900,
+    "mp": 5,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 3,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "make poison buff in a cell for one turn",
+    "change": {
+      "targetType": "square",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "poison": [1]
+      },
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

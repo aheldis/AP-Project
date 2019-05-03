@@ -1,7 +1,7 @@
 package model.account;
 
-import model.Item.Item;
-import model.Item.Usable;
+import model.item.Item;
+import model.item.Usable;
 import model.battle.Deck;
 import model.card.Card;
 import model.card.Hero;
@@ -10,6 +10,7 @@ import model.card.Spell;
 import view.AccountView;
 import view.enums.ErrorType;
 
+import javax.xml.stream.events.EntityReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -45,7 +46,7 @@ public class Collection {
     }
 
     public void showCardsAndItems() {
-        accountView.cardsAndItemsView(spells, minions, heroes, new ArrayList<Usable>(Arrays.asList(items)));
+        accountView.cardsAndItemsView(spells, minions, heroes, new ArrayList<>(Arrays.asList(items)));
     }
 
     public void addToHeros(Hero hero) {
@@ -73,18 +74,20 @@ public class Collection {
     public void selectADeckAsMainDeck(String deckName) {
 
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
-        if (deck == null) {
-            ErrorType error = ErrorType.HAVE_NOT_DECK;
-            error.printMessage();
-
+        if(errorForDeck(deck)) {
+            if (!deck.validate()) {
+                ErrorType error=ErrorType.SELECTED_INVALID_DECK;
+                error.printMessage();
+            }
+            account.setMainDeck(deck);
         }
-        account.setMainDeck(deck);
     }
 
     public Deck passTheDeckIfHaveBeenExist(String deckName) {
         for (Deck deck : decks) {
-            if (deck.getName().equals(deckName))
+            if (deck.getName().equals(deckName)) {
                 return deck;
+            }
         }
         return null;
     }
@@ -180,15 +183,18 @@ public class Collection {
         cards.addAll(heroes);
         cards.addAll(minions);
         cards.addAll(spells);
-        for (Card card : cards) {
-            if (card.equals(cardId))
-                return card;
+        for (int i=0;i< cards.size();i++) {
+            if (cards.get(i).equalCard(cardId)) {
+                return cards.get(i);
+            }
         }
         return null;
     }
 
     public Usable passUsableItemByUsableItemId(String usableItemId) {
         for (Usable item : items) {
+            if(item == null)
+                continue;
             if (item.getUsableId().getUsableIdAsString().equals(usableItemId)) {
                 return item;
             }
@@ -217,12 +223,13 @@ public class Collection {
             error.printMessage();
             return;
         }
-//        if (cardHaveBeenExistInThisDeck(deckName, cardId) != null) {
-//            error = ErrorType.HAVE_CARD_IN_DECK;
-//            error.printMessage();
-//            return;
-//            deck.addToCardsOfDeck(card);
-//        }
+        if(deck.cardHaveBeenExistInThisDeck(card.getCardId().getCardIdAsString())!=null){
+            error=ErrorType.HAVE_CARD_IN_DECK;
+            error.printMessage();
+            return;
+        }
+        deck.addToCardsOfDeck(card);
+
 
     }
 
@@ -348,21 +355,28 @@ public class Collection {
     }
 
     public void removeCard(Card card) {
-        for (Hero hero : heroes) {
-            if (card instanceof Hero && hero.equals(card)) {
-                heroes.remove(hero);
-                break;
+        if(card instanceof Hero) {
+            for (Hero hero : heroes) {
+                if ( hero.equals(card)) {
+                    heroes.remove(hero);
+                    return;
+                }
             }
         }
-        for (Minion minion : minions) {
-            if (card instanceof Minion && minion.equals(card)) {
-                minions.remove(minion);
+        if(card instanceof Minion) {
+            for (Minion minion : minions) {
+                if ( minion.equals(card)) {
+                    minions.remove(minion);
+                    return;
+                }
             }
         }
-        for (Spell spell : spells) {
-            if (card instanceof Spell && spell.equals(card)) {
-                spells.remove(spell);
-                break;
+        if(card instanceof Spell) {
+            for (Spell spell : spells) {
+                if (spell.equals(card)) {
+                    spells.remove(spell);
+                    return;
+                }
             }
         }
     }

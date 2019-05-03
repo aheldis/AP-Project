@@ -1,0 +1,35 @@
+{
+  "@type": "model.item.Usable",
+  "@val": {
+    "name": "Baptism",
+    "type": "Usable",
+    "description": "have 2 turns holy buff for a minion",
+    "cost": 20000,
+    "itemNumber": 19,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "item",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": true
+    },
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "holy": [2]
+      },
+      "unaffactBuffs": false
+    }
+  }
+}

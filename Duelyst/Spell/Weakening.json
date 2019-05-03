@@ -1,0 +1,42 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "Weakening",
+    "CardNumber": 17,
+    "cost": 1000,
+    "mp": 1,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "weackness buff (ap-4)",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": -4,
+      "continuous": false,
+      "buffs": {
+        "weackness": [1]
+      },
+      "unaffactBuffs": false,
+      "apOrHpForWeakness": "ap",
+      "changeInApOrHpForWeakness": -4
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

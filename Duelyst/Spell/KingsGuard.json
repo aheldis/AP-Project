@@ -1,0 +1,38 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "KingsGuard",
+    "CardNumber": 19,
+    "cost": 1750,
+    "mp": 9,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "kill opponent card",
+    "change": {
+      "targetType": "square",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -100,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": true
+    }
+  }
+}

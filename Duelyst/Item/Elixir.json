@@ -1,0 +1,37 @@
+{
+  "@type": "model.item.Collectible",
+  "@val": {
+    "name": "Elixir",
+    "type": "Collectible",
+    "description": "hp + 3 power buff(ap+3)",
+    "cost": 0,
+    "itemNumber": 7,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "item",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": true
+    },
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 3,
+      "apChange": 3,
+      "continuous": false,
+      "buffs": {
+        "power": [1]
+      },
+      "unaffactBuffs": false,
+      "apOrHpForPower": "ap",
+      "changeInApOrHpForPower": 3
+    }
+  }
+}

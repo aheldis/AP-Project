@@ -1,0 +1,38 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "Fireball",
+    "CardNumber": 4,
+    "cost": 400,
+    "mp": 1,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "decrease 4 units of opponent's hp",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -4,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

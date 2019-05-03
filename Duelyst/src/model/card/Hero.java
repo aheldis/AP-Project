@@ -11,8 +11,7 @@ public class Hero extends Card {
     private Spell spell;
     private int mpRequiredForSpell;
     private int coolDown;
-    private int lastTimeSpellUsed;
-    private int attackRange;
+    private int turnNotUsedSpecialPower = 0;
     private int numberOfAttacks;
     private int numberOfBeingAttacked;
     private boolean haveSpecialPower;
@@ -34,16 +33,13 @@ public class Hero extends Card {
     }
 
     public void addNewHeroCard() {
-        //TODO add new other Card and also items (to removed: Make NewHero and MakeNewUsable Item)
+        //TODO add new other Card and also items (to removed: Make NewHero and MakeNewUsable item)
     }
 
     public boolean getHaveSpecialPower() {
         return haveSpecialPower;
     }
 
-    public void setHaveSpecialPower(boolean haveSpecialPower) {
-        this.haveSpecialPower = haveSpecialPower;
-    }
 
     public ArrayList<Buff> getBuffs() {
         return buffs;
@@ -65,8 +61,15 @@ public class Hero extends Card {
         return coolDown;
     }
 
-    public int getLastTimeSpellUsed() {
-        return lastTimeSpellUsed;
+    public int getTurnNotUsedSpecialPower() {
+        return turnNotUsedSpecialPower;
+    }
+    public void addToTurnNotUsedSpecialPower(int a){
+        turnNotUsedSpecialPower+=a;
+    }
+
+    public void setTurnNotUsedSpecialPower(int turnNotUsedSpell) {
+        this.turnNotUsedSpecialPower = turnNotUsedSpell;
     }
 
     public int getAttackRange() {

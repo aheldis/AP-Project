@@ -1,0 +1,41 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "NaneSarma",
+    "CardNumber": 36,
+    "cost": 500,
+    "mp": 3,
+    "hp": 3,
+    "ap": 4,
+    "counterAttack": "ranged",
+    "attackRange": 5,
+    "ActivationTimeOfSpecialPower": "ON_SPAWN",
+    "description": "stun 8 neighbor cells for 1 turn",
+    "change": {
+      "targetType": "square",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "stun": [1]
+      },
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "neighbor": true
+    }
+  }
+}

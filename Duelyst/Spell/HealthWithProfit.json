@@ -1,0 +1,48 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "HealthWithProfit",
+    "CardNumber": 13,
+    "cost": 2250,
+    "mp": 0,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "weakness buff (hp-6) have 2 holy buff for 3 turns",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -6,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "weakness": [
+          1
+        ],
+        "holy": [
+          3,
+          3
+        ]
+      },
+      "unaffactBuffs": false,
+      "apOrHpForWeakness": "hp",
+      "changeInApOrHpForWeakness": -6
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

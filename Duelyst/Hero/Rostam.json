@@ -1,5 +1,5 @@
 {
-  "@type": "CardCopy",
+  "@type": "model.card.Hero",
   "@val": {
     "name": "Rostam",
     "CardNumber": 10,
@@ -7,6 +7,8 @@
     "mp": 0,
     "hp": 55,
     "ap": 7,
+    "coolDown": 0,
+    "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "hybrid",
     "attackRange": 4,
     "description": "-",

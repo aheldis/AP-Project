@@ -1,0 +1,40 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "AllDisarm",
+    "CardNumber": 10,
+    "cost": 2000,
+    "mp": 9,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "disarm all opponent minions and hero for 1 turn",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "disarm": [1]
+      },
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": true,
+      "random": false
+    }
+  }
+}

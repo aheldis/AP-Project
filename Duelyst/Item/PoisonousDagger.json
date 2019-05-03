@@ -1,0 +1,35 @@
+{
+  "@type": "model.item.Usable",
+  "@val": {
+    "name": "PoisonousDagger",
+    "type": "Usable",
+    "description": "poison buff for a random opponent minion",
+    "cost": 7000,
+    "itemNumber": 16,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "item",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": true
+    },
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "poison": [1]
+      },
+      "unaffactBuffs": false
+    }
+  }
+}

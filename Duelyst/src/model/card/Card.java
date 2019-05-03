@@ -1,9 +1,9 @@
 package model.card;
 
 
-import model.Item.Collectable;
-import model.Item.Flag;
 import model.battle.Player;
+import model.item.Collectible;
+import model.item.Flag;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -28,13 +28,12 @@ public abstract class Card {
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
     private String counterAttack;
-    private int attackRange;
+    protected int attackRange;
     private int cost;
-    //private ArrayList<Buff> buffsOnThisCard;
     private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
     private Square position;
     private LandOfGame landOfGame;
-    private int CardNumber;// card number dashte bashan oon shomareE ke to doc e vase sakhtan mode ha, albate mitoonan nadashte bashan ba esm besazim game card ha ro :-? item ha ham hamin tor
+    private int CardNumber;
     private Player player;
     private boolean canMove = false;
     private boolean canAttack = false;
@@ -66,9 +65,13 @@ public abstract class Card {
         }
     }
 
-    public void removeBuff(Buff buff) {
-        //kar dige e ke lazem nist? ye check beshe baad
-        buffsOnThisCard.remove(buff);
+    public void removeBuff(String buffName) {
+        for (Buff buff : buffsOnThisCard.keySet()) {
+            if (buff.getName().equals(buffName)) {
+                buffsOnThisCard.remove(buff);
+                return;
+            }
+        }
     }
 
 
@@ -88,25 +91,24 @@ public abstract class Card {
             }
             if (newPosition.getObject() instanceof Flag) {
                 ((Flag) newPosition.getObject()).setOwnerCard(this);
-                player.addToFlags((Flag) newPosition.getObject());
+                player.addToOwnFlags((Flag) newPosition.getObject());
                 player.setFlagSaver(this);
-                player.addToTurnForSavingFlag();//todo dead
+                player.addToTurnForSavingFlag();
             }
-            if (newPosition.getObject() instanceof Collectable) {
-                player.getHand().addToCollectableItem((Collectable) newPosition.getObject());
+            if (newPosition.getObject() instanceof Collectible) {
+                player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             }
+            // if(newPosition.getObject() instanceof ) todo asare khane
+
             setPosition(newPosition);
             newPosition.setObject(this);
             position.setObject(null);
-            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() + "moved to" + newCoordination.getX() + newCoordination.getY());
+            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() +
+                    "moved to" + newCoordination.getX() + newCoordination.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
             canMove = false;
-            //todo check if RequestSuccessionType works correctly
         } else
             ErrorType.INVALID_TARGET.printMessage();
-        //check asare khane
-        //can move = false
-        //ویژگی هایی که موقع حرکت اعمال میشود
 
     }
 
@@ -138,6 +140,8 @@ public abstract class Card {
     }
 
     public boolean withinRange(Coordinate coordinate, int range) {
+        if (counterAttack.equals("Ranged") && getNormalDistance(coordinate) == 1)
+            return false;
         return getManhatanDistance(coordinate) <= range;
     }
 
@@ -216,9 +220,14 @@ public abstract class Card {
         if (this instanceof Spell) {
             return;
         }
-
+        if (!canAttack) {
+            ErrorType.CAN_NOT_ATTACK.printMessage();
+            return;
+        }
         if (this instanceof Minion) {
             if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
+                //todo affect special power
+                setTarget(this, position);
                 setTarget(position);
                 getChange().affect(player, this.getTargetClass().getTargets());
             }
@@ -227,9 +236,6 @@ public abstract class Card {
         if (!withinRange(attackedCard.position.getCoordinate(), attackRange)) {
             ErrorType.UNAVAILABLE_OPPONENT.printMessage();
             return;
-        }
-        if (!isCanAttack()) {
-            ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
         }
         attackedCard.changeHp(-ap + hpChangeAfterAttack);
         attackedCard.counterAttack(this);
@@ -258,6 +264,13 @@ public abstract class Card {
             canCounterAttack = counterAttack.equals("Hybrid");
         if (this.canCounterAttack && canCounterAttack)
             theOneWhoAttacked.changeHp(-ap);
+        if (theOneWhoAttacked instanceof Minion) {
+            if (((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
+                //todo affect special power
+                //setTarget(theOneWhoAttacked, position);
+                // getChange().affect(, this.getTargetClass().getTargets());//todo chert momkene bashe
+            }
+        }
     }
 
     public void setCanAttack(boolean bool, int forHowManyTurn) {
@@ -356,14 +369,19 @@ public abstract class Card {
         }
         if (this instanceof Minion) {
             if (((Minion) this).getHaveSpecialPower()) {
-                //todo AffectSpecialPower - lastTimeSpellUsed in hero
+
+                //todo AffectSpecialPower
                 return;
             }
 
         }
         if (this instanceof Hero) {
             if (((Hero) this).getHaveSpecialPower()) {
-                //todo AffectSpecialPower
+                if (((Hero) this).getTurnNotUsedSpecialPower() <= ((Hero) this).getCoolDown()) {
+                    //todo AffectSpecialPower
+                    return;
+                }
+                ((Hero) this).setTurnNotUsedSpecialPower(0);
                 return;
             }
         }

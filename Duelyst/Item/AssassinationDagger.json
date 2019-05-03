@@ -1,0 +1,33 @@
+{
+  "@type": "model.item.Usable",
+  "@val": {
+    "name": "AssassinationDagger",
+    "type": "Usable",
+    "description": "hp change for all opponent cards",
+    "cost": 15000,
+    "itemNumber": 15,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "item",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": true,
+      "random": false
+    },
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -1,
+      "apChange": 0,
+      "continuous": true,
+      "buffs": {},
+      "unaffactBuffs": false
+    }
+  }
+}

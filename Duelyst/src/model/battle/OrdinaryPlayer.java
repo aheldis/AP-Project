@@ -1,6 +1,6 @@
 package model.battle;
 
-import model.Item.Flag;
+import model.item.Flag;
 import model.account.Account;
 import model.card.Buff;
 import model.card.Card;
@@ -13,54 +13,16 @@ import java.util.ArrayList;
 
 public class OrdinaryPlayer extends Player {
 
+    public OrdinaryPlayer(){
+    }
 
     public OrdinaryPlayer(Account account, Deck deck, int mana) {
         this.setAccount(account);
         this.setMainDeck(deck);
         this.setType("OrdinaryPlayer");
-        getMainDeck().setRandomOrderForDeck();
+        mainDeck.setRandomOrderForDeck();
         setMana(mana);
         setHand();
-    }
-
-    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
-        ErrorType error;
-        if (playerCard == null) {
-            error = ErrorType.INVALID_CARD_ID;
-            error.printMessage();
-            return;
-        }
-        if (!playerCard.canMoveToCoordination(playerCard, coordinate)) {
-            error = ErrorType.INVALID_TARGET;
-            error.printMessage();
-            return;
-        }
-        Square square = land.passSquareInThisCoordinate(coordinate);
-        if (square == null) {
-            error = ErrorType.INVALID_SQUARE;
-            error.printMessage();
-            return;
-        }
-        ArrayList<Buff> buffsOfSquare = square.getBuffs();
-        for (Buff buff : buffsOfSquare) {
-            buff.affect(playerCard);
-        }
-        if (square.getObject() instanceof Flag) {
-            ((Flag) square.getObject()).setOwnerCard(playerCard);
-            addToFlags((Flag) square.getObject());
-            setFlagSaver(playerCard);
-            addToTurnForSavingFlag();
-        }
-        getCardsOnLand().add(playerCard);
-        Square[][] squares = land.getSquares();
-        squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
-
-    }
-
-    public void playTurn() {
-
-        //bere request begire
-
     }
 
     public void addToAccountWins() {
@@ -102,8 +64,8 @@ public class OrdinaryPlayer extends Player {
             flagSaver = card;
             turnForSavingFlag++;//todo dead
         }
-        if (newPosition.getObject() instanceof Collectable) {
-            hand.addToCollectableItem((Collectable) newPosition.getObject());
+        if (newPosition.getObject() instanceof Collectible) {
+            hand.addToCollectibleItem((Collectible) newPosition.getObject());
         }
         card.setPosition(newPosition);
         newPosition.setObject(card);

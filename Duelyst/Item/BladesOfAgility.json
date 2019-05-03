@@ -1,0 +1,33 @@
+{
+  "@type": "model.item.Collectible",
+  "@val": {
+    "name": "BladesOfAgility",
+    "type": "Collectible",
+    "description": "add to ap of a random minion  6 units",
+    "cost": 0,
+    "itemNumber": 13,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "item",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": true
+    },
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 6,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "AllAttack",
+    "CardNumber": 16,
+    "cost": 1500,
+    "mp": 4,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "hp-6",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -6,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": false,
+      "row": false,
+      "column": true,
+      "all": false,
+      "random": false
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "Eagle",
+    "CardNumber": 15,
+    "cost": 200,
+    "mp": 2,
+    "hp": 0,
+    "ap": 2,
+    "counterAttack": "ranged",
+    "attackRange": 3,
+    "ActivationTimeOfSpecialPower": "PASSIVE",
+    "description": "have power buff ap+10",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 10,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "power": [1]
+      },
+      "unaffactBuffs": false,
+      "apOrHpForPower": "hp",
+      "changeInApOrHpForPower": 10
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "minion",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false
+    }
+  }
+}

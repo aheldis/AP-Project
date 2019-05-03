@@ -1,12 +1,14 @@
 {
-  "@type": "CardCopy",
+  "@type": "model.card.Hero",
   "@val": {
-    "name": "zahhak",
+    "name": "Zahhak",
     "CardNumber": 5,
     "cost": 10000,
     "mp": 0,
     "hp": 50,
     "ap": 2,
+    "coolDown": 0,
+    "ActivationTimeOfSpecialPower": "ON_DEFEND",
     "counterAttack": "melee",
     "attackRange": 0,
     "description": "put poison buff on opponent minion for 3 turns",
@@ -22,7 +24,9 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {
-        "poison": 3
+        "poison": [
+          3
+        ]
       },
       "unaffactBuffs": false
     },

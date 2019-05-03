@@ -1,7 +1,7 @@
 package model.account;
-
 import model.battle.Deck;
 import model.battle.MatchInfo;
+import model.battle.OrdinaryPlayer;
 import model.battle.Player;
 import view.AccountView;
 
@@ -11,13 +11,13 @@ import java.util.ArrayList;
 public class Account implements Comparable<Account> {
     private String userName;
     private String password;
-    private int daric;
+    private int daric = 15000;
     private int wins;
     private ArrayList<MatchInfo> matchHistory;
-    private Collection collection=new Collection(this);
-    private Player player;
-    private Deck mainDeck;
-    private ArrayList<Deck> decks;
+    private Collection collection = new Collection(this);
+    private Deck mainDeck = new Deck();
+    private Player player = new OrdinaryPlayer();
+    private ArrayList<Deck> decks = new ArrayList<>();
 
     public Account(String userName, String password) {
         this.userName = userName;
@@ -98,4 +98,27 @@ public class Account implements Comparable<Account> {
     private void setDeckFromCollection() {
         decks = collection.getDecks();
     }
+
+//    public void accountSave() {
+//        try {
+//            FileWriter file = new FileWriter("D:\\project-Duelyst\\Duelyst\\AccountSaver\\AccountUser.txt");
+//            file.append("\n"+userName);
+//            file.close();
+//        }
+//        catch (Exception e){
+//
+//        }
+//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//        try {
+//            FileWriter file = new FileWriter("D:\\project-Duelyst\\Duelyst\\AccountSaver\\" + userName + ".txt");
+//            file.write(gson.toJson(this));
+//            file.close();
+//
+//        } catch (Exception e) {
+//            System.out.println(e);
+//            //todo ye errori bede
+//        }
+//
+//    }//todo for save don't delete
+
 }

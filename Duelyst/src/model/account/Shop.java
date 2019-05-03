@@ -1,21 +1,24 @@
 package model.account;
 
 import com.gilecode.yagson.YaGson;
-import model.Item.Item;
-import model.Item.Usable;
-import model.Item.UsableId;
+import model.item.Collectible;
+import model.item.Item;
+import model.item.Usable;
+import model.item.UsableId;
 import model.card.*;
 import view.AccountView;
 import view.enums.ErrorType;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Shop {
     public static Shop singleInstance = null;
-    private static String pathOfFiles = "../Duelyst/";
+    private static String pathOfFiles = "Duelyst/";
     private ArrayList<Card> cards = new ArrayList<>();// todo (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
-    private ArrayList<Usable> items = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Item> Collectibles = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
 //    private String[] type = {"hero", "minion", "spell", "item"}; //ina ye enumi chizi mibood behtar mibood
 
@@ -27,12 +30,34 @@ public class Shop {
         return singleInstance;
     }
 
+//    public ArrayList<Card> passDeckForComputer(){
+//        Collections.shuffle(cards);
+//        ArrayList<Card> computerCards = new ArrayList<>();
+//        FilesType typeOfFile = null;
+//        for(int i=0 ; i<19 ; i++){
+//            if(cards.get(i) instanceof Minion)
+//                typeOfFile = FilesType.MINION;
+//            if(cards.get(i) instanceof Spell)
+//                typeOfFile = FilesType.HERO;
+//            if(!( cards.get(i) instanceof Hero)){
+//                new CardId(account, cards.get(i), account.getCollection().getNumberOfCardId(cards.get(i)));
+//                makeNewFromFile(pathOfFiles + typeOfFile+ "/" + card.getName()+".json", typeOfFile);
+//                computerCards.add(cards.get(i));
+//                cards.remove(computerCards.get(i));
+//            }
+//        }
+//        return computerCards;
+//    }
+
+
     private void init() {
         for (FilesType typeOfFile : FilesType.values()) {
             File folder = new File(pathOfFiles + typeOfFile.getName());
             File[] listOfFiles = folder.listFiles();
-            for (int i = 0; i < listOfFiles.length; i++) {
-                makeNewFromFile(listOfFiles[i].getPath(), typeOfFile);
+            if (!(listOfFiles == null || typeOfFile == FilesType.BUFF)) {
+                for (int i = 0; i < listOfFiles.length; i++) {
+                    makeNewFromFile(listOfFiles[i].getPath(), typeOfFile);
+                }
             }
         }
     }
@@ -44,22 +69,29 @@ public class Shop {
             YaGson mapper = new YaGson();
 
             if (type.equals(FilesType.HERO)) {
-                Hero hero = mapper.fromJson(reader, Hero.class);
+                Hero hero = mapper.fromJson(reader, model.card.Hero.class);
                 addCard(hero);
             }
             if (type.equals(FilesType.MINION)) {
-                Minion minion = mapper.fromJson(reader, Minion.class);
+                Minion minion = mapper.fromJson(reader, model.card.Minion.class);
                 addCard(minion);
             }
             if (type.equals(FilesType.SPELL)) {
-                Spell spell = mapper.fromJson(reader, Spell.class);
+                Spell spell = mapper.fromJson(reader, model.card.Spell.class);
                 addCard(spell);
             }
             if (type.equals(FilesType.ITEM)) {
-                Usable item = mapper.fromJson(reader, Usable.class);
-                addItem(item);
+                try {
+                    Usable item = mapper.fromJson(reader, model.item.Usable.class);
+                    addUsable(item);
+                }catch (Exception e){
+                }
+                try {
+                    Collectible item = mapper.fromJson(reader, Collectible.class);
+                    addCollectible(item);
+                }catch (Exception e){
+                }
             }
-
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -69,8 +101,12 @@ public class Shop {
         cards.add(card);
     }
 
-    public void addItem(Usable item) {
+    public void addUsable(Item item) {
         items.add(item);
+    }
+
+    public void addCollectible(Collectible item) {
+        Collectibles.add(item);
     }
 
     public static String getPathOfFiles() {
@@ -105,7 +141,7 @@ public class Shop {
     }
 
     private boolean itemExist(String name) {
-        for (Usable item : items) {
+        for (Item item : items) {
             if (item.getName().equals(name)) {
                 return true;
             }
@@ -123,9 +159,9 @@ public class Shop {
     }
 
     private Usable getItem(String name) {
-        for (Usable item : items) {
-            if (item.getName().equals(name)) {
-                return item;
+        for (Item item : items) {
+            if (item instanceof Usable && item.getName().equals(name)) {
+                return (Usable) item;
             }
         }
         return null;
@@ -141,11 +177,6 @@ public class Shop {
     }
 
     public void buy(Account account, String name) {
-        if (!cardExist(name) && !itemExist(name)) {
-            ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
-            accountView.printError(error);
-            return;
-        }
         if (cardExist(name)) {
             Card card = getCard(name);
             new CardId(account, card, account.getCollection().getNumberOfCardId(card));
@@ -163,18 +194,22 @@ public class Shop {
                 collection.addToMinions((Minion) card);
                 typeOfFile = FilesType.MINION;
             }
-            makeNewFromFile(pathOfFiles + typeOfFile + card.getName(), typeOfFile); //todo check lotfan
+            makeNewFromFile(pathOfFiles + typeOfFile+ "/" + card.getName()+".json", typeOfFile); //todo check lotfan
             cards.remove(card);
+            return;
         }
-        if (itemExist(name)) {
+        else if (itemExist(name)) {
             Usable item = getItem(name);
             new UsableId(account, item, account.getCollection().getNumberOfItemId(item));
             if (!enoughDaricForBuy(account, item.getCost()))
                 return;
             account.getCollection().addToItems(item);
             items.remove(item);
-            makeNewFromFile(pathOfFiles + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM); //todo check lotfan
+            makeNewFromFile(pathOfFiles +"/"+ FilesType.ITEM.getName() + item.getName(), FilesType.ITEM); //todo check lotfan
+            return;
         }
+        ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
+        accountView.printError(error);
     }
 
     private boolean enoughDaricForBuy(Account account, int cost) {
@@ -187,18 +222,19 @@ public class Shop {
         return true;
     }
 
-    public void sell(Account account, String id) { //todo in lazeme bargarde be shop?
+    public void sell(Account account, String id) {
         Collection collection = account.getCollection();
         Card card = collection.passCardByCardId(id);
         Usable item = collection.passUsableItemByUsableItemId(id);
         if (card != null) {
+            account.changeValueOfDaric(card.getCost());
             collection.removeCard(card);
         } else if (item != null) {
+            account.changeValueOfDaric(card.getCost());
             collection.removeItem(item);
         } else {
             ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION;
             accountView.printError(error);
-            return;
         }
     }
 
@@ -226,9 +262,15 @@ public class Shop {
         return item;
     }
 
+    public ArrayList<Item> getCollectibles() {
+        return Collectibles;
+    }
 
     public void show() {
-        accountView.cardsAndItemsView(Card.getSpells(cards), Card.getMinions(cards), Card.getHeroes(cards), items);
+        System.out.println();
+        accountView.cardsAndItemsView(Card.getSpells(cards),
+                Card.getMinions(cards),
+                Card.getHeroes(cards), items);
     }
 
     public void help() {

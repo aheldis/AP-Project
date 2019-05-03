@@ -1,5 +1,5 @@
 {
-  "@type": "CardCopy",
+  "@type": "model.card.Hero",
   "@val": {
     "name": "Arash",
     "CardNumber": 7,
@@ -7,6 +7,8 @@
     "mp": 2,
     "hp": 30,
     "ap": 2,
+    "coolDown": 2,
+    "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "ranges",
     "attackRange": 6,
     "description": "attack to the row of hero 4 units",

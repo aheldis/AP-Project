@@ -6,20 +6,6 @@ import view.enums.ErrorType;
 
 
 public class Game {
-    private static BattleView battleView = BattleView.getInstance();
-    //    private static Game singleInstance = null;
-  /*  private boolean singlePlayer;
-    private boolean story;
-    private boolean customGame;
-    private int mode; //1 -> dead 2 -> saveFlag 3 -> collectFlag
-    private int numberOfFlags;
-    private int heroNumber;
-    private ArrayList<Integer> spellIds;//todo id ha string hastan
-    private ArrayList<Integer> minionIds;
-    private int itemNumber;
-    private int reward;
-    private int levelNumber = -1;
-  */  //private ArrayList<Game> gamesType;
     private Player[] players = new Player[2];
     private int mode;
     private int numberOfFlags = 0;
@@ -42,7 +28,7 @@ public class Game {
         return true;
     }
 
-    public Match makeNewMultiGame(int mode, int numberOfFlags) {
+    public Match makeNewMultiGame(int mode, int numberOfFlags, int reward) {
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }
 
@@ -61,17 +47,16 @@ public class Game {
     public Match makeNewStoryGame(int level) {
         Deck secondPlayerDeck = Deck.getDeckForStoryMode(level);
         mode = level;
-        switch (level){
+        switch (level) {
             case 1:
                 reward = 500;
-                break ;
+                break;
             case 2:
-                reward =1000;
+                reward = 1000;
                 break;
             case 3:
                 reward = 1500;
                 break;
-
         }
 
         players[1] = new ComputerPlayer(secondPlayerDeck);

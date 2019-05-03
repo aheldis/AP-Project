@@ -1,7 +1,7 @@
 package model.battle;
 
-import model.Item.Collectable;
-import model.Item.Item;
+import model.item.Collectible;
+import model.item.Item;
 import model.card.Card;
 
 import java.util.ArrayList;
@@ -10,23 +10,23 @@ import java.util.Random;
 public class Hand {
     private Deck deck;
     private ArrayList<Card> gameCards;
-    private ArrayList<Item> collectableItems = new ArrayList<>();
+    private ArrayList<Item> CollectibleItems = new ArrayList<>();
     //private final int RAND_NUMBER=11;
 
     public Hand(Deck deck) {
         this.deck = deck;
     }
 
-    public Collectable passCollectableInHand(String CollectableId) {
-        for (Item collectable : collectableItems) {
-            if (((Collectable) collectable).getCollectableId().getCollectableIdAsString().equals(CollectableId))
-                return (Collectable) collectable;
+    public Collectible passCollectibleInHand(String CollectibleId) {
+        for (Item Collectible : CollectibleItems) {
+            if (((Collectible) Collectible).getCollectibleId().getCollectibleIdAsString().equals(CollectibleId))
+                return (Collectible) Collectible;
         }
         return null;
     }
 
-    public void addToCollectableItem(Collectable item) {
-        collectableItems.add(item);
+    public void addToCollectibleItem(Collectible item) {
+        CollectibleItems.add(item);
     }
 
     public Card passCardInHand(String cardId) {
@@ -79,9 +79,6 @@ public class Hand {
         gameCards.remove(card);
     }
 
-    public void removeUsedItemFromHand(Item item) {
-        collectableItems.remove(item);
-    }
 
     public Card chooseARandomCard() {
         Random random = new Random();
@@ -92,8 +89,8 @@ public class Hand {
         return gameCards;
     }
 
-    public ArrayList<Item> getCollectableItems() {
-        return collectableItems;
+    public ArrayList<Item> getCollectibleItems() {
+        return CollectibleItems;
     }
 
 

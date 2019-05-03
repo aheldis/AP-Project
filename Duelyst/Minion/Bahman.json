@@ -1,0 +1,38 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "Bahman",
+    "CardNumber": 31,
+    "cost": 450,
+    "mp": 8,
+    "hp": 16,
+    "ap": 9,
+    "counterAttack": "melee",
+    "attackRange": 1,
+    "ActivationTimeOfSpecialPower": "ON_SPAWN",
+    "description": "decrease 16 units of hp of a random opponent minions",
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -16,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffactBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": true
+    }
+  }
+}

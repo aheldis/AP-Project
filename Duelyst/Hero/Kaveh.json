@@ -1,5 +1,5 @@
 {
-  "@type": "CardCopy",
+  "@type": "model.card.Hero",
   "@val": {
     "name": "Kaveh",
     "CardNumber": 6,
@@ -7,6 +7,8 @@
     "mp": 1,
     "hp": 50,
     "ap": 4,
+    "coolDown": 3,
+    "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "melee",
     "attackRange": 0,
     "description": "put holy buff on square for 3 turns",
@@ -22,7 +24,7 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {
-        "holy": 3
+        "holy": [3]
       },
       "unaffactBuffs": false
     },

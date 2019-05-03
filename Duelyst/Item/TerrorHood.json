@@ -1,0 +1,37 @@
+{
+  "@type": "model.item.Usable",
+  "@val": {
+    "name": "TerrorHood",
+    "type": "Usable",
+    "description": "weakness buff(ap-2) for a random minion",
+    "cost": 5000,
+    "itemNumber": 12,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "item",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": true
+    },
+    "change": {
+      "targetType": "card",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": -2,
+      "continuous": false,
+      "buffs": {
+        "weakness": [1]
+      },
+      "unaffactBuffs": false,
+      "apOrHpForWeakness": "ap",
+      "changeInApOrHpForWeakness": -2
+    }
+  }
+}
