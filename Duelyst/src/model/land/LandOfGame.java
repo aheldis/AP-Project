@@ -20,6 +20,11 @@ public class LandOfGame {
     }
 
     public Square passSquareInThisCoordinate(Coordinate coordinate) {
+        int x = coordinate.getX();
+        int y= coordinate.getY();
+        if(x <0 || x>4 || y<0 || y>8)
+            return null ;
+
         return squares[coordinate.getX()][coordinate.getY()];
     }
 //    public void removeCardFromAnSquare(Coordinate coordinate){

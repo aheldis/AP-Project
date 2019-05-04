@@ -63,6 +63,7 @@ public abstract class Player {
         }
         mana -= playerCard.getMp();
         hand.removeUsedCardsFromHand(playerCard);
+        playerCard.setPosition(square);
         getCardsOnLand().add(playerCard);
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
