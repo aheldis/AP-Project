@@ -100,4 +100,8 @@ public class Change {
         }
         return buff;
     }
+
+    public String getTargetType() {
+        return targetType;
+    }
 }

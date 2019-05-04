@@ -53,7 +53,7 @@ public class OrdinaryPlayer extends Player {
         }
 
         if (card instanceof Minion) {
-            if (((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_RESPAWN) {
+            if (((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
                 card.setTarget(card, newPosition);
 
                 //todo AffectSpecialPower

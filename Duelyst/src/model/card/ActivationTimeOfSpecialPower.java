@@ -1,7 +1,7 @@
 package model.card;
 
 public enum ActivationTimeOfSpecialPower {
-    ON_RESPAWN,
+    ON_SPAWN,
     PASSIVE,
     ON_DEATH,
     ON_ATTACK,

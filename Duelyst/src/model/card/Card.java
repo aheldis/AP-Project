@@ -13,6 +13,7 @@ import view.enums.RequestSuccessionType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 public abstract class Card {
     protected Change change = new Change();//HAS-A
@@ -20,9 +21,9 @@ public abstract class Card {
     protected int mp;
     protected int hp;
     protected int ap;
-    protected int turnOfCanNotMove = 0;
-    protected int turnOfCanNotAttack = 0;
-    protected int turnOfCanNotCounterAttack = 0;
+    private int turnOfCanNotMove = 0;
+    private int turnOfCanNotAttack = 0;
+    private int turnOfCanNotCounterAttack = 0;
     private String name;
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
@@ -39,6 +40,9 @@ public abstract class Card {
     private boolean canCounterAttack = true;
     private int hpChangeAfterAttack = 0; //todo mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
     private String description;
+    private static final int DEFAULT = -1;
+    //todo
+
 
     public Change getChange() {
         return change;
@@ -79,8 +83,8 @@ public abstract class Card {
         }
         if (canMoveToCoordination(this, newCoordination) && withinRange(newCoordination, 2)) {
             if (this instanceof Minion) {
-                if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_RESPAWN) {
-                    setTarget(this, newPosition);
+                if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
+                    setTarget(newPosition);
 
                     //todo AffectSpecialPower
                 }
@@ -141,11 +145,72 @@ public abstract class Card {
         return getManhatanDistance(coordinate) <= range;
     }
 
-    public void setTarget(Card card, Square CardSquare) {
-        //todo checkIfAttackedCardIsValid to class target
-        //todo check kone ke to classe targete card (one/all/column/row) hast
-        //todo age square hast ya distance dare check kone
-        //todo ArrayList e target ro to classe target bere bezare
+    public void setTarget(Square cardSquare) {
+        boolean isSquare = change.getTargetType().equals("Square");
+        boolean isCard = change.getTargetType().equals("Card");
+        ArrayList<Square> targets = new ArrayList<>();
+//      todo check i va j shomare deraye ya shomare deraye * scale?
+        if (isSquare)
+            targets.add(cardSquare);
+        else if (isCard) {
+
+            if (target.isOne() && target.checkIfAttackedCardIsValid(cardSquare.getObject()) &&
+                    target.checkDistance(this, cardSquare) && target.checkIsEnemy(player, cardSquare) &&
+                    target.checkIsAlly(player, cardSquare)) {
+                targets.add(cardSquare);
+
+            } else if (target.isAll()) {
+
+                for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
+                    for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
+                        Square check = landOfGame.getSquares()[i][j];
+                        if (target.checkIfAttackedCardIsValid(check.getObject()) && target.checkDistance(this, check) &&
+                                target.checkIsEnemy(player, check) && target.checkIsAlly(player, check))
+                            targets.add(check);
+                    }
+
+            } else if (target.isRow()) {
+
+                for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
+                    Square check = landOfGame.getSquares()[cardSquare.getYCoordinate()][j];
+                    if (target.checkIfAttackedCardIsValid(check.getObject()) &&
+                            target.checkNotItSelf(cardSquare.getYCoordinate(), j, position) &&
+                            target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
+                            target.checkIsAlly(player, check))
+                        targets.add(check);
+                }
+
+            } else if (target.isColumn()) {
+
+                for (int i = 0; i < landOfGame.getNumberOfRows(); i++) {
+                    Square check = landOfGame.getSquares()[i][cardSquare.getXCoordinate()];
+                    if (target.checkIfAttackedCardIsValid(check.getObject()) &&
+                            target.checkNotItSelf(i, cardSquare.getXCoordinate(), position) &&
+                            target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
+                            target.checkIsAlly(player, check))
+                        targets.add(check);
+                }
+
+            } else if (target.isRandom()) {
+
+                int i, j;
+                Random random = new Random();
+                if (target.getDistance() != DEFAULT) {
+                    i = position.getYCoordinate() + random.nextInt(2 * target.getDistance() + 1) - 1;
+                    j = position.getXCoordinate() + random.nextInt(2 * target.getDistance() + 1) - 1;
+                    if (i == -1) i += 2;
+                    if (j == -1) j += 2;
+                    if (i == landOfGame.getNumberOfRows()) i -= 2;
+                    if (j == landOfGame.getNumberOfColumns()) j -= 2;
+                } else {
+                    i = position.getYCoordinate() + random.nextInt(landOfGame.getNumberOfRows());
+                    j = position.getXCoordinate() + random.nextInt(landOfGame.getNumberOfColumns());
+                }
+                targets.add(landOfGame.getSquares()[i][j]);
+
+            }
+        }
+        target.setTargets(targets);
 
     }
 
@@ -175,7 +240,7 @@ public abstract class Card {
         if (this instanceof Minion) {
             if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
                 //todo affect special power
-                setTarget(this, position);
+                setTarget(position);
                 getChange().affect(player, this.getTargetClass().getTargets());
             }
         }

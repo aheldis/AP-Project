@@ -30,7 +30,7 @@ public class GraveYard {
     public void addCardToGraveYard(Card card, Square position) {
         if (card instanceof Minion) {
             if (((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_DEATH) {
-                card.setTarget(card, position);
+                card.setTarget(position);
                 card.getChange().affect(player, card.getTargetClass().getTargets());
             }
         }
