@@ -63,7 +63,7 @@ public class Shop {
 
     public void makeNewFromFile(String path, FilesType type) {
         try {
-            System.out.println(path);
+
             InputStream input = new FileInputStream(path);
             Reader reader = new InputStreamReader(input);
             YaGson mapper = new YaGson();
