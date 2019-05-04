@@ -33,7 +33,10 @@
       "row": true,
       "column": false,
       "all": false,
-      "random": false
+      "random": false,"distance": -1,
+      "self": false,
+      "enemy": false,
+      "ally": false
     }
   }
 }

@@ -27,7 +27,11 @@
       "apChange": 0,
       "continuous": true,
       "buffs": {},
-      "unaffactBuffs": false
+      "unaffactBuffs": false,
+      "distance": -1,
+      "self": false,
+      "enemy": false,
+      "ally": false
     }
   }
 }

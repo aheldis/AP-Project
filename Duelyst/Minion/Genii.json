@@ -36,7 +36,11 @@
       "row": false,
       "column": false,
       "all": true,
-      "random": false
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": false,
+      "ally": false
     }
   }
 }

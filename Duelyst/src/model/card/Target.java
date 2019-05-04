@@ -22,9 +22,9 @@ public class Target {
     private static final int DEFAULT = -1;
     private int distance = DEFAULT;
     //default
-    private boolean self;
-    private boolean enemy;
-    private boolean ally;
+    private boolean self = false;
+    private boolean enemy = false;
+    private boolean ally = false;
 
 
     public Target() {

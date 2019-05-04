@@ -38,7 +38,10 @@
       "column": false,
       "all": false,
       "random": false,
-      "neighbor": true
+      "distance": -1,
+      "self": false,
+      "enemy": false,
+      "ally": false
     }
   }
 }
