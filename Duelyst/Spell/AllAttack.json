@@ -34,7 +34,7 @@
       "all": false,
       "random": false,
       "self": false,
-      "enemy": false,
+      "enemy": true,
       "ally": false
     }
   }

@@ -33,9 +33,9 @@
       "column": false,
       "all": false,
       "random": false,
-      "self": false,
-      "enemy": false,
-      "ally": false
+      "self": true,
+      "enemy": true,
+      "ally": true
     }
   }
 }

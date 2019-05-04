@@ -43,9 +43,9 @@
       "column": false,
       "all": false,
       "random": false,
-      "self": false,
+      "self": true,
       "enemy": false,
-      "ally": false
+      "ally": true
     }
   }
 }

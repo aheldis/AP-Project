@@ -36,7 +36,7 @@
       "all": true,
       "random": false,
       "self": false,
-      "enemy": false,
+      "enemy": true,
       "ally": false
     }
   }
