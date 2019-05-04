@@ -1,9 +1,0 @@
-cost: 500
-MP: 1
-HP: 3
-Ap: 4
-nationality: Tooran
-model.counterAttack: ranged
-attackRange: 5
-specialPower: -
-activationTimeOfSpecialPower: -

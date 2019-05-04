@@ -11,7 +11,7 @@ public class Target {
     private LandOfGame land;
     private ArrayList<Square> targets = new ArrayList<>();
     private String counterAttackType; //ranged hybrid melee
-    private String cardType; //Minion Hero Spell (Buff?)
+    private String cardType; //Minion Hero Spell
     //    private String number; // 0 <=
     private boolean one;
     private boolean row;
@@ -22,7 +22,6 @@ public class Target {
     private static final int DEFAULT = -1;
     private int distance = DEFAULT;
     //default
-    private int attackPower;
     private boolean self;
     private boolean enemy;
     private boolean ally;
@@ -66,15 +65,15 @@ public class Target {
     public boolean checkIsEnemy(Player me, Square check) {
         if (!enemy)
             return false;
-        //todo
-        return true;
+        return check.getObject() != null && check.getObject() instanceof Card &&
+                ((Card)check.getObject()).getPlayer() == me.getOpponent();
     }
 
     public boolean checkIsAlly(Player me, Square check) {
         if (!ally)
             return false;
-        //todo
-        return true;
+        return check.getObject() != null && check.getObject() instanceof Card &&
+                ((Card)check.getObject()).getPlayer() == me;
     }
 
     public boolean checkDistance(Card forWitchCard, Square squareOfTarget) {

@@ -1,9 +1,0 @@
-cost: 300
-MP: 4
-HP: 5
-Ap: 6
-nationality: Snake
-model.counterAttack: ranged
-attackRange: 4
-specialPower: Poison(3)
-activationTimeOfSpecialPower: attack

@@ -1,9 +1,0 @@
-cost: 300
-MP: 9
-HP: 14
-Ap: 10
-nationality: Beast
-model.counterAttack: hybrid
-attackRange: 7
-specialPower: -
-activationTimeOfSpecialPower: -

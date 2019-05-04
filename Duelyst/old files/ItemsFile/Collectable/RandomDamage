@@ -1,9 +1,0 @@
-MpChanges: 0
-ApChanges: 0
-HpChanges: 0
-Buffs_TurnOfEffect_numberOfBuffs: null _ 0 _ 0
-target_numberOfTargets_numberOfAttacks: Enemy _ 3 _ 2
-numberOfAttacksHit_numberOfAddedAttacks: 0 _ 0
-TypeOfCounterAttack: -
-forWhom: Friend
-desc: hits 3 random enemies 2 times

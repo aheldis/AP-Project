@@ -1,8 +1,0 @@
-Spell
-cost: 2000
-Mp: 9
-ApChanges-TurnOfEffect: 0 - 1
-HpChanges-TurnOfEffect: 0 - 1
-Buffs-TurnOfEffect: DisArm - 1
-target: Enemy - All - Card
-desc: disarm an enemy card for one turn

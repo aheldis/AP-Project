@@ -1,9 +1,0 @@
-cost: 250
-MP: 5
-HP: 9
-Ap: 5
-nationality: Dragon
-model.counterAttack: ranged
-attackRange: 4
-specialPower: -
-activationTimeOfSpecialPower: -

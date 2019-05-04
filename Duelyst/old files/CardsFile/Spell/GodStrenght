@@ -1,8 +1,0 @@
-Spell
-cost: 450
-Mp: 2
-ApChanges-TurnOfEffect: 4 - 1
-HpChanges-TurnOfEffect: 0 - 1
-Buffs-TurnOfEffect: null - 1
-target: Friend - One - Hero
-desc: add 4 to attack power of a friend hero

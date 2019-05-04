@@ -1,8 +1,0 @@
-Spell
-cost: 2100
-Mp: 0
-ApChanges-TurnOfEffect: 0 - 1
-HpChanges-TurnOfEffect: 0 - 1
-Buffs-TurnOfEffect: Destroy - 1
-target: Enemy|Friend - One - Card
-decs: destroy all negative friend's buff, destroy all positive enemy's buff for enemy or friend model.card

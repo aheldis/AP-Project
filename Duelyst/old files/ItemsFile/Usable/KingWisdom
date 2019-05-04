@@ -1,9 +1,0 @@
-name: KingWisdom
-cost: 9000
-changesInMana_forHowManyTurns: +1_all
-buff_howMany: 
-forWhichCounterAttack(ranged/hybrid/melee): 
-changesInHp: 
-whom(friend/enemy)_kind(hero/minion)_number_random(true/false): 
-changesInAP: 
-when(attack/death/put): 

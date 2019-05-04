@@ -1,9 +1,0 @@
-cost: 450
-MP: 8
-HP: 16
-Ap: 9
-nationality: Bahman
-model.counterAttack: melee
-attackRange: 0
-specialPower: Minion _ distance(random) _ decreaseHP(16) _ turnOfEffect(0)
-activationTimeOfSpecialPower: passive

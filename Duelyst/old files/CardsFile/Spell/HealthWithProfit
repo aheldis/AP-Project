@@ -1,8 +1,0 @@
-Spell
-cost: 2250
-Mp: 0
-ApChanges-TurnOfEffect: 4 - 1
-HpChanges-TurnOfEffect: -6 - 1
-Buffs-TurnOfEffect: Holy - 3
-target: Friend - One - Card
-desc: add a holy buff and a weakness buff to a friend model.card,decrease 6 from health and add 4 to attack power

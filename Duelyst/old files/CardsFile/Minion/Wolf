@@ -1,9 +1,0 @@
-cost: 400
-MP: 3
-HP: 6
-Ap: 1
-nationality: Wolf
-model.counterAttack: melee
-attackRange: 0
-specialPower: Minion _ decreaseHP(6) _ turnOfEffect(1)
-activationTimeOfSpecialPower: attack

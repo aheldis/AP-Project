@@ -1,9 +1,0 @@
-cost: 300
-MP: 2
-HP: 6
-Ap: 4
-nationality: Fars
-model.counterAttack: ranged
-attackRange: 7
-specialPower: -
-activationTimeOfSpecialPower: -

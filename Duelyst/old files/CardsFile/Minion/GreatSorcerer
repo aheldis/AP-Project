@@ -1,9 +1,0 @@
-cost: 550
-MP: 6
-HP: 6
-Ap: 6
-nationality: Sorcerer
-model.counterAttack: ranged
-attackRange: 5
-specialPower: Minion _ distance(1) _ Power(APChange(2)) / Holy(1)
-activationTimeOfSpecialPower: passive

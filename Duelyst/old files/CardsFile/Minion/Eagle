@@ -1,9 +1,0 @@
-cost: 200
-MP: 2
-HP: 0
-Ap: 2
-nationality: Eagle
-model.counterAttack: ranged
-attackRange: 3
-specialPower: Power(HPChange(10))
-activationTimeOfSpecialPower: -

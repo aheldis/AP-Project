@@ -1,9 +1,0 @@
-name: Baptism
-cost: 20000
-changesInMana_forHowManyTurns: 
-buff_howMany: holy_2
-forWhichCounterAttack(ranged/hybrid/melee): 
-changesInHp: 
-whom(friend/enemy)_kind(hero/minion)_number_random(true/false): friend_minion_all_false
-changesInAP: 
-when(attack/death/put): spawn

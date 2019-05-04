@@ -1,8 +1,0 @@
-Spell
-cost: 1000
-Mp: 1
-ApChanges-TurnOfEffect: -4 - 1
-HpChanges-TurnOfEffect: 0 - 1
-Buffs-TurnOfEffect: null - 1
-target: Enemy - One - Card - Minion
-desc: a weakness buff with decreasing Ap(ap-4)

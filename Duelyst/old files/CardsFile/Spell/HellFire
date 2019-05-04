@@ -1,8 +1,0 @@
-Spell
-cost: 600
-Mp: 3
-ApChanges-TurnOfEffect: 0 - 1
-HpChanges-TurnOfEffect: 0 - 1
-Buffs-TurnOfEffect: Fire - 2
-target: Square(2*2)
-desc: fire buff on 2*2 cells

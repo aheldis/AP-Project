@@ -1,9 +1,0 @@
-cost: 600
-MP: 3
-HP: 6
-Ap: 6
-nationality: Giant
-model.counterAttack: melee
-attackRange: 0
-specialPower: Weakness(APChange(3 * (allCombo - 1)))
-activationTimeOfSpecialPower: combo

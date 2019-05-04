@@ -1,9 +1,0 @@
-MpChanges: 0
-ApChanges: 2
-HpChanges: 0
-Buffs_TurnOfEffect_numberOfBuffs: null _ 0 _ 0
-target_numberOfTargets_numberOfAttacks: null _ 0 _ 0
-numberOfAttacksHit_numberOfAddedAttacks: 0 _ 0
-TypeOfCounterAttack: ranged/hybrid
-forWhom: Friend
-desc: increase AP by 2 for type ranged/hybrid

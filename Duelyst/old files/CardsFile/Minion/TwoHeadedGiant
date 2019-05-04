@@ -1,9 +1,0 @@
-cost: 550
-MP: 4
-HP: 10
-Ap: 4
-nationality: Giant
-model.counterAttack: melee
-attackRange: 0
-specialPower: positive(not)
-activationTimeOfSpecialPower: passive

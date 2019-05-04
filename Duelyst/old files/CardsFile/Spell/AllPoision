@@ -1,8 +1,0 @@
-Spell
-cost: 1500
-Mp: 8
-ApChanges-TurnOfEffect: 0 - 1
-HpChanges-TurnOfEffect: 0 - 1
-Buffs-TurnOfEffect: Poison - 4
-target: Enemy - All - Card
-desc: affect poison buff in all enemy's cards

@@ -1,9 +1,0 @@
-MpChanges: 0
-ApChanges: 0
-HpChanges: 0
-Buffs_TurnOfEffect_numberOfBuffs: Holy _ 2 _ 10
-target_numberOfTargets_numberOfAttacks: null _ 0 _ 0
-numberOfAttacksHit_numberOfAddedAttacks: 0 _ 0
-TypeOfCounterAttack: -
-forWhom: Friend
-desc: 10 Holy buffs are activated for friends for 2 turns

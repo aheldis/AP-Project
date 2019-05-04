@@ -1,9 +1,0 @@
-name: TerrorHood
-cost: 5000
-changesInMana_forHowManyTurns: 
-buff_howMany: weakness(Ap(-2))_1
-forWhichCounterAttack(ranged/hybrid/melee): 
-changesInHp: 
-whom(friend/enemy)_kind(hero/minion)_number_random(true/false): enemy_hero/minion_1_true
-changesInAP: 
-when(attack/death/put): attack

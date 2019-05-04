@@ -1,9 +1,0 @@
-cost: 600
-MP: 2
-HP: 1
-Ap: 8
-nationality: Lion
-model.counterAttack: melee
-attackRange: 0
-specialPower: Holy(not)
-activationTimeOfSpecialPower: attack

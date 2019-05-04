@@ -1,9 +1,0 @@
-cost: 450
-MP: 4
-HP: 5
-Ap: 7
-nationality: Giv
-model.counterAttack: ranged
-attackRange: 5
-specialPower: Buff(not) / Attack(not)
-activationTimeOfSpecialPower: defend

@@ -1,8 +1,0 @@
-Spell
-cost: 1750
-Mp: 9
-ApChanges-TurnOfEffect: 0 - 1
-HpChanges-TurnOfEffect: 0 - 1
-Buffs-TurnOfEffect: Killer - 1
-target: Enemy - One - Card - Minion
-desc: kills a minion in range of a hero
