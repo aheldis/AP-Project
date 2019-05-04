@@ -18,9 +18,9 @@ public class Minion extends Card {
     private boolean comboAbility;
     private boolean haveSpecialPower;
 
-    void setTarget(Square square) {
-        this.square = square;
-    }
+//    void setTarget(Square square) {
+//        this.square = square;
+//    }
 
     public ActivationTimeOfSpecialPower getActivationTimeOfSpecialPower() {
         return activationTimeOfSpecialPower;

@@ -195,7 +195,7 @@ public class Request {
                 state = StateType.SELECT_CARD;
                 return RequestType.GAME_SELECT_CARD_ID;
             }
-            if (command.matches("show card info \\W+")) {
+            if (command.matches("show card info \\w+")) {
                 setId(command.split(" ")[3]);
                 return RequestType.GAME_SHOW_CARD_INFO;
             }
