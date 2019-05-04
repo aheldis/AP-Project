@@ -32,7 +32,10 @@
       "row": false,
       "column": true,
       "all": false,
-      "random": false
+      "random": false,
+      "self": false,
+      "enemy": false,
+      "ally": false
     }
   }
 }
