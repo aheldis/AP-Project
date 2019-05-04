@@ -11,6 +11,7 @@ public abstract class Item {
     private int itemNumber;
     protected Target target = new Target();
     protected Change change = new Change();
+    //todo if you wanna add player set player in match constructor
 
     public Item(){
 

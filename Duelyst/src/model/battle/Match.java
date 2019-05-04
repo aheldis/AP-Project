@@ -2,6 +2,8 @@ package model.battle;
 
 import Controller.MenuController;
 import model.account.Shop;
+import model.card.Card;
+import model.card.Hero;
 import model.item.Collectible;
 import model.item.Flag;
 import model.item.Item;
@@ -12,6 +14,7 @@ import view.BattleView;
 import view.MenuView;
 import view.enums.StateType;
 
+import javax.swing.plaf.basic.BasicTreeUI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -30,6 +33,10 @@ public class Match {
     private int BOUND_FOR_COLLECTIBLES = 4;
     private ArrayList<Collectible> collectibles = new ArrayList<>();
 
+
+    public int getReward() {
+        return reward;
+    }
 
     public ArrayList<Flag> getFlags() {
         return flags;
@@ -82,14 +89,37 @@ public class Match {
     }
 
     public Match(Player[] players, String mode, int numberOfFlags, int reward) {
+        land = new LandOfGame();
+        ArrayList<Card> cards = players[0].getCardsOnLand();
+        Hero firstHero =players[0].getMainDeck().getHero();
+        Hero secondHero =players[1].getMainDeck().getHero();
+        for(Card card : cards){
+            card.setPlayer(players[0]);
+            card.setLandOfGame(land);
+        }
+        firstHero.setPlayer(players[0]);
+        firstHero.setLandOfGame(land);
+        firstHero.setCanMove(true,1);
+        cards = players[1].getCardsOnLand();
+        for(Card card :cards){
+            card.setPlayer(players[1]);
+            card.setLandOfGame(land);
+        }
+        secondHero.setPlayer(players[1]);
+        secondHero.setLandOfGame(land);
+        secondHero.setCanMove(true,1);
         this.players = players;
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;
         this.reward = reward;
-        land = new LandOfGame();
+
         Square[][] square = land.getSquares();
         square[2][0].setObject( players[0].mainDeck.getHero());
+        firstHero.setPosition(square[2][0]);
         square[2][8].setObject( players[1].mainDeck.getHero());
+        secondHero.setPosition(square[2][8]);
+        players[0].addToCardsOfLand(players[0].mainDeck.getHero());
+        players[1].addToCardsOfLand(players[1].mainDeck.getHero());
         if(mode.equals(Game.getModeAsString(3))){
             setFlagsRandomly(3);
         }
