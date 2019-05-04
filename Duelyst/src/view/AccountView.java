@@ -33,7 +33,7 @@ public class AccountView {
         long years;
         long milliSecond;
 
-        public Duration(long milliSecond) {//joda joda taqsim she daqiq tare :D
+        Duration(long milliSecond) {//joda joda taqsim she daqiq tare :D
             this.milliSecond = milliSecond;
             seconds = milliSecond / 1000 % 60;
             minutes = milliSecond / (60 * 1000) % 60;

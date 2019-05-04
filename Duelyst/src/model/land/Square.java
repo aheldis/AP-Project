@@ -65,5 +65,14 @@ public class Square {
         this.object = object;
     }
 
+    public static boolean checkerForSquare(int x, int y, LandOfGame landOfGame) {
+        if (x > 4 || x < 0)
+            return false;
+        if (y < 0 || y > 8)
+            return false;
+        return landOfGame.getSquares()[x][y].getObject() == null;
+    }
+
+
     //todo hamsayeha
 }

@@ -13,7 +13,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Shop {
-    public static Shop singleInstance = null;
+    private static Shop singleInstance = null;
     private static String pathOfFiles = "Duelyst/";
     private ArrayList<Card> cards = new ArrayList<>();// todo (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
     private ArrayList<Item> items = new ArrayList<>();
@@ -177,10 +177,10 @@ public class Shop {
     }
 
     public void buy(Account account, String name) {
-        if (cardExist(name)) {
-            Card card = getCard(name);
+        Card card = getCard(name);
+        if (card != null) {
             new CardId(account, card, account.getCollection().getNumberOfCardId(card));
-            if (!enoughDaricForBuy(account, card.getCost()))
+            if (notEnoughDaricForBuy(account, card.getCost()))
                 return;
             Collection collection = account.getCollection();
             FilesType typeOfFile = null;
@@ -198,10 +198,10 @@ public class Shop {
             cards.remove(card);
             return;
         }
-        else if (itemExist(name)) {
-            Usable item = getItem(name);
+        Usable item = getItem(name);
+        if (item != null) {
             new UsableId(account, item, account.getCollection().getNumberOfItemId(item));
-            if (!enoughDaricForBuy(account, item.getCost()))
+            if (notEnoughDaricForBuy(account, item.getCost()))
                 return;
             account.getCollection().addToItems(item);
             items.remove(item);
@@ -212,14 +212,14 @@ public class Shop {
         accountView.printError(error);
     }
 
-    private boolean enoughDaricForBuy(Account account, int cost) {
+    private boolean notEnoughDaricForBuy(Account account, int cost) {
         if (account.getDaric() < cost) {
             ErrorType error = ErrorType.NOT_ENOUGH_MONEY;
             accountView.printError(error);
-            return false;
+            return true;
         }
         account.changeValueOfDaric(-cost);
-        return true;
+        return false;
     }
 
     public void sell(Account account, String id) {
@@ -230,7 +230,7 @@ public class Shop {
             account.changeValueOfDaric(card.getCost());
             collection.removeCard(card);
         } else if (item != null) {
-            account.changeValueOfDaric(card.getCost());
+            account.changeValueOfDaric(item.getCost());
             collection.removeItem(item);
         } else {
             ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION;
@@ -250,6 +250,7 @@ public class Shop {
         } else if (card instanceof Minion) {
             typeOfFile = FilesType.MINION;
         }
+        if (card != null)
         makeNewFromFile(pathOfFiles + typeOfFile + card.getName(), typeOfFile);
         cards.remove(card);
         return card;
@@ -257,6 +258,7 @@ public class Shop {
 
     public Item getNewItemByName(String name) {
         Usable item = getItem(name);
+        if (item != null)
         makeNewFromFile(pathOfFiles + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM);
         items.remove(item);
         return item;

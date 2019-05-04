@@ -15,7 +15,7 @@ public class GraveYard {
     private ArrayList<Card> cards;
     private Player player;
 
-    public GraveYard(Player player) {
+    GraveYard(Player player) {
         this.player = player;
     }
 

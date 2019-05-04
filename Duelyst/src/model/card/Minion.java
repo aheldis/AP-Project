@@ -6,7 +6,7 @@ import model.land.Square;
 //todo // healthPower _> hp    attackPower -> ap to card darimeshon
 
 public class Minion extends Card {
-    String specialPowerInfo;
+    private String specialPowerInfo;
     private int numberOfBeingAttacked;
     private int numberOfAttack;
     private String playerName;
@@ -17,10 +17,6 @@ public class Minion extends Card {
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
     private boolean comboAbility;
     private boolean haveSpecialPower;
-
-//    void setTarget(Square square) {
-//        this.square = square;
-//    }
 
     public ActivationTimeOfSpecialPower getActivationTimeOfSpecialPower() {
         return activationTimeOfSpecialPower;

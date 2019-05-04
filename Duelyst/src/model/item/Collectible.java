@@ -2,19 +2,19 @@ package model.item;
 
 import model.land.Square;
 
-public class Collectible extends Item {
-    private CollectibleId collectibleId;
+public class Collectible extends model.item.Item {
+    private model.item.CollectibleId collectibleId;
     private Square square;
 
     void affect() {
 
     }
 
-    public CollectibleId getCollectibleId() {
+    public model.item.CollectibleId getCollectibleId() {
         return collectibleId;
     }
 
-    public void setCollectibleId(CollectibleId collectibleId) {
+    public void setCollectibleId(model.item.CollectibleId collectibleId) {
         this.collectibleId = collectibleId;
     }
 

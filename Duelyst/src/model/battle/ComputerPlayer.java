@@ -1,7 +1,6 @@
 package model.battle;
 
 import model.card.Card;
-import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
 
@@ -9,10 +8,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ComputerPlayer extends Player {
-
-    private int RANDOM_NUMBER_FOR_PUT_CARD = 3;
-    private int RANDOM_NUMBER_FOR_MOVE = 10;
-    private int RANDOM_NUMBER_FOR_ATTACK = 13;
 
     public ComputerPlayer(Deck deck) {
         this.setMainDeck(deck);
@@ -23,31 +18,18 @@ public class ComputerPlayer extends Player {
     }
 
     public static ComputerPlayer makeNewPlayer(Deck mainDeck) {
-        ComputerPlayer player = new ComputerPlayer(mainDeck);
-        return player;
-    }
-
-    private boolean checkerForSquare(int x, int y) {
-        Square[][] square = match.getLand().getSquares();
-        if (x > 4 || x < 0)
-            return false;
-        if (y < 0 || y > 8)
-            return false;
-        if (square[x][y].getObject() != null)
-            return false;
-        return true;
-
+        return new ComputerPlayer(mainDeck);
     }
 
     private int yMovement(int x, int y) {
         y++;
-        if (!checkerForSquare(x, y)) {
+        if (!Square.checkerForSquare(x, y, match.getLand())) {
             y++;
-            if (!checkerForSquare(x, y)) {
+            if (!Square.checkerForSquare(x, y, match.getLand())) {
                 y -= 3;
-                if (!checkerForSquare(x, y)) {
+                if (!Square.checkerForSquare(x, y, match.getLand())) {
                     y--;
-                    if (!checkerForSquare(x, y)) {
+                    if (!Square.checkerForSquare(x, y, match.getLand())) {
                         return -1;
                     }
                 }
@@ -59,13 +41,13 @@ public class ComputerPlayer extends Player {
 
     private int xMovement(int x, int y) {
         x++;
-        if (!checkerForSquare(x, y)) {
+        if (!Square.checkerForSquare(x, y, match.getLand())) {
             x++;
-            if (!checkerForSquare(x, y)) {
+            if (!Square.checkerForSquare(x, y, match.getLand())) {
                 x -= 3;
-                if (!checkerForSquare(x, y)) {
+                if (Square.checkerForSquare(x, y, match.getLand())){
                     x--;
-                    if (!checkerForSquare(x, y)) {
+                    if (!Square.checkerForSquare(x, y, match.getLand())) {
                         return -1;
                     }
                 }
@@ -80,6 +62,7 @@ public class ComputerPlayer extends Player {
         Random random = new Random();
         int x, y;
         //put card
+        int RANDOM_NUMBER_FOR_PUT_CARD = 3;
         if (random.nextInt() % RANDOM_NUMBER_FOR_PUT_CARD == 0) {
             int randomNumberForCards = random.nextInt(2);
             for (int i = 0; i < randomNumberForCards; i++) {
@@ -104,6 +87,7 @@ public class ComputerPlayer extends Player {
             }
         }
 
+        int RANDOM_NUMBER_FOR_MOVE = 10;
         if (random.nextInt() % RANDOM_NUMBER_FOR_MOVE == 0) {
             x = mainDeck.getHero().getPosition().getXCoordinate();
             y = mainDeck.getHero().getPosition().getYCoordinate();
@@ -126,6 +110,7 @@ public class ComputerPlayer extends Player {
             }
         }
 
+        int RANDOM_NUMBER_FOR_ATTACK = 13;
         if (random.nextInt() % RANDOM_NUMBER_FOR_ATTACK == 0) {
             ArrayList<Card> cards= getOpponent().getCardsOnLand();
             int randomIndex = random.nextInt(cards.size()-1);

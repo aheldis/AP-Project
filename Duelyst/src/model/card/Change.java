@@ -84,19 +84,20 @@ public class Change {
     }
 
     private Buff getBuff(String buffName) {
-
         Buff buff = Buff.getNewBuffByName(buffName);
-        if (buffName.equals("power")) {
-            if (apOrHpForPower.equals("ap"))
-                buff.setApChange(changeInApOrHpForPower);
-            else
-                buff.setHpChange(changeInApOrHpForPower);
-        }
-        if (buffName.equals("weakness")) {
-            if (apOrHpForWeakness.equals("ap"))
-                buff.setApChange(changeInApOrHpForWeakness);
-            else
-                buff.setHpChange(changeInApOrHpForWeakness);
+        if (buff != null) {
+            if (buffName.equals("power")) {
+                if (apOrHpForPower.equals("ap"))
+                    buff.setApChange(changeInApOrHpForPower);
+                else
+                    buff.setHpChange(changeInApOrHpForPower);
+            }
+            if (buffName.equals("weakness")) {
+                if (apOrHpForWeakness.equals("ap"))
+                    buff.setApChange(changeInApOrHpForWeakness);
+                else
+                    buff.setHpChange(changeInApOrHpForWeakness);
+            }
         }
         return buff;
     }

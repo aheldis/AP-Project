@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class AllAccount {
-    private static AllAccount singleInstance = null;
-    public static   ArrayList<Account> accounts = new ArrayList<>();
+    private static AllAccount singleInstance = new AllAccount();
+    private static ArrayList<Account> accounts = new ArrayList<>();
 
 
     private AllAccount() {
@@ -82,9 +82,11 @@ public class AllAccount {
 
     }
 
-    public void addToAccounts(Account account) {
+    private void addToAccounts(Account account) {
         accounts.add(account);
     }
 
-
+    public ArrayList<Account> getAccounts() {
+        return accounts;
+    }
 }

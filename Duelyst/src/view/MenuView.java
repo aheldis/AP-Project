@@ -59,7 +59,7 @@ public class MenuView {
 
     public void showAllAccount() {
         AllAccount allAccount = AllAccount.getInstance();
-        for (Account account : allAccount.accounts) {
+        for (Account account : allAccount.getAccounts()) {
             System.out.println(account.getUserName());
         }
     }
@@ -83,9 +83,9 @@ public class MenuView {
                 break;
             case "SaveFlagMode":
                 Flag flag1 = match.getFlags().get(0);
-                System.out.println("in cell x: "+flag1.getSquare().getXCoordinate()+
-                        " y: "+flag1.getSquare().getYCoordinate());
-                if(flag1.getOwnerCard() !=null){
+                System.out.println("in cell x: " + flag1.getSquare().getXCoordinate() +
+                        " y: " + flag1.getSquare().getYCoordinate());
+                if (flag1.getOwnerCard() != null) {
                     System.out.println(flag1.getOwnerCard().getCardId());
                 }
                 break;
@@ -114,22 +114,26 @@ public class MenuView {
         }
     }
 
+    private void showSpellOrMinion(Card card, int counterOfCards) {
+        if (card instanceof Spell) {
+            System.out.print("     ");
+            AccountView.getInstance().showEachSpell((Spell) card, counterOfCards);
+            System.out.println("\n");
+
+        } else if (card instanceof Minion) {
+            System.out.print("     ");
+            AccountView.getInstance().showEachMinion((Minion) card, counterOfCards);
+            System.out.println("\n");
+        }
+    }
+
     public void showHand(Player player) {
         //nmikham hero o ina on balash bashe mosalaman :|
-        int counterOfCards =0;
-        ArrayList<Card> cards =player.getHand().getGameCards();
+        int counterOfCards = 0;
+        ArrayList<Card> cards = player.getHand().getGameCards();
         if (cards != null && cards.size() != 0) {
             for (Card card : cards) {
-                if (card instanceof Spell) {
-                    System.out.print("     ");
-                    AccountView.getInstance().showEachSpell((Spell) card, counterOfCards);
-                    System.out.println("\n");
-
-                } else if (card instanceof Minion) {
-                    System.out.print("     ");
-                    AccountView.getInstance().showEachMinion((Minion) card, counterOfCards);
-                    System.out.println("\n");
-                }
+                showSpellOrMinion(card, counterOfCards);
                 counterOfCards++;
             }
         }
@@ -140,14 +144,7 @@ public class MenuView {
         System.out.println("Next card :");
         Card nextCard = deck.passNextCard();
         if (nextCard instanceof Spell) {
-            System.out.print("     ");
-            AccountView.getInstance().showEachSpell((Spell) nextCard, NOT_VALID);
-            System.out.println("\n");
-
-        } else if (nextCard instanceof Minion) {
-            System.out.print("     ");
-            AccountView.getInstance().showEachMinion((Minion) nextCard, NOT_VALID);
-            System.out.println("\n");
+            showSpellOrMinion(nextCard, NOT_VALID);
         }
     }
 
@@ -187,7 +184,7 @@ public class MenuView {
         AccountView.getInstance().showEachItem(collectible, NOT_VALID);
     }
 
-    public void helpForSelectMode(){
+    public void helpForSelectMode() {
         System.out.println("Enter single player");
         System.out.println("Enter multi player");
     }

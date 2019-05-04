@@ -10,7 +10,6 @@ import model.card.Spell;
 import view.AccountView;
 import view.enums.ErrorType;
 
-import javax.xml.stream.events.EntityReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -61,14 +60,13 @@ public class Collection {
         spells.add(spell);
     }
 
-    public boolean addToItems(Usable item) {
+    public void addToItems(Usable item) {
         for (int i = 0; i < 3; i++) {
             if (items[i] == null) {
                 items[i] = item;
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     public void selectADeckAsMainDeck(String deckName) {
