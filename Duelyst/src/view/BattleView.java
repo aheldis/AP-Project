@@ -35,6 +35,10 @@ public class BattleView {
     }
 
     public void showCardInfo(Card card) {
+        if(card == null ) {
+            ErrorType.INVALID_CARD_ID.printMessage();
+            return;
+        }
         System.out.println("Name: " + card.getName());
         System.out.println("Cost: " + card.getCost());
         System.out.println("Desc: " + card.getDescription());

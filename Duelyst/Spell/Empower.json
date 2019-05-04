@@ -23,7 +23,7 @@
       "apChange": 2,
       "continuous": false,
       "buffs": {},
-      "unaffactBuffs": false,
+      "unaffactBuffs": false
     },
     "target": {
       "counterAttackType": "-",

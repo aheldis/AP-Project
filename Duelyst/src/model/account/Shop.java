@@ -1,17 +1,16 @@
 package model.account;
 
 import com.gilecode.yagson.YaGson;
+import model.card.*;
 import model.item.Collectible;
 import model.item.Item;
 import model.item.Usable;
 import model.item.UsableId;
-import model.card.*;
 import view.AccountView;
 import view.enums.ErrorType;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Shop {
     public static Shop singleInstance = null;
@@ -64,6 +63,7 @@ public class Shop {
 
     public void makeNewFromFile(String path, FilesType type) {
         try {
+
             InputStream input = new FileInputStream(path);
             Reader reader = new InputStreamReader(input);
             YaGson mapper = new YaGson();
