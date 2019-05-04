@@ -145,6 +145,13 @@ public abstract class Card {
         return getManhatanDistance(coordinate) <= range;
     }
 
+    private boolean checkTarget(Square check) {
+        return target.checkIfAttackedCardIsValid(check.getObject()) &&
+                target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position) &&
+                target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
+                target.checkIsAlly(player, check);
+    }
+
     public void setTarget(Square cardSquare) {
         boolean isSquare = change.getTargetType().equals("Square");
         boolean isCard = change.getTargetType().equals("Card");
@@ -154,9 +161,7 @@ public abstract class Card {
             targets.add(cardSquare);
         else if (isCard) {
 
-            if (target.isOne() && target.checkIfAttackedCardIsValid(cardSquare.getObject()) &&
-                    target.checkDistance(this, cardSquare) && target.checkIsEnemy(player, cardSquare) &&
-                    target.checkIsAlly(player, cardSquare)) {
+            if (target.isOne() && checkTarget(cardSquare)) {
                 targets.add(cardSquare);
 
             } else if (target.isAll()) {
@@ -164,8 +169,7 @@ public abstract class Card {
                 for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
                     for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
                         Square check = landOfGame.getSquares()[i][j];
-                        if (target.checkIfAttackedCardIsValid(check.getObject()) && target.checkDistance(this, check) &&
-                                target.checkIsEnemy(player, check) && target.checkIsAlly(player, check))
+                        if (checkTarget(check))
                             targets.add(check);
                     }
 
@@ -173,10 +177,7 @@ public abstract class Card {
 
                 for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
                     Square check = landOfGame.getSquares()[cardSquare.getYCoordinate()][j];
-                    if (target.checkIfAttackedCardIsValid(check.getObject()) &&
-                            target.checkNotItSelf(cardSquare.getYCoordinate(), j, position) &&
-                            target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
-                            target.checkIsAlly(player, check))
+                    if (checkTarget(check))
                         targets.add(check);
                 }
 
@@ -184,10 +185,7 @@ public abstract class Card {
 
                 for (int i = 0; i < landOfGame.getNumberOfRows(); i++) {
                     Square check = landOfGame.getSquares()[i][cardSquare.getXCoordinate()];
-                    if (target.checkIfAttackedCardIsValid(check.getObject()) &&
-                            target.checkNotItSelf(i, cardSquare.getXCoordinate(), position) &&
-                            target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
-                            target.checkIsAlly(player, check))
+                    if (checkTarget(check))
                         targets.add(check);
                 }
 
