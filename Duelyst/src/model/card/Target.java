@@ -11,7 +11,7 @@ public class Target {
     private LandOfGame land;
     private ArrayList<Square> targets = new ArrayList<>();
     private String counterAttackType; //ranged hybrid melee
-    private String cardType; //Minion Hero Spell
+    private String cardType; //minion hero spell
     //    private String number; // 0 <=
     private boolean one;
     private boolean row;
@@ -44,13 +44,13 @@ public class Target {
             return true;
         String counterAttackName = null;
         if (attacked instanceof Minion) {
-            if (!cardType.equals("Minion")) {
+            if (!cardType.equals("minion")) {
                 return false;
             }
             counterAttackName = ((Card)attacked).getCounterAttackName();
         }
         if (attacked instanceof Hero) {
-            if (!cardType.equals("Hero")) {
+            if (!cardType.equals("hero")) {
                 return false;
             }
             counterAttackName = ((Card)attacked).getCounterAttackName();
