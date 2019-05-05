@@ -1,15 +1,13 @@
 package model.battle;
 
-import Controller.MenuController;
+import controller.MenuController;
 import model.account.Shop;
 import model.item.Collectible;
 import model.item.Flag;
 import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
-import model.requirment.Coordinate;
 import view.BattleView;
-import view.MenuView;
 import view.enums.StateType;
 
 import java.util.ArrayList;

@@ -23,8 +23,8 @@
       "turnOfCanNotMoveForOpponent": 0,
       "turnOfCanNotAttackForOpponent": 0,
       "turnOfCanNotCounterAttackForOpponent": 0,
-      "hpChange": 1,
       "apChange": 0,
+      "changeInMana": 1,
       "continuous": false,
       "buffs": {
         "mana": [3]

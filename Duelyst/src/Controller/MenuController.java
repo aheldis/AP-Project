@@ -1,18 +1,26 @@
-package Controller;
+package controller;
 
-import model.item.*;
-import model.account.*;
-import model.battle.*;
-import model.card.*;
+import model.account.Account;
+import model.account.AllAccount;
+import model.account.Collection;
+import model.account.Shop;
+import model.battle.Game;
+import model.battle.GraveYard;
+import model.battle.Match;
+import model.battle.Player;
+import model.card.ActivationTimeOfSpecialPower;
+import model.card.Card;
+import model.card.Minion;
+import model.item.Collectible;
+import model.item.Item;
+import model.item.Usable;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.BattleView;
 import view.MenuView;
 import view.Request;
-import view.enums.*;
-
-import javax.swing.plaf.nimbus.State;
-import java.nio.file.FileAlreadyExistsException;
+import view.enums.ErrorType;
+import view.enums.StateType;
 
 
 public class MenuController {

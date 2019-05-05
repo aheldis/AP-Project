@@ -19,9 +19,10 @@
       "turnOfCanNotMoveForOpponent": 0,
       "turnOfCanNotAttackForOpponent": 0,
       "turnOfCanNotCounterAttackForOpponent": 0,
-      "hpChange": -6,
+      "hpChange": 0,
       "apChange": 0,
       "continuous": false,
+      "changeInHpForDecreaserHp": -6,
       "buffs": {
         "DecreaserHp": [1]
       },
