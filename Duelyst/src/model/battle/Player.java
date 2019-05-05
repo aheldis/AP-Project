@@ -6,6 +6,7 @@ import model.card.Card;
 import model.card.Hero;
 import model.item.Collectible;
 import model.item.Flag;
+import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -95,8 +96,14 @@ public abstract class Player {
 
     public abstract void addMatchInfo(MatchInfo matchInfo);
 
-    public void putCollectibleItemOnLand(Coordinate coordinate, String CollectibleItemId) {
-        //todo
+    public void putCollectibleItemOnLand(Coordinate coordinate, String collectibleItemId) {
+        ArrayList<Item> collectibleItems = getHand().getCollectibleItems();
+        Collectible selected = null;
+        for (Item collectible : collectibleItems)
+            if (collectible.getName().equals(collectibleItemId))
+                selected = (Collectible) collectible;
+        Square square = match.getLand().passSquareInThisCoordinate(coordinate);
+        square.setObject(selected);
     }
 
     public void addItemToCollectibles(Collectible collectible) {

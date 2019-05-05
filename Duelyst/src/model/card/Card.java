@@ -173,7 +173,6 @@ public abstract class Card {
         boolean isSquare = change.getTargetType().equals("Square");
         boolean isCard = change.getTargetType().equals("Card");
         ArrayList<Square> targets = new ArrayList<>();
-//      todo check i va j shomare deraye ya shomare deraye * scale?
         if (isSquare)
             targets.add(cardSquare);
         else if (isCard) {

@@ -33,10 +33,6 @@ public class Square {
         return null;
     }
 
-    public Coordinate passTheCenterOfSquare() {
-        return coordinate;
-    }
-
     public void setScale(int scale) {
         scaleForEachSquare = scale;
     }
@@ -73,6 +69,7 @@ public class Square {
         return landOfGame.getSquares()[x][y].getObject() == null;
     }
 
+    //todo collectible
 
     //todo hamsayeha
 }
