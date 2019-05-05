@@ -541,7 +541,7 @@ public class MenuController {
                             error.printMessage();
                             break;
                         }
-                        selectedCard.useSpecialPower(request.getCoordinate());
+                        selectedCard.useSpecialPower(match.getLand().passSquareInThisCoordinate(request.getCoordinate()));
                         break;
                     case GAME_MOVE:
                         if (selectedCard == null) {

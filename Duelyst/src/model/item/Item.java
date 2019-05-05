@@ -4,7 +4,7 @@ import model.card.Change;
 import model.card.Target;
 
 public abstract class Item {
-    private String name;
+    private String name = new String();
     private String type; //usable Collectible
     private String description;
     private int cost;

@@ -1,6 +1,5 @@
 package model.card;
 
-
 import model.battle.OrdinaryPlayer;
 import model.battle.Player;
 import model.item.Collectible;

@@ -53,11 +53,16 @@ public class Shop {
         for (FilesType typeOfFile : FilesType.values()) {
             File folder = new File(pathOfFiles + typeOfFile.getName());
             File[] listOfFiles = folder.listFiles();
-            if (!(listOfFiles == null || typeOfFile == FilesType.BUFF)) {
+            if (!(listOfFiles == null || typeOfFile == FilesType.BUFF || typeOfFile == FilesType.ITEM)) {
                 for (int i = 0; i < listOfFiles.length; i++) {
                     makeNewFromFile(listOfFiles[i].getPath(), typeOfFile);
                 }
             }
+        }
+
+        System.out.println(getInstance().collectibles.size());
+        for (Item collectible : getInstance().collectibles) {
+            System.out.println("in get instance shop: ");
         }
     }
 
@@ -80,17 +85,16 @@ public class Shop {
                 Spell spell = mapper.fromJson(reader, model.card.Spell.class);
                 addCard(spell);
             }
-            if (type.equals(FilesType.ITEM)) {
-                try {
-                    Usable item = mapper.fromJson(reader, model.item.Usable.class);
-                    addUsable(item);
-                }catch (Exception e){
-                }
-                try {
-                    Collectible item = mapper.fromJson(reader, Collectible.class);
-                    addCollectible(item);
-                }catch (Exception e){
-                }
+            if (type.equals(FilesType.COLLECTIBLE)) {
+                System.out.println(path);
+                Collectible item = mapper.fromJson(reader, model.item.Collectible.class);
+                System.out.println("collectible" + item);
+                addCollectible(item);
+            }
+            if (type.equals(FilesType.USABLE)) {
+                Usable item = mapper.fromJson(reader, model.item.Usable.class);
+                System.out.println("usable: " + item);
+                addUsable(item);
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -194,7 +198,7 @@ public class Shop {
                 collection.addToMinions((Minion) card);
                 typeOfFile = FilesType.MINION;
             }
-            makeNewFromFile(pathOfFiles + typeOfFile+ "/" + card.getName()+".json", typeOfFile); //todo check lotfan
+            makeNewFromFile(pathOfFiles + typeOfFile + "/" + card.getName() + ".json", typeOfFile); //todo check lotfan
             cards.remove(card);
             return;
         }
@@ -205,7 +209,7 @@ public class Shop {
                 return;
             account.getCollection().addToItems(item);
             items.remove(item);
-            makeNewFromFile(pathOfFiles +"/"+ FilesType.ITEM.getName() + item.getName(), FilesType.ITEM); //todo check lotfan
+            makeNewFromFile(pathOfFiles + "/" + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM); //todo check lotfan
             return;
         }
         ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
@@ -251,7 +255,7 @@ public class Shop {
             typeOfFile = FilesType.MINION;
         }
         if (card != null)
-        makeNewFromFile(pathOfFiles + typeOfFile.getName() + "/" + card.getName() + ".json", typeOfFile);
+            makeNewFromFile(pathOfFiles + typeOfFile.getName() + "/" + card.getName() + ".json", typeOfFile);
         cards.remove(card);
         return card;
     }
@@ -259,7 +263,7 @@ public class Shop {
     public Item getNewItemByName(String name) {
         Usable item = getItem(name);
         if (item != null)
-        makeNewFromFile(pathOfFiles + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM);
+            makeNewFromFile(pathOfFiles + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM);
         items.remove(item);
         return item;
     }

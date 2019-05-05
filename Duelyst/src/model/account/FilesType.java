@@ -4,8 +4,11 @@ public enum FilesType {
     HERO("Hero"),
     MINION("Minion"),
     SPELL("Spell"),
-    ITEM("item"),
-    BUFF("Buff");
+    ITEM("Item"),
+    BUFF("Buff"),
+    USABLE("Usable"),
+    COLLECTIBLE("Collectible");
+
     private String name;
 
     FilesType(String name) {
@@ -20,7 +23,7 @@ public enum FilesType {
                 return FilesType.HERO;
             case "Minion":
                 return FilesType.MINION;
-            case "item":
+            case "Item":
                 return FilesType.ITEM;
             case "Buff":
                 return FilesType.BUFF;

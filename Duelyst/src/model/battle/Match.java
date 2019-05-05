@@ -29,7 +29,7 @@ public class Match {
     private LandOfGame land;
     private int whichPlayer = 0; //0--> player 1 /1--> player 2
     private Date date;
-    private int BOUND_FOR_COLLECTIBLES = 4;
+    private int BOUND_FOR_COLLECTIBLES = 6;
     private ArrayList<Collectible> collectibles = new ArrayList<>();
 
 
@@ -82,16 +82,21 @@ public class Match {
                 continue;
             }
             collectible = (Collectible) collectibles.get(randomItem);
+            //todo besaze to shop oonayee ro ke mizare to battel
             this.collectibles.add(collectible);
             squares[randomX][randomY].setObject(collectible);
+
         }
 
         HashMap<String, Integer> collectibleNames = new HashMap<>();
         for (Item collectible : collectibles) {
+            System.out.println( collectible);
             if (!collectibleNames.containsKey(collectible))
                 collectibleNames.put(collectible.getName(), 0);
-            collectibleNames.put(collectible.getName(), collectibleNames.get(collectible) + 1);
-            CollectibleId id = new CollectibleId((Collectible)collectible, collectibleNames.get(collectible));
+            int number = collectibleNames.get(collectible.getName()) + 1;
+            collectibleNames.remove(collectible.getName());
+            collectibleNames.put(collectible.getName(), number );
+            CollectibleId id = new CollectibleId((Collectible)collectible, collectibleNames.get(collectible.getName()));
         }
     }
 
@@ -121,12 +126,12 @@ public class Match {
         this.reward = reward;
 
         Square[][] square = land.getSquares();
-        square[2][0].setObject(players[0].mainDeck.getHero());
+        square[2][0].setObject(players[0].getMainDeck().getHero());
         firstHero.setPosition(square[2][0]);
-        square[2][8].setObject(players[1].mainDeck.getHero());
+        square[2][8].setObject(players[1].getMainDeck().getHero());
         secondHero.setPosition(square[2][8]);
-        players[0].addToCardsOfLand(players[0].mainDeck.getHero());
-        players[1].addToCardsOfLand(players[1].mainDeck.getHero());
+        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
+        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
         if (mode.equals(Game.getModeAsString(3))) {
             setFlagsRandomly(3);
         }
