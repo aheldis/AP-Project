@@ -34,21 +34,30 @@ public abstract class Player {
 //    public abstract void useSpecialPower(Card card);
 
     public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
+
         ErrorType error;
         if (playerCard == null) {
             error = ErrorType.INVALID_CARD_ID;
             error.printMessage();
             return;
         }
+
         if (!playerCard.canMoveToCoordination(playerCard, coordinate)) {
             error = ErrorType.INVALID_TARGET;
             error.printMessage();
             return;
         }
+
         Square square = land.passSquareInThisCoordinate(coordinate);
         if (square == null) {
             error = ErrorType.INVALID_SQUARE;
             error.printMessage();
+            return;
+        }
+
+        if (playerCard instanceof Spell) {
+            playerCard.setTarget(land.passSquareInThisCoordinate(coordinate));
+            playerCard.getChange().affect(playerCard.getPlayer(), playerCard.getTarget().getTargets());
             return;
         }
 
@@ -64,6 +73,7 @@ public abstract class Player {
             //setFlagSaver(playerCard);
             addToTurnForSavingFlag();
         }
+
         mana -= playerCard.getMp();
         hand.removeUsedCardsFromHand(playerCard);
         playerCard.setPosition(square);

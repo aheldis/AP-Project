@@ -569,5 +569,7 @@ public abstract class Card {
         this.mp = mp;
     }
 
-
+    public Target getTarget() {
+        return target;
+    }
 }
