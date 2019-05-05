@@ -20,20 +20,11 @@ public class Request {
         this.state = state;
     }
 
-    public void getNewLine() throws Exception {
-//        String st = Main.br.readLine();
-//        if (st == null)
-//            return;
-//        this.command = st;
-
+    public void getNewLine() {
         this.command = scanner.nextLine().trim();
     }
 
-    public void getNewCommand() throws Exception {
-//        String st = Main.br.readLine();
-//        if (st == null)
-//            return;
-//        this.command = st.trim();
+    public void getNewCommand() {
         this.command = scanner.nextLine().trim();
         type = getType();
     }

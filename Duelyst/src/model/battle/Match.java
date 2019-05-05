@@ -101,7 +101,7 @@ public class Match {
 
     public Match(Player[] players, String mode, int numberOfFlags, int reward) {
         land = new LandOfGame();
-        ArrayList<Card> cards = players[0].getCardsOnLand();
+        ArrayList<Card> cards = players[0].getMainDeck().getCardsOfDeck();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
         for (Card card : cards) {
@@ -111,7 +111,7 @@ public class Match {
         firstHero.setPlayer(players[0]);
         firstHero.setLandOfGame(land);
         firstHero.setCanMove(true, 1);
-        cards = players[1].getCardsOnLand();
+        cards = players[1].getMainDeck().getCardsOfDeck();
         for (Card card : cards) {
             card.setPlayer(players[1]);
             card.setLandOfGame(land);
@@ -139,6 +139,9 @@ public class Match {
         }
         setCollectiblesRandomly();
         date = new Date();
+        //todo set mana
+        players[0].setMana(2);
+        players[1].setMana(2);
         initGame();
     }
 

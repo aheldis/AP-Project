@@ -68,3 +68,6 @@ move to (5,3)
                      move ali_Eagle_2 in (2,3)
                      end turn
                      Show opponent minions
+move to (2,1)
+exit
+show hand

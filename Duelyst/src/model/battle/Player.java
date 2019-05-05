@@ -26,28 +26,27 @@ public abstract class Player {
     private int turnsPlayed = 0;
     private int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
     private GraveYard graveYard = new GraveYard(this);
-    private ArrayList<Buff> buffsOnThisPlayer;
+    private ArrayList<Buff> buffsOnThisPlayer = new ArrayList<>();
     //Collectible item to hand ast :D
 
     //    public abstract void move(Card card, Square newPosition);
 //    public abstract void attack(Card card, Square target);
 //    public abstract void useSpecialPower(Card card);
 
-    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
-
+    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {//todo mana ro gand mzane
         ErrorType error;
         if (playerCard == null) {
             error = ErrorType.INVALID_CARD_ID;
             error.printMessage();
             return;
         }
-
+        playerCard.setPosition(getHero().getPosition());
         if (!playerCard.canMoveToCoordination(playerCard, coordinate)) {
             error = ErrorType.INVALID_TARGET;
             error.printMessage();
             return;
         }
-
+        playerCard.setPosition(null);
         Square square = land.passSquareInThisCoordinate(coordinate);
         if (square == null) {
             error = ErrorType.INVALID_SQUARE;

@@ -58,7 +58,6 @@ public class Game {
                 reward = 1500;
                 break;
         }
-
         players[1] = new ComputerPlayer(secondPlayerDeck);
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }

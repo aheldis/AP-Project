@@ -145,6 +145,10 @@ public abstract class Card {
         if (card.getManhatanDistance(destination) == 2) {
             int x = card.position.getXCoordinate();
             int y = card.position.getYCoordinate();
+
+            if(x < 0 || x>4 || y<0 || y>8)
+                return false;
+
             int distanceOfX = destination.getX() - card.position.getXCoordinate();
             int distanceOfY = destination.getY() - card.position.getYCoordinate();
             if (Math.abs(distanceOfX) == 2 || Math.abs(distanceOfY) == 2) {
@@ -165,6 +169,7 @@ public abstract class Card {
                 }
             }
         }
+
         return Objects.requireNonNull(landOfGame.passSquareInThisCoordinate(destination)).getObject() == null;
     }
 
