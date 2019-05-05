@@ -7,7 +7,7 @@ public class Usable extends Item {
         //todo
     }
 
-    public boolean equals(String UsableId) {
+    public boolean equals(String usableId) {
         return this.usableId.getUsableIdAsString().equals(usableId);
     }
 
