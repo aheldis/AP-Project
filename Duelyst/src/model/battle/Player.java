@@ -1,9 +1,7 @@
 package model.battle;
 
 import model.account.Account;
-import model.card.Buff;
-import model.card.Card;
-import model.card.Hero;
+import model.card.*;
 import model.item.Collectible;
 import model.item.Flag;
 import model.item.Item;
@@ -154,6 +152,10 @@ public abstract class Player {
 
             for (Buff buff : buffsToBeRemoved)
                 card.getBuffsOnThisCard().remove(buff);
+
+            if (card instanceof Minion && ((Minion) card).getHaveSpecialPower() &&
+                    ((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.PASSIVE)
+                card.useSpecialPower(card.getPosition());
         }
 
         ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
@@ -178,9 +180,7 @@ public abstract class Player {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
         }
-        mainDeck.getHero().
-
-                addToTurnNotUsedSpecialPower(1);
+        mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
 
     }
 

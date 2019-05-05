@@ -435,10 +435,9 @@ public abstract class Card {
 
     public static ArrayList<Hero> getHeroes(ArrayList<Card> cards) {
         ArrayList<Hero> heroes = new ArrayList<>();
-        for (Card card : cards) {
+        for (Card card : cards)
             if (card instanceof Hero)
                 heroes.add((Hero) card);
-        }
         return heroes;
     }
 
