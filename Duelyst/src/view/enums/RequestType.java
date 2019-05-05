@@ -67,5 +67,7 @@ public enum RequestType {
     SINGLE_CUSTOM,
     SINGLE_STORY,
     MODE_HELP,
-    SELECT_MODE_EXIT
+    SELECT_MODE_EXIT,
+    SINGLE_GAME_EXIT,
+    SINGLE_GAME_HELP;
 }

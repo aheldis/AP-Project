@@ -190,4 +190,8 @@ public class MenuView {
         System.out.println("Enter single player");
         System.out.println("Enter multi player");
     }
+    public void helpForSingleMode(){
+        System.out.println("Enter story");
+        System.out.println("Enter custom game");
+    }
 }

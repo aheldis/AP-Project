@@ -251,7 +251,7 @@ public class Shop {
             typeOfFile = FilesType.MINION;
         }
         if (card != null)
-        makeNewFromFile(pathOfFiles + typeOfFile + card.getName(), typeOfFile);
+        makeNewFromFile(pathOfFiles + typeOfFile.getName() + "/" + card.getName() + ".json", typeOfFile);
         cards.remove(card);
         return card;
     }

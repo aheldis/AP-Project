@@ -372,12 +372,17 @@ public class MenuController {
                             if (!request.getCommand().matches("\\d"))
                                 continue;
                             level = Integer.parseInt(request.getCommand());
-
-                        } while (level > 0 && level < 4);
+                        } while (!(level > 0 && level < 4));
                         match = game.makeNewStoryGame(level);
                         state = StateType.BATTLE;
                         break;
                     }
+                    case SINGLE_GAME_EXIT:
+                        state = StateType.SELECT_MODE;
+                        break;
+                    case SINGLE_GAME_HELP:
+                        menuView.helpForSingleMode();
+                        break;
                 }
             } else if (state == StateType.BATTLE) {
                 ErrorType error;
@@ -529,7 +534,7 @@ public class MenuController {
             } else if (state == StateType.SELECT_CARD) {
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
-                    case GAME_USE_SPECIAL_POWER:
+                    case GAME_USE_SPECIAL_POWER://todo faqat hero
                         ErrorType error;
                         if (player.getMana() < player.getHero().getMpRequiredForSpell()) {
                             error = ErrorType.NOT_ENOUGH_MANA;

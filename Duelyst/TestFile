@@ -51,84 +51,20 @@ add ali_HorsemanFromFars_5 to deck zizi
 add ali_HorsemanFromFars_6 to deck zizi
 select deck zizi
 exit
-save
-enter exit
-create Account zahra
-123
-enter shop
-buy Kaveh
-buy ArcherFromFars
-buy ArcherFromTooran
-buy Bahman
-buy Fireball
-buy Eagle
-buy ArcherFromFars
-buy ArcherFromTooran
-buy Ashkboos
-buy Bahman
-buy Fireball
-buy Eagle
-buy StonnerGiant
-buy SwordsmanFromFars
-buy Wolf
-buy WhiteWolf
-buy HorsemanFromFars
-buy HorsemanFromFars
-buy HorsemanFromFars
-buy HorsemanFromFars
-buy HorsemanFromFars
-buy HorsemanFromFars
-show daric
-exit
-enter collection
-create deck zizi
-add zahra_Kaveh_1 to deck zizi
-add zahra_ArcherFromFars_1 to deck zizi
-add zahra_ArcherFromFars_2 to deck zizi
-add zahra_ArcherFromTooran_1 to deck zizi
-add zahra_ArcherFromTooran_2 to deck zizi
-add zahra_Bahman_1 to deck zizi
-add zahra_Bahman_2 to deck zizi
-add zahra_Fireball_1 to deck zizi
-add zahra_Eagle_1 to deck zizi
-add zahra_Ashkboos_1 to deck zizi
-add zahra_Bahman_3 to deck zizi
-add zahra_Fireball_2 to deck zizi
-add zahra_Eagle_2 to deck zizi
-add zahra_StonnerGiant_1 to deck zizi
-add zahra_SwordsmanFromFars_1 to deck zizi
-add zahra_Wolf_1 to deck zizi
-add zahra_HorsemanFromFars_1 to deck zizi
-add zahra_HorsemanFromFars_2 to deck zizi
-add zahra_HorsemanFromFars_3 to deck zizi
-add zahra_HorsemanFromFars_4 to deck zizi
-add zahra_HorsemanFromFars_5 to deck zizi
-add zahra_HorsemanFromFars_6 to deck zizi
-show deck zizi
-validate deck zizi
-select deck zizi
-exit
-enter Battle
+enter battle
 help
-multi player
-ali
-Start multiPlayer game 0 0
-Start multiPlayer game 1 0
-12
-1345
+single player
+help
+story
 game info
-show my minions
-show hand
-show card info ali_Ashkboos_1
-game info
-show card info zahra_Kaveh_1
-select card zahra_Kaveh_1
+1
+show card info ali_Kaveh_1
+select card ali_Kaveh_1
 move to (5,3)
 move to (2,1)
 move to (2,4)
-exit
+insert ali_Eagle_2 in (2,2)
+insert ali_Wolf_1 in (2,2)
+move ali_Eagle_2 in (2,3)
 end turn
-game info
-show card info ali_Kaveh_1
-show hand
-show menu
+Show opponent minions

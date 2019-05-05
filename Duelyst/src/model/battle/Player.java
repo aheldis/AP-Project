@@ -22,7 +22,7 @@ public abstract class Player {
     private ArrayList<Card> cardsOnLand = new ArrayList<>();
     //private Card flagSaver;
     private int turnForSavingFlag = 0;
-    private ArrayList<Flag> ownFlags;
+    private ArrayList<Flag> ownFlags = new ArrayList<>();
     private Account account;
     private Match match;
     private int turnsPlayed = 0;

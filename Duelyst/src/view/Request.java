@@ -7,12 +7,11 @@ import view.enums.StateType;
 import java.util.Scanner;
 
 public class Request {
-    private Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
     private String command;
     private StateType state;//menu or collection or shop or model.battle
     private RequestType type;
     private Coordinate coordinate = new Coordinate();
-
     private String deckName;
     private String Id;
 
@@ -22,20 +21,20 @@ public class Request {
     }
 
     public void getNewLine() throws Exception {
-        String st = Main.br.readLine();
-        if (st == null)
-            return;
-        this.command = st;
+//        String st = Main.br.readLine();
+//        if (st == null)
+//            return;
+//        this.command = st;
 
-//this.command = scanner.nextLine().trim();
+        this.command = scanner.nextLine().trim();
     }
 
     public void getNewCommand() throws Exception {
-        String st = Main.br.readLine();
-        if (st == null)
-            return;
-        this.command = st.trim();
-        //this.command = scanner.nextLine().trim();
+//        String st = Main.br.readLine();
+//        if (st == null)
+//            return;
+//        this.command = st.trim();
+        this.command = scanner.nextLine().trim();
         type = getType();
     }
 
@@ -269,13 +268,21 @@ public class Request {
             if (command.toLowerCase().matches("exit")) {
                 return RequestType.SELECT_MODE_EXIT;
             }
+            if(command.toLowerCase().equals("help"))
+                return RequestType.MODE_HELP;
         }
         if (state == StateType.SINGLE_GAME) {
             if (command.toLowerCase().matches("custom game"))
                 return RequestType.SINGLE_CUSTOM;
             if (command.toLowerCase().matches("story"))
                 return RequestType.SINGLE_STORY;
+            if(command.toLowerCase().equals("help")){
+                return RequestType.SINGLE_GAME_HELP;
+            }
+            if(command.toLowerCase().equals("exit"))
+                return RequestType.SINGLE_GAME_EXIT;
         }
+
         return null;
     }
 
