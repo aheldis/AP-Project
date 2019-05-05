@@ -24,7 +24,7 @@ public abstract class Player {
     private Account account;
     private Match match;
     private int turnsPlayed = 0;
-    private int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
+    private int manaOfThisTurn /*don't change this except in initPerTurn*/, mana = 2;
     private GraveYard graveYard = new GraveYard(this);
     private ArrayList<Buff> buffsOnThisPlayer = new ArrayList<>();
     //Collectible item to hand ast :D

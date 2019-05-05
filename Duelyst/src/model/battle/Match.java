@@ -104,6 +104,8 @@ public class Match {
         ArrayList<Card> cards = players[0].getMainDeck().getCardsOfDeck();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
+        players[0].setMatch(this);
+        players[1].setMatch(this);
         for (Card card : cards) {
             card.setPlayer(players[0]);
             card.setLandOfGame(land);
@@ -119,6 +121,8 @@ public class Match {
         secondHero.setPlayer(players[1]);
         secondHero.setLandOfGame(land);
         secondHero.setCanMove(true, 1);
+        players[0].setOpponent(players[1]);
+        players[1].setOpponent(players[0]);
         this.players = players;
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;

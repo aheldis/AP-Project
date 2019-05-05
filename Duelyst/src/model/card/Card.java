@@ -30,7 +30,7 @@ public abstract class Card {
     protected int attackRange;
     private int cost;
     //    private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
-    private ArrayList<Buff> buffsOnThisCard;
+    private ArrayList<Buff> buffsOnThisCard = new ArrayList<>();
     private Square position;
     private LandOfGame landOfGame;
     private int CardNumber;
