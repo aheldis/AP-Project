@@ -106,7 +106,7 @@ public abstract class Card {
             if (newPosition.getObject() instanceof Flag) {
                 ((Flag) newPosition.getObject()).setOwnerCard(this);
                 player.addToOwnFlags((Flag) newPosition.getObject());
-                player.setFlagSaver(this);
+                //player.setFlagSaver(this);
                 player.addToTurnForSavingFlag();
             }
             if (newPosition.getObject() instanceof Collectible) {
@@ -121,6 +121,9 @@ public abstract class Card {
                     " moved to x: " + newCoordination.getX()+", y: " + newCoordination.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
             canMove = false;
+            for (Flag flag : player.getOwnFlags())
+                if (flag.getOwnerCard().equalCard(cardId.getCardIdAsString()))
+                    flag.setSquare(newPosition);
         } else
             ErrorType.INVALID_TARGET.printMessage();
 

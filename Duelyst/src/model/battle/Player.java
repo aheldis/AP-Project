@@ -14,18 +14,18 @@ import view.enums.ErrorType;
 import java.util.ArrayList;
 
 public abstract class Player {
-    Deck mainDeck;
-    Hand hand;
+    private Deck mainDeck;
+    private Hand hand;
     protected String type;
     private Player opponent;
-    ArrayList<Card> cardsOnLand = new ArrayList<>();
+    private ArrayList<Card> cardsOnLand = new ArrayList<>();
     private Card flagSaver;
     private int turnForSavingFlag = 0;
     private ArrayList<Flag> ownFlags;
     private Account account;
-    Match match;
+    private Match match;
     private int turnsPlayed = 0;
-    int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
+    private int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
     private GraveYard graveYard = new GraveYard(this);
     private ArrayList<Buff> buffsOnThisPlayer;
     //Collectible item to hand ast :D
@@ -61,7 +61,7 @@ public abstract class Player {
         if (square.getObject() instanceof Flag) {
             ((Flag) square.getObject()).setOwnerCard(playerCard);
             match.addToGameFlags((Flag) square.getObject());
-            setFlagSaver(playerCard);
+            //setFlagSaver(playerCard);
             addToTurnForSavingFlag();
         }
         mana -= playerCard.getMp();
@@ -197,9 +197,9 @@ public abstract class Player {
         cardsOnLand.remove(card);
     }
 
-    public void setFlagSaver(Card card) {
+    /*public void setFlagSaver(Card card) {
         flagSaver = card;
-    }
+    }*/
 
     public Hero getHero() {
         return mainDeck.getHero();

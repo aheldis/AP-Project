@@ -45,7 +45,7 @@ public class ComputerPlayer extends Player {
             x++;
             if (!Square.checkerForSquare(x, y, match.getLand())) {
                 x -= 3;
-                if (Square.checkerForSquare(x, y, match.getLand())){
+                if (Square.checkerForSquare(x, y, match.getLand())) {
                     x--;
                     if (!Square.checkerForSquare(x, y, match.getLand())) {
                         return -1;
@@ -112,9 +112,9 @@ public class ComputerPlayer extends Player {
 
         int RANDOM_NUMBER_FOR_ATTACK = 13;
         if (random.nextInt() % RANDOM_NUMBER_FOR_ATTACK == 0) {
-            ArrayList<Card> cards= getOpponent().getCardsOnLand();
-            int randomIndex = random.nextInt(cards.size()-1);
-            cardsOnLand.get(random.nextInt(cardsOnLand.size()-1)).attack(cards.get(randomIndex));
+            ArrayList<Card> cards = getOpponent().getCardsOnLand();
+            int randomIndex = random.nextInt(cards.size() - 1);
+            cardsOnLand.get(random.nextInt(cardsOnLand.size() - 1)).attack(cards.get(randomIndex));
         }
     }
 

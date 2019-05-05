@@ -99,11 +99,6 @@ public class Deck {//if it is normal deck you had initialize it in collection
         return cardsOfDeck;
     }
 
-    public void setRandomCardsAndItemsInDeck() {//todo
-
-
-    }
-
     public static Deck getDeckForStoryMode(int level) {
         Deck deck = new Deck();
         try {

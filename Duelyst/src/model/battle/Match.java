@@ -12,13 +12,12 @@ import model.land.Square;
 import view.BattleView;
 import view.enums.StateType;
 
-import javax.swing.plaf.basic.BasicTreeUI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
 public class Match {
-    private Player[] players ;
+    private Player[] players;
     private String mode;//DeathMode - SaveFlagMode - CollectFlagMode
     private int numberOfFlags;
     private ArrayList<Flag> flags;
@@ -40,7 +39,7 @@ public class Match {
         return flags;
     }
 
-    public void addToGameFlags(Flag flag){
+    public void addToGameFlags(Flag flag) {
         this.flags.add(flag);
     }
 
@@ -60,22 +59,22 @@ public class Match {
             flag = new Flag();
             flags.add(flag);
             squares[randomX][randomY].setObject(flag);
-            if(mode==2)
+            if (mode == 2)
                 return;
         }
     }
 
-    private void setCollectiblesRandomly(){
+    private void setCollectiblesRandomly() {
         Random random = new Random();
-        int numberOfCollectiblesOnLand = random.nextInt( BOUND_FOR_COLLECTIBLES );
-        int randomX,randomY,randomItem;
+        int numberOfCollectiblesOnLand = random.nextInt(BOUND_FOR_COLLECTIBLES);
+        int randomX, randomY, randomItem;
         ArrayList<Item> collectibles = Shop.getInstance().getCollectibles();
         Collectible collectible;
         Square[][] squares = land.getSquares();
         for (int i = 0; i < numberOfCollectiblesOnLand; i++) {
             randomX = random.nextInt(4);
             randomY = random.nextInt(8);
-            randomItem = random.nextInt(collectibles.size()-1);
+            randomItem = random.nextInt(collectibles.size() - 1);
             if (squares[randomX][randomY].getObject() != null) {
                 i--;
                 continue;
@@ -89,39 +88,39 @@ public class Match {
     public Match(Player[] players, String mode, int numberOfFlags, int reward) {
         land = new LandOfGame();
         ArrayList<Card> cards = players[0].getCardsOnLand();
-        Hero firstHero =players[0].getMainDeck().getHero();
-        Hero secondHero =players[1].getMainDeck().getHero();
-        for(Card card : cards){
+        Hero firstHero = players[0].getMainDeck().getHero();
+        Hero secondHero = players[1].getMainDeck().getHero();
+        for (Card card : cards) {
             card.setPlayer(players[0]);
             card.setLandOfGame(land);
         }
         firstHero.setPlayer(players[0]);
         firstHero.setLandOfGame(land);
-        firstHero.setCanMove(true,1);
+        firstHero.setCanMove(true, 1);
         cards = players[1].getCardsOnLand();
-        for(Card card :cards){
+        for (Card card : cards) {
             card.setPlayer(players[1]);
             card.setLandOfGame(land);
         }
         secondHero.setPlayer(players[1]);
         secondHero.setLandOfGame(land);
-        secondHero.setCanMove(true,1);
+        secondHero.setCanMove(true, 1);
         this.players = players;
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;
         this.reward = reward;
 
         Square[][] square = land.getSquares();
-        square[2][0].setObject( players[0].mainDeck.getHero());
+        square[2][0].setObject(players[0].getMainDeck().getHero());
         firstHero.setPosition(square[2][0]);
-        square[2][8].setObject( players[1].mainDeck.getHero());
+        square[2][8].setObject(players[1].getMainDeck().getHero());
         secondHero.setPosition(square[2][8]);
-        players[0].addToCardsOfLand(players[0].mainDeck.getHero());
-        players[1].addToCardsOfLand(players[1].mainDeck.getHero());
-        if(mode.equals(Game.getModeAsString(3))){
+        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
+        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
+        if (mode.equals(Game.getModeAsString(3))) {
             setFlagsRandomly(3);
         }
-        if(mode.equals(Game.getModeAsString(2))){
+        if (mode.equals(Game.getModeAsString(2))) {
             setFlagsRandomly(2);
         }
         setCollectiblesRandomly();
@@ -149,14 +148,13 @@ public class Match {
             MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
-        if(passComputerPlayer() == -1) {
+        if (passComputerPlayer() == -1) {
             players[whichPlayer].initPerTurn();
             whichPlayer = 1 - whichPlayer;
-        }
-        else{
+        } else {
             players[whichPlayer].initPerTurn();
             players[passComputerPlayer()].playTurnForComputer();
-            players[1-whichPlayer].initPerTurn();//init for computer
+            players[1 - whichPlayer].initPerTurn();//init for computer
             if (gameEnded()) {
                 endGame();
                 MenuController.state = StateType.ACCOUNT_MENU;
@@ -182,10 +180,10 @@ public class Match {
 //        }
 //    }
 
-    private int passComputerPlayer(){
-        if(players[0] instanceof ComputerPlayer)
+    private int passComputerPlayer() {
+        if (players[0] instanceof ComputerPlayer)
             return 0;
-        if(players[1] instanceof ComputerPlayer)
+        if (players[1] instanceof ComputerPlayer)
             return 1;
         else
             return -1;

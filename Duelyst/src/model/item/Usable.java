@@ -7,7 +7,7 @@ public class Usable extends Item {
     public void affect() {
         //todo
     }
-
+*/
     public boolean equals(String usableId) {
         return this.usableId.getUsableIdAsString().equals(usableId);
     }

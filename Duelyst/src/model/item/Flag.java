@@ -4,7 +4,6 @@ import model.card.Card;
 import model.land.Square;
 
 public class Flag extends Item {
-    private boolean isOnTheGround = true;
     private Square square;
     private Card OwnerCard;
 
@@ -24,11 +23,4 @@ public class Flag extends Item {
         this.square = square;
     }
 
-    public boolean isOnTheGround() {
-        return isOnTheGround;
-    }
-
-    public void setOnTheGround(boolean onTheGround) {
-        isOnTheGround = onTheGround;
-    }
 }

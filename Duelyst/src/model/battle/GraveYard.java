@@ -42,16 +42,16 @@ public class GraveYard {
 
                 break;
             case "SaveFlagMode": //todo in ro kolan nemikhad vase in mode bezari be nazaram faghat hamoon birron bashe :-?
+            case "CollectFlagMode":
                 for (Flag flag : flags) {
-                    if (flag.getOwnerCard().equalCard(card.getCardId().getCardIdAsString())) {
+                    if (flag.getOwnerCard() != null && flag.getOwnerCard().equalCard(card.getCardId().getCardIdAsString())) {
                         player.setTurnForSavingFlag(0);
+                        //player.setFlagSaver(null);
                         position.setObject(flag);
+                        flag.setOwnerCard(null);
                         break;
                     }
                 }
-                break;
-            case "CollectFlagMode":
-
                 break;
         }
         cards.add(card);
