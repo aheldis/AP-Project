@@ -14,7 +14,6 @@ import model.card.Minion;
 import model.item.Collectible;
 import model.item.Item;
 import model.item.Usable;
-import model.land.Square;
 import model.requirment.Coordinate;
 import view.BattleView;
 import view.MenuView;
@@ -521,7 +520,7 @@ public class MenuController {
                         break;
                     case GAME_ITEM_USE:
                         Coordinate coordinate = request.getCoordinate();
-                        player.putCollectibleItemOnLand(coordinate, id);
+                        player.useCollectibleItemOnLand(coordinate, id);
                         break;
                     case GAME_EXIT_FROM_SELECT_ITEM:
                         state = StateType.BATTLE;

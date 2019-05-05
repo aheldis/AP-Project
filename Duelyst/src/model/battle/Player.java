@@ -96,7 +96,7 @@ public abstract class Player {
 
     public abstract void addMatchInfo(MatchInfo matchInfo);
 
-    public void putCollectibleItemOnLand(Coordinate coordinate, String collectibleItemId) {
+    public void useCollectibleItemOnLand(Coordinate coordinate, String collectibleItemId) {
         ArrayList<Item> collectibleItems = getHand().getCollectibleItems();
         Collectible selected = null;
         for (Item collectible : collectibleItems)
@@ -178,10 +178,7 @@ public abstract class Player {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
         }
-        mainDeck.getHero().
-
-                addToTurnNotUsedSpecialPower(1);
-
+        mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
     }
 
     public void addToCardsOfLand(Card card) {
