@@ -90,7 +90,6 @@ public class Match {
 
         HashMap<String, Integer> collectibleNames = new HashMap<>();
         for (Item collectible : collectibles) {
-            System.out.println( collectible);
             if (!collectibleNames.containsKey(collectible))
                 collectibleNames.put(collectible.getName(), 0);
             int number = collectibleNames.get(collectible.getName()) + 1;

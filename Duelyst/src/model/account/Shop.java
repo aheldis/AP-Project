@@ -59,11 +59,6 @@ public class Shop {
                 }
             }
         }
-
-        System.out.println(getInstance().collectibles.size());
-        for (Item collectible : getInstance().collectibles) {
-            System.out.println("in get instance shop: ");
-        }
     }
 
     public void makeNewFromFile(String path, FilesType type) {
@@ -86,14 +81,11 @@ public class Shop {
                 addCard(spell);
             }
             if (type.equals(FilesType.COLLECTIBLE)) {
-                System.out.println(path);
                 Collectible item = mapper.fromJson(reader, model.item.Collectible.class);
-                System.out.println("collectible" + item);
                 addCollectible(item);
             }
             if (type.equals(FilesType.USABLE)) {
                 Usable item = mapper.fromJson(reader, model.item.Usable.class);
-                System.out.println("usable: " + item);
                 addUsable(item);
             }
         } catch (IOException e) {
@@ -263,7 +255,7 @@ public class Shop {
     public Item getNewItemByName(String name) {
         Usable item = getItem(name);
         if (item != null)
-            makeNewFromFile(pathOfFiles + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM);
+            makeNewFromFile(pathOfFiles + FilesType.USABLE.getName() + "/" + item.getName() + ".json", FilesType.USABLE);
         items.remove(item);
         return item;
     }
@@ -273,7 +265,6 @@ public class Shop {
     }
 
     public void show() {
-        System.out.println();
         accountView.cardsAndItemsView(Card.getSpells(cards),
                 Card.getMinions(cards),
                 Card.getHeroes(cards), items);
