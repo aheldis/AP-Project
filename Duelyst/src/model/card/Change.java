@@ -38,7 +38,8 @@ public class Change {
     //todo ina ro dar nazar begiram too in paeen :> DONE :-?
 
     public void affect(Player player, ArrayList<Square> targets) {
-        if (targetType.equals("Square")) {
+
+        if (targetType.equals("square")) {
             for (Square square : targets) {
                 for (String buffName : buffs.keySet()) {
                     for(int number: buffs.get(buffName))
@@ -46,13 +47,14 @@ public class Change {
                 }
             }
         }
-        if (targetType.equals("Card")) {
+
+        if (targetType.equals("card")) {
             for (Square square : targets) {
                 makeChangeInTargetCard(player, (Card) square.getObject());
             }
         }
 
-        if(targets.equals("Player")){
+        if(targetType.equals("player")){
             for (String buffName : buffs.keySet()) {
                 for (int number : buffs.get(buffName))
                     player.addBuffToPlayer(getBuff(buffName, number));
@@ -61,14 +63,14 @@ public class Change {
     }
 
     private void makeChangeInTargetCard(Player player, Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
-        if (!this.opponentCanMove)
-            targetCard.setCanMove(false, this.turnOfCanNotMoveForOpponent);
+        if (!opponentCanMove)
+            targetCard.setCanMove(false, turnOfCanNotMoveForOpponent);
 
-        if (!this.opponentCanCounterAttack)
-            targetCard.setCanCounterAttack(false, this.turnOfCanNotCounterAttackForOpponent);
+        if (!opponentCanCounterAttack)
+            targetCard.setCanCounterAttack(false, turnOfCanNotCounterAttackForOpponent);
 
-        if (!this.opponentCanAttack)
-            targetCard.setCanAttack(false, this.turnOfCanNotAttackForOpponent);
+        if (!opponentCanAttack)
+            targetCard.setCanAttack(false, turnOfCanNotAttackForOpponent);
 
         targetCard.changeAp(apChange);
         targetCard.changeHp(hpChange);

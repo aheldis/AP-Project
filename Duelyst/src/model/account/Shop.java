@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Shop {
     private static Shop singleInstance = null;
     private static String pathOfFiles = "Duelyst/";
-    private ArrayList<Card> cards = new ArrayList<>();// todo (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
+    private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Item> collectibles = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
@@ -239,7 +239,7 @@ public class Shop {
     }
 
 
-    //todo for making story game
+    //for making story game
     public Card getNewCardByName(String name) {
         Card card = getCard(name);
         FilesType typeOfFile = null;

@@ -6,6 +6,7 @@ import model.card.Card;
 import model.card.Hero;
 import model.item.Collectible;
 import model.item.Flag;
+import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -14,18 +15,18 @@ import view.enums.ErrorType;
 import java.util.ArrayList;
 
 public abstract class Player {
-    Deck mainDeck;
-    Hand hand;
+    private Deck mainDeck;
+    private Hand hand;
     protected String type;
     private Player opponent;
-    ArrayList<Card> cardsOnLand = new ArrayList<>();
-    private Card flagSaver;
+    private ArrayList<Card> cardsOnLand = new ArrayList<>();
+    //private Card flagSaver;
     private int turnForSavingFlag = 0;
     private ArrayList<Flag> ownFlags;
     private Account account;
-    Match match;
+    private Match match;
     private int turnsPlayed = 0;
-    int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
+    private int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
     private GraveYard graveYard = new GraveYard(this);
     private ArrayList<Buff> buffsOnThisPlayer;
     //Collectible item to hand ast :D
@@ -61,7 +62,8 @@ public abstract class Player {
         if (square.getObject() instanceof Flag) {
             ((Flag) square.getObject()).setOwnerCard(playerCard);
             match.addToGameFlags((Flag) square.getObject());
-            setFlagSaver(playerCard);
+            playerCard.getPlayer().addToOwnFlags((Flag) square.getObject());
+            //setFlagSaver(playerCard);
             addToTurnForSavingFlag();
         }
         mana -= playerCard.getMp();
@@ -94,8 +96,14 @@ public abstract class Player {
 
     public abstract void addMatchInfo(MatchInfo matchInfo);
 
-    public void putCollectibleItemOnLand(Coordinate coordinate, String CollectibleItemId) {
-        //todo
+    public void putCollectibleItemOnLand(Coordinate coordinate, String collectibleItemId) {
+        ArrayList<Item> collectibleItems = getHand().getCollectibleItems();
+        Collectible selected = null;
+        for (Item collectible : collectibleItems)
+            if (collectible.getName().equals(collectibleItemId))
+                selected = (Collectible) collectible;
+        Square square = match.getLand().passSquareInThisCoordinate(coordinate);
+        square.setObject(selected);
     }
 
     public void addItemToCollectibles(Collectible collectible) {
@@ -196,9 +204,9 @@ public abstract class Player {
         cardsOnLand.remove(card);
     }
 
-    public void setFlagSaver(Card card) {
+    /*public void setFlagSaver(Card card) {
         flagSaver = card;
-    }
+    }*/
 
     public Hero getHero() {
         return mainDeck.getHero();
@@ -294,5 +302,9 @@ public abstract class Player {
 
     public void manaChange(int number) {
         mana += number;
+    }
+
+    public int getManaOfThisTurn() {
+        return manaOfThisTurn;
     }
 }

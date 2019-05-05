@@ -37,22 +37,16 @@ public class GraveYard {
         ArrayList<Flag> flags = player.getOwnFlags();
         String mode = player.getMatch().getMode();
         position.setObject(null);
-        switch (mode) {
-            case "DeathMode":
 
+        for (Flag flag : flags) {
+            if (flag.getOwnerCard() != null && flag.getOwnerCard().equalCard(card.getCardId().getCardIdAsString())) {
+                player.setTurnForSavingFlag(0);
+                player.getOwnFlags().remove(flag);
+                //player.setFlagSaver(null);
+                position.setObject(flag);
+                flag.setOwnerCard(null);
                 break;
-            case "SaveFlagMode": //todo in ro kolan nemikhad vase in mode bezari be nazaram faghat hamoon birron bashe :-?
-                for (Flag flag : flags) {
-                    if (flag.getOwnerCard().equalCard(card.getCardId().getCardIdAsString())) {
-                        player.setTurnForSavingFlag(0);
-                        position.setObject(flag);
-                        break;
-                    }
-                }
-                break;
-            case "CollectFlagMode":
-
-                break;
+            }
         }
         cards.add(card);
     }

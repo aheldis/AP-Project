@@ -12,7 +12,7 @@ public class ComputerPlayer extends Player {
     public ComputerPlayer(Deck deck) {
         this.setMainDeck(deck);
         this.setType("ComputerPlayer");
-        mainDeck.setRandomOrderForDeck();
+        getMainDeck().setRandomOrderForDeck();
         setMana(2);
         setHand();
     }
@@ -23,13 +23,13 @@ public class ComputerPlayer extends Player {
 
     private int yMovement(int x, int y) {
         y++;
-        if (!Square.checkerForSquare(x, y, match.getLand())) {
+        if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
             y++;
-            if (!Square.checkerForSquare(x, y, match.getLand())) {
+            if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
                 y -= 3;
-                if (!Square.checkerForSquare(x, y, match.getLand())) {
+                if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
                     y--;
-                    if (!Square.checkerForSquare(x, y, match.getLand())) {
+                    if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
                         return -1;
                     }
                 }
@@ -41,13 +41,13 @@ public class ComputerPlayer extends Player {
 
     private int xMovement(int x, int y) {
         x++;
-        if (!Square.checkerForSquare(x, y, match.getLand())) {
+        if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
             x++;
-            if (!Square.checkerForSquare(x, y, match.getLand())) {
+            if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
                 x -= 3;
-                if (Square.checkerForSquare(x, y, match.getLand())){
+                if (Square.checkerForSquare(x, y, getMatch().getLand())) {
                     x--;
-                    if (!Square.checkerForSquare(x, y, match.getLand())) {
+                    if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
                         return -1;
                     }
                 }
@@ -66,8 +66,8 @@ public class ComputerPlayer extends Player {
         if (random.nextInt() % RANDOM_NUMBER_FOR_PUT_CARD == 0) {
             int randomNumberForCards = random.nextInt(2);
             for (int i = 0; i < randomNumberForCards; i++) {
-                x = mainDeck.getHero().getPosition().getXCoordinate();
-                y = mainDeck.getHero().getPosition().getYCoordinate();
+                x = getMainDeck().getHero().getPosition().getXCoordinate();
+                y = getMainDeck().getHero().getPosition().getYCoordinate();
                 if (random.nextInt() % 2 == 0) {//x =x hero
                     y = yMovement(x, y);
                     if (y == -1)
@@ -81,18 +81,18 @@ public class ComputerPlayer extends Player {
                 coordinate = new Coordinate();
                 coordinate.setY(y);
                 coordinate.setX(x);
-                Card card = hand.chooseARandomCard();
-                if (manaOfThisTurn < card.getMp())
-                    putCardOnLand(card, coordinate, match.getLand());
+                Card card = getHand().chooseARandomCard();
+                if (getManaOfThisTurn() < card.getMp())
+                    putCardOnLand(card, coordinate, getMatch().getLand());
             }
         }
 
         int RANDOM_NUMBER_FOR_MOVE = 10;
         if (random.nextInt() % RANDOM_NUMBER_FOR_MOVE == 0) {
-            x = mainDeck.getHero().getPosition().getXCoordinate();
-            y = mainDeck.getHero().getPosition().getYCoordinate();
-            int cardMoven = random.nextInt(cardsOnLand.size() - 1);
-            Card card = cardsOnLand.get(cardMoven);
+            x = getMainDeck().getHero().getPosition().getXCoordinate();
+            y = getMainDeck().getHero().getPosition().getYCoordinate();
+            int cardMoven = random.nextInt(getCardsOnLand().size() - 1);
+            Card card = getCardsOnLand().get(cardMoven);
             if (random.nextInt() % 2 == 0) {
                 y = yMovement(x, y);
                 if (y != -1) {
@@ -112,9 +112,9 @@ public class ComputerPlayer extends Player {
 
         int RANDOM_NUMBER_FOR_ATTACK = 13;
         if (random.nextInt() % RANDOM_NUMBER_FOR_ATTACK == 0) {
-            ArrayList<Card> cards= getOpponent().getCardsOnLand();
-            int randomIndex = random.nextInt(cards.size()-1);
-            cardsOnLand.get(random.nextInt(cardsOnLand.size()-1)).attack(cards.get(randomIndex));
+            ArrayList<Card> cards = getOpponent().getCardsOnLand();
+            int randomIndex = random.nextInt(cards.size() - 1);
+            getCardsOnLand().get(random.nextInt(getCardsOnLand().size() - 1)).attack(cards.get(randomIndex));
         }
     }
 
