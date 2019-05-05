@@ -21,20 +21,19 @@
       "turnOfCanNotCounterAttackForOpponent": 0,
       "hpChange": 0,
       "apChange": 0,
-      "continuous": true,
       "buffs": {
         "holy": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
         ]
       },
       "unaffactBuffs": false

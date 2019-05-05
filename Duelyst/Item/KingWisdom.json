@@ -29,8 +29,10 @@
       "turnOfCanNotCounterAttackForOpponent": 0,
       "hpChange": 1,
       "apChange": 0,
-      "continuous": true,
-      "buffs": {},
+      "changeInManaForMana": 1,
+      "buffs": {
+        "Mana": [-1]
+      },
       "unaffactBuffs": false
     }
   }
