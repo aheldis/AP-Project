@@ -19,7 +19,7 @@ public abstract class Player {
     protected String type;
     private Player opponent;
     private ArrayList<Card> cardsOnLand = new ArrayList<>();
-    private Card flagSaver;
+    //private Card flagSaver;
     private int turnForSavingFlag = 0;
     private ArrayList<Flag> ownFlags;
     private Account account;
@@ -61,6 +61,7 @@ public abstract class Player {
         if (square.getObject() instanceof Flag) {
             ((Flag) square.getObject()).setOwnerCard(playerCard);
             match.addToGameFlags((Flag) square.getObject());
+            playerCard.getPlayer().addToOwnFlags((Flag) square.getObject());
             //setFlagSaver(playerCard);
             addToTurnForSavingFlag();
         }

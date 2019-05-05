@@ -46,6 +46,7 @@ public class GraveYard {
                 for (Flag flag : flags) {
                     if (flag.getOwnerCard() != null && flag.getOwnerCard().equalCard(card.getCardId().getCardIdAsString())) {
                         player.setTurnForSavingFlag(0);
+                        player.getOwnFlags().remove(flag);
                         //player.setFlagSaver(null);
                         position.setObject(flag);
                         flag.setOwnerCard(null);
