@@ -73,7 +73,7 @@ public class ComputerPlayer extends Player {
                     if (y == -1)
                         continue;
 
-                } else {//y= y hero
+                } else {//y = y hero
                     x = xMovement(x, y);
                     if (x == -1)
                         continue;

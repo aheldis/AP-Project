@@ -20,10 +20,6 @@ public class Hero extends Card {
         buffs.add(buff);
     }
 
-    public void useSpecialPower(Coordinate coordinate) {
-        //TODO fkr konam niyaz nadashte bashim
-    }
-
     public void increaseNumberOfAttacks() {
         numberOfAttacks++;
     }

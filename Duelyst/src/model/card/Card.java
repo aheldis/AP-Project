@@ -1,6 +1,7 @@
 package model.card;
 
 
+import model.battle.OrdinaryPlayer;
 import model.battle.Player;
 import model.item.Collectible;
 import model.item.Flag;
@@ -54,11 +55,6 @@ public abstract class Card {
         buffsOnThisCard.add(buff);
     }
 
-    public void useSpecialPower(Square cardSquare) {
-        setTarget(cardSquare);
-        change.affect(player, target.getTargets());
-    }
-
     public void removeBuffs(boolean goodBuff) {
         ArrayList<Buff> buffsWhichAreGoingToDeleted = new ArrayList<>();
         for (Buff buff : buffsOnThisCard) {
@@ -87,19 +83,22 @@ public abstract class Card {
 
     public void move(Coordinate newCoordination) {
         Square newPosition = landOfGame.passSquareInThisCoordinate(newCoordination);
-        if (newPosition == null) {
-            ErrorType.CAN_NOT_MOVE_IN_SQUARE.printMessage();
-            return;
-        }
 
-        if (!canMove) {
-            ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
-            return;
-        }
+        if (player instanceof OrdinaryPlayer) {
+            if (newPosition == null) {
+                ErrorType.CAN_NOT_MOVE_IN_SQUARE.printMessage();
+                return;
+            }
 
-        if (!(canMoveToCoordination(this, newCoordination) && withinRange(newCoordination, 2))) {
-            ErrorType.INVALID_TARGET.printMessage();
-            return;
+            if (!canMove) {
+                ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
+                return;
+            }
+
+            if (!(canMoveToCoordination(this, newCoordination) && withinRange(newCoordination, 2))) {
+                ErrorType.INVALID_TARGET.printMessage();
+                return;
+            }
         }
 
         ArrayList<Buff> buffsOfSquare = newPosition.getBuffs();
@@ -109,8 +108,7 @@ public abstract class Card {
 
         if (this instanceof Minion) {
             if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
-                setTarget(newPosition);
-                //todo change ro seda bezan
+                useSpecialPower(newPosition);
                 //cell effect:
                 Square square = landOfGame.passSquareInThisCoordinate(newCoordination);
                 for (Buff buff : square.getBuffs()) {
@@ -133,9 +131,11 @@ public abstract class Card {
         setPosition(newPosition);
         newPosition.setObject(this);
         position.setObject(null);
-        RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() +
-                " moved to x: " + newCoordination.getX() + ", y: " + newCoordination.getY());
-        RequestSuccessionType.MOVE_TO.printMessage();
+        if (player instanceof OrdinaryPlayer) {
+            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() +
+                    " moved to x: " + newCoordination.getX() + ", y: " + newCoordination.getY());
+            RequestSuccessionType.MOVE_TO.printMessage();
+        }
         canMove = false;
         for (Flag flag : player.getOwnFlags())
             if (flag.getOwnerCard().equalCard(cardId.getCardIdAsString()))
@@ -183,8 +183,8 @@ public abstract class Card {
     }
 
     public void setTarget(Square cardSquare) {
-        boolean isSquare = change.getTargetType().equals("Square");
-        boolean isCard = change.getTargetType().equals("Card");
+        boolean isSquare = change.getTargetType().equals("square");
+        boolean isCard = change.getTargetType().equals("card");
         ArrayList<Square> targets = new ArrayList<>();
         if (isSquare)
             targets.add(cardSquare);
@@ -253,26 +253,30 @@ public abstract class Card {
     }
 
     public void attack(Card attackedCard) {
-        if (attackedCard == null) {
-            ErrorType.INVALID_CARD_ID.printMessage();
-            return;
-        }
         if (this instanceof Spell) {
             return;
         }
-        if (!canAttack) {
-            ErrorType.CAN_NOT_ATTACK.printMessage();
-            return;
+
+        if (player instanceof OrdinaryPlayer) {
+            if (attackedCard == null) {
+                ErrorType.INVALID_CARD_ID.printMessage();
+                return;
+            }
+
+            if (!canAttack) {
+                ErrorType.CAN_NOT_ATTACK.printMessage();
+                return;
+            }
         }
         if (this instanceof Minion) {
-            if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
-                //todo affect special power
-                setTarget(position);
+            if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK ||
+                    ((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
+                useSpecialPower(position);
                 getChange().affect(player, this.getTargetClass().getTargets());
             }
         }
 
-        if (!withinRange(attackedCard.position.getCoordinate(), attackRange)) {
+        if (!withinRange(attackedCard.position.getCoordinate(), attackRange) && player instanceof OrdinaryPlayer) {
             ErrorType.UNAVAILABLE_OPPONENT.printMessage();
             return;
         }
@@ -304,10 +308,10 @@ public abstract class Card {
         if (this.canCounterAttack && canCounterAttack)
             theOneWhoAttacked.changeHp(-ap);
         if (theOneWhoAttacked instanceof Minion) {
-            if (((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
-                //todo affect special power
-                //setTarget(theOneWhoAttacked, position);
-                // getChange().affect(, this.getTargetClass().getTargets());//todo chert momkene bashe
+            if (((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK ||
+                    ((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN ||
+                    ((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_DEFEND) {
+                useSpecialPower(theOneWhoAttacked.getPosition());
             }
         }
     }
@@ -396,25 +400,29 @@ public abstract class Card {
         ap += number;
     }
 
-    public void useSpecialPower(Coordinate coordinate) {
+    public void useSpecialPower(Square cardSquare) {
+
         ErrorType error;
         if (this instanceof Spell) {
             error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;
             error.printMessage();
             return;
         }
+
         if (this instanceof Minion) {
             if (((Minion) this).getHaveSpecialPower()) {
-
-                //todo AffectSpecialPower
+                setTarget(cardSquare);
+                change.affect(player, target.getTargets());
                 return;
             }
 
         }
+
         if (this instanceof Hero) {
             if (((Hero) this).getHaveSpecialPower()) {
                 if (((Hero) this).getTurnNotUsedSpecialPower() <= ((Hero) this).getCoolDown()) {
-                    //todo AffectSpecialPower
+                    setTarget(cardSquare);
+                    change.affect(player, target.getTargets());
                     return;
                 }
                 ((Hero) this).setTurnNotUsedSpecialPower(0);
