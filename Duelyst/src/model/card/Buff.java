@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 //in ke bafha ro dorost misaze o ina (getNewBuffByName va makeNewFromFile) ro check kardam
 
+//todo for sba 2 nobat baraye json
+
 public class Buff {
     private static ArrayList<Buff> buffs = new ArrayList<>();
     private static String pathOfFiles = Shop.getPathOfFiles() + "Buff";

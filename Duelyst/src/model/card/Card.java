@@ -54,6 +54,11 @@ public abstract class Card {
         buffsOnThisCard.add(buff);
     }
 
+    public void useSpecialPower(Square cardSquare) {
+        setTarget(cardSquare);
+        change.affect(player, target.getTargets());
+    }
+
     public void removeBuffs(boolean goodBuff) {
         ArrayList<Buff> buffsWhichAreGoingToDeleted = new ArrayList<>();
         for (Buff buff : buffsOnThisCard) {
@@ -386,9 +391,6 @@ public abstract class Card {
         return this.cardId.getCardIdAsString().equals(cardId);
     }
 
-    public void removeCounterAttack() {//TODO
-
-    }
 
     public void changeAp(int number) {
         ap += number;
