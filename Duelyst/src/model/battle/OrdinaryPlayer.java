@@ -1,15 +1,6 @@
 package model.battle;
 
-import model.item.Flag;
 import model.account.Account;
-import model.card.Buff;
-import model.card.Card;
-import model.land.LandOfGame;
-import model.land.Square;
-import model.requirment.Coordinate;
-import view.enums.ErrorType;
-
-import java.util.ArrayList;
 
 public class OrdinaryPlayer extends Player {
 
@@ -20,7 +11,7 @@ public class OrdinaryPlayer extends Player {
         this.setAccount(account);
         this.setMainDeck(deck);
         this.setType("OrdinaryPlayer");
-        mainDeck.setRandomOrderForDeck();
+        getMainDeck().setRandomOrderForDeck();
         setMana(mana);
         setHand();
     }

@@ -64,6 +64,7 @@ public class Hero extends Card {
     public int getTurnNotUsedSpecialPower() {
         return turnNotUsedSpecialPower;
     }
+
     public void addToTurnNotUsedSpecialPower(int a){
         turnNotUsedSpecialPower+=a;
     }

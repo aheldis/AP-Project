@@ -304,4 +304,8 @@ public abstract class Player {
     public void manaChange(int number) {
         mana += number;
     }
+
+    public int getManaOfThisTurn() {
+        return manaOfThisTurn;
+    }
 }
