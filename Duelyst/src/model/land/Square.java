@@ -69,7 +69,4 @@ public class Square {
         return landOfGame.getSquares()[x][y].getObject() == null;
     }
 
-    //todo collectible
-
-    //todo hamsayeha
 }

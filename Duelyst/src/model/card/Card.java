@@ -29,7 +29,7 @@ public abstract class Card {
     private String counterAttack;
     protected int attackRange;
     private int cost;
-//    private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
+    //    private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
     private ArrayList<Buff> buffsOnThisCard;
     private Square position;
     private LandOfGame landOfGame;
@@ -41,7 +41,6 @@ public abstract class Card {
     private int hpChangeAfterAttack = 0; //todo mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
     private String description;
     private static final int DEFAULT = -1;
-    //todo
 
     public void setPlayer(Player player) {
         this.player = player;
@@ -83,50 +82,59 @@ public abstract class Card {
 
     public void move(Coordinate newCoordination) {
         Square newPosition = landOfGame.passSquareInThisCoordinate(newCoordination);
-        if(newPosition == null){
+        if (newPosition == null) {
             ErrorType.CAN_NOT_MOVE_IN_SQUARE.printMessage();
             return;
         }
+
         if (!canMove) {
             ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
             return;
         }
-        if (canMoveToCoordination(this, newCoordination) && withinRange(newCoordination, 2)) {
-            if (this instanceof Minion) {
-                if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
-                    setTarget(newPosition);
 
-                    //cell effect:
-                    Square square = landOfGame.passSquareInThisCoordinate(newCoordination);
-                    for (Buff buff : square.getBuffs()) {
-                        this.addBuff(buff);
-                    }
+        if (!(canMoveToCoordination(this, newCoordination) && withinRange(newCoordination, 2))) {
+            ErrorType.INVALID_TARGET.printMessage();
+            return;
+        }
+
+        ArrayList<Buff> buffsOfSquare = newPosition.getBuffs();
+        for (Buff buff : buffsOfSquare) {
+            buff.affect(this);
+        }
+
+        if (this instanceof Minion) {
+            if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
+                setTarget(newPosition);
+                //todo change ro seda bezan
+                //cell effect:
+                Square square = landOfGame.passSquareInThisCoordinate(newCoordination);
+                for (Buff buff : square.getBuffs()) {
+                    this.addBuff(buff);
                 }
             }
-            if (newPosition.getObject() instanceof Flag) {
-                ((Flag) newPosition.getObject()).setOwnerCard(this);
-                player.addToOwnFlags((Flag) newPosition.getObject());
-                //player.setFlagSaver(this);
-                player.addToTurnForSavingFlag();
-            }
-            if (newPosition.getObject() instanceof Collectible) {
-                player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
-            }
-            // if(newPosition.getObject() instanceof ) todo asare khane
+        }
 
-            setPosition(newPosition);
-            newPosition.setObject(this);
-            position.setObject(null);
-            RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() +
-                    " moved to x: " + newCoordination.getX()+", y: " + newCoordination.getY());
-            RequestSuccessionType.MOVE_TO.printMessage();
-            canMove = false;
-            for (Flag flag : player.getOwnFlags())
-                if (flag.getOwnerCard().equalCard(cardId.getCardIdAsString()))
-                    flag.setSquare(newPosition);
-        } else
-            ErrorType.INVALID_TARGET.printMessage();
+        if (newPosition.getObject() instanceof Flag) {
+            ((Flag) newPosition.getObject()).setOwnerCard(this);
+            player.addToOwnFlags((Flag) newPosition.getObject());
+            //player.setFlagSaver(this);
+            player.addToTurnForSavingFlag();
+        }
 
+        if (newPosition.getObject() instanceof Collectible) {
+            player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
+        }
+
+        setPosition(newPosition);
+        newPosition.setObject(this);
+        position.setObject(null);
+        RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() +
+                " moved to x: " + newCoordination.getX() + ", y: " + newCoordination.getY());
+        RequestSuccessionType.MOVE_TO.printMessage();
+        canMove = false;
+        for (Flag flag : player.getOwnFlags())
+            if (flag.getOwnerCard().equalCard(cardId.getCardIdAsString()))
+                flag.setSquare(newPosition);
     }
 
     public boolean canMoveToCoordination(Card card, Coordinate destination) {

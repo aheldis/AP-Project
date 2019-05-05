@@ -18,7 +18,6 @@ public class Target {
     private boolean column;
     private boolean all;
     private boolean random;
-    //todo by haniyeh
     private static final int DEFAULT = -1;
     private int distance = DEFAULT;
     //default
@@ -82,22 +81,9 @@ public class Target {
         return forWitchCard.withinRange(squareOfTarget.getCoordinate(), distance);
     }
 
-    public ArrayList<Square> getTarget(Square square /*squari e ke seda mikone */) {
-        //todo
-        return null;
-    }
-
     public ArrayList<Square> getTargets() {
         return targets;
     }
-
-//    public void setTargets(Card attacker, Card attacked) {
-//        if (attacked == null) {
-//
-//        } else {
-//
-//        }
-//    }
 
     public void setTargets(ArrayList<Square> targets) {
         this.targets = targets;
@@ -127,7 +113,6 @@ public class Target {
         return self;
     }
 
-    //todo isAlly and isEnemy
     public boolean isAlly() {
         return ally;
     }

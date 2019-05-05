@@ -75,11 +75,6 @@ public class Spell extends Card {
         this.turnForHpChanges = turnForHpChanges;
     }
 
-
-//    public void printdesc() {
-//        System.out.println(getDescription());//todo sout
-//    }
-
     public int getPlayerNameByNumber() {
         return playerNameByNumber;
     }

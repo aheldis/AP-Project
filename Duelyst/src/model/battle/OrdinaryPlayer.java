@@ -33,57 +33,7 @@ public class OrdinaryPlayer extends Player {
         getAccount().addMatchInfo(matchInfo);
     }
 
-/*
-    public void move(Card card, Square newPosition) {
-        ErrorType error;
-        if (!withinRange(card.getPosition(), newPosition, 2)) {
-            error = ErrorType.CAN_NOT_MOVE_IN_SQUARE;
-            error.printMessage();
-            return;
-        }
-        if (!card.isCanMove() && card.canMoveToCoordination(card, newPosition.getCoordinate())) {
-            error = ErrorType.CAN_NOT_MOVE_IN_SQUARE;
-            error.printMessage();
-            return;
-        }
 
-        ArrayList<Buff> buffsOfSquare = newPosition.getBuffs();
-        for (Buff buff : buffsOfSquare) {
-            buff.affect(card);
-        }
-
-        if (card instanceof Minion) {
-            if (((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
-                card.setTarget(card, newPosition);
-
-                //todo AffectSpecialPower
-            }
-        }
-        if (newPosition.getObject() instanceof Flag) {
-            flags.add((Flag) newPosition.getObject());
-            flagSaver = card;
-            turnForSavingFlag++;//todo dead
-        }
-        if (newPosition.getObject() instanceof Collectible) {
-            hand.addToCollectibleItem((Collectible) newPosition.getObject());
-        }
-        card.setPosition(newPosition);
-        newPosition.setObject(card);
-    }*/
-
-
-   /* @Override
-    public void attack(Card card, Square target) {
-
-    }*/
-
-    /*public boolean withinRange(Square square1, Square square2, int range) {
-        if (abs(square1.getXCoordinate() - square2.getXCoordinate()) +
-                abs(square1.getYCoordinate() - square2.getYCoordinate()) <= range) {
-            return true;
-        }
-        return false;
-    }*/
 //    public static OrdinaryPlayer makeNewPlayer(Account account, Deck mainDeck) {
 //        if (mainDeck == null) {
 //            ErrorType error = ErrorType.DONT_HAVE_MAIN_DECK;
