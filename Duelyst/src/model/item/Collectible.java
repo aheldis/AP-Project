@@ -5,11 +5,11 @@ import model.land.Square;
 public class Collectible extends model.item.Item {
     private model.item.CollectibleId collectibleId;
     private Square square;
-
+/*
     void affect() {
 
     }
-
+*/
     public model.item.CollectibleId getCollectibleId() {
         return collectibleId;
     }

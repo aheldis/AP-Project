@@ -21,9 +21,8 @@
       "turnOfCanNotCounterAttackForOpponent": 0,
       "hpChange": 0,
       "apChange": 0,
-      "continuous": true,
       "buffs": {
-        "disarm": [1]
+        "disarm": [-1]
       },
       "unaffactBuffs": false
     },

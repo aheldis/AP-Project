@@ -377,6 +377,10 @@ public class Collection {
                 }
             }
         }
+
+        for(Deck deck: decks){
+            deck.removeFromCardsOfDeck(card);
+        }
     }
 
     public void removeItem(Usable item) {
@@ -385,6 +389,10 @@ public class Collection {
                 items[i] = null;
                 return;
             }
+        }
+
+        for(Deck deck: decks){
+            deck.removeItemOfDeck(item);
         }
     }
 

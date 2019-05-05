@@ -11,7 +11,6 @@ import view.enums.ErrorType;
 import view.enums.RequestSuccessionType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
@@ -30,7 +29,8 @@ public abstract class Card {
     private String counterAttack;
     protected int attackRange;
     private int cost;
-    private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
+//    private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
+    private ArrayList<Buff> buffsOnThisCard;
     private Square position;
     private LandOfGame landOfGame;
     private int CardNumber;
@@ -51,17 +51,18 @@ public abstract class Card {
         return change;
     }
 
-    public void addBuff(Buff buff, int forHowManyTurn) {
-        if (!buffsOnThisCard.containsKey(buff))
-            buffsOnThisCard.put(buff, new ArrayList<>());
-        buffsOnThisCard.get(buff).add(forHowManyTurn);
+    public void addBuff(Buff buff) {
+        buffsOnThisCard.add(buff);
     }
 
     public void removeBuffs(boolean goodBuff) {
         ArrayList<Buff> buffsWhichAreGoingToDeleted = new ArrayList<>();
-        for (Buff buff : buffsOnThisCard.keySet()) {
-            if (buff.isGoodBuff() == goodBuff)
+        for (Buff buff : buffsOnThisCard) {
+            if (buff.isGoodBuff() == goodBuff && !buff.isContinuous()) {
+                if (buff.isHaveUnAffect())
+                    buff.unAffect(this);
                 buffsWhichAreGoingToDeleted.add(buff);
+            }
         }
         for (Buff buff : buffsWhichAreGoingToDeleted) {
             buffsOnThisCard.remove(buff);
@@ -69,8 +70,10 @@ public abstract class Card {
     }
 
     public void removeBuff(String buffName) {
-        for (Buff buff : buffsOnThisCard.keySet()) {
-            if (buff.getName().equals(buffName)) {
+        for (Buff buff : buffsOnThisCard) {
+            if (buff.getName().equals(buffName) && !buff.isContinuous()) {
+                if (buff.isHaveUnAffect())
+                    buff.unAffect(this);
                 buffsOnThisCard.remove(buff);
                 return;
             }
@@ -93,7 +96,11 @@ public abstract class Card {
                 if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
                     setTarget(newPosition);
 
-                    //todo AffectSpecialPower
+                    //cell effect:
+                    Square square = landOfGame.passSquareInThisCoordinate(newCoordination);
+                    for (Buff buff : square.getBuffs()) {
+                        this.addBuff(buff);
+                    }
                 }
             }
             if (newPosition.getObject() instanceof Flag) {
@@ -491,7 +498,7 @@ public abstract class Card {
         this.cost = cost;
     }
 
-    public HashMap<Buff, ArrayList<Integer>> getBuffsOnThisCard() {
+    public ArrayList<Buff> getBuffsOnThisCard() {
         return buffsOnThisCard;
     }
 

@@ -34,7 +34,7 @@ public class Request {
         String st = Main.br.readLine();
         if (st == null)
             return;
-        this.command = st;
+        this.command = st.trim();
         //this.command = scanner.nextLine().trim();
         type = getType();
     }

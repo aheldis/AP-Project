@@ -33,9 +33,11 @@ public class Spell extends Card {
         System.out.println(getDescription());//todo sout
     }
 
-    public void affect(/*target card*/) {
+    /*
+    public void affect() {
 //az tabeye too card estefade kone
     }
+    */
 
     public void setTarget(Square square) {
 

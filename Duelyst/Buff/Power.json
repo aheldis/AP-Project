@@ -1,5 +1,5 @@
 {
-  "@type": "BuffCopy",
+  "@type": "model.card.Buff",
   "@val": {
     "name": "Power",
     "goodBuff": true,

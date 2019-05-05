@@ -1,14 +1,15 @@
 {
   "@type": "model.card.Buff",
   "@val": {
-    "name": "Stun",
+    "name": "DecreaserHp",
     "goodBuff": false,
-    "haveUnAffect": true,
+    "haveUnAffect": false,
     "apChange": 0,
     "hpChange": 0,
     "canMove": false,
     "canAttack": false,
     "canCounterAttack": true,
-    "hpChangeAfterAttack": false
+    "hpChangeAfterAttack": false,
+    "hpChangeNotInFirstTurn": true
   }
 }

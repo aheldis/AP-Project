@@ -3,6 +3,7 @@ package model.item;
 public class Usable extends Item {
     private UsableId usableId;
 
+    /*
     public void affect() {
         //todo
     }

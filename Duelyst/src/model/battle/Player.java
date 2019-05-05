@@ -27,6 +27,7 @@ public abstract class Player {
     private int turnsPlayed = 0;
     int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
     private GraveYard graveYard = new GraveYard(this);
+    private ArrayList<Buff> buffsOnThisPlayer;
     //Collectible item to hand ast :D
 
     //    public abstract void move(Card card, Square newPosition);
@@ -51,10 +52,12 @@ public abstract class Player {
             error.printMessage();
             return;
         }
-        ArrayList<Buff> buffsOfSquare = square.getBuffs();
-        for (Buff buff : buffsOfSquare) {
-            buff.affect(playerCard);
+
+        //cellEffect:
+        for (Buff buff : square.getBuffs()) {
+            this.addBuffToPlayer(buff);
         }
+
         if (square.getObject() instanceof Flag) {
             ((Flag) square.getObject()).setOwnerCard(playerCard);
             match.addToGameFlags((Flag) square.getObject());
@@ -101,8 +104,9 @@ public abstract class Player {
 
     public Card passCardInGame(String cardId) {
         Card card = hand.passCardInHand(cardId);
-        if (card != null)
+        if (card != null) {
             return card;
+        }
         ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(cardsOnLand);
         for (Card outPutCard : cards) {
@@ -125,29 +129,51 @@ public abstract class Player {
             if (card.getTurnOfCanNotMove() <= 0)
                 card.setCanMove(true, 0);
 
-            for (Buff buff : card.getBuffsOnThisCard().keySet()) {
-                ArrayList<Integer> theNumbersWhichAreNotPositiveAndNeedToBeRemoved = new ArrayList<>();
-                for (Integer forHowManyTurn : card.getBuffsOnThisCard().get(buff)) {
+            ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
+            for (Buff buff : card.getBuffsOnThisCard()) {
+                if (!buff.isContinuous()) {
+                    int forHowManyTurn = buff.getForHowManyTurn();
                     forHowManyTurn--;
                     if (forHowManyTurn > 0) {
                         buff.affect(card);
                     } else {
                         if (buff.isHaveUnAffect())
                             buff.unAffect(card);
-                        theNumbersWhichAreNotPositiveAndNeedToBeRemoved.add(forHowManyTurn);
+                        buffsToBeRemoved.add(buff);
                     }
                 }
+            }
 
-                for (Integer number : theNumbersWhichAreNotPositiveAndNeedToBeRemoved)
-                    card.getBuffsOnThisCard().get(buff).remove(number);
+            for (Buff buff : buffsToBeRemoved)
+                card.getBuffsOnThisCard().remove(buff);
+        }
+
+        ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
+        for (Buff buff : buffsOnThisPlayer) {
+
+            if (!buff.isContinuous()) {
+                int forHowManyTurn = buff.getForHowManyTurn();
+                forHowManyTurn--;
+                if (forHowManyTurn > 0) {
+                    buff.affect(this);
+                } else
+                    buffsToBeRemoved.add(buff);
             }
         }
+
+        for (Buff buff : buffsToBeRemoved)
+            buffsOnThisPlayer.remove(buff);
+
+
         turnsPlayed++;
         if (manaOfThisTurn < 9) {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
         }
-        mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
+        mainDeck.getHero().
+
+                addToTurnNotUsedSpecialPower(1);
+
     }
 
     public void addToCardsOfLand(Card card) {
@@ -259,7 +285,15 @@ public abstract class Player {
         return cardsOnLand;
     }
 
-    public void playTurnForComputer(){
+    public void playTurnForComputer() {
         //write nothing here for access to this function in computer
+    }
+
+    public void addBuffToPlayer(Buff buff) {
+        buffsOnThisPlayer.add(buff);
+    }
+
+    public void manaChange(int number) {
+        mana += number;
     }
 }
