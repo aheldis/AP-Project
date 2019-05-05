@@ -43,6 +43,9 @@ public abstract class Card {
     private static final int DEFAULT = -1;
     //todo
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     public Change getChange() {
         return change;
@@ -80,6 +83,10 @@ public abstract class Card {
 
     public void move(Coordinate newCoordination) {
         Square newPosition = landOfGame.passSquareInThisCoordinate(newCoordination);
+        if(newPosition == null){
+            ErrorType.CAN_NOT_MOVE_IN_SQUARE.printMessage();
+            return;
+        }
         if (!canMove) {
             ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
             return;
@@ -111,7 +118,7 @@ public abstract class Card {
             newPosition.setObject(this);
             position.setObject(null);
             RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() +
-                    "moved to" + newCoordination.getX() + newCoordination.getY());
+                    " moved to x: " + newCoordination.getX()+", y: " + newCoordination.getY());
             RequestSuccessionType.MOVE_TO.printMessage();
             canMove = false;
         } else

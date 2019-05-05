@@ -11,7 +11,6 @@ public class Hand {
     private Deck deck;
     private ArrayList<Card> gameCards;
     private ArrayList<Item> CollectibleItems = new ArrayList<>();
-    //private final int RAND_NUMBER=11;
 
     public Hand(Deck deck) {
         this.deck = deck;
@@ -46,7 +45,7 @@ public class Hand {
 //
 //            return;
 //        }
-        this.gameCards = new ArrayList<>(deck.getCardsOfDeck().subList(0, 4));
+        this.gameCards = new ArrayList<>(deck.getCardsOfDeck().subList(0, 5));
         deck.setIndexOfCards(5);
     }
 

@@ -191,7 +191,7 @@ public class Request {
                 return RequestType.GAME_ATTACK_COMBO;
             }
             if (command.matches("select card \\w+")) {//todo get input
-                setId(command.substring(12));
+                setId(command.split(" ")[2]);
                 state = StateType.SELECT_CARD;
                 return RequestType.GAME_SELECT_CARD_ID;
             }
@@ -202,6 +202,7 @@ public class Request {
 
             if (command.matches("insert \\w+ in \\(\\d+,\\d+\\)")) {
                 setId(command.split(" ")[1]);
+                coordinate = new Coordinate();
                 coordinate.setX(Integer.parseInt(command.split(" ")[3].substring(1, 2)));
                 coordinate.setY(Integer.parseInt(command.split(" ")[3].substring(3, 4)));
                 return RequestType.GAME_INSERT;
@@ -226,6 +227,7 @@ public class Request {
         }
         if (state == StateType.SELECT_CARD) {
             if (command.toLowerCase().matches("move to \\(\\d+,\\d+\\)")) {
+                coordinate = new Coordinate();
                 coordinate.setX(Integer.parseInt(command.substring(9, 10)));
                 coordinate.setY(Integer.parseInt(command.substring(11, 12)));
                 return RequestType.GAME_MOVE;
@@ -236,9 +238,13 @@ public class Request {
             }
 
             if (command.toLowerCase().matches("use special power \\(\\d+,\\d+\\)")) {
+                coordinate = new Coordinate();
                 coordinate.setX(Integer.parseInt(command.substring(19, 20)));
                 coordinate.setY(Integer.parseInt(command.substring(21, 22)));
                 return RequestType.GAME_USE_SPECIAL_POWER;
+            }
+            if(command.toLowerCase().equals("exit")){
+                return RequestType.GAME_EXIT_FROM_SELECT_CARD;
             }
 
         }
@@ -246,10 +252,13 @@ public class Request {
             if (command.toLowerCase().matches("show info"))
                 return RequestType.GAME_ITEM_SHOW_INFO;
             if (command.toLowerCase().matches("use \\(\\d+,\\d+\\)")) {
+                coordinate = new Coordinate();
                 coordinate.setX(Integer.parseInt(command.substring(5, 6)));
                 coordinate.setY(Integer.parseInt(command.substring(7, 8)));
                 return RequestType.GAME_ITEM_USE;
             }
+            if(command.toLowerCase().equals("exit"))
+                return RequestType.GAME_EXIT_FROM_SELECT_ITEM;
 
         }
         if (state == StateType.SELECT_MODE) {

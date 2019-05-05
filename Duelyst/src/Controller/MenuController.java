@@ -36,9 +36,10 @@ public class MenuController {
         String id;
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
+        Card selectedCard = null;
+        Item selectedItem = null;
         while (state != StateType.END_PROGRAM) {
-            Card selectedCard = null;
-            Item selectedItem = null;
+
 
             if (request.getRequestType() == null) {
                 request = new Request(state);
@@ -413,6 +414,7 @@ public class MenuController {
                     case GAME_END_GAME://انصراف از بازی
                         match.setLoser(player);
                         match.setWinner(player.getOpponent());
+                        player.getOpponent().getAccount().changeValueOfDaric(match.getReward());
                         state = StateType.ACCOUNT_MENU;
                         break;
                     case GAME_SHOW_MENU:
@@ -521,13 +523,13 @@ public class MenuController {
                         Coordinate coordinate = request.getCoordinate();
                         player.putCollectibleItemOnLand(coordinate, id);
                         break;
+                    case GAME_EXIT_FROM_SELECT_ITEM:
+                        state = StateType.BATTLE;
                 }
 
             } else if (state == StateType.SELECT_CARD) {
-                Square square;
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
-
                     case GAME_USE_SPECIAL_POWER:
                         ErrorType error;
                         if (player.getMana() < player.getHero().getMpRequiredForSpell()) {
@@ -543,9 +545,12 @@ public class MenuController {
                             errorType.printMessage();
                             break;
 
+
                         }
                         selectedCard.move(request.getCoordinate());
                         break;
+                    case GAME_EXIT_FROM_SELECT_CARD:
+                        state = StateType.BATTLE;
                     case GAME_ATTACK:
                         Card card;
                         id = request.getId();

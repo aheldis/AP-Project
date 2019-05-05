@@ -129,7 +129,7 @@ public class MenuView {
 
     public void showHand(Player player) {
         //nmikham hero o ina on balash bashe mosalaman :|
-        int counterOfCards = 0;
+        int counterOfCards = 1;
         ArrayList<Card> cards = player.getHand().getGameCards();
         if (cards != null && cards.size() != 0) {
             for (Card card : cards) {
@@ -145,7 +145,9 @@ public class MenuView {
         Card nextCard = deck.passNextCard();
         if (nextCard instanceof Spell) {
             showSpellOrMinion(nextCard, NOT_VALID);
+            return;
         }
+        showSpellOrMinion(nextCard,1);
     }
 
     public void showCollectibleItems(Player player) {
