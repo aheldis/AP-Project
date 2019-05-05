@@ -170,9 +170,8 @@ public abstract class Player {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
         }
-        mainDeck.getHero().
 
-                addToTurnNotUsedSpecialPower(1);
+        mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
 
     }
 

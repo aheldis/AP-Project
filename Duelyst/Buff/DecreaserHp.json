@@ -10,6 +10,6 @@
     "canAttack": false,
     "canCounterAttack": true,
     "hpChangeAfterAttack": false,
-    "hpChangeNotInFirstTurn": true
+    "changeInSecondTurn": true
   }
 }

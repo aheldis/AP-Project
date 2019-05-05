@@ -17,7 +17,7 @@ public class Shop {
     private static String pathOfFiles = "Duelyst/";
     private ArrayList<Card> cards = new ArrayList<>();// todo (Saba) faghat havaset bashe age bar midari az inja chizi remove koni jash yeki bezari
     private ArrayList<Item> items = new ArrayList<>();
-    private ArrayList<Item> Collectibles = new ArrayList<>();
+    private ArrayList<Item> collectibles = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
 //    private String[] type = {"hero", "minion", "spell", "item"}; //ina ye enumi chizi mibood behtar mibood
 
@@ -106,7 +106,7 @@ public class Shop {
     }
 
     public void addCollectible(Collectible item) {
-        Collectibles.add(item);
+        collectibles.add(item);
     }
 
     public static String getPathOfFiles() {
@@ -265,7 +265,7 @@ public class Shop {
     }
 
     public ArrayList<Item> getCollectibles() {
-        return Collectibles;
+        return collectibles;
     }
 
     public void show() {
