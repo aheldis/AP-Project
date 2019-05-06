@@ -56,7 +56,6 @@ public abstract class Player {
         }
 
         if (playerCard instanceof Spell) {
-            System.out.println("spell");
             playerCard.setTarget(land.passSquareInThisCoordinate(coordinate));
             playerCard.getChange().affect(playerCard.getPlayer(), playerCard.getTarget().getTargets());
             graveYard.addCardToGraveYard(playerCard, land.passSquareInThisCoordinate(coordinate));
@@ -151,9 +150,6 @@ public abstract class Player {
     public void initPerTurn() {
         hand.checkTheHandAndAddToIt();
         for (Card card : cardsOnLand) {
-            if(card == null){
-                System.out.println("initperturn card null");
-            }
             card.changeTurnOfCanNotAttack(-1);
             card.changeTurnOfCanNotCounterAttack(-1);
             card.changeTurnOfCanNotMove(-1);
@@ -189,7 +185,7 @@ public abstract class Player {
                 card.useSpecialPower(card.getPosition());
         }
 
-        
+
         ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
         for (Buff buff : buffsOnThisPlayer) {
 
@@ -220,6 +216,8 @@ public abstract class Player {
         if (mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.EACH_ROUND) {
             mainDeck.getItem().setTarget(this);
             mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
+        }
+
         }
 
     }
