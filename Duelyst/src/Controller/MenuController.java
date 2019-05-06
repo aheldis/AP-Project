@@ -1,5 +1,7 @@
 package Controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Collection;
@@ -21,6 +23,10 @@ import view.MenuView;
 import view.Request;
 import view.enums.ErrorType;
 import view.enums.StateType;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 
 public class MenuController {
@@ -115,7 +121,17 @@ public class MenuController {
             } else if (state == StateType.ACCOUNT_MENU) {
                 switch (request.getRequestType()) {
                     case MENU_ENTER_COLLECTION:
-                        account.setClonedCollection((Collection) account.getCollection().clone());
+//                        Gson gson =new GsonBuilder().setPrettyPrinting().create();
+//                        try {
+//                            File file = new File("D:\\project-Duelyst\\Duelyst\\Collection.txt");
+//                            FileWriter fileWriter = new FileWriter(file);
+//                            fileWriter.write(gson.toJson(account.getCollection()));
+//                            fileWriter.close();
+//                        }
+//                        catch(Exception e){
+//
+//                        }
+                        //account.setClonedCollection((Collection) account.getCollection().clone());
                         state = StateType.COLLECTION;
                         break;
                     case MENU_ENTER_BATTLE:
@@ -237,9 +253,18 @@ public class MenuController {
                         haveSavedInCollection = true;
                         break;
                     case COLLECTION_EXIT:
-                        if(!haveSavedInCollection){
-                            account.setCollection(account.getClonedCollection());
-                        }
+//                        if(!haveSavedInCollection){
+//                            try{
+//                                FileReader fr = new FileReader("D:\\project-Duelyst\\Duelyst\\Collection.txt");
+//
+//                                Gson gson1 = new GsonBuilder().create();
+//                                Collection lastCollection = gson1.fromJson(fr, Collection.class);
+//                                account.setCollection(lastCollection);
+//                                }
+//                            catch (Exception e){
+//
+//                            }
+//                        }
                         state = StateType.ACCOUNT_MENU;
                         haveSavedInCollection = false;
                         break;
