@@ -81,7 +81,7 @@ public class Hand {
 
     public Card chooseARandomCard() {
         Random random = new Random();
-        return gameCards.get(random.nextInt() % gameCards.size());
+        return gameCards.get(random.nextInt(100) % gameCards.size());
     }
 
     public ArrayList<Card> getGameCards() {

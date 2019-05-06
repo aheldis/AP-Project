@@ -142,7 +142,7 @@ public class Request {
             switch (command.toLowerCase()) {
                 case "login":
                     return RequestType.MAIN_MENU_LOGIN;
-                case "show leaderBoard":
+                case "show leaderboard":
                     return RequestType.MAIN_MENU_LEADER_BOARD;
                 case "help":
                     return RequestType.MAIN_MENU_HELP;

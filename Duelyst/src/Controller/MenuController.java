@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import model.account.Account;
 import model.account.AllAccount;
@@ -119,8 +119,10 @@ public class MenuController {
                         break;
                     case MENU_ENTER_BATTLE:
                         game = new Game();
-                        if (!game.checkPlayerDeck(account, 1))
+                        if (!game.checkPlayerDeck(account, 1)) {
                             state = StateType.ACCOUNT_MENU;
+                            break;
+                        }
                         menuView.printer("select mode");
                         state = StateType.SELECT_MODE;
                         break;
@@ -283,18 +285,23 @@ public class MenuController {
                         String command;
                         String userName;
                         menuView.showAllAccount();
-                        Account account;
+                        Account secondAccount;
                         do {
                             menuView.printer("Select user [user name]");
                             request.getNewLine();
                             userName = request.getCommand();
-                            account = allAccount.userNameHaveBeenExist(userName);
+                            secondAccount = allAccount.userNameHaveBeenExist(userName);
+                            if(secondAccount == account){
+                                ErrorType error = ErrorType.SECOND_PLAYER_NOT_VALID;
+                                menuView.printError(error);
+                                secondAccount = null;
+                            }
                             if (account == null) {
                                 ErrorType error = ErrorType.USER_NAME_NOT_FOUND;
                                 menuView.printError(error);
                             }
-                        } while (account == null);
-                        if (account.getMainDeck() == null) {
+                        } while (secondAccount == null);
+                        if (secondAccount.getMainDeck() == null) {
                             ErrorType error = ErrorType.SELECTED_INVALID_DECK_FOR_PLAYER2;
                             error.printMessage();
                             break;

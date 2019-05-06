@@ -58,19 +58,4 @@ single player
 help
 story
 game info
-2
-show card info ali_Kaveh_1
-select card ali_Kaveh_1
-move to (5,3)
-                     move to (2,1)
-                     move to (2,4)
-                     insert ali_Eagle_2 in (2,2)
-                     insert ali_Wolf_1 in (2,2)
-                     move ali_Eagle_2 in (2,3)
-                     end turn
-                     Show opponent minions
-move to (2,1)
-
-show hand
 3
-game info

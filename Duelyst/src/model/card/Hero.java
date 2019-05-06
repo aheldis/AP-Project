@@ -1,13 +1,10 @@
 package model.card;
 
-import model.requirment.Coordinate;
-
 import java.util.ArrayList;
 
 public class Hero extends Card {
     private String specialPowerInfo;
     private ArrayList<Buff> buffs = new ArrayList<Buff>();
-    private Coordinate Square;
     private Spell spell;
     private int mpRequiredForSpell;
     private int coolDown;
@@ -39,10 +36,6 @@ public class Hero extends Card {
 
     public ArrayList<Buff> getBuffs() {
         return buffs;
-    }
-
-    public Coordinate getSquare() {
-        return Square;
     }
 
     public Spell getSpell() {

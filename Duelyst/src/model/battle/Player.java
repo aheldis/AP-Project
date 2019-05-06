@@ -25,7 +25,7 @@ public abstract class Player {
     private Account account;
     private Match match;
     private int turnsPlayed = 0;
-    private int manaOfThisTurn /*don't change this except in initPerTurn*/, mana = 2;
+    private int manaOfThisTurn = 2 /*don't change this except in initPerTurn*/, mana = 2;
     private GraveYard graveYard = new GraveYard(this);
     private ArrayList<Buff> buffsOnThisPlayer = new ArrayList<>();
     //Collectible item to hand ast :D
@@ -42,7 +42,7 @@ public abstract class Player {
             return;
         }
         playerCard.setPosition(getHero().getPosition());
-        if (!playerCard.canMoveToCoordination(playerCard, coordinate)) {
+        if (!playerCard.canInsertToCoordination(this.getHero().getPosition().getCoordinate(), coordinate)) {
             error = ErrorType.INVALID_TARGET;
             error.printMessage();
             return;
@@ -56,6 +56,7 @@ public abstract class Player {
         }
 
         if (playerCard instanceof Spell) {
+            System.out.println("spell");
             playerCard.setTarget(land.passSquareInThisCoordinate(coordinate));
             playerCard.getChange().affect(playerCard.getPlayer(), playerCard.getTarget().getTargets());
             graveYard.addCardToGraveYard(playerCard, land.passSquareInThisCoordinate(coordinate));
@@ -88,7 +89,7 @@ public abstract class Player {
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
 
-        if (mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
+        if ( mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
                 mainDeck.getItem().getTarget().checkTheOneWhoDoesTheThing(playerCard)) {
             mainDeck.getItem().setTarget(this);
             mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
@@ -150,6 +151,9 @@ public abstract class Player {
     public void initPerTurn() {
         hand.checkTheHandAndAddToIt();
         for (Card card : cardsOnLand) {
+            if(card == null){
+                System.out.println("initperturn card null");
+            }
             card.changeTurnOfCanNotAttack(-1);
             card.changeTurnOfCanNotCounterAttack(-1);
             card.changeTurnOfCanNotMove(-1);
@@ -161,28 +165,31 @@ public abstract class Player {
                 card.setCanMove(true, 0);
 
             ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
-            for (Buff buff : card.getBuffsOnThisCard()) {
-                if (!buff.isContinuous()) {
-                    int forHowManyTurn = buff.getForHowManyTurn();
-                    forHowManyTurn--;
-                    if (forHowManyTurn > 0) {
-                        buff.affect(card);
-                    } else {
-                        if (buff.isHaveUnAffect())
-                            buff.unAffect(card);
-                        buffsToBeRemoved.add(buff);
+            if(card.getBuffsOnThisCard() != null) {
+                for (Buff buff : card.getBuffsOnThisCard()) {
+                    System.out.println("initperturn");
+                    if (!buff.isContinuous()) {
+                        int forHowManyTurn = buff.getForHowManyTurn();
+                        forHowManyTurn--;
+                        if (forHowManyTurn > 0) {
+                            buff.affect(card);
+                        } else {
+                            if (buff.isHaveUnAffect())
+                                buff.unAffect(card);
+                            buffsToBeRemoved.add(buff);
+                        }
                     }
                 }
+                for (Buff buff : buffsToBeRemoved)
+                    card.getBuffsOnThisCard().remove(buff);
             }
-
-            for (Buff buff : buffsToBeRemoved)
-                card.getBuffsOnThisCard().remove(buff);
 
             if (card instanceof Minion && ((Minion) card).getHaveSpecialPower() &&
                     ((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.PASSIVE)
                 card.useSpecialPower(card.getPosition());
         }
 
+        
         ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
         for (Buff buff : buffsOnThisPlayer) {
 
@@ -204,10 +211,13 @@ public abstract class Player {
         if (manaOfThisTurn < 9) {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
+            System.out.println("initperturn changed mana ");
+            System.out.println("manaOfThisTurn = " + manaOfThisTurn);
+            System.out.println("mana = " + mana);
         }
         mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
 
-        if (mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.EACH_ROUND) {
+        if (mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.EACH_ROUND) {
             mainDeck.getItem().setTarget(this);
             mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
         }

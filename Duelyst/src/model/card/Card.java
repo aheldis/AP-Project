@@ -143,6 +143,21 @@ public abstract class Card {
                 flag.setSquare(newPosition);
     }
 
+    public boolean canInsertToCoordination(Coordinate heroCoordination, Coordinate destination){
+        int x = destination.getX();
+        int y = destination.getY();
+        if (x < 0 || x > 4 || y < 0 || y > 8)
+            return false;
+
+        if (Math.abs(heroCoordination.getX() - x) + Math.abs(heroCoordination.getY() - y) <= 2) {
+            Square square = landOfGame.getSquares()[x][y];
+            if (!(square.getObject() == null || square.getObject() instanceof Flag))
+                return false;
+            return true;
+        }
+        return false;
+
+    }
     public boolean canMoveToCoordination(Card card, Coordinate destination) {
         if (card.getManhatanDistance(destination) == 2) {
             int x = card.position.getXCoordinate();
