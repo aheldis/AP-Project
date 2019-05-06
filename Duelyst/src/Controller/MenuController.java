@@ -1,4 +1,4 @@
-package controller;
+package Controller;
 
 import model.account.Account;
 import model.account.AllAccount;
@@ -31,8 +31,9 @@ public class MenuController {
 
     private static Game game;
     private static Match match;
+    private static boolean haveSavedInCollection= false;
 
-    public static void main() {
+    public static void main() throws Exception{
         String id;
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
@@ -115,6 +116,7 @@ public class MenuController {
             else if (state == StateType.ACCOUNT_MENU) {
                 switch (request.getRequestType()) {
                     case MENU_ENTER_COLLECTION:
+                        account.setClonedCollection((Collection) account.getCollection().clone());
                         state = StateType.COLLECTION;
                         break;
                     case MENU_ENTER_BATTLE:
@@ -235,10 +237,14 @@ public class MenuController {
                             menuView.printer(deckName + " is not validate");
                         break;
                     case COLLECTION_SAVE:
-                        //todo
+                        haveSavedInCollection = true;
                         break;
                     case COLLECTION_EXIT:
+                        if(!haveSavedInCollection){
+                            account.setCollection(account.getClonedCollection());
+                        }
                         state = StateType.ACCOUNT_MENU;
+                        haveSavedInCollection = false;
                         break;
                 }
 
