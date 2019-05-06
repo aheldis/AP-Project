@@ -8,7 +8,7 @@
     "itemNumber": 19,
     "target": {
       "counterAttackType": "-",
-      "cardType": "minion",
+      "cardType": "usable",
       "one": false,
       "row": false,
       "column": false,
@@ -19,7 +19,7 @@
       "ally": true
     },
     "change": {
-      "targetType": "card",
+      "targetType": "minion",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

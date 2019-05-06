@@ -13,7 +13,7 @@
     "attackRange": 0,
     "description": "disarm an opponent minion",
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

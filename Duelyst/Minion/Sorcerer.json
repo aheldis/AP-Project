@@ -12,7 +12,7 @@
     "activationTimeOfSpecialPowerString": "PASSIVE",
     "description": "power buff with 2 units hp and weakness buff with 1 unit hp",
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

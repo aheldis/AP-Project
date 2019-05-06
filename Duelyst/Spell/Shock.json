@@ -12,7 +12,7 @@
     "ActivationTimeOfSpecialPower": "-",
     "description": "stun for 2 turns",
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

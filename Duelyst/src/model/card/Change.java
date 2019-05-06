@@ -37,7 +37,7 @@ public class Change {
             }
         }
 
-        if (targetType.equals("card")) {
+        if (targetType.equals("force")) {
             for (Square square : targets) {
                 makeChangeInTargetCard(player, (Card) square.getObject());
             }

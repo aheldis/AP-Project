@@ -13,7 +13,7 @@
     "attackRange": 6,
     "description": "attack to the row of hero 4 units",
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

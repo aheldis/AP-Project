@@ -12,7 +12,7 @@
     "activationTimeOfSpecialPowerString": "PASSIVE",
     "description": "power buff(ap+2) holy buff continuous",
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": false,

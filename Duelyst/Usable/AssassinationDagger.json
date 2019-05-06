@@ -9,7 +9,7 @@
     "activationTimeOfItemString": "ON_PUT",
     "target": {
       "counterAttackType": "-",
-      "cardType": "hero",
+      "cardType": "usable",
       "one": false,
       "row": false,
       "column": false,
@@ -22,7 +22,7 @@
       "theOneWhoDoesTheThing": "force"
     },
     "change": {
-      "targetType": "card",
+      "targetType": "hero",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

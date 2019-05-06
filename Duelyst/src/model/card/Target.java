@@ -38,7 +38,7 @@ public class Target {
         this.land = land;
     }
 
-    public boolean checkIfAttackedCardIsValid(Object attacked) {
+    public boolean checkIfAttackedCardIsValid(Object attacked, String targetType) {
         //check beshe ba sharayet target mikhoone ya na todo kamel nistaa
         if (attacked == null)
             return false;
@@ -58,14 +58,14 @@ public class Target {
             return false;
 
         if (attacked instanceof Minion) {
-            if (!cardType.equals("minion") && !cardType.equals("force")) {
+            if (!targetType.equals("minion") && !targetType.equals("force")) {
                 return false;
             }
             counterAttackName = ((Card)attacked).getCounterAttackName();
         }
 
         if (attacked instanceof Hero) {
-            if (!cardType.equals("hero") && !cardType.equals("force")) {
+            if (!targetType.equals("hero") && !targetType.equals("force")) {
                 return false;
             }
             counterAttackName = ((Card)attacked).getCounterAttackName();

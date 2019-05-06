@@ -23,8 +23,8 @@ public abstract class Item {
     //todo age mikhastim bara item ha player o land o ina bezarim byd to constructor e match meqdar bedim :D
 
     {
-        for(ActivationTimeOfItem activationTime: ActivationTimeOfItem.values()) {
-            if(activationTimeOfItemString.equals(activationTime.name())){
+        for (ActivationTimeOfItem activationTime : ActivationTimeOfItem.values()) {
+            if (activationTimeOfItemString.equals(activationTime.name())) {
                 activationTimeOfItem = activationTime;
             }
         }
@@ -91,9 +91,10 @@ public abstract class Item {
                             randomNumber = random.nextInt(player.getCardsOnLand().size());
                         else
                             randomNumber = random.nextInt(player.getCardsOnLand().size() + 1);
-                        if (randomNumber == player.getCardsOnLand().size() && target.checkIfAttackedCardIsValid(player.getHero()))
+                        if (randomNumber == player.getCardsOnLand().size() &&
+                                target.checkIfAttackedCardIsValid(player.getHero(), change.getTargetType()))
                             targets.add(player.getHero().getPosition());
-                        else if (target.checkIfAttackedCardIsValid(player.getCardsOnLand().get(randomNumber)))
+                        else if (target.checkIfAttackedCardIsValid(player.getCardsOnLand().get(randomNumber), change.getTargetType()))
                             targets.add(player.getCardsOnLand().get(randomNumber).getPosition());
                     }
 
@@ -103,9 +104,9 @@ public abstract class Item {
                         else
                             randomNumber = random.nextInt(player.getOpponent().getCardsOnLand().size() + 1);
                         if (randomNumber == player.getOpponent().getCardsOnLand().size() &&
-                                target.checkIfAttackedCardIsValid(player.getOpponent().getHero()))
+                                target.checkIfAttackedCardIsValid(player.getOpponent().getHero(), change.getTargetType()))
                             targets.add(player.getOpponent().getHero().getPosition());
-                        else if (target.checkIfAttackedCardIsValid(player.getOpponent().getCardsOnLand().get(randomNumber)))
+                        else if (target.checkIfAttackedCardIsValid(player.getOpponent().getCardsOnLand().get(randomNumber), change.getTargetType()))
                             targets.add(player.getOpponent().getCardsOnLand().get(randomNumber).getPosition());
                     }
                 }
@@ -117,7 +118,7 @@ public abstract class Item {
 
             if (target.isAll() && target.isAlly())
                 for (Card card : player.getCardsOnLand())
-                    if (target.checkIfAttackedCardIsValid(card))
+                    if (target.checkIfAttackedCardIsValid(card, change.getTargetType()))
                         targets.add(card.getPosition());
 
         }

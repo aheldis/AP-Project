@@ -12,7 +12,7 @@
     "activationTimeOfSpecialPowerString": "ON_DEFEND",
     "description": "won't be disarm",
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": false,
       "opponentCanCounterAttack": true,

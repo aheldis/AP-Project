@@ -9,7 +9,7 @@
     "activationTimeOfItemString": "ON_ATTACK",
     "target": {
       "counterAttackType": "-",
-      "cardType": "force",
+      "cardType": "usable",
       "one": false,
       "row": false,
       "column": false,
@@ -22,7 +22,7 @@
       "theOneWhoDoesTheThing": "force"
     },
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

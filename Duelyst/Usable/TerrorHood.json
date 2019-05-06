@@ -8,7 +8,7 @@
     "itemNumber": 12,
     "target": {
       "counterAttackType": "-",
-      "cardType": "force",
+      "cardType": "usable",
       "one": false,
       "row": false,
       "column": false,
@@ -20,7 +20,7 @@
       "ally": false
     },
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

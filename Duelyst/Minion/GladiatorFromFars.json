@@ -12,7 +12,7 @@
     "activationTimeOfSpecialPowerString": "ON_ATTACK",
     "description": "attack 5 units more than times that this minions have been attacked y GladiatorFromFars",
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

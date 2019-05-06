@@ -8,7 +8,7 @@
     "itemNumber": 6,
     "target": {
       "counterAttackType": "-",
-      "cardType": "hero",
+      "cardType": "usable",
       "one": true,
       "row": false,
       "column": false,

@@ -13,7 +13,7 @@
     "attackRange": 3,
     "description": "dispel an opponent minion",
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

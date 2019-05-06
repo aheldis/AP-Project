@@ -12,7 +12,7 @@
     "ActivationTimeOfSpecialPower": "-",
     "description": "decrease 4 units of opponent's hp",
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

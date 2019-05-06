@@ -13,7 +13,7 @@
     "attackRange": 3,
     "description": "have 3 holyBuff countinuesly",
     "change": {
-      "targetType": "card",
+      "targetType": "force",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,

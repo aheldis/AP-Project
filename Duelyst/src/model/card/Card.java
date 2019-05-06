@@ -181,8 +181,8 @@ public abstract class Card {
         return getManhatanDistance(coordinate) <= range;
     }
 
-    private boolean checkTarget(Square check) {
-        return target.checkIfAttackedCardIsValid(check.getObject()) &&
+    private boolean checkTarget(Square check, String targetType) {
+        return target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
                 target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position) &&
                 target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
                 target.checkIsAlly(player, check);
@@ -190,13 +190,13 @@ public abstract class Card {
 
     public void setTarget(Square cardSquare) {
         boolean isSquare = change.getTargetType().equals("square");
-        boolean isCard = change.getTargetType().equals("card");
+        boolean isCard = change.getTargetType().equals("force");
         ArrayList<Square> targets = new ArrayList<>();
         if (isSquare)
             targets.add(cardSquare);
         else if (isCard) {
 
-            if (target.isOne() && checkTarget(cardSquare)) {
+            if (target.isOne() && checkTarget(cardSquare, change.getTargetType())) {
                 targets.add(cardSquare);
 
             } else if (target.isAll()) {
@@ -204,7 +204,7 @@ public abstract class Card {
                 for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
                     for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
                         Square check = landOfGame.getSquares()[i][j];
-                        if (checkTarget(check))
+                        if (checkTarget(check, change.getTargetType()))
                             targets.add(check);
                     }
 
@@ -212,7 +212,7 @@ public abstract class Card {
 
                 for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
                     Square check = landOfGame.getSquares()[cardSquare.getYCoordinate()][j];
-                    if (checkTarget(check))
+                    if (checkTarget(check, change.getTargetType()))
                         targets.add(check);
                 }
 
@@ -220,7 +220,7 @@ public abstract class Card {
 
                 for (int i = 0; i < landOfGame.getNumberOfRows(); i++) {
                     Square check = landOfGame.getSquares()[i][cardSquare.getXCoordinate()];
-                    if (checkTarget(check))
+                    if (checkTarget(check, change.getTargetType()))
                         targets.add(check);
                 }
 
@@ -369,11 +369,11 @@ public abstract class Card {
             if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt() == null) {
                 if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasMinionAndPassIt() == null)
                     continue;
-                if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]]))
+                if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]], change.getTargetType()))
                     continue;
                 return landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasMinionAndPassIt();
             }
-            if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]]))
+            if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]], change.getTargetType()))
                 continue;
             return landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt();
         }
