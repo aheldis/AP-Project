@@ -72,6 +72,8 @@ public class Square {
     }
 
     public boolean squareHasMinionOrHero() {
+        if(object == null)
+            return false;
         if (object instanceof Hero)
             return true;
         if (object instanceof Minion)
