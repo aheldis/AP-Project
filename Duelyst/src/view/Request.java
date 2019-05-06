@@ -205,7 +205,7 @@ public class Request {
                 coordinate.setY(Integer.parseInt(command.split(" ")[3].substring(3, 4)));
                 return RequestType.GAME_INSERT;
             }
-            if (command.toLowerCase().matches("select item \\d+")) {
+            if (command.toLowerCase().matches("select item \\w+")) {
                 setId(command.substring(12));
                 state = StateType.SELECT_ITEM;
                 return RequestType.GAME_SELECT_Collectible;

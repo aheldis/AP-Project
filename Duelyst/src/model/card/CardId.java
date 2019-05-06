@@ -34,4 +34,7 @@ public class CardId {
         return cardId;
     }
 
+    public Account getAccount() {
+        return account;
+    }
 }

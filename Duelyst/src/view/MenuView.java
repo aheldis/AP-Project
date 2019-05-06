@@ -89,26 +89,38 @@ public class MenuView {
     public void printGameInfo(Match match) {
         printInfoForEachPlayer(match.getPlayers()[0], 1, match);
         printInfoForEachPlayer(match.getPlayers()[1], 2, match);
-        switch (match.getMode()) {
+     /*   switch (match.getMode()) {
             case "DeathMode":
                 break;
             case "SaveFlagMode": {
                 Flag flag = match.getFlags().get(0);
                 System.out.println("flag position: (" + flag.getSquare().getXCoordinate() + "," + flag.getSquare().getYCoordinate() + ")");
                 if (flag.getOwnerCard() != null) {
-                    System.out.println(flag.getOwnerCard().getCardId());
+                    Account ownerAccount = flag.getOwnerCard().getCardId().getAccount();
+                    if(ownerAccount == null)
+                        System.out.println("UserName of owner: Computer");
+                    else
+                        System.out.println(ownerAccount.getUserName());
+                    System.out.println("owner cardID: " + flag.getOwnerCard().getCardId().getCardIdAsString());
                 }
                 break;
             }
             case "CollectFlagMode": {
-                for (Flag flag : match.getFlags()) {
-                    System.out.println("flag position: (" + flag.getSquare().getXCoordinate() + "," + flag.getSquare().getYCoordinate() + ")");
-                    if (flag.getOwnerCard() != null) {
-                        System.out.println("userName of owner: " + flag.getOwnerCard().getName());
-                        System.out.println("owner cardID: " + flag.getOwnerCard().getCardId().getCardIdAsString());
-                    }
-                }
+
                 break;
+            }
+        }*/
+        for (Flag flag : match.getFlags()) {
+            System.out.println("flag position: (" + flag.getSquare().getXCoordinate() + "," + flag.getSquare().getYCoordinate() + ")");
+            if (flag.getOwnerCard() != null) {
+                if (flag.getOwnerCard() != null) {
+                    Account ownerAccount = flag.getOwnerCard().getCardId().getAccount();
+                    if (ownerAccount == null)
+                        System.out.println("Username of owner: Computer");
+                    else
+                        System.out.println("Username of owner: " + ownerAccount.getUserName());
+                    System.out.println("Owner cardID: " + flag.getOwnerCard().getCardId().getCardIdAsString());
+                }
             }
         }
     }
@@ -159,16 +171,16 @@ public class MenuView {
             showSpellOrMinion(nextCard, NOT_VALID);
             return;
         }
-        showSpellOrMinion(nextCard,1);
+        showSpellOrMinion(nextCard, 1);
     }
 
     public void showCollectibleItems(Player player) {
-        ArrayList <Collectible> items = player.getHand().getCollectibleItems();
+        ArrayList<Collectible> items = player.getHand().getCollectibleItems();
         System.out.println("Collectible items :");
         int number = 1;
         if (items != null && items.size() != 0) {
             for (Collectible item : items) {
-                if(item == null )
+                if (item == null)
                     continue;
                 System.out.print("     ");
                 System.out.println(number + ": Name: " + item.getName() + " - Desc: " + item.getDescription() + " - itemID: " + item.getCollectibleId().getCollectibleIdAsString());
@@ -176,7 +188,6 @@ public class MenuView {
             }
         }
     }
-
 
 
     public void showBattleMenu() {
@@ -215,7 +226,8 @@ public class MenuView {
         System.out.println("Enter single player");
         System.out.println("Enter multi player");
     }
-    public void helpForSingleMode(){
+
+    public void helpForSingleMode() {
         System.out.println("Enter story");
         System.out.println("Enter custom game");
     }

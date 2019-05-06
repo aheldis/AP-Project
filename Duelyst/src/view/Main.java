@@ -7,6 +7,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
    //    br =new BufferedReader(new FileReader(file));
         //Shop.getInstance();
-        Controller.MenuController.main();
+        controller.MenuController.main();
     }
 }
