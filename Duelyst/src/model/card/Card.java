@@ -171,7 +171,7 @@ public abstract class Card {
             int x = card.position.getXCoordinate();
             int y = card.position.getYCoordinate();
 
-            if (x < 0 || x > landOfGame.getNumberOfRows() || y < 0 || y > landOfGame.getNumberOfColumns())
+            if (x < 0 || x >= landOfGame.getNumberOfRows() || y < 0 || y >= landOfGame.getNumberOfColumns())
                 return false;
 
             int distanceOfX = destination.getX() - card.position.getXCoordinate();
@@ -180,7 +180,7 @@ public abstract class Card {
                 x -= distanceOfX / 2;
                 y -= distanceOfY / 2;
                 Square square = landOfGame.getSquares()[x][y]; //todo HANIYEH  java.lang.ArrayIndexOutOfBoundsException: -1 mikhore
-                if (/*square.getObject() != null && */!(square.squareHasMinionOrHero())) //todo ina okeye dige oona comment bashe chon collectible tooshe mitoone bere
+                if (!(square.squareHasMinionOrHero()))
                     return false;
             } else {
                 x += distanceOfX;
