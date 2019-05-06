@@ -3,6 +3,7 @@ package model.land;
 import model.card.Buff;
 import model.card.Hero;
 import model.card.Minion;
+import model.item.Flag;
 import model.requirment.Coordinate;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class Square {
     private int scaleForEachSquare;
     private Coordinate coordinate;
     private Object object;
+    private ArrayList<Flag> flags = new ArrayList<>();
     private ArrayList<Buff> buffs = new ArrayList<>();
 
     public Square(Coordinate coordinate) {
@@ -66,7 +68,7 @@ public class Square {
             return false;
         if (y < 0 || y > 8)
             return false;
-        return landOfGame.getSquares()[x][y].getObject() == null;
+        return landOfGame.getSquares()[x][y].getObject() == null; //todo in vase chie? flag ro check nemikone lazeme begin
     }
 
     public boolean squareHasMinionOrHero() {
@@ -77,4 +79,11 @@ public class Square {
         return false;
     }
 
+    public void addToFlags(Flag flag){
+        flags.add(flag);
+    }
+
+    public ArrayList<Flag> getFlags() {
+        return flags;
+    }
 }

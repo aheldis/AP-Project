@@ -70,11 +70,13 @@ public abstract class Player {
             this.addBuffToPlayer(buff);
         }
 
-        if (square.getObject() instanceof Flag) {
-            ((Flag) square.getObject()).setOwnerCard(playerCard);
-            match.addToGameFlags((Flag) square.getObject());
-            playerCard.getPlayer().addToOwnFlags((Flag) square.getObject());
-            addToTurnForSavingFlag();
+        if (square.getFlags().size() > 0) {
+            for(Flag flag: square.getFlags()) {
+                flag.setOwnerCard(playerCard);
+                match.addToGameFlags(flag);
+                playerCard.getPlayer().addToOwnFlags(flag);
+                addToTurnForSavingFlag();
+            }
         }
 
         if (playerCard instanceof Minion) {

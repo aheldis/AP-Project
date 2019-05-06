@@ -27,6 +27,7 @@ import view.enums.StateType;
 //todo 6 dor flag dastemoon bood bazi tamoom nemishe
 //todo hero computer chera aslan tekoon nemikhore
 //todo instace of collectible to player putCardOnLand comment gozashtam
+//todo to setFlagRandomly ye comment gozashtam
 
 public class MenuController {
     public static StateType state = StateType.MAIN_MENU;

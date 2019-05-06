@@ -50,29 +50,19 @@ public class Match {
         Random random = new Random();
         Square[][] squares = land.getSquares();
         int randomX, randomY;
-        if (mode == 2) {
+        for (int i = 0; i < numberOfFlags; i++) {
             randomX = random.nextInt(land.getNumberOfRows());
             randomY = random.nextInt(land.getNumberOfColumns());
             while (squares[randomX][randomY].getObject() != null) {
                 randomX = random.nextInt(land.getNumberOfRows());
                 randomY = random.nextInt(land.getNumberOfColumns());
             }
+            //todo aval bazi momkene chandta flag ro add kone to ye khoone. okeye; vali age nemikhaim to oon while balaee e ino ezafe kon: || squares[randomX][randomY].getFlags().size() != 0
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
-            squares[randomX][randomY].setObject(flag);
-            return;
+            squares[randomX][randomY].addToFlags(flag);
         }
-        for (int i = 0; i < numberOfFlags; i++) {
-            randomX = random.nextInt(land.getNumberOfRows());
-            randomY = random.nextInt(land.getNumberOfColumns());
-            if (squares[randomX][randomY].getObject() != null) {
-                i--;
-                continue;
-            }
-            flag = new Flag(squares[randomX][randomY]);
-            flags.add(flag);
-            squares[randomX][randomY].setObject(flag);
-        }
+        return;
     }
 
     private void setCollectiblesRandomly() {
@@ -86,7 +76,7 @@ public class Match {
             randomX = random.nextInt(4);
             randomY = random.nextInt(8);
             randomItem = random.nextInt(collectibles.size() - 1);
-            if (squares[randomX][randomY].getObject() != null) {
+            if (squares[randomX][randomY].getObject() != null || squares[randomX][randomY].getFlags().size() != 0) {
                 i--;
                 continue;
             }

@@ -42,7 +42,7 @@ public class GraveYard {
                 player.setTurnForSavingFlag(0);
                 player.getOwnFlags().remove(flag);
                 //player.setFlagSaver(null);
-                position.setObject(flag);
+                position.addToFlags(flag);
                 flag.setOwnerCard(null);
                 break;
             }

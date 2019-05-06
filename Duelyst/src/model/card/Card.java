@@ -116,14 +116,18 @@ public abstract class Card {
             }
         }
 
-        if (newPosition.getObject() instanceof Flag) {
-            ((Flag) newPosition.getObject()).setOwnerCard(this);
-            player.addToOwnFlags((Flag) newPosition.getObject());
-            player.addToTurnForSavingFlag();
+        if (newPosition.getFlags().size() > 0) {
+            for(Flag flag: newPosition.getFlags()) {
+                flag.setOwnerCard(this);
+                player.addToOwnFlags(flag);
+                player.addToTurnForSavingFlag();
+            }
         }
 
         if (newPosition.getObject() instanceof Collectible &&
                 ((Collectible) newPosition.getObject()).getTarget().checkTheOneWhoCollects(this)) {
+            //todo sabaaaaaa savaw saba
+            System.out.println("collected");
             player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
         }
@@ -151,7 +155,7 @@ public abstract class Card {
 
         if (Math.abs(heroCoordination.getX() - x) + Math.abs(heroCoordination.getY() - y) <= 2) {
             Square square = landOfGame.getSquares()[x][y];
-            if (!(square.getObject() == null || square.squareHasMinionOrHero()))
+            if (square.squareHasMinionOrHero())
                 return false;
             return true;
         }
@@ -172,16 +176,16 @@ public abstract class Card {
                 x -= distanceOfX / 2;
                 y -= distanceOfY / 2;
                 Square square = landOfGame.getSquares()[x][y];
-                if (square.getObject() != null && !(square.squareHasMinionOrHero()))
+                if (/*square.getObject() != null && */!(square.squareHasMinionOrHero())) //todo ina okeye dige oona comment bashe chon collectible tooshe mitoone bere
                     return false;
             } else {
                 x += distanceOfX;
                 Square square = landOfGame.getSquares()[x][y];
-                if (square.getObject() != null && !(square.squareHasMinionOrHero())) {
+                if (/*square.getObject() != null && */!(square.squareHasMinionOrHero())) {
                     x -= distanceOfX;
                     y += distanceOfY;
                     square = landOfGame.getSquares()[x][y];
-                    if (square.getObject() != null && !(square.squareHasMinionOrHero()))
+                    if (/*square.getObject() != null && */!(square.squareHasMinionOrHero()))
                         return false;
                 }
             }

@@ -47,18 +47,23 @@ public class Game {
         Deck secondPlayerDeck = Deck.getDeckForStoryMode(level);
         mode = level;
         switch (level) {
-            case 1:
+            case 1: {
                 reward = 500;
+                numberOfFlags = 0;
                 break;
-            case 2:
+            }
+            case 2: {
                 reward = 1000;
+                numberOfFlags = 1;
                 break;
-            case 3:
+            }
+            case 3: {
                 reward = 1500;
+                numberOfFlags = 5;
                 break;
+            }
         }
         players[1] = new ComputerPlayer(secondPlayerDeck);
-        numberOfFlags = 5;
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }
 
