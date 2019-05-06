@@ -177,8 +177,8 @@ public abstract class Card {
             int distanceOfX = destination.getX() - card.position.getXCoordinate();
             int distanceOfY = destination.getY() - card.position.getYCoordinate();
             if (Math.abs(distanceOfX) == 2 || Math.abs(distanceOfY) == 2) {
-                x -= distanceOfX / 2;
-                y -= distanceOfY / 2;
+                x += distanceOfX / 2;
+                y += distanceOfY / 2;
                 Square square = landOfGame.getSquares()[x][y]; //todo HANIYEH  java.lang.ArrayIndexOutOfBoundsException: -1 mikhore
                 if (!(square.squareHasMinionOrHero()))
                     return false;
