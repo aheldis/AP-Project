@@ -71,5 +71,6 @@ public enum RequestType {
     SINGLE_GAME_EXIT,
     SINGLE_GAME_HELP,
     SHOP_MAKE_NEW_CARD,
-    GAME_SHOW_VIEW_LAND;
+    GAME_SHOW_VIEW_LAND,
+    GRAVE_YARD_EXIT;
 }

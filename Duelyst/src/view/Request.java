@@ -221,7 +221,8 @@ public class Request {
             if (command.toLowerCase().matches("show cards"))
                 return RequestType.GAME_GRAVE_YARD_SHOW_CARDS;
             if (command.toLowerCase().matches("exit"))
-                state = StateType.BATTLE;
+                return RequestType.GRAVE_YARD_EXIT;
+
         }
         if (state == StateType.SELECT_CARD) {
             if (command.toLowerCase().matches("move to \\(\\d+,\\d+\\)")) {

@@ -112,7 +112,7 @@ public abstract class Card {
         if (this instanceof Minion) {
             Square square = landOfGame.passSquareInThisCoordinate(newCoordination);
             for (Buff buff : square.getBuffs()) {
-                this.addBuff(buff);
+                addBuff(buff);
             }
         }
 
