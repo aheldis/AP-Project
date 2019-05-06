@@ -70,5 +70,6 @@ public enum RequestType {
     SELECT_MODE_EXIT,
     SINGLE_GAME_EXIT,
     SINGLE_GAME_HELP,
-    SHOP_MAKE_NEW_CARD;
+    SHOP_MAKE_NEW_CARD,
+    GAME_SHOW_VIEW_LAND;
 }
