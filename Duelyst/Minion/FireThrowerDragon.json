@@ -9,7 +9,7 @@
     "ap": 5,
     "counterAttack": "ranged",
     "attackRange": 4,
-    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "activationTimeOfSpecialPowerString": "ON_ATTACK",
     "description": "-",
     "change": {
       "targetType": "card",

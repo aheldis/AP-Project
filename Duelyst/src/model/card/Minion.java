@@ -11,9 +11,18 @@ public class Minion extends Card {
     private int forWhichPlayer;
     private Square square;
     private int price;
+    private String activationTimeOfSpecialPowerString;
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
     private boolean comboAbility;
     private boolean haveSpecialPower;
+
+    {
+        for(ActivationTimeOfSpecialPower activationTime: ActivationTimeOfSpecialPower.values()) {
+            if(activationTimeOfSpecialPowerString.equals(activationTime.name())){
+                activationTimeOfSpecialPower = activationTime;
+            }
+        }
+    }
 
     public ActivationTimeOfSpecialPower getActivationTimeOfSpecialPower() {
         return activationTimeOfSpecialPower;

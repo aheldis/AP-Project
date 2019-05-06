@@ -9,7 +9,7 @@
     "ap": 4,
     "counterAttack": "ranged",
     "attackRange": 3,
-    "ActivationTimeOfSpecialPower": "PASSIVE",
+    "activationTimeOfSpecialPowerString": "PASSIVE",
     "description": "power buff with 2 units hp and weakness buff with 1 unit hp",
     "change": {
       "targetType": "card",

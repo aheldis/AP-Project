@@ -9,7 +9,7 @@
     "ap": 5,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "ON_DEATH",
+    "activationTimeOfSpecialPowerString": "ON_DEATH",
     "description": "decrease hp of hero on death",
     "change": {
       "targetType": "hero",

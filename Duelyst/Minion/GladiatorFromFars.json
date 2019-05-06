@@ -9,7 +9,7 @@
     "ap": 6,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "activationTimeOfSpecialPowerString": "ON_ATTACK",
     "description": "attack 5 units more than times that this minions have been attacked y GladiatorFromFars",
     "change": {
       "targetType": "card",

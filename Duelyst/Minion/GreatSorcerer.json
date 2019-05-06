@@ -9,7 +9,7 @@
     "ap": 6,
     "counterAttack": "ranged",
     "attackRange": 5,
-    "ActivationTimeOfSpecialPower": "PASSIVE",
+    "activationTimeOfSpecialPowerString": "PASSIVE",
     "description": "power buff(ap+2) holy buff continuous",
     "change": {
       "targetType": "card",

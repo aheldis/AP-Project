@@ -9,7 +9,7 @@
     "ap": 4,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "COMBO",
+    "activationTimeOfSpecialPowerString": "COMBO",
     "description": "combo",
     "change": {
       "targetType": "card",

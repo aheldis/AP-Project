@@ -194,4 +194,5 @@ public class MenuView {
         System.out.println("Enter story");
         System.out.println("Enter custom game");
     }
+
 }

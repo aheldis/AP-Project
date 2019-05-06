@@ -9,7 +9,7 @@
     "ap": 12,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "ON_DEFEND",
+    "activationTimeOfSpecialPowerString": "ON_DEFEND",
     "description": "won't be affected by poison buff",
     "change": {
       "targetType": "card",

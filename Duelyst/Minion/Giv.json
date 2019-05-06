@@ -9,7 +9,7 @@
     "ap": 7,
     "counterAttack": "ranged",
     "attackRange": 5,
-    "ActivationTimeOfSpecialPower": "ON_DEFEND",
+    "activationTimeOfSpecialPowerString": "ON_DEFEND",
     "description": "won't get negetive buffs",
     "change": {
       "targetType": "card",

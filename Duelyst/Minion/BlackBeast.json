@@ -9,7 +9,7 @@
     "ap": 10,
     "counterAttack": "hybrid",
     "attackRange": 7,
-    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "activationTimeOfSpecialPowerString": "ON_ATTACK",
     "description": "-",
     "change": {
       "targetType": "card",

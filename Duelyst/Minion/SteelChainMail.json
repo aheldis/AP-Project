@@ -9,7 +9,7 @@
     "ap": 1,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "PASSIVE",
+    "activationTimeOfSpecialPowerString": "PASSIVE",
     "description": "have 12 holy buff passive",
     "change": {
       "targetType": "card",

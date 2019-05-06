@@ -9,7 +9,7 @@
     "ap": 9,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "ON_SPAWN",
+    "activationTimeOfSpecialPowerString": "ON_SPAWN",
     "description": "decrease 16 units of hp of a random opponent minions",
     "change": {
       "targetType": "card",

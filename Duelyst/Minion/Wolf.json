@@ -9,7 +9,7 @@
     "ap": 1,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "activationTimeOfSpecialPowerString": "ON_ATTACK",
     "description": "decrease 6 units from hp of minion in next turn",
     "change": {
       "targetType": "card",

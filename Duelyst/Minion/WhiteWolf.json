@@ -9,7 +9,7 @@
     "ap": 2,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "activationTimeOfSpecialPowerString": "ON_ATTACK",
     "description": "when attacks decrease hp for next turn 6 units and 4 units for the next one",
     "change": {
       "targetType": "card",

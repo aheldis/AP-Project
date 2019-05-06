@@ -9,7 +9,7 @@
     "ap": 14,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "ON_DEFEND",
+    "activationTimeOfSpecialPowerString": "ON_DEFEND",
     "description": "won't be disarm",
     "change": {
       "targetType": "card",

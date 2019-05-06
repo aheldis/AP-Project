@@ -9,7 +9,7 @@
     "ap": 6,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "activationTimeOfSpecialPowerString": "ON_ATTACK",
     "description": "one turn disarm and 4 turns poison buff",
     "change": {
       "targetType": "card",

@@ -9,7 +9,7 @@
     "ap": 4,
     "counterAttack": "ranged",
     "attackRange": 5,
-    "ActivationTimeOfSpecialPower": "ON_SPAWN",
+    "activationTimeOfSpecialPowerString": "ON_SPAWN",
     "description": "stun 8 neighbor cells for 1 turn",
     "change": {
       "targetType": "square",

@@ -9,7 +9,7 @@
     "ap": 6,
     "counterAttack": "ranged",
     "attackRange": 4,
-    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "activationTimeOfSpecialPowerString": "ON_ATTACK",
     "description": "poison buff for 3 turns",
     "change": {
       "targetType": "card",

@@ -9,7 +9,7 @@
     "ap": 4,
     "counterAttack": "ranged",
     "attackRange": 4,
-    "ActivationTimeOfSpecialPower": "ON_TURN",
+    "activationTimeOfSpecialPowerString": "ON_TURN",
     "description": "power buff (ap+1) countinuous",
     "change": {
       "targetType": "card",

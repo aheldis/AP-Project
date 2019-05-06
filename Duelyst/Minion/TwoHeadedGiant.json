@@ -9,7 +9,7 @@
     "ap": 4,
     "counterAttack": "melee",
     "attackRange": 1,
-    "ActivationTimeOfSpecialPower": "ON_ATTACK",
+    "activationTimeOfSpecialPowerString": "ON_ATTACK",
     "description": "destroy all positive buffs",
     "change": {
       "targetType": "card",
