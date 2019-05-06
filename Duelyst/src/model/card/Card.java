@@ -117,7 +117,7 @@ public abstract class Card {
         }
 
         if (newPosition.getFlags().size() > 0) {
-            for(Flag flag: newPosition.getFlags()) {
+            for (Flag flag : newPosition.getFlags()) {
                 flag.setOwnerCard(this);
                 player.addToOwnFlags(flag);
             }
@@ -151,7 +151,7 @@ public abstract class Card {
                 flag.setSquare(newPosition);
     }
 
-    public boolean canInsertToCoordination(Coordinate heroCoordination, Coordinate destination){
+    public boolean canInsertToCoordination(Coordinate heroCoordination, Coordinate destination) {
         int x = destination.getX();
         int y = destination.getY();
         if (x < 0 || x >= landOfGame.getNumberOfRows() || y < 0 || y > landOfGame.getNumberOfColumns())
@@ -166,6 +166,7 @@ public abstract class Card {
         return false;
 
     }
+
     public boolean canMoveToCoordination(Card card, Coordinate destination) {
         if (card.getManhatanDistance(destination) == 2) {
             int x = card.position.getXCoordinate();
@@ -205,7 +206,7 @@ public abstract class Card {
     }
 
     private boolean checkTarget(Square check, String targetType) {
-        return target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
+        return check != null && target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
                 target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position) &&
                 target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
                 target.checkIsAlly(player, check) && target.checkTheOneWhoDoesTheThing(check.getObject());
@@ -253,6 +254,7 @@ public abstract class Card {
 
                 int i, j;
                 Random random = new Random();
+                Square check = null;
                 if (target.getDistance() != DEFAULT) {
                     i = position.getXCoordinate() + random.nextInt(2 * target.getDistance() + 1) - 1;
                     j = position.getYCoordinate() + random.nextInt(2 * target.getDistance() + 1) - 1;
@@ -260,16 +262,21 @@ public abstract class Card {
                     if (j == -1) j += 2;
                     if (i == landOfGame.getNumberOfRows()) i -= 2;
                     if (j == landOfGame.getNumberOfColumns()) j -= 2;
+                    check = landOfGame.getSquares()[i][j];
                 } else {
-                    i = position.getXCoordinate() + random.nextInt(landOfGame.getNumberOfRows());
-                    j = position.getYCoordinate() + random.nextInt(landOfGame.getNumberOfColumns());
+                    while (!checkTarget(check, change.getTargetType())) {
+                        i = position.getXCoordinate() + random.nextInt(landOfGame.getNumberOfRows());
+                        j = position.getYCoordinate() + random.nextInt(landOfGame.getNumberOfColumns());
+                        check = landOfGame.getSquares()[i][j];
+                    }
                 }
-                targets.add(landOfGame.getSquares()[i][j]);
+                if (checkTarget(check, change.getTargetType()))
+                    targets.add(check);
 
             } else {
                 if (target.getDistance() != DEFAULT) {
                     int distance = 0;
-                    while (distance < target.getDistance()) {
+                    while (distance <= target.getDistance()) {
                         for (int i = -distance; i <= distance; i++) {
                             if (cardSquare.getXCoordinate() + i >= landOfGame.getNumberOfRows() || cardSquare.getXCoordinate() + i < 0)
                                 continue;

@@ -27,9 +27,6 @@ import view.enums.StateType;
 //todo hero computer chera aslan tekoon nemikhore
 //todo instace of collectible to player putCardOnLand comment gozashtam
 //todo to setFlagRandomly ye comment gozashtam
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 
 
 
@@ -393,7 +390,7 @@ public class MenuController {
                             menuView.printer("Enter Start game [deck name] [mode] [number of flags]");
                             request.getNewLine();
                             command = request.getCommand();
-                            if (!command.matches("start game \\w+ \\d+ (\\d)*"))
+                            if (!command.matches("Start game \\w+ \\d+ (\\d)*"))
                                 continue;
                             deckName = command.split(" ")[2];
                             mode = Integer.parseInt(command.split(" ")[3]);
@@ -547,9 +544,7 @@ public class MenuController {
                 GraveYard graveYard;
                 graveYard = match.passPlayerWithTurn().getGraveYard();
                 switch (request.getRequestType()) {
-                    case GRAVE_YARD_EXIT:
-                        state = StateType.BATTLE;
-                        break;
+
                     case GAME_GRAVE_YARD_SHOW_INFO:
 
                         request.getNewLine();
