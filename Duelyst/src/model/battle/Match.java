@@ -51,6 +51,18 @@ public class Match {
         Random random = new Random();
         Square[][] squares = land.getSquares();
         int randomX, randomY;
+        if(mode == 2){
+            randomX = random.nextInt(4);
+            randomY = random.nextInt(8);
+            while(squares[randomX][randomY].getObject() == null) {
+                randomX = random.nextInt(4);
+                randomY = random.nextInt(8);
+            }
+            flag = new Flag(squares[randomX][randomY]);
+            flags.add(flag);
+            squares[randomX][randomY].setObject(flag);
+                return;
+        }
         for (int i = 0; i < numberOfFlags; i++) {
             randomX = random.nextInt(4);
             randomY = random.nextInt(8);
@@ -58,11 +70,9 @@ public class Match {
                 i--;
                 continue;
             }
-            flag = new Flag();
+            flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
             squares[randomX][randomY].setObject(flag);
-            if (mode == 2)
-                return;
         }
     }
 

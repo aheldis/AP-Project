@@ -31,8 +31,7 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {},
-      "unaffactBuffs": false,
-
+      "unaffactBuffs": false
     }
   }
 }
