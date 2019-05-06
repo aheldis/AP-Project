@@ -51,21 +51,21 @@ public class Match {
         Random random = new Random();
         Square[][] squares = land.getSquares();
         int randomX, randomY;
-        if(mode == 2){
-            randomX = random.nextInt(4);
-            randomY = random.nextInt(8);
-            while(squares[randomX][randomY].getObject() == null) {
-                randomX = random.nextInt(4);
-                randomY = random.nextInt(8);
+        if (mode == 2) {
+            randomX = random.nextInt(land.getNumberOfRows());
+            randomY = random.nextInt(land.getNumberOfColumns());
+            while (squares[randomX][randomY].getObject() == null) {
+                randomX = random.nextInt(land.getNumberOfColumns());
+                randomY = random.nextInt(land.getNumberOfRows());
             }
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
             squares[randomX][randomY].setObject(flag);
-                return;
+            return;
         }
         for (int i = 0; i < numberOfFlags; i++) {
-            randomX = random.nextInt(4);
-            randomY = random.nextInt(8);
+            randomX = random.nextInt(land.getNumberOfRows());
+            randomY = random.nextInt(land.getNumberOfColumns());
             if (squares[randomX][randomY].getObject() != null) {
                 i--;
                 continue;
@@ -104,8 +104,8 @@ public class Match {
                 collectibleNames.put(collectible.getName(), 0);
             int number = collectibleNames.get(collectible.getName()) + 1;
             collectibleNames.remove(collectible.getName());
-            collectibleNames.put(collectible.getName(), number );
-            CollectibleId id = new CollectibleId((Collectible)collectible, collectibleNames.get(collectible.getName()));
+            collectibleNames.put(collectible.getName(), number);
+            CollectibleId id = new CollectibleId((Collectible) collectible, collectibleNames.get(collectible.getName()));
         }
     }
 
