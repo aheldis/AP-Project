@@ -1,6 +1,5 @@
 package model.battle;
 
-import controller.MenuController;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
@@ -80,7 +79,7 @@ public class Match {
         Random random = new Random();
         int numberOfCollectiblesOnLand = random.nextInt(BOUND_FOR_COLLECTIBLES);
         int randomX, randomY, randomItem;
-        ArrayList<Item> collectibles = Shop.getInstance().getCollectibles();
+        ArrayList<Item> collectibles = new ArrayList<>(Shop.getInstance().getCollectibles());
         Square[][] squares = land.getSquares();
         for (int i = 0; i < numberOfCollectiblesOnLand; i++) {
             Collectible collectible;
@@ -105,7 +104,7 @@ public class Match {
             int number = collectibleNames.get(collectible.getName()) + 1;
             collectibleNames.remove(collectible.getName());
             collectibleNames.put(collectible.getName(), number);
-            CollectibleId id = new CollectibleId((Collectible) collectible, collectibleNames.get(collectible.getName()));
+            new CollectibleId((Collectible) collectible, number);
         }
     }
 
@@ -176,7 +175,7 @@ public class Match {
     public void changeTurn() {//age bazi ba computer bashe turn avaz nemishe
         if (gameEnded()) {
             endGame();
-            MenuController.state = StateType.ACCOUNT_MENU;
+            Controller.MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
         if (passComputerPlayer() == -1) {
@@ -188,7 +187,7 @@ public class Match {
             players[1 - whichPlayer].initPerTurn();//init for computer
             if (gameEnded()) {
                 endGame();
-                MenuController.state = StateType.ACCOUNT_MENU;
+                Controller.MenuController.state = StateType.ACCOUNT_MENU;
                 return;
             }
         }

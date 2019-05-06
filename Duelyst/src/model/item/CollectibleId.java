@@ -13,7 +13,7 @@ public class CollectibleId {
     }
 
     public void setCollectibleId() {//{number of that model.card will add to cardId}
-        CollectibleId = collectible.getName() + " " + number;
+        CollectibleId = collectible.getName() + "_" + number;
     }
 
     public String getCollectibleIdAsString() {

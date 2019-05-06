@@ -171,7 +171,7 @@ public class MenuView {
                 if(item == null )
                     continue;
                 System.out.print("     ");
-                System.out.println(number + ": Name: " + item.getName() + " - Desc: " + item.getDescription() + " - itemID: " + item.getCollectibleId());
+                System.out.println(number + ": Name: " + item.getName() + " - Desc: " + item.getDescription() + " - itemID: " + item.getCollectibleId().getCollectibleIdAsString());
                 System.out.println("\n");
             }
         }
