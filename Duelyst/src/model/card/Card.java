@@ -39,7 +39,10 @@ public abstract class Card {
     private boolean canMove = false;
     private boolean canAttack = false;
     private boolean canCounterAttack = true;
-    private int hpChangeAfterAttack = 0; /** mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro */
+    private int hpChangeAfterAttack = 0;
+    /**
+     * mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
+     */
     private String description;
     private static final int DEFAULT = -1;
 
@@ -107,13 +110,9 @@ public abstract class Card {
         }
 
         if (this instanceof Minion) {
-            if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
-                useSpecialPower(newPosition);
-                //cell effect:
-                Square square = landOfGame.passSquareInThisCoordinate(newCoordination);
-                for (Buff buff : square.getBuffs()) {
-                    this.addBuff(buff);
-                }
+            Square square = landOfGame.passSquareInThisCoordinate(newCoordination);
+            for (Buff buff : square.getBuffs()) {
+                this.addBuff(buff);
             }
         }
 
@@ -276,8 +275,7 @@ public abstract class Card {
             }
         }
         if (this instanceof Minion) {
-            if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK ||
-                    ((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
+            if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
                 useSpecialPower(position);
                 getChange().affect(player, this.getTargetClass().getTargets());
             }

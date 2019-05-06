@@ -58,6 +58,7 @@ public abstract class Player {
         if (playerCard instanceof Spell) {
             playerCard.setTarget(land.passSquareInThisCoordinate(coordinate));
             playerCard.getChange().affect(playerCard.getPlayer(), playerCard.getTarget().getTargets());
+            graveYard.addCardToGraveYard(playerCard, land.passSquareInThisCoordinate(coordinate));
             return;
         }
 
@@ -70,8 +71,14 @@ public abstract class Player {
             ((Flag) square.getObject()).setOwnerCard(playerCard);
             match.addToGameFlags((Flag) square.getObject());
             playerCard.getPlayer().addToOwnFlags((Flag) square.getObject());
-            //setFlagSaver(playerCard);
             addToTurnForSavingFlag();
+        }
+
+        if (playerCard instanceof Minion) {
+            if (((Minion) playerCard).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
+                playerCard.useSpecialPower(square);
+                playerCard.getChange().affect(this, playerCard.getTargetClass().getTargets());
+            }
         }
 
         mana -= playerCard.getMp();
