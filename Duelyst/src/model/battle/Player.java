@@ -77,6 +77,7 @@ public abstract class Player {
                 playerCard.getPlayer().addToOwnFlags(flag);
                 addToTurnForSavingFlag();
             }
+            square.clearFlags();
         }
 
         if (playerCard instanceof Minion) {

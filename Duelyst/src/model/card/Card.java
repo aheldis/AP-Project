@@ -122,6 +122,7 @@ public abstract class Card {
                 player.addToOwnFlags(flag);
                 player.addToTurnForSavingFlag();
             }
+            newPosition.clearFlags();
         }
 
         if (newPosition.getObject() instanceof Collectible &&

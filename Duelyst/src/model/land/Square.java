@@ -88,4 +88,8 @@ public class Square {
     public ArrayList<Flag> getFlags() {
         return flags;
     }
+
+    public void clearFlags(){
+        flags = new ArrayList<>();
+    }
 }
