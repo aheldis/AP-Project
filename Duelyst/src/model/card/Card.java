@@ -200,15 +200,17 @@ public abstract class Card {
         return target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
                 target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position) &&
                 target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
-                target.checkIsAlly(player, check);
+                target.checkIsAlly(player, check) && target.checkTheOneWhoDoesTheThing(check.getObject());
     }
 
     public void setTarget(Square cardSquare) {
         boolean isSquare = change.getTargetType().equals("square");
-        boolean isCard = change.getTargetType().equals("force");
+        boolean isCard = change.getTargetType().equals("force") || change.getTargetType().equals("minion") ||
+                change.getTargetType().equals("hero");
         ArrayList<Square> targets = new ArrayList<>();
         if (isSquare)
             targets.add(cardSquare);
+
         else if (isCard) {
 
             if (target.isOne() && checkTarget(cardSquare, change.getTargetType())) {
@@ -256,6 +258,27 @@ public abstract class Card {
                 }
                 targets.add(landOfGame.getSquares()[i][j]);
 
+            } else {
+                if (target.getDistance() != DEFAULT) {
+                    int distance = 0;
+                    while (distance < target.getDistance()) {
+                        for (int i = -distance; i <= distance; i++) {
+                            if (cardSquare.getYCoordinate() + i >= landOfGame.getNumberOfRows() || cardSquare.getYCoordinate() + i < 0)
+                                continue;
+                            for (int j = -distance; j <= distance; j++) {
+                                if (cardSquare.getXCoordinate() + j >= landOfGame.getNumberOfColumns() ||
+                                        cardSquare.getXCoordinate() + j < 0)
+                                    continue;
+                                Square check = landOfGame.getSquares()[cardSquare.getYCoordinate() + i][cardSquare.getXCoordinate() + j];
+                                if (checkTarget(check, change.getTargetType()))
+                                    targets.add(check);
+                            }
+                        }
+                        distance++;
+                    }
+                }
+                if (target.isSelf())
+                    targets.add(position);
             }
         }
         target.setTargets(targets);

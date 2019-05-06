@@ -11,7 +11,7 @@ public class Minion extends Card {
     private int forWhichPlayer;
     private Square square;
     private int price;
-    private String activationTimeOfSpecialPowerString;
+    private String activationTimeOfSpecialPowerString = "-";
     private ActivationTimeOfSpecialPower activationTimeOfSpecialPower;
     private boolean comboAbility;
     private boolean haveSpecialPower;

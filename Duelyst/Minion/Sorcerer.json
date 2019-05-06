@@ -12,7 +12,7 @@
     "activationTimeOfSpecialPowerString": "PASSIVE",
     "description": "power buff with 2 units hp and weakness buff with 1 unit hp",
     "change": {
-      "targetType": "force",
+      "targetType": "minion",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,
@@ -40,7 +40,7 @@
       "column": false,
       "all": false,
       "random": false,
-      "distance": -1,
+      "distance": 1,
       "self": true,
       "enemy": false,
       "ally": true
