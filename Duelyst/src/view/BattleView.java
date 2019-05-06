@@ -107,6 +107,4 @@ public class BattleView {
                     System.out.println("(" + i + "," + j + ")");
 
     }
-
-
 }

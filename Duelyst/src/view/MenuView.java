@@ -174,6 +174,12 @@ public class MenuView {
         showSpellOrMinion(nextCard, 1);
     }
 
+    public void showACollectibleItem(Collectible item, int number){
+        System.out.print("     ");
+        System.out.println(number + ": Name: " + item.getName() + " - Desc: " + item.getDescription() + " - itemID: " + item.getCollectibleId().getCollectibleIdAsString());
+        System.out.println("\n");
+    }
+
     public void showCollectibleItems(Player player) {
         ArrayList<Collectible> items = player.getHand().getCollectibleItems();
         System.out.println("Collectible items :");
@@ -182,9 +188,8 @@ public class MenuView {
             for (Collectible item : items) {
                 if (item == null)
                     continue;
-                System.out.print("     ");
-                System.out.println(number + ": Name: " + item.getName() + " - Desc: " + item.getDescription() + " - itemID: " + item.getCollectibleId().getCollectibleIdAsString());
-                System.out.println("\n");
+                showACollectibleItem(item, number);
+                number++;
             }
         }
     }
@@ -219,7 +224,7 @@ public class MenuView {
     public void showItemInfo(Hand hand, String CollectibleId) {
         System.out.println("item : ");
         Collectible collectible = hand.passCollectibleInHand(CollectibleId);
-        AccountView.getInstance().showEachItem(collectible, NOT_VALID);
+        showACollectibleItem(collectible, 1);
     }
 
     public void helpForSelectMode() {

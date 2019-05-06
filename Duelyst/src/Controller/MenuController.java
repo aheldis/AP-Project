@@ -23,6 +23,11 @@ import view.enums.ErrorType;
 import view.enums.StateType;
 
 
+//todo use collectible kar nemikone
+//todo 6 dor flag dastemoon bood bazi tamoom nemishe
+//todo hero computer chera aslan tekoon nemikhore
+//todo instace of collectible to player putCardOnLand comment gozashtam
+
 public class MenuController {
     public static StateType state = StateType.MAIN_MENU;
     private static Account account;
