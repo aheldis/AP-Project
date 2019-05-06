@@ -3,6 +3,7 @@ package model.land;
 import model.card.Buff;
 import model.card.Hero;
 import model.card.Minion;
+import model.item.Collectible;
 import model.item.Flag;
 import model.requirment.Coordinate;
 
@@ -26,12 +27,16 @@ public class Square {
     public Minion squareHasMinionAndPassIt() {
         if (object instanceof Minion)
             return (Minion) object;
+        if (object instanceof Collectible && ((Collectible) object).getTheOneWhoCollects() instanceof Minion)
+            return (Minion) ((Collectible) object).getTheOneWhoCollects();
         return null;
     }
 
     public Hero squareHasHeroAndPassIt() {
         if (object instanceof Hero)
             return (Hero) object;
+        if (object instanceof Collectible && ((Collectible) object).getTheOneWhoCollects() instanceof Hero)
+            return (Hero) ((Collectible) object).getTheOneWhoCollects();
         return null;
     }
 
@@ -64,9 +69,9 @@ public class Square {
     }
 
     public static boolean checkerForSquare(int x, int y, LandOfGame landOfGame) {
-        if (x > 4 || x < 0)
+        if (x >= landOfGame.getNumberOfRows() || x < 0)
             return false;
-        if (y < 0 || y > 8)
+        if (y < 0 || y >= landOfGame.getNumberOfColumns())
             return false;
         return landOfGame.getSquares()[x][y].getObject() == null; //todo in vase chie? flag ro check nemikone lazeme begin
     }
@@ -74,11 +79,9 @@ public class Square {
     public boolean squareHasMinionOrHero() {
         if(object == null)
             return false;
-        if (object instanceof Hero)
+        if (squareHasHeroAndPassIt() != null)
             return true;
-        if (object instanceof Minion)
-            return true;
-        return false;
+        return squareHasMinionAndPassIt() != null;
     }
 
     public void addToFlags(Flag flag){

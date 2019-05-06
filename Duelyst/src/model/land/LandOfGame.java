@@ -29,16 +29,10 @@ public class LandOfGame {
     public Square passSquareInThisCoordinate(Coordinate coordinate) {
         int x = coordinate.getX();
         int y = coordinate.getY();
-        if (x < 0 || x > 4 || y < 0 || y > 8)
+        if (x < 0 || x >= NUMBER_OF_ROWS || y < 0 || y >= NUMBER_OF_COLUMNS)
             return null;
         return squares[coordinate.getX()][coordinate.getY()];
     }
-//    public void removeCardFromAnSquare(Coordinate coordinate){
-//        squares[coordinate.getX()][coordinate.getY()].removeCardFromSquare();
-//    }
-//    public void addCardToAnSquare(Coordinate coordinate, Card card){
-//        squares[coordinate.getX()][coordinate.getY()].putCard(card);
-//    }
 
 
     public Square[][] getSquares() {
