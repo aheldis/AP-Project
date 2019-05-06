@@ -136,6 +136,7 @@ public abstract class Player {
             square.setObject(selected);
             selected.setTarget(this);
             selected.getChange().affect(this, selected.getTarget().getTargets());
+            hand.getCollectibleItems().remove(selected);
         }
     }
 
