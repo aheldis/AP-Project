@@ -126,8 +126,12 @@ public abstract class Card {
 
         if (newPosition.getObject() instanceof Collectible &&
                 ((Collectible) newPosition.getObject()).getTarget().checkTheOneWhoCollects(this)) {
-            //todo sabaaaaaa savaw saba
-            System.out.println("collected");
+            //
+            Collectible collectible = (Collectible) newPosition.getObject();
+            System.out.println("Card.move");
+            System.out.println("collectible.getName() = " + collectible.getName());
+            System.out.println("collectible.getDescription() = " + collectible.getDescription());
+            //
             player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
         }
@@ -175,7 +179,7 @@ public abstract class Card {
             if (Math.abs(distanceOfX) == 2 || Math.abs(distanceOfY) == 2) {
                 x -= distanceOfX / 2;
                 y -= distanceOfY / 2;
-                Square square = landOfGame.getSquares()[x][y];
+                Square square = landOfGame.getSquares()[x][y]; //todo HANIYEH  java.lang.ArrayIndexOutOfBoundsException: -1 mikhore
                 if (/*square.getObject() != null && */!(square.squareHasMinionOrHero())) //todo ina okeye dige oona comment bashe chon collectible tooshe mitoone bere
                     return false;
             } else {
