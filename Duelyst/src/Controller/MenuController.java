@@ -22,13 +22,6 @@ import view.Request;
 import view.enums.ErrorType;
 import view.enums.StateType;
 
-//todo land ro ke chap mikone age adad minevise flagashe
-//todo use collectible kar nemikone
-//todo hero computer chera aslan tekoon nemikhore
-//todo instace of collectible to player putCardOnLand comment gozashtam
-//todo to setFlagRandomly ye comment gozashtam
-
-
 
 public class MenuController {
     public static StateType state = StateType.MAIN_MENU;
