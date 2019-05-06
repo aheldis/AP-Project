@@ -10,14 +10,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Item {
-    private String name = new String();
+    private String name;
     private String type; //usable Collectible
     private String description;
     private int cost;
     private int itemNumber;
     protected Target target = new Target();
     protected Change change = new Change();
+    private String activationTimeOfItemString = "EACH_ROUND";
+    private ActivationTimeOfItem activationTimeOfItem = ActivationTimeOfItem.EACH_ROUND;
+    //todo if you wanna add player set player in match constructor
     //todo age mikhastim bara item ha player o land o ina bezarim byd to constructor e match meqdar bedim :D
+
+    {
+        for(ActivationTimeOfItem activationTime: ActivationTimeOfItem.values()) {
+            if(activationTimeOfItemString.equals(activationTime.name())){
+                activationTimeOfItem = activationTime;
+            }
+        }
+    }
 
     public Item() {
 
@@ -117,4 +128,9 @@ public abstract class Item {
     public Target getTarget() {
         return target;
     }
+
+    public ActivationTimeOfItem getActivationTimeOfItem() {
+        return activationTimeOfItem;
+    }
+
 }

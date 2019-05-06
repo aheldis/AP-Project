@@ -6,6 +6,7 @@
     "description": "disarm a random opponent minion",
     "cost": 15000,
     "itemNumber": 17,
+    "activationTimeOfItemString": "ON_ATTACK",
     "target": {
       "counterAttackType": "-",
       "cardType": "force",
@@ -17,7 +18,8 @@
       "distance": -1,
       "self": false,
       "enemy": true,
-      "ally": false
+      "ally": false,
+      "theOneWhoDoesTheThing": "hero"
     },
     "change": {
       "targetType": "card",

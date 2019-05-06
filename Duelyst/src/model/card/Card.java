@@ -2,6 +2,7 @@ package model.card;
 
 import model.battle.OrdinaryPlayer;
 import model.battle.Player;
+import model.item.ActivationTimeOfItem;
 import model.item.Collectible;
 import model.item.Flag;
 import model.land.LandOfGame;
@@ -289,6 +290,12 @@ public abstract class Card {
         attackedCard.changeHp(-ap + hpChangeAfterAttack);
         attackedCard.counterAttack(this);
         setCanAttack(false, 1);
+
+        if (player.getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
+                player.getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
+            player.getMainDeck().getItem().setTarget(player);
+            player.getMainDeck().getItem().getChange().affect(player, player.getMainDeck().getItem().getTarget().getTargets());
+        }
     }
 
     public boolean isCanAttack() {

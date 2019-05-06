@@ -27,7 +27,7 @@ public class Target {
     private boolean haveRange = false; //baraye item
     private boolean notHaveRange = false; //baraye item
     private String theOneWhoCollects = "-"; //baraye item
-
+    private String theOneWhoDoesTheThing = "-"; //baraye item hero va folan
 
     public Target() {
 
@@ -76,6 +76,14 @@ public class Target {
 
         }
         return false;
+    }
+
+    public boolean checkTheOneWhoDoesTheThing(Object object) {
+        if (theOneWhoDoesTheThing.equals("-"))
+            return true;
+        if (object instanceof Hero && (theOneWhoDoesTheThing.equals("hero") || theOneWhoDoesTheThing.equals("force")))
+            return true;
+        return object instanceof Minion && (theOneWhoDoesTheThing.equals("minion") || theOneWhoDoesTheThing.equals("force"));
     }
 
     public boolean checkIsEnemy(Player me, Square check) {
@@ -156,5 +164,9 @@ public class Target {
         if (!(card instanceof Hero) && theOneWhoCollects.equals("hero"))
             return false;
         return card.getRange() != 0 || !haveRange;
+    }
+
+    public String getTheOneWhoDoesTheThing() {
+        return theOneWhoDoesTheThing;
     }
 }

@@ -6,6 +6,7 @@
     "description": "poison buff for a random opponent minion",
     "cost": 7000,
     "itemNumber": 16,
+    "activationTimeOfItemString": "ON_ATTACK",
     "target": {
       "counterAttackType": "-",
       "cardType": "force",
@@ -17,7 +18,8 @@
       "distance": -1,
       "self": false,
       "enemy": true,
-      "ally": false
+      "ally": false,
+      "theOneWhoDoesTheThing": "force"
     },
     "change": {
       "targetType": "card",

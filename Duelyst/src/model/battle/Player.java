@@ -2,6 +2,7 @@ package model.battle;
 
 import model.account.Account;
 import model.card.*;
+import model.item.ActivationTimeOfItem;
 import model.item.Collectible;
 import model.item.Flag;
 import model.item.Item;
@@ -80,6 +81,11 @@ public abstract class Player {
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
 
+        if (mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
+                mainDeck.getItem().getTarget().checkTheOneWhoDoesTheThing(playerCard)) {
+            mainDeck.getItem().setTarget(this);
+            mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
+        }
     }
 
     public String getUserName() {
@@ -194,8 +200,10 @@ public abstract class Player {
         }
         mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
 
-        mainDeck.getItem().setTarget(this);
-        mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
+        if (mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.EACH_ROUND) {
+            mainDeck.getItem().setTarget(this);
+            mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
+        }
 
     }
 

@@ -6,5 +6,5 @@ public enum ActivationTimeOfSpecialPower {
     ON_DEATH,
     ON_ATTACK,
     ON_DEFEND,
-    COMBOO;
+    COMBO
 }

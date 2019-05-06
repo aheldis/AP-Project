@@ -6,6 +6,7 @@
     "description": "hp change for all opponent cards",
     "cost": 15000,
     "itemNumber": 15,
+    "activationTimeOfItemString": "ON_PUT",
     "target": {
       "counterAttackType": "-",
       "cardType": "hero",
@@ -17,7 +18,8 @@
       "distance": -1,
       "self": false,
       "enemy": true,
-      "ally": false
+      "ally": false,
+      "theOneWhoDoesTheThing": "force"
     },
     "change": {
       "targetType": "card",
