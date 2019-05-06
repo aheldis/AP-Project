@@ -172,23 +172,22 @@ public abstract class Card {
                 x -= distanceOfX / 2;
                 y -= distanceOfY / 2;
                 Square square = landOfGame.getSquares()[x][y];
-                if (square.getObject() != null && !(square.getObject() instanceof Flag))
+                if (square.getObject() != null && !(square.squareHasMinionOrHero()))
                     return false;
             } else {
                 x += distanceOfX;
                 Square square = landOfGame.getSquares()[x][y];
-                if (square.getObject() != null && !(square.getObject() instanceof Flag)) {
+                if (square.getObject() != null && !(square.squareHasMinionOrHero())) {
                     x -= distanceOfX;
                     y += distanceOfY;
                     square = landOfGame.getSquares()[x][y];
-                    if (square.getObject() != null && !(square.getObject() instanceof Flag))
+                    if (square.getObject() != null && !(square.squareHasMinionOrHero()))
                         return false;
                 }
             }
         }
 
-        return Objects.requireNonNull(landOfGame.passSquareInThisCoordinate(destination)).getObject() == null ||
-                Objects.requireNonNull(landOfGame.passSquareInThisCoordinate(destination)).getObject() instanceof Flag;
+        return !Objects.requireNonNull(landOfGame.passSquareInThisCoordinate(destination)).squareHasMinionOrHero();
     }
 
     public boolean withinRange(Coordinate coordinate, int range) {

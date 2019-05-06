@@ -405,6 +405,9 @@ public class MenuController {
                 ErrorType error;
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
+                    case GAME_SHOW_VIEW_LAND:
+                        match.getLand().showMap(match);
+                        break;
                     case GAME_GAME_INFO:
                         menuView.printGameInfo(match);
                         break;

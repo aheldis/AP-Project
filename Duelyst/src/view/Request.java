@@ -158,6 +158,8 @@ public class Request {
 
         } else if (state == StateType.BATTLE) {
             switch (command.toLowerCase()) {
+                case "show land":
+                    return RequestType.GAME_SHOW_VIEW_LAND;
                 case "game info":
                     return RequestType.GAME_GAME_INFO;
                 case "show my minions":
