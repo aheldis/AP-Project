@@ -54,28 +54,31 @@ public class LandOfGame {
     }
 
     public void showMap(Match match) {
+        System.out.println(match.getPlayers()[0].getHero().getPosition().getXCoordinate());
+        System.out.println(match.getPlayers()[0].getHero().getPosition().getYCoordinate());
+        System.out.println(match.getPlayers()[1].getHero().getPosition().getXCoordinate());
+        System.out.println(match.getPlayers()[1].getHero().getPosition().getYCoordinate());
         Object object;
-        for (int j = 0; j < 9; j++) {
-            for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 9; j++) {
                 object = squares[i][j].getObject();
                 System.out.print("|");
-                if (object instanceof Flag)
-                    System.out.println("F");
-                if(object instanceof Collectible)
-                    System.out.println("C");
-                if(object instanceof Usable)
-                    System.out.println("U");
                 if(object instanceof Hero)
-                    System.out.println("H");
-                if(object instanceof Spell)
-                    System.out.println("S");
-                if(object instanceof Minion)
-                    System.out.println("M");
+                    System.out.print("H");
+                else if (object instanceof Flag)
+                    System.out.print("F");
+                else if(object instanceof Collectible)
+                    System.out.print("C");
+                else if(object instanceof Usable)
+                    System.out.print("U");
+                else if(object instanceof Spell)
+                    System.out.print("S");
+                else if(object instanceof Minion)
+                    System.out.print("M");
                 else
-                    System.out.println(" ");
-
+                    System.out.print(" ");
             }
-
+            System.out.println("|\n");
         }
     }
 

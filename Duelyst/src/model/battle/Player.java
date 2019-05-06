@@ -220,7 +220,6 @@ public abstract class Player {
 
         }
 
-    }
 
     public void addToCardsOfLand(Card card) {
         cardsOnLand.add(card);
