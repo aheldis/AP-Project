@@ -1,6 +1,5 @@
 package model.battle;
 
-import Controller.MenuController;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
@@ -176,7 +175,7 @@ public class Match {
     public void changeTurn() {//age bazi ba computer bashe turn avaz nemishe
         if (gameEnded()) {
             endGame();
-            MenuController.state = StateType.ACCOUNT_MENU;
+            controller.MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
         if (passComputerPlayer() == -1) {
@@ -188,7 +187,7 @@ public class Match {
             players[1 - whichPlayer].initPerTurn();//init for computer
             if (gameEnded()) {
                 endGame();
-                MenuController.state = StateType.ACCOUNT_MENU;
+                controller.MenuController.state = StateType.ACCOUNT_MENU;
                 return;
             }
         }

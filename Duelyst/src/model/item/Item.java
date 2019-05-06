@@ -87,26 +87,14 @@ public abstract class Item {
                     }
 
                     if (target.isAlly()) {
-                        if (target.getCardType().equals("minion"))
-                            randomNumber = random.nextInt(player.getCardsOnLand().size());
-                        else
-                            randomNumber = random.nextInt(player.getCardsOnLand().size() + 1);
-                        if (randomNumber == player.getCardsOnLand().size() &&
-                                target.checkIfAttackedCardIsValid(player.getHero(), change.getTargetType()))
-                            targets.add(player.getHero().getPosition());
-                        else if (target.checkIfAttackedCardIsValid(player.getCardsOnLand().get(randomNumber), change.getTargetType()))
+                        randomNumber = random.nextInt(player.getCardsOnLand().size());
+                        if (target.checkIfAttackedCardIsValid(player.getCardsOnLand().get(randomNumber), change.getTargetType()))
                             targets.add(player.getCardsOnLand().get(randomNumber).getPosition());
                     }
 
                     if (target.isEnemy()) {
-                        if (target.getCardType().equals("minion"))
-                            randomNumber = random.nextInt(player.getOpponent().getCardsOnLand().size());
-                        else
-                            randomNumber = random.nextInt(player.getOpponent().getCardsOnLand().size() + 1);
-                        if (randomNumber == player.getOpponent().getCardsOnLand().size() &&
-                                target.checkIfAttackedCardIsValid(player.getOpponent().getHero(), change.getTargetType()))
-                            targets.add(player.getOpponent().getHero().getPosition());
-                        else if (target.checkIfAttackedCardIsValid(player.getOpponent().getCardsOnLand().get(randomNumber), change.getTargetType()))
+                        randomNumber = random.nextInt(player.getOpponent().getCardsOnLand().size());
+                        if (target.checkIfAttackedCardIsValid(player.getOpponent().getCardsOnLand().get(randomNumber), change.getTargetType()))
                             targets.add(player.getOpponent().getCardsOnLand().get(randomNumber).getPosition());
                     }
                 }
@@ -127,7 +115,7 @@ public abstract class Item {
     }
 
     public Target getTarget() {
-        if(target == null)
+        if (target == null)
             System.out.println("you're uglhy");
         return target;
     }
