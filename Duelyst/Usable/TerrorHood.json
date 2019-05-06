@@ -33,7 +33,7 @@
       "buffs": {
         "weakness": [1]
       },
-      "unaffactBuffs": false,
+      "unaffectBuffs": false,
       "apOrHpForWeakness": "ap",
       "changeInApOrHpForWeakness": -2
     }

@@ -25,7 +25,7 @@
       "buffs": {
         "poison": [1]
       },
-      "unaffactBuffs": false
+      "unaffectBuffs": false
     },
     "target": {
       "counterAttackType": "-",

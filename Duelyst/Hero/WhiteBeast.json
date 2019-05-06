@@ -25,7 +25,7 @@
       "buffs": {
         "power": [-1]
       },
-      "unaffactBuffs": true,
+      "unaffectBuffs": true,
       "apOrHpForPower": "ap",
       "changeInApOrHpForPower": 4
     },

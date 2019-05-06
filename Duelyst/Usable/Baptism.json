@@ -29,7 +29,7 @@
       "buffs": {
         "holy": [2]
       },
-      "unaffactBuffs": false,
+      "unaffectBuffs": false,
       "distance": -1,
       "self": false,
       "enemy": false,

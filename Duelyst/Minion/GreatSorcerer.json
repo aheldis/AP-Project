@@ -25,7 +25,7 @@
         "holy": [-1],
         "power": [-1]
       },
-      "unaffactBuffs": false,
+      "unaffectBuffs": false,
       "apOrHpForPower": "ap",
       "changeInApOrHpForPower": 2
     },

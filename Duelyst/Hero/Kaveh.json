@@ -26,7 +26,7 @@
       "buffs": {
         "holy": [3]
       },
-      "unaffactBuffs": false
+      "unaffectBuffs": false
     },
     "target": {
       "counterAttackType": "melee",

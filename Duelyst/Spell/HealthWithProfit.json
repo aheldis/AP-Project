@@ -31,7 +31,7 @@
           3
         ]
       },
-      "unaffactBuffs": false,
+      "unaffectBuffs": false,
       "apOrHpForWeakness": "hp",
       "changeInApOrHpForWeakness": -6
     },

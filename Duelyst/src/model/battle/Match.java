@@ -82,7 +82,7 @@ public class Match {
                 continue;
             }
             collectible = (Collectible) collectibles.get(randomItem);
-            //todo besaze to shop oonayee ro ke mizare to battel
+            Shop.getInstance().removeCollectible(collectible);
             this.collectibles.add(collectible);
             squares[randomX][randomY].setObject(collectible);
 

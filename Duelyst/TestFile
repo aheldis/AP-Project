@@ -1,5 +1,6 @@
 create account ali
 12
+help
 enter shop
 buy Kaveh
 buy ArcherFromFars
@@ -57,7 +58,7 @@ single player
 help
 story
 game info
-1
+2
 show card info ali_Kaveh_1
 select card ali_Kaveh_1
 move to (5,3)
@@ -69,5 +70,5 @@ move to (5,3)
                      end turn
                      Show opponent minions
 move to (2,1)
-exit
+
 show hand

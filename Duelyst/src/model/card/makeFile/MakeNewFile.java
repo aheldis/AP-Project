@@ -22,8 +22,7 @@ public class MakeNewFile {
     private static String path;
 
 
-
-    public static void makeNewCardFile() throws  Exception{
+    public static void makeNewCardFile() throws Exception {
 
         String input = null;
         do {
@@ -113,15 +112,37 @@ public class MakeNewFile {
                             int num = Integer.parseInt(request.getCommand());
                             hashMap.put(buffName, num);
                         }
+                    } else if (annotatedType.getType().getTypeName().equals("java.util.HashMap<java.lang.String, java.util.ArrayList<java.lang.Integer>>")) {
+                        newCardMessages.printLine("enter number of buffs: ");
+                        request.getNewLine();
+                        HashMap<String, ArrayList<Integer>> hashMap = new HashMap<>();
+                        int number = Integer.parseInt(request.getCommand());
+                        for (int i = 0; i < number; i++) {
+                            newCardMessages.printLine("enter buff name(holy/power/poison/weakness/stun/disarm) CORRECTLY");
+                            request.getNewLine();
+                            String buffName = request.getCommand();
+                            newCardMessages.printLine("enter how many of this buff");
+                            request.getNewLine();
+                            int count = Integer.parseInt(request.getCommand());
+                            ArrayList<Integer> array = new ArrayList<>();
+                            for (int j = 0; j < count; j++) {
+                                newCardMessages.printLine("for How Many Turn");
+                                request.getNewLine();
+                                int num = Integer.parseInt(request.getCommand());
+                                array.add(num);
+
+                            }
+                            hashMap.put(buffName, array);
+                        }
                         field.set(object, hashMap);
                     }
 
                 } catch (Exception e) {
                     newCardMessages.printLine(e.getMessage());
                 }
-            }
 
-            return object;
+                return object;
+            }
 
         } catch (Exception e) {
             newCardMessages.printLine("other error");

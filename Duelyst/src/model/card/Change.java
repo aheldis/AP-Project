@@ -7,15 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Change {
-    //TODO OOOO continuesssss DONE
-    //todo continues passive on attack on spawn on death
-    //todo cell effect
-
-
-    //TODO oon on_move o folan ro too kard borde gharar shod chi beshe va if yes be fileha bas ezafe she. ~ e engar ezafe shode hichi pas :) (check)
-
-    // todo setter hasho to card gozashtam ke dastresish rahat tar she :D (zahra)
-
     private String targetType;
     private boolean opponentCanMove = true; //Disarm buff
     private boolean opponentCanAttack = true;
@@ -27,15 +18,13 @@ public class Change {
     private int apChange = 0;
 
     private HashMap<String, ArrayList<Integer>> buffs = new HashMap<>();
-    private boolean unaffactBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
+    private boolean unaffectBuffs; //bara nirooye khodi bada ro az bein mibare bara doshman khoobaro
     private String apOrHpForWeakness = null; // ap/hp -> faghat faghat age weakness buff dasht
     private int changeInApOrHpForWeakness = 0; //meghdare Taghir age weakness dasht
     private String apOrHpForPower = null; // ap/hp -> faghat faghat age power buff dasht
     private int changeInApOrHpForPower = 0; //meghdare Taghir age power dasht
     private int changeInManaForMana = 0;
     private int changeInHpForDecreaserHp = 0;
-
-    //todo ina ro dar nazar begiram too in paeen :> DONE :-?
 
     public void affect(Player player, ArrayList<Square> targets) {
 
@@ -75,16 +64,14 @@ public class Change {
         targetCard.changeAp(apChange);
         targetCard.changeHp(hpChange);
 
-        if (!unaffactBuffs) {
+        if (!unaffectBuffs) {
             for (String buffName : buffs.keySet()) {
                 for (int forHowManyTurn : buffs.get(buffName)) {
                     targetCard.addBuff(getBuff(buffName, forHowManyTurn));
-                    //todo ye check bokonam hamin aval nabayad affect dade beshse ya na
                 }
             }
         }
 
-        //todo age size arraylist buff sefr nabashe faghat oon buffe ro bayad hazf kone DONE :-?
         if (unaffactBuffs) {
             if (buffs.size() == 0) {
                 if (targetCard.getPlayer().equals(player)) {

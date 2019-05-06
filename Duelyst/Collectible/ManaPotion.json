@@ -34,7 +34,7 @@
       "buffs": {
         "mana": [1]
       },
-      "unaffactBuffs": false
+      "unaffectBuffs": false
     }
   }
 }

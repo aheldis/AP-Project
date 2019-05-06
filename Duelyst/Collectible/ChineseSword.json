@@ -27,7 +27,7 @@
       "apChange": 5,
       "continuous": false,
       "buffs": {},
-      "unaffactBuffs": false,
+      "unaffectBuffs": false,
       "distance": -1,
       "self": false,
       "enemy": false,

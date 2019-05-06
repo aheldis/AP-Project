@@ -29,7 +29,7 @@
       "buffs": {
         "mana": [3]
       },
-      "unaffactBuffs": false,
+      "unaffectBuffs": false,
       "distance": -1,
       "self": false,
       "enemy": false,

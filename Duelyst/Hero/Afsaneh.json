@@ -24,7 +24,7 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {},
-      "unaffactBuffs": true
+      "unaffectBuffs": true
     },
     "target": {
       "counterAttackType": "ranged",

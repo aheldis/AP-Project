@@ -129,7 +129,6 @@ public class MenuView {
 
     public void showHand(Player player) {
         //nmikham hero o ina on balash bashe mosalaman :|
-        System.out.println("hi");
         int counterOfCards = 1;
         ArrayList<Card> cards = player.getHand().getGameCards();
         if (cards != null && cards.size() != 0) {

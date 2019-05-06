@@ -26,7 +26,7 @@
         "poison": [4],
         "disarm": [1]
       },
-      "unaffactBuffs": false
+      "unaffectBuffs": false
     },
     "target": {
       "counterAttackType": "melee",

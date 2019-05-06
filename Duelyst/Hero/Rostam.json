@@ -24,7 +24,7 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {},
-      "unaffactBuffs": false
+      "unaffectBuffs": false
     },
     "target": {
       "counterAttackType": "hybrid",

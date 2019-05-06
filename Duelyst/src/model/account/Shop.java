@@ -270,6 +270,11 @@ public class Shop {
                 Card.getHeroes(cards), items);
     }
 
+    public void removeCollectible(Collectible collectible) {
+        makeNewFromFile(pathOfFiles + FilesType.COLLECTIBLE.getName() + "/" + collectible.getName() + ".json", FilesType.COLLECTIBLE);
+        collectibles.remove(collectible);
+    }
+
     public void help() {
         accountView.viewHelpOfShop();
     }
