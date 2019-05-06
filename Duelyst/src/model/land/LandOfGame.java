@@ -5,7 +5,6 @@ import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
 import model.item.Collectible;
-import model.item.Flag;
 import model.item.Usable;
 import model.requirment.Coordinate;
 
@@ -61,8 +60,8 @@ public class LandOfGame {
                 System.out.print("|");
                 if(object instanceof Hero)
                     System.out.print("H");
-                else if (object instanceof Flag)
-                    System.out.print("F");
+                else if (squares[i][j].getFlags().size() > 0)
+                    System.out.print(squares[i][j].getFlags().size());
                 else if(object instanceof Collectible)
                     System.out.print("C");
                 else if(object instanceof Usable)

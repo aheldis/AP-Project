@@ -98,7 +98,7 @@ public abstract class Card {
                 return;
             }
 
-            if (!(canMoveToCoordination(this, newCoordination) && withinRange(newCoordination, 2))) {
+            if (!withinRange(newCoordination, 2) || !(canMoveToCoordination(this, newCoordination))) {
                 ErrorType.INVALID_TARGET.printMessage();
                 return;
             }
@@ -116,15 +116,23 @@ public abstract class Card {
             }
         }
 
-        if (newPosition.getObject() instanceof Flag) {
-            ((Flag) newPosition.getObject()).setOwnerCard(this);
-            player.addToOwnFlags((Flag) newPosition.getObject());
-            player.addToTurnForSavingFlag();
+        if (newPosition.getFlags().size() > 0) {
+            for(Flag flag: newPosition.getFlags()) {
+                flag.setOwnerCard(this);
+                player.addToOwnFlags(flag);
+                player.addToTurnForSavingFlag();
+            }
+            newPosition.clearFlags();
         }
 
         if (newPosition.getObject() instanceof Collectible &&
                 ((Collectible) newPosition.getObject()).getTarget().checkTheOneWhoCollects(this)) {
-            System.out.println("collected");
+            //
+            Collectible collectible = (Collectible) newPosition.getObject();
+            System.out.println("Card.move");
+            System.out.println("collectible.getName() = " + collectible.getName());
+            System.out.println("collectible.getDescription() = " + collectible.getDescription());
+            //
             player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
         }
@@ -152,7 +160,7 @@ public abstract class Card {
 
         if (Math.abs(heroCoordination.getX() - x) + Math.abs(heroCoordination.getY() - y) <= 2) {
             Square square = landOfGame.getSquares()[x][y];
-            if (!(square.getObject() == null || square.squareHasMinionOrHero()))
+            if (square.squareHasMinionOrHero())
                 return false;
             return true;
         }
@@ -164,25 +172,25 @@ public abstract class Card {
             int x = card.position.getXCoordinate();
             int y = card.position.getYCoordinate();
 
-            if (x < 0 || x > landOfGame.getNumberOfRows() || y < 0 || y > landOfGame.getNumberOfColumns())
+            if (x < 0 || x >= landOfGame.getNumberOfRows() || y < 0 || y >= landOfGame.getNumberOfColumns())
                 return false;
 
             int distanceOfX = destination.getX() - card.position.getXCoordinate();
             int distanceOfY = destination.getY() - card.position.getYCoordinate();
             if (Math.abs(distanceOfX) == 2 || Math.abs(distanceOfY) == 2) {
-                x -= distanceOfX / 2;
-                y -= distanceOfY / 2;
+                x += distanceOfX / 2;
+                y += distanceOfY / 2;
                 Square square = landOfGame.getSquares()[x][y];
-                if (square.getObject() != null && !(square.squareHasMinionOrHero()))
+                if ((square.squareHasMinionOrHero()))
                     return false;
             } else {
                 x += distanceOfX;
                 Square square = landOfGame.getSquares()[x][y];
-                if (square.getObject() != null && !(square.squareHasMinionOrHero())) {
+                if (!(square.squareHasMinionOrHero())) {
                     x -= distanceOfX;
                     y += distanceOfY;
                     square = landOfGame.getSquares()[x][y];
-                    if (square.getObject() != null && !(square.squareHasMinionOrHero()))
+                    if (square.squareHasMinionOrHero())
                         return false;
                 }
             }

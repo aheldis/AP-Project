@@ -101,12 +101,15 @@ public class BattleView {
         System.out.println("in these squares: ");
         LandOfGame landOfGame = player.getMatch().getLand();
         Square[][] squares = landOfGame.getSquares();
-        for (int i = 0; i <= 2; i++)//todo
-            for (int j = 0; j <= 2; j++)
-                if (Math.abs(i) + Math.abs(j) <= 2 && !squares[i][j].squareHasMinionOrHero())
+        for (int i = -2; i <= 2; i++)
+            for (int j = -2; j <= 2; j++) {
+                int x = player.getHero().getPosition().getXCoordinate() + i;
+                int y = player.getHero().getPosition().getYCoordinate() + j;
+                if (x < 0 || x >= landOfGame.getNumberOfRows() || y < 0 || y >= landOfGame.getNumberOfColumns())
+                    continue;
+                if (Math.abs(i) + Math.abs(j) <= 2 && !squares[x][y].squareHasMinionOrHero())
                     System.out.println("(" + i + "," + j + ")");
+            }
 
     }
-
-
 }

@@ -70,11 +70,14 @@ public abstract class Player {
             this.addBuffToPlayer(buff);
         }
 
-        if (square.getObject() instanceof Flag) {
-            ((Flag) square.getObject()).setOwnerCard(playerCard);
-            match.addToGameFlags((Flag) square.getObject());
-            playerCard.getPlayer().addToOwnFlags((Flag) square.getObject());
-            addToTurnForSavingFlag();
+        if (square.getFlags().size() > 0) {
+            for (Flag flag : square.getFlags()) {
+                flag.setOwnerCard(playerCard);
+                match.addToGameFlags(flag);
+                playerCard.getPlayer().addToOwnFlags(flag);
+                addToTurnForSavingFlag();
+            }
+            square.clearFlags();
         }
 
         if (playerCard instanceof Minion) {
@@ -91,7 +94,7 @@ public abstract class Player {
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
 
-        if ( mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
+        if (mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
                 mainDeck.getItem().getTarget().checkTheOneWhoDoesTheThing(playerCard)) {
             mainDeck.getItem().setTarget(this);
             mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
@@ -99,7 +102,7 @@ public abstract class Player {
     }
 
     public String getUserName() {
-        if(this instanceof ComputerPlayer){
+        if (this instanceof ComputerPlayer) {
             return "computer";
         }
         return account.getUserName();
@@ -129,7 +132,8 @@ public abstract class Player {
             if (collectible.getName().equals(collectibleItemId))
                 selected = (Collectible) collectible;
         Square square = match.getLand().passSquareInThisCoordinate(coordinate);
-        square.setObject(selected);
+        selected.setTarget(this);
+        selected.getChange().affect(this, selected.getTarget().getTargets());
     }
 
     public void addItemToCollectibles(Collectible collectible) {
@@ -164,7 +168,7 @@ public abstract class Player {
                 card.setCanMove(true, 0);
 
             ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
-            if(card.getBuffsOnThisCard() != null) {
+            if (card.getBuffsOnThisCard() != null) {
                 for (Buff buff : card.getBuffsOnThisCard()) {
                     if (!buff.isContinuous()) {
                         int forHowManyTurn = buff.getForHowManyTurn();
@@ -217,7 +221,9 @@ public abstract class Player {
             mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
         }
 
-        }
+        if(ownFlags.size() > 0)
+            turnForSavingFlag++;
+    }
 
 
     public void addToCardsOfLand(Card card) {
