@@ -17,7 +17,7 @@ public abstract class Item {
     private int itemNumber;
     protected Target target = new Target();
     protected Change change = new Change();
-    //todo if you wanna add player set player in match constructor
+    //todo age mikhastim bara item ha player o land o ina bezarim byd to constructor e match meqdar bedim :D
 
     public Item() {
 

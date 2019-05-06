@@ -1,4 +1,4 @@
-package controller;
+package Controller;
 
 import model.account.Account;
 import model.account.AllAccount;
@@ -10,6 +10,7 @@ import model.battle.Match;
 import model.battle.Player;
 import model.card.ActivationTimeOfSpecialPower;
 import model.card.Card;
+import model.card.Hero;
 import model.card.Minion;
 import model.item.Collectible;
 import model.item.Item;
@@ -31,7 +32,7 @@ public class MenuController {
     private static Game game;
     private static Match match;
 
-    public static void main() throws Exception {
+    public static void main() {
         String id;
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
@@ -109,7 +110,9 @@ public class MenuController {
                     case MAIN_MENU_EXIT:
                         return;
                 }
-            } else if (state == StateType.ACCOUNT_MENU) {
+            }
+
+            else if (state == StateType.ACCOUNT_MENU) {
                 switch (request.getRequestType()) {
                     case MENU_ENTER_COLLECTION:
                         state = StateType.COLLECTION;
@@ -132,7 +135,9 @@ public class MenuController {
                         state = StateType.MAIN_MENU;
                         break;
                 }
-            } else if (state == StateType.COLLECTION) {
+            }
+
+            else if (state == StateType.COLLECTION) {
                 Collection collection = account.getCollection();
                 String deckName;
                 Card card;
@@ -235,7 +240,9 @@ public class MenuController {
                         break;
                 }
 
-            } else if (state == StateType.SHOP) {
+            }
+
+            else if (state == StateType.SHOP) {
                 Shop shop = Shop.getInstance();
                 switch (request.getRequestType()) {
                     case SHOP_SHOW_COLLECTION:
@@ -264,6 +271,9 @@ public class MenuController {
                         break;
                     case SHOP_EXIT:
                         state = StateType.ACCOUNT_MENU;
+                    case SHOP_MAKE_NEW_CARD:
+                        //todo for savaw :D
+                        break;
                 }
             } else if (state == StateType.SELECT_MODE) {
                 switch (request.getRequestType()) {
@@ -534,7 +544,10 @@ public class MenuController {
             } else if (state == StateType.SELECT_CARD) {
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
-                    case GAME_USE_SPECIAL_POWER://todo faqat hero
+                    case GAME_USE_SPECIAL_POWER://faqat hero
+                        if(!(selectedCard instanceof Hero)){
+                            ErrorType.CAN_NOT_USE_SPECIAL_POWER.printMessage();
+                        }
                         ErrorType error;
                         if (player.getMana() < player.getHero().getMpRequiredForSpell()) {
                             error = ErrorType.NOT_ENOUGH_MANA;
@@ -548,13 +561,12 @@ public class MenuController {
                             ErrorType errorType = ErrorType.INVALID_CARD_ID;
                             errorType.printMessage();
                             break;
-
-
                         }
                         selectedCard.move(request.getCoordinate());
                         break;
                     case GAME_EXIT_FROM_SELECT_CARD:
                         state = StateType.BATTLE;
+                        break;
                     case GAME_ATTACK:
                         Card card;
                         id = request.getId();

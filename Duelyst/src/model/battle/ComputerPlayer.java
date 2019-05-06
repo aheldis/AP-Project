@@ -62,9 +62,9 @@ public class ComputerPlayer extends Player {
         Random random = new Random();
         int x, y;
         //put card
-        int RANDOM_NUMBER_FOR_PUT_CARD = 3;
+        int RANDOM_NUMBER_FOR_PUT_CARD = 2;
         if (random.nextInt() % RANDOM_NUMBER_FOR_PUT_CARD == 0) {
-            int randomNumberForCards = random.nextInt(2);
+            int randomNumberForCards = random.nextInt(4);
             for (int i = 0; i < randomNumberForCards; i++) {
                 x = getMainDeck().getHero().getPosition().getXCoordinate();
                 y = getMainDeck().getHero().getPosition().getYCoordinate();
@@ -82,30 +82,32 @@ public class ComputerPlayer extends Player {
                 coordinate.setY(y);
                 coordinate.setX(x);
                 Card card = getHand().chooseARandomCard();
-                if (getMana()>= card.getMp())
+                if (getMana() >= card.getMp())
                     putCardOnLand(card, coordinate, getMatch().getLand());
             }
         }
 
-        int RANDOM_NUMBER_FOR_MOVE = 10;
+        int RANDOM_NUMBER_FOR_MOVE = 5;
         if (random.nextInt() % RANDOM_NUMBER_FOR_MOVE == 0) {
             x = getMainDeck().getHero().getPosition().getXCoordinate();
             y = getMainDeck().getHero().getPosition().getYCoordinate();
-            int cardMoven = random.nextInt(getCardsOnLand().size() - 1);
-            Card card = getCardsOnLand().get(cardMoven);
-            if (random.nextInt() % 2 == 0) {
-                y = yMovement(x, y);
-                if (y != -1) {
-                    coordinate.setX(x);
-                    coordinate.setY(y);
-                    card.move(coordinate);
-                }
-            } else {
-                x = xMovement(x, y);
-                if (x != -1) {
-                    coordinate.setX(x);
-                    coordinate.setY(y);
-                    card.move(coordinate);
+            if (getCardsOnLand().size() > 1) {
+                int cardMoven = random.nextInt(getCardsOnLand().size() - 1);
+                Card card = getCardsOnLand().get(cardMoven);
+                if (random.nextInt() % 2 == 0) {
+                    y = yMovement(x, y);
+                    if (y != -1) {
+                        coordinate.setX(x);
+                        coordinate.setY(y);
+                        card.move(coordinate);
+                    }
+                } else {
+                    x = xMovement(x, y);
+                    if (x != -1) {
+                        coordinate.setX(x);
+                        coordinate.setY(y);
+                        card.move(coordinate);
+                    }
                 }
             }
         }
@@ -113,8 +115,11 @@ public class ComputerPlayer extends Player {
         int RANDOM_NUMBER_FOR_ATTACK = 13;
         if (random.nextInt() % RANDOM_NUMBER_FOR_ATTACK == 0) {
             ArrayList<Card> cards = getOpponent().getCardsOnLand();
-            int randomIndex = random.nextInt(cards.size() - 1);
-            getCardsOnLand().get(random.nextInt(getCardsOnLand().size() - 1)).attack(cards.get(randomIndex));
+            if (cards.size() > 1) {
+                int randomIndex = random.nextInt(cards.size() - 1);
+                if (getCardsOnLand().size() > 1)
+                    getCardsOnLand().get(random.nextInt(getCardsOnLand().size() - 1)).attack(cards.get(randomIndex));
+            }
         }
     }
 

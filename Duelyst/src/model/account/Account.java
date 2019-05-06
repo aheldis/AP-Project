@@ -116,9 +116,9 @@ public class Account implements Comparable<Account> {
 //
 //        } catch (Exception e) {
 //            System.out.println(e);
-//            //todo ye errori bede
 //        }
 //
-//    }//todo for save don't delete
+//    }
+    /**  for save don't delete **/
 
 }

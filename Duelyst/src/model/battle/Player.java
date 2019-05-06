@@ -33,7 +33,7 @@ public abstract class Player {
 //    public abstract void attack(Card card, Square target);
 //    public abstract void useSpecialPower(Card card);
 
-    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {//todo mana ro gand mzane
+    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
         ErrorType error;
         if (playerCard == null) {
             error = ErrorType.INVALID_CARD_ID;
@@ -83,6 +83,9 @@ public abstract class Player {
     }
 
     public String getUserName() {
+        if(this instanceof ComputerPlayer){
+            return "computer";
+        }
         return account.getUserName();
     }
 
@@ -125,7 +128,7 @@ public abstract class Player {
         ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(cardsOnLand);
         for (Card outPutCard : cards) {
-            if (outPutCard.equalCard(cardId) && outPutCard.getPlayer().getAccount().equals(account))
+            if (outPutCard.equalCard(cardId) && outPutCard.getPlayer().equals(this))
                 card = outPutCard;
         }
         return card;

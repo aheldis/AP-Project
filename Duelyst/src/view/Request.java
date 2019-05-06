@@ -43,7 +43,9 @@ public class Request {
                 case "enter exit":
                     return RequestType.MENU_ENTER_EXIT;
             }
-        } else if (state == StateType.COLLECTION) {
+        }
+        else if (state == StateType.COLLECTION)
+        {
             switch (command.toLowerCase()) {
                 case "exit":
                     return RequestType.COLLECTION_EXIT;
@@ -100,7 +102,8 @@ public class Request {
                 return RequestType.COLLECTION_SHOW_DECK;
             }
 
-        } else if (state == StateType.SHOP) {
+        }
+        else if (state == StateType.SHOP) {
             if (command.toLowerCase().equals("show daric")) {
                 return RequestType.SHOP_SHOW_DARIC;
             }
@@ -131,6 +134,9 @@ public class Request {
             }
             if (command.toLowerCase().matches("help")) {
                 return RequestType.SHOP_HELP;
+            }
+            if(command.toLowerCase().equals("make new card")){
+                return RequestType.SHOP_MAKE_NEW_CARD;
             }
         } else if (state == StateType.MAIN_MENU) {
             switch (command.toLowerCase()) {

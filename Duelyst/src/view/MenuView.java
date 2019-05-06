@@ -107,7 +107,7 @@ public class MenuView {
         for (Card card : player.getCardsOnLand()) {
             if (card instanceof Minion) {
                 System.out.printf("%s: %s, health: %d, location: (%d, %d), power: %d\n",
-                        card.getCardId(), card.getName(), card.getHp(),
+                        card.getCardId().getCardIdAsString(), card.getName(), card.getHp(),
                         card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
                         card.getAp());
             }
@@ -128,8 +128,6 @@ public class MenuView {
     }
 
     public void showHand(Player player) {
-        //nmikham hero o ina on balash bashe mosalaman :|
-        System.out.println("hi");
         int counterOfCards = 1;
         ArrayList<Card> cards = player.getHand().getGameCards();
         if (cards != null && cards.size() != 0) {

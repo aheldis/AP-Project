@@ -38,7 +38,7 @@ public abstract class Card {
     private boolean canMove = false;
     private boolean canAttack = false;
     private boolean canCounterAttack = true;
-    private int hpChangeAfterAttack = 0; //todo mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
+    private int hpChangeAfterAttack = 0; /** mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro */
     private String description;
     private static final int DEFAULT = -1;
 

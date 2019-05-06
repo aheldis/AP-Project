@@ -14,7 +14,6 @@ public class Change {
 
     //TODO oon on_move o folan ro too kard borde gharar shod chi beshe va if yes be fileha bas ezafe she. ~ e engar ezafe shode hichi pas :) (check)
 
-    // todo setter hasho to card gozashtam ke dastresish rahat tar she :D (zahra)
 
     private String targetType;
     private boolean opponentCanMove = true; //Disarm buff

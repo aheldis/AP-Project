@@ -1,6 +1,6 @@
 package model.battle;
 
-import controller.MenuController;
+import Controller.MenuController;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
@@ -143,7 +143,7 @@ public class Match {
         }
         setCollectiblesRandomly();
         date = new Date();
-        //todo set mana
+        //set mana : meqdare avaliye mana baraye player inline behesh 2 dadam
         players[0].setMana(2);
         players[1].setMana(2);
         initGame();
