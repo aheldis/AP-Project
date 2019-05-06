@@ -1,6 +1,7 @@
 package model.card;
 
 import model.battle.Player;
+import model.item.Collectible;
 import model.land.LandOfGame;
 import model.land.Square;
 
@@ -43,11 +44,16 @@ public class Target {
         if (attacked == null)
             return false;
 
-        if (!(attacked instanceof Card))
-            return false;
 
         if (attacked instanceof Spell)
             return true;
+
+        if (attacked instanceof Collectible)
+            attacked = ((Collectible) attacked).getTheOneWhoCollects();
+
+        if (!(attacked instanceof Card))
+            return false;
+
 
         String counterAttackName = null;
 
@@ -61,14 +67,14 @@ public class Target {
             if (!targetType.equals("minion") && !targetType.equals("force")) {
                 return false;
             }
-            counterAttackName = ((Card)attacked).getCounterAttackName();
+            counterAttackName = ((Card) attacked).getCounterAttackName();
         }
 
         if (attacked instanceof Hero) {
             if (!targetType.equals("hero") && !targetType.equals("force")) {
                 return false;
             }
-            counterAttackName = ((Card)attacked).getCounterAttackName();
+            counterAttackName = ((Card) attacked).getCounterAttackName();
         }
 
         if (counterAttackName != null) {
@@ -81,6 +87,8 @@ public class Target {
     public boolean checkTheOneWhoDoesTheThing(Object object) {
         if (theOneWhoDoesTheThing.equals("-"))
             return true;
+        if (object instanceof Collectible)
+            object = ((Collectible) object).getTheOneWhoCollects();
         if (object instanceof Hero && (theOneWhoDoesTheThing.equals("hero") || theOneWhoDoesTheThing.equals("force")))
             return true;
         return object instanceof Minion && (theOneWhoDoesTheThing.equals("minion") || theOneWhoDoesTheThing.equals("force"));
@@ -89,15 +97,21 @@ public class Target {
     public boolean checkIsEnemy(Player me, Square check) {
         if (!enemy)
             return false;
-        return check.getObject() != null && check.getObject() instanceof Card &&
-                ((Card)check.getObject()).getPlayer() == me.getOpponent();
+        Object object = check.getObject();
+        if (object instanceof Collectible)
+            object = ((Collectible) object).getTheOneWhoCollects();
+        return check.getObject() != null && object instanceof Card &&
+                ((Card) object).getPlayer() == me.getOpponent();
     }
 
     public boolean checkIsAlly(Player me, Square check) {
         if (!ally)
             return false;
-        return check.getObject() != null && check.getObject() instanceof Card &&
-                ((Card)check.getObject()).getPlayer() == me;
+        Object object = check.getObject();
+        if (object instanceof Collectible)
+            object = ((Collectible) object).getTheOneWhoCollects();
+        return check.getObject() != null && object instanceof Card &&
+                ((Card) object).getPlayer() == me;
     }
 
     public boolean checkDistance(Card forWitchCard, Square squareOfTarget) {

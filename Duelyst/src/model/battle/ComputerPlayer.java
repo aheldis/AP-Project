@@ -23,6 +23,7 @@ public class ComputerPlayer extends Player {
     }
 
     private int yMovement(int x, int y) {
+        //todo zahra in pore buge
         y++;
         if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
             y++;
