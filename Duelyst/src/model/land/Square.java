@@ -69,4 +69,12 @@ public class Square {
         return landOfGame.getSquares()[x][y].getObject() == null;
     }
 
+    public boolean squareHasMinionOrHero() {
+        if (object instanceof Hero)
+            return true;
+        if (object instanceof Minion)
+            return true;
+        return false;
+    }
+
 }
