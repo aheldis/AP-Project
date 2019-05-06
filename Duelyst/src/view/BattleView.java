@@ -101,9 +101,9 @@ public class BattleView {
         System.out.println("in these squares: ");
         LandOfGame landOfGame = player.getMatch().getLand();
         Square[][] squares = landOfGame.getSquares();
-        for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
-            for (int j = 0; j < landOfGame.getNumberOfColumns(); j++)
-                if (!squares[i][j].squareHasMinionOrHero())
+        for (int i = -2; i <= 2; i++)
+            for (int j = -2; j <= 2; j++)
+                if (Math.abs(i) + Math.abs(j) <= 2 && !squares[i][j].squareHasMinionOrHero())
                     System.out.println("(" + i + "," + j + ")");
 
     }
