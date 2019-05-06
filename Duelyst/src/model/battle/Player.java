@@ -60,6 +60,8 @@ public abstract class Player {
             playerCard.setTarget(land.passSquareInThisCoordinate(coordinate));
             playerCard.getChange().affect(playerCard.getPlayer(), playerCard.getTarget().getTargets());
             graveYard.addCardToGraveYard(playerCard, land.passSquareInThisCoordinate(coordinate));
+            mana -= playerCard.getMp();
+            hand.removeUsedCardsFromHand(playerCard);
             return;
         }
 
@@ -73,7 +75,6 @@ public abstract class Player {
         if (square.getFlags().size() > 0) {
             for (Flag flag : square.getFlags()) {
                 flag.setOwnerCard(playerCard);
-                match.addToGameFlags(flag);
                 playerCard.getPlayer().addToOwnFlags(flag);
             }
             square.clearFlags();

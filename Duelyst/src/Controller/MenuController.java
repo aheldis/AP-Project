@@ -1,7 +1,5 @@
 package controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Collection;
@@ -23,11 +21,6 @@ import view.MenuView;
 import view.Request;
 import view.enums.ErrorType;
 import view.enums.StateType;
-
-import javax.sql.rowset.BaseRowSet;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 
 //todo land ro ke chap mikone age adad minevise flagashe
 //todo use collectible kar nemikone
