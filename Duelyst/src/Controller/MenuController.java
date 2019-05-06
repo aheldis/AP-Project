@@ -1,5 +1,7 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Collection;
@@ -22,12 +24,9 @@ import view.Request;
 import view.enums.ErrorType;
 import view.enums.StateType;
 
-//todo land ro ke chap mikone age adad minevise flagashe
-//todo use collectible kar nemikone
-//todo hero computer chera aslan tekoon nemikhore
-//todo instace of collectible to player putCardOnLand comment gozashtam
-//todo to setFlagRandomly ye comment gozashtam
-
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 
 public class MenuController {
