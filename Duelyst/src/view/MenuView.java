@@ -84,6 +84,8 @@ public class MenuView {
         System.out.println("Hero: " + player.getHero().getName()
                 + " - cardId: " + player.getHero().getCardId().getCardIdAsString());
         System.out.println("health point : " + player.getHero().getHp());
+        System.out.println("number of flaged save: " + player.getNumberOfFlagsSaved());
+        System.out.println("Turn For Saving Flag: " + player.getTurnForSavingFlag());
     }
 
     public void printGameInfo(Match match) {

@@ -71,7 +71,7 @@ public abstract class Player {
         }
 
         if (square.getFlags().size() > 0) {
-            for(Flag flag: square.getFlags()) {
+            for (Flag flag : square.getFlags()) {
                 flag.setOwnerCard(playerCard);
                 match.addToGameFlags(flag);
                 playerCard.getPlayer().addToOwnFlags(flag);
@@ -94,7 +94,7 @@ public abstract class Player {
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
 
-        if ( mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
+        if (mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
                 mainDeck.getItem().getTarget().checkTheOneWhoDoesTheThing(playerCard)) {
             mainDeck.getItem().setTarget(this);
             mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
@@ -102,7 +102,7 @@ public abstract class Player {
     }
 
     public String getUserName() {
-        if(this instanceof ComputerPlayer){
+        if (this instanceof ComputerPlayer) {
             return "computer";
         }
         return account.getUserName();
@@ -168,7 +168,7 @@ public abstract class Player {
                 card.setCanMove(true, 0);
 
             ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
-            if(card.getBuffsOnThisCard() != null) {
+            if (card.getBuffsOnThisCard() != null) {
                 for (Buff buff : card.getBuffsOnThisCard()) {
                     if (!buff.isContinuous()) {
                         int forHowManyTurn = buff.getForHowManyTurn();
@@ -221,7 +221,9 @@ public abstract class Player {
             mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
         }
 
-        }
+        if(ownFlags.size() > 0)
+            turnForSavingFlag++;
+    }
 
 
     public void addToCardsOfLand(Card card) {

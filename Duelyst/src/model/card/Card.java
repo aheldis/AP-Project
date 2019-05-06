@@ -180,7 +180,7 @@ public abstract class Card {
             if (Math.abs(distanceOfX) == 2 || Math.abs(distanceOfY) == 2) {
                 x += distanceOfX / 2;
                 y += distanceOfY / 2;
-                Square square = landOfGame.getSquares()[x][y]; //todo HANIYEH  java.lang.ArrayIndexOutOfBoundsException: -1 mikhore
+                Square square = landOfGame.getSquares()[x][y];
                 if ((square.squareHasMinionOrHero()))
                     return false;
             } else {
