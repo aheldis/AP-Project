@@ -131,7 +131,8 @@ public abstract class Player {
             if (collectible.getName().equals(collectibleItemId))
                 selected = (Collectible) collectible;
         Square square = match.getLand().passSquareInThisCoordinate(coordinate);
-        square.setObject(selected);
+        selected.setTarget(this);
+        selected.getChange().affect(this, selected.getTarget().getTargets());
     }
 
     public void addItemToCollectibles(Collectible collectible) {
