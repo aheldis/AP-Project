@@ -28,6 +28,7 @@ public class MenuController {
     private static Account account;
     private static AllAccount allAccount = AllAccount.getInstance();
     private static MenuView menuView = MenuView.getInstance();
+    private static BattleView battleView = BattleView.getInstance();
 
     private static Game game;
     private static Match match;
@@ -439,7 +440,7 @@ public class MenuController {
                         state = StateType.GRAVE_YARD;
                         break;
                     case GAME_HELP:
-                        //todo
+                        battleView.gameHelp(player);
                         break;
                     case GAME_END_GAME://انصراف از بازی
                         match.setLoser(player);
