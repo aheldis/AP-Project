@@ -108,7 +108,7 @@ public class BattleView {
                 if (x < 0 || x >= landOfGame.getNumberOfRows() || y < 0 || y >= landOfGame.getNumberOfColumns())
                     continue;
                 if (Math.abs(i) + Math.abs(j) <= 2 && !squares[x][y].squareHasMinionOrHero())
-                    System.out.println("(" + i + "," + j + ")");
+                    System.out.println("(" + x + "," + y + ")");
             }
 
     }
