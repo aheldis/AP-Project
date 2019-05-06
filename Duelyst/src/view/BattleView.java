@@ -79,30 +79,23 @@ public class BattleView {
     public void gameHelp(Player player) {
 
         System.out.println("You can move these cards:");
-        if (player.getHero().getCanMove())
-            System.out.println("    cardId: " + player.getHero().getCardId());
         for (Card card : player.getCardsOnLand()) {
             if (card.getCanMove())
-                System.out.println("    cardId: " + card.getCardId());
+                System.out.println("    cardId: " + card.getCardId().getCardIdAsString());
         }
 
         System.out.println("You can attack these cards:");
-        if (player.getHero().getCanMove()) {
-            System.out.println("    cardId: " + player.getHero().getCardId() + " can attack:");
-            for (Card card : player.getHero().getTheCardsInRange())
-                System.out.println("        cardId: " + card.getCardId());
-        }
         for (Card card : player.getCardsOnLand()) {
             if (card.getCanMove()) {
-                System.out.println("    cardId: " + player.getHero().getCardId() + " can attack:");
+                System.out.println("    cardId: " + card.getCardId().getCardIdAsString() + " can attack:");
                 for (Card cardInRange : card.getTheCardsInRange())
-                    System.out.println("        cardId: " + cardInRange.getCardId());
+                    System.out.println("        cardId: " + cardInRange.getCardId().getCardIdAsString());
             }
         }
 
         System.out.println("You can insert these cards: ");
         for (Card card : player.getHand().getGameCards()) {
-            System.out.println("cardId: " + card.getCardId());
+            System.out.println("cardId: " + card.getCardId().getCardIdAsString());
         }
 
         System.out.println("in these squares: ");

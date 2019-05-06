@@ -51,11 +51,11 @@ public class Match {
         Square[][] squares = land.getSquares();
         int randomX, randomY;
         if (mode == 2) {
-            randomX = random.nextInt(4);
-            randomY = random.nextInt(8);
+            randomX = random.nextInt(land.getNumberOfRows());
+            randomY = random.nextInt(land.getNumberOfColumns());
             while (squares[randomX][randomY].getObject() != null) {
-                randomX = random.nextInt(4);
-                randomY = random.nextInt(8);
+                randomX = random.nextInt(land.getNumberOfRows());
+                randomY = random.nextInt(land.getNumberOfColumns());
             }
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
@@ -142,8 +142,8 @@ public class Match {
         firstHero.setPosition(square[2][0]);
         square[2][8].setObject(players[1].getMainDeck().getHero());
         secondHero.setPosition(square[2][8]);
-        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
-        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
+//        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
+//        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
         if (mode.equals(Game.getModeAsString(3))) {
             setFlagsRandomly(3);
         }
@@ -175,7 +175,7 @@ public class Match {
     public void changeTurn() {//age bazi ba computer bashe turn avaz nemishe
         if (gameEnded()) {
             endGame();
-            Controller.MenuController.state = StateType.ACCOUNT_MENU;
+            controller.MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
         if (passComputerPlayer() == -1) {
@@ -187,7 +187,7 @@ public class Match {
             players[1 - whichPlayer].initPerTurn();//init for computer
             if (gameEnded()) {
                 endGame();
-                Controller.MenuController.state = StateType.ACCOUNT_MENU;
+                controller.MenuController.state = StateType.ACCOUNT_MENU;
                 return;
             }
         }
