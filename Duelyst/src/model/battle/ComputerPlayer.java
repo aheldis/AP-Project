@@ -1,6 +1,7 @@
 package model.battle;
 
 import model.card.Card;
+import model.item.ActivationTimeOfItem;
 import model.land.Square;
 import model.requirment.Coordinate;
 
@@ -119,6 +120,13 @@ public class ComputerPlayer extends Player {
                 int randomIndex = random.nextInt(cards.size() - 1);
                 if (getCardsOnLand().size() > 1)
                     getCardsOnLand().get(random.nextInt(getCardsOnLand().size() - 1)).attack(cards.get(randomIndex));
+            }
+
+
+            if (getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
+                    getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
+                getMainDeck().getItem().setTarget(this);
+                getMainDeck().getItem().getChange().affect(this, getMainDeck().getItem().getTarget().getTargets());
             }
         }
     }
