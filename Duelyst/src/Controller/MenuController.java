@@ -28,6 +28,10 @@ import view.enums.StateType;
 //todo hero computer chera aslan tekoon nemikhore
 //todo instace of collectible to player putCardOnLand comment gozashtam
 //todo to setFlagRandomly ye comment gozashtam
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+
 
 public class MenuController {
     public static StateType state = StateType.MAIN_MENU;
