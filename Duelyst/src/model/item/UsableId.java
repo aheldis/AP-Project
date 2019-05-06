@@ -6,7 +6,7 @@ public class UsableId {
     private String usableId;
     private int number;
     private Usable usable;
-    private Account account;
+    private Account account = null;
 
     public UsableId(Account account, Usable usable, int number) {
         this.account = account;
@@ -24,7 +24,11 @@ public class UsableId {
     }
 
     public void setUsableId() {//{number of that model.card will add to cardId}
-        usableId = account.getUserName() + "_" + usable.getName() + " " + number;
+        if(account == null)
+            usableId = "computer_" + usable.getName() + "_" + number;
+        else
+
+        usableId = account.getUserName() + "_" + usable.getName() + "_" + number;
     }
 
     public String getUsableIdAsString() {

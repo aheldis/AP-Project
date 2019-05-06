@@ -127,6 +127,8 @@ public abstract class Item {
     }
 
     public Target getTarget() {
+        if(target == null)
+            System.out.println("you're uglhy");
         return target;
     }
 

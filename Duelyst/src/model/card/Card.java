@@ -122,15 +122,18 @@ public abstract class Card {
             player.addToTurnForSavingFlag();
         }
 
+        System.out.println("move  -- " + this.getName());
         if (newPosition.getObject() instanceof Collectible &&
                 ((Collectible) newPosition.getObject()).getTarget().checkTheOneWhoCollects(this)) {
+            System.out.println(" -> " + ((Collectible) newPosition.getObject()).getName());
             player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
         }
 
+        position.setObject(null);
         setPosition(newPosition);
         newPosition.setObject(this);
-        position.setObject(null);
+
         if (player instanceof OrdinaryPlayer) {
             RequestSuccessionType.MOVE_TO.setMessage(getCardId().getCardIdAsString() +
                     " moved to x: " + newCoordination.getX() + ", y: " + newCoordination.getY());
@@ -326,8 +329,12 @@ public abstract class Card {
         attackedCard.counterAttack(this);
         setCanAttack(false, 1);
 
-        if (player.getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
-                player.getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
+        if (player.getMainDeck().getItem() != null && player.getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
+                player.
+                        getMainDeck().
+                        getItem().
+                        getTarget().
+                        checkTheOneWhoDoesTheThing(this)) {
             player.getMainDeck().getItem().setTarget(player);
             player.getMainDeck().getItem().getChange().affect(player, player.getMainDeck().getItem().getTarget().getTargets());
         }

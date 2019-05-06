@@ -31,4 +31,6 @@ public class Collectible extends model.item.Item {
     public Card getTheOneWhoCollects() {
         return theOneWhoCollects;
     }
+
+
 }

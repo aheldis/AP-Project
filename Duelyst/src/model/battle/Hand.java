@@ -10,7 +10,7 @@ import java.util.Random;
 public class Hand {
     private Deck deck;
     private ArrayList<Card> gameCards;
-    private ArrayList<Item> CollectibleItems = new ArrayList<>();
+    private ArrayList<Collectible> CollectibleItems = new ArrayList<>();
 
     public Hand(Deck deck) {
         this.deck = deck;
@@ -88,7 +88,7 @@ public class Hand {
         return gameCards;
     }
 
-    public ArrayList<Item> getCollectibleItems() {
+    public ArrayList<Collectible> getCollectibleItems() {
         return CollectibleItems;
     }
 

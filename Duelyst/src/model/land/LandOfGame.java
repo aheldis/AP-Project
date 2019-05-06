@@ -54,10 +54,6 @@ public class LandOfGame {
     }
 
     public void showMap(Match match) {
-        System.out.println(match.getPlayers()[0].getHero().getPosition().getXCoordinate());
-        System.out.println(match.getPlayers()[0].getHero().getPosition().getYCoordinate());
-        System.out.println(match.getPlayers()[1].getHero().getPosition().getXCoordinate());
-        System.out.println(match.getPlayers()[1].getHero().getPosition().getYCoordinate());
         Object object;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 9; j++) {

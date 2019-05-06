@@ -123,7 +123,7 @@ public class ComputerPlayer extends Player {
             }
 
 
-            if (getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
+            if (getMainDeck().getItem() != null && getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
                     getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
                 getMainDeck().getItem().setTarget(this);
                 getMainDeck().getItem().getChange().affect(this, getMainDeck().getItem().getTarget().getTargets());

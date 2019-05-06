@@ -105,14 +105,12 @@ public class MenuController {
                         allAccount.showLeaderBoard();
                         break;
                     case MAIN_MENU_SAVE:
-                      // account.accountSave();
+                        // account.accountSave();
                         break;
                     case MAIN_MENU_EXIT:
                         return;
                 }
-            }
-
-            else if (state == StateType.ACCOUNT_MENU) {
+            } else if (state == StateType.ACCOUNT_MENU) {
                 switch (request.getRequestType()) {
                     case MENU_ENTER_COLLECTION:
                         state = StateType.COLLECTION;
@@ -137,9 +135,7 @@ public class MenuController {
                         state = StateType.MAIN_MENU;
                         break;
                 }
-            }
-
-            else if (state == StateType.COLLECTION) {
+            } else if (state == StateType.COLLECTION) {
                 Collection collection = account.getCollection();
                 String deckName;
                 Card card;
@@ -242,9 +238,7 @@ public class MenuController {
                         break;
                 }
 
-            }
-
-            else if (state == StateType.SHOP) {
+            } else if (state == StateType.SHOP) {
                 Shop shop = Shop.getInstance();
                 switch (request.getRequestType()) {
                     case SHOP_SHOW_COLLECTION:
@@ -291,7 +285,7 @@ public class MenuController {
                             request.getNewLine();
                             userName = request.getCommand();
                             secondAccount = allAccount.userNameHaveBeenExist(userName);
-                            if(secondAccount == account){
+                            if (secondAccount == account) {
                                 ErrorType error = ErrorType.SECOND_PLAYER_NOT_VALID;
                                 menuView.printError(error);
                                 secondAccount = null;
@@ -384,8 +378,8 @@ public class MenuController {
                         menuView.showLevelsForStory();
                         int level = 0;
                         do {
-                            menuView.printer("Enter the level");
                             request.getNewLine();
+
                             if (!request.getCommand().matches("\\d"))
                                 continue;
                             level = Integer.parseInt(request.getCommand());
@@ -438,7 +432,8 @@ public class MenuController {
                     case GAME_END_GAME://انصراف از بازی
                         match.setLoser(player);
                         match.setWinner(player.getOpponent());
-                        player.getOpponent().getAccount().changeValueOfDaric(match.getReward());
+                        if (player.getOpponent().getAccount() != null)
+                            player.getOpponent().getAccount().changeValueOfDaric(match.getReward());
                         state = StateType.ACCOUNT_MENU;
                         break;
                     case GAME_SHOW_MENU:
@@ -450,7 +445,7 @@ public class MenuController {
                         if (selectedCard != null) {
                             state = StateType.SELECT_CARD;
                         }
-                        if(player.getMainDeck().getHero().getCardId().getCardIdAsString().equals(id)){
+                        if (player.getMainDeck().getHero().getCardId().getCardIdAsString().equals(id)) {
                             selectedCard = player.getMainDeck().getHero();
                             state = StateType.SELECT_CARD;
                         }
@@ -555,7 +550,7 @@ public class MenuController {
                 Player player = match.passPlayerWithTurn();
                 switch (request.getRequestType()) {
                     case GAME_USE_SPECIAL_POWER://faqat hero
-                        if(!(selectedCard instanceof Hero)){
+                        if (!(selectedCard instanceof Hero)) {
                             ErrorType.CAN_NOT_USE_SPECIAL_POWER.printMessage();
                         }
                         ErrorType error;

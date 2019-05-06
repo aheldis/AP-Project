@@ -57,6 +57,10 @@ help
 single player
 help
 story
-game info
 2
 game info
+show land
+select card ali_Kaveh_1
+move to (2,1)
+exit
+show land

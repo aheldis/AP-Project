@@ -123,13 +123,15 @@ public class Deck {//if it is normal deck you had initialize it in collection
                         new UsableId((Usable)item, number++);
                         deck.addItemToDeck(item);
                     } else {
-                        deck.addToCardsOfDeck(Shop.getInstance().getNewCardByName(line.trim()));
+                        Card card = Shop.getInstance().getNewCardByName(line.trim());
+                        new CardId(card, number++);
+                        deck.addToCardsOfDeck(card);
                     }
                 }
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("getDeckForStoryMode: " + e.getMessage());
         }
         return deck;
     }

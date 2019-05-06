@@ -5,7 +5,6 @@ import model.card.*;
 import model.item.ActivationTimeOfItem;
 import model.item.Collectible;
 import model.item.Flag;
-import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -50,6 +49,7 @@ public abstract class Player {
         playerCard.setPosition(null);
         Square square = land.passSquareInThisCoordinate(coordinate);
         if (square == null) {
+
             error = ErrorType.INVALID_SQUARE;
             error.printMessage();
             return;
@@ -120,9 +120,9 @@ public abstract class Player {
     public abstract void addMatchInfo(MatchInfo matchInfo);
 
     public void useCollectibleItemOnLand(Coordinate coordinate, String collectibleItemId) {
-        ArrayList<Item> collectibleItems = getHand().getCollectibleItems();
+        ArrayList<Collectible> collectibleItems = getHand().getCollectibleItems();
         Collectible selected = null;
-        for (Item collectible : collectibleItems)
+        for (Collectible collectible : collectibleItems)
             if (collectible.getName().equals(collectibleItemId))
                 selected = (Collectible) collectible;
         Square square = match.getLand().passSquareInThisCoordinate(coordinate);
@@ -163,7 +163,6 @@ public abstract class Player {
             ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
             if(card.getBuffsOnThisCard() != null) {
                 for (Buff buff : card.getBuffsOnThisCard()) {
-                    System.out.println("initperturn");
                     if (!buff.isContinuous()) {
                         int forHowManyTurn = buff.getForHowManyTurn();
                         forHowManyTurn--;
@@ -207,9 +206,6 @@ public abstract class Player {
         if (manaOfThisTurn < 9) {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
-            System.out.println("initperturn changed mana ");
-            System.out.println("manaOfThisTurn = " + manaOfThisTurn);
-            System.out.println("mana = " + mana);
         }
         mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
 

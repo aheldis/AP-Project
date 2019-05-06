@@ -52,11 +52,11 @@ public class Match {
         Square[][] squares = land.getSquares();
         int randomX, randomY;
         if (mode == 2) {
-            randomX = random.nextInt(land.getNumberOfRows());
-            randomY = random.nextInt(land.getNumberOfColumns());
-            while (squares[randomX][randomY].getObject() == null) {
-                randomX = random.nextInt(land.getNumberOfColumns());
-                randomY = random.nextInt(land.getNumberOfRows());
+            randomX = random.nextInt(4);
+            randomY = random.nextInt(8);
+            while (squares[randomX][randomY].getObject() != null) {
+                randomX = random.nextInt(4);
+                randomY = random.nextInt(8);
             }
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);

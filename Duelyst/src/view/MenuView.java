@@ -72,22 +72,23 @@ public class MenuView {
     }
 
     public void showLevelsForStory() {
-        System.out.println("first level : hero:whiteBeast / mode:Death mode ");
-        System.out.println("second level : hero:zahak / mode:save flag mode");
-        System.out.println("third level : hero:arash / mode:collect flag mode");
+        System.out.println("First level: hero: WhiteBeast / mode: Death mode ");
+        System.out.println("Second level: hero: Zahhak / mode: save flag mode");
+        System.out.println("Third level: hero: Arash / mode: collect flag mode");
     }
 
-    private void printInfoForEachPlayer(Player player, Match match) {
-        System.out.println("player: UserName: " + player.getUserName());
+    private void printInfoForEachPlayer(Player player, int playerNumber, Match match) {
+        System.out.println("player " + playerNumber + ":");
+        System.out.println("UserName: " + player.getUserName());
         System.out.println("Mana: " + player.getMana());
         System.out.println("Hero: " + player.getHero().getName()
-                + "- cardId: " + player.getHero().getCardId().getCardIdAsString());
+                + " - cardId: " + player.getHero().getCardId().getCardIdAsString());
         System.out.println("health point : " + player.getHero().getHp());
     }
 
     public void printGameInfo(Match match) {
-        printInfoForEachPlayer(match.getPlayers()[0], match);
-        printInfoForEachPlayer(match.getPlayers()[1], match);
+        printInfoForEachPlayer(match.getPlayers()[0], 1, match);
+        printInfoForEachPlayer(match.getPlayers()[1], 2, match);
         switch (match.getMode()) {
             case "DeathMode":
                 break;
@@ -162,8 +163,21 @@ public class MenuView {
     }
 
     public void showCollectibleItems(Player player) {
-        AccountView.getInstance().DeckAndHandView(null, player.getHand().getCollectibleItems(), null);
+        ArrayList <Collectible> items = player.getHand().getCollectibleItems();
+        System.out.println("Collectible items :");
+        int number = 1;
+        if (items != null && items.size() != 0) {
+            for (Collectible item : items) {
+                if(item == null )
+                    continue;
+                System.out.print("     ");
+                System.out.println(number + ": Name: " + item.getName() + " - Desc: " + item.getDescription() + " - itemID: " + item.getCollectibleId());
+                System.out.println("\n");
+            }
+        }
     }
+
+
 
     public void showBattleMenu() {
         System.out.println("Game info - show manas and flags");
@@ -178,8 +192,8 @@ public class MenuView {
         System.out.println("Show hand  - show your hand");
         System.out.println("Insert [card name] in (x, y) - put a card on land");
         System.out.println("End turn");
-        System.out.println("Show collectables - show collectable items");
-        System.out.println("Select item [collectable id] - select an item");
+        System.out.println("Show collectables - show collectible items");
+        System.out.println("Select item [collectible id] - select an item");
         System.out.println("show info - show item info after select it");
         System.out.println("Use [location x, y] - use item after select it");
         System.out.println("Show Next Card - show next card in hand");
