@@ -24,7 +24,6 @@ import view.enums.StateType;
 
 //todo land ro ke chap mikone age adad minevise flagashe
 //todo use collectible kar nemikone
-//todo 6 dor flag dastemoon bood bazi tamoom nemishe
 //todo hero computer chera aslan tekoon nemikhore
 //todo instace of collectible to player putCardOnLand comment gozashtam
 //todo to setFlagRandomly ye comment gozashtam

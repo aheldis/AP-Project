@@ -75,7 +75,6 @@ public abstract class Player {
                 flag.setOwnerCard(playerCard);
                 match.addToGameFlags(flag);
                 playerCard.getPlayer().addToOwnFlags(flag);
-                addToTurnForSavingFlag();
             }
             square.clearFlags();
         }

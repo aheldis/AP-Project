@@ -120,7 +120,6 @@ public abstract class Card {
             for(Flag flag: newPosition.getFlags()) {
                 flag.setOwnerCard(this);
                 player.addToOwnFlags(flag);
-                player.addToTurnForSavingFlag();
             }
             newPosition.clearFlags();
         }
