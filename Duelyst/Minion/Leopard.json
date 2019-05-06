@@ -12,7 +12,7 @@
     "activationTimeOfSpecialPowerString": "ON_ATTACK",
     "description": "decrease hp for next turn 8 units",
     "change": {
-      "targetType": "force",
+      "targetType": "minion",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,
@@ -38,7 +38,7 @@
       "random": false,
       "distance": -1,
       "self": false,
-      "enemy": false,
+      "enemy": true,
       "ally": false
     }
   }

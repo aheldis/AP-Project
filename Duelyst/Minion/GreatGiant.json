@@ -9,7 +9,7 @@
     "ap": 8,
     "counterAttack": "hybrid",
     "attackRange": 2,
-    "activationTimeOfSpecialPowerString": "ON_ATTACK",
+    "activationTimeOfSpecialPowerString": "-",
     "description": "-",
     "change": {
       "targetType": "force",

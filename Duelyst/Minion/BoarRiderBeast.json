@@ -9,7 +9,7 @@
     "ap": 8,
     "counterAttack": "melee",
     "attackRange": 1,
-    "activationTimeOfSpecialPowerString": "ON_ATTACK",
+    "activationTimeOfSpecialPowerString": "-",
     "description": "-",
     "change": {
       "targetType": "force",

@@ -12,7 +12,7 @@
     "activationTimeOfSpecialPowerString": "PASSIVE",
     "description": "power buff(ap+2) holy buff continuous",
     "change": {
-      "targetType": "force",
+      "targetType": "minion",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": false,
@@ -37,7 +37,7 @@
       "column": false,
       "all": false,
       "random": false,
-      "distance": -1,
+      "distance": 1,
       "self": true,
       "enemy": false,
       "ally": true

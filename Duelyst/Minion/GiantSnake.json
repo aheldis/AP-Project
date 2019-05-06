@@ -9,10 +9,10 @@
     "ap": 7,
     "counterAttack": "ranged",
     "attackRange": 5,
-    "activationTimeOfSpecialPowerString": "ON_SPAWWN",
+    "activationTimeOfSpecialPowerString": "ON_SPAWN",
     "description": "unti holy buff",
     "change": {
-      "targetType": "force",
+      "targetType": "minion",
       "opponentCanMove": true,
       "opponentCanAttack": true,
       "opponentCanCounterAttack": true,
@@ -36,9 +36,9 @@
       "all": false,
       "random": false,
       "neighbor": true,
-      "distance": -1,
+      "distance": 2,
       "self": false,
-      "enemy": false,
+      "enemy": true,
       "ally": false
     }
   }

@@ -24,7 +24,8 @@
       "apChange": 0,
       "continuous": false,
       "buffs": {},
-      "unaffectBuffs": false
+      "unaffectBuffs": false,
+      "theOneWhoDoesTheThing": "hero"
     },
     "target": {
       "counterAttackType": "ranged",
@@ -33,9 +34,10 @@
       "row": true,
       "column": false,
       "all": false,
-      "random": false,"distance": -1,
+      "random": false,
+      "distance": -1,
       "self": false,
-      "enemy": false,
+      "enemy": true,
       "ally": false
     }
   }
