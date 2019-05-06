@@ -34,6 +34,7 @@ public abstract class Player {
 //    public abstract void useSpecialPower(Card card);
 
     public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
+
         ErrorType error;
         if (playerCard == null) {
             error = ErrorType.INVALID_CARD_ID;
@@ -61,6 +62,8 @@ public abstract class Player {
             graveYard.addCardToGraveYard(playerCard, land.passSquareInThisCoordinate(coordinate));
             return;
         }
+
+        //todo instace of collectible
 
         //cellEffect:
         for (Buff buff : square.getBuffs()) {

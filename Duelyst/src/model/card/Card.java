@@ -122,10 +122,8 @@ public abstract class Card {
             player.addToTurnForSavingFlag();
         }
 
-        System.out.println("move  -- " + this.getName());
         if (newPosition.getObject() instanceof Collectible &&
                 ((Collectible) newPosition.getObject()).getTarget().checkTheOneWhoCollects(this)) {
-            System.out.println(" -> " + ((Collectible) newPosition.getObject()).getName());
             player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
         }

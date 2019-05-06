@@ -79,7 +79,7 @@ public class Match {
         Random random = new Random();
         int numberOfCollectiblesOnLand = random.nextInt(BOUND_FOR_COLLECTIBLES);
         int randomX, randomY, randomItem;
-        ArrayList<Item> collectibles = Shop.getInstance().getCollectibles();
+        ArrayList<Item> collectibles = new ArrayList<>(Shop.getInstance().getCollectibles());
         Square[][] squares = land.getSquares();
         for (int i = 0; i < numberOfCollectiblesOnLand; i++) {
             Collectible collectible;
@@ -104,7 +104,7 @@ public class Match {
             int number = collectibleNames.get(collectible.getName()) + 1;
             collectibleNames.remove(collectible.getName());
             collectibleNames.put(collectible.getName(), number);
-            CollectibleId id = new CollectibleId((Collectible) collectible, collectibleNames.get(collectible.getName()));
+            new CollectibleId((Collectible) collectible, number);
         }
     }
 
