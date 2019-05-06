@@ -219,7 +219,7 @@ public class MenuView {
     public void showItemInfo(Hand hand, String CollectibleId) {
         System.out.println("item : ");
         Collectible collectible = hand.passCollectibleInHand(CollectibleId);
-        AccountView.getInstance().showEachItem(collectible, NOT_VALID);
+        AccountView.getInstance().showEachItem(collectible, 1);
     }
 
     public void helpForSelectMode() {

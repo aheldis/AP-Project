@@ -112,7 +112,7 @@ public abstract class Card {
         if (this instanceof Minion) {
             Square square = landOfGame.passSquareInThisCoordinate(newCoordination);
             for (Buff buff : square.getBuffs()) {
-                this.addBuff(buff);
+                addBuff(buff);
             }
         }
 
@@ -124,6 +124,7 @@ public abstract class Card {
 
         if (newPosition.getObject() instanceof Collectible &&
                 ((Collectible) newPosition.getObject()).getTarget().checkTheOneWhoCollects(this)) {
+            System.out.println("collected");
             player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
         }
