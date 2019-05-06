@@ -34,7 +34,7 @@ public class AllAccount {
 //            }
 //            catch (Exception e){
 //                System.out.println(e);
-//                //todo save don't delete
+/** save don't delete*/
 //            }
         }
         return singleInstance;

@@ -107,7 +107,7 @@ public class MenuView {
         for (Card card : player.getCardsOnLand()) {
             if (card instanceof Minion) {
                 System.out.printf("%s: %s, health: %d, location: (%d, %d), power: %d\n",
-                        card.getCardId(), card.getName(), card.getHp(),
+                        card.getCardId().getCardIdAsString(), card.getName(), card.getHp(),
                         card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
                         card.getAp());
             }

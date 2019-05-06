@@ -1,15 +1,13 @@
 package model.item;
 
+import model.card.Card;
 import model.land.Square;
 
 public class Collectible extends model.item.Item {
     private model.item.CollectibleId collectibleId;
     private Square square;
-/*
-    void affect() {
+    private Card theOneWhoCollects;
 
-    }
-*/
     public model.item.CollectibleId getCollectibleId() {
         return collectibleId;
     }
@@ -24,5 +22,13 @@ public class Collectible extends model.item.Item {
 
     void setSquare(Square square) {
         this.square = square;
+    }
+
+    public void setTheOneWhoCollects(Card theOneWhoCollects) {
+        this.theOneWhoCollects = theOneWhoCollects;
+    }
+
+    public Card getTheOneWhoCollects() {
+        return theOneWhoCollects;
     }
 }

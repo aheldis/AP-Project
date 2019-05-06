@@ -10,8 +10,6 @@ public class Spell extends Card {
     private int turn;
     private ArrayList<Buff> buffs;
     private ArrayList<Integer> turnOfBuffs;
-
-    //todo in chertaro dorsot kon :|||
     private int apChanges;
     private int turnForApChanges;
     private int hpChanges;
@@ -29,15 +27,6 @@ public class Spell extends Card {
         this.buffs = buffs;
     }
 
-    public void printdesc() {
-        System.out.println(getDescription());//todo sout
-    }
-
-    /*
-    public void affect() {
-//az tabeye too card estefade kone
-    }
-    */
 
     public void setTarget(Square square) {
 

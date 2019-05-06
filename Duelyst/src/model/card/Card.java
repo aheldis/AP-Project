@@ -30,7 +30,7 @@ public abstract class Card {
     protected int attackRange;
     private int cost;
     //    private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
-    private ArrayList<Buff> buffsOnThisCard;
+    private ArrayList<Buff> buffsOnThisCard = new ArrayList<>();
     private Square position;
     private LandOfGame landOfGame;
     private int CardNumber;
@@ -38,7 +38,7 @@ public abstract class Card {
     private boolean canMove = false;
     private boolean canAttack = false;
     private boolean canCounterAttack = true;
-    private int hpChangeAfterAttack = 0; //todo mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
+    private int hpChangeAfterAttack = 0; /** mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro */
     private String description;
     private static final int DEFAULT = -1;
 
@@ -123,8 +123,10 @@ public abstract class Card {
             player.addToTurnForSavingFlag();
         }
 
-        if (newPosition.getObject() instanceof Collectible) {
+        if (newPosition.getObject() instanceof Collectible &&
+                ((Collectible) newPosition.getObject()).getTarget().checkTheOneWhoCollects(this)) {
             player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
+            ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
         }
 
         setPosition(newPosition);
@@ -146,7 +148,7 @@ public abstract class Card {
             int x = card.position.getXCoordinate();
             int y = card.position.getYCoordinate();
 
-            if(x < 0 || x>4 || y<0 || y>8)
+            if (x < 0 || x > 4 || y < 0 || y > 8)
                 return false;
 
             int distanceOfX = destination.getX() - card.position.getXCoordinate();
@@ -317,6 +319,58 @@ public abstract class Card {
                     ((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_DEFEND) {
                 useSpecialPower(theOneWhoAttacked.getPosition());
             }
+        }
+    }
+
+    public Card findNearestOne(Target target) {
+        int x = position.getXCoordinate();
+        int y = position.getYCoordinate();
+        int distance = 1;
+        boolean check[] = {false, false, false, false, false, false, false, false};
+        while (true) {
+
+            boolean allChecked = true;
+            for (int i = 0; i < 8; i++)
+                if (!check[i]) {
+                    allChecked = false;
+                    break;
+                }
+
+            if (allChecked) {
+                distance++;
+                if (x + distance >= landOfGame.getNumberOfColumns() && x - distance < 0 &&
+                        y + distance >= landOfGame.getNumberOfRows() && y - distance < 0)
+                    return null;
+                for (int i = 0; i < 8; i++)
+                    check[i] = false;
+            }
+
+            int dx[] = {1, 0, -1, 0, 1, 1, -1, -1};
+            int dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
+            Random random = new Random();
+            int randomNumber = random.nextInt();
+
+            if (check[randomNumber])
+                continue;
+
+            check[randomNumber] = true;
+
+            if (x + dx[randomNumber] * distance >= landOfGame.getNumberOfColumns() || x + dx[randomNumber] * distance < 0)
+                continue;
+
+            if (y + dy[randomNumber] * distance >= landOfGame.getNumberOfRows() || y + dy[randomNumber] * distance < 0)
+                continue;
+
+            if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt() == null) {
+                if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasMinionAndPassIt() == null)
+                    continue;
+                if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]]))
+                    continue;
+                return landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasMinionAndPassIt();
+            }
+            if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]]))
+                continue;
+            return landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt();
         }
     }
 
@@ -534,7 +588,7 @@ public abstract class Card {
     }
 
     public int getRange() {
-        return 0;
+        return attackRange;
     }
 
     public String getDescription() {

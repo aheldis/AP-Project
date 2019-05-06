@@ -8,7 +8,7 @@
     "itemNumber": 2,
     "target": {
       "counterAttackType": "-",
-      "cardType": "item",
+      "cardType": "hero",
       "one": true,
       "row": false,
       "column": false,
@@ -17,7 +17,7 @@
       "distance": -1,
       "self": false,
       "enemy": false,
-      "ally": false
+      "ally": true
     },
     "change": {
       "targetType": "card",

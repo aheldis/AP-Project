@@ -69,5 +69,6 @@ public enum RequestType {
     MODE_HELP,
     SELECT_MODE_EXIT,
     SINGLE_GAME_EXIT,
-    SINGLE_GAME_HELP;
+    SINGLE_GAME_HELP,
+    SHOP_MAKE_NEW_CARD;
 }

@@ -6,6 +6,9 @@ import model.land.Square;
 public class Flag extends Item {
     private Square square;
     private Card OwnerCard;
+    public Flag(Square square){
+        this.square = square;
+    }
 
     public void setOwnerCard(Card ownerCard) {
         OwnerCard = ownerCard;

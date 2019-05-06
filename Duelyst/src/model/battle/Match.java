@@ -1,6 +1,6 @@
 package model.battle;
 
-import controller.MenuController;
+import Controller.MenuController;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
@@ -51,6 +51,18 @@ public class Match {
         Random random = new Random();
         Square[][] squares = land.getSquares();
         int randomX, randomY;
+        if(mode == 2){
+            randomX = random.nextInt(4);
+            randomY = random.nextInt(8);
+            while(squares[randomX][randomY].getObject() == null) {
+                randomX = random.nextInt(4);
+                randomY = random.nextInt(8);
+            }
+            flag = new Flag(squares[randomX][randomY]);
+            flags.add(flag);
+            squares[randomX][randomY].setObject(flag);
+                return;
+        }
         for (int i = 0; i < numberOfFlags; i++) {
             randomX = random.nextInt(4);
             randomY = random.nextInt(8);
@@ -58,11 +70,9 @@ public class Match {
                 i--;
                 continue;
             }
-            flag = new Flag();
+            flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
             squares[randomX][randomY].setObject(flag);
-            if (mode == 2)
-                return;
         }
     }
 
@@ -104,6 +114,8 @@ public class Match {
         ArrayList<Card> cards = players[0].getMainDeck().getCardsOfDeck();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
+        players[0].setMatch(this);
+        players[1].setMatch(this);
         for (Card card : cards) {
             card.setPlayer(players[0]);
             card.setLandOfGame(land);
@@ -119,6 +131,8 @@ public class Match {
         secondHero.setPlayer(players[1]);
         secondHero.setLandOfGame(land);
         secondHero.setCanMove(true, 1);
+        players[0].setOpponent(players[1]);
+        players[1].setOpponent(players[0]);
         this.players = players;
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;
@@ -139,7 +153,7 @@ public class Match {
         }
         setCollectiblesRandomly();
         date = new Date();
-        //todo set mana
+        //set mana : meqdare avaliye mana baraye player inline behesh 2 dadam
         players[0].setMana(2);
         players[1].setMana(2);
         initGame();

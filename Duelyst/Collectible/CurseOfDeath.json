@@ -8,12 +8,16 @@
     "itemNumber": 10,
     "target": {
       "counterAttackType": "-",
-      "cardType": "item",
+      "cardType": "minion",
       "one": false,
       "row": false,
       "column": false,
       "all": false,
-      "random": true
+      "random": true,
+      "distance": 0,
+      "self": false,
+      "enemy": false,
+      "ally": true
     },
     "change": {
       "targetType": "card",

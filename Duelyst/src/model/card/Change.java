@@ -72,7 +72,7 @@ public class Change {
             }
         }
 
-        if (unaffactBuffs) {
+        if (unaffectBuffs) {
             if (buffs.size() == 0) {
                 if (targetCard.getPlayer().equals(player)) {
                     targetCard.removeBuffs(false);

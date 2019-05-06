@@ -10,20 +10,23 @@ public class Target {
     private Player player;
     private LandOfGame land;
     private ArrayList<Square> targets = new ArrayList<>();
-    private String counterAttackType; //ranged hybrid melee
-    private String cardType; //minion hero spell
+    private String counterAttackType = "-"; //ranged hybrid melee
+    private String cardType = "-"; //minion hero spell  -> force ro ezafe kardam baraye hero ya minion
     //    private String number; // 0 <=
-    private boolean one;
-    private boolean row;
-    private boolean column;
-    private boolean all;
-    private boolean random;
+    private boolean one = false;
+    private boolean row = false;
+    private boolean column = false;
+    private boolean all = false;
+    private boolean random = false;
     private static final int DEFAULT = -1;
     private int distance = DEFAULT;
     //default
     private boolean self = false;
     private boolean enemy = false;
     private boolean ally = false;
+    private boolean haveRange = false; //baraye item
+    private boolean notHaveRange = false; //baraye item
+    private String theOneWhoCollects = "-"; //baraye item
 
 
     public Target() {
@@ -37,23 +40,37 @@ public class Target {
 
     public boolean checkIfAttackedCardIsValid(Object attacked) {
         //check beshe ba sharayet target mikhoone ya na todo kamel nistaa
+        if (attacked == null)
+            return false;
+
         if (!(attacked instanceof Card))
             return false;
+
         if (attacked instanceof Spell)
             return true;
+
         String counterAttackName = null;
+
+        if (theOneWhoCollects.equals("-") && haveRange && ((Card) attacked).getRange() == 0)
+            return false;
+
+        if (notHaveRange && ((Card) attacked).getRange() != 0)
+            return false;
+
         if (attacked instanceof Minion) {
-            if (!cardType.equals("minion")) {
+            if (!cardType.equals("minion") && !cardType.equals("force")) {
                 return false;
             }
             counterAttackName = ((Card)attacked).getCounterAttackName();
         }
+
         if (attacked instanceof Hero) {
-            if (!cardType.equals("hero")) {
+            if (!cardType.equals("hero") && !cardType.equals("force")) {
                 return false;
             }
             counterAttackName = ((Card)attacked).getCounterAttackName();
         }
+
         if (counterAttackName != null) {
             return counterAttackName.equals(counterAttackType);
 
@@ -133,5 +150,11 @@ public class Target {
         if (self)
             return !(y == position.getYCoordinate() && x == position.getXCoordinate());
         return true;
+    }
+
+    public boolean checkTheOneWhoCollects(Card card) {
+        if (!(card instanceof Hero) && theOneWhoCollects.equals("hero"))
+            return false;
+        return card.getRange() != 0 || !haveRange;
     }
 }

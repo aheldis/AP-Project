@@ -24,7 +24,7 @@ public abstract class Player {
     private Account account;
     private Match match;
     private int turnsPlayed = 0;
-    private int manaOfThisTurn /*don't change this except in initPerTurn*/, mana;
+    private int manaOfThisTurn /*don't change this except in initPerTurn*/, mana = 2;
     private GraveYard graveYard = new GraveYard(this);
     private ArrayList<Buff> buffsOnThisPlayer = new ArrayList<>();
     //Collectible item to hand ast :D
@@ -33,7 +33,7 @@ public abstract class Player {
 //    public abstract void attack(Card card, Square target);
 //    public abstract void useSpecialPower(Card card);
 
-    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {//todo mana ro gand mzane
+    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
         ErrorType error;
         if (playerCard == null) {
             error = ErrorType.INVALID_CARD_ID;
@@ -83,6 +83,9 @@ public abstract class Player {
     }
 
     public String getUserName() {
+        if(this instanceof ComputerPlayer){
+            return "computer";
+        }
         return account.getUserName();
     }
 
@@ -125,7 +128,7 @@ public abstract class Player {
         ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(cardsOnLand);
         for (Card outPutCard : cards) {
-            if (outPutCard.equalCard(cardId) && outPutCard.getPlayer().getAccount().equals(account))
+            if (outPutCard.equalCard(cardId) && outPutCard.getPlayer().equals(this))
                 card = outPutCard;
         }
         return card;
@@ -190,6 +193,9 @@ public abstract class Player {
             mana = manaOfThisTurn;
         }
         mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
+
+        mainDeck.getItem().setTarget(this);
+        mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
 
     }
 
