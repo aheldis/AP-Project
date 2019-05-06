@@ -1,5 +1,7 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Collection;
@@ -21,6 +23,11 @@ import view.MenuView;
 import view.Request;
 import view.enums.ErrorType;
 import view.enums.StateType;
+
+import javax.sql.rowset.BaseRowSet;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 //todo land ro ke chap mikone age adad minevise flagashe
 //todo use collectible kar nemikone
@@ -389,7 +396,7 @@ public class MenuController {
                             menuView.printer("Enter Start game [deck name] [mode] [number of flags]");
                             request.getNewLine();
                             command = request.getCommand();
-                            if (!command.matches("Start game \\w+ \\d+ (\\d)*"))
+                            if (!command.matches("start game \\w+ \\d+ (\\d)*"))
                                 continue;
                             deckName = command.split(" ")[2];
                             mode = Integer.parseInt(command.split(" ")[3]);
@@ -543,7 +550,9 @@ public class MenuController {
                 GraveYard graveYard;
                 graveYard = match.passPlayerWithTurn().getGraveYard();
                 switch (request.getRequestType()) {
-
+                    case GRAVE_YARD_EXIT:
+                        state = StateType.BATTLE;
+                        break;
                     case GAME_GRAVE_YARD_SHOW_INFO:
 
                         request.getNewLine();
