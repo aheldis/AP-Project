@@ -8,13 +8,14 @@ import view.AccountView;
 import java.util.ArrayList;
 
 
-public class Account implements Comparable<Account> {
+public class Account implements Comparable<Account> ,Cloneable{
     private String userName;
     private String password;
     private int daric = 15000;
     private int wins;
     private ArrayList<MatchInfo> matchHistory = new ArrayList<>();
     private Collection collection = new Collection(this);
+    private Collection clonedCollection = new Collection(this);
     private Deck mainDeck = new Deck();
     private Player player = new OrdinaryPlayer();
     private ArrayList<Deck> decks = new ArrayList<>();
@@ -22,6 +23,26 @@ public class Account implements Comparable<Account> {
     public Account(String userName, String password) {
         this.userName = userName;
         this.password = password;
+    }
+
+    public void setClonedCollection(Collection clonedCollection) {
+        this.clonedCollection = clonedCollection;
+    }
+
+    public Collection getClonedCollection() {
+        return clonedCollection;
+    }
+
+    public void setCollection(Collection collection) {
+        this.collection = collection;
+    }
+
+
+
+    public Object clone() throws
+            CloneNotSupportedException
+    {
+        return super.clone();
     }
 
     public Collection getCollection() {

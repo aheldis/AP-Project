@@ -340,6 +340,15 @@ public abstract class Card {
         }
     }
 
+    public ArrayList<Card> getTheCardsInRange() {
+        ArrayList<Card> cardsInRange = new ArrayList<>();
+        for (Card card : player.getCardsOnLand()) {
+            if (withinRange(card.getPosition().getCoordinate(), attackRange))
+                cardsInRange.add(card);
+        }
+        return cardsInRange;
+    }
+
     public boolean isCanAttack() {
         return canAttack;
     }

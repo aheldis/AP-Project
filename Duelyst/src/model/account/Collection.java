@@ -13,7 +13,7 @@ import view.enums.ErrorType;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Collection {
+public class Collection  implements Cloneable{
 
     private ArrayList<Spell> spells = new ArrayList<>();
     private ArrayList<Hero> heroes = new ArrayList<>();
@@ -25,6 +25,11 @@ public class Collection {
 
     public Collection(Account account) {
         this.account = account;
+    }
+
+    public Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
     }
 
     public ArrayList<Deck> getDecks() {

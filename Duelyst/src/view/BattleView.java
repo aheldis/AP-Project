@@ -1,20 +1,23 @@
 package view;
 
 import model.battle.ComputerPlayer;
-import model.battle.Game;
 import model.battle.Match;
 import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
+import model.land.LandOfGame;
+import model.land.Square;
 import view.enums.ErrorType;
 
 public class BattleView {
     private static BattleView singleInstance = null;
-    private BattleView(){
+
+    private BattleView() {
 
     }
+
     public static BattleView getInstance() {
         if (singleInstance == null) {
             singleInstance = new BattleView();
@@ -35,7 +38,7 @@ public class BattleView {
     }
 
     public void showCardInfo(Card card) {
-        if(card == null ) {
+        if (card == null) {
             ErrorType.INVALID_CARD_ID.printMessage();
             return;
         }
@@ -71,6 +74,45 @@ public class BattleView {
         } else {
             System.out.println("Computer is loser");
         }
+    }
+
+    public void gameHelp(Player player) {
+
+        System.out.println("You can move these cards:");
+        if (player.getHero().getCanMove())
+            System.out.println("    cardId: " + player.getHero().getCardId());
+        for (Card card : player.getCardsOnLand()) {
+            if (card.getCanMove())
+                System.out.println("    cardId: " + card.getCardId());
+        }
+
+        System.out.println("You can attack these cards:");
+        if (player.getHero().getCanMove()) {
+            System.out.println("    cardId: " + player.getHero().getCardId() + " can attack:");
+            for (Card card : player.getHero().getTheCardsInRange())
+                System.out.println("        cardId: " + card.getCardId());
+        }
+        for (Card card : player.getCardsOnLand()) {
+            if (card.getCanMove()) {
+                System.out.println("    cardId: " + player.getHero().getCardId() + " can attack:");
+                for (Card cardInRange : card.getTheCardsInRange())
+                    System.out.println("        cardId: " + cardInRange.getCardId());
+            }
+        }
+
+        System.out.println("You can insert these cards: ");
+        for (Card card : player.getHand().getGameCards()) {
+            System.out.println("cardId: " + card.getCardId());
+        }
+
+        System.out.println("in these squares: ");
+        LandOfGame landOfGame = player.getMatch().getLand();
+        Square[][] squares = landOfGame.getSquares();
+        for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
+            for (int j = 0; j < landOfGame.getNumberOfColumns(); j++)
+                if (!squares[i][j].squareHasMinionOrHero())
+                    System.out.println("(" + i + "," + j + ")");
+
     }
 
 
