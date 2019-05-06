@@ -98,7 +98,7 @@ public abstract class Card {
                 return;
             }
 
-            if (withinRange(newCoordination, 2) && !(canMoveToCoordination(this, newCoordination))) {
+            if (!withinRange(newCoordination, 2) || !(canMoveToCoordination(this, newCoordination))) {
                 ErrorType.INVALID_TARGET.printMessage();
                 return;
             }
