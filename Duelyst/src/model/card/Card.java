@@ -180,16 +180,16 @@ public abstract class Card {
                 x -= distanceOfX / 2;
                 y -= distanceOfY / 2;
                 Square square = landOfGame.getSquares()[x][y]; //todo HANIYEH  java.lang.ArrayIndexOutOfBoundsException: -1 mikhore
-                if (/*square.getObject() != null && */!(square.squareHasMinionOrHero())) //todo ina okeye dige oona comment bashe chon collectible tooshe mitoone bere
+                if (square.getObject() != null && !(square.squareHasMinionOrHero()))
                     return false;
             } else {
                 x += distanceOfX;
                 Square square = landOfGame.getSquares()[x][y];
-                if (/*square.getObject() != null && */!(square.squareHasMinionOrHero())) {
+                if (square.getObject() != null && !(square.squareHasMinionOrHero())) {
                     x -= distanceOfX;
                     y += distanceOfY;
                     square = landOfGame.getSquares()[x][y];
-                    if (/*square.getObject() != null && */!(square.squareHasMinionOrHero()))
+                    if (square.getObject() != null && !(square.squareHasMinionOrHero()))
                         return false;
                 }
             }
