@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class GraveYard {
 
-    private ArrayList<Card> cards;
+    private ArrayList<Card> cards = new ArrayList<>();
     private Player player;
 
     GraveYard(Player player) {

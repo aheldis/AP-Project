@@ -3,6 +3,8 @@ package view.enums;
 import view.MessageViewer;
 
 public enum ErrorType {
+
+    SECOND_PLAYER_NOT_VALID("Choosen player is invalid"),
     HAVE_NOT_THIS_CARD_FILE("You have not this card definition"),
     USER_NAME_NOT_FOUND("User name not found"),
     PASSWORD_DOES_NOT_MATCH("Password doesn't match"),

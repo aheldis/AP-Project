@@ -1,6 +1,6 @@
 package model.battle;
 
-import Controller.MenuController;
+import controller.MenuController;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
@@ -223,7 +223,6 @@ public class Match {
     public void initGame() {
         players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
         players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
-
     }
 
     private boolean gameEnded() {

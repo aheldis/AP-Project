@@ -1,5 +1,12 @@
 package model.land;
 
+import model.battle.Match;
+import model.card.Hero;
+import model.card.Minion;
+import model.card.Spell;
+import model.item.Collectible;
+import model.item.Flag;
+import model.item.Usable;
 import model.requirment.Coordinate;
 
 public class LandOfGame {
@@ -45,4 +52,31 @@ public class LandOfGame {
     public int getNumberOfRows() {
         return NUMBER_OF_ROWS;
     }
+
+    public void showMap(Match match) {
+        Object object;
+        for (int j = 0; j < 9; j++) {
+            for (int i = 0; i < 5; i++) {
+                object = squares[i][j].getObject();
+                System.out.print("|");
+                if (object instanceof Flag)
+                    System.out.println("F");
+                if(object instanceof Collectible)
+                    System.out.println("C");
+                if(object instanceof Usable)
+                    System.out.println("U");
+                if(object instanceof Hero)
+                    System.out.println("H");
+                if(object instanceof Spell)
+                    System.out.println("S");
+                if(object instanceof Minion)
+                    System.out.println("M");
+                else
+                    System.out.println(" ");
+
+            }
+
+        }
+    }
+
 }

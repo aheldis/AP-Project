@@ -13,7 +13,7 @@ public class Account implements Comparable<Account> {
     private String password;
     private int daric = 15000;
     private int wins;
-    private ArrayList<MatchInfo> matchHistory;
+    private ArrayList<MatchInfo> matchHistory = new ArrayList<>();
     private Collection collection = new Collection(this);
     private Deck mainDeck = new Deck();
     private Player player = new OrdinaryPlayer();

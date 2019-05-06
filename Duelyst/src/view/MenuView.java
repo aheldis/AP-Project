@@ -1,13 +1,16 @@
 package view;
 
-import model.item.Collectible;
-import model.item.Flag;
 import model.account.Account;
 import model.account.AllAccount;
-import model.battle.*;
+import model.battle.Deck;
+import model.battle.Hand;
+import model.battle.Match;
+import model.battle.Player;
 import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
+import model.item.Collectible;
+import model.item.Flag;
 import view.enums.ErrorType;
 
 import java.util.ArrayList;
@@ -75,32 +78,38 @@ public class MenuView {
     }
 
     private void printInfoForEachPlayer(Player player, Match match) {
-        System.out.println("player : UserName: " + player.getUserName());
-        System.out.println("mana : " + player.getMana());
-        switch (match.getMode()) {
-            case "DeathMode":
-                System.out.println("health point : " + player.getHero().getHp());
-                break;
-            case "SaveFlagMode":
-                Flag flag1 = match.getFlags().get(0);
-                System.out.println("in cell x: " + flag1.getSquare().getXCoordinate() +
-                        " y: " + flag1.getSquare().getYCoordinate());
-                if (flag1.getOwnerCard() != null) {
-                    System.out.println(flag1.getOwnerCard().getCardId());
-                }
-                break;
-            case "CollectFlagMode":
-                for (Flag flag : match.getFlags()) {
-                    System.out.println(flag.getOwnerCard().getName());
-                    System.out.println(flag.getOwnerCard().getCardId().getCardIdAsString().split("_")[0]);
-                }
-                break;
-        }
+        System.out.println("player: UserName: " + player.getUserName());
+        System.out.println("Mana: " + player.getMana());
+        System.out.println("Hero: " + player.getHero().getName()
+                + "- cardId: " + player.getHero().getCardId().getCardIdAsString());
+        System.out.println("health point : " + player.getHero().getHp());
     }
 
     public void printGameInfo(Match match) {
         printInfoForEachPlayer(match.getPlayers()[0], match);
         printInfoForEachPlayer(match.getPlayers()[1], match);
+        switch (match.getMode()) {
+            case "DeathMode":
+                break;
+            case "SaveFlagMode": {
+                Flag flag = match.getFlags().get(0);
+                System.out.println("flag position: (" + flag.getSquare().getXCoordinate() + "," + flag.getSquare().getYCoordinate() + ")");
+                if (flag.getOwnerCard() != null) {
+                    System.out.println(flag.getOwnerCard().getCardId());
+                }
+                break;
+            }
+            case "CollectFlagMode": {
+                for (Flag flag : match.getFlags()) {
+                    System.out.println("flag position: (" + flag.getSquare().getXCoordinate() + "," + flag.getSquare().getYCoordinate() + ")");
+                    if (flag.getOwnerCard() != null) {
+                        System.out.println("userName of owner: " + flag.getOwnerCard().getName());
+                        System.out.println("owner cardID: " + flag.getOwnerCard().getCardId().getCardIdAsString());
+                    }
+                }
+                break;
+            }
+        }
     }
 
     public void showMyMinions(Player player) {
@@ -118,11 +127,13 @@ public class MenuView {
         if (card instanceof Spell) {
             System.out.print("     ");
             AccountView.getInstance().showEachSpell((Spell) card, counterOfCards);
+            System.out.println(" - cardID: " + card.getCardId().getCardIdAsString());
             System.out.println("\n");
 
         } else if (card instanceof Minion) {
             System.out.print("     ");
             AccountView.getInstance().showEachMinion((Minion) card, counterOfCards);
+            System.out.println(" - cardID: " + card.getCardId().getCardIdAsString());
             System.out.println("\n");
         }
     }

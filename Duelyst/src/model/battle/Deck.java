@@ -1,10 +1,13 @@
 package model.battle;
 
+import model.card.CardId;
 import model.item.Item;
 import model.account.FilesType;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
+import model.item.Usable;
+import model.item.UsableId;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -106,14 +109,19 @@ public class Deck {//if it is normal deck you had initialize it in collection
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             String type = "Hero";
+            int number = 1;
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.charAt(0) == '_') {
                     type = line.substring(1);
                 } else {
                     if (FilesType.HERO.getName().equals(type)) {
-                        deck.setHero((Hero) Shop.getInstance().getNewCardByName(line.trim()));
+                        Hero hero = (Hero) Shop.getInstance().getNewCardByName(line.trim());
+                        new CardId(hero, number++);
+                        deck.setHero(hero);
                     } else if (FilesType.ITEM.getName().equals(type)) {
-                        deck.addItemToDeck(Shop.getInstance().getNewItemByName(line.trim()));
+                        Item item = Shop.getInstance().getNewItemByName(line.trim());
+                        new UsableId((Usable)item, number++);
+                        deck.addItemToDeck(item);
                     } else {
                         deck.addToCardsOfDeck(Shop.getInstance().getNewCardByName(line.trim()));
                     }

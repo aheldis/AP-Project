@@ -1,7 +1,6 @@
 package model.battle;
 
 import model.account.Account;
-import view.BattleView;
 import view.enums.ErrorType;
 
 
@@ -59,6 +58,7 @@ public class Game {
                 break;
         }
         players[1] = new ComputerPlayer(secondPlayerDeck);
+        numberOfFlags = 5;
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }
 

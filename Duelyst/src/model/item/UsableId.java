@@ -16,6 +16,13 @@ public class UsableId {
         setUsableId();
     }
 
+    public UsableId(Usable usable, int number) {
+        this.usable = usable;
+        this.number = number;
+        usable.setUsableId(this);
+        setUsableId();
+    }
+
     public void setUsableId() {//{number of that model.card will add to cardId}
         usableId = account.getUserName() + "_" + usable.getName() + " " + number;
     }
