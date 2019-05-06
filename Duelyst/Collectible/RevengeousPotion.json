@@ -8,16 +8,16 @@
     "itemNumber": 9,
     "target": {
       "counterAttackType": "-",
-      "cardType": "item",
+      "cardType": "force",
       "one": true,
       "row": false,
       "column": false,
       "all": false,
       "random": false,
       "distance": -1,
-      "self": false,
+      "self": true,
       "enemy": false,
-      "ally": false
+      "ally": true
     },
     "change": {
       "targetType": "card",

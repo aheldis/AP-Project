@@ -8,12 +8,16 @@
     "itemNumber": 13,
     "target": {
       "counterAttackType": "-",
-      "cardType": "item",
-      "one": false,
+      "cardType": "force",
+      "one": true,
       "row": false,
       "column": false,
       "all": false,
-      "random": true
+      "random": false,
+      "distance": -1,
+      "self": true,
+      "enemy": false,
+      "ally": true
     },
     "change": {
       "targetType": "card",
@@ -27,11 +31,7 @@
       "apChange": 6,
       "continuous": false,
       "buffs": {},
-      "unaffactBuffs": false,
-      "distance": -1,
-      "self": false,
-      "enemy": false,
-      "ally": false
-    }
+      "unaffactBuffs": false
+      }
   }
 }

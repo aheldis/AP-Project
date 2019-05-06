@@ -8,12 +8,16 @@
     "itemNumber": 15,
     "target": {
       "counterAttackType": "-",
-      "cardType": "item",
+      "cardType": "hero",
       "one": false,
       "row": false,
       "column": false,
       "all": true,
-      "random": false
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": true,
+      "ally": false
     },
     "change": {
       "targetType": "card",
@@ -27,11 +31,7 @@
       "apChange": 0,
       "continuous": true,
       "buffs": {},
-      "unaffactBuffs": false,
-      "distance": -1,
-      "self": false,
-      "enemy": false,
-      "ally": false
+      "unaffactBuffs": false
     }
   }
 }

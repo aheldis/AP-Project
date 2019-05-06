@@ -8,12 +8,15 @@
     "itemNumber": 19,
     "target": {
       "counterAttackType": "-",
-      "cardType": "item",
+      "cardType": "minion",
       "one": false,
       "row": false,
       "column": false,
-      "all": false,
-      "random": true
+      "all": true,
+      "random": true,
+      "self": true,
+      "enemy": false,
+      "ally": true
     },
     "change": {
       "targetType": "card",
@@ -30,10 +33,7 @@
         "holy": [2]
       },
       "unaffactBuffs": false,
-      "distance": -1,
-      "self": false,
-      "enemy": false,
-      "ally": false
+      "distance": -1
     }
   }
 }

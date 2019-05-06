@@ -191,6 +191,9 @@ public abstract class Player {
         }
         mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
 
+        mainDeck.getItem().setTarget(this);
+        mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
+
     }
 
     public void addToCardsOfLand(Card card) {
