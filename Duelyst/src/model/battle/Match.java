@@ -239,12 +239,12 @@ public class Match {
                 break;
             }
             case "CollectFlagMode": {
-                if (players[0].getNumberOfFlagsSaved() >= numberOfFlags / 2) {
+                if (players[0].getNumberOfFlagsSaved() * 2 >= numberOfFlags) {
                     setWinnerAndLoser(players[0], players[1]);
                     return true;
                 }
-                if (players[1].getNumberOfFlagsSaved() >= numberOfFlags / 2) {
-                    setWinnerAndLoser(players[1], players[2]);
+                if (players[1].getNumberOfFlagsSaved() * 2 >= numberOfFlags) {
+                    setWinnerAndLoser(players[1], players[0]);
                     return true;
                 }
                 break;
