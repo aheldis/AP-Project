@@ -28,6 +28,7 @@ import view.enums.StateType;
 //todo instace of collectible to player putCardOnLand comment gozashtam
 //todo to setFlagRandomly ye comment gozashtam
 
+
 public class MenuController {
     public static StateType state = StateType.MAIN_MENU;
     private static Account account;

@@ -90,7 +90,9 @@ public class MenuView {
 
     public void printGameInfo(Match match) {
         printInfoForEachPlayer(match.getPlayers()[0], 1, match);
+        System.out.println();
         printInfoForEachPlayer(match.getPlayers()[1], 2, match);
+        System.out.println();
      /*   switch (match.getMode()) {
             case "DeathMode":
                 break;
