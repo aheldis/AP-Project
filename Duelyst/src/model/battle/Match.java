@@ -165,7 +165,7 @@ public class Match {
     public void changeTurn() {//age bazi ba computer bashe turn avaz nemishe
         if (gameEnded()) {
             endGame();
-            controller.MenuController.state = StateType.ACCOUNT_MENU;
+            Controller.MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
         if (passComputerPlayer() == -1) {
@@ -177,7 +177,7 @@ public class Match {
             players[1 - whichPlayer].initPerTurn();//init for computer
             if (gameEnded()) {
                 endGame();
-                controller.MenuController.state = StateType.ACCOUNT_MENU;
+                Controller.MenuController.state = StateType.ACCOUNT_MENU;
                 return;
             }
         }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Shop {
     private static Shop singleInstance = null;
-    private static String pathOfFiles = "Duelyst/";
+    private static String pathOfFiles = "";
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Item> collectibles = new ArrayList<>();
@@ -54,8 +54,8 @@ public class Shop {
             File folder = new File(pathOfFiles + typeOfFile.getName());
             File[] listOfFiles = folder.listFiles();
             if (!(listOfFiles == null || typeOfFile == FilesType.BUFF || typeOfFile == FilesType.ITEM)) {
-                for (int i = 0; i < listOfFiles.length; i++) {
-                    makeNewFromFile(listOfFiles[i].getPath(), typeOfFile);
+                for (File listOfFile : listOfFiles) {
+                    makeNewFromFile(listOfFile.getPath(), typeOfFile);
                 }
             }
         }

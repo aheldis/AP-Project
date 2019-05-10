@@ -95,7 +95,8 @@ public class BattleView {
 
         System.out.println("You can insert these cards: ");
         for (Card card : player.getHand().getGameCards()) {
-            System.out.println("cardId: " + card.getCardId().getCardIdAsString());
+            if (player.getMana() >= card.getMp())
+                System.out.println("cardId: " + card.getCardId().getCardIdAsString());
         }
 
         System.out.println("in these squares: ");
