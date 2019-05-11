@@ -67,13 +67,13 @@ public abstract class Player {
 
         if (square.getObject() instanceof Collectible &&
                 ((Collectible) square.getObject()).getTarget().checkTheOneWhoCollects(playerCard)) {
-            this.getHand().addToCollectibleItem((Collectible) square.getObject());
+            getHand().addToCollectibleItem((Collectible) square.getObject());
             ((Collectible) square.getObject()).setTheOneWhoCollects(playerCard);
         }
 
         //cellEffect:
         for (Buff buff : square.getBuffs()) {
-            this.addBuffToPlayer(buff);
+            addBuffToPlayer(buff);
         }
 
         if (square.getFlags().size() > 0) {
@@ -137,8 +137,10 @@ public abstract class Player {
                 selected = collectible;
         if (selected != null) {
             Square square = match.getLand().passSquareInThisCoordinate(coordinate);
+            Object preObject = square.getObject();
             square.setObject(selected);
             selected.setTarget(this);
+            square.setObject(preObject);
             selected.getChange().affect(this, selected.getTarget().getTargets());
             hand.getCollectibleItems().remove(selected);
         }
