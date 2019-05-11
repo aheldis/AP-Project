@@ -25,7 +25,6 @@ import view.enums.StateType;
 
 public class MenuController {
     public static StateType state = StateType.MAIN_MENU;
-    private static MenuController menuController = new MenuController();
     private static Account account;
     private static AllAccount allAccount = AllAccount.getInstance();
     private static MenuView menuView = MenuView.getInstance();
@@ -33,17 +32,9 @@ public class MenuController {
 
     private static Game game;
     private static Match match;
-    private static boolean haveSavedInCollection = false;
+    private static boolean haveSavedInCollection= false;
 
-    private MenuController() {
-
-    }
-
-    public static MenuController getInstance() {
-        return menuController;
-    }
-
-    public static void main() throws Exception {
+    public static void main() throws Exception{
         String id;
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();

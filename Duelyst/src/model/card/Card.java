@@ -200,12 +200,10 @@ public abstract class Card {
     }
 
     private boolean checkTarget(Square check, String targetType) {
-/*        return check != null && target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
+        return check != null && target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
                 target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position) &&
-                target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
-                target.checkIsAlly(player, check) && target.checkTheOneWhoDoesTheThing(check.getObject());
- */
-return check != null;
+                target.checkDistance(this, check) && (target.checkIsEnemy(player, check) ||
+                target.checkIsAlly(player, check)) && target.checkTheOneWhoDoesTheThing(check.getObject());
     }
 
     public void setTarget(Square cardSquare) {
