@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Shop {
     private static Shop singleInstance = null;
-    private static String pathOfFiles = "";
+    private static String pathOfFiles = "Duelyst/";
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Item> collectibles = new ArrayList<>();
