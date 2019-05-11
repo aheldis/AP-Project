@@ -10,7 +10,7 @@
     "coolDown": 3,
     "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "description": "put holy buff on square for 3 turns",
     "change": {
       "targetType": "square",

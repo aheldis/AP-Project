@@ -10,7 +10,7 @@
     "coolDown": 0,
     "ActivationTimeOfSpecialPower": "ON_DEFEND",
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "description": "put poison buff on opponent minion for 3 turns",
     "change": {
       "targetType": "force",

@@ -47,7 +47,6 @@ public abstract class Player {
             error.printMessage();
             return;
         }
-        playerCard.setPosition(null);
         Square square = land.passSquareInThisCoordinate(coordinate);
         if (square == null) {
 
@@ -64,6 +63,9 @@ public abstract class Player {
             hand.removeUsedCardsFromHand(playerCard);
             return;
         }
+
+        playerCard.setPosition(null);
+
 
         if (square.getObject() instanceof Collectible &&
                 ((Collectible) square.getObject()).getTarget().checkTheOneWhoCollects(playerCard)) {
@@ -171,11 +173,11 @@ public abstract class Player {
             card.changeTurnOfCanNotCounterAttack(-1);
             card.changeTurnOfCanNotMove(-1);
             if (card.getTurnOfCanNotAttack() <= 0)
-                card.setCanCounterAttack(true, 0);
+                card.setCanCounterAttack(true, 1);
             if (card.getTurnOfCanNotCounterAttack() <= 0)
-                card.setCanCounterAttack(true, 0);
+                card.setCanCounterAttack(true, 1);
             if (card.getTurnOfCanNotMove() <= 0)
-                card.setCanMove(true, 0);
+                card.setCanMove(true, 1);
 
             ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
             if (card.getBuffsOnThisCard() != null) {

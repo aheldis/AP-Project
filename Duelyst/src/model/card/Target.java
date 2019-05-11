@@ -95,23 +95,23 @@ public class Target {
     }
 
     public boolean checkIsEnemy(Player me, Square check) {
-        if (!enemy)
-            return false;
+        //if (!enemy)
+          //  return false;
         Object object = check.getObject();
         if (object instanceof Collectible)
             object = ((Collectible) object).getTheOneWhoCollects();
         return check.getObject() != null && object instanceof Card &&
-                ((Card) object).getPlayer() == me.getOpponent();
+                ((((Card) object).getPlayer() == me.getOpponent() && enemy) || (((Card) object).getPlayer() != me.getOpponent() && !enemy));
     }
 
     public boolean checkIsAlly(Player me, Square check) {
-        if (!ally)
-            return false;
+    //    if (!ally)
+      //      return false;
         Object object = check.getObject();
         if (object instanceof Collectible)
             object = ((Collectible) object).getTheOneWhoCollects();
         return check.getObject() != null && object instanceof Card &&
-                ((Card) object).getPlayer() == me;
+                ((((Card) object).getPlayer() == me && ally) || (((Card) object).getPlayer() != me && !ally));
     }
 
     public boolean checkDistance(Card forWitchCard, Square squareOfTarget) {
@@ -170,7 +170,7 @@ public class Target {
 
     public boolean checkNotItSelf(int y, int x, Square position) {
         if (self)
-            return !(y == position.getYCoordinate() && x == position.getXCoordinate());
+            return (y == position.getYCoordinate() && x == position.getXCoordinate());
         return true;
     }
 

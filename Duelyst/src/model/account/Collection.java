@@ -423,7 +423,7 @@ public class Collection  implements Cloneable{
     public int getNumberOfItemId(Item item) {
         int number = 1;
         for (Item item1 : items) {
-            if (item1.getName().equals(item.getName())) {
+            if (item1 != null && item != null && item1.getName().equals(item.getName())) {
                 number++;
             }
         }

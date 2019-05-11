@@ -28,9 +28,6 @@ public class Spell extends Card {
     }
 
 
-    public void setTarget(Square square) {
-
-    }
 
     public int getApChanges() {
         return apChanges;

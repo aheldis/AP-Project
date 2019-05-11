@@ -10,7 +10,7 @@
     "coolDown": 2,
     "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "description": "power buff with 4 unit",
     "change": {
       "targetType": "ranged",

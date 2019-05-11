@@ -10,7 +10,7 @@
     "coolDown": 8,
     "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "description": "stun all opponent for 1 turn",
     "change": {
       "targetType": "force",

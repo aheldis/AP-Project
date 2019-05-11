@@ -200,7 +200,7 @@ public class Shop {
                 return;
             account.getCollection().addToItems(item);
             items.remove(item);
-            makeNewFromFile(pathOfFiles + "/" + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM);
+            makeNewFromFile(pathOfFiles + "/" + FilesType.USABLE.getName() + "/" + item.getName() + ".json", FilesType.ITEM);
             return;
         }
         ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;

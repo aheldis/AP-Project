@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import model.account.Account;
 import model.account.AllAccount;
@@ -467,8 +467,7 @@ public class MenuController {
                     case GAME_END_GAME://انصراف از بازی
                         match.setLoser(player);
                         match.setWinner(player.getOpponent());
-                        if (player.getOpponent().getAccount() != null)
-                            player.getOpponent().getAccount().changeValueOfDaric(match.getReward());
+                        match.endGame();
                         state = StateType.ACCOUNT_MENU;
                         break;
                     case GAME_SHOW_MENU:
@@ -610,7 +609,7 @@ public class MenuController {
                     case GAME_ATTACK:
                         Card card;
                         id = request.getId();
-                        card = player.passCardInGame(id);
+                        card = player.getOpponent().passCardInGame(id);
                         if (card == null) {
                             ErrorType errorType = ErrorType.INVALID_CARD_ID;
                             errorType.printMessage();

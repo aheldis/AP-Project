@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Account implements Comparable<Account> ,Cloneable{
     private String userName;
     private String password;
-    private int daric = 15000;
+    private int daric = 150000;
     private int wins;
     private ArrayList<MatchInfo> matchHistory = new ArrayList<>();
     private Collection collection = new Collection(this);

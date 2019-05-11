@@ -1,5 +1,6 @@
 package model.battle;
 
+import model.card.Spell;
 import model.item.Flag;
 import model.card.ActivationTimeOfSpecialPower;
 import model.card.Card;
@@ -8,6 +9,7 @@ import model.land.Square;
 import view.AccountView;
 import view.BattleView;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class GraveYard {
@@ -28,6 +30,10 @@ public class GraveYard {
     }
 
     public void addCardToGraveYard(Card card, Square position) {
+        if(card instanceof Spell){
+            cards.add(card);
+            return;
+        }
         if (card instanceof Minion) {
             if (((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_DEATH) {
                 card.useSpecialPower(position);

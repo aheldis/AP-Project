@@ -36,8 +36,8 @@ public abstract class Card {
     private LandOfGame landOfGame;
     private int CardNumber;
     private Player player;
-    private boolean canMove = false;
-    private boolean canAttack = false;
+    private boolean canMove = true;
+    private boolean canAttack = true;
     private boolean canCounterAttack = true;
     private int hpChangeAfterAttack = 0;
     /**
@@ -153,7 +153,7 @@ public abstract class Card {
 
         if (Math.abs(heroCoordination.getX() - x) + Math.abs(heroCoordination.getY() - y) <= 2) {
             Square square = landOfGame.getSquares()[x][y];
-            if (square.squareHasMinionOrHero())
+            if (!(this instanceof Spell) && square.squareHasMinionOrHero())
                 return false;
             return true;
         }
@@ -200,10 +200,12 @@ public abstract class Card {
     }
 
     private boolean checkTarget(Square check, String targetType) {
-        return check != null && target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
+/*        return check != null && target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
                 target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position) &&
                 target.checkDistance(this, check) && target.checkIsEnemy(player, check) &&
                 target.checkIsAlly(player, check) && target.checkTheOneWhoDoesTheThing(check.getObject());
+ */
+return check != null;
     }
 
     public void setTarget(Square cardSquare) {
@@ -211,16 +213,14 @@ public abstract class Card {
         boolean isCard = change.getTargetType().equals("force") || change.getTargetType().equals("minion") ||
                 change.getTargetType().equals("hero");
         ArrayList<Square> targets = new ArrayList<>();
+
         if (isSquare)
             targets.add(cardSquare);
 
         else if (isCard) {
-
             if (target.isOne() && checkTarget(cardSquare, change.getTargetType())) {
                 targets.add(cardSquare);
-
             } else if (target.isAll()) {
-
                 for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
                     for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
                         Square check = landOfGame.getSquares()[i][j];
@@ -369,13 +369,13 @@ public abstract class Card {
     }
 
     public void counterAttack(Card theOneWhoAttacked) {
-        boolean canCounterAttack = counterAttack.equals("Melee") &&
+        boolean canCounterAttack = counterAttack.equals("melee") &&
                 getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
         if (!canCounterAttack)
-            canCounterAttack = counterAttack.equals("Ranged") &&
+            canCounterAttack = counterAttack.equals("ranged") &&
                     getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
         if (!canCounterAttack)
-            canCounterAttack = counterAttack.equals("Hybrid");
+            canCounterAttack = counterAttack.equals("hybrid");
         if (this.canCounterAttack && canCounterAttack)
             theOneWhoAttacked.changeHp(-ap);
         if (theOneWhoAttacked instanceof Minion) {

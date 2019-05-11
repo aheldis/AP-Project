@@ -23,11 +23,17 @@ buy HorsemanFromFars
 buy HorsemanFromFars
 buy HorsemanFromFars
 buy HorsemanFromFars
-buy HorsemanFromFars
+buy PoisonousSnake
+buy Shock
+buy FeatherOfSimurgh
+buy DamolsArc
+buy Baptism
 show daric
 exit
 enter collection
 create deck zizi
+add ali_Shock_1 to deck zizi
+add ali_FeatherOfSimurgh_1 to deck zizi
 add ali_Kaveh_1 to deck zizi
 add ali_ArcherFromFars_1 to deck zizi
 add ali_ArcherFromFars_2 to deck zizi
@@ -48,13 +54,72 @@ add ali_HorsemanFromFars_1 to deck zizi
 add ali_HorsemanFromFars_2 to deck zizi
 add ali_HorsemanFromFars_3 to deck zizi
 add ali_HorsemanFromFars_4 to deck zizi
-add ali_HorsemanFromFars_5 to deck zizi
-add ali_HorsemanFromFars_6 to deck zizi
+add ali_PoisonousSnake_1 to deck zizi
+
 select deck zizi
 exit
+enter exit
+create account saba
+123
+enter shop
+buy Kaveh
+buy ArcherFromFars
+buy ArcherFromTooran
+buy Bahman
+buy Fireball
+buy Eagle
+buy ArcherFromFars
+buy ArcherFromTooran
+buy Ashkboos
+buy Bahman
+buy Fireball
+buy Eagle
+buy StonnerGiant
+buy SwordsmanFromFars
+buy Wolf
+buy WhiteWolf
+buy HorsemanFromFars
+buy HorsemanFromFars
+buy HorsemanFromFars
+buy HorsemanFromFars
+buy HorsemanFromFars
+buy PoisonousSnake
+buy Shock
+buy FeatherOfSimurgh
+buy DamolsArc
+buy Baptism
+show daric
+exit
+enter collection
+create deck zizi
+add saba_Shock_1 to deck zizi
+add saba_FeatherOfSimurgh_1 to deck zizi
+add saba_Kaveh_1 to deck zizi
+add saba_ArcherFromFars_1 to deck zizi
+add saba_ArcherFromFars_2 to deck zizi
+add saba_ArcherFromTooran_1 to deck zizi
+add saba_ArcherFromTooran_2 to deck zizi
+add saba_Bahman_1 to deck zizi
+add saba_Bahman_2 to deck zizi
+add saba_Fireball_1 to deck zizi
+add saba_Eagle_1 to deck zizi
+add saba_Ashkboos_1 to deck zizi
+add saba_Bahman_3 to deck u
+add saba_Fireball_2 to deck zizi
+add saba_Eagle_2 to deck zizi
+add saba_StonnerGiant_1 to deck zizi
+add saba_SwordsmanFromFars_1 to deck zizi
+add saba_Wolf_1 to deck zizi
+add saba_HorsemanFromFars_1 to deck zizi
+add saba_HorsemanFromFars_2 to deck zizi
+add saba_HorsemanFromFars_3 to deck zizi
+add saba_HorsemanFromFars_4 to deck zizi
+add saba_PoisonousSnake_1 to deck zizi
+select deck zizi
+exit
+enter help
 enter battle
-help
 single player
 story
 3
-show land
+show hand

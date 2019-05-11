@@ -231,7 +231,7 @@ public class Request {
                 coordinate.setY(Integer.parseInt(command.substring(11, 12)));
                 return RequestType.GAME_MOVE;
             }
-            if (command.toLowerCase().matches("attack \\w+ ")) {
+            if (command.toLowerCase().matches("attack \\w+")) {
                 setId(command.substring(7));
                 return RequestType.GAME_ATTACK;
             }

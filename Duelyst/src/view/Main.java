@@ -1,6 +1,6 @@
 package view;
 
-import Controller.MenuController;
+import controller.MenuController;
 
 public class Main {
  //   public static File file = new File("Duelyst/TestFile");

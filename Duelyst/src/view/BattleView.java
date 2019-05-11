@@ -70,7 +70,7 @@ public class BattleView {
         }
 
         if (!(loser instanceof ComputerPlayer)) {
-            System.out.println(match.getWinner().getUserName() + " is winner");
+            System.out.println(match.getLoser().getUserName() + " is loser");
         } else {
             System.out.println("Computer is loser");
         }

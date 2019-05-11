@@ -65,14 +65,14 @@ public abstract class Item {
     public void setTarget(Player player) {
         ArrayList<Square> targets = new ArrayList<>();
 
-        if (target.getCardType().equals("hero")) {
+        if (change.getTargetType().equals("hero")) {
             if (target.isEnemy())
                 targets.add(player.getOpponent().getHero().getPosition());
             if (target.isAlly())
                 targets.add(player.getHero().getPosition());
         }
 
-        if (target.getCardType().equals("minion") || target.getCardType().equals("force")) {
+        if ( change.getTargetType().equals("minion") || target.getCardType().equals("force")) {
 
             if (target.isOne() && target.isRandom()) {
 

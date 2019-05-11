@@ -112,6 +112,7 @@ public class Match {
         firstHero.setPlayer(players[0]);
         firstHero.setLandOfGame(land);
         firstHero.setCanMove(true, 1);
+        firstHero.setCanAttack(true, 1);
         cards = players[1].getMainDeck().getCardsOfDeck();
         for (Card card : cards) {
             card.setPlayer(players[1]);
@@ -120,6 +121,8 @@ public class Match {
         secondHero.setPlayer(players[1]);
         secondHero.setLandOfGame(land);
         secondHero.setCanMove(true, 1);
+        secondHero.setCanAttack(true, 1);
+
         players[0].setOpponent(players[1]);
         players[1].setOpponent(players[0]);
         this.players = players;
@@ -165,7 +168,7 @@ public class Match {
     public void changeTurn() {//age bazi ba computer bashe turn avaz nemishe
         if (gameEnded()) {
             endGame();
-            Controller.MenuController.state = StateType.ACCOUNT_MENU;
+            controller.MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
         if (passComputerPlayer() == -1) {
@@ -177,7 +180,7 @@ public class Match {
             players[1 - whichPlayer].initPerTurn();//init for computer
             if (gameEnded()) {
                 endGame();
-                Controller.MenuController.state = StateType.ACCOUNT_MENU;
+                controller.MenuController.state = StateType.ACCOUNT_MENU;
                 return;
             }
         }
@@ -253,7 +256,7 @@ public class Match {
         return false;
     }
 
-    private void endGame() {
+    public void endGame() {
         MatchInfo matchInfo = new MatchInfo();
         if (this.winner instanceof OrdinaryPlayer)
             matchInfo.winner = this.winner.getAccount();

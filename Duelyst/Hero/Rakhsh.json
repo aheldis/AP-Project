@@ -10,7 +10,7 @@
     "coolDown": 2,
     "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "description": "stun an opponent minion for one turn",
     "change": {
       "targetType": "force",

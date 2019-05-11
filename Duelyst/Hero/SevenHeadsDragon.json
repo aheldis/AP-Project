@@ -10,7 +10,7 @@
     "coolDown": 1,
     "ActivationTimeOfSpecialPower": "CONTINUES",
     "counterAttack": "melee",
-    "attackRange": 0,
+    "attackRange": 1,
     "description": "disarm an opponent minion",
     "change": {
       "targetType": "force",
