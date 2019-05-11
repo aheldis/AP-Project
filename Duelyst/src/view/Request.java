@@ -188,7 +188,7 @@ public class Request {
             if (command.matches("attack combo (\\w+) (\\w+)+")) {
                 return RequestType.GAME_ATTACK_COMBO;
             }
-            if (command.matches("select card \\w+")) {//todo get input
+            if (command.matches("select card \\w+")) {
                 setId(command.split(" ")[2]);
                 state = StateType.SELECT_CARD;
                 return RequestType.GAME_SELECT_CARD_ID;

@@ -126,12 +126,6 @@ public abstract class Card {
 
         if (newPosition.getObject() instanceof Collectible &&
                 ((Collectible) newPosition.getObject()).getTarget().checkTheOneWhoCollects(this)) {
-            //
-            Collectible collectible = (Collectible) newPosition.getObject();
-            System.out.println("Card.move");
-            System.out.println("collectible.getName() = " + collectible.getName());
-            System.out.println("collectible.getDescription() = " + collectible.getDescription());
-            //
             player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
         }

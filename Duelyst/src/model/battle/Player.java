@@ -65,7 +65,11 @@ public abstract class Player {
             return;
         }
 
-        //todo instace of collectible
+        if (square.getObject() instanceof Collectible &&
+                ((Collectible) square.getObject()).getTarget().checkTheOneWhoCollects(playerCard)) {
+            this.getHand().addToCollectibleItem((Collectible) square.getObject());
+            ((Collectible) square.getObject()).setTheOneWhoCollects(playerCard);
+        }
 
         //cellEffect:
         for (Buff buff : square.getBuffs()) {
@@ -136,6 +140,7 @@ public abstract class Player {
             square.setObject(selected);
             selected.setTarget(this);
             selected.getChange().affect(this, selected.getTarget().getTargets());
+            hand.getCollectibleItems().remove(selected);
         }
     }
 

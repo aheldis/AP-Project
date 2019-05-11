@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Shop {
     private static Shop singleInstance = null;
-    private static String pathOfFiles = "Duelyst/";
+    private static String pathOfFiles = "";
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Item> collectibles = new ArrayList<>();
@@ -54,8 +54,8 @@ public class Shop {
             File folder = new File(pathOfFiles + typeOfFile.getName());
             File[] listOfFiles = folder.listFiles();
             if (!(listOfFiles == null || typeOfFile == FilesType.BUFF || typeOfFile == FilesType.ITEM)) {
-                for (int i = 0; i < listOfFiles.length; i++) {
-                    makeNewFromFile(listOfFiles[i].getPath(), typeOfFile);
+                for (File listOfFile : listOfFiles) {
+                    makeNewFromFile(listOfFile.getPath(), typeOfFile);
                 }
             }
         }
@@ -189,7 +189,7 @@ public class Shop {
                 collection.addToMinions((Minion) card);
                 typeOfFile = FilesType.MINION;
             }
-            makeNewFromFile(pathOfFiles + typeOfFile + "/" + card.getName() + ".json", typeOfFile); //todo check lotfan
+            makeNewFromFile(pathOfFiles + typeOfFile + "/" + card.getName() + ".json", typeOfFile);
             cards.remove(card);
             return;
         }
@@ -200,7 +200,7 @@ public class Shop {
                 return;
             account.getCollection().addToItems(item);
             items.remove(item);
-            makeNewFromFile(pathOfFiles + "/" + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM); //todo check lotfan
+            makeNewFromFile(pathOfFiles + "/" + FilesType.ITEM.getName() + item.getName(), FilesType.ITEM);
             return;
         }
         ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
