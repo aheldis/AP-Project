@@ -1,10 +1,17 @@
 package view.enums;
 
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import view.MakeAndShowClass;
 import view.MessageViewer;
+import view.sample.StageLauncher;
+
+import java.awt.*;
 
 public enum ErrorType {
 
-    SECOND_PLAYER_NOT_VALID("Choosen player is invalid"),
+    SECOND_PLAYER_NOT_VALID("Choose player is invalid"),
     HAVE_NOT_THIS_CARD_FILE("You have not this card definition"),
     USER_NAME_NOT_FOUND("User name not found"),
     PASSWORD_DOES_NOT_MATCH("Password doesn't match"),
@@ -55,8 +62,10 @@ public enum ErrorType {
     }
 
     public void printMessage() {
-        MessageViewer errorViewer = MessageViewer.getInstance();
-        errorViewer.collectionMessage(message);
+        MakeAndShowClass makeAndShowClass = MakeAndShowClass.getInstance();
+        makeAndShowClass.makeError(message);
+//        MessageViewer errorViewer = MessageViewer.getInstance();
+//        errorViewer.collectionMessage(message);
     }
 
     public String getMessage() {
