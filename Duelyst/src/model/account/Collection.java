@@ -31,6 +31,21 @@ public class Collection  implements Cloneable{
     {
         return super.clone();
     }
+    public boolean checkTheDeckForImport(Deck deck){
+        ArrayList<Card> cards = deck.getCardsOfDeck();
+        cards.add(deck.getHero());
+        for(int i=0;i<cards.size();i++){
+            if(passCardByCardId(cards.get(i).getCardId().getCardIdAsString())==null){
+                return false;//does not have spell or minion
+            }
+        }
+        //if does not have item
+        if(passUsableItemByUsableItemId(deck.getItem().getUsableId().getUsableIdAsString())==null)
+            return false;
+
+        return true;//have all cards
+    }
+
 
     public ArrayList<Deck> getDecks() {
         return decks;

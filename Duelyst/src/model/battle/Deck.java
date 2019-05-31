@@ -18,7 +18,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
     // else call setRandomCardsAndItemsInDeck()
     private ArrayList<Card> cardsOfDeck = new ArrayList<>(20);//minon spell
     private String deckName;
-    private Item item;
+    private Usable item;
     private Hero hero = null;
     private int indexOfCards = 0;
 
@@ -34,7 +34,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
         this.hero = hero;
     }
 
-    public Item getItem() {
+    public Usable getItem() {
         return item;
     }
 
@@ -55,14 +55,14 @@ public class Deck {//if it is normal deck you had initialize it in collection
     }
 
     public void addToCardsOfDeck(Card card) {
-            cardsOfDeck.add(card);
+        cardsOfDeck.add(card);
     }
 
     public void removeFromCardsOfDeck(Card card) {
         cardsOfDeck.remove(card);
     }
 
-    public void addItemToDeck(Item item) {
+    public void addItemToDeck(Usable item) {
         if (this.item != null)
             this.item = item;
     }
@@ -121,7 +121,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
                     } else if (FilesType.ITEM.getName().equals(type)) {
                         Item item = Shop.getInstance().getNewItemByName(line.trim());
                         new UsableId((Usable)item, number++);
-                        deck.addItemToDeck(item);
+                        deck.addItemToDeck((Usable) item);
                     } else {
                         Card card = Shop.getInstance().getNewCardByName(line.trim());
                         new CardId(card, number++);

@@ -43,7 +43,9 @@ public enum ErrorType {
     CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION("This card is exhausted"),
     INVALID_SQUARE("Invalid square"),
     CAN_NOT_COMBO_ATTACK("Can con combo attack"),
-    CAN_NOT_ATTACK("Can not attack");
+    CAN_NOT_ATTACK("Can not attack"),
+    HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT("you do not have some cards of this deck"),
+    INVALID_NAME_FOR_IMPORTED_DECK("Invalid name for deck");
 
 
     private String message;

@@ -1,46 +1,38 @@
-package controller;
+package Controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.account.Account;
-import model.account.AllAccount;
-import model.account.Collection;
-import model.account.Shop;
-import model.battle.Game;
-import model.battle.GraveYard;
-import model.battle.Match;
-import model.battle.Player;
-import model.card.ActivationTimeOfSpecialPower;
-import model.card.Card;
-import model.card.Hero;
-import model.card.Minion;
-import model.item.Collectible;
-import model.item.Item;
-import model.item.Usable;
+import model.account.*;
+import model.battle.*;
+import model.card.*;
+import model.item.*;
 import model.requirment.Coordinate;
 import view.BattleView;
-import view.MenuView;
-import view.Request;
-import view.enums.ErrorType;
-import view.enums.StateType;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import view.*;
+import view.enums.*;
+import java.io.*;
 
 
-public class MenuController {
+public class MenuController  {
     public static StateType state = StateType.MAIN_MENU;
     private static Account account;
     private static AllAccount allAccount = AllAccount.getInstance();
     private static MenuView menuView = MenuView.getInstance();
     private static BattleView battleView = BattleView.getInstance();
-
     private static Game game;
     private static Match match;
-    private static boolean haveSavedInCollection= false;
+    private static boolean haveSavedInCollection = false;
 
-    public static void main() throws Exception{
+//    private MenuController() {
+//
+//    }
+//
+//    public static MenuController getInstance() {
+//        return menuController;
+//    }
+
+
+    public static void main() throws Exception {
         String id;
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
@@ -65,9 +57,22 @@ public class MenuController {
                             break;
                         }
                         menuView.printer("Enter your password");
+                        String password;
                         request.getNewLine();
-                        allAccount.createAccount(userName, request.getCommand());
+                        password = request.getCommand();
+                        allAccount.createAccount(userName, password);
                         account = allAccount.getAccountByName(userName);
+
+                        try {
+                            File file = new File("D:\\project-Duelyst\\Duelyst\\AccountSaver\\AccountUser.txt");
+                            FileWriter fileWriter = new FileWriter(file, true);
+                            fileWriter.write(userName + "/" + password + '\n');
+                            fileWriter.close();
+
+                        } catch (IOException e) {
+                        }
+
+
                         state = StateType.ACCOUNT_MENU;
                         menuView.printer("you have signed up ");
                     }
@@ -99,7 +104,7 @@ public class MenuController {
                                     break;
                                 }
                             }
-                            if (!breaker) {
+                            if (!breaker) {//log in
                                 account = allAccount.getAccountByName(userName);
                                 state = StateType.ACCOUNT_MENU;
                             }
@@ -116,9 +121,20 @@ public class MenuController {
                         // account.accountSave();
                         break;
                     case MAIN_MENU_EXIT:
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                        try {
+                            File file = new File("D:\\project-Duelyst\\Duelyst\\AccountSaver\\" +
+                                    account.getUserName() + ".txt");
+                            FileWriter fileWriter = new FileWriter(file);
+                            fileWriter.write(gson.toJson(account));
+                            fileWriter.close();
+                        } catch (Exception e) {
+
+                        }
                         return;
                 }
             } else if (state == StateType.ACCOUNT_MENU) {
+                String deckName;
                 switch (request.getRequestType()) {
                     case MENU_ENTER_COLLECTION:
 //                        Gson gson =new GsonBuilder().setPrettyPrinting().create();
@@ -133,6 +149,43 @@ public class MenuController {
 //                        }
                         //account.setClonedCollection((Collection) account.getCollection().clone());
                         state = StateType.COLLECTION;
+                        break;
+                    case MENU_EXPORT_DECK:
+
+                        request.getNewLine();
+                        deckName = request.getCommand();
+                        Deck deck = account.getCollection().passTheDeckIfHaveBeenExist(deckName);
+                        if (deck == null) {
+                            ErrorType.HAVE_NOT_DECK.printMessage();
+                            break;
+                        }
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                        File file = new File("D:\\project-Duelyst\\Duelyst\\exportedDeck\\" + deckName + ".txt");
+                        FileWriter fileWriter = new FileWriter(file);
+                        fileWriter.write(gson.toJson(deck));
+                        fileWriter.close();
+
+                        break;
+                    case MENU_IMPORT_DECK:
+                        menuView.printer("Enter deck name");
+                        request.getNewLine();
+                        deckName = request.getCommand();
+                        try {
+                            FileReader fr = new FileReader("D:\\project-Duelyst\\Duelyst\\exportedDeck\\" + deckName + ".txt");
+                            Gson gson1 = new GsonBuilder().create();
+                            Deck deck1 = gson1.fromJson(fr, Deck.class);//load the deck
+                            if (!account.getCollection().checkTheDeckForImport(deck1))
+                            {
+                                ErrorType.HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT.printMessage();
+                            }
+                            else {
+                                account.getCollection().getDecks().add(deck1);
+                            }
+                        } catch (Exception e) {
+                            ErrorType.INVALID_NAME_FOR_IMPORTED_DECK.printMessage();
+                        }
+
+
                         break;
                     case MENU_ENTER_BATTLE:
                         game = new Game();
@@ -464,8 +517,7 @@ public class MenuController {
                     case GAME_END_GAME://انصراف از بازی
                         match.setLoser(player);
                         match.setWinner(player.getOpponent());
-                        if (player.getOpponent().getAccount() != null)
-                            player.getOpponent().getAccount().changeValueOfDaric(match.getReward());
+                        match.endGame();
                         state = StateType.ACCOUNT_MENU;
                         break;
                     case GAME_SHOW_MENU:
@@ -489,7 +541,7 @@ public class MenuController {
                         if (opponentCard == null) {
                             error = ErrorType.INVALID_CARD_ID;
                             error.printMessage();
-                            return;
+                            break;
                         }
                         String[] cardIds = request.getCommand().split(" ")[2].split(" ");
                         for (String cardId : cardIds) {
@@ -607,7 +659,7 @@ public class MenuController {
                     case GAME_ATTACK:
                         Card card;
                         id = request.getId();
-                        card = player.passCardInGame(id);
+                        card = player.getOpponent().passCardInGame(id);
                         if (card == null) {
                             ErrorType errorType = ErrorType.INVALID_CARD_ID;
                             errorType.printMessage();
