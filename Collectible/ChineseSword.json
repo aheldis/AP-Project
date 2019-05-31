@@ -1,0 +1,42 @@
+{
+  "@type": "model.item.Collectible",
+  "@val": {
+    "name": "ChineseSword",
+    "type": "Collectible",
+    "description": "ap + 5",
+    "cost": 0,
+    "itemNumber": 20,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "collectible",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": true,
+      "enemy": false,
+      "ally": true,
+      "notHaveRange": true
+    },
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 5,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": false,
+      "distance": -1,
+      "self": false,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}

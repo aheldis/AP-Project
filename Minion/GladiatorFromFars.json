@@ -1,0 +1,42 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "GladiatorFromFars",
+    "CardNumber": 5,
+    "cost": 600,
+    "mp": 9,
+    "hp": 24,
+    "ap": 6,
+    "counterAttack": "melee",
+    "attackRange": 1,
+    "activationTimeOfSpecialPowerString": "ON_ATTACK",
+    "description": "attack 5 units more than times that this minions have been attacked y GladiatorFromFars",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": true,
+      "ally": false
+    }
+  }
+}

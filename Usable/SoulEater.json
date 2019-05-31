@@ -1,0 +1,41 @@
+{
+  "@type": "model.item.Usable",
+  "@val": {
+    "name": "SoulEater",
+    "type": "Usable",
+    "description": "power buff on your minion (ap+1)",
+    "cost": 2500,
+    "itemNumber": 18,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "usable",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": true,
+      "distance": -1,
+      "self": true,
+      "enemy": false,
+      "ally": true
+    },
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 1,
+      "continuous": false,
+      "buffs": {
+        "power": [1]
+      },
+      "unaffectBuffs": false,
+      "apOrHpForPower": "ap",
+      "changeInApOrHpForPower": 1
+    }
+  }
+}

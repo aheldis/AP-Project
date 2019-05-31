@@ -1,0 +1,55 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "SteelChainMail",
+    "CardNumber": 37,
+    "cost": 650,
+    "mp": 3,
+    "hp": 1,
+    "ap": 1,
+    "counterAttack": "melee",
+    "attackRange": 1,
+    "activationTimeOfSpecialPowerString": "PASSIVE",
+    "description": "have 12 holy buff passive",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "buffs": {
+        "holy": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      },
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}

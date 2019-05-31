@@ -1,0 +1,44 @@
+{
+  "@type": "model.card.Hero",
+  "@val": {
+    "name": "Arash",
+    "CardNumber": 7,
+    "cost": 10000,
+    "mp": 2,
+    "hp": 30,
+    "ap": 2,
+    "coolDown": 2,
+    "ActivationTimeOfSpecialPower": "CONTINUES",
+    "counterAttack": "ranges",
+    "attackRange": 6,
+    "description": "attack to the row of hero 4 units",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -4,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": false,
+      "theOneWhoDoesTheThing": "hero"
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "hero",
+      "one": false,
+      "row": true,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": true,
+      "ally": false
+    }
+  }
+}

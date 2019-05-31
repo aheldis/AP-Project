@@ -1,0 +1,45 @@
+{
+  "@type": "model.card.Hero",
+  "@val": {
+    "name": "Simurgh",
+    "CardNumber": 2,
+    "cost": 9000,
+    "mp": 5,
+    "hp": 50,
+    "ap": 4,
+    "coolDown": 8,
+    "ActivationTimeOfSpecialPower": "CONTINUES",
+    "counterAttack": "melee",
+    "attackRange": 1,
+    "description": "stun all opponent for 1 turn",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "stun": [1]
+      },
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "hero",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": true,
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": true,
+      "ally": false
+    }
+  }
+}

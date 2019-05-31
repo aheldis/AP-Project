@@ -1,0 +1,44 @@
+{
+  "@type": "model.card.Hero",
+  "@val": {
+    "name": "Esfandiar",
+    "CardNumber": 9,
+    "cost": 12000,
+    "mp": 0,
+    "hp": 35,
+    "ap": 3,
+    "coolDown": 0,
+    "ActivationTimeOfSpecialPower": "CONTINUES",
+    "counterAttack": "hybrid",
+    "attackRange": 3,
+    "description": "have 3 holyBuff countinuesly",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "buffs": {
+        "holy": [-1]
+      },
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "hybrid",
+      "cardType": "hero",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": true,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}

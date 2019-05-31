@@ -1,0 +1,41 @@
+{
+  "@type": "model.item.Usable",
+  "@val": {
+    "name": "DamolsArc",
+    "type": "Usable",
+    "description": "disarm opponent hero for one turn",
+    "cost": 3000,
+    "itemNumber": 3,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "usable",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": true,
+      "ally": false,
+      "haveRange": true,
+      "theOneWhoCollects": "hero"
+    },
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "disarm": [1]
+      },
+      "unaffectBuffs": false
+    }
+  }
+}

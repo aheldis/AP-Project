@@ -1,0 +1,41 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "GodStrength",
+    "CardNumber": 5,
+    "cost": 450,
+    "mp": 2,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 0,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "add 4 units to ap of hero",
+    "change": {
+      "targetType": "hero",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 4,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "self": true,
+      "enemy": false,
+      "ally": true
+    }
+  }
+}

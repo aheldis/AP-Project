@@ -1,0 +1,42 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "PrinceFromTooran",
+    "CardNumber": 12,
+    "cost": 800,
+    "mp": 6,
+    "hp": 6,
+    "ap": 10,
+    "counterAttack": "melee",
+    "attackRange": 1,
+    "activationTimeOfSpecialPowerString": "COMBO",
+    "description": "combo",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": true,
+      "ally": false
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "HellFire",
+    "CardNumber": 6,
+    "cost": 600,
+    "mp": 3,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 2,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "fire buff for 2 turns in choosen cells",
+    "change": {
+      "targetType": "square",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "Fire": [2]
+      },
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "self": false,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}

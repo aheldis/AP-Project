@@ -1,0 +1,37 @@
+{
+  "@type": "model.item.Collectible",
+  "@val": {
+    "name": "Devastation",
+    "type": "Collectible",
+    "description": "hp+6 for a random card",
+    "cost": 0,
+    "itemNumber": 4,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "collectible",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": true,
+      "distance": -1,
+      "self": true,
+      "enemy": false,
+      "ally": true
+    },
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 6,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": false
+    }
+  }
+}

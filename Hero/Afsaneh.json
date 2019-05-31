@@ -1,0 +1,44 @@
+{
+  "@type": "model.card.Hero",
+  "@val": {
+    "name": "Afsaneh",
+    "CardNumber": 8,
+    "cost": 11000,
+    "mp": 1,
+    "hp": 40,
+    "ap": 3,
+    "coolDown": 2,
+    "ActivationTimeOfSpecialPower": "CONTINUES",
+    "counterAttack": "ranged",
+    "attackRange": 3,
+    "description": "dispel an opponent minion",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": true
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "hero",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": true,
+      "ally": false
+
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "@type": "model.card.Buff",
+  "@val": {
+    "name": "Power",
+    "goodBuff": true,
+    "haveUnAffect": false,
+    "apChange": 1,
+    "hpChange": 1,
+    "canMove": false,
+    "canAttack": false,
+    "canCounterAttack": false,
+    "hpChangeAfterAttack": false
+  }
+}

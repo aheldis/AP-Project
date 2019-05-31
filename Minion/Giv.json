@@ -1,0 +1,42 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "Giv",
+    "CardNumber": 30,
+    "cost": 450,
+    "mp": 4,
+    "hp": 5,
+    "ap": 7,
+    "counterAttack": "ranged",
+    "attackRange": 5,
+    "activationTimeOfSpecialPowerString": "ON_DEFEND",
+    "description": "won't get negetive buffs",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "ranged",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": true,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}

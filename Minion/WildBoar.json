@@ -1,0 +1,42 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "WildBoar",
+    "CardNumber": 28,
+    "cost": 500,
+    "mp": 6,
+    "hp": 10,
+    "ap": 14,
+    "counterAttack": "melee",
+    "attackRange": 1,
+    "activationTimeOfSpecialPowerString": "ON_DEFEND",
+    "description": "won't be disarm",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": false,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": true,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}

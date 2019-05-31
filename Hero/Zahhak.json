@@ -1,0 +1,47 @@
+{
+  "@type": "model.card.Hero",
+  "@val": {
+    "name": "Zahhak",
+    "CardNumber": 5,
+    "cost": 10000,
+    "mp": 0,
+    "hp": 50,
+    "ap": 2,
+    "coolDown": 0,
+    "ActivationTimeOfSpecialPower": "ON_DEFEND",
+    "counterAttack": "melee",
+    "attackRange": 1,
+    "description": "put poison buff on opponent minion for 3 turns",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "poison": [
+          3
+        ]
+      },
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "melee",
+      "cardType": "hero",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": true,
+      "ally": false
+    }
+  }
+}

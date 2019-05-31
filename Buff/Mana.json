@@ -1,0 +1,14 @@
+{
+  "@type": "model.card.Buff",
+  "@val": {
+    "name": "Mana",
+    "goodBuff": false,
+    "haveUnAffect": false,
+    "apChange": 0,
+    "hpChange": 0,
+    "canMove": false,
+    "canAttack": false,
+    "canCounterAttack": false,
+    "hpChangeAfterAttack": false
+  }
+}

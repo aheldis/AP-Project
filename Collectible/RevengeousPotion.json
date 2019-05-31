@@ -1,0 +1,49 @@
+{
+  "@type": "model.item.Collectible",
+  "@val": {
+    "name": "RevengeousPotion",
+    "type": "Collectible",
+    "description": "10 holy buff for 2 turns",
+    "cost": 0,
+    "itemNumber": 9,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "collectible",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": true,
+      "enemy": false,
+      "ally": true
+    },
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {
+        "holy": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "@type": "model.card.Minion",
+  "@val": {
+    "name": "OneEyedGiant",
+    "CardNumber": 17,
+    "cost": 500,
+    "mp": 7,
+    "hp": 12,
+    "ap": 11,
+    "counterAttack": "hybrid",
+    "attackRange": 3,
+    "activationTimeOfSpecialPowerString": "ON_DEATH",
+    "description": "decrease hp of minions in 8 neighbor cells 2 units",
+    "change": {
+      "targetType": "minion",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": -2,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "hybrid",
+      "cardType": "minion",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": 1,
+      "self": false,
+      "enemy": true,
+      "ally": false
+    }
+  }
+}

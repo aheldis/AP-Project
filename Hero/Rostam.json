@@ -1,0 +1,43 @@
+{
+  "@type": "model.card.Hero",
+  "@val": {
+    "name": "Rostam",
+    "CardNumber": 10,
+    "cost": 8000,
+    "mp": 0,
+    "hp": 55,
+    "ap": 7,
+    "coolDown": 0,
+    "ActivationTimeOfSpecialPower": "CONTINUES",
+    "counterAttack": "hybrid",
+    "attackRange": 4,
+    "description": "-",
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": false
+    },
+    "target": {
+      "counterAttackType": "hybrid",
+      "cardType": "hero",
+      "one": true,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "distance": -1,
+      "self": false,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}

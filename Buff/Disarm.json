@@ -1,0 +1,14 @@
+{
+  "@type": "model.card.Buff",
+  "@val": {
+    "name": "Disarm",
+    "goodBuff": false,
+    "haveUnAffect": true,
+    "apChange": 0,
+    "hpChange": 0,
+    "canMove": false,
+    "canAttack": false,
+    "canCounterAttack": false,
+    "hpChangeAfterAttack": false
+  }
+}

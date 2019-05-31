@@ -1,0 +1,39 @@
+{
+  "@type": "model.item.Usable",
+  "@val": {
+    "name": "KingWisdom",
+    "type": "Usable",
+    "description": "add to mana each turn",
+    "cost": 9000,
+    "itemNumber": 14,
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "usable",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": true,
+      "random": false,
+      "distance": -1,
+      "self": true,
+      "enemy": false,
+      "ally": true
+    },
+    "change": {
+      "targetType": "force",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 1,
+      "apChange": 0,
+      "changeInManaForMana": 1,
+      "buffs": {
+        "Mana": [-1]
+      },
+      "unaffectBuffs": false
+    }
+  }
+}

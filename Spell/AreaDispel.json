@@ -1,0 +1,41 @@
+{
+  "@type": "model.card.Spell",
+  "@val": {
+    "name": "AreaDispel",
+    "CardNumber": 2,
+    "cost": 1500,
+    "mp": 2,
+    "hp": 0,
+    "ap": 0,
+    "counterAttack": "-",
+    "attackRange": 2,
+    "ActivationTimeOfSpecialPower": "-",
+    "description": "destroy positive buffs of opponent and negetive buffs of your minions and hero",
+    "change": {
+      "targetType": "square",
+      "opponentCanMove": true,
+      "opponentCanAttack": true,
+      "opponentCanCounterAttack": true,
+      "turnOfCanNotMoveForOpponent": 0,
+      "turnOfCanNotAttackForOpponent": 0,
+      "turnOfCanNotCounterAttackForOpponent": 0,
+      "hpChange": 0,
+      "apChange": 0,
+      "continuous": false,
+      "buffs": {},
+      "unaffectBuffs": true
+    },
+    "target": {
+      "counterAttackType": "-",
+      "cardType": "spell",
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "self": false,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}
