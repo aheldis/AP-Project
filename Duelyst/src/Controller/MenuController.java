@@ -1,5 +1,7 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Collection;
@@ -21,6 +23,10 @@ import view.MenuView;
 import view.Request;
 import view.enums.ErrorType;
 import view.enums.StateType;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 
 public class MenuController {
@@ -458,7 +464,8 @@ public class MenuController {
                     case GAME_END_GAME://انصراف از بازی
                         match.setLoser(player);
                         match.setWinner(player.getOpponent());
-                        match.endGame();
+                        if (player.getOpponent().getAccount() != null)
+                            player.getOpponent().getAccount().changeValueOfDaric(match.getReward());
                         state = StateType.ACCOUNT_MENU;
                         break;
                     case GAME_SHOW_MENU:
@@ -600,7 +607,7 @@ public class MenuController {
                     case GAME_ATTACK:
                         Card card;
                         id = request.getId();
-                        card = player.getOpponent().passCardInGame(id);
+                        card = player.passCardInGame(id);
                         if (card == null) {
                             ErrorType errorType = ErrorType.INVALID_CARD_ID;
                             errorType.printMessage();
