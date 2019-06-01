@@ -2,6 +2,7 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "Rostam",
+    "PATH_OF_THE_PICTURE": "pics/rostam.png",
     "CardNumber": 10,
     "cost": 8000,
     "mp": 0,

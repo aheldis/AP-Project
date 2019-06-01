@@ -22,14 +22,14 @@ import java.util.Random;
 
 public class StageLauncher extends Application {
 
-    public static final int WIDTH =1500;
+    public static final int WIDTH = 1500;
     public static final int HEIGHT = 900;
     public static Stage primaryStage;
     public static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
 
     private static Scene makeScene(StateType stateType) {
         Group root = new Group();
-        Scene scene = new Scene(root,WIDTH,HEIGHT);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
         return scene;
     }
@@ -45,15 +45,11 @@ public class StageLauncher extends Application {
         Scene mainMenuScene = makeScene(StateType.MAIN_MENU);
         Scene collectionScene = makeScene(StateType.COLLECTION);
 
-        final Random rng = new Random();
-        VBox content = new VBox(5);
-        ScrollPane scroller = new ScrollPane(content);
-        scroller.setFitToWidth(true);
-
         ArrayList<Card> cards = new ArrayList<>();
         Hero hero = new Hero();
-        hero.setPATH_OF_THE_PICTURE("D:\\project_Duelyst1\\pics\\collectionBackground.jpg");
-        cards.add(hero);
+        hero.setPATH_OF_THE_PICTURE("pics/default.png");
+        for (int i = 0; i < 15; i++)
+            cards.add(hero);
         CollectionScene.showInCollection(cards);
 
         primaryStage.setScene(collectionScene);

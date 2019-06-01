@@ -2,6 +2,7 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "Simurgh",
+    "PATH_OF_THE_PICTURE": "pics/simorgh.png",
     "CardNumber": 2,
     "cost": 9000,
     "mp": 5,
