@@ -11,7 +11,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import view.sample.StageLauncher;
 
-
+/**
+ * "zahra"
+ * always use primaryStage.getScene() for access to scene :)
+ * for switching between scene use hashMap
+ */
 
 public class MakeAndShowClass {
     public static MakeAndShowClass singleInstance = new MakeAndShowClass();

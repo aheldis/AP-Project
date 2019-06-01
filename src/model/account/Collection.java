@@ -251,7 +251,7 @@ public class Collection  implements Cloneable{
 
     }
 
-    public boolean errorForDeck(Deck deck) {
+    private boolean errorForDeck(Deck deck) {
         ErrorType error;
         if (deck == null) {
             error = ErrorType.HAVE_NOT_DECK;

@@ -45,6 +45,15 @@ public abstract class Card {
      */
     private String description;
     private static final int DEFAULT = -1;
+    private String PATH_OF_THE_PICTURE;
+
+    public String getPathOfThePicture() {
+        return PATH_OF_THE_PICTURE;
+    }
+
+    public void setPATH_OF_THE_PICTURE(String PATH_OF_THE_PICTURE) {
+        this.PATH_OF_THE_PICTURE = PATH_OF_THE_PICTURE;
+    }
 
     public void setPlayer(Player player) {
         this.player = player;
