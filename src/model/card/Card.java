@@ -46,6 +46,23 @@ public abstract class Card {
     private String description;
     private static final int DEFAULT = -1;
     private String PATH_OF_THE_PICTURE;
+    private String PATH_OF_ANIMATION;
+
+    public String getPATH_OF_ANIMATION() {
+        return PATH_OF_ANIMATION;
+    }
+
+    public void setPATH_OF_ANIMATION(String PATH_OF_ANIMATION) {
+        this.PATH_OF_ANIMATION = PATH_OF_ANIMATION;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setAp(int ap) {
+        this.ap = ap;
+    }
 
     public String getPathOfThePicture() {
         return PATH_OF_THE_PICTURE;

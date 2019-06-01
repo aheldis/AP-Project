@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "ArcherFromTooran",
+    "PATH_OF_THE_PICTURE": "pics/minion_background.png",
+    "PATH_OF_ANIMATION": "pics/gifMinion/kaman-dar-toorani.png",
     "CardNumber": 7,
     "cost": 500,
     "mp": 1,

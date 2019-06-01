@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "BlackBeast",
+    "PATH_OF_THE_PICTURE": "pics/minion_background.png",
+    "PATH_OF_ANIMATION": "pics/gifMinion/dive_siah.gif",
     "CardNumber": 13,
     "cost": 300,
     "mp": 9,

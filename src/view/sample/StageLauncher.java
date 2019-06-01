@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.card.Card;
 import model.card.Hero;
+import model.card.Minion;
 import view.CollectionScene;
 import view.enums.StateType;
 import javafx.scene.control.Button;
@@ -34,6 +35,14 @@ public class StageLauncher extends Application {
         return scene;
     }
 
+    public void minionMaker(ArrayList<Card>cards,String path ){
+        Minion minion = new Minion();
+        minion.setPATH_OF_THE_PICTURE("D:\\project_Duelyst1\\pics\\minion_background.png");
+        minion.setPATH_OF_ANIMATION(path);
+        minion.setHp(10);
+        minion.setAp(10);
+        cards.add(minion);
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -48,7 +57,20 @@ public class StageLauncher extends Application {
         ArrayList<Card> cards = new ArrayList<>();
         Hero hero = new Hero();
         hero.setPATH_OF_THE_PICTURE("pics/default.png");
-        for (int i = 0; i < 15; i++)
+        hero.setHp(10);
+        hero.setAp(10);
+        hero.setDescription("hello girls");
+
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\folad_zereh.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\dive_siah.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\gorge_sefid.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\jasose_toorani.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\kamandar_torani.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\neyzedar_toorani.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\arjang_div.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\ashkboos.gif");
+
+        for (int i = 0; i < 2; i++)
             cards.add(hero);
         CollectionScene.showInCollection(cards);
 

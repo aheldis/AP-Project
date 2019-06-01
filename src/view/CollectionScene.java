@@ -1,5 +1,6 @@
 package view;
 
+import com.sun.javafx.geom.BaseBounds;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -18,15 +19,17 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.card.Card;
+import model.card.Hero;
+import model.card.Minion;
 import view.enums.StateType;
 import view.sample.StageLauncher;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.text.Format;
 import java.util.ArrayList;
 
-import static view.sample.StageLauncher.HEIGHT;
-import static view.sample.StageLauncher.WIDTH;
+import static view.sample.StageLauncher.*;
 
 
 public class CollectionScene {
@@ -38,7 +41,31 @@ public class CollectionScene {
     private static int Y_BORDER = 35;
 
 
-    public static void showEachCard(Card card, HBox hBox, int i, int j) {
+    private static ImageView makeImage(int x, int y, String path, int width, int height) {
+        try {
+            Image image = new Image(new FileInputStream(path));
+            ImageView imageView = new ImageView(image);
+            imageView.relocate(x, y);
+            imageView.setFitWidth(width);
+            imageView.setFitHeight(height);
+            root.getChildren().add(imageView);
+            return imageView;
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    private static Text textView(int x, int y, String input) {
+        Text text = new Text(input);
+        text.setFont(Font.font(20));
+        text.relocate(x, y);
+        text.setFill(Color.WHITE);
+        root.getChildren().add(text);
+        return text;
+    }
+
+    private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
             Image image = new Image(new FileInputStream(card.getPathOfThePicture()));
             ImageView imageView = new ImageView(image);
@@ -48,26 +75,65 @@ public class CollectionScene {
             hBox.getChildren().add(imageView);
 
             imageView.setOnMouseClicked(event -> {
-                Text text = new Text("hi");
-                Rectangle rectangle = new Rectangle();
-                rectangle.setFill(Color.rgb(0, 0, 0, 0.6));
-                rectangle.setArcWidth(20);
-                rectangle.setArcHeight(20);
-                rectangle.relocate(X_BORDER * (i + 1) + i * CARD_WIDTH, Y_BORDER * (j + 1) + j * CARD_HEIGHT + 200);
-                rectangle.setWidth(210);
-                rectangle.setHeight(50);
-                text.setFont(Font.font(20));
-                text.setFill(Color.WHITE);
-                text.relocate(X_BORDER * (i + 1) + i * CARD_WIDTH + 10, Y_BORDER * (j + 1) + j * CARD_HEIGHT + 200);
-                root.getChildren().add(rectangle);
-                root.getChildren().add(text);
-                imageView.setOnMouseClicked(event1 -> {
-                    root.getChildren().remove(rectangle);
-                    root.getChildren().remove(text);
-                });
+                try {
+                    ImageView descView = makeImage(i * (X_BORDER + CARD_WIDTH) + 20,
+                            j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/desc.png", 200, 100);
+                    ImageView apView = makeImage(i * (X_BORDER + CARD_WIDTH) - 55,
+                            j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/ap_show.png", 100, 100);
+                    ImageView hpView = makeImage((i + 1) * (X_BORDER + CARD_WIDTH) - 105,
+                            j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/hp_show.png", 110, 100);
+
+                    Text hp = textView((i + 1) * (X_BORDER + CARD_WIDTH) - 60,
+                            j * (Y_BORDER + CARD_HEIGHT) + 295, card.getHp() + "");
+                    Text ap = textView(i * (X_BORDER + CARD_WIDTH) - 15,
+                            j * (Y_BORDER + CARD_HEIGHT) + 295, card.getAp() + "");
+                    Text desc = textView(i * (X_BORDER + CARD_WIDTH) + 50,
+                            j * (Y_BORDER + CARD_HEIGHT) + 280, card.getDescription());
+
+                    imageView.setOnMouseClicked(event1 -> {
+                        root.getChildren().removeAll(descView, hpView, apView, hp, ap, desc);
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             });
 
         } catch (Exception e) {
+
+        }
+
+    }
+
+    private static void showEachMinion(Card card, HBox hBox, int i,int j){
+        try {
+            Image image = new Image(new FileInputStream(card.getPathOfThePicture()));
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(CARD_HEIGHT);
+            imageView.setFitWidth(CARD_WIDTH);
+            imageView.fitWidthProperty();
+            hBox.getChildren().add(imageView);
+
+            Image animationImage = new Image(new FileInputStream(card.getPATH_OF_ANIMATION()));
+            ImageView animationImageView = new ImageView(animationImage);
+            animationImageView.relocate(i * (X_BORDER + CARD_WIDTH)+75,j * (Y_BORDER + CARD_HEIGHT)+20);
+            animationImageView.setFitHeight(150);
+            animationImageView.setFitWidth(110);
+            animationImageView.fitWidthProperty();
+            root.getChildren().add(animationImageView);
+
+            Text ap = new Text(card.getAp()+"");
+            ap.setFont(Font.font(20));
+            ap.relocate(i * (X_BORDER + CARD_WIDTH)+44,j * (Y_BORDER + CARD_HEIGHT)+180);
+            root.getChildren().add(ap);
+            ap.setFill(Color.WHITE);
+
+            Text hp = new Text(card.getHp()+"");
+            hp.setFont(Font.font(20));
+            hp.relocate(i*(X_BORDER + CARD_WIDTH)+175,j * (Y_BORDER + CARD_HEIGHT)+180);
+            root.getChildren().add(hp);
+            hp.setFill(Color.WHITE);
+
+        }catch (Exception e){
 
         }
 
@@ -118,7 +184,10 @@ public class CollectionScene {
                 vBox.getChildren().add(hBox);
                 j++;
             }
-            showEachCard(cards.get(i), hBox, i % 5, j);
+            if (cards.get(i) instanceof Hero)
+                showEachHero(cards.get(i), hBox, i % 5, j);
+            if(cards.get(i) instanceof Minion)
+                showEachMinion(cards.get(i),hBox,i%5,j);
         }
 
         collectionScene.setRoot(scroller);

@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "ArcherFromFars",
+    "PATH_OF_THE_PICTURE": "pics/minion_background.png",
+    "PATH_OF_ANIMATION": "pics/gifMinion/kamandar_fars.gif",
     "CardNumber": 1,
     "cost": 300,
     "mp": 2,
