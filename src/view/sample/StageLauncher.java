@@ -18,9 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.card.Card;
-import model.card.Hero;
-import model.card.Minion;
+import model.card.*;
 import view.CollectionScene;
 import view.enums.StateType;
 import javafx.scene.control.Button;
@@ -53,42 +51,49 @@ public class StageLauncher extends Application {
         minion.setHp(10);
         minion.setAp(10);
         cards.add(minion);
+        minion.setDescription("i am minion");
     }
 
     @Override
     public void start(Stage primaryStage) {
         StageLauncher.primaryStage = primaryStage;
 
+        //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
+        //todo ad danimation to  spell and minions
 
         //make scene with type, can access root with (Group)scene.getRoot
         //all of the scene are in a hashMap with each state we can access to them
         Scene mainMenuScene = makeScene(StateType.MAIN_MENU);
         Scene collectionScene = makeScene(StateType.COLLECTION);
 
-//        ArrayList<Card> cards = new ArrayList<>();
-//        Hero hero = new Hero();
-//        hero.setPATH_OF_THE_PICTURE("pics/default.png");
-//        hero.setHp(10);
-//        hero.setAp(10);
-//        hero.setDescription("hello girls");
-//
-//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\folad_zereh.gif");
-//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\dive_siah.gif");
-//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\gorge_sefid.gif");
-//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\jasose_toorani.gif");
-//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\kamandar_torani.gif");
-//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\neyzedar_toorani.gif");
-//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\arjang_div.gif");
-//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\ashkboos.gif");
-//
-//        for (int i = 0; i < 2; i++)
-//            cards.add(hero);
-//        CollectionScene.showInCollection(cards);
+
+        ArrayList<Card> cards = new ArrayList<>();
+        Hero hero = new Hero();
+        hero.setPATH_OF_THE_PICTURE("pics/default.png");
+        hero.setHp(10);
+        hero.setAp(10);
+        hero.setDescription("hello girls");
+
+        Spell spell= new Spell();
+        spell.setPATH_OF_THE_PICTURE("D:\\project_Duelyst1\\pics\\minion_background.png");
+        spell.setPATH_OF_ANIMATION("D:\\project_Duelyst1\\pics\\spell\\fireBall.png");
+        spell.setCountOfAnimation(16);
+        cards.add(spell);
 
 
-            SpriteMaker.getInstance().makeSpritePic("D:\\project_Duelyst1\\pics\\edit.png",
-                   20,20,(Group)collectionScene.getRoot(),20,5,5000,
-                    48,48,256);
+
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\folad_zereh.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\dive_siah.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\gorge_sefid.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\jasose_toorani.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\kamandar_torani.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\neyzedar_toorani.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\arjang_div.gif");
+        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\ashkboos.gif");
+
+        for (int i = 0; i < 2; i++)
+            cards.add(hero);
+        CollectionScene.showInCollection(cards);
 
 
         primaryStage.setScene(collectionScene);

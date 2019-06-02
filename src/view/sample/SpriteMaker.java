@@ -27,6 +27,8 @@ public class SpriteMaker {
             ImageView imageView = new ImageView(image);
             imageView.setX(x);
             imageView.setY(y);
+            imageView.setScaleX(2);
+            imageView.setScaleY(2);
 
             imageView.setViewport(new Rectangle2D(0, 0, widthOfEachFrame * numberOfPicInEachColumn, totalHeight));
 //sprite animation  useful for your project
@@ -36,7 +38,6 @@ public class SpriteMaker {
                     Duration.millis(millis),
                     count, numberOfPicInEachColumn,
                     1, 0,
-                    // 64=829/13
                     widthOfEachFrame, heightOfEachFrame
             );
             animation.setCycleCount(Animation.INDEFINITE);

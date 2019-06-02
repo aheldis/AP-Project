@@ -47,6 +47,21 @@ public abstract class Card {
     private static final int DEFAULT = -1;
     private String PATH_OF_THE_PICTURE;
     private String PATH_OF_ANIMATION;
+    private int countOfAnimation;
+    private int animationRow = 5;
+
+
+    public void setCountOfAnimation(int countOfAnimation) {
+        this.countOfAnimation = countOfAnimation;
+    }
+
+    public int getAnimationRow() {
+        return animationRow;
+    }
+
+    public int getCountOfAnimation() {
+        return countOfAnimation;
+    }
 
     public String getPATH_OF_ANIMATION() {
         return PATH_OF_ANIMATION;

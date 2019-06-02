@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
+import model.card.Spell;
 import view.enums.StateType;
 import view.sample.SpriteMaker;
 import view.sample.StageLauncher;
@@ -75,7 +76,8 @@ public class CollectionScene {
             imageView.fitWidthProperty();
             hBox.getChildren().add(imageView);
 
-            imageView.setOnMouseClicked(event -> {
+            imageView.setOnMouseEntered(event -> {
+
                 try {
                     ImageView descView = makeImage(i * (X_BORDER + CARD_WIDTH) + 70,
                             j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/desc.png", 200, 100);
@@ -84,6 +86,8 @@ public class CollectionScene {
                     ImageView hpView = makeImage((i + 1) * (X_BORDER + CARD_WIDTH) - 55,
                             j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/hp_show.png", 110, 100);
 
+
+
                     Text hp = textView((i + 1) * (X_BORDER + CARD_WIDTH) - 10,
                             j * (Y_BORDER + CARD_HEIGHT) + 295, card.getHp() + "");
                     Text ap = textView(i * (X_BORDER + CARD_WIDTH) - 15+50,
@@ -91,7 +95,7 @@ public class CollectionScene {
                     Text desc = textView(i * (X_BORDER + CARD_WIDTH) + 100,
                             j * (Y_BORDER + CARD_HEIGHT) + 280, card.getDescription());
 
-                    imageView.setOnMouseClicked(event1 -> {
+                    imageView.setOnMouseExited(event1 -> {
                         root.getChildren().removeAll(descView, hpView, apView, hp, ap, desc);
                     });
                 } catch (Exception e) {
@@ -102,6 +106,43 @@ public class CollectionScene {
         } catch (Exception e) {
 
         }
+
+    }
+
+    private static void textForCollection(Card card ,int i,int j,ImageView imageView){
+        Text ap = new Text(card.getAp()+"");
+        ap.setFont(Font.font(20));
+        ap.relocate(i * (X_BORDER + CARD_WIDTH)+98,j * (Y_BORDER + CARD_HEIGHT)+180);
+        root.getChildren().add(ap);
+        ap.setFill(Color.WHITE);
+
+        Text hp = new Text(card.getHp()+"");
+        hp.setFont(Font.font(20));
+        hp.relocate(i*(X_BORDER + CARD_WIDTH)+175+53,j * (Y_BORDER + CARD_HEIGHT)+180);
+        root.getChildren().add(hp);
+        hp.setFill(Color.WHITE);
+
+
+        try{
+            imageView.setOnMouseEntered(event -> {
+
+                Text desc = new Text(card.getDescription());
+                desc.setFill(Color.WHITE);
+                desc.setFont(Font.font(15));
+                desc.relocate(i * (X_BORDER + CARD_WIDTH)+100,j * (Y_BORDER + CARD_HEIGHT)+285);
+
+
+                ImageView descView = makeImage(i * (X_BORDER + CARD_WIDTH) + 70,
+                        j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/desc.png", 200, 100);
+                root.getChildren().add(desc);
+
+                imageView.setOnMouseExited(event1 -> root.getChildren().removeAll(desc,descView));
+            });
+
+        }catch (Exception e){
+
+        }
+
 
     }
 
@@ -122,17 +163,8 @@ public class CollectionScene {
             animationImageView.fitWidthProperty();
             root.getChildren().add(animationImageView);
 
-            Text ap = new Text(card.getAp()+"");
-            ap.setFont(Font.font(20));
-            ap.relocate(i * (X_BORDER + CARD_WIDTH)+94,j * (Y_BORDER + CARD_HEIGHT)+180);
-            root.getChildren().add(ap);
-            ap.setFill(Color.WHITE);
+            textForCollection(card,i,j,imageView);
 
-            Text hp = new Text(card.getHp()+"");
-            hp.setFont(Font.font(20));
-            hp.relocate(i*(X_BORDER + CARD_WIDTH)+175+50,j * (Y_BORDER + CARD_HEIGHT)+180);
-            root.getChildren().add(hp);
-            hp.setFill(Color.WHITE);
 
         }catch (Exception e){
 
@@ -149,11 +181,12 @@ public class CollectionScene {
             imageView.fitWidthProperty();
             hBox.getChildren().add(imageView);
 
-//            SpriteMaker.getInstance().makeSpritePic(card.getPATH_OF_ANIMATION(),i * (X_BORDER + CARD_WIDTH)+75+50,
-//                    i * (Y_BORDER + CARD_HEIGHT)+75+50,
-//                    root,
-//                    );
-//
+            SpriteMaker.getInstance().makeSpritePic(card.getPATH_OF_ANIMATION(),i * (X_BORDER + CARD_WIDTH)+150,
+                    i * (Y_BORDER + CARD_HEIGHT)+75,
+                    root,card.getCountOfAnimation(),card.getAnimationRow(),5000,
+                    48,48,256);
+
+            textForCollection(card,i,j,imageView);
 
 
         }catch (Exception e){
@@ -217,6 +250,8 @@ public class CollectionScene {
                 showEachHero(cards.get(i), hBox, i % 5, j);
             if(cards.get(i) instanceof Minion)
                 showEachMinion(cards.get(i),hBox,i%5,j);
+            if (cards.get(i) instanceof Spell)
+                showEachSpell(cards.get(i),hBox,i%5,j);
         }
 
         collectionScene.setRoot(scroller);
