@@ -4,12 +4,17 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.runtime.ECMAException;
 import view.sample.StageLauncher;
+
+import java.io.FileInputStream;
 
 /**
  * "zahra"
@@ -30,28 +35,31 @@ public class MakeAndShowClass {
         return singleInstance;
     }
 
-    public void makeError(String errorMessage) {
+    public void makeError(String errorMessage){
         Stage stage = StageLauncher.primaryStage;
         Scene scene = stage.getScene();
         Group root = (Group) scene.getRoot();
         Platform.runLater(() -> {
-            Rectangle rectangle = new Rectangle(300, 400, 900, 100);
-            rectangle.setFill(scene.getFill());
-            rectangle.setArcHeight(20);
-            rectangle.setArcWidth(30);
-            Text text = new Text(errorMessage);
-            text.relocate(350,450);
-            text.setFont(Font.font(50));
-            DropShadow e = new DropShadow();
-            e.setWidth(20);
-            e.setColor(Color.PINK);
-            e.setHeight(20);
-            e.setOffsetX(5);
-            e.setOffsetY(5);
-            e.setRadius(10);
-            rectangle.setEffect(e);
-            root.getChildren().add(rectangle);
-            root.getChildren().add(text);
+            try {
+                javafx.scene.image.Image image = new Image(new FileInputStream("pics/error_box.png"));
+                ImageView imageView = new ImageView(image);
+                imageView.setFitWidth(350);
+                imageView.setFitHeight(200);
+                imageView.relocate(600,300);
+
+                Text text = new Text(errorMessage);
+                text.relocate(610, 340);
+                text.setFont(Font.font(50));
+                text.setFill(Color.rgb(173,225,218,0.5));
+                root.getChildren().add(imageView);
+                root.getChildren().add(text);
+                imageView.setOnMouseClicked(event -> {
+                    root.getChildren().removeAll(text,imageView);
+                });
+            }catch (Exception e){
+
+            }
+
         });
 
     }

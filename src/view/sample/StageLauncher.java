@@ -1,13 +1,23 @@
 package view.sample;
 
+import javafx.animation.Animation;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
@@ -17,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.awt.*;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -35,7 +46,7 @@ public class StageLauncher extends Application {
         return scene;
     }
 
-    public void minionMaker(ArrayList<Card>cards,String path ){
+    public void minionMaker(ArrayList<Card> cards, String path) {
         Minion minion = new Minion();
         minion.setPATH_OF_THE_PICTURE("D:\\project_Duelyst1\\pics\\minion_background.png");
         minion.setPATH_OF_ANIMATION(path);
@@ -54,25 +65,31 @@ public class StageLauncher extends Application {
         Scene mainMenuScene = makeScene(StateType.MAIN_MENU);
         Scene collectionScene = makeScene(StateType.COLLECTION);
 
-        ArrayList<Card> cards = new ArrayList<>();
-        Hero hero = new Hero();
-        hero.setPATH_OF_THE_PICTURE("pics/default.png");
-        hero.setHp(10);
-        hero.setAp(10);
-        hero.setDescription("hello girls");
+//        ArrayList<Card> cards = new ArrayList<>();
+//        Hero hero = new Hero();
+//        hero.setPATH_OF_THE_PICTURE("pics/default.png");
+//        hero.setHp(10);
+//        hero.setAp(10);
+//        hero.setDescription("hello girls");
+//
+//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\folad_zereh.gif");
+//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\dive_siah.gif");
+//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\gorge_sefid.gif");
+//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\jasose_toorani.gif");
+//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\kamandar_torani.gif");
+//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\neyzedar_toorani.gif");
+//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\arjang_div.gif");
+//        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\ashkboos.gif");
+//
+//        for (int i = 0; i < 2; i++)
+//            cards.add(hero);
+//        CollectionScene.showInCollection(cards);
 
-        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\folad_zereh.gif");
-        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\dive_siah.gif");
-        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\gorge_sefid.gif");
-        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\jasose_toorani.gif");
-        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\kamandar_torani.gif");
-        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\neyzedar_toorani.gif");
-        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\arjang_div.gif");
-        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\ashkboos.gif");
 
-        for (int i = 0; i < 2; i++)
-            cards.add(hero);
-        CollectionScene.showInCollection(cards);
+            SpriteMaker.getInstance().makeSpritePic("D:\\project_Duelyst1\\pics\\edit.png",
+                   20,20,(Group)collectionScene.getRoot(),20,5,5000,
+                    48,48,256);
+
 
         primaryStage.setScene(collectionScene);
         primaryStage.show();

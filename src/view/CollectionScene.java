@@ -22,6 +22,7 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import view.enums.StateType;
+import view.sample.SpriteMaker;
 import view.sample.StageLauncher;
 
 import java.io.FileInputStream;
@@ -76,18 +77,18 @@ public class CollectionScene {
 
             imageView.setOnMouseClicked(event -> {
                 try {
-                    ImageView descView = makeImage(i * (X_BORDER + CARD_WIDTH) + 20,
+                    ImageView descView = makeImage(i * (X_BORDER + CARD_WIDTH) + 70,
                             j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/desc.png", 200, 100);
-                    ImageView apView = makeImage(i * (X_BORDER + CARD_WIDTH) - 55,
+                    ImageView apView = makeImage(i * (X_BORDER + CARD_WIDTH) - 5,
                             j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/ap_show.png", 100, 100);
-                    ImageView hpView = makeImage((i + 1) * (X_BORDER + CARD_WIDTH) - 105,
+                    ImageView hpView = makeImage((i + 1) * (X_BORDER + CARD_WIDTH) - 55,
                             j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/hp_show.png", 110, 100);
 
-                    Text hp = textView((i + 1) * (X_BORDER + CARD_WIDTH) - 60,
+                    Text hp = textView((i + 1) * (X_BORDER + CARD_WIDTH) - 10,
                             j * (Y_BORDER + CARD_HEIGHT) + 295, card.getHp() + "");
-                    Text ap = textView(i * (X_BORDER + CARD_WIDTH) - 15,
+                    Text ap = textView(i * (X_BORDER + CARD_WIDTH) - 15+50,
                             j * (Y_BORDER + CARD_HEIGHT) + 295, card.getAp() + "");
-                    Text desc = textView(i * (X_BORDER + CARD_WIDTH) + 50,
+                    Text desc = textView(i * (X_BORDER + CARD_WIDTH) + 100,
                             j * (Y_BORDER + CARD_HEIGHT) + 280, card.getDescription());
 
                     imageView.setOnMouseClicked(event1 -> {
@@ -104,7 +105,7 @@ public class CollectionScene {
 
     }
 
-    private static void showEachMinion(Card card, HBox hBox, int i,int j){
+    private static void showEachMinion(Card card, HBox hBox, int i,int j){//todo add desc
         try {
             Image image = new Image(new FileInputStream(card.getPathOfThePicture()));
             ImageView imageView = new ImageView(image);
@@ -115,7 +116,7 @@ public class CollectionScene {
 
             Image animationImage = new Image(new FileInputStream(card.getPATH_OF_ANIMATION()));
             ImageView animationImageView = new ImageView(animationImage);
-            animationImageView.relocate(i * (X_BORDER + CARD_WIDTH)+75,j * (Y_BORDER + CARD_HEIGHT)+20);
+            animationImageView.relocate(i * (X_BORDER + CARD_WIDTH)+75+50,j * (Y_BORDER + CARD_HEIGHT)+20);
             animationImageView.setFitHeight(150);
             animationImageView.setFitWidth(110);
             animationImageView.fitWidthProperty();
@@ -123,13 +124,13 @@ public class CollectionScene {
 
             Text ap = new Text(card.getAp()+"");
             ap.setFont(Font.font(20));
-            ap.relocate(i * (X_BORDER + CARD_WIDTH)+44,j * (Y_BORDER + CARD_HEIGHT)+180);
+            ap.relocate(i * (X_BORDER + CARD_WIDTH)+94,j * (Y_BORDER + CARD_HEIGHT)+180);
             root.getChildren().add(ap);
             ap.setFill(Color.WHITE);
 
             Text hp = new Text(card.getHp()+"");
             hp.setFont(Font.font(20));
-            hp.relocate(i*(X_BORDER + CARD_WIDTH)+175,j * (Y_BORDER + CARD_HEIGHT)+180);
+            hp.relocate(i*(X_BORDER + CARD_WIDTH)+175+50,j * (Y_BORDER + CARD_HEIGHT)+180);
             root.getChildren().add(hp);
             hp.setFill(Color.WHITE);
 
@@ -137,6 +138,27 @@ public class CollectionScene {
 
         }
 
+    }
+
+    private static void showEachSpell(Card card,HBox hBox,int i,int j){
+        try {
+            Image image = new Image(new FileInputStream(card.getPathOfThePicture()));
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(CARD_HEIGHT);
+            imageView.setFitWidth(CARD_WIDTH);
+            imageView.fitWidthProperty();
+            hBox.getChildren().add(imageView);
+
+//            SpriteMaker.getInstance().makeSpritePic(card.getPATH_OF_ANIMATION(),i * (X_BORDER + CARD_WIDTH)+75+50,
+//                    i * (Y_BORDER + CARD_HEIGHT)+75+50,
+//                    root,
+//                    );
+//
+
+
+        }catch (Exception e){
+
+        }
     }
 
     public static void showInCollection(ArrayList<Card> cards) {
@@ -169,7 +191,7 @@ public class CollectionScene {
             e.printStackTrace();
         }
         VBox vBox = new VBox();
-        vBox.setAlignment(Pos.CENTER);
+        //vBox.setAlignment(Pos.TOP_RIGHT);
         root.getChildren().add(vBox);
         vBox.setSpacing(Y_BORDER);
 
@@ -178,8 +200,15 @@ public class CollectionScene {
         int j = -1;
         for (int i = 0; i < cards.size(); i++) {
             if (i % 5 == 0) {
+
                 hBox = new HBox();
-                hBox.setAlignment(Pos.CENTER);
+                Text helper =new Text("hiii");
+                helper.relocate(0,0);
+                helper.setFont(Font.font(5));
+                helper.setFill(Color.TRANSPARENT);
+                hBox.getChildren().add(helper);
+                //hBox.setAlignment(Pos.CENTER);
+               // hBox.setAlignment(Pos.BASELINE_RIGHT);
                 hBox.setSpacing(X_BORDER);
                 vBox.getChildren().add(hBox);
                 j++;
