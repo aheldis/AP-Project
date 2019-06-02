@@ -81,7 +81,6 @@ public class StageLauncher extends Application {
         cards.add(spell);
 
 
-
         minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\folad_zereh.gif");
         minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\dive_siah.gif");
         minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\gorge_sefid.gif");

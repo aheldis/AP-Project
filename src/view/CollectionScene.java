@@ -201,20 +201,16 @@ public class CollectionScene {
         //for background of collection
 
         try {
+
             Image image = new Image(new FileInputStream("pics/collectionBackground.jpg"));
             ImageView imageView = new ImageView(image);
-//            layout.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.REPEAT,
-//                    BackgroundRepeat.REPEAT,
-//                    BackgroundPosition.CENTER,
-//                    new BackgroundSize(WIDTH,HEIGHT,true,true,true,true))));
-            // scroller.setBackground(new Background(new BackgroundImage(image, null, null, null, null)));
             root.getChildren().add(imageView);
             imageView.relocate(0, 0);
             imageView.setFitHeight(HEIGHT);
             imageView.setFitWidth(WIDTH);
             BoxBlur boxblur = new BoxBlur();
-            boxblur.setWidth(2.0f);
-            boxblur.setHeight(3.0f);
+            boxblur.setWidth(10.0f);
+            boxblur.setHeight(10.0f);
             boxblur.setIterations(3);
             imageView.setEffect(boxblur);
             imageView.fitWidthProperty();
@@ -224,7 +220,7 @@ public class CollectionScene {
             e.printStackTrace();
         }
         VBox vBox = new VBox();
-        //vBox.setAlignment(Pos.TOP_RIGHT);
+        vBox.setAlignment(Pos.CENTER);
         root.getChildren().add(vBox);
         vBox.setSpacing(Y_BORDER);
 
@@ -253,10 +249,37 @@ public class CollectionScene {
             if (cards.get(i) instanceof Spell)
                 showEachSpell(cards.get(i),hBox,i%5,j);
         }
+        try {
+            Image back = new Image(new FileInputStream("D:\\project_Duelyst1\\pics\\menu\\button_cancel.png"));
+            ImageView backView = new ImageView(back);
+            backView.relocate(500, 10);
+            backView.setFitWidth(200);
+            backView.setFitHeight(80);
+            Group group = new Group();
+            Text text = new Text("BACK");
+            text.setFont(Font.font(30));
+            text.setFill(Color.WHITE);
+            group.getChildren().addAll(backView,text);
+            text.relocate(567,23);
+            vBox.getChildren().add(group);
+            group.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    //todo go to menu for haniyeh
+                }
+            });
+
+
+        }catch (Exception e){
+
+        }
 
         collectionScene.setRoot(scroller);
 
 
     }
+
+
+
 
 }
