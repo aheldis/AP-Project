@@ -49,7 +49,24 @@ public abstract class Card {
     private String PATH_OF_ANIMATION;
     private int countOfAnimation;
     private int animationRow = 5;
+    private int frameSize;
+    private long millis;
 
+    public void setMillis(long millis) {
+        this.millis = millis;
+    }
+
+    public long getMillis() {
+        return millis;
+    }
+
+    public void setFrameSize(int frameSize) {
+        this.frameSize = frameSize;
+    }
+
+    public int getFrameSize() {
+        return frameSize;
+    }
 
     public void setCountOfAnimation(int countOfAnimation) {
         this.countOfAnimation = countOfAnimation;
