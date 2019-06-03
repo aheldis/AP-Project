@@ -272,7 +272,7 @@ public class CollectionScene {
                 showEachSpell(cards.get(i), hBox, i % 5, j);
         }
         try {
-            Image back = new Image(new FileInputStream("D:\\project_Duelyst1\\pics\\menu\\button_cancel.png"));
+            Image back = new Image(new FileInputStream("pics/menu/button_cancel.png"));
             ImageView backView = new ImageView(back);
             backView.relocate(500, 10);
             backView.setFitWidth(200);
@@ -317,7 +317,7 @@ public class CollectionScene {
         Random random = new Random();
         int a = random.nextInt(6);
         Image plate = new Image(new FileInputStream(
-                "D:\\project_Duelyst1\\pics\\collection\\deck-select\\back-" + a + ".png"));
+                "pics/collection/deck-select/back-" + a + ".png"));
         ImageView plateImageView = new ImageView(plate);
         plateImageView.setFitHeight(200);
         plateImageView.setFitWidth(230);
@@ -346,7 +346,7 @@ public class CollectionScene {
             try {
                 HBox hBox = new HBox();
                 deckImage = new Image(new FileInputStream(
-                        "D:\\project_Duelyst1\\pics\\collection\\deck_ribbons\\ribbon-" + a + ".png"));
+                        "pics/collection/deck_ribbons/ribbon-" + a + ".png"));
                 deckImageView = new ImageView(deckImage);
                 deckImageView.setFitHeight(150);
                 deckImageView.setFitWidth(300);
@@ -357,7 +357,7 @@ public class CollectionScene {
                 for (int j = 0; j < cards.size(); j++) {
                     hBox = new HBox();
                     backPic = new Image(new FileInputStream(
-                            "D:\\project_Duelyst1\\pics\\collection\\deck-select\\cardback-" + a + ".jpg"));
+                            "pics/collection/deck-select/cardback-" + a + ".jpg"));
                     final ImageView backPicView = new ImageView(backPic);
                     backPicView.setFitHeight(70);
                     backPicView.setFitWidth(250);

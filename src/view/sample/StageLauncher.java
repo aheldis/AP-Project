@@ -49,7 +49,7 @@ public class StageLauncher extends Application {
 
     public void minionMaker(ArrayList<Card> cards, String path) {
         Minion minion = new Minion();
-        minion.setPATH_OF_THE_PICTURE("D:\\project_Duelyst1\\pics\\minion_background.png");
+        minion.setPATH_OF_THE_PICTURE("pics/minion_background.png");
         minion.setPATH_OF_ANIMATION(path);
         minion.setHp(10);
         minion.setAp(10);
@@ -78,8 +78,8 @@ public class StageLauncher extends Application {
         hero.setDescription("hello girls");
 
         Spell spell= new Spell();
-        spell.setPATH_OF_THE_PICTURE("D:\\project_Duelyst1\\pics\\minion_background.png");
-        spell.setPATH_OF_ANIMATION("D:\\project_Duelyst1\\pics\\spell\\fireBall.png");
+        spell.setPATH_OF_THE_PICTURE("pics/minion_background.png");
+        spell.setPATH_OF_ANIMATION("pics/spell/fireBall.png");
         spell.setCountOfAnimation(16);
         spell.setFrameSize(48);
 
@@ -87,12 +87,14 @@ public class StageLauncher extends Application {
 
         cards.add(spell);
 
-        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\giv.gif");
-        minionMaker(cards,"D:\\project_Duelyst1\\pics\\gifMinion\\gorg.gif");
+        minionMaker(cards,"pics/gifMinion/giv.gif");
+        minionMaker(cards,"pics/gifMinion/gorg.gif");
 
         for (int i = 0; i < 2; i++)
             cards.add(hero);
         CollectionScene.showInCollection(cards);
+
+        //todo test for deck show inas
 //        ArrayList<Deck> decks = new ArrayList<>();
 //        Deck deck = new Deck();
 //        spell.setDescription("atasssh");
@@ -106,8 +108,7 @@ public class StageLauncher extends Application {
 //        CollectionScene.showDeck(decks);
 
         try {
-            collectionScene.setCursor(new ImageCursor(new Image(new FileInputStream("D:\\project_Duelyst1\\pics\\mouse.png"))));
-        } catch (FileNotFoundException e) {
+            collectionScene.setCursor(new ImageCursor(new Image(new FileInputStream("pics/mouse.png")))); } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         primaryStage.setScene(collectionScene);
