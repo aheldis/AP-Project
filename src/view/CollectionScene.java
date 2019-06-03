@@ -10,7 +10,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
@@ -58,9 +58,9 @@ public class CollectionScene {
             imageView.setFitHeight(HEIGHT);
             imageView.setFitWidth(WIDTH);
             BoxBlur boxblur = new BoxBlur();
-            boxblur.setWidth(10.0f);
-            boxblur.setHeight(10.0f);
-            boxblur.setIterations(3);
+            boxblur.setWidth(20.0f);
+            boxblur.setHeight(20.0f);
+            boxblur.setIterations(1);
             imageView.setEffect(boxblur);
             imageView.fitWidthProperty();
 
@@ -227,13 +227,28 @@ public class CollectionScene {
 
         makeBackground("pics/collectionBackground.jpg");
 
+
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         root.getChildren().add(vBox);
         vBox.setSpacing(Y_BORDER);
 
-        scroller.setFitToWidth(true);
+        //Image searchBar = new Image()
+
+        Rectangle rectangle = new Rectangle();
+        rectangle.relocate(0,0);
+        rectangle.setHeight(80);
+        rectangle.setWidth(100);
+        rectangle.setFill(Color.BLACK);
+
         HBox hBox = new HBox();
+        hBox.getChildren().add(rectangle);
+        hBox.setBackground(new Background(new BackgroundFill(Color.rgb(10, 10, 10, 0.1),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        vBox.getChildren().add(hBox);
+
+        scroller.setFitToWidth(true);
+
         int j = -1;
         for (int i = 0; i < cards.size(); i++) {
             if (i % 5 == 0) {
@@ -302,7 +317,7 @@ public class CollectionScene {
         Random random = new Random();
         int a = random.nextInt(6);
         Image plate = new Image(new FileInputStream(
-                "D:\\project_Duelyst1\\pics\\collection\\deck-select\\back-"+a+".png"));
+                "D:\\project_Duelyst1\\pics\\collection\\deck-select\\back-" + a + ".png"));
         ImageView plateImageView = new ImageView(plate);
         plateImageView.setFitHeight(200);
         plateImageView.setFitWidth(230);
@@ -324,9 +339,10 @@ public class CollectionScene {
 
         plateImageView.setOnMouseClicked(event -> {
             root.getChildren().removeAll(texts);
+            texts.clear();
             vBox.getChildren().clear();
-            Image deckImage,backPic;
-            ImageView deckImageView,backPicView;
+            Image deckImage, backPic;
+            ImageView deckImageView;
             try {
                 HBox hBox = new HBox();
                 deckImage = new Image(new FileInputStream(
@@ -341,19 +357,19 @@ public class CollectionScene {
                 for (int j = 0; j < cards.size(); j++) {
                     hBox = new HBox();
                     backPic = new Image(new FileInputStream(
-                            "D:\\project_Duelyst1\\pics\\collection\\deck-select\\cardback-"+a+".jpg"));
-                    backPicView = new ImageView(backPic);
+                            "D:\\project_Duelyst1\\pics\\collection\\deck-select\\cardback-" + a + ".jpg"));
+                    final ImageView backPicView = new ImageView(backPic);
                     backPicView.setFitHeight(70);
                     backPicView.setFitWidth(250);
                     hBox.getChildren().add(backPicView);
 
-                    SpriteMaker.getInstance().makeSpritePic(cards.get(j).getPATH_OF_ANIMATION(),240,75*j+165,
-                            hBox,cards.get(j).getCountOfAnimation(),cards.get(j).getAnimationRow(),4000,
-                            cards.get(j).getFrameSize(),cards.get(j).getFrameSize(),256);
+                    SpriteMaker.getInstance().makeSpritePic(cards.get(j).getPATH_OF_ANIMATION(), 240, 75 * j + 165,
+                            hBox, cards.get(j).getCountOfAnimation(), cards.get(j).getAnimationRow(), 4000,
+                            cards.get(j).getFrameSize(), cards.get(j).getFrameSize(), 256);
 
-                    Text text = new Text(cards.get(j).getName()+"\n"+cards.get(j).getDescription());
-                    text.relocate(10,75*j+165);
-                    text.setFill(Color.rgb(200,200,225,0.5));
+                    Text text = new Text(cards.get(j).getName() + "\n" + cards.get(j).getDescription());
+                    text.relocate(10, 75 * j + 165);
+                    text.setFill(Color.rgb(200, 200, 225, 0.5));
                     text.setFont(Font.font(20));
                     root.getChildren().add(text);
                     texts.add(text);
@@ -399,6 +415,8 @@ public class CollectionScene {
 
 
     }
+
+
 
 
 }
