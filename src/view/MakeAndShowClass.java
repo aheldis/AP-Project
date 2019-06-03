@@ -3,11 +3,9 @@ package view;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -35,7 +33,7 @@ public class MakeAndShowClass {
     }
 
     public void makeError(String errorMessage){
-        Stage stage = StageLauncher.primaryStage;
+        Stage stage = StageLauncher.getPrimaryStage();
         Scene scene = stage.getScene();
         Group root = (Group) scene.getRoot();
         Platform.runLater(() -> {

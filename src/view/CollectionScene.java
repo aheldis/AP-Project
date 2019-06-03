@@ -40,7 +40,7 @@ import static view.sample.StageLauncher.*;
 
 
 public class CollectionScene {
-    private static Scene collectionScene = StageLauncher.sceneHashMap.get(StateType.COLLECTION);
+    private static Scene collectionScene = StageLauncher.getScene(StateType.COLLECTION);
     private static Group root = (Group) collectionScene.getRoot();
     private static int CARD_HEIGHT = 320;
     private static int CARD_WIDTH = 245;
@@ -50,25 +50,26 @@ public class CollectionScene {
 
 
     private static void makeBackground(String path) {
+        GeneralGraphicMethods.setBackground(root, path, true);/*
         try {
 
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);
             root.getChildren().add(imageView);
             imageView.relocate(0, 0);
-            imageView.setFitHeight(HEIGHT);
-            imageView.setFitWidth(WIDTH);
-            BoxBlur boxblur = new BoxBlur();
-            boxblur.setWidth(20.0f);
-            boxblur.setHeight(20.0f);
-            boxblur.setIterations(1);
-            imageView.setEffect(boxblur);
+            imageView.setFitHeight(StageLauncher.getHEIGHT());
+            imageView.setFitWidth(StageLauncher.getWIDTH());
+            BoxBlur boxBlur = new BoxBlur();
+            boxBlur.setWidth(20.0f);
+            boxBlur.setHeight(20.0f);
+            boxBlur.setIterations(1);
+            imageView.setEffect(boxBlur);
             imageView.fitWidthProperty();
 
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private static ImageView makeImage(int x, int y, String path, int width, int height) {

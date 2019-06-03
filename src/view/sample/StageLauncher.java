@@ -20,7 +20,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.battle.Deck;
+import model.battle.Hand;
 import model.card.*;
+import view.BattleScene;
 import view.CollectionScene;
 import view.enums.StateType;
 import javafx.scene.control.Button;
@@ -35,10 +37,22 @@ import java.util.Random;
 
 public class StageLauncher extends Application {
 
-    public static final int WIDTH = 1500;
-    public static final int HEIGHT = 900;
-    public static Stage primaryStage;
-    public static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
+    private static final int WIDTH = 1500;
+    private static final int HEIGHT = 900;
+    private static Stage primaryStage;
+    private static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
+
+    public static int getWIDTH() {
+        return WIDTH;
+    }
+
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     private static Scene makeScene(StateType stateType) {
         Group root = new Group();
@@ -46,6 +60,13 @@ public class StageLauncher extends Application {
         sceneHashMap.put(stateType, scene);
         return scene;
     }
+
+    public static Scene getScene(StateType stateType){
+        if(sceneHashMap.containsKey(stateType))
+            return sceneHashMap.get(stateType);
+        return makeScene(stateType);
+    }
+
 
     public void minionMaker(ArrayList<Card> cards, String path) {
         Minion minion = new Minion();
@@ -56,6 +77,16 @@ public class StageLauncher extends Application {
         cards.add(minion);
         minion.setDescription("i am minion");
     }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        StageLauncher.primaryStage = primaryStage;
+        primaryStage.setScene(makeScene(StateType.BATTLE));
+        new BattleScene("pics/maps/abyssian/midground.png", WIDTH, HEIGHT);
+        primaryStage.show();
+    }
+
+    /*
 
     @Override
     public void start(Stage primaryStage) {
@@ -115,6 +146,7 @@ public class StageLauncher extends Application {
         primaryStage.show();
     }
 
+*/
 
     public static void main(String[] args) {
         launch(args);
