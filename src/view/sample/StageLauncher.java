@@ -70,42 +70,42 @@ public class StageLauncher extends Application {
         Scene collectionScene = makeScene(StateType.COLLECTION);
 
 
-        ArrayList<Card> cards = new ArrayList<>();
-        Hero hero = new Hero();
-        hero.setPATH_OF_THE_PICTURE("pics/default.png");
-        hero.setHp(10);
-        hero.setAp(10);
-        hero.setDescription("hello girls");
-
+//        ArrayList<Card> cards = new ArrayList<>();
+//        Hero hero = new Hero();
+//        hero.setPATH_OF_THE_PICTURE("pics/default.png");
+//        hero.setHp(10);
+//        hero.setAp(10);
+//        hero.setDescription("hello girls");
+//
         Spell spell= new Spell();
         spell.setPATH_OF_THE_PICTURE("pics/minion_background.png");
         spell.setPATH_OF_ANIMATION("pics/spell/fireBall.png");
         spell.setCountOfAnimation(16);
         spell.setFrameSize(48);
-
-
-
-        cards.add(spell);
-
-        minionMaker(cards,"pics/gifMinion/giv.gif");
-        minionMaker(cards,"pics/gifMinion/gorg.gif");
-
-        for (int i = 0; i < 2; i++)
-            cards.add(hero);
-        CollectionScene.showInCollection(cards);
+//
+//
+//
+//        cards.add(spell);
+//
+//        minionMaker(cards,"pics/gifMinion/giv.gif");
+//        minionMaker(cards,"pics/gifMinion/gorg.gif");
+//
+//        for (int i = 0; i < 6; i++)
+//            cards.add(hero);
+//        CollectionScene.showInCollection(cards);
 
         //todo test for deck show inas
-//        ArrayList<Deck> decks = new ArrayList<>();
-//        Deck deck = new Deck();
-//        spell.setDescription("atasssh");
-//        spell.setName("atisih");
-//        deck.getCardsOfDeck().add(spell);
-//        deck.getCardsOfDeck().add(spell);
-//        deck.setName("zahra");
-//        for (int i = 0; i < 10; i++) {
-//            decks.add(deck);
-//        }
-//        CollectionScene.showDeck(decks);
+        ArrayList<Deck> decks = new ArrayList<>();
+        Deck deck = new Deck();
+        spell.setDescription("atasssh");
+        spell.setName("atisih");
+        deck.getCardsOfDeck().add(spell);
+        deck.getCardsOfDeck().add(spell);
+        deck.setName("zahra");
+        for (int i = 0; i < 10; i++) {
+            decks.add(deck);
+        }
+        CollectionScene.showDeck(decks);
 
         try {
             collectionScene.setCursor(new ImageCursor(new Image(new FileInputStream("pics/mouse.png")))); } catch (FileNotFoundException e) {

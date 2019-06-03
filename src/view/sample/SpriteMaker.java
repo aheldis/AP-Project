@@ -22,25 +22,26 @@ public class SpriteMaker {
     private SpriteMaker() {
     }
 
-    public void makeSpritePic(String path, int x, int y,Parent root, int count,
+    public ImageView makeSpritePic(String path, int x, int y,Parent root, int count,
                               int numberOfPicInEachColumn, long millis,
                               int widthOfEachFrame, int heightOfEachFrame, int totalHeight) {
+        ImageView imageView = null;
         try {
             Image image = new Image(new FileInputStream(path));
-            ImageView imageView = new ImageView(image);
+            imageView = new ImageView(image);
             imageView.setX(x);
             imageView.setY(y);
             imageView.setScaleX(2);
             imageView.setScaleY(2);
-
-            imageView.setViewport(new Rectangle2D(0, 0, widthOfEachFrame * numberOfPicInEachColumn, totalHeight));
-//sprite animation  useful for your project
             if(root instanceof Group){
-                 ((Group) root).getChildren().add(imageView);
+                ((Group) root).getChildren().add(imageView);
             }
             if(root instanceof HBox){
                 ((HBox) root).getChildren().add(imageView);
             }
+            imageView.setViewport(new Rectangle2D(0, 0, widthOfEachFrame * numberOfPicInEachColumn, totalHeight));
+//sprite animation  useful for your project
+
             //root.getChildrenUnmodifiable().add(imageView);
             final Animation animation = new view.SpriteAnimation(
                     imageView,
@@ -54,5 +55,6 @@ public class SpriteMaker {
         } catch (Exception e) {
 
         }
+        return imageView;
     }
 }

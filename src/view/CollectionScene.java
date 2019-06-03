@@ -33,6 +33,7 @@ import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
 import java.text.Format;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static view.sample.StageLauncher.*;
@@ -45,7 +46,7 @@ public class CollectionScene {
     private static int CARD_WIDTH = 245;
     private static int X_BORDER = 45;
     private static int Y_BORDER = 35;
-    private static ArrayList<Text> texts = new ArrayList<>();
+    private static List<Object> deletable = new ArrayList<>();
 
 
     private static void makeBackground(String path) {
@@ -107,19 +108,19 @@ public class CollectionScene {
 
                 try {
                     ImageView descView = makeImage(i * (X_BORDER + CARD_WIDTH) + 70,
-                            j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/desc.png", 200, 100);
+                            j * (Y_BORDER + CARD_HEIGHT) + 390, "pics/desc.png", 200, 100);
                     ImageView apView = makeImage(i * (X_BORDER + CARD_WIDTH) - 5,
-                            j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/ap_show.png", 100, 100);
+                            j * (Y_BORDER + CARD_HEIGHT) + 390, "pics/ap_show.png", 100, 100);
                     ImageView hpView = makeImage((i + 1) * (X_BORDER + CARD_WIDTH) - 55,
-                            j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/hp_show.png", 110, 100);
+                            j * (Y_BORDER + CARD_HEIGHT) + 390, "pics/hp_show.png", 110, 100);
 
 
                     Text hp = textView((i + 1) * (X_BORDER + CARD_WIDTH) - 10,
-                            j * (Y_BORDER + CARD_HEIGHT) + 295, card.getHp() + "");
+                            j * (Y_BORDER + CARD_HEIGHT) + 420, card.getHp() + "");
                     Text ap = textView(i * (X_BORDER + CARD_WIDTH) - 15 + 50,
-                            j * (Y_BORDER + CARD_HEIGHT) + 295, card.getAp() + "");
+                            j * (Y_BORDER + CARD_HEIGHT) + 420, card.getAp() + "");
                     Text desc = textView(i * (X_BORDER + CARD_WIDTH) + 100,
-                            j * (Y_BORDER + CARD_HEIGHT) + 280, card.getDescription());
+                            j * (Y_BORDER + CARD_HEIGHT) + 420, card.getDescription());
 
                     imageView.setOnMouseExited(event1 -> {
                         root.getChildren().removeAll(descView, hpView, apView, hp, ap, desc);
@@ -138,13 +139,13 @@ public class CollectionScene {
     private static void textForCollection(Card card, int i, int j, ImageView imageView) {
         Text ap = new Text(card.getAp() + "");
         ap.setFont(Font.font(20));
-        ap.relocate(i * (X_BORDER + CARD_WIDTH) + 98, j * (Y_BORDER + CARD_HEIGHT) + 180);
+        ap.relocate(i * (X_BORDER + CARD_WIDTH) + 98, j * (Y_BORDER + CARD_HEIGHT) + 310);
         root.getChildren().add(ap);
         ap.setFill(Color.WHITE);
 
         Text hp = new Text(card.getHp() + "");
         hp.setFont(Font.font(20));
-        hp.relocate(i * (X_BORDER + CARD_WIDTH) + 175 + 53, j * (Y_BORDER + CARD_HEIGHT) + 180);
+        hp.relocate(i * (X_BORDER + CARD_WIDTH) + 175 + 53, j * (Y_BORDER + CARD_HEIGHT) + 310);
         root.getChildren().add(hp);
         hp.setFill(Color.WHITE);
 
@@ -155,11 +156,11 @@ public class CollectionScene {
                 Text desc = new Text(card.getDescription());
                 desc.setFill(Color.WHITE);
                 desc.setFont(Font.font(15));
-                desc.relocate(i * (X_BORDER + CARD_WIDTH) + 100, j * (Y_BORDER + CARD_HEIGHT) + 285);
+                desc.relocate(i * (X_BORDER + CARD_WIDTH) + 100, j * (Y_BORDER + CARD_HEIGHT) + 435);
 
 
                 ImageView descView = makeImage(i * (X_BORDER + CARD_WIDTH) + 70,
-                        j * (Y_BORDER + CARD_HEIGHT) + 260, "pics/desc.png", 200, 100);
+                        j * (Y_BORDER + CARD_HEIGHT) + 400, "pics/desc.png", 200, 100);
                 root.getChildren().add(desc);
 
                 imageView.setOnMouseExited(event1 -> root.getChildren().removeAll(desc, descView));
@@ -183,7 +184,7 @@ public class CollectionScene {
 
             Image animationImage = new Image(new FileInputStream(card.getPATH_OF_ANIMATION()));
             ImageView animationImageView = new ImageView(animationImage);
-            animationImageView.relocate(i * (X_BORDER + CARD_WIDTH) + 75 + 50, j * (Y_BORDER + CARD_HEIGHT) + 20);
+            animationImageView.relocate(i * (X_BORDER + CARD_WIDTH) + 75 + 50, j * (Y_BORDER + CARD_HEIGHT) + 120);
             animationImageView.setFitHeight(150);
             animationImageView.setFitWidth(110);
             animationImageView.fitWidthProperty();
@@ -208,7 +209,7 @@ public class CollectionScene {
             hBox.getChildren().add(imageView);
 
             SpriteMaker.getInstance().makeSpritePic(card.getPATH_OF_ANIMATION(), i * (X_BORDER + CARD_WIDTH) + 150,
-                    i * (Y_BORDER + CARD_HEIGHT) + 75,
+                    i * (Y_BORDER + CARD_HEIGHT) + 200,
                     root, card.getCountOfAnimation(), card.getAnimationRow(), 5000,
                     48, 48, 256);
 
@@ -225,6 +226,7 @@ public class CollectionScene {
 
         ScrollPane scroller = new ScrollPane(root);
 
+
         makeBackground("pics/collectionBackground.jpg");
 
 
@@ -233,64 +235,82 @@ public class CollectionScene {
         root.getChildren().add(vBox);
         vBox.setSpacing(Y_BORDER);
 
-        //Image searchBar = new Image()
-
-        Rectangle rectangle = new Rectangle();
-        rectangle.relocate(0,0);
-        rectangle.setHeight(80);
-        rectangle.setWidth(100);
-        rectangle.setFill(Color.BLACK);
-
-        HBox hBox = new HBox();
-        hBox.getChildren().add(rectangle);
-        hBox.setBackground(new Background(new BackgroundFill(Color.rgb(10, 10, 10, 0.1),
-                CornerRadii.EMPTY, Insets.EMPTY)));
-        vBox.getChildren().add(hBox);
-
-        scroller.setFitToWidth(true);
-
-        int j = -1;
-        for (int i = 0; i < cards.size(); i++) {
-            if (i % 5 == 0) {
-
-                hBox = new HBox();
-                hBox.setAlignment(Pos.CENTER);
-                Text helper = new Text("hiii");
-                helper.relocate(0, 0);
-                helper.setFont(Font.font(5));
-                helper.setFill(Color.TRANSPARENT);
-                hBox.getChildren().add(helper);
-                hBox.setSpacing(X_BORDER);
-                vBox.getChildren().add(hBox);
-                j++;
-            }
-            if (cards.get(i) instanceof Hero)
-                showEachHero(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Minion)
-                showEachMinion(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Spell)
-                showEachSpell(cards.get(i), hBox, i % 5, j);
-        }
+        Image searchBar, magnifier, leftBar;
         try {
-            Image back = new Image(new FileInputStream("pics/menu/button_cancel.png"));
-            ImageView backView = new ImageView(back);
-            backView.relocate(500, 10);
-            backView.setFitWidth(200);
-            backView.setFitHeight(80);
-            Group group = new Group();
-            Text text = new Text("BACK");
-            text.setFont(Font.font(30));
-            text.setFill(Color.WHITE);
-            group.getChildren().addAll(backView, text);
-            text.relocate(567, 23);
-            vBox.getChildren().add(group);
-            group.setOnMouseClicked(event -> {
-                //todo go to menu for haniyeh
-            });
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.TOP_RIGHT);
+            hBox.setSpacing(1);
 
 
-        } catch (Exception e) {
+            searchBar = new Image(new FileInputStream("pics/collection/searchbar.png"));
+            ImageView searchBarImageView = new ImageView(searchBar);
+            searchBarImageView.setFitWidth(200);
+            searchBarImageView.setFitHeight(100);
+            //searchBarImageView.setVisible(true);
 
+
+            magnifier = new Image(new FileInputStream("pics/collection/magnifier.png"));
+            ImageView magnifierView = new ImageView(magnifier);
+            magnifierView.setFitHeight(60);
+            magnifierView.setFitWidth(40);
+            magnifierView.relocate(20, 50);
+
+
+            hBox.getChildren().add(searchBarImageView);
+            hBox.getChildren().add(magnifierView);
+
+            hBox.setBackground(new Background(new BackgroundFill(Color.rgb(10, 10, 10, 0.1),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+            vBox.getChildren().add(hBox);
+
+
+            scroller.setFitToWidth(true);
+
+            int j = -1;
+            for (int i = 0; i < cards.size(); i++) {
+                if (i % 5 == 0) {
+
+                    hBox = new HBox();
+                    //hBox.setAlignment(Pos.CENTER);
+                    Text helper = new Text("hiii");
+                    helper.relocate(0, 0);
+                    helper.setFont(Font.font(5));
+                    helper.setFill(Color.TRANSPARENT);
+                    hBox.getChildren().add(helper);
+                    hBox.setSpacing(X_BORDER);
+                    vBox.getChildren().add(hBox);
+                    j++;
+                }
+                if (cards.get(i) instanceof Hero)
+                    showEachHero(cards.get(i), hBox, i % 5, j);
+                if (cards.get(i) instanceof Minion)
+                    showEachMinion(cards.get(i), hBox, i % 5, j);
+                if (cards.get(i) instanceof Spell)
+                    showEachSpell(cards.get(i), hBox, i % 5, j);
+            }
+            try {
+                Image back = new Image(new FileInputStream("pics/menu/button_cancel.png"));
+                ImageView backView = new ImageView(back);
+                backView.relocate(500, 10);
+                backView.setFitWidth(200);
+                backView.setFitHeight(80);
+                Group group = new Group();
+                Text text = new Text("BACK");
+                text.setFont(Font.font(30));
+                text.setFill(Color.WHITE);
+                group.getChildren().addAll(backView, text);
+                text.relocate(567, 23);
+                vBox.getChildren().add(group);
+                group.setOnMouseClicked(event -> {
+                    //todo go to menu for haniyeh
+                });
+
+
+            } catch (Exception e) {
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         collectionScene.setRoot(scroller);
 
@@ -338,8 +358,8 @@ public class CollectionScene {
 
 
         plateImageView.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(texts);
-            texts.clear();
+            root.getChildren().removeAll(deletable);
+            deletable.clear();
             vBox.getChildren().clear();
             Image deckImage, backPic;
             ImageView deckImageView;
@@ -357,22 +377,22 @@ public class CollectionScene {
                 for (int j = 0; j < cards.size(); j++) {
                     hBox = new HBox();
                     backPic = new Image(new FileInputStream(
-                            "pics/collection/deck-select/cardback-" + a + ".jpg"));
+                            "pics/collection/deck-select/deck_back.png"));
                     final ImageView backPicView = new ImageView(backPic);
                     backPicView.setFitHeight(70);
-                    backPicView.setFitWidth(250);
+                    backPicView.setFitWidth(300);
                     hBox.getChildren().add(backPicView);
 
-                    SpriteMaker.getInstance().makeSpritePic(cards.get(j).getPATH_OF_ANIMATION(), 240, 75 * j + 165,
-                            hBox, cards.get(j).getCountOfAnimation(), cards.get(j).getAnimationRow(), 4000,
-                            cards.get(j).getFrameSize(), cards.get(j).getFrameSize(), 256);
+                   deletable.add(SpriteMaker.getInstance().makeSpritePic(cards.get(j).getPATH_OF_ANIMATION(), 0, 75 * j + 165,
+                            root, cards.get(j).getCountOfAnimation(), cards.get(j).getAnimationRow(), 4000,
+                            cards.get(j).getFrameSize(), cards.get(j).getFrameSize(), 256));
 
                     Text text = new Text(cards.get(j).getName() + "\n" + cards.get(j).getDescription());
-                    text.relocate(10, 75 * j + 165);
+                    text.relocate(70, 75 * j + 165);
                     text.setFill(Color.rgb(200, 200, 225, 0.5));
                     text.setFont(Font.font(20));
                     root.getChildren().add(text);
-                    texts.add(text);
+                    deletable.add(text);
 
                     vBox.getChildren().add(hBox);
                 }
@@ -406,6 +426,13 @@ public class CollectionScene {
                     e.printStackTrace();
                 }
             }
+            ImageView deleteImageView = new ImageView(new Image(new FileInputStream(
+                    "D:\\project_Duelyst1\\pics\\collection\\delete_deck_shine.png")));
+            deleteImageView.setFitHeight(50);
+            deleteImageView.setFitWidth(450);
+            deleteImageView.relocate(1090,820);
+            root.getChildren().add(deleteImageView);
+
 
 
             root.getChildren().addAll(vBox);
@@ -415,8 +442,6 @@ public class CollectionScene {
 
 
     }
-
-
 
 
 }
