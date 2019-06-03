@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class MakeNewFile {
 
     private static NewCardMessages newCardMessages = NewCardMessages.getInstance();
-    private static Request request = new Request(StateType.BATTLE);//mohem ni chi bashe mikham az scanneresh estefade konam
+    private static Request request = new Request(StateType.BATTLE);
     private static String path;
 
 

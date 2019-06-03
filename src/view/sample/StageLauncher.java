@@ -62,7 +62,7 @@ public class StageLauncher extends Application {
         StageLauncher.primaryStage = primaryStage;
 
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
-        //todo ad danimation to  spell and minions
+        //todo add animation to  spell and minions
 
         //make scene with type, can access root with (Group)scene.getRoot
         //all of the scene are in a hashMap with each state we can access to them
