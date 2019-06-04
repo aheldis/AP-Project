@@ -1,14 +1,15 @@
 package view;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.print.PageLayout;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +24,7 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
+import view.enums.ErrorType;
 import view.enums.StateType;
 import view.sample.*;
 
@@ -132,6 +134,7 @@ public class CollectionScene {
 
     }
 
+
     private static void textForCollection(Card card, int i, int j, ImageView imageView) {
         Text ap = new Text(card.getAp() + "");
         ap.setFont(Font.font(20));
@@ -217,48 +220,66 @@ public class CollectionScene {
         }
     }
 
-    public static void showInCollection(ArrayList<Card> cards) {
+    public static void showInCollection(ArrayList<Card> cards,Collection collection) {
         root.getChildren().clear();
 
         ScrollPane scroller = new ScrollPane(root);
 
-
         makeBackground("pics/collectionBackground.jpg");
-
 
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         root.getChildren().add(vBox);
         vBox.setSpacing(Y_BORDER);
 
-        Image searchBar, magnifier, leftBar;
         try {
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.TOP_RIGHT);
             hBox.setSpacing(1);
 
+            StackPane stackPane = new StackPane();
+            stackPane.setAlignment(Pos.CENTER);
 
-            searchBar = new Image(new FileInputStream("pics/collection/searchbar.png"));
-            ImageView searchBarImageView = new ImageView(searchBar);
-            searchBarImageView.setFitWidth(200);
-            searchBarImageView.setFitHeight(100);
-            //searchBarImageView.setVisible(true);
+            Image searchBarImageView = new Image(new FileInputStream(
+                    "pics/collection/searchbar.png"));
 
-
-            magnifier = new Image(new FileInputStream("pics/collection/magnifier.png"));
-            ImageView magnifierView = new ImageView(magnifier);
-            magnifierView.setFitHeight(60);
+            ImageView magnifierView = new ImageView(new Image(new FileInputStream(
+                    "D:\\project_Duelyst1\\pics\\collection\\magnifier_icon.png")));
+            magnifierView.setFitHeight(40);
             magnifierView.setFitWidth(40);
-            magnifierView.relocate(20, 50);
+
+            ImageView rightBar = new ImageView(new Image(new FileInputStream(
+                    "D:\\project_Duelyst1\\pics\\collection\\left.png")));
+            rightBar.setFitWidth(100);
+            rightBar.setFitHeight(100);
 
 
-            hBox.getChildren().add(searchBarImageView);
-            hBox.getChildren().add(magnifierView);
 
+            stackPane.getChildren().add(rightBar);
+            stackPane.getChildren().add(magnifierView);
+
+            TextField textArea = new TextField();
+            textArea.setPrefHeight(100);
+            textArea.relocate(10, 10);
+            textArea.positionCaret(1);
+            textArea.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 25px; -fx-font-weight: bold;");
+            //textArea.setStyle("-fx-text-inner-color: red;");
+            textArea.setBackground(new Background(new BackgroundFill(Color.rgb(5, 5, 5, 0.1),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+
+            hBox.getChildren().addAll( textArea,stackPane);
             hBox.setBackground(new Background(new BackgroundFill(Color.rgb(10, 10, 10, 0.1),
                     CornerRadii.EMPTY, Insets.EMPTY)));
             vBox.getChildren().add(hBox);
 
+            magnifierView.setOnMouseClicked(event -> {
+                System.out.println(textArea.getText());
+                textArea.clear();
+                if (!collection.searchCardName(textArea.getText())) {
+                     ErrorType.HAVE_NOT_CARD_IN_COLLECTION.printMessage();
+                     //todo show cards
+                }
+            });
 
             scroller.setFitToWidth(true);
 
@@ -330,6 +351,7 @@ public class CollectionScene {
      */
 
     private static void makeDeck(VBox vBox, int i, Deck deck, Collection collection) throws Exception {
+
         Random random = new Random();
         int a = random.nextInt(6);
         Image plate = new Image(new FileInputStream(
@@ -367,32 +389,28 @@ public class CollectionScene {
                 ribbonHBox.getChildren().add(deckImageView);
                 vBox.getChildren().add(ribbonHBox);
 
-                final ImageView menuBar = new ImageView(new Image(new FileInputStream(
-                        "pics/collection//menu_button.png")));
-                menuBar.relocate(300, 10);
-                menuBar.setFitHeight(20);
-                menuBar.setFitWidth(20);
-                root.getChildren().add(menuBar);
+                final ImageView delete_deck = new ImageView(new Image(new FileInputStream(
+                        "D:\\project_Duelyst1\\pics\\collection\\button_close@2x.png")));
+                delete_deck.relocate(300, 10);
+                delete_deck.setFitHeight(20);
+                delete_deck.setFitWidth(20);
+                root.getChildren().add(delete_deck);
+                deletable.add(delete_deck);
 
-                final ImageView menuBar_rotate = new ImageView(new Image(new FileInputStream(
-                        "pics/collection/menu_button_rotate.png")));
+                delete_deck.setOnMouseClicked(event14 -> {
+                    try {
+                        collection.deleteDeck(deck.getName());
+                        System.out.println(deletable);
+                        root.getChildren().removeAll(deletable);
+                        deletable.clear();
+                        vBox.getChildren().clear();
 
-                menuBar.setOnMouseClicked(event14 -> {
-                    menuBar_rotate.relocate(300, 10);
-                    menuBar_rotate.setFitHeight(20);
-                    menuBar_rotate.setFitWidth(20);
-                    root.getChildren().add(menuBar_rotate);
-                    root.getChildren().remove(menuBar);
+                    } catch (Exception e) {
 
-                });
-
-                menuBar_rotate.setOnMouseClicked(event13 -> {
-                    root.getChildren().remove(menuBar_rotate);
-                    root.getChildren().add(menuBar);
+                    }
 
                 });
-                deletable.add(menuBar_rotate);
-                deletable.add(menuBar);
+
 
                 ArrayList<Card> cards = deck.getCardsOfDeck();
 
@@ -460,7 +478,7 @@ public class CollectionScene {
         collectionScene.setRoot(root);
         root.getChildren().clear();
 
-        makeBackground("pics/collectionBackground.jpg");
+        makeBackground("D:\\project_Duelyst1\\pics\\collection\\background@2x.jpg");
 
         try {
             VBox vBox = new VBox();
@@ -483,13 +501,33 @@ public class CollectionScene {
                     e.printStackTrace();
                 }
             }
-            ImageView deleteImageView = new ImageView(new Image(new FileInputStream(
-                    "D:\\project_Duelyst1\\pics\\collection\\delete_deck_shine.png")));
-            deleteImageView.setFitHeight(50);
-            deleteImageView.setFitWidth(450);
-            deleteImageView.relocate(1090, 820);
-            root.getChildren().add(deleteImageView);
 
+            ImageView add_deck = new ImageView(new Image(new FileInputStream(
+                    "D:\\project_Duelyst1\\pics\\collection\\plate@2x.png")));
+            add_deck.relocate(collectionScene.getWidth() - 110, collectionScene.getHeight() - 110);
+            add_deck.setFitWidth(100);
+            add_deck.setFitHeight(100);
+            ImageView plus = new ImageView(new Image(new FileInputStream(
+                    "D:\\project_Duelyst1\\pics\\collection\\add.png")));
+            plus.relocate(collectionScene.getWidth() - 67, collectionScene.getHeight() - 67);
+            plus.setFitHeight(15);
+            plus.setFitWidth(15);
+            root.getChildren().add(add_deck);
+            root.getChildren().add(plus);
+            //todo mizane ro plus ye kofti beshe
+
+//            plus.setOnMouseClicked(event -> {
+//                AnimationTimer animationTimer = new AnimationTimer() {
+//                    @Override
+//                    public void handle(long now) {
+//                        for(int i=0;i<50;i++){
+//                            plus.setFitWidth(plus.getFitWidth()+);
+//                        }
+//                    }
+//                };
+//                animationTimer.start();
+//
+//            });
 
             root.getChildren().add(vBox);
         } catch (Exception e) {

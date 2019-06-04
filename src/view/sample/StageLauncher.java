@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.account.Account;
@@ -12,8 +13,12 @@ import model.battle.Deck;
 import model.card.*;
 import view.CollectionScene;
 import view.enums.StateType;
+import java.awt.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -80,44 +85,53 @@ public class StageLauncher extends Application {
         //all of the scene are in a hashMap with each state we can access to them
         Scene mainMenuScene = makeScene(StateType.MAIN_MENU);
         Scene collectionScene = makeScene(StateType.COLLECTION);
+//        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
+//        URL url = null;
+//        try {
+//            url = file.toURI().toURL();
+//            collectionScene.getStylesheets().add(url.toExternalForm());
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
 
 
-//        ArrayList<Card> cards = new ArrayList<>();
-//        Hero hero = new Hero();
-//        hero.setPATH_OF_THE_PICTURE("pics/default.png");
-//        hero.setHp(10);
-//        hero.setAp(10);
-//        hero.setDescription("hello girls");
+        ArrayList<Card> cards = new ArrayList<>();
+        Hero hero = new Hero();
+        hero.setPATH_OF_THE_PICTURE("pics/default.png");
+        hero.setHp(10);
+        hero.setAp(10);
+        hero.setDescription("hello girls");
 //
+
         Spell spell= new Spell();
         spell.setPATH_OF_THE_PICTURE("pics/minion_background.png");
         spell.setPATH_OF_ANIMATION("pics/spell/fireBall.png");
         spell.setCountOfAnimation(16);
         spell.setFrameSize(48);
-//
-//
-//
-//        cards.add(spell);
-//
-//        minionMaker(cards,"pics/gifMinion/giv.gif");
-//        minionMaker(cards,"pics/gifMinion/gorg.gif");
-//
-//        for (int i = 0; i < 6; i++)
-//            cards.add(hero);
-//        CollectionScene.showInCollection(cards);
+
+
+
+        cards.add(spell);
+
+        minionMaker(cards,"pics/gifMinion/giv.gif");
+        minionMaker(cards,"pics/gifMinion/gorg.gif");
+
+        for (int i = 0; i < 6; i++)
+            cards.add(hero);
+        CollectionScene.showInCollection(cards,new Collection(new Account("zahra","123")));
 
         //todo test for deck show inas
-        ArrayList<Deck> decks = new ArrayList<>();
-        Deck deck = new Deck();
-        spell.setDescription("atasssh");
-        spell.setName("atisih");
-        deck.getCardsOfDeck().add(spell);
-        deck.getCardsOfDeck().add(spell);
-        deck.setName("zahra");
-        for (int i = 0; i < 10; i++) {
-            decks.add(deck);
-        }
-        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
+//        ArrayList<Deck> decks = new ArrayList<>();
+//        Deck deck = new Deck();
+//        spell.setDescription("atasssh");
+//        spell.setName("atisih");
+//        deck.getCardsOfDeck().add(spell);
+//        deck.getCardsOfDeck().add(spell);
+//        deck.setName("zahra");
+//        for (int i = 0; i < 10; i++) {
+//            decks.add(deck);
+//        }
+//        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
 
 
 
