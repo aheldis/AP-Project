@@ -368,27 +368,25 @@ public class CollectionScene {
                 vBox.getChildren().add(ribbonHBox);
 
                 final ImageView menuBar = new ImageView(new Image(new FileInputStream(
-                        "D:\\project_Duelyst1\\pics\\collection\\menu_button.png")));
+                        "pics/collection//menu_button.png")));
                 menuBar.relocate(300, 10);
                 menuBar.setFitHeight(20);
                 menuBar.setFitWidth(20);
                 root.getChildren().add(menuBar);
 
                 final ImageView menuBar_rotate = new ImageView(new Image(new FileInputStream(
-                        "D:\\project_Duelyst1\\pics\\collection\\menu_button_rotate.png")));
+                        "pics/collection/menu_button_rotate.png")));
 
                 menuBar.setOnMouseClicked(event14 -> {
-                    //System.currentTimeMillis();
-                    root.getChildren().remove(menuBar);
                     menuBar_rotate.relocate(300, 10);
                     menuBar_rotate.setFitHeight(20);
                     menuBar_rotate.setFitWidth(20);
                     root.getChildren().add(menuBar_rotate);
+                    root.getChildren().remove(menuBar);
 
                 });
 
                 menuBar_rotate.setOnMouseClicked(event13 -> {
-                    //System.currentTimeMillis();
                     root.getChildren().remove(menuBar_rotate);
                     root.getChildren().add(menuBar);
 
@@ -424,7 +422,6 @@ public class CollectionScene {
                     garbage.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            System.out.println("why?");
                             //collection.removeCardFromDeck(card,deck.getName());
                             root.getChildren().remove(group);
                             group.getChildren().clear();
