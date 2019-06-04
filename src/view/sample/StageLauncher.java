@@ -1,39 +1,21 @@
 package view.sample;
 
-import javafx.animation.Animation;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+import model.account.Account;
+import model.account.Collection;
 import model.battle.Deck;
-import model.battle.Hand;
 import model.card.*;
-import view.BattleScene;
 import view.CollectionScene;
 import view.enums.StateType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 public class StageLauncher extends Application {
 
@@ -78,15 +60,14 @@ public class StageLauncher extends Application {
         minion.setDescription("i am minion");
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        StageLauncher.primaryStage = primaryStage;
-        primaryStage.setScene(makeScene(StateType.BATTLE));
-        new BattleScene("pics/maps/abyssian/midground.png", WIDTH, HEIGHT);
-        primaryStage.show();
-    }
+    //@Override
+//    public void start(Stage primaryStage) throws Exception {
+//        StageLauncher.primaryStage = primaryStage;
+//        primaryStage.setScene(makeScene(StateType.BATTLE));
+//        new BattleScene("pics/maps/abyssian/midground.png", WIDTH, HEIGHT);
+//        primaryStage.show();
+//    }
 
-    /*
 
     @Override
     public void start(Stage primaryStage) {
@@ -136,7 +117,9 @@ public class StageLauncher extends Application {
         for (int i = 0; i < 10; i++) {
             decks.add(deck);
         }
-        CollectionScene.showDeck(decks);
+        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
+
+
 
         try {
             collectionScene.setCursor(new ImageCursor(new Image(new FileInputStream("pics/mouse.png")))); } catch (FileNotFoundException e) {
@@ -146,7 +129,7 @@ public class StageLauncher extends Application {
         primaryStage.show();
     }
 
-*/
+
 
     public static void main(String[] args) {
         launch(args);

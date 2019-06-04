@@ -1,8 +1,10 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.print.PageLayout;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -13,25 +15,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.account.Collection;
 import model.battle.Deck;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
 import view.enums.StateType;
-import view.sample.SpriteMaker;
-import view.sample.StageLauncher;
+import view.sample.*;
 
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.RandomAccessFile;
-import java.text.Format;
+import java.net.CookiePolicy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -123,9 +120,7 @@ public class CollectionScene {
                     Text desc = textView(i * (X_BORDER + CARD_WIDTH) + 100,
                             j * (Y_BORDER + CARD_HEIGHT) + 420, card.getDescription());
 
-                    imageView.setOnMouseExited(event1 -> {
-                        root.getChildren().removeAll(descView, hpView, apView, hp, ap, desc);
-                    });
+                    imageView.setOnMouseExited(event1 -> root.getChildren().removeAll(descView, hpView, apView, hp, ap, desc));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -334,7 +329,7 @@ public class CollectionScene {
      * BackgroundSize.DEFAULT)));
      */
 
-    private static void makeDeck(VBox vBox, int i, Deck deck) throws Exception {
+    private static void makeDeck(VBox vBox, int i, Deck deck, Collection collection) throws Exception {
         Random random = new Random();
         int a = random.nextInt(6);
         Image plate = new Image(new FileInputStream(
@@ -362,40 +357,97 @@ public class CollectionScene {
             root.getChildren().removeAll(deletable);
             deletable.clear();
             vBox.getChildren().clear();
-            Image deckImage, backPic;
             ImageView deckImageView;
             try {
-                HBox hBox = new HBox();
-                deckImage = new Image(new FileInputStream(
-                        "pics/collection/deck_ribbons/ribbon-" + a + ".png"));
-                deckImageView = new ImageView(deckImage);
+                HBox ribbonHBox = new HBox();
+                deckImageView = new ImageView(new Image(new FileInputStream(
+                        "pics/collection/deck_ribbons/ribbon-" + a + ".png")));
                 deckImageView.setFitHeight(150);
-                deckImageView.setFitWidth(300);
-                hBox.getChildren().add(deckImageView);
-                vBox.getChildren().add(hBox);
+                deckImageView.setFitWidth(324);
+                ribbonHBox.getChildren().add(deckImageView);
+                vBox.getChildren().add(ribbonHBox);
+
+                final ImageView menuBar = new ImageView(new Image(new FileInputStream(
+                        "D:\\project_Duelyst1\\pics\\collection\\menu_button.png")));
+                menuBar.relocate(300, 10);
+                menuBar.setFitHeight(20);
+                menuBar.setFitWidth(20);
+                root.getChildren().add(menuBar);
+
+                final ImageView menuBar_rotate = new ImageView(new Image(new FileInputStream(
+                        "D:\\project_Duelyst1\\pics\\collection\\menu_button_rotate.png")));
+
+                menuBar.setOnMouseClicked(event14 -> {
+                    //System.currentTimeMillis();
+                    root.getChildren().remove(menuBar);
+                    menuBar_rotate.relocate(300, 10);
+                    menuBar_rotate.setFitHeight(20);
+                    menuBar_rotate.setFitWidth(20);
+                    root.getChildren().add(menuBar_rotate);
+
+                });
+
+                menuBar_rotate.setOnMouseClicked(event13 -> {
+                    //System.currentTimeMillis();
+                    root.getChildren().remove(menuBar_rotate);
+                    root.getChildren().add(menuBar);
+
+                });
+                deletable.add(menuBar_rotate);
+                deletable.add(menuBar);
 
                 ArrayList<Card> cards = deck.getCardsOfDeck();
-                for (int j = 0; j < cards.size(); j++) {
-                    hBox = new HBox();
-                    backPic = new Image(new FileInputStream(
-                            "pics/collection/deck-select/deck_back.png"));
-                    final ImageView backPicView = new ImageView(backPic);
+
+
+                for (Card card : cards) {
+                    Group group = new Group();
+
+                    ImageView backPicView = new ImageView(new Image(new FileInputStream(
+                            "pics/collection/deck-select/deck_back.png")));
                     backPicView.setFitHeight(70);
                     backPicView.setFitWidth(300);
-                    hBox.getChildren().add(backPicView);
+                    group.getChildren().add(backPicView);
 
-                   deletable.add(SpriteMaker.getInstance().makeSpritePic(cards.get(j).getPATH_OF_ANIMATION(), 0, 75 * j + 165,
-                            root, cards.get(j).getCountOfAnimation(), cards.get(j).getAnimationRow(), 4000,
-                            cards.get(j).getFrameSize(), cards.get(j).getFrameSize(), 256));
+                    SpriteMaker.getInstance().makeSpritePic(card.getPATH_OF_ANIMATION(), 0, 10,
+                            group, card.getCountOfAnimation(), card.getAnimationRow(), 4000,
+                            card.getFrameSize(), card.getFrameSize(), 256);
 
-                    Text text = new Text(cards.get(j).getName() + "\n" + cards.get(j).getDescription());
-                    text.relocate(70, 75 * j + 165);
+                    ImageView garbage = new ImageView(new Image(new FileInputStream(
+                            "pics/collection/delete-button.png")));
+                    garbage.setFitHeight(20);
+                    garbage.setFitWidth(20);
+                    garbage.relocate(230, 40);
+                    group.getChildren().add(garbage);
+
+                    vBox.getChildren().add(group);
+
+                    garbage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            System.out.println("why?");
+                            //collection.removeCardFromDeck(card,deck.getName());
+                            root.getChildren().remove(group);
+                            group.getChildren().clear();
+
+                        }
+                    });
+
+                    Text text = new Text(card.getName() + "\n" + card.getDescription());
+                    text.setY(25);
+                    text.setX(70);
                     text.setFill(Color.rgb(200, 200, 225, 0.5));
                     text.setFont(Font.font(20));
-                    root.getChildren().add(text);
-                    deletable.add(text);
+                    text.setOnMouseEntered(event1 -> {
+                        text.setUnderline(true);
+                        text.setFill(Color.rgb(49, 255, 245, 0.5));
+                    });
+                    text.setOnMouseExited(event12 -> {
+                        text.setUnderline(false);
+                        text.setFill(Color.rgb(200, 200, 225, 0.5));
+                    });
+                    group.getChildren().add(text);
 
-                    vBox.getChildren().add(hBox);
+
                 }
 
 
@@ -407,7 +459,7 @@ public class CollectionScene {
 
     }
 
-    public static void showDeck(ArrayList<Deck> decks) {
+    public static void showDeck(ArrayList<Deck> decks, Collection collection) {
         collectionScene.setRoot(root);
         root.getChildren().clear();
 
@@ -415,14 +467,21 @@ public class CollectionScene {
 
         try {
             VBox vBox = new VBox();
+
+//            ScrollPane scroller = new ScrollPane(vBox);
+//            scroller.setPrefViewportWidth(316);
+//            scroller.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+//            scroller.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             vBox.relocate(0, 0);
             vBox.setSpacing(5);
             vBox.setPrefSize(200, collectionScene.getHeight());
             vBox.setBackground(new Background(new BackgroundFill(Color.rgb(10, 10, 10, 0.5),
                     CornerRadii.EMPTY, Insets.EMPTY)));
+
+
             for (int i = 0; i < decks.size(); i++) {
                 try {
-                    makeDeck(vBox, i, decks.get(i));
+                    makeDeck(vBox, i, decks.get(i), collection);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -431,12 +490,11 @@ public class CollectionScene {
                     "D:\\project_Duelyst1\\pics\\collection\\delete_deck_shine.png")));
             deleteImageView.setFitHeight(50);
             deleteImageView.setFitWidth(450);
-            deleteImageView.relocate(1090,820);
+            deleteImageView.relocate(1090, 820);
             root.getChildren().add(deleteImageView);
 
 
-
-            root.getChildren().addAll(vBox);
+            root.getChildren().add(vBox);
         } catch (Exception e) {
             e.printStackTrace();
         }

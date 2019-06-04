@@ -279,6 +279,8 @@ public class Collection  implements Cloneable{
 
     public void removeCardFromDeck(Card card, String deckName) {
         ErrorType error;
+        if(card == null)
+            return;
         String cardId = card.getCardId().getCardIdAsString();
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (!errorForDeck(deck))

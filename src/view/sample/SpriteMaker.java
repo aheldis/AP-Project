@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -38,6 +39,9 @@ public class SpriteMaker {
             }
             if(root instanceof HBox){
                 ((HBox) root).getChildren().add(imageView);
+            }
+            if(root instanceof StackPane){
+                ((StackPane) root).getChildren().add(imageView);
             }
             imageView.setViewport(new Rectangle2D(0, 0, widthOfEachFrame * numberOfPicInEachColumn, totalHeight));
 //sprite animation  useful for your project

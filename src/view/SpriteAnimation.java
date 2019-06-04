@@ -38,8 +38,8 @@ public class SpriteAnimation extends Transition {
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);
         if (index != lastIndex) {
-            final int y = (index % columns) * width + offsetX;
-            final int x = (index / columns) * height + offsetY;
+            final int x = (index / columns) * width + offsetX;
+            final int y = (index % columns) * height + offsetY;
             imageView.setViewport(new Rectangle2D(x, y, width, height));
             lastIndex = index;
         }
