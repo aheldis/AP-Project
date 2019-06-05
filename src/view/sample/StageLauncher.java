@@ -14,6 +14,8 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
+import model.account.Account;
+import model.account.Collection;
 import javafx.util.Duration;
 import model.card.*;
 import view.GeneralGraphicMethods;
@@ -21,6 +23,7 @@ import view.SelectGameScene;
 import view.enums.StateType;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -62,7 +65,7 @@ public class StageLauncher extends Application {
     }
 
 
-    public void minionMaker(ArrayList<Card> cards, String path) {
+    private void minionMaker(ArrayList<Card> cards, String path) {
         Minion minion = new Minion();
         minion.setPATH_OF_THE_PICTURE("pics/minion_background.png");
         minion.setPATH_OF_ANIMATION(path);
@@ -212,7 +215,6 @@ public class StageLauncher extends Application {
 ////                .onFinished(t -> Raining(c,root)).build();
 ////        fall.play();
 //    }
-
 
     public static void main(String[] args) {
         launch(args);

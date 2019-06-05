@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.print.PageLayout;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
@@ -36,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static view.GeneralGraphicMethods.*;
+import static view.sample.StageLauncher.*;
 
 
 public class CollectionScene {
@@ -57,7 +56,7 @@ public class CollectionScene {
             imageView.setFitHeight(height);
             root.getChildren().add(imageView);
             return imageView;
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return null;
@@ -109,9 +108,7 @@ public class CollectionScene {
                 }
             });
 
-        } catch (Exception e) {
-
-        }
+        } catch (Exception ignored) { }
 
     }
 
@@ -138,7 +135,7 @@ public class CollectionScene {
                 imageView.setOnMouseExited(event1 -> root.getChildren().removeAll(desc, descView));
             });
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
@@ -157,8 +154,7 @@ public class CollectionScene {
 
             textForCollection(card, i, j, imageView);
 
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
 
     }
 
@@ -175,11 +171,7 @@ public class CollectionScene {
                     card.getFrameSize(), card.getFrameSize(), card.getHeightOfPicture());
 
             textForCollection(card, i, j, imageView);
-
-
-        } catch (Exception e) {
-
-        }
+        } catch (Exception ignored) { }
     }
 
     public static void showInCollection(ArrayList<Card> cards,Collection collection) {
@@ -206,12 +198,12 @@ public class CollectionScene {
                     "pics/collection/searchbar.png"));
 
             ImageView magnifierView = new ImageView(new Image(new FileInputStream(
-                    "D:\\project_Duelyst1\\pics\\collection\\magnifier_icon.png")));
+                    "pics\\collection\\magnifier_icon.png")));
             magnifierView.setFitHeight(40);
             magnifierView.setFitWidth(40);
 
             ImageView rightBar = new ImageView(new Image(new FileInputStream(
-                    "D:\\project_Duelyst1\\pics\\collection\\left.png")));
+                    "pics\\collection\\left.png")));
             rightBar.setFitWidth(100);
             rightBar.setFitHeight(100);
 
@@ -276,9 +268,7 @@ public class CollectionScene {
                 });
 
 
-            } catch (Exception e) {
-
-            }
+            } catch (Exception ignored) { }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -382,9 +372,7 @@ public class CollectionScene {
                         deletable.clear();
                         vBox.getChildren().clear();
 
-                    } catch (Exception e) {
-
-                    }
+                    } catch (Exception ignored) { }
 
                 });
 
@@ -431,7 +419,9 @@ public class CollectionScene {
                         text.setUnderline(false);
                         text.setFill(Color.rgb(200, 200, 225, 0.5));
                     });
+                    group.getChildren().add(text);
                 }
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

@@ -1,12 +1,9 @@
 package view;
 
 import javafx.application.Platform;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -25,7 +22,7 @@ import java.io.FileInputStream;
  */
 
 public class MakeAndShowClass {
-    public static MakeAndShowClass singleInstance = new MakeAndShowClass();
+    private static MakeAndShowClass singleInstance = new MakeAndShowClass();
 
     private MakeAndShowClass() {
 
@@ -75,9 +72,7 @@ public class MakeAndShowClass {
                     stackPane.getChildren().clear();
                     scene.setRoot(root);
                 });
-            }catch (Exception e){
-
-            }
+            }catch (Exception ignored){ }
 
         });
 
