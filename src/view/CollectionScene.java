@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.print.PageLayout;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
@@ -30,12 +31,11 @@ import view.sample.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.CookiePolicy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static view.sample.StageLauncher.*;
+import static view.GeneralGraphicMethods.*;
 
 
 public class CollectionScene {
@@ -47,29 +47,6 @@ public class CollectionScene {
     private static int Y_BORDER = 35;
     private static List<Node> deletable = new ArrayList<>();
 
-    private static ImageView makeImage(int x, int y, String path, int width, int height) {
-        try {
-            Image image = new Image(new FileInputStream(path));
-            ImageView imageView = new ImageView(image);
-            imageView.relocate(x, y);
-            imageView.setFitWidth(width);
-            imageView.setFitHeight(height);
-            root.getChildren().add(imageView);
-            return imageView;
-        } catch (Exception ignored) {
-
-        }
-        return null;
-    }
-
-    private static Text textView(int x, int y, String input) {
-        Text text = new Text(input);
-        text.setFont(Font.font(20));
-        text.relocate(x, y);
-        text.setFill(Color.WHITE);
-        root.getChildren().add(text);
-        return text;
-    }
 
     private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
@@ -276,13 +253,6 @@ public class CollectionScene {
 
 
     }
-
-//    private Text textmaker(String input, int x, int y, double fontSize){
-//        Text text = new Text(input);
-//        text.relocate(x,y);
-//        text.setFont(Font.font(fontSize));
-//        return text;
-//    }
 
     /**
      * //todo code for image background
