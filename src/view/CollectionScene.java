@@ -49,7 +49,7 @@ public class CollectionScene {
 
 
     private static void makeBackground(String path) {
-        GeneralGraphicMethods.setBackground(root, path, true);/*
+        GeneralGraphicMethods.setBackground(root, path, true, 0, 0);/*
         try {
 
             Image image = new Image(new FileInputStream(path));
