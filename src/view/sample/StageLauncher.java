@@ -1,15 +1,19 @@
 package view.sample;
 
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.card.*;
 import view.AccountScene;
 import view.GeneralGraphicMethods;
 import view.SelectGameScene;
 import view.enums.StateType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -18,22 +22,31 @@ public class StageLauncher extends Application {
 
     private static Stage primaryStage;
     private static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
+    private static double HEIGHT;
+    private static double WIDTH;
 
+    public static double getWidth() {
+        return WIDTH;
+    }
+
+    public static double getHeight() {
+        return HEIGHT;
+    }
 
     public static Stage getPrimaryStage() {
         return primaryStage;
     }
 
-    private static Scene makeScene(StateType stateType,String cursorPath) {
-        StackPane root = new StackPane();
-        Scene scene = new Scene(root);
+    private static Scene makeScene(StateType stateType, String cursorPath) {
+        Group root = new Group();
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        GeneralGraphicMethods.setCursor(scene,cursorPath);
+        GeneralGraphicMethods.setCursor(scene, cursorPath);
         return scene;
     }
 
-    public static Scene getScene(StateType stateType){
-        if(sceneHashMap.containsKey(stateType))
+    public static Scene getScene(StateType stateType) {
+        if (sceneHashMap.containsKey(stateType))
             return sceneHashMap.get(stateType);
         return null;
         //return makeScene(stateType);
@@ -69,10 +82,10 @@ public class StageLauncher extends Application {
         //make scene with type, can access root with (Group)scene.getRoot
         //all of the scene are in a hashMap with each state we can access to them
         Scene accountScene = makeScene(StateType.ACCOUNT_MENU, "pics/cursor/mouse.png");
-        Scene mainMenuScene = makeScene(StateType.MAIN_MENU,"pics/cursor/mouse.png");
-        Scene collectionScene = makeScene(StateType.COLLECTION,"pics/cursor/mouse.png");
-        Scene selectModeScene = makeScene(StateType.SELECT_MODE,"pics/cursor/mouse_green.png");
-        Scene selectGameScene = makeScene(StateType.SELECT_GAME,"pics/cursor/mouse_green.png");
+        Scene mainMenuScene = makeScene(StateType.MAIN_MENU, "pics/cursor/mouse.png");
+        Scene collectionScene = makeScene(StateType.COLLECTION, "pics/cursor/mouse.png");
+        Scene selectModeScene = makeScene(StateType.SELECT_MODE, "pics/cursor/mouse_green.png");
+        Scene selectGameScene = makeScene(StateType.SELECT_GAME, "pics/cursor/mouse_green.png");
 
 //        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
 //        URL url = null;
@@ -82,7 +95,6 @@ public class StageLauncher extends Application {
 //        } catch (MalformedURLException e) {
 //            e.printStackTrace();
 //        }
-
 
 
 //        ArrayList<Card> cards = new ArrayList<>();
@@ -129,13 +141,21 @@ public class StageLauncher extends Application {
 //
 //
 //        primaryStage.setScene(selectGameScene);
-        AccountScene.makeBackground();
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setX(primaryScreenBounds.getMinX());
+        primaryStage.setY(primaryScreenBounds.getMinY());
+        WIDTH = primaryScreenBounds.getWidth();
+        HEIGHT = primaryScreenBounds.getHeight();
+        primaryStage.setWidth(WIDTH);
+        primaryStage.setHeight(HEIGHT);
         primaryStage.setFullScreen(true);
         primaryStage.setScene(accountScene);
+        primaryStage.setTitle("Duelyst");
+        AccountScene.makeBackground();
         primaryStage.show();
     }
 
-            Random random = new Random();
+    Random random = new Random();
 //    public void start(Stage primaryStage) {
 //
 //        Group root = new Group();

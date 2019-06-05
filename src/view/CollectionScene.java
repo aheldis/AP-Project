@@ -35,7 +35,7 @@ import static view.GeneralGraphicMethods.*;
 
 public class CollectionScene {
     private static final Scene collectionScene = StageLauncher.getScene(StateType.COLLECTION);
-    private static StackPane root = (StackPane) collectionScene.getRoot();
+    private static Group root = (Group) collectionScene.getRoot();
     private static int CARD_HEIGHT = 320;
     private static int CARD_WIDTH = 245;
     private static int X_BORDER = 45;

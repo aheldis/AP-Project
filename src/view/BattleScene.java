@@ -8,7 +8,7 @@ import view.sample.StageLauncher;
 
 public class BattleScene {
     private Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
-    private StackPane root = (StackPane) battleScene.getRoot();
+    private Group root = (Group) battleScene.getRoot();
     private String backGroundImagePath;
     private int width;
     private int height;
