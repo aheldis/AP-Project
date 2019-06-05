@@ -2,7 +2,6 @@ package view;
 
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
@@ -20,8 +19,8 @@ public class GeneralGraphicMethods {
     private static int HEIGHT = StageLauncher.getHEIGHT();
     private static int WIDTH = StageLauncher.getWIDTH();
 
-    public static void setBackground(Group root, String path, Boolean blur, double width, double height) {
-        ImageView imageView = addImage(root, path, 0, 0,WIDTH,HEIGHT);
+    static void setBackground(Group root, String path, Boolean blur, double width, double height) {
+        ImageView imageView = addImage(root, path, 0, 0, WIDTH, HEIGHT);
         if (imageView == null)
             return;
         if (blur) {
@@ -35,7 +34,7 @@ public class GeneralGraphicMethods {
         imageView.fitHeightProperty();
     }
 
-    public static Text addText(Group root, String input, int x, int y, Paint color, double fontSize){
+    static Text addText(Group root, String input, int x, int y, Paint color, double fontSize) {
         Text text = new Text(input);
         text.setX(x);
         text.setY(y);
@@ -45,7 +44,7 @@ public class GeneralGraphicMethods {
         return text;
     }
 
-    public static ImageView addImage(Group root, String path, int x, int y,int width,int height) {
+    static ImageView addImage(Group root, String path, int x, int y, int width, int height) {
         try {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);

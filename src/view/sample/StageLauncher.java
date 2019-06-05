@@ -4,23 +4,17 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.account.Account;
 import model.account.Collection;
-import model.battle.Deck;
 import model.card.*;
 import view.CollectionScene;
 import view.GeneralGraphicMethods;
-import view.SelectModeScene;
 import view.enums.StateType;
-import java.awt.*;
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,6 +24,7 @@ public class StageLauncher extends Application {
     private static final int HEIGHT = 900;
     private static Stage primaryStage;
     private static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
+    private static final String CURSOR_PATH = "pics/mouse.png";
 
     public static int getWIDTH() {
         return WIDTH;
@@ -43,18 +38,18 @@ public class StageLauncher extends Application {
         return primaryStage;
     }
 
-    private static Scene makeScene(StateType stateType,String cursorPath) {
+    private static Scene makeScene(StateType stateType) {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
 
-        GeneralGraphicMethods.setCursor(scene,cursorPath);
+        GeneralGraphicMethods.setCursor(scene, CURSOR_PATH);
 
         return scene;
     }
 
-    public static Scene getScene(StateType stateType){
-        if(sceneHashMap.containsKey(stateType))
+    public static Scene getScene(StateType stateType) {
+        if (sceneHashMap.containsKey(stateType))
             return sceneHashMap.get(stateType);
         return makeScene(stateType);
     }
@@ -108,22 +103,21 @@ public class StageLauncher extends Application {
         hero.setDescription("hello girls");
 //
 
-        Spell spell= new Spell();
+        Spell spell = new Spell();
         spell.setPATH_OF_THE_PICTURE("pics/minion_background.png");
         spell.setPATH_OF_ANIMATION("pics/spell/fireBall.png");
         spell.setCountOfAnimation(16);
         spell.setFrameSize(48);
 
 
-
         cards.add(spell);
 
-        minionMaker(cards,"pics/gifMinion/giv.gif");
-        minionMaker(cards,"pics/gifMinion/gorg.gif");
+        minionMaker(cards, "pics/gifMinion/giv.gif");
+        minionMaker(cards, "pics/gifMinion/gorg.gif");
 
         for (int i = 0; i < 6; i++)
             cards.add(hero);
-        CollectionScene.showInCollection(cards,new Collection(new Account("zahra","123")));
+        CollectionScene.showInCollection(cards, new Collection(new Account("zahra", "123")));
 
         //todo test for deck show inas
 //        ArrayList<Deck> decks = new ArrayList<>();
@@ -139,7 +133,6 @@ public class StageLauncher extends Application {
 //        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
 
 
-
         try {
             collectionScene.setCursor(new ImageCursor(new Image(new FileInputStream("pics/mouse.png"))));
         } catch (FileNotFoundException e) {
@@ -148,7 +141,6 @@ public class StageLauncher extends Application {
         primaryStage.setScene(collectionScene);
         primaryStage.show();
     }
-
 
 
     public static void main(String[] args) {
