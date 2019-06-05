@@ -2,15 +2,10 @@ package view;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import view.enums.StateType;
 import view.sample.StageLauncher;
-
 import java.util.ArrayList;
 
 public class AccountScene {
@@ -21,10 +16,11 @@ public class AccountScene {
     public static void makeBackground() {
         String backgroundPath = "pics/menu/background@2x.jpg";
         GeneralGraphicMethods.setBackground(root, backgroundPath, true, 0, 0);
-
+        double width = StageLauncher.getWidth();
+        double height = StageLauncher.getHeight();
         String foregroundPath = "pics/menu/foreground@2x.png";
         ImageView imageView = GeneralGraphicMethods.addImage(root, foregroundPath,
-                500, 500, 2676 / 2, 810 / 2);
+                width - 1300, height - 300, 2676 / 2, 810 / 2);
         movable.add(imageView);
         /*
         String pillarsPath = "pics/menu/pillars_far@2x.png";

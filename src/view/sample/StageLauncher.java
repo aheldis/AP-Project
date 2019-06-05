@@ -4,14 +4,12 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.card.*;
+import model.card.Card;
+import model.card.Minion;
 import view.AccountScene;
 import view.GeneralGraphicMethods;
-import view.SelectGameScene;
 import view.enums.StateType;
 
 import java.util.ArrayList;
@@ -75,6 +73,15 @@ public class StageLauncher extends Application {
     @Override
     public void start(Stage primaryStage) {
         StageLauncher.primaryStage = primaryStage;
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setX(primaryScreenBounds.getMinX());
+        primaryStage.setY(primaryScreenBounds.getMinY());
+        WIDTH = primaryScreenBounds.getWidth();
+        HEIGHT = primaryScreenBounds.getHeight();
+        primaryStage.setWidth(WIDTH);
+        primaryStage.setHeight(HEIGHT);
+        primaryStage.setFullScreen(true);
+        primaryStage.setTitle("Duelyst");
 
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
         //todo add animation to  spell and minions
@@ -141,17 +148,8 @@ public class StageLauncher extends Application {
 //
 //
 //        primaryStage.setScene(selectGameScene);
-        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX(primaryScreenBounds.getMinX());
-        primaryStage.setY(primaryScreenBounds.getMinY());
-        WIDTH = primaryScreenBounds.getWidth();
-        HEIGHT = primaryScreenBounds.getHeight();
-        primaryStage.setWidth(WIDTH);
-        primaryStage.setHeight(HEIGHT);
-        primaryStage.setFullScreen(true);
-        primaryStage.setScene(accountScene);
-        primaryStage.setTitle("Duelyst");
         AccountScene.makeBackground();
+        primaryStage.setScene(accountScene);
         primaryStage.show();
     }
 

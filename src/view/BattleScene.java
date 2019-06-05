@@ -2,7 +2,6 @@ package view;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
 import view.enums.StateType;
 import view.sample.StageLauncher;
 

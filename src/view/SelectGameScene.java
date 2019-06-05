@@ -1,22 +1,13 @@
 package view;
 
-import javafx.animation.Animation;
-import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import view.enums.StateType;
 import view.sample.StageLauncher;
-
 
 import static view.GeneralGraphicMethods.*;
 
