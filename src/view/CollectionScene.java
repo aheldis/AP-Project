@@ -56,7 +56,7 @@ public class CollectionScene {
             imageView.setFitHeight(height);
             root.getChildren().add(imageView);
             return imageView;
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return null;
@@ -141,7 +141,7 @@ public class CollectionScene {
                 imageView.setOnMouseExited(event1 -> root.getChildren().removeAll(desc, descView));
             });
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
@@ -220,12 +220,12 @@ public class CollectionScene {
                     "pics/collection/searchbar.png"));
 
             ImageView magnifierView = new ImageView(new Image(new FileInputStream(
-                    "D:\\project_Duelyst1\\pics\\collection\\magnifier_icon.png")));
+                    "pics\\collection\\magnifier_icon.png")));
             magnifierView.setFitHeight(40);
             magnifierView.setFitWidth(40);
 
             ImageView rightBar = new ImageView(new Image(new FileInputStream(
-                    "D:\\project_Duelyst1\\pics\\collection\\left.png")));
+                    "pics\\collection\\left.png")));
             rightBar.setFitWidth(100);
             rightBar.setFitHeight(100);
 
@@ -477,10 +477,7 @@ public class CollectionScene {
                         text.setFill(Color.rgb(200, 200, 225, 0.5));
                     });
                     group.getChildren().add(text);
-
-
                 }
-
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -519,12 +516,12 @@ public class CollectionScene {
             }
 
             ImageView add_deck = new ImageView(new Image(new FileInputStream(
-                    "D:\\project_Duelyst1\\pics\\collection\\plate@2x.png")));
+                    "pics\\collection\\plate@2x.png")));
             add_deck.relocate(collectionScene.getWidth() - 110, collectionScene.getHeight() - 110);
             add_deck.setFitWidth(100);
             add_deck.setFitHeight(100);
             ImageView plus = new ImageView(new Image(new FileInputStream(
-                    "D:\\project_Duelyst1\\pics\\collection\\add.png")));
+                    "pics\\collection\\add.png")));
             plus.relocate(collectionScene.getWidth() - 67, collectionScene.getHeight() - 67);
             plus.setFitHeight(15);
             plus.setFitWidth(15);
