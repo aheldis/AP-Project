@@ -17,9 +17,6 @@ import java.io.FileNotFoundException;
 
 public class GeneralGraphicMethods {
 
-    private static int HEIGHT = StageLauncher.getHEIGHT();
-    private static int WIDTH = StageLauncher.getWIDTH();
-
     /*static void setBackground(Parent root, String path, Boolean blur, double width, double height) {
         ImageView imageView = addImage(root, path, 0, 0,WIDTH,HEIGHT);
         if (imageView == null)
@@ -73,8 +70,8 @@ public class GeneralGraphicMethods {
     }
 
     private static void nodeAdder(Node node, Parent root) {
-        if (root instanceof Group)
-            ((Group) root).getChildren().add(node);
+        if (root instanceof StackPane)
+            ((StackPane) root).getChildren().add(node);
         if (root instanceof HBox)
             ((HBox) root).getChildren().add(node);
         if (root instanceof VBox)

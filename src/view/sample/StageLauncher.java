@@ -16,18 +16,9 @@ import java.util.Random;
 
 public class StageLauncher extends Application {
 
-    private static final int WIDTH = 1500;
-    private static final int HEIGHT = 900;
     private static Stage primaryStage;
     private static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
 
-    public static int getWIDTH() {
-        return WIDTH;
-    }
-
-    public static int getHEIGHT() {
-        return HEIGHT;
-    }
 
     public static Stage getPrimaryStage() {
         return primaryStage;
@@ -35,7 +26,7 @@ public class StageLauncher extends Application {
 
     private static Scene makeScene(StateType stateType,String cursorPath) {
         StackPane root = new StackPane();
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root);
         sceneHashMap.put(stateType, scene);
         GeneralGraphicMethods.setCursor(scene,cursorPath);
         return scene;

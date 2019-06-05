@@ -18,20 +18,20 @@ public class AccountScene {
 
     public static void makeBackground() {
         String backgroundPath = "pics/menu/background@2x.jpg";
-       GeneralGraphicMethods.setBackground(root, backgroundPath, true, 0, 0);
+        GeneralGraphicMethods.setBackground(root, backgroundPath, true, 0, 0);
 
-//        String foregroundPath = "pics/menu/foreground@2x.png";
-        /*ImageView imageView = GeneralGraphicMethods.addImage(root, foregroundPath,
-                accountScene.getWidth() - 2600, accountScene.getHeight() - 800, 2676, 810);
+        String foregroundPath = "pics/menu/foreground@2x.png";
+        ImageView imageView = GeneralGraphicMethods.addImage(root, foregroundPath,
+                accountScene.getWidth(), accountScene.getHeight(), 2676 / 2, 810 / 2);
         movable.add(imageView);
         String pillarsPath = "pics/menu/pillars_far@2x.png";
         imageView = GeneralGraphicMethods.addImage(root, pillarsPath, -100,
-                accountScene.getHeight() / 2, 600, 300);
+                accountScene.getHeight() / 2, 2676 / 2, 910 / 2);
         movable.add(imageView);
         pillarsPath = "pics/menu/pillars_near@2x.png";
         imageView = GeneralGraphicMethods.addImage(root, pillarsPath, -100,
-                accountScene.getHeight() / 2, 2167, 1843);
-        movable.add(imageView);*/
+                accountScene.getHeight() / 2, 2167 / 2, 1843 / 2);
+        movable.add(imageView);
     }
 
 
