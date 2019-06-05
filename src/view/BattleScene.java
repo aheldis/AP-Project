@@ -30,7 +30,7 @@ public class BattleScene {
     }
 
     public void setBackground() {
-       GeneralGraphicMethods.setBackground(root, backGroundImagePath, false);
+       GeneralGraphicMethods.setBackground(root, backGroundImagePath, false,0,0);
     }
 
 }

@@ -133,7 +133,8 @@ public class MenuController  {
                         }
                         return;
                 }
-            } else if (state == StateType.ACCOUNT_MENU) {
+            }
+            else if (state == StateType.ACCOUNT_MENU) {
                 String deckName;
                 switch (request.getRequestType()) {
                     case MENU_ENTER_COLLECTION:
@@ -207,7 +208,8 @@ public class MenuController  {
                         state = StateType.MAIN_MENU;
                         break;
                 }
-            } else if (state == StateType.COLLECTION) {
+            }
+            else if (state == StateType.COLLECTION) {
                 Collection collection = account.getCollection();
                 String deckName;
                 Card card;
@@ -323,7 +325,8 @@ public class MenuController  {
                         break;
                 }
 
-            } else if (state == StateType.SHOP) {
+            }
+            else if (state == StateType.SHOP) {
                 Shop shop = Shop.getInstance();
                 switch (request.getRequestType()) {
                     case SHOP_SHOW_COLLECTION:
@@ -356,7 +359,8 @@ public class MenuController  {
                         //todo for savaw :D
                         break;
                 }
-            } else if (state == StateType.SELECT_MODE) {
+            }
+            else if (state == StateType.SELECT_MODE) {
                 switch (request.getRequestType()) {
                     case MODE_MULTI_PLAYER: {
                         int mode = 0;

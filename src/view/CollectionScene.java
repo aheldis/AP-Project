@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.print.PageLayout;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
@@ -35,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static view.sample.StageLauncher.*;
 
 
 public class CollectionScene {
@@ -45,31 +45,7 @@ public class CollectionScene {
     private static int CARD_WIDTH = 245;
     private static int X_BORDER = 45;
     private static int Y_BORDER = 35;
-    private static List<Object> deletable = new ArrayList<>();
-
-
-    private static void makeBackground(String path) {
-        GeneralGraphicMethods.setBackground(root, path, true);/*
-        try {
-
-            Image image = new Image(new FileInputStream(path));
-            ImageView imageView = new ImageView(image);
-            root.getChildren().add(imageView);
-            imageView.relocate(0, 0);
-            imageView.setFitHeight(StageLauncher.getHEIGHT());
-            imageView.setFitWidth(StageLauncher.getWIDTH());
-            BoxBlur boxBlur = new BoxBlur();
-            boxBlur.setWidth(20.0f);
-            boxBlur.setHeight(20.0f);
-            boxBlur.setIterations(1);
-            imageView.setEffect(boxBlur);
-            imageView.fitWidthProperty();
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
-    }
+    private static List<Node> deletable = new ArrayList<>();
 
     private static ImageView makeImage(int x, int y, String path, int width, int height) {
         try {
@@ -225,7 +201,7 @@ public class CollectionScene {
 
         ScrollPane scroller = new ScrollPane(root);
 
-        makeBackground("pics/collectionBackground.jpg");
+        GeneralGraphicMethods.setBackground(root, "pics/collectionBackground.jpg", true,20,20);
 
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
@@ -350,6 +326,21 @@ public class CollectionScene {
      * BackgroundSize.DEFAULT)));
      */
 
+    private static ImageView makeIConBarForDeck(String path,int x,int y){
+        ImageView deck = null;
+        try {
+            deck = new ImageView(new Image(new FileInputStream(path)));
+            deck.relocate(x,y);
+            deck.setFitHeight(20);
+            deck.setFitWidth(20);
+            root.getChildren().add(deck);
+            deletable.add(deck);
+        }catch (Exception e){
+
+        }
+        return deck;
+    }
+
     private static void makeDeck(VBox vBox, int i, Deck deck, Collection collection) throws Exception {
 
         Random random = new Random();
@@ -389,18 +380,43 @@ public class CollectionScene {
                 ribbonHBox.getChildren().add(deckImageView);
                 vBox.getChildren().add(ribbonHBox);
 
-                final ImageView delete_deck = new ImageView(new Image(new FileInputStream(
-                        "D:\\project_Duelyst1\\pics\\collection\\button_close@2x.png")));
-                delete_deck.relocate(300, 10);
-                delete_deck.setFitHeight(20);
-                delete_deck.setFitWidth(20);
-                root.getChildren().add(delete_deck);
-                deletable.add(delete_deck);
+                final ImageView addCardToDeck = makeIConBarForDeck(
+                        "D:\\project_Duelyst1\\pics\\collection\\add-blue.png",40,10);
+
+                final ImageView delete_deck = makeIConBarForDeck(
+                        "D:\\project_Duelyst1\\pics\\collection\\close-deck.png",70,10);
+
+               final ImageView checkMainDeck ;
+                if(deck.getName().equals(collection.getAccount().getMainDeck().getName())){
+                    checkMainDeck = makeIConBarForDeck(
+                            "D:\\project_Duelyst1\\pics\\collection\\checkmark-green.png",10,10);
+                }
+                else{
+                    checkMainDeck = makeIConBarForDeck(
+                            "D:\\project_Duelyst1\\pics\\collection\\checkmark-blue.png",10,10);
+                }
+
+                addCardToDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        //todo addd a card to deck
+                    }
+                });
+
+                checkMainDeck.setOnMouseClicked(event13 -> {
+                   if( collection.validateDeck(deck.getName())){
+                       collection.selectADeckAsMainDeck(deck.getName());
+                       root.getChildren().remove(checkMainDeck);
+                       makeIConBarForDeck(
+                               "D:\\project_Duelyst1\\pics\\collection\\checkmark-green.png",20,10);
+                   }
+
+
+                });
 
                 delete_deck.setOnMouseClicked(event14 -> {
                     try {
                         collection.deleteDeck(deck.getName());
-                        System.out.println(deletable);
                         root.getChildren().removeAll(deletable);
                         deletable.clear();
                         vBox.getChildren().clear();
@@ -478,7 +494,7 @@ public class CollectionScene {
         collectionScene.setRoot(root);
         root.getChildren().clear();
 
-        makeBackground("D:\\project_Duelyst1\\pics\\collection\\background@2x.jpg");
+        GeneralGraphicMethods.setBackground(root, "pics/collection/background@2x.jpg", true,20,20);
 
         try {
             VBox vBox = new VBox();

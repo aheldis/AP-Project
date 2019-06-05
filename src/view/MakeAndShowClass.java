@@ -58,9 +58,6 @@ public class MakeAndShowClass {
 
                 root.setEffect(boxblur);
 
-
-
-
                 javafx.scene.image.Image image = new Image(new FileInputStream("pics/error_box.png"));
                 ImageView imageView = new ImageView(image);
                 imageView.setFitWidth(350);

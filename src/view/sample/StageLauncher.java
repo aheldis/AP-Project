@@ -12,6 +12,8 @@ import model.account.Collection;
 import model.battle.Deck;
 import model.card.*;
 import view.CollectionScene;
+import view.GeneralGraphicMethods;
+import view.SelectModeScene;
 import view.enums.StateType;
 import java.awt.*;
 import java.io.File;
@@ -41,17 +43,21 @@ public class StageLauncher extends Application {
         return primaryStage;
     }
 
-    private static Scene makeScene(StateType stateType) {
+    private static Scene makeScene(StateType stateType,String cursorPath) {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
+
+        GeneralGraphicMethods.setCursor(scene,cursorPath);
+
         return scene;
     }
 
     public static Scene getScene(StateType stateType){
         if(sceneHashMap.containsKey(stateType))
             return sceneHashMap.get(stateType);
-        return makeScene(stateType);
+        return null;
+        //return makeScene(stateType);
     }
 
 
@@ -83,8 +89,12 @@ public class StageLauncher extends Application {
 
         //make scene with type, can access root with (Group)scene.getRoot
         //all of the scene are in a hashMap with each state we can access to them
-        Scene mainMenuScene = makeScene(StateType.MAIN_MENU);
-        Scene collectionScene = makeScene(StateType.COLLECTION);
+        Scene mainMenuScene = makeScene(StateType.MAIN_MENU,"pics/cursor/mouse.png");
+        Scene collectionScene = makeScene(StateType.COLLECTION,"pics/cursor/mouse.png");
+        Scene selectModeScene = makeScene(StateType.SELECT_MODE,"pics/cursor/mouse_green.png");
+
+
+
 //        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
 //        URL url = null;
 //        try {
@@ -95,32 +105,33 @@ public class StageLauncher extends Application {
 //        }
 
 
-        ArrayList<Card> cards = new ArrayList<>();
-        Hero hero = new Hero();
-        hero.setPATH_OF_THE_PICTURE("pics/default.png");
-        hero.setHp(10);
-        hero.setAp(10);
-        hero.setDescription("hello girls");
+
+//        ArrayList<Card> cards = new ArrayList<>();
+//        Hero hero = new Hero();
+//        hero.setPATH_OF_THE_PICTURE("pics/default.png");
+//        hero.setHp(10);
+//        hero.setAp(10);
+//        hero.setDescription("hello girls");
+////
 //
-
-        Spell spell= new Spell();
-        spell.setPATH_OF_THE_PICTURE("pics/minion_background.png");
-        spell.setPATH_OF_ANIMATION("pics/spell/fireBall.png");
-        spell.setCountOfAnimation(16);
-        spell.setFrameSize(48);
-
-
-
-        cards.add(spell);
-
-        minionMaker(cards,"pics/gifMinion/giv.gif");
-        minionMaker(cards,"pics/gifMinion/gorg.gif");
-
-        for (int i = 0; i < 6; i++)
-            cards.add(hero);
-        CollectionScene.showInCollection(cards,new Collection(new Account("zahra","123")));
-
-        //todo test for deck show inas
+//        Spell spell= new Spell();
+//        spell.setPATH_OF_THE_PICTURE("pics/minion_background.png");
+//        spell.setPATH_OF_ANIMATION("pics/spell/fireBall.png");
+//        spell.setCountOfAnimation(16);
+//        spell.setFrameSize(48);
+//
+//
+//
+////        cards.add(spell);
+////
+////        minionMaker(cards,"pics/gifMinion/giv.gif");
+////        minionMaker(cards,"pics/gifMinion/gorg.gif");
+////
+////        for (int i = 0; i < 6; i++)
+////            cards.add(hero);
+////        CollectionScene.showInCollection(cards,new Collection(new Account("zahra","123")));
+//
+//        //todo test for deck show inas
 //        ArrayList<Deck> decks = new ArrayList<>();
 //        Deck deck = new Deck();
 //        spell.setDescription("atasssh");
@@ -134,12 +145,11 @@ public class StageLauncher extends Application {
 //        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
 
 
+        SelectModeScene.selectMode();
 
-        try {
-            collectionScene.setCursor(new ImageCursor(new Image(new FileInputStream("pics/mouse.png")))); } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        primaryStage.setScene(collectionScene);
+
+
+        primaryStage.setScene(selectModeScene);
         primaryStage.show();
     }
 

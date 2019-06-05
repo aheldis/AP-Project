@@ -23,6 +23,11 @@ public class Collection  implements Cloneable{
     private ArrayList<Deck> decks = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
 
+
+    public Account getAccount() {
+        return account;
+    }
+
     public Collection(Account account) {
         this.account = account;
     }
