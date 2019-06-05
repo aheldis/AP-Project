@@ -24,7 +24,7 @@ public class StageLauncher extends Application {
     private static final int HEIGHT = 900;
     private static Stage primaryStage;
     private static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
-    private static final String CURSOR_PATH = "pics/mouse.png";
+    private static final String CURSOR_PATH = "pics/cursor/mouse.png";
 
     public static int getWIDTH() {
         return WIDTH;
@@ -134,7 +134,7 @@ public class StageLauncher extends Application {
 
 
         try {
-            collectionScene.setCursor(new ImageCursor(new Image(new FileInputStream("pics/mouse.png"))));
+            collectionScene.setCursor(new ImageCursor(new Image(new FileInputStream("pics/cursor/mouse.png"))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
