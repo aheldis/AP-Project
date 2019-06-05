@@ -2,25 +2,13 @@ package view.sample;
 
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.account.Account;
-import model.account.Collection;
-import model.battle.Deck;
 import model.card.*;
-import view.CollectionScene;
 import view.GeneralGraphicMethods;
-import view.SelectModeScene;
+import view.SelectGameScene;
 import view.enums.StateType;
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -92,8 +80,7 @@ public class StageLauncher extends Application {
         Scene mainMenuScene = makeScene(StateType.MAIN_MENU,"pics/cursor/mouse.png");
         Scene collectionScene = makeScene(StateType.COLLECTION,"pics/cursor/mouse.png");
         Scene selectModeScene = makeScene(StateType.SELECT_MODE,"pics/cursor/mouse_green.png");
-
-
+        Scene selectGameScene = makeScene(StateType.SELECT_GAME,"pics/cursor/mouse_green.png");
 
 //        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
 //        URL url = null;
@@ -145,11 +132,11 @@ public class StageLauncher extends Application {
 //        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
 
 
-        SelectModeScene.selectMode();
+        SelectGameScene.selectGame();
 
 
 
-        primaryStage.setScene(selectModeScene);
+        primaryStage.setScene(selectGameScene);
         primaryStage.show();
     }
 
