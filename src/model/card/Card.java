@@ -45,8 +45,8 @@ public abstract class Card {
      */
     private String description;
     private static final int DEFAULT = -1;
-    private String PATH_OF_THE_PICTURE;
-    private String PATH_OF_ANIMATION;
+    private String pathOfThePicture;
+    private String pathOfAnimation;
     private int countOfAnimation;
     private int animationRow = 5;
     private int frameSize;
@@ -89,12 +89,12 @@ public abstract class Card {
         return countOfAnimation;
     }
 
-    public String getPATH_OF_ANIMATION() {
-        return PATH_OF_ANIMATION;
+    public String getPathOfAnimation() {
+        return pathOfAnimation;
     }
 
-    public void setPATH_OF_ANIMATION(String PATH_OF_ANIMATION) {
-        this.PATH_OF_ANIMATION = PATH_OF_ANIMATION;
+    public void setPathOfAnimation(String pathOfAnimation) {
+        this.pathOfAnimation = pathOfAnimation;
     }
 
     public void setHp(int hp) {
@@ -106,11 +106,11 @@ public abstract class Card {
     }
 
     public String getPathOfThePicture() {
-        return PATH_OF_THE_PICTURE;
+        return pathOfThePicture;
     }
 
-    public void setPATH_OF_THE_PICTURE(String PATH_OF_THE_PICTURE) {
-        this.PATH_OF_THE_PICTURE = PATH_OF_THE_PICTURE;
+    public void setPathOfThePicture(String pathOfThePicture) {
+        this.pathOfThePicture = pathOfThePicture;
     }
 
     public void setPlayer(Player player) {

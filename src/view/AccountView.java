@@ -99,7 +99,7 @@ public class AccountView {
         );
     }
 
-    public void showEachItem(Item item, int counter) {
+    private void showEachItem(Item item, int counter) {
         if (item == null)
             return;
         System.out.print(counter + " : Name : " + item.getName() +
@@ -107,7 +107,7 @@ public class AccountView {
         );
     }
 
-    public void showEachSpell(Spell spell, int counterOfCards) {
+    void showEachSpell(Spell spell, int counterOfCards) {
         if (counterOfCards != NOT_VALID)
             System.out.print(counterOfCards);
         System.out.print(" : Type : Spell");
@@ -119,7 +119,7 @@ public class AccountView {
         );
     }
 
-    public void showEachMinion(Minion minion, int counterOfCards) {
+    void showEachMinion(Minion minion, int counterOfCards) {
         if (counterOfCards != NOT_VALID)
             System.out.print(counterOfCards);
         System.out.print(" : Type : Minion");
@@ -265,7 +265,7 @@ public class AccountView {
 //        System.out.println(match.getTime()); //todo time-e java ???
     }
 
-    public void printDate(Date date) {
+    private void printDate(Date date) {
         Date currentDate = new Date();
         long diff = date.getTime() - currentDate.getTime();
         Duration duration = new Duration(diff);

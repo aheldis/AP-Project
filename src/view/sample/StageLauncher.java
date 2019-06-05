@@ -3,8 +3,10 @@ package view.sample;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.card.*;
+import view.AccountScene;
 import view.GeneralGraphicMethods;
 import view.SelectGameScene;
 import view.enums.StateType;
@@ -32,12 +34,10 @@ public class StageLauncher extends Application {
     }
 
     private static Scene makeScene(StateType stateType,String cursorPath) {
-        Group root = new Group();
+        StackPane root = new StackPane();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-
         GeneralGraphicMethods.setCursor(scene,cursorPath);
-
         return scene;
     }
 
@@ -51,8 +51,8 @@ public class StageLauncher extends Application {
 
     private void minionMaker(ArrayList<Card> cards, String path) {
         Minion minion = new Minion();
-        minion.setPATH_OF_THE_PICTURE("pics/minion_background.png");
-        minion.setPATH_OF_ANIMATION(path);
+        minion.setPathOfThePicture("pics/minion_background.png");
+        minion.setPathOfAnimation(path);
         minion.setHp(10);
         minion.setAp(10);
         cards.add(minion);
@@ -77,6 +77,7 @@ public class StageLauncher extends Application {
 
         //make scene with type, can access root with (Group)scene.getRoot
         //all of the scene are in a hashMap with each state we can access to them
+        Scene accountScene = makeScene(StateType.ACCOUNT_MENU, "pics/cursor/mouse.png");
         Scene mainMenuScene = makeScene(StateType.MAIN_MENU,"pics/cursor/mouse.png");
         Scene collectionScene = makeScene(StateType.COLLECTION,"pics/cursor/mouse.png");
         Scene selectModeScene = makeScene(StateType.SELECT_MODE,"pics/cursor/mouse_green.png");
@@ -131,12 +132,15 @@ public class StageLauncher extends Application {
 //        }
 //        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
 
-
-        SelectGameScene.selectGame();
-
-
-
-        primaryStage.setScene(selectGameScene);
+//
+//        SelectGameScene.selectGame();
+//
+//
+//
+//        primaryStage.setScene(selectGameScene);
+        AccountScene.makeBackground();
+        primaryStage.setFullScreen(true);
+        primaryStage.setScene(accountScene);
         primaryStage.show();
     }
 

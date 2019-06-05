@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -20,9 +21,9 @@ import static view.GeneralGraphicMethods.*;
 
 public class SelectGameScene {
     private static Scene selectGameScene = StageLauncher.getScene(StateType.SELECT_GAME);
-    private static Group selectGameRoot = (Group) selectGameScene.getRoot();
+    private static StackPane selectGameRoot = (StackPane) selectGameScene.getRoot();
     private static Scene selectModeScene = StageLauncher.getScene(StateType.SELECT_MODE);
-    private static Group selectModeRoot = (Group) selectModeScene.getRoot();
+    private static StackPane selectModeRoot = (StackPane) selectModeScene.getRoot();
 
     private static void changeScene(){
         Platform.runLater(() ->
