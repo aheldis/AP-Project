@@ -17,10 +17,10 @@ public class GeneralGraphicMethods {
     private static double HEIGHT = StageLauncher.getHeight();
     private static double WIDTH = StageLauncher.getWidth();
 
-    static void setBackground(Parent root, String path, Boolean blur, double width, double height) {
+    static ImageView setBackground(Parent root, String path, Boolean blur, double width, double height) {
         ImageView imageView = addImage(root, path, 0, 0, WIDTH + 50, HEIGHT + 50);
         if (imageView == null)
-            return;
+            return null;
         if (blur) {
             BoxBlur boxBlur = new BoxBlur();
             boxBlur.setWidth(width);
@@ -30,6 +30,7 @@ public class GeneralGraphicMethods {
         }
         imageView.fitWidthProperty();
         imageView.fitHeightProperty();
+        return imageView;
     }
 
 
