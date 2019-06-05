@@ -1,12 +1,12 @@
 package view;
 
-import javafx.scene.Group;
-import javafx.scene.ImageCursor;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import com.sun.javafx.scene.traversal.ParentTraversalEngine;
+import javafx.scene.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -20,7 +20,7 @@ public class GeneralGraphicMethods {
     private static int HEIGHT = StageLauncher.getHEIGHT();
     private static int WIDTH = StageLauncher.getWIDTH();
 
-    public static void setBackground(Group root, String path, Boolean blur, double width, double height) {
+    public static void setBackground(Parent root, String path, Boolean blur, double width, double height) {
         ImageView imageView = addImage(root, path, 0, 0,WIDTH,HEIGHT);
         if (imageView == null)
             return;
@@ -35,21 +35,32 @@ public class GeneralGraphicMethods {
         imageView.fitHeightProperty();
     }
 
-    public static Text addText(Group root, String input, int x, int y, Paint color, double fontSize){
+    public static Text addText(Parent root, String input, double x, double y, Paint color, double fontSize){
         Text text = new Text(input);
         text.setX(x);
         text.setY(y);
         text.setFill(color);
         text.setFont(Font.font(fontSize));
-        root.getChildren().add(text);
+       nodeAdder(text,root);
         return text;
     }
 
-    public static ImageView addImage(Group root, String path, int x, int y,int width,int height) {
+    private static void nodeAdder(Node node ,Parent root ){
+        if(root instanceof Group)
+            ((Group)root).getChildren().add(node);
+        if(root instanceof HBox)
+            ((HBox)root).getChildren().add(node);
+        if(root instanceof VBox)
+            ((VBox) root).getChildren().add(node);
+    }
+
+    public static ImageView addImage(Parent root, String path, double x, double y,double width,double height) {
         try {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);
-            root.getChildren().add(imageView);
+
+            nodeAdder(imageView,root);
+
             imageView.relocate(x, y);
             imageView.setFitHeight(height);
             imageView.setFitWidth(width);

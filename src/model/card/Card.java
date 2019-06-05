@@ -51,6 +51,15 @@ public abstract class Card {
     private int animationRow = 5;
     private int frameSize;
     private long millis;
+    private int heightOfPicture;
+
+    public void setHeightOfPicture(int heightOfPicture) {
+        this.heightOfPicture = heightOfPicture;
+    }
+
+    public int getHeightOfPicture() {
+        return heightOfPicture;
+    }
 
     public void setMillis(long millis) {
         this.millis = millis;
