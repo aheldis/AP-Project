@@ -33,11 +33,9 @@ public class GeneralGraphicMethods {
         return imageView;
     }
 
-
-    static Text addText(Parent root, String input, double x, double y, Paint color, double fontSize) {
+    public static Text addText(Parent root, String input, double x, double y, Paint color, double fontSize) {
         Text text = new Text(input);
-        text.setX(x);
-        text.setY(y);
+        text.relocate(x, y);
         text.setFill(color);
         text.setFont(Font.font(fontSize));
         nodeAdder(text, root);
@@ -53,13 +51,13 @@ public class GeneralGraphicMethods {
             ((VBox) root).getChildren().add(node);
     }
 
-    static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
+    public static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
         try {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);
+            imageView.relocate(x, y);
             imageView.setFitHeight(height);
             imageView.setFitWidth(width);
-            imageView.relocate(x, y);
             nodeAdder(imageView, root);
             return imageView;
         } catch (FileNotFoundException e) {

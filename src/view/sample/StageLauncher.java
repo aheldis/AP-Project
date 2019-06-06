@@ -6,9 +6,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.card.Card;
-import model.card.Minion;
-import view.AccountScene;
+import model.account.Account;
+import model.account.Collection;
+import model.battle.Deck;
+import model.card.*;
+import view.CollectionScene;
 import view.GeneralGraphicMethods;
 import view.enums.StateType;
 
@@ -104,52 +106,51 @@ public class StageLauncher extends Application {
 //        }
 
 
+
 //        ArrayList<Card> cards = new ArrayList<>();
 //        Hero hero = new Hero();
-//        hero.setPATH_OF_THE_PICTURE("pics/default.png");
+//        hero.setPATH_OF_THE_PICTURE("pics/Hero/hero_card/simorgh.png");
 //        hero.setHp(10);
 //        hero.setAp(10);
 //        hero.setDescription("hello girls");
 ////
-//
-//        Spell spell= new Spell();
-//        spell.setPATH_OF_THE_PICTURE("pics/minion_background.png");
-//        spell.setPATH_OF_ANIMATION("pics/spell/fireBall.png");
-//        spell.setCountOfAnimation(16);
-//        spell.setFrameSize(48);
-//
-//
-//
-////        cards.add(spell);
-////
-////        minionMaker(cards,"pics/gifMinion/giv.gif");
-////        minionMaker(cards,"pics/gifMinion/gorg.gif");
-////
-////        for (int i = 0; i < 6; i++)
-////            cards.add(hero);
-////        CollectionScene.showInCollection(cards,new Collection(new Account("zahra","123")));
-//
-//        //todo test for deck show inas
-//        ArrayList<Deck> decks = new ArrayList<>();
-//        Deck deck = new Deck();
-//        spell.setDescription("atasssh");
-//        spell.setName("atisih");
-//        deck.getCardsOfDeck().add(spell);
-//        deck.getCardsOfDeck().add(spell);
-//        deck.setName("zahra");
-//        for (int i = 0; i < 10; i++) {
-//            decks.add(deck);
-//        }
-//        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
 
+        Spell spell= new Spell();
+        spell.setPathOfThePicture(  "pics/minion_background.png");
+        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setCountOfAnimation(16);
+        spell.setFrameSize(48);
+
+
+
+//        cards.add(spell);
 //
-//        SelectGameScene.selectGame();
+//        minionMaker(cards,"pics/gifMinion/giv.gif");
+//        minionMaker(cards,"pics/gifMinion/gorg.gif");
 //
-//
-//
-//        primaryStage.setScene(selectGameScene);
-        AccountScene.getInstance().makeBackground();
-        primaryStage.setScene(accountScene);
+//        for (int i = 0; i < 6; i++)
+//            cards.add(hero);
+//        CollectionScene.showInCollection(cards,new Collection(new Account("zahra","123")));
+
+        //todo test for deck show inas
+        ArrayList<Deck> decks = new ArrayList<>();
+        Deck deck = new Deck();
+        spell.setDescription("atasssh");
+        spell.setName("atisih");
+        deck.getCardsOfDeck().add(spell);
+        deck.getCardsOfDeck().add(spell);
+        deck.setName("zahra");
+        for (int i = 0; i < 10; i++) {
+            decks.add(deck);
+        }
+        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
+
+
+       // SelectGameScene.selectGame();
+
+
+
+        primaryStage.setScene(collectionScene);
         primaryStage.show();
     }
 

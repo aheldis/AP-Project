@@ -5,12 +5,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.account.Collection;
@@ -21,8 +24,7 @@ import model.card.Minion;
 import model.card.Spell;
 import view.enums.ErrorType;
 import view.enums.StateType;
-import view.sample.SpriteMaker;
-import view.sample.StageLauncher;
+import view.sample.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -52,13 +54,17 @@ public class CollectionScene {
             imageView.fitWidthProperty();
             hBox.getChildren().add(imageView);
 
+            showMana(root,i * (X_BORDER + CARD_WIDTH)+40 ,
+                    j * (Y_BORDER + CARD_HEIGHT) + 130,card.getMp());
+
+
             imageView.setOnMouseEntered(event -> {
-//todo debug
-                try {/*
-                    Text[] descView = addImage(root, "pics/desc.png",
-                            i * (X_BORDER + CARD_WIDTH) + 70,
-                            j * (Y_BORDER + CARD_HEIGHT) + 390, 200, 100);
-                    Text[] apView = addImage(root, "pics/ap_show.png",
+
+                try {
+                    ImageView descView = addImage(root,"pics/desc.png",
+                            i* (X_BORDER + CARD_WIDTH) + 70,
+                            j * (Y_BORDER + CARD_HEIGHT) + 390,  200, 100);
+                    ImageView apView = addImage(root, "pics/ap_show.png",
                             i * (X_BORDER + CARD_WIDTH) - 5,
                             j * (Y_BORDER + CARD_HEIGHT) + 390, 100, 100);
                     ImageView hpView = addImage(root, "pics/hp_show.png",
@@ -66,15 +72,16 @@ public class CollectionScene {
                             j * (Y_BORDER + CARD_HEIGHT) + 390, 110, 100);
 
 
-                    Text hp = addText(root, card.getHp() + "", (i + 1) * (X_BORDER + CARD_WIDTH) - 10,
-                            j * (Y_BORDER + CARD_HEIGHT) + 420, Color.WHITE, 20);
-                    Text ap = addText(root, card.getAp() + "", i * (X_BORDER + CARD_WIDTH) - 15 + 50,
-                            j * (Y_BORDER + CARD_HEIGHT) + 420, Color.WHITE, 20);
-                    Text desc = addText(root, card.getDescription(), i * (X_BORDER + CARD_WIDTH) + 100,
-                            j * (Y_BORDER + CARD_HEIGHT) + 420, Color.WHITE, 20);
+                    Text hp = addText(root,card.getHp() + "",(i + 1) * (X_BORDER + CARD_WIDTH) - 10,
+                            j * (Y_BORDER + CARD_HEIGHT) + 430,Color.WHITE,20 );
+                    Text ap = addText(root,card.getAp() + "",i * (X_BORDER + CARD_WIDTH) - 15 + 50,
+                            j * (Y_BORDER + CARD_HEIGHT) + 430,Color.WHITE,20);
+                    Text desc = addText(root, card.getDescription(),i * (X_BORDER + CARD_WIDTH) + 100,
+                            j * (Y_BORDER + CARD_HEIGHT) + 430,Color.WHITE,20);
+
 
                     imageView.setOnMouseExited(event1 ->
-                            root.getChildren().removeAll(descView, hpView, apView, hp, ap, desc));*/
+                            root.getChildren().removeAll(descView, hpView, apView, hp, ap, desc));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -85,15 +92,19 @@ public class CollectionScene {
 
     }
 
+    private static void showMana(Group root,int x,int y,int mana){
+        addImage(root,"pics/icon_mana@2x.png",x,y,50,50);
+        addText(root,mana+"",x+20,y+20,Color.rgb(22,22,225,0.5),20);
+    }
 
     private static void textForCollection(Card card, int i, int j, ImageView imageView) {
         addText(root, card.getAp() + "",
                 i * (X_BORDER + CARD_WIDTH) + 98,
-                j * (Y_BORDER + CARD_HEIGHT) + 310, Color.WHITE, 20);
+                j * (Y_BORDER + CARD_HEIGHT) + 320,Color.WHITE,20);
 
         addText(root, card.getHp() + "",
                 i * (X_BORDER + CARD_WIDTH) + 175 + 53,
-                j * (Y_BORDER + CARD_HEIGHT) + 310, Color.WHITE, 20);
+                j * (Y_BORDER + CARD_HEIGHT) + 320,Color.WHITE,20);
 
         try {
             imageView.setOnMouseEntered(event -> {
@@ -126,6 +137,8 @@ public class CollectionScene {
             animationImageView.fitWidthProperty();
 
             textForCollection(card, i, j, imageView);
+            showMana(root,i * (X_BORDER + CARD_WIDTH)+40 ,
+                    j * (Y_BORDER + CARD_HEIGHT) + 130,card.getMp());
 
         } catch (Exception ignored) {
         }
@@ -141,12 +154,15 @@ public class CollectionScene {
                     i * (X_BORDER + CARD_WIDTH) + 150,
                     i * (Y_BORDER + CARD_HEIGHT) + 200,
                     root, card.getCountOfAnimation(),
-                    card.getAnimationRow(), card.getMillis(),
-                    card.getFrameSize(), card.getFrameSize(), card.getHeightOfPicture());
+                    card.getAnimationRow(), 4000,
+                    48, 48, 256);
 
             textForCollection(card, i, j, imageView);
-        } catch (Exception ignored) {
-        }
+
+            showMana(root,i * (X_BORDER + CARD_WIDTH)+40 ,
+                    j * (Y_BORDER + CARD_HEIGHT) + 130,card.getMp());
+
+        } catch (Exception ignored) { }
     }
 
     public static void showInCollection(ArrayList<Card> cards, Collection collection) {
@@ -169,16 +185,13 @@ public class CollectionScene {
             StackPane stackPane = new StackPane();
             stackPane.setAlignment(Pos.CENTER);
 
-            Image searchBarImageView = new Image(new FileInputStream(
-                    "pics/collection/searchbar.png"));
-
             ImageView magnifierView = new ImageView(new Image(new FileInputStream(
-                    "pics\\collection\\magnifier_icon.png")));
+                    "pics/collection/magnifier_icon.png")));
             magnifierView.setFitHeight(40);
             magnifierView.setFitWidth(40);
 
             ImageView rightBar = new ImageView(new Image(new FileInputStream(
-                    "pics\\collection\\left.png")));
+                    "pics/collection/left.png")));
             rightBar.setFitWidth(100);
             rightBar.setFitHeight(100);
 
@@ -187,24 +200,24 @@ public class CollectionScene {
 
             TextField textArea = new TextField();
             textArea.setPrefHeight(100);
-            textArea.relocate(10, 10);
+            textArea.relocate(10,10);
             textArea.positionCaret(1);
             textArea.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 25px; -fx-font-weight: bold;");
             //textArea.setStyle("-fx-text-inner-color: red;");
             textArea.setBackground(new Background(new BackgroundFill(Color.rgb(5, 5, 5, 0.1),
                     CornerRadii.EMPTY, Insets.EMPTY)));
 
-            hBox.getChildren().addAll(textArea, stackPane);
-            hBox.setBackground(new Background(new BackgroundFill(Color.rgb(10, 10, 10, 0.1),
+            hBox.getChildren().addAll( textArea,stackPane);
+            hBox.setBackground(new Background(
+                    new BackgroundFill(Color.rgb(10, 10, 10, 0.1),
                     CornerRadii.EMPTY, Insets.EMPTY)));
             vBox.getChildren().add(hBox);
 
             magnifierView.setOnMouseClicked(event -> {
-                System.out.println(textArea.getText());
                 textArea.clear();
                 if (!collection.searchCardName(textArea.getText())) {
-                    ErrorType.HAVE_NOT_CARD_IN_COLLECTION.printMessage();
-                    //todo show cards
+                     ErrorType.HAVE_NOT_CARD_IN_COLLECTION.printMessage();
+                     //todo show cards
                 }
             });
 
@@ -236,7 +249,7 @@ public class CollectionScene {
                 addImage(group, "pics/menu/button_cancel.png",
                         500, 10, 200, 80);
 
-                addText(group, "BACK", 567, 23, Color.WHITE, 30);
+                addText(group,"BACK",567,40,Color.WHITE,30);
                 vBox.getChildren().add(group);
                 group.setOnMouseClicked(event -> {
                     //todo go to menu for haniyeh
@@ -249,8 +262,6 @@ public class CollectionScene {
             e.printStackTrace();
         }
         collectionScene.setRoot(scroller);
-
-
     }
 
     /**
@@ -284,12 +295,12 @@ public class CollectionScene {
         ImageView plateImageView = addImage(root, "pics/collection/deck-select/back-" + a + ".png",
                 350 + (300 * (i / 5.0)), 20 + (i % 5) * (150), 230, 200);
 
-        addText(root, (i + 1) + "", 350 + (300 * (i / 5.0)) + 20,
-                20 + (i % 5) * (150) + 120,
-                Color.rgb(225, 225, 225, 0.5), 30);
+        addText(root,(i + 1) + "",350 + (300 * (i / 5.0)) + 20,
+                20 + (i % 5) * (150) + 150,
+                Color.rgb(225, 225, 225, 0.5),30);
 
-        addText(root, deck.getName(), 350 + (300 * (i / 5.0)) + 80, 20 + (i % 5) * (150) + 120,
-                Color.rgb(211, 100, 225, 0.5), 40);
+        addText(root,deck.getName(),350 + (300 * (i / 5.0)) + 80, 20 + (i % 5) * (150) + 150,
+                Color.rgb(211, 100, 225, 0.5),40 );
 
 
         plateImageView.setOnMouseClicked(event -> {
@@ -299,41 +310,52 @@ public class CollectionScene {
             ImageView deckImageView;
             try {
                 HBox ribbonHBox = new HBox();
-                deckImageView = addImage(vBox,
-                        "pics/collection/deck_ribbons/ribbon-" + a + ".png", 0, 0,
-                        324, 150);
+                addImage(vBox,
+                        "pics/collection/deck_ribbons/ribbon-" + a + ".png",0,0,
+                        324,150);
 
                 final ImageView addCardToDeck = makeIConBarForDeck(
-                        "pics\\collection\\add-blue.png", 40, 10);
+                        "pics/collection/add-blue.png",40,10);
 
                 final ImageView delete_deck = makeIConBarForDeck(
-                        "pics\\collection\\close-deck.png", 70, 10);
+                        "pics/collection/close-deck.png",70,10);
 
                 final ImageView checkMainDeck;
                 if (deck.getName().equals(collection.getAccount().getMainDeck().getName())) {
                     checkMainDeck = makeIConBarForDeck(
-                            "pics\\collection\\checkmark-green.png", 10, 10);
-                } else {
+                            "pics/collection/checkmark-green.png",10,10);
+                }
+                else{
                     checkMainDeck = makeIConBarForDeck(
-                            "pics\\collection\\checkmark-blue.png", 10, 10);
+                            "pics/collection/checkmark-blue.png",10,10);
                 }
 
-                addCardToDeck.setOnMouseClicked(event15 -> {
-                    //todo addd a card to deck
+
+                addCardToDeck.setOnMouseEntered(event15 -> {
+                    System.out.println("hi");
+                    Rectangle rectangle = new Rectangle(350,50,800,700);
+                    rectangle.setFill(Color.rgb(0,0,0,0.7));
+                    rectangle.setArcHeight(50);
+                    rectangle.setArcWidth(50);
+                    root.getChildren().add(rectangle);
+
+                    ImageView close= addImage(root,
+                            "pics/collection/button_close@2x.png",1100,50,50,50);
+                    close.setOnMouseClicked(event17 -> root.getChildren().removeAll(close,rectangle));
+
                 });
 
                 checkMainDeck.setOnMouseClicked(event13 -> {
-                    if (collection.validateDeck(deck.getName())) {
-                        collection.selectADeckAsMainDeck(deck.getName());
-                        root.getChildren().remove(checkMainDeck);
-                        makeIConBarForDeck("D:\\project_Duelyst1\\pics\\collection\\checkmark-green.png",
-                                20, 10);
-                    }
-
-
+                   if( collection.validateDeck(deck.getName())){
+                       collection.selectADeckAsMainDeck(deck.getName());
+                       root.getChildren().remove(checkMainDeck);
+                       makeIConBarForDeck("pics/collection/checkmark-green.png",
+                               20,10);
+                   }
                 });
 
                 delete_deck.setOnMouseClicked(event14 -> {
+                    System.out.println("hi");
                     try {
                         collection.deleteDeck(deck.getName());
                         root.getChildren().removeAll(deletable);
@@ -372,14 +394,15 @@ public class CollectionScene {
                     vBox.getChildren().add(group);
 
                     garbage.setOnMouseClicked(event16 -> {
-                        collection.removeCardFromDeck(card, deck.getName());
+                        //todo az commenti to baziye asli dar biyad
+                        //collection.removeCardFromDeck(card,deck.getName());
                         root.getChildren().remove(group);
                         group.getChildren().clear();
 
                     });
 
-                    Text text = addText(group, card.getName() + "\n" + card.getDescription(),
-                            25, 70, Color.rgb(200, 200, 225, 0.5), 20);
+                    Text text = addText(group,card.getName() + "\n" + card.getDescription(),
+                            60,10,Color.rgb(200, 200, 225, 0.5),20);
                     text.setOnMouseEntered(event1 -> {
                         text.setUnderline(true);
                         text.setFill(Color.rgb(49, 255, 245, 0.5));
@@ -388,7 +411,6 @@ public class CollectionScene {
                         text.setUnderline(false);
                         text.setFill(Color.rgb(200, 200, 225, 0.5));
                     });
-                    group.getChildren().add(text);
                 }
 
             } catch (FileNotFoundException e) {
@@ -430,6 +452,7 @@ public class CollectionScene {
                     collectionScene.getWidth() - 67, collectionScene.getHeight() - 67,
                     15, 15);
             //todo mizane ro plus ye kofti beshe
+
 
 //            plus.setOnMouseClicked(event -> {
 //                AnimationTimer animationTimer = new AnimationTimer() {
