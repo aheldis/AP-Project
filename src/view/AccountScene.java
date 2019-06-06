@@ -6,10 +6,13 @@ import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import view.enums.StateType;
 import view.sample.StageLauncher;
@@ -24,9 +27,9 @@ public class AccountScene {
     private static Group root = (Group) accountScene.getRoot();
     private static final HashMap<Node, Bounds> movables = new HashMap<>();
     private static final ArrayList<Node> movableNodes = new ArrayList<>();
+    private static final ArrayList<Node> windows = new ArrayList<>();
 
-    private AccountScene() {
-    }
+    private AccountScene() { }
 
     public static AccountScene getInstance() {
         return instance;
@@ -37,6 +40,44 @@ public class AccountScene {
         ImageView background = GeneralGraphicMethods.setBackground(root, backgroundPath, true, 0, 0);
         addLanterns();
         addMovables(background);
+        addWindows();
+    }
+
+    private void addWindows() {
+        double centerX = accountScene.getWidth() / 2;
+        double centerY = accountScene.getHeight() / 2;
+        double sizeX = 500;
+        double sizeY = 600;
+        Rectangle rectangle = new Rectangle( centerX - sizeX / 2, centerY - sizeY / 2, sizeX, sizeY);
+        rectangle.setFill(Color.rgb(40, 40, 36, 0.95));
+        root.getChildren().add(rectangle);
+        TextField userName = new TextField();
+        userName.setPromptText("User name");
+        userName.setPrefSize(350, 75);
+        userName.relocate(centerX - 175, centerY - sizeY / 2 + 100);
+        userName.setStyle("-fx-background-color: gray; -fx-font-size: 20px");
+        root.getChildren().add(userName);
+        TextField password = new TextField();
+        password.setPromptText("Password");
+        password.setPrefSize(350, 75);
+        password.relocate(centerX - 175, centerY - sizeY / 2 + 200);
+        password.setStyle("-fx-background-color: gray; -fx-font-size: 20px");
+        root.getChildren().add(password);
+        String noChange = "-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20px";
+        Button signUp = new Button("SIGN UP");
+        signUp.setPrefSize(350, 75);
+        signUp.relocate(centerX - 175, centerY - sizeY / 2 + 350);
+        signUp.setStyle("-fx-background-color: darkorange;" + noChange);
+        root.getChildren().add(signUp);
+        signUp.setOnMouseEntered(event -> {
+            GeneralGraphicMethods.setCursor(accountScene, "pics/cursor/mouse.png");
+            signUp.setStyle("-fx-background-color: red;" + noChange);
+        });
+        signUp.setOnMouseExited(event -> {
+            GeneralGraphicMethods.setCursor(accountScene, "pics/cursor/mouse_auto@2x.png");
+            signUp.setStyle("-fx-background-color: darkorange;" + noChange);
+        });
+
     }
 
     private void addLanterns() {

@@ -33,7 +33,7 @@ public class GeneralGraphicMethods {
         return imageView;
     }
 
-    public static Text addText(Parent root, String input, double x, double y, Paint color, double fontSize) {
+    static Text addText(Parent root, String input, double x, double y, Paint color, double fontSize) {
         Text text = new Text(input);
         text.relocate(x, y);
         text.setFill(color);
@@ -53,7 +53,7 @@ public class GeneralGraphicMethods {
             ((StackPane) root).getChildren().add(node);
     }
 
-    public static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
+    static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
         try {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);

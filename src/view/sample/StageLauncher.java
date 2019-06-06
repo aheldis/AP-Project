@@ -88,7 +88,7 @@ public class StageLauncher extends Application {
 
         //make scene with type, can access root with (Group)scene.getRoot
         //all of the scene are in a hashMap with each state we can access to them
-        Scene accountScene = makeScene(StateType.ACCOUNT_MENU, "pics/cursor/mouse.png");
+        Scene accountScene = makeScene(StateType.ACCOUNT_MENU, "pics/cursor/mouse_auto@2x.png");
         Scene mainMenuScene = makeScene(StateType.MAIN_MENU, "pics/cursor/mouse.png");
         Scene collectionScene = makeScene(StateType.COLLECTION, "pics/cursor/mouse.png");
         Scene selectModeScene = makeScene(StateType.SELECT_MODE, "pics/cursor/mouse_green.png");
