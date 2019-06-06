@@ -189,7 +189,7 @@ public class AccountScene {
                         finalDistanceY = distanceY * 2 * GeneralGraphicMethods.getRatioY();
                     } else {
                         finalDistanceX = distanceX * GeneralGraphicMethods.getRatioX();
-                        finalDistanceY = distanceY * GeneralGraphicMethods.getRatioX();
+                        finalDistanceY = distanceY * GeneralGraphicMethods.getRatioY();
                     }
                     Bounds bounds = AccountScene.movables.get(node);
                     new Thread(() -> Platform.runLater(() -> {
