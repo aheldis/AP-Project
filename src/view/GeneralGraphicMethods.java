@@ -18,7 +18,7 @@ public class GeneralGraphicMethods {
     private static double WIDTH = StageLauncher.getWidth();
 
     static ImageView setBackground(Parent root, String path, Boolean blur, double width, double height) {
-        ImageView imageView = addImage(root, path, 0, 0, WIDTH, HEIGHT);
+        ImageView imageView = addImage(root, path, 0, 0, WIDTH / getRatioX(), HEIGHT / getRatioY());
         if (imageView == null)
             return null;
         if (blur) {
@@ -55,11 +55,11 @@ public class GeneralGraphicMethods {
         try {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);
-            imageView.relocate(x, y);
-            imageView.setX(x);
-            imageView.setY(y);
-            imageView.setFitHeight(height);
-            imageView.setFitWidth(width);
+            imageView.relocate(x * getRatioX(), y * getRatioY());
+            imageView.setX(x * getRatioX());
+            imageView.setY(y * getRatioY());
+            imageView.setFitHeight(height * getRatioY());
+            imageView.setFitWidth(width * getRatioY());
             nodeAdder(imageView, root);
             return imageView;
         } catch (FileNotFoundException e) {
@@ -74,5 +74,13 @@ public class GeneralGraphicMethods {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public static double getRatioX() {
+        return StageLauncher.getWidth() / 1970;
+    }
+
+    public static double getRatioY() {
+        return StageLauncher.getHeight() / 1080;
     }
 }

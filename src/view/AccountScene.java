@@ -47,7 +47,7 @@ public class AccountScene {
         movableNodes.add(imageView);
         String foregroundPath = "pics/menu/foreground@2x.png";
         imageView = GeneralGraphicMethods.addImage(root, foregroundPath,
-                380, 330, 2676 / 1.8, 810 / 1.8);
+                380, 320, 2676 / 1.8, 810 / 1.8);
         movables.put(imageView, imageView.getBoundsInLocal());
         movableNodes.add(imageView);
         moveWithMouse(background, width / 2, height / 2);
