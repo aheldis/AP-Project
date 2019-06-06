@@ -10,7 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import view.enums.StateType;
 import view.sample.StageLauncher;
@@ -105,34 +104,27 @@ public class AccountScene {
 
     private void addMugs(ImageView background) {
         String mugPath = "pics/menu/vignette.png";
-        int count = 50;
+        int count = 200;
         ImageView[] mugs = new ImageView[count];
         double xv = -0.5;
         double ratioX = GeneralGraphicMethods.getRatioX();
-        double ratioY = GeneralGraphicMethods.getRatioY();
         Random random = new Random();
-        for (int i = 0; i < count / 2; i++) {
+        for (int i = 0; i < count; i++) {
+            int randNumber = random.nextInt(3);
             double x = 800 - i * random.nextInt(200);
-            double y = 400 + random.nextInt(200);
-            mugs[i * 2] = GeneralGraphicMethods.addImage(root, mugPath, x, y, 1103 / 5, 1080 / 5);
-            mugs[i * 2 + 1] = GeneralGraphicMethods.addImage(root, mugPath, x + 110,
-                    y, 1103 / 5, 1080 / 5);
-            mugs[i * 2].setRotationAxis(Rotate.Y_AXIS);
-            mugs[i * 2].setRotate(180);
+            double y = StageLauncher.getHeight() - 1080 / 5 * randNumber;
+            mugs[i] = GeneralGraphicMethods.addImage(root, mugPath, x, y,
+                    1103 / 5 * randNumber, 1080 / 5 * randNumber);
+            mugs[i].setRotate(270);
         }
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                for (int i = 0; i < count / 2; i++) {
-                    mugs[i * 2].setX(mugs[i * 2].getX() + xv * ratioX);
-                    mugs[i * 2 + 1].setX(mugs[i * 2 + 1].getX() + xv * ratioX);
-                    if (mugs[i * 2 + 1].getX() < -600) {
+                for (int i = 0; i < count; i++) {
+                    mugs[i].setX(mugs[i].getX() + xv * ratioX);
+                    if (mugs[i].getX() < -100) {
                         double x = (900 - random.nextInt(200)) * ratioX;
-                        double y = (350 + random.nextInt(200)) * ratioY;
-                        mugs[i * 2].setX(x);
-                        mugs[i * 2].setY(y);
-                        mugs[i * 2 + 1].setX(x + 110 * ratioX);
-                        mugs[i * 2 + 1].setY(y);
+                        mugs[i].setX(x);
                     }
                 }
             }
