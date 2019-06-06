@@ -75,7 +75,7 @@ public class AccountScene {
                         if (lastTime == 0) {
                             lastTime = now;
                         }
-                        if (now > lastTime + second * 2) {
+                        if (now > lastTime + second / 2 + second / 4) {
                             lastTime = now;
                             lantern.setX((380 + random.nextInt(450)) * ratioX);
                             lantern.setY((100 + random.nextInt(70)) * ratioY);
