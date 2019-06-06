@@ -1,15 +1,15 @@
 package view;
 
-import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import view.enums.StateType;
 import view.sample.StageLauncher;
@@ -40,39 +40,66 @@ public class AccountScene {
     }
 
     private void addLanterns() {
-        String lanternPath = "pics/menu/lantern_large_3.png";
-        int count = 50;
+        ArrayList<String> lanternPaths = new ArrayList<>();
+        lanternPaths.add("pics/menu/lantern_large_3.png");
+        lanternPaths.add("pics/menu/lantern_large_2.png");
+        lanternPaths.add("pics/menu/lantern_large_3.png");
+        lanternPaths.add("pics/menu/lantern_small.png");
+        int count = 80;
         ImageView[] lanterns = new ImageView[count];
         int[] xv = new int[count];
         int[] yv = new int[count];
+        boolean[] faded = new boolean[count];
         double ratioX = GeneralGraphicMethods.getRatioX();
         double ratioY = GeneralGraphicMethods.getRatioY();
         Random random = new Random();
         for (int i = 0; i < count; i++) {
-            lanterns[i] = GeneralGraphicMethods.addImage(root, lanternPath,
+            lanterns[i] = GeneralGraphicMethods.addImage(root, lanternPaths.get(random.nextInt(4)),
                     380 + random.nextInt(450), 100 + random.nextInt(70),
-                    random.nextInt(10) + 15, random.nextInt(20) + 10);
+                    20, 27);
             xv[i] = random.nextInt(2) + 2;
             yv[i] = random.nextInt(4) - 4;
         }
 
         AnimationTimer animationTimer = new AnimationTimer() {
+            private long lastTime = 0;
+            private long second = (long) Math.pow(10, 9);
+
             @Override
             public void handle(long now) {
                 for (int i = 0; i < count; i++) {
                     ImageView lantern = lanterns[i];
-                    lantern.setX(((lantern.getX() + (double) xv[i] / 10) % 850) * ratioX);
-                    if (lantern.getX() < 380 * ratioX) {
-                        lantern.setX((380 + random.nextInt(400)) * ratioX);
-                        lantern.setFitWidth((random.nextInt(10) + 15) * ratioX);
+                    lantern.setX(lantern.getX() + (double) xv[i] / 10 * ratioX);
+                    lantern.setY(lantern.getY() + (double) yv[i] / 10 * ratioY);
+                    if (faded[i]) {
+                        if (lastTime == 0) {
+                            lastTime = now;
+                        }
+                        if (now > lastTime + second * 2) {
+                            lastTime = now;
+                            lantern.setX((380 + random.nextInt(450)) * ratioX);
+                            lantern.setY((100 + random.nextInt(70)) * ratioY);
+                            lantern.setFitWidth(20 * ratioX);
+                            lantern.setFitHeight(27 * ratioY);
+                            FadeTransition fade = new FadeTransition();
+                            fade.setDuration(Duration.millis(500));
+                            fade.setFromValue(0);
+                            fade.setToValue(10);
+                            fade.setNode(lantern);
+                            fade.play();
+                            faded[i] = false;
+                        }
+                    } else if (lantern.getX() > 850 * ratioX || lantern.getY() < -50) {
+                        FadeTransition fade = new FadeTransition();
+                        fade.setDuration(Duration.millis(500));
+                        fade.setFromValue(10);
+                        fade.setToValue(0);
+                        fade.setNode(lantern);
+                        fade.play();
+                        faded[i] = true;
                     }
-                    lantern.setY(lantern.getY() + ((double) yv[i] / 10) * ratioY);
-                    if ((lantern.getY()) < -200) {
-                        lantern.setY((100 + random.nextInt(70)) * ratioY);
-                        lantern.setFitHeight((random.nextInt(20) + 10) * ratioY);
-                    }
-                    lantern.setFitWidth(lantern.getFitHeight() + 0.01 * ratioX);
-                    lantern.setFitHeight(lantern.getFitHeight() + 0.01 * ratioY);
+                    lantern.setFitWidth(lantern.getFitWidth() + 0.03 * ratioX);
+                    lantern.setFitHeight(lantern.getFitHeight() + 0.03 * ratioY);
                 }
             }
         };
@@ -93,7 +120,7 @@ public class AccountScene {
                 40, 2167 / 1.8, 1843 / 1.8);
         movables.put(imageView, imageView.getBoundsInLocal());
         movableNodes.add(imageView);
-        addMugs(background);
+        addMugs();
         String foregroundPath = "pics/menu/foreground@2x.png";
         imageView = GeneralGraphicMethods.addImage(root, foregroundPath,
                 380, 320, 2676 / 1.8, 810 / 1.8);
@@ -102,28 +129,37 @@ public class AccountScene {
         moveWithMouse(background, width / 2, height / 2);
     }
 
-    private void addMugs(ImageView background) {
-        String mugPath = "pics/menu/vignette.png";
-        int count = 200;
+    private void addMugs() {
+        ArrayList<String> cloudPaths = new ArrayList<>();
+        for (int i = 1; i < 8; i++)
+            cloudPaths.add("pics/particles/cloud_00" + i + "@2x.png");
+        int count = 40;
         ImageView[] mugs = new ImageView[count];
         double xv = -0.5;
         double ratioX = GeneralGraphicMethods.getRatioX();
         Random random = new Random();
         for (int i = 0; i < count; i++) {
-            int randNumber = random.nextInt(3);
-            double x = 800 - i * random.nextInt(200);
-            double y = StageLauncher.getHeight() - 1080 / 5 * randNumber;
-            mugs[i] = GeneralGraphicMethods.addImage(root, mugPath, x, y,
-                    1103 / 5 * randNumber, 1080 / 5 * randNumber);
-            mugs[i].setRotate(270);
+            int randNumber = random.nextInt(2) + 3;
+            double x = 800 - i * random.nextInt(50);
+            double y = 360 + random.nextInt(200);
+            mugs[i] = GeneralGraphicMethods.addImage(root, cloudPaths.get(random.nextInt(7)), x, y,
+                    100 * randNumber, 50 * randNumber);
+            Lighting lighting = new Lighting();
+            lighting.setDiffuseConstant(1.0);
+            lighting.setSpecularConstant(0.0);
+            lighting.setSpecularExponent(0.0);
+            lighting.setSurfaceScale(0.0);
+            lighting.setLight(new Light.Distant(45, 45,
+                    Color.rgb(121, 149, 255, 1)));
+            mugs[i].setEffect(lighting);
         }
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 for (int i = 0; i < count; i++) {
                     mugs[i].setX(mugs[i].getX() + xv * ratioX);
-                    if (mugs[i].getX() < -100) {
-                        double x = (900 - random.nextInt(200)) * ratioX;
+                    if (mugs[i].getX() + mugs[i].getFitWidth() < -100) {
+                        double x = 1300 * ratioX;
                         mugs[i].setX(x);
                     }
                 }
@@ -135,6 +171,8 @@ public class AccountScene {
     private void moveWithMouse(ImageView imageView, double centerX, double centerY) {
         final double[] firstDistanceX = {0};
         final double[] firstDistanceY = {0};
+
+
         imageView.setOnMouseMoved(event -> {
             double distanceX = event.getX() - centerX;
             double distanceY = event.getY() - centerY;

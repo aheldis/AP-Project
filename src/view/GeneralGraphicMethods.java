@@ -78,11 +78,11 @@ public class GeneralGraphicMethods {
         }
     }
 
-    public static double getRatioX() {
+    static double getRatioX() {
         return StageLauncher.getWidth() / 1970;
     }
 
-    public static double getRatioY() {
+    static double getRatioY() {
         return StageLauncher.getHeight() / 1080;
     }
 }
