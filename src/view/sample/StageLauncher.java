@@ -143,7 +143,14 @@ public class StageLauncher extends Application {
         for (int i = 0; i < 10; i++) {
             decks.add(deck);
         }
-        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
+
+        Collection collection = new Collection(new Account("zahra","123"));
+        for(int i=0;i<13;i++){
+            collection.addToCards(spell);
+
+        }
+
+        CollectionScene.showDeck(decks,collection);
 
 
        // SelectGameScene.selectGame();

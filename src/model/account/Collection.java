@@ -12,6 +12,7 @@ import view.enums.ErrorType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Spliterator;
 
 public class Collection  implements Cloneable{
 
@@ -73,19 +74,28 @@ public class Collection  implements Cloneable{
         accountView.cardsAndItemsView(spells, minions, heroes, new ArrayList<>(Arrays.asList(items)));
     }
 
-    public void addToHeros(Hero hero) {
+    public void addToCards(Card card){
+        if(card instanceof Hero)
+            addToHeros((Hero) card);
+        if(card instanceof Minion)
+            addToMinions((Minion) card);
+        if(card instanceof Spell)
+            addToSpells((Spell) card);
+    }
+
+    void addToHeros(Hero hero) {
         heroes.add(hero);
     }
 
-    public void addToMinions(Minion minion) {
+    void addToMinions(Minion minion) {
         minions.add(minion);
     }
 
-    public void addToSpells(Spell spell) {
+    void addToSpells(Spell spell) {
         spells.add(spell);
     }
 
-    public void addToItems(Usable item) {
+    void addToItems(Usable item) {
         for (int i = 0; i < 3; i++) {
             if (items[i] == null) {
                 items[i] = item;
