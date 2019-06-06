@@ -18,7 +18,7 @@ public class GeneralGraphicMethods {
     private static double WIDTH = StageLauncher.getWidth();
 
     static ImageView setBackground(Parent root, String path, Boolean blur, double width, double height) {
-        ImageView imageView = addImage(root, path, 0, 0, WIDTH + 50, HEIGHT + 50);
+        ImageView imageView = addImage(root, path, 0, 0, WIDTH, HEIGHT);
         if (imageView == null)
             return null;
         if (blur) {
@@ -56,6 +56,8 @@ public class GeneralGraphicMethods {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);
             imageView.relocate(x, y);
+            imageView.setX(x);
+            imageView.setY(y);
             imageView.setFitHeight(height);
             imageView.setFitWidth(width);
             nodeAdder(imageView, root);

@@ -6,11 +6,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.account.Account;
-import model.account.Collection;
-import model.battle.Deck;
-import model.card.*;
-import view.CollectionScene;
+import model.card.Card;
+import model.card.Minion;
+import view.AccountScene;
 import view.GeneralGraphicMethods;
 import view.enums.StateType;
 
@@ -78,8 +76,8 @@ public class StageLauncher extends Application {
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setX(primaryScreenBounds.getMinX());
         primaryStage.setY(primaryScreenBounds.getMinY());
-        WIDTH = primaryScreenBounds.getWidth();
-        HEIGHT = primaryScreenBounds.getHeight();
+        WIDTH = primaryScreenBounds.getWidth() + 50;
+        HEIGHT = primaryScreenBounds.getHeight() + 50;
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
         primaryStage.setFullScreen(true);
@@ -106,7 +104,6 @@ public class StageLauncher extends Application {
 //        }
 
 
-
 //        ArrayList<Card> cards = new ArrayList<>();
 //        Hero hero = new Hero();
 //        hero.setPATH_OF_THE_PICTURE("pics/Hero/hero_card/simorgh.png");
@@ -114,13 +111,12 @@ public class StageLauncher extends Application {
 //        hero.setAp(10);
 //        hero.setDescription("hello girls");
 ////
-
-        Spell spell= new Spell();
-        spell.setPathOfThePicture(  "pics/minion_background.png");
-        spell.setPathOfAnimation("pics/spell/fireBall.png");
-        spell.setCountOfAnimation(16);
-        spell.setFrameSize(48);
-
+//
+//        Spell spell = new Spell();
+//        spell.setPathOfThePicture("pics/minion_background.png");
+//        spell.setPathOfAnimation("pics/spell/fireBall.png");
+//        spell.setCountOfAnimation(16);
+//        spell.setFrameSize(48);
 
 
 //        cards.add(spell);
@@ -131,26 +127,25 @@ public class StageLauncher extends Application {
 //        for (int i = 0; i < 6; i++)
 //            cards.add(hero);
 //        CollectionScene.showInCollection(cards,new Collection(new Account("zahra","123")));
-
-        //todo test for deck show inas
-        ArrayList<Deck> decks = new ArrayList<>();
-        Deck deck = new Deck();
-        spell.setDescription("atasssh");
-        spell.setName("atisih");
-        deck.getCardsOfDeck().add(spell);
-        deck.getCardsOfDeck().add(spell);
-        deck.setName("zahra");
-        for (int i = 0; i < 10; i++) {
-            decks.add(deck);
-        }
-        CollectionScene.showDeck(decks,new Collection(new Account("zahra","123")));
-
-
-       // SelectGameScene.selectGame();
+//
+//        //todo test for deck show inas
+//        ArrayList<Deck> decks = new ArrayList<>();
+//        Deck deck = new Deck();
+//        spell.setDescription("atasssh");
+//        spell.setName("atisih");
+//        deck.getCardsOfDeck().add(spell);
+//        deck.getCardsOfDeck().add(spell);
+//        deck.setName("zahra");
+//        for (int i = 0; i < 10; i++) {
+//            decks.add(deck);
+//        }
+//        CollectionScene.showDeck(decks, new Collection(new Account("zahra", "123")));
 
 
+        // SelectGameScene.selectGame();
 
-        primaryStage.setScene(collectionScene);
+        AccountScene.getInstance().makeBackground();
+        primaryStage.setScene(accountScene);
         primaryStage.show();
     }
 
