@@ -141,6 +141,26 @@ public class StageLauncher extends Application {
 //        }
 //        CollectionScene.showDeck(decks, new Collection(new Account("zahra", "123")));
 
+        //todo test for deck show inas
+        ArrayList<Deck> decks = new ArrayList<>();
+        Deck deck = new Deck();
+        spell.setDescription("atasssh");
+        spell.setName("atisih");
+        deck.getCardsOfDeck().add(spell);
+        deck.getCardsOfDeck().add(spell);
+        deck.setName("zahra");
+        for (int i = 0; i < 10; i++) {
+            decks.add(deck);
+        }
+
+        Collection collection = new Collection(new Account("zahra","123"));
+        for(int i=0;i<13;i++){
+            collection.addToCards(spell);
+
+        }
+
+        CollectionScene.showDeck(decks,collection);
+
 
         // SelectGameScene.selectGame();
 

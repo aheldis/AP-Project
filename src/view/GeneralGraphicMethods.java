@@ -49,6 +49,8 @@ public class GeneralGraphicMethods {
             ((HBox) root).getChildren().add(node);
         if (root instanceof VBox)
             ((VBox) root).getChildren().add(node);
+        if(root instanceof StackPane)
+            ((StackPane) root).getChildren().add(node);
     }
 
     public static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
