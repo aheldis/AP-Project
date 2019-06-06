@@ -51,6 +51,13 @@ public class AccountScene {
         Rectangle rectangle = new Rectangle( centerX - sizeX / 2, centerY - sizeY / 2, sizeX, sizeY);
         rectangle.setFill(Color.rgb(40, 40, 36, 0.95));
         root.getChildren().add(rectangle);
+        windows.add(rectangle);
+        signUp(sizeY);
+    }
+
+    private void signUp(double sizeY) {
+        double centerX = accountScene.getWidth() / 2;
+        double centerY = accountScene.getHeight() / 2;
         TextField userName = new TextField();
         userName.setPromptText("User name");
         userName.setPrefSize(350, 75);
@@ -63,21 +70,27 @@ public class AccountScene {
         password.relocate(centerX - 175, centerY - sizeY / 2 + 200);
         password.setStyle("-fx-background-color: gray; -fx-font-size: 20px");
         root.getChildren().add(password);
-        String noChange = "-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20px";
-        Button signUp = new Button("SIGN UP");
-        signUp.setPrefSize(350, 75);
-        signUp.relocate(centerX - 175, centerY - sizeY / 2 + 350);
-        signUp.setStyle("-fx-background-color: darkorange;" + noChange);
-        root.getChildren().add(signUp);
-        signUp.setOnMouseEntered(event -> {
-            GeneralGraphicMethods.setCursor(accountScene, "pics/cursor/mouse.png");
-            signUp.setStyle("-fx-background-color: red;" + noChange);
-        });
-        signUp.setOnMouseExited(event -> {
-            GeneralGraphicMethods.setCursor(accountScene, "pics/cursor/mouse_auto@2x.png");
-            signUp.setStyle("-fx-background-color: darkorange;" + noChange);
-        });
+        Button signUp = newButton("SIGN UP", sizeY);
+    }
 
+    Button newButton(String name, double sizeY) {
+        double centerX = accountScene.getWidth() / 2;
+        double centerY = accountScene.getHeight() / 2;
+        String noChange = "-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20px";
+        Button button = new Button(name);
+        button.setPrefSize(350, 75);
+        button.relocate(centerX - 175, centerY - sizeY / 2 + 350);
+        button.setStyle("-fx-background-color: darkorange;" + noChange);
+        root.getChildren().add(button);
+        button.setOnMouseEntered(event -> {
+            GeneralGraphicMethods.setCursor(accountScene, "pics/cursor/mouse.png");
+            button.setStyle("-fx-background-color: red;" + noChange);
+        });
+        button.setOnMouseExited(event -> {
+            GeneralGraphicMethods.setCursor(accountScene, "pics/cursor/mouse_auto@2x.png");
+            button.setStyle("-fx-background-color: darkorange;" + noChange);
+        });
+        return button;
     }
 
     private void addLanterns() {
