@@ -61,7 +61,7 @@ public class GeneralGraphicMethods {
             imageView.setX(x * getRatioX());
             imageView.setY(y * getRatioY());
             imageView.setFitHeight(height * getRatioY());
-            imageView.setFitWidth(width * getRatioY());
+            imageView.setFitWidth(width * getRatioX());
             nodeAdder(imageView, root);
             return imageView;
         } catch (FileNotFoundException e) {
