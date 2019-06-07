@@ -89,7 +89,7 @@ public class GeneralGraphicMethods {
     public static void setCursor(Scene scene, Cursor cursor) {
         String path = cursor.getPath();
         try {
-            scene.setCursor(new ImageCursor(new Image(new FileInputStream(path))));
+            scene.getRoot().setCursor(new ImageCursor(new Image(new FileInputStream(path))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

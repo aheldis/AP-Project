@@ -29,9 +29,6 @@ public class BattleScene {
     private double width = StageLauncher.getWidth();
     private double height = StageLauncher.getHeight();
     private int numberOfMap;
-    private double cellWidth = 82;
-    private double cellHeight = 77;
-    private double gap = 5;
     private Rectangle[][] gameGrid;
     private MapProperties mapProperties;
 
@@ -56,7 +53,8 @@ public class BattleScene {
         String path = "pics/maps_categorized/map" + numberOfMap + "/property.json";
         YaGson yaGson = new YaGson();
         try {
-            yaGson.fromJson(new FileReader(path), MapProperties.class);
+            mapProperties = yaGson.fromJson(new FileReader(path), MapProperties.class);
+            mapProperties.setCellSize();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -128,20 +126,21 @@ public class BattleScene {
         board = new Group();
         int numberOfColumns = LandOfGame.getNumberOfColumns();
         int numberOfRows = LandOfGame.getNumberOfRows();
-        double primaryX = 330, primaryY = 230;
+        double primaryX = (mapProperties.ulx + mapProperties.llx) / 2, primaryY = mapProperties.uly;
         double currentX = primaryX, currentY = primaryY;
 
+        System.out.println(mapProperties.cellHeight);
         gameGrid = new Rectangle[numberOfRows][numberOfColumns];
 
         for (int i = 0; i < numberOfRows; i++)
             for (int j = 0; j < numberOfColumns; j++) {
                 if(j == 0) {
-                    currentY += cellHeight + gap;
+                    currentY += mapProperties.cellHeight + mapProperties.gap;
                     currentX = primaryX;
                 }
                 else
-                    currentX += cellWidth + gap;
-                Rectangle rectangle = new Rectangle(cellWidth, cellHeight);
+                    currentX += mapProperties.cellWidth + mapProperties.gap;
+                Rectangle rectangle = new Rectangle(mapProperties.cellWidth, mapProperties.cellHeight);
                 rectangle.setFill(Color.rgb(0, 0, 0, 0.2));
                 rectangle.setX(currentX);
                 rectangle.setY(currentY);
@@ -153,10 +152,6 @@ public class BattleScene {
 
         PerspectiveTransform perspectiveTransform = new PerspectiveTransform();
 
-        if (mapProperties == null) {
-            System.out.println("map is null");
-            return;
-        }
         perspectiveTransform.setUlx(mapProperties.ulx);
         perspectiveTransform.setUly(mapProperties.uly);
         perspectiveTransform.setUrx(mapProperties.urx);

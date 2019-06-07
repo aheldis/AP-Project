@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import model.card.Card;
 import model.card.Minion;
 import view.AccountScene;
+import view.BattleScene;
 import view.GeneralGraphicMethods;
 import view.enums.Cursor;
 import view.enums.StateType;
@@ -41,7 +42,7 @@ public class StageLauncher extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
+   //     Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
         return scene;
     }
 
@@ -166,10 +167,10 @@ public class StageLauncher extends Application {
 
         // SelectGameScene.selectGame();
        //primaryStage.setScene(selectGameScene);
- //       primaryStage.setScene(accountScene);
-  //      AccountScene.getInstance().makeBackground();
+//        primaryStage.setScene(accountScene);
+//        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(collectionScene);
-        BattleScene.getSingleInstance().setBattleScene(3); //from 1 to 12
+        BattleScene.getSingleInstance().setBattleScene(1); //from 1 to 12
         primaryStage.setScene(battleScene);
         primaryStage.show();
     }

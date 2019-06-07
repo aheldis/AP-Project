@@ -3,6 +3,7 @@ package view;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import model.card.makeFile.MakeNewFile;
+import model.land.LandOfGame;
 import view.enums.StateType;
 
 import java.io.FileWriter;
@@ -10,47 +11,46 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class MapProperties {
-    public int cellWidth;
-    public int cellHeight;
-    public int gap;
-    public int ulx;
-    public int uly;
-    public int urx;
-    public int ury;
-    public int llx;
-    public int lly;
-    public int lrx;
-    public int lry;
+    public double cellWidth;
+    public double cellHeight;
+    public double gap = 4;
+    public double ulx;
+    public double uly;
+    public double urx;
+    public double ury;
+    public double llx;
+    public double lly;
+    public double lrx;
+    public double lry;
 
+    public void setCellSize(){
+        cellWidth = (((urx + lrx) / 2 - (ulx + llx) / 2) - gap * (LandOfGame.getNumberOfColumns() - 1)) / LandOfGame.getNumberOfColumns();
+        System.out.println("cellWidth = " + cellWidth);
+        cellHeight = ((lly - uly) - gap * (LandOfGame.getNumberOfColumns() - 1)) / LandOfGame.getNumberOfColumns();
+        System.out.println("(lly - uly) = " + (lly - uly));
+        System.out.println("cellHeight = " + cellHeight);
+    }
     public static void main(String[] args) {
         Request request = new Request(StateType.BATTLE);
         request.getNewLine();
         int numberOfMap = Integer.parseInt(request.getCommand());
         MapProperties mapProperties = new MapProperties();
+        mapProperties.ulx = Double.parseDouble(request.getCommand());
         request.getNewLine();
-        mapProperties.cellWidth = Integer.parseInt(request.getCommand());
+        mapProperties.uly = Double.parseDouble(request.getCommand());
         request.getNewLine();
-        mapProperties.cellHeight = Integer.parseInt(request.getCommand());
+        mapProperties.urx = Double.parseDouble(request.getCommand());
         request.getNewLine();
-        mapProperties.gap = Integer.parseInt(request.getCommand());
+        mapProperties.ury = Double.parseDouble(request.getCommand());
         request.getNewLine();
-        mapProperties.ulx = Integer.parseInt(request.getCommand());
+        mapProperties.llx = Double.parseDouble(request.getCommand());
         request.getNewLine();
-        mapProperties.uly = Integer.parseInt(request.getCommand());
+        mapProperties.lly = Double.parseDouble(request.getCommand());
         request.getNewLine();
-        mapProperties.urx = Integer.parseInt(request.getCommand());
+        mapProperties.lrx = Double.parseDouble(request.getCommand());
         request.getNewLine();
-        mapProperties.ury = Integer.parseInt(request.getCommand());
-        request.getNewLine();
-        mapProperties.llx = Integer.parseInt(request.getCommand());
-        request.getNewLine();
-        mapProperties.lly = Integer.parseInt(request.getCommand());
-        request.getNewLine();
-        mapProperties.lrx = Integer.parseInt(request.getCommand());
-        request.getNewLine();
-        mapProperties.lry = Integer.parseInt(request.getCommand());
-
-
+        mapProperties.lry = Double.parseDouble(request.getCommand());
+        
         String path = "pics/maps_categorized/map" + numberOfMap + "/property.json";
         YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
         try {
