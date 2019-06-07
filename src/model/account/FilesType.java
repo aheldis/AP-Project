@@ -16,16 +16,16 @@ public enum FilesType {
     }
 
     public static FilesType getEnum(String input) {
-        switch (input) {
-            case "Spell":
+        switch (input.trim().toLowerCase()) {
+            case "spell":
                 return FilesType.SPELL;
-            case "Hero":
+            case "hero":
                 return FilesType.HERO;
-            case "Minion":
+            case "minion":
                 return FilesType.MINION;
-            case "Item":
+            case "item":
                 return FilesType.ITEM;
-            case "Buff":
+            case "buff":
                 return FilesType.BUFF;
         }
         return null;

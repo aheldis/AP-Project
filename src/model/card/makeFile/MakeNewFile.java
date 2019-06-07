@@ -1,3 +1,4 @@
+/*
 package model.card.makeFile;
 
 import com.gilecode.yagson.YaGson;
@@ -17,7 +18,6 @@ import java.util.HashMap;
 
 public class MakeNewFile {
 
-    private static NewCardMessages newCardMessages = NewCardMessages.getInstance();
     private static Request request = new Request(StateType.BATTLE);
     private static String path;
 
@@ -118,7 +118,7 @@ public class MakeNewFile {
                         HashMap<String, ArrayList<Integer>> hashMap = new HashMap<>();
                         int number = Integer.parseInt(request.getCommand());
                         for (int i = 0; i < number; i++) {
-                            newCardMessages.printLine("enter buff name(holy/power/poison/weakness/stun/disarm) CORRECTLY");
+                            newCardMessages.printLine("enter buff name(holy/power/poison/weakness/stun/disarm)");
                             request.getNewLine();
                             String buffName = request.getCommand();
                             newCardMessages.printLine("enter how many of this buff");
@@ -151,3 +151,4 @@ public class MakeNewFile {
         return null;
     }
 }
+*/

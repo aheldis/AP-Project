@@ -3,6 +3,7 @@ package model.card.makeFile;
 
 public class CardCopy {
     public String name;
+    public String type;
     public int cost;
     public int mp;
     public int hp;
@@ -10,9 +11,10 @@ public class CardCopy {
     public String counterAttack;
     public int attackRange;
     public String ActivationTimeOfSpecialPower;
-    public String description;
-    protected ChangeCopy change = new ChangeCopy();//HAS-A
-    protected TargetCopy target = new TargetCopy();
+    public int coolDown;
+
+    private ChangeCopy change = new ChangeCopy();
+    private TargetCopy target = new TargetCopy();
 
     public void setChange(ChangeCopy change) {
         this.change = change;

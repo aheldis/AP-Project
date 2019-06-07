@@ -37,6 +37,10 @@ public class Buff {
         }
     }
 
+    public static String getPathOfFiles() {
+        return pathOfFiles;
+    }
+
     static public Buff getNewBuffByName(String name, int forHowManyTurn) {
         for (Buff buff : buffs) {
             if (buff.getName().equals(name)) {
