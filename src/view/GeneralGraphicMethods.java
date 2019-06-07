@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import view.enums.Cursor;
 import view.sample.StageLauncher;
 
 import java.io.FileInputStream;
@@ -84,7 +85,8 @@ public class GeneralGraphicMethods {
         return null;
     }
 
-    public static void setCursor(Scene scene, String path) {
+    public static void setCursor(Scene scene, Cursor cursor) {
+        String path = cursor.getPath();
         try {
             scene.setCursor(new ImageCursor(new Image(new FileInputStream(path))));
         } catch (FileNotFoundException e) {

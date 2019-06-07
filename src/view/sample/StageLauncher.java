@@ -4,20 +4,13 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.account.Account;
-import model.account.Collection;
-import model.battle.Deck;
 import model.card.Card;
 import model.card.Minion;
-import view.BattleScene;
-import model.card.Spell;
 import view.AccountScene;
-import view.CollectionScene;
 import view.GeneralGraphicMethods;
-import view.SelectGameScene;
+import view.enums.Cursor;
 import view.enums.StateType;
 
 import java.util.ArrayList;
@@ -43,11 +36,11 @@ public class StageLauncher extends Application {
         return primaryStage;
     }
 
-    private static Scene makeScene(StateType stateType, String cursorPath) {
+    private static Scene makeScene(StateType stateType, Cursor cursor) {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        GeneralGraphicMethods.setCursor(scene, cursorPath);
+        GeneralGraphicMethods.setCursor(scene, cursor);
         return scene;
     }
 
@@ -96,12 +89,12 @@ public class StageLauncher extends Application {
 
         //make scene with type, can access root with (Group)scene.getRoot
         //all of the scene are in a hashMap with each state we can access to them
-        Scene accountScene = makeScene(StateType.ACCOUNT_MENU, "pics/cursor/mouse_auto@2x.png");
-        Scene mainMenuScene = makeScene(StateType.MAIN_MENU, "pics/cursor/mouse.png");
-        Scene collectionScene = makeScene(StateType.COLLECTION, "pics/cursor/mouse.png");
-        Scene selectModeScene = makeScene(StateType.SELECT_MODE, "pics/cursor/mouse_green.png");
-        Scene selectGameScene = makeScene(StateType.SELECT_GAME, "pics/cursor/mouse_green.png");
-        Scene battleScene = makeScene(StateType.BATTLE, "pics/cursor/mouse_red.png");
+        Scene accountScene = makeScene(StateType.ACCOUNT_MENU, Cursor.AUTO);
+        Scene mainMenuScene = makeScene(StateType.MAIN_MENU, Cursor.AUTO);
+        Scene collectionScene = makeScene(StateType.COLLECTION, Cursor.AUTO);
+        Scene selectModeScene = makeScene(StateType.SELECT_MODE, Cursor.AUTO);
+        Scene selectGameScene = makeScene(StateType.SELECT_GAME, Cursor.AUTO);
+        Scene battleScene = makeScene(StateType.BATTLE, Cursor.AUTO);
 
 //        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
 //        URL url = null;
@@ -170,13 +163,12 @@ public class StageLauncher extends Application {
 //        collectionScene.setFill(Color.BLACK);
 //        GeneralGraphicMethods.addImage(collectionScene.getRoot(),"pics/particles/cloud_005@2x.png",200,200,100,100);
 
-        //AccountScene.getInstance().makeBackground();
        //primaryStage.setScene(selectGameScene);
-//        AccountScene.getInstance().makeBackground();
-//        primaryStage.setScene(accountScene);
-
-        BattleScene.getSingleInstance().setBattleScene(3); //from 1 to 12
-        primaryStage.setScene(battleScene);
+        primaryStage.setScene(accountScene);
+        AccountScene.getInstance().makeBackground();
+//
+//        BattleScene.getSingleInstance().setBattleScene(3); //from 1 to 12
+//        primaryStage.setScene(battleScene);
       //  primaryStage.setScene(collectionScene);
         primaryStage.show();
     }
