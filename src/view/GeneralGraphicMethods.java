@@ -21,7 +21,8 @@ public class GeneralGraphicMethods {
     private static double WIDTH = StageLauncher.getWidth();
 
     static ImageView setBackground(Parent root, String path, Boolean blur, double width, double height) {
-        ImageView imageView = addImage(root, path, 0, 0, WIDTH / getRatioX(), HEIGHT / getRatioY());
+        //ImageView imageView = addImage(root, path, 0, 0, WIDTH / getRatioX(), HEIGHT / getRatioY());
+        ImageView imageView = addImage(root, path, 0, 0, WIDTH, HEIGHT);
         if (imageView == null)
             return null;
         if (blur) {
@@ -60,21 +61,17 @@ public class GeneralGraphicMethods {
         try {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);
-            /*
+
             imageView.relocate(x,y);
             imageView.setFitHeight(height);
             imageView.setFitWidth(width);
-//*/
-//            imageView.relocate(x * getRatioX(), y * getRatioY());
-////            imageView.setX(x * getRatioX());
-////            imageView.setY(y * getRatioY());
-//            imageView.setFitHeight(height * getRatioY());
-//            imageView.setFitWidth(width * getRatioX());
-//
-            imageView.relocate(x, y);
-            imageView.setFitHeight(height);
-            imageView.setFitWidth(width);
-
+/*
+            imageView.relocate(x * getRatioX(), y * getRatioY());
+            imageView.setX(x * getRatioX());
+            imageView.setY(y * getRatioY());
+            imageView.setFitHeight(height * getRatioY());
+            imageView.setFitWidth(width * getRatioX());
+*/
             nodeAdder(imageView, root);
             return imageView;
         } catch (FileNotFoundException e) {
