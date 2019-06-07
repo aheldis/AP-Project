@@ -7,12 +7,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import view.enums.Cursor;
 import view.sample.StageLauncher;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -91,6 +93,15 @@ public class GeneralGraphicMethods {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    static javafx.scene.shape.Rectangle addRectangle(Parent root,int x,int y,int width,int height,int arcW,int arcH,Paint color){
+        javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle(width,height);
+        rectangle.setFill(color);
+        rectangle.setArcWidth(arcW);
+        rectangle.setArcHeight(arcH);
+        nodeAdder(rectangle,root);
+        return rectangle;
     }
 
     static double getRatioX() {

@@ -16,11 +16,14 @@ import view.enums.StateType;
 import view.sample.StageLauncher;
 
 
+import java.util.ArrayList;
+
 import static view.GeneralGraphicMethods.*;
 
 public class ShopScene {
     private static Scene shopScene = StageLauncher.getScene(StateType.SHOP);
     private static Group root = (Group) shopScene.getRoot();
+    private static ArrayList<HBox> hBoxes = new ArrayList<>();
 
     private static Group makeShopIconBar(String path, String input, int i) {
         Group group = new Group();
@@ -43,15 +46,25 @@ public class ShopScene {
 
     }
 
-    public static void makeRectIcon(int width,int numberOfRows,String iconName,int numberOfIcons){
+    public static void makeRectIcon(int width, int height, int numberOfRows,
+                                    String iconName, int numberOfCulonm,
+                                    int numberOfIcons, String typeOfFile, int upperNumber) {
         HBox hBox;
-        int j=0;
-        for(int i=0;i<numberOfRows;i++) {
+        int j = 0;
+        ImageView imageIcon;
+        for (int i = 0; i < numberOfRows; i++) {
             hBox = new HBox();
-            ImageView imageIcon = addImage(hBox,
-                    "pics/shop/"+iconName+"-"+j+".png",0,0,width,width);
-
-
+            hBoxes.add(hBox);
+            hBox.setSpacing(10);
+            hBox.relocate(350, height * (i + 1) + 10 * i - upperNumber);
+            root.getChildren().add(hBox);
+            for (int k = 0; k < numberOfCulonm; k++) {
+                j++;
+                if (j > numberOfIcons)
+                    return;
+                imageIcon = addImage(hBox,
+                        "pics/shop/" + iconName + "-" + j + typeOfFile, 0, 0, width, height);
+            }
         }
     }
 
@@ -72,27 +85,30 @@ public class ShopScene {
         root.getChildren().add(makeShopIconBar(
                 "pics/shop/sellCard.png", "Sell Card", 1));
 
-        root.getChildren().add(makeShopIconBar(
+        Group search = makeShopIconBar(
                 "pics/shop/research.png", "Search", 2
-        ));
+        );
+        root.getChildren().add(search);
 
-        root.getChildren().add(makeShopIconBar(
-                "pics/shop/emotes.png", "Emotes", 3));
+        Group emote = makeShopIconBar(
+                "pics/shop/emotes.png", "Emotes", 3);
+        root.getChildren().add(emote);
 
-        root.getChildren().add(makeShopIconBar(
-                "pics/shop/profile_icon.png", "Profile Icon", 4
-        ));
+        Group profile = makeShopIconBar(
+                "pics/shop/profile_icon.png", "Profile Icon", 4);
+        root.getChildren().add(profile);
 
-        root.getChildren().add(makeShopIconBar(
-                "pics/shop/battle_map.png", "Battle Maps", 5));
+        Group battle_maps = makeShopIconBar(
+                "pics/shop/battle_map.png", "Battle Maps", 5);
+        root.getChildren().add(battle_maps);
 
-        root.getChildren().add(makeShopIconBar(
-                "pics/shop/friends.png", "Bundles", 6
-        ));
+        Group bundles = makeShopIconBar(
+                "pics/shop/friends.png", "Bundles", 6);
+        root.getChildren().add(bundles);
 
-        root.getChildren().add(makeShopIconBar(
-                "pics/shop/spirit_orb.png", "Spirit Orbs", 7
-        ));
+        Group orbs = makeShopIconBar(
+                "pics/shop/spirit_orb.png", "Spirit Orbs", 7);
+        root.getChildren().add(orbs);
 
         Rectangle rectangle = new Rectangle(20, 840, 220, 60);
         rectangle.setFill(Color.rgb(10, 10, 10));
@@ -103,6 +119,67 @@ public class ShopScene {
         addImage(root, "pics/shop/diamond.png", 25, 840, 50, 50);
         addText(root, "Daric: " + account.getDaric(),
                 80, 865, Color.rgb(225, 225, 225, 0.5), 20);
+
+
+        emote.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hBoxes);
+            hBoxes.clear();
+            makeRectIcon(200, 200, 4,
+                    "emotes", 5, 20, ".png", 90);
+
+        });
+        orbs.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hBoxes);
+            hBoxes.clear();
+            makeRectIcon(200, 200, 2,
+                    "orbs", 4, 7, ".png", 90);
+        });
+
+
+        battle_maps.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hBoxes);
+            hBoxes.clear();
+            makeRectIcon(200, 400, 2,
+                    "battle_map", 4,
+                    8, ".jpg", 300);
+        });
+
+        bundles.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hBoxes);
+            hBoxes.clear();
+            makeRectIcon(210, 200, 4,
+                    "bundles", 5,
+                    17, ".png", 90);
+        });
+
+        profile.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hBoxes);
+            hBoxes.clear();
+            makeRectIcon(200, 200, 4,
+                    "profile", 5,
+                    20, ".jpg", 90);
+        });
+
+        search.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hBoxes);
+            hBoxes.clear();
+            HBox hBox = new HBox();
+
+            addRectangle(hBox, 0, 0, 400, 60, 40, 40
+                    , Color.rgb(0, 0, 0, 0.7));
+
+            hBox.relocate(600, 200);
+            Group group = new Group();
+            addRectangle(group, 0, 0, 80, 60, 40, 40
+                    , Color.rgb(0, 0, 0, 0.7));
+            ImageView magnifier = addImage(group,
+                    "pics/shop/research.png", 10, 3, 50, 50);
+            hBox.getChildren().addAll(group);
+
+
+            root.getChildren().addAll(hBox);
+            hBoxes.add(hBox);
+        });
 
 
     }
