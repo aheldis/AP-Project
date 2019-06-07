@@ -8,7 +8,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.card.Card;
 import model.card.Minion;
-import view.*;
+import view.BattleScene;
+import view.GeneralGraphicMethods;
 import view.enums.StateType;
 
 import java.util.ArrayList;
@@ -167,15 +168,8 @@ public class StageLauncher extends Application {
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
 
-
+        BattleScene.getSingleInstance().setBattleScene(10); //from 1 to 12
         primaryStage.setScene(battleScene);
-
-
-        for(int i = 1; i <= 12; i++) {
-            BattleScene.getSingleInstance().setBattleScene(i);
-            primaryStage.show();
-        }
-
         primaryStage.show();
     }
 

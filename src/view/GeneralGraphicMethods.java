@@ -4,7 +4,9 @@ import javafx.scene.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -49,8 +51,9 @@ public class GeneralGraphicMethods {
             ((HBox) root).getChildren().add(node);
         if (root instanceof VBox)
             ((VBox) root).getChildren().add(node);
-        if(root instanceof StackPane)
+        if (root instanceof StackPane)
             ((StackPane) root).getChildren().add(node);
+
     }
 
     static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
