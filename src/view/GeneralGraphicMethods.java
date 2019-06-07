@@ -66,11 +66,11 @@ public class GeneralGraphicMethods {
             imageView.setFitWidth(width);
 */
 
-            imageView.relocate(x * getRatioX(), y * getRatioY());
-            imageView.setX(x * getRatioX());
-            imageView.setY(y * getRatioY());
             imageView.setFitWidth(width * getRatioX());
             imageView.setFitHeight(height * getRatioY());
+            imageView.setLayoutX(x * getRatioX());
+            imageView.setLayoutY(y * getRatioY());
+            imageView.relocate(x * getRatioX(), y * getRatioY());
             /*
             imageView.relocate(x, y);
             imageView.setX(x);
