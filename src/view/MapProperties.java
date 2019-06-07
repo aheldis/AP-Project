@@ -17,8 +17,8 @@ public class MapProperties {
 
     public void init() {
         setCellSize();
-        double changeXRatio = GeneralGraphicMethods.getRatioX() / 0.7563451776649747;
-        double changeYRatio = GeneralGraphicMethods.getRatioY() / 0.8592592592592593 ;
+        double changeXRatio = 0.7563451776649747 / GeneralGraphicMethods.getRatioX();
+        double changeYRatio = 0.8592592592592593 / GeneralGraphicMethods.getRatioY();
         cellWidth /= changeXRatio;
         cellHeight /= changeYRatio;
         ulx /= changeXRatio;
