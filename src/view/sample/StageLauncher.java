@@ -11,11 +11,13 @@ import model.account.Account;
 import model.account.Collection;
 import model.battle.Deck;
 import model.card.Card;
+import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
 import view.BattleScene;
 import view.CollectionScene;
 import view.GeneralGraphicMethods;
+import view.*;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -58,7 +60,7 @@ public class StageLauncher extends Application {
     }
 
 
-    private void minionMaker(ArrayList<Card> cards, String path) {
+    private static void minionMaker(ArrayList<Card> cards, String path) {
         Minion minion = new Minion();
         minion.setPathOfThePicture("pics/minion_background.png");
         minion.setPathOfAnimation(path);
@@ -76,6 +78,72 @@ public class StageLauncher extends Application {
 //        primaryStage.show();
 //    }
 
+    public static void zahraTestDeck() {
+
+        Spell spell = new Spell();
+        spell.setPathOfThePicture("pics/minion_background.png");
+        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setCountOfAnimation(16);
+        spell.setFrameSize(48);
+
+        Spell spell1 = new Spell();
+        spell1.setPathOfThePicture("pics/minion_background.png");
+        spell1.setPathOfAnimation("pics/spell/fireBall.png");
+        spell1.setCountOfAnimation(16);
+        spell1.setFrameSize(48);
+
+        ArrayList<Deck> decks = new ArrayList<>();
+        Deck deck = new Deck();
+
+        spell.setDescription("atasssh");
+        spell.setName("atisih");
+        spell1.setDescription("atasssh");
+        spell1.setName("atisih");
+        deck.getCardsOfDeck().add(spell);
+        deck.getCardsOfDeck().add(spell);
+        deck.setName("zahra");
+        for (int i = 0; i < 10; i++) {
+            decks.add(deck);
+        }
+
+        Collection collection = new Collection(new Account("zahra", "123"));
+        for (int i = 0; i < 15; i++) {
+            collection.addToCards(spell);
+        }
+        collection.setDecks(decks);
+
+        CollectionScene.showDeck(decks, collection);
+    }
+
+    public static void zahraTestCard() {
+        ArrayList<Card> cards = new ArrayList<>();
+        Hero hero = new Hero();
+        hero.setPathOfThePicture("pics/Hero/hero_card/simorgh.png");
+        hero.setHp(10);
+        hero.setAp(10);
+        hero.setDescription("hello girls");
+
+        Spell spell = new Spell();
+        spell.setPathOfThePicture("pics/minion_background.png");
+        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setCountOfAnimation(16);
+        spell.setFrameSize(48);
+
+        Spell spell1 = new Spell();
+        spell1.setPathOfThePicture("pics/minion_background.png");
+        spell1.setPathOfAnimation("pics/spell/fireBall.png");
+        spell1.setCountOfAnimation(16);
+        spell1.setFrameSize(48);
+        cards.add(spell);
+
+        minionMaker(cards, "pics/gifMinion/giv.gif");
+        minionMaker(cards, "pics/gifMinion/gorg.gif");
+
+        for (int i = 0; i < 6; i++)
+            cards.add(hero);
+        CollectionScene.showInCollection(cards, new Collection(new Account("zahra", "123")));
+
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -101,6 +169,9 @@ public class StageLauncher extends Application {
         Scene selectModeScene = makeScene(StateType.SELECT_MODE, Cursor.GREEN);
         Scene selectGameScene = makeScene(StateType.SELECT_GAME, Cursor.GREEN);
         Scene battleScene = makeScene(StateType.BATTLE, Cursor.RED);
+        Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
+
+
 
 //        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
 //        URL url = null;
@@ -112,71 +183,24 @@ public class StageLauncher extends Application {
 //        }
 
 
-//        ArrayList<Card> cards = new ArrayList<>();
-//        Hero hero = new Hero();
-//        hero.setPATH_OF_THE_PICTURE("pics/Hero/hero_card/simorgh.png");
-//        hero.setHp(10);
-//        hero.setAp(10);
-//        hero.setDescription("hello girls");
-////
-//
-        Spell spell = new Spell();
-        spell.setPathOfThePicture("pics/minion_background.png");
-        spell.setPathOfAnimation("pics/spell/fireBall.png");
-        spell.setCountOfAnimation(16);
-        spell.setFrameSize(48);
-
-        Spell spell1 = new Spell();
-        spell1.setPathOfThePicture("pics/minion_background.png");
-        spell1.setPathOfAnimation("pics/spell/fireBall.png");
-        spell1.setCountOfAnimation(16);
-        spell1.setFrameSize(48);
-//
-////        cards.add(spell);
-////
-////        minionMaker(cards,"pics/gifMinion/giv.gif");
-////        minionMaker(cards,"pics/gifMinion/gorg.gif");
-////
-////        for (int i = 0; i < 6; i++)
-////            cards.add(hero);
-////        CollectionScene.showInCollection(cards,new Collection(new Account("zahra","123")));
-////
-////        //todo test for deck show inas
-        ArrayList<Deck> decks = new ArrayList<>();
-        Deck deck = new Deck();
-
-        spell.setDescription("atasssh");
-        spell.setName("atisih");
-        spell1.setDescription("atasssh");
-        spell1.setName("atisih");
-        deck.getCardsOfDeck().add(spell);
-        deck.getCardsOfDeck().add(spell);
-        deck.setName("zahra");
-        for (int i = 0; i < 10; i++) {
-            decks.add(deck);
-        }
-
-        Collection collection = new Collection(new Account("zahra","123"));
-        for(int i=0;i<15;i++){
-            collection.addToCards(spell);
-        }
-        collection.setDecks(decks);
-
-        CollectionScene.showDeck(decks,collection);
-
-
-        // SelectGameScene.selectGame();
-
-//        collectionScene.setFill(Color.BLACK);
-//        GeneralGraphicMethods.addImage(collectionScene.getRoot(),"pics/particles/cloud_005@2x.png",200,200,100,100);
-
-        // SelectGameScene.selectGame();
-       //primaryStage.setScene(selectGameScene);
-//        primaryStage.setScene(accountScene);
- //       AccountScene.getInstance().makeBackground();
+//        zahraTestDeck();
 //        primaryStage.setScene(collectionScene);
-        BattleScene.getSingleInstance().setBattleScene(4); //from 1 to 12
-        primaryStage.setScene(battleScene);
+
+//        zahraTestCard();
+//        getPrimaryStage().setScene(collectionScene);
+
+//        SelectGameScene.selectGame();
+//        primaryStage.setScene(selectGameScene);
+
+//        AccountScene.getInstance().makeBackground();
+//        primaryStage.setScene(accountScene);
+
+//        BattleScene.getSingleInstance().setBattleScene(10); //from 1 to 12
+//        primaryStage.setScene(battleScene);
+
+        primaryStage.setScene(shopScene);
+        ShopScene.makeShopScene();
+
         primaryStage.show();
     }
 
