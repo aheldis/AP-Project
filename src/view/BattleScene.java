@@ -50,11 +50,12 @@ public class BattleScene {
     }
 
     private void setMapProperties(){
+        //todo properties ha ta 4 dorostan
         String path = "pics/maps_categorized/map" + numberOfMap + "/property.json";
         YaGson yaGson = new YaGson();
         try {
             mapProperties = yaGson.fromJson(new FileReader(path), MapProperties.class);
-            mapProperties.setCellSize();
+            mapProperties.init();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

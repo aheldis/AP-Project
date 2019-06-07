@@ -94,10 +94,14 @@ public class GeneralGraphicMethods {
     }
 
     static double getRatioX() {
+        //return 1;
+        System.out.println("StageLauncher.getWidth() / 1970 = " + StageLauncher.getWidth() / 1970);
         return StageLauncher.getWidth() / 1970;
     }
 
     static double getRatioY() {
+        //return 1;
+        System.out.println("StageLauncher.getHeight() / 1080 = " + StageLauncher.getHeight() / 1080);
         return StageLauncher.getHeight() / 1080;
     }
 }

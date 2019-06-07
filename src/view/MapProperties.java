@@ -1,12 +1,6 @@
 package view;
 
-import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import model.land.LandOfGame;
-import view.enums.StateType;
-
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class MapProperties {
     public double cellWidth;
@@ -21,11 +15,27 @@ public class MapProperties {
     public double lrx;
     public double lry;
 
-    public void setCellSize(){
+    public void init() {
+        setCellSize();
+        double changeXRatio = GeneralGraphicMethods.getRatioX() / 0.7563451776649747;
+        double changeYRatio = GeneralGraphicMethods.getRatioY() / 0.8592592592592593 ;
+        cellWidth /= changeXRatio;
+        cellHeight /= changeYRatio;
+        ulx /= changeXRatio;
+        uly /= changeYRatio;
+        urx /= changeXRatio;
+        ury /= changeYRatio;
+        llx /= changeXRatio;
+        lly /= changeYRatio;
+        lrx /= changeXRatio;
+        lry /= changeYRatio;
+    }
+
+    public void setCellSize() {
         cellWidth = (((urx + lrx) / 2 - (ulx + llx) / 2) - gap * (LandOfGame.getNumberOfColumns() - 1)) / LandOfGame.getNumberOfColumns();
         cellHeight = ((lly - uly) - gap * (LandOfGame.getNumberOfColumns() - 1)) / LandOfGame.getNumberOfColumns();
     }
-
+/*
     public static void main(String[] args) {
         Request request = new Request(StateType.BATTLE);
         request.getNewLine();
@@ -57,5 +67,5 @@ public class MapProperties {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
