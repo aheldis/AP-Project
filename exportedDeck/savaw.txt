@@ -1,0 +1,5 @@
+{
+  "cardsOfDeck": [],
+  "deckName": "savaw",
+  "indexOfCards": 0
+}

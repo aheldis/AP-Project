@@ -11,6 +11,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import model.battle.Deck;
+import model.card.Card;
+import model.item.Item;
+import model.item.Usable;
+import org.omg.CORBA.NO_IMPLEMENT;
 import view.GeneralGraphicMethods;
 import view.sample.StageLauncher;
 
@@ -20,7 +25,7 @@ public class DragAndDropClass {
     static double orgSceneX, orgSceneY;
     static double orgTranslateX, orgTranslateY;
 
-    public static void dragAndDrop(Node source, Node target, Scene scene, Parent root) {
+    public static void dragAndDrop(Node source, Node target, Deck deck, Object card) {
 
         source.setOnDragDetected(event -> {
             //circleOnMousePressedEventHandler.handle(event);
@@ -80,6 +85,10 @@ public class DragAndDropClass {
                 try {
                     if (target instanceof VBox) {
                         ((VBox) target).getChildren().add(source);
+                        if(card instanceof Card)
+                            deck.addToCardsOfDeck((Card)card);
+                        if(card instanceof Item)
+                            deck.addItemToDeck((Usable) card);
                     }
                 }catch (Exception e){
                     System.out.println(source);
