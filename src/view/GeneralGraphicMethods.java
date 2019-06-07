@@ -21,8 +21,7 @@ public class GeneralGraphicMethods {
     private static double WIDTH = StageLauncher.getWidth();
 
     static ImageView setBackground(Parent root, String path, Boolean blur, double width, double height) {
-        //ImageView imageView = addImage(root, path, 0, 0, WIDTH / getRatioX(), HEIGHT / getRatioY());
-        ImageView imageView = addImage(root, path, 0, 0, WIDTH, HEIGHT);
+        ImageView imageView = addImage(root, path, 0, 0, WIDTH / getRatioX(), HEIGHT / getRatioY());
         if (imageView == null)
             return null;
         if (blur) {
@@ -61,17 +60,22 @@ public class GeneralGraphicMethods {
         try {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);
-
+            /*
             imageView.relocate(x,y);
             imageView.setFitHeight(height);
             imageView.setFitWidth(width);
-/*
-            imageView.relocate(x * getRatioX(), y * getRatioY());
-            imageView.setX(x * getRatioX());
-            imageView.setY(y * getRatioY());
-            imageView.setFitHeight(height * getRatioY());
-            imageView.setFitWidth(width * getRatioX());
 */
+
+            imageView.setFitWidth(width * getRatioX());
+            imageView.setFitHeight(height * getRatioY());
+            imageView.setLayoutX(x * getRatioX());
+            imageView.setLayoutY(y * getRatioY());
+            imageView.relocate(x * getRatioX(), y * getRatioY());
+            /*
+            imageView.relocate(x, y);
+            imageView.setFitHeight(height);
+            imageView.setFitWidth(width);
+            */
             nodeAdder(imageView, root);
             return imageView;
         } catch (FileNotFoundException e) {
@@ -80,9 +84,10 @@ public class GeneralGraphicMethods {
         return null;
     }
 
-    public static void setCursor(Scene scene, String path) {
+    public static void setCursor(Scene scene, Cursor cursor) {
+        String path = cursor.getPath();
         try {
-            scene.getRoot().setCursor(new ImageCursor(new Image(new FileInputStream(path))));
+            scene.setCursor(new ImageCursor(new Image(new FileInputStream(path))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
