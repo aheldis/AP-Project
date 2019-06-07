@@ -2,13 +2,11 @@ package view;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import model.card.makeFile.MakeNewFile;
 import model.land.LandOfGame;
 import view.enums.StateType;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class MapProperties {
     public double cellWidth;

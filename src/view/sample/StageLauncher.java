@@ -14,6 +14,9 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
+import view.BattleScene;
+import view.CollectionScene;
+import view.GeneralGraphicMethods;
 import view.*;
 import view.enums.Cursor;
 import view.enums.StateType;
@@ -45,7 +48,7 @@ public class StageLauncher extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor.getPath()));
+        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
         return scene;
     }
 

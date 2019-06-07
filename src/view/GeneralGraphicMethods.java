@@ -64,17 +64,18 @@ public class GeneralGraphicMethods {
             imageView.relocate(x,y);
             imageView.setFitHeight(height);
             imageView.setFitWidth(width);
-//*/
-            imageView.relocate(x * getRatioX(), y * getRatioY());
-//            imageView.setX(x * getRatioX());
-//            imageView.setY(y * getRatioY());
-            imageView.setFitHeight(height * getRatioY());
-            imageView.setFitWidth(width * getRatioX());
-////
-//            imageView.relocate(x, y);
-//            imageView.setFitHeight(height);
-//            imageView.setFitWidth(width);
+*/
 
+            imageView.setFitWidth(width * getRatioX());
+            imageView.setFitHeight(height * getRatioY());
+            imageView.setLayoutX(x * getRatioX());
+            imageView.setLayoutY(y * getRatioY());
+            imageView.relocate(x * getRatioX(), y * getRatioY());
+            /*
+            imageView.relocate(x, y);
+            imageView.setFitHeight(height);
+            imageView.setFitWidth(width);
+            */
             nodeAdder(imageView, root);
             return imageView;
         } catch (FileNotFoundException e) {
@@ -83,9 +84,10 @@ public class GeneralGraphicMethods {
         return null;
     }
 
-    public static void setCursor(Scene scene, String path) {
+    public static void setCursor(Scene scene, Cursor cursor) {
+        String path = cursor.getPath();
         try {
-            scene.getRoot().setCursor(new ImageCursor(new Image(new FileInputStream(path))));
+            scene.setCursor(new ImageCursor(new Image(new FileInputStream(path))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
