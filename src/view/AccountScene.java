@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
@@ -30,7 +31,7 @@ public class AccountScene {
     private static final HashMap<Node, Bounds> movables = new HashMap<>();
     private static final ArrayList<Node> movableNodes = new ArrayList<>();
     private static final ArrayList<Node> windows = new ArrayList<>();
-    private static Button enterButton = null;
+    private static ArrayList<Node> changes = new ArrayList<>();
 
     private AccountScene() {
     }
@@ -53,21 +54,33 @@ public class AccountScene {
         double centerY = accountScene.getHeight() / 2;
         double sizeX = 500;
         double sizeY = 600;
-        Rectangle rectangle = new Rectangle(centerX - sizeX / 2, centerY - sizeY / 2, sizeX, sizeY);
+        Rectangle rectangle = new Rectangle(centerX - sizeX / 2, centerY - sizeY / 2, sizeX, sizeY - 100);
         rectangle.setFill(Color.rgb(40, 40, 36, 0.95));
         root.getChildren().add(rectangle);
         windows.add(rectangle);
         ImageView brand = GeneralGraphicMethods.addImage(root, "pics/login_pics/brand_duelyst@2x.png",
                 (centerX - 250) / 2, centerY - sizeY / 2 - 200, 1000 / 2, 216 / 2);
         windows.add(brand);
-        enter("LOG IN", sizeY);
+        Label logIn = new Label("LOG IN");
+        logIn.relocate(centerX - 100, centerY - sizeY / 2 + 45);
+        root.getChildren().add(logIn);
+        windows.add(logIn);
+        Label signUp = new Label("SIGN UP");
+        signUp.relocate(centerX + 20, centerY - sizeY / 2 + 45);
+        root.getChildren().add(signUp);
+        windows.add(signUp);
+        commonTextFields(sizeY);
+        Button enterButton = newButton("LOG IN", sizeY);
+        enter("LOG IN", enterButton, logIn, signUp);
+        logIn.setOnMouseClicked(event -> enter("LOG IN", enterButton, logIn, signUp));
+        signUp.setOnMouseClicked(event -> enter("SIGN UP", enterButton, logIn, signUp));
     }
 
-    private void enter(String enter, double sizeY) {
+    private void commonTextFields(double sizeY) {
         double centerX = accountScene.getWidth() / 2;
         double centerY = accountScene.getHeight() / 2;
         TextField userName = new TextField();
-        userName.setPromptText("User name");
+        userName.setPromptText("Username");
         userName.setPrefSize(350, 75);
         userName.relocate(centerX - 175, centerY - sizeY / 2 + 100);
         userName.setStyle("-fx-background-color: rgba(100,100,100,0.4); -fx-font-size: 20px");
@@ -80,12 +93,29 @@ public class AccountScene {
         password.setStyle("-fx-background-color: rgba(100,100,100,0.4); -fx-font-size: 20px");
         root.getChildren().add(password);
         windows.add(password);
-        root.getChildren().remove(enterButton);
-        windows.remove(enterButton);
-        if (enter.equals("LOG IN"))
-            enterButton = newButton("LOG IN", sizeY);
-        else
-            enterButton = newButton("SIGN UP", sizeY);
+    }
+
+    private void enter(String enter, Button enterButton, Label logIn, Label signUp) {
+        root.getChildren().removeAll(changes);
+        windows.removeAll(changes);
+        changes.removeAll(changes);
+        if (enter.equals("LOG IN")) {
+            enterButton.setText("LOG IN");
+            logIn.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
+            signUp.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
+            ImageView triangle = GeneralGraphicMethods.addImage(root, "pics/login_pics/bnea-triangle@2x.png",
+                    (logIn.getLayoutX() + 25) / 2, (logIn.getLayoutY() - 20) / 2,15, 10);
+            windows.add(triangle);
+            changes.add(triangle);
+        } else {
+            enterButton.setText("SIGN UP");
+            signUp.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
+            logIn.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
+            ImageView triangle = GeneralGraphicMethods.addImage(root, "pics/login_pics/bnea-triangle@2x.png",
+                    (signUp.getLayoutX() + 30) / 2, (signUp.getLayoutY() - 20) / 2,15, 10);
+            windows.add(triangle);
+            changes.add(triangle);
+        }
 
     }
 
@@ -98,7 +128,6 @@ public class AccountScene {
         button.relocate(centerX - 175, centerY - sizeY / 2 + 350);
         button.setStyle("-fx-background-color: darkorange;" + noChange);
         root.getChildren().add(button);
-        windows.add(button);
         button.setOnMouseEntered(event -> {
             GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN.getPath());
             button.setStyle("-fx-background-color: red;" + noChange);
