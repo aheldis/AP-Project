@@ -70,6 +70,8 @@ public class BattleScene {
             for (File file1 : files) {
                 //System.out.println("file1.getName() = " + file1.getName());
                 ImageView imageView = GeneralGraphicMethods.setBackground(root, file1.getPath(), false, 0, 0);
+                imageView.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
+
                 if (file1.getName().contains("middleground") || file1.getName().contains("midground")) {
                     //todo duration ya ye chiz dige
                     moveBackgrounds(imageView, false, false);
@@ -129,7 +131,6 @@ public class BattleScene {
         double primaryX = (mapProperties.ulx + mapProperties.llx) / 2, primaryY = mapProperties.uly;
         double currentX = primaryX, currentY = primaryY;
 
-        System.out.println(mapProperties.cellHeight);
         gameGrid = new Rectangle[numberOfRows][numberOfColumns];
 
         for (int i = 0; i < numberOfRows; i++)

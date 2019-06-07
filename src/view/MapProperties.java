@@ -25,11 +25,9 @@ public class MapProperties {
 
     public void setCellSize(){
         cellWidth = (((urx + lrx) / 2 - (ulx + llx) / 2) - gap * (LandOfGame.getNumberOfColumns() - 1)) / LandOfGame.getNumberOfColumns();
-        System.out.println("cellWidth = " + cellWidth);
         cellHeight = ((lly - uly) - gap * (LandOfGame.getNumberOfColumns() - 1)) / LandOfGame.getNumberOfColumns();
-        System.out.println("(lly - uly) = " + (lly - uly));
-        System.out.println("cellHeight = " + cellHeight);
     }
+
     public static void main(String[] args) {
         Request request = new Request(StateType.BATTLE);
         request.getNewLine();
