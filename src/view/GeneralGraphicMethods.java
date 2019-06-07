@@ -19,6 +19,16 @@ import java.io.FileNotFoundException;
 public class GeneralGraphicMethods {
     private static double HEIGHT = StageLauncher.getHeight();
     private static double WIDTH = StageLauncher.getWidth();
+    private static double sabasXRatio = 0.7563451776649747;
+    private static double sabasYRatio = 0.8592592592592593;
+
+    public static double getSabasXRatio() {
+        return sabasXRatio;
+    }
+
+    public static double getSabasYRatio() {
+        return sabasYRatio;
+    }
 
     static ImageView setBackground(Parent root, String path, Boolean blur, double width, double height) {
         ImageView imageView = addImage(root, path, 0, 0, WIDTH / getRatioX(), HEIGHT / getRatioY());
@@ -95,13 +105,13 @@ public class GeneralGraphicMethods {
 
     static double getRatioX() {
         //return 1;
-        System.out.println("StageLauncher.getWidth() / 1970 = " + StageLauncher.getWidth() / 1970);
+        //System.out.println("StageLauncher.getWidth() / 1970 = " + StageLauncher.getWidth() / 1970);
         return StageLauncher.getWidth() / 1970;
     }
 
     static double getRatioY() {
         //return 1;
-        System.out.println("StageLauncher.getHeight() / 1080 = " + StageLauncher.getHeight() / 1080);
+        //System.out.println("StageLauncher.getHeight() / 1080 = " + StageLauncher.getHeight() / 1080);
         return StageLauncher.getHeight() / 1080;
     }
 }

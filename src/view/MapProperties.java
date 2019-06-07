@@ -2,6 +2,8 @@ package view;
 
 import model.land.LandOfGame;
 
+import java.lang.reflect.Field;
+
 public class MapProperties {
     public double cellWidth;
     public double cellHeight;
@@ -17,18 +19,31 @@ public class MapProperties {
 
     public void init() {
         setCellSize();
-        double changeXRatio = 0.7563451776649747 / GeneralGraphicMethods.getRatioX();
-        double changeYRatio = 0.8592592592592593 / GeneralGraphicMethods.getRatioY();
-        cellWidth /= changeXRatio;
-        cellHeight /= changeYRatio;
-        ulx /= changeXRatio;
-        uly /= changeYRatio;
-        urx /= changeXRatio;
-        ury /= changeYRatio;
-        llx /= changeXRatio;
-        lly /= changeYRatio;
-        lrx /= changeXRatio;
-        lry /= changeYRatio;
+        double changeXRatio = GeneralGraphicMethods.getRatioX() / GeneralGraphicMethods.getSabasXRatio();
+        double changeYRatio = GeneralGraphicMethods.getRatioY() / GeneralGraphicMethods.getSabasYRatio() ;
+        try {
+            Field[] fields = MapProperties.class.getFields();
+            for(Field field: fields){
+                double value = (Double)field.get(this);
+                if(field.getName().contains("x") || field.getName().contains("Width"))
+                    field.set(this, value * changeXRatio);
+                else
+                    field.set(this, value * changeYRatio);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        cellWidth *= changeXRatio;
+        cellHeight *= changeYRatio;
+        ulx *= changeXRatio;
+        uly *= changeYRatio;
+        urx *= changeXRatio;
+        ury *= changeYRatio;
+        llx *= changeXRatio;
+        lly *= changeYRatio;
+        lrx *= changeXRatio;
+        lry *= changeYRatio;
     }
 
     public void setCellSize() {
