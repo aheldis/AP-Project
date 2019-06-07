@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import view.enums.Cursor;
 import view.sample.StageLauncher;
 
 import java.io.FileInputStream;

@@ -14,6 +14,7 @@ public class LandOfGame {
     private static final int NUMBER_OF_COLUMNS = 9;
     private Square[][] squares = new Square[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
 
+
     public LandOfGame() {
         Coordinate coordinate;
         for (int i = 0; i < NUMBER_OF_COLUMNS; i++) {
@@ -39,11 +40,11 @@ public class LandOfGame {
         return squares;
     }
 
-    public int getNumberOfColumns() {
+    public static int getNumberOfColumns() {
         return NUMBER_OF_COLUMNS;
     }
 
-    public int getNumberOfRows() {
+    public static int getNumberOfRows() {
         return NUMBER_OF_ROWS;
     }
 

@@ -3,6 +3,12 @@ package view;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Pair;
+import model.land.LandOfGame;
 import view.enums.StateType;
 import view.sample.StageLauncher;
 
@@ -16,9 +22,13 @@ public class BattleScene {
     private Group root = (Group) battleScene.getRoot();
     private double width = StageLauncher.getWidth();
     private double height = StageLauncher.getHeight();
+    private int numberOfMap;
+    private double cellWidth = 82;
+    private double cellHeight = 77;
+    private double gap = 5;
+    private Rectangle[][] gameGrid;
 
     private BattleScene() {
-
     }
 
     public static BattleScene getSingleInstance() {
@@ -29,10 +39,12 @@ public class BattleScene {
 
     public void setBattleScene(int numberOfMap) {
         root.getChildren().clear();
-        setMapBackground(numberOfMap);
+        this.numberOfMap = numberOfMap;
+        setMapBackground();
+        addGrid();
     }
 
-    private void setMapBackground(int numberOfMap) {
+    private void setMapBackground() {
         //System.out.println("numberOfMap = " + numberOfMap);
         String pathOfFile = "pics/maps_categorized/map" + numberOfMap + "/background";
         File file = new File(pathOfFile);
@@ -43,7 +55,8 @@ public class BattleScene {
                 //System.out.println("file1.getName() = " + file1.getName());
                 ImageView imageView = GeneralGraphicMethods.setBackground(root, file1.getPath(), false, 0, 0);
                 if (file1.getName().contains("middleground") || file1.getName().contains("midground")) {
-                    moveBackgrounds(imageView, true, false);
+                    //todo duration ya ye chiz dige
+                    moveBackgrounds(imageView, false, false);
                 }
                 if (file1.getName().contains("foreground")) {
                     moveBackgrounds(imageView, false, true);
@@ -84,4 +97,39 @@ public class BattleScene {
                 imageView.setY(primaryY - moveDistance);
         });
     }
+
+    public Rectangle getCell(int row, int column){
+        return gameGrid[row][column];
+    }
+
+    public Pair<Double, Double> getCellPosition(int row, int column){
+        return new Pair<>(gameGrid[row][column].getX(), gameGrid[row][column].getY());
+    }
+
+    private void addGrid() {
+        int numberOfColumns = LandOfGame.getNumberOfColumns();
+        int numberOfRows = LandOfGame.getNumberOfRows();
+        double primaryX = 300, primaryY = 150;
+        double currentX = primaryX, currentY = primaryY;
+
+        gameGrid = new Rectangle[numberOfRows][numberOfColumns];
+
+        for (int i = 0; i < numberOfRows; i++)
+            for (int j = 0; j < numberOfColumns; j++) {
+                if(j == 0) {
+                    currentY += cellHeight + gap;
+                    currentX = primaryX;
+                }
+                else
+                    currentX += cellWidth + gap;
+                Rectangle rectangle = new Rectangle(cellWidth, cellHeight);
+                rectangle.setFill(Color.rgb(0, 0, 0, 0.2));
+                rectangle.setX(currentX);
+                rectangle.setY(currentY);
+                gameGrid[i][j] = rectangle;
+                root.getChildren().add(rectangle);
+            }
+
+    }
+
 }

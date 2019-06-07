@@ -1,23 +1,17 @@
 package view.sample;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.account.Account;
-import model.account.Collection;
-import model.battle.Deck;
 import model.card.Card;
 import model.card.Minion;
-import view.BattleScene;
-import model.card.Spell;
 import view.AccountScene;
-import view.CollectionScene;
 import view.GeneralGraphicMethods;
-import view.SelectGameScene;
+import view.enums.Cursor;
 import view.enums.StateType;
 
 import java.util.ArrayList;
@@ -43,11 +37,11 @@ public class StageLauncher extends Application {
         return primaryStage;
     }
 
-    private static Scene makeScene(StateType stateType, String cursorPath) {
+    private static Scene makeScene(StateType stateType, Cursor cursor) {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        GeneralGraphicMethods.setCursor(scene, cursorPath);
+        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
         return scene;
     }
 
@@ -171,7 +165,7 @@ public class StageLauncher extends Application {
 //        collectionScene.setFill(Color.BLACK);
 //        GeneralGraphicMethods.addImage(collectionScene.getRoot(),"pics/particles/cloud_005@2x.png",200,200,100,100);
 
-        //AccountScene.getInstance().makeBackground();
+        // SelectGameScene.selectGame();
        //primaryStage.setScene(selectGameScene);
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
