@@ -66,16 +66,16 @@ public class GeneralGraphicMethods {
             imageView.setFitWidth(width);
 */
 
-            imageView.setFitWidth(width * getRatioX());
-            imageView.setFitHeight(height * getRatioY());
-            imageView.setLayoutX(x * getRatioX());
-            imageView.setLayoutY(y * getRatioY());
-            imageView.relocate(x * getRatioX(), y * getRatioY());
-            /*
+//            imageView.setFitWidth(width * getRatioX());
+//            imageView.setFitHeight(height * getRatioY());
+//            imageView.setLayoutX(x * getRatioX());
+//            imageView.setLayoutY(y * getRatioY());
+//            imageView.relocate(x * getRatioX(), y * getRatioY());
+
             imageView.relocate(x, y);
             imageView.setFitHeight(height);
             imageView.setFitWidth(width);
-            */
+
             nodeAdder(imageView, root);
             return imageView;
         } catch (FileNotFoundException e) {

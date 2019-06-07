@@ -145,6 +145,14 @@ public class StageLauncher extends Application {
 
     }
 
+    public static void zahraTestShop(){
+        Account account = new Account("zahra","123");
+        account.setDaric(10000);
+
+
+        ShopScene.makeShopScene(account);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         StageLauncher.primaryStage = primaryStage;
@@ -195,11 +203,12 @@ public class StageLauncher extends Application {
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
 
-//        BattleScene.getSingleInstance().setBattleScene(10); //from 1 to 12
+//        BattleScene.getSingleInstance().setBattleScene(2); //from 1 to 12
 //        primaryStage.setScene(battleScene);
 
+        zahraTestShop();
         primaryStage.setScene(shopScene);
-        ShopScene.makeShopScene();
+
 
         primaryStage.show();
     }

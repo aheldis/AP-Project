@@ -38,6 +38,9 @@ public class Account implements Comparable<Account> ,Cloneable{
     }
 
 
+    public void setDaric(int daric) {
+        this.daric = daric;
+    }
 
     public Object clone() throws
             CloneNotSupportedException
