@@ -32,9 +32,9 @@ public enum ErrorType {
     HAVE_HERO_IN_DECK("Hero have been exist in this deck"),
     HAVE_ONE_ITEM_IN_DECK("You have one item in this deck"),
 
-    NO_SUCH_CARD_OR_ITEM_IN_SHOP("There is no such card or item in shop"),
-    NOT_ENOUGH_MONEY("You don't have enough money to buy this card/item"),
-    NO_SUCH_CARD_OR_ITEM_IN_COLLECTION("You don't have this card or item in your collection"),
+    NO_SUCH_CARD_OR_ITEM_IN_SHOP("There is no such card or item\n in shop"),
+    NOT_ENOUGH_MONEY("You don't have enough money to\n buy this card/item"),
+    NO_SUCH_CARD_OR_ITEM_IN_COLLECTION("You don't have this card or item\n in your collection"),
     SELECTED_INVALID_DECK("Selected deck is invalid"),
     SELECTED_INVALID_DECK_FOR_PLAYER2("Selected deck for second player is invalid"),
     DONT_HAVE_MAIN_DECK("You don't have a main deck"),

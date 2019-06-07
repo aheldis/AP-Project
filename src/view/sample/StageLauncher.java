@@ -5,10 +5,12 @@ import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.account.Account;
 import model.account.Collection;
+import model.account.Shop;
 import model.battle.Deck;
 import model.card.Card;
 import model.card.Hero;
@@ -18,6 +20,8 @@ import view.*;
 import view.enums.Cursor;
 import view.enums.StateType;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -144,6 +148,21 @@ public class StageLauncher extends Application {
 
     public static void zahraTestShop(){
         Account account = new Account("zahra","123");
+        Spell spell = new Spell();
+
+        Collection collection = new Collection(account);
+        spell.setPathOfThePicture("pics/minion_background.png");
+        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setCountOfAnimation(16);
+        spell.setName("Fireball");
+        spell.setFrameSize(48);
+        spell.setMp(10);
+        spell.setHp(10);
+        for (int i = 0; i < 6; i++)
+            collection.addToCards(spell);
+
+        Shop.getInstance().addCard(spell);
+
         account.setDaric(10000);
 
 
@@ -162,6 +181,11 @@ public class StageLauncher extends Application {
         primaryStage.setHeight(HEIGHT);
         primaryStage.setFullScreen(true);
         primaryStage.setTitle("Duelyst");
+        try {
+            primaryStage.getIcons().add(new Image(new FileInputStream("pics/duelyst_icon.png")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
         //todo add animation to  spell and minions

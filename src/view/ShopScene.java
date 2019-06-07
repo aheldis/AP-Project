@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,10 +13,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import model.account.Account;
+import model.account.Shop;
+import model.card.Card;
 import view.enums.StateType;
 import view.sample.StageLauncher;
 
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static view.GeneralGraphicMethods.*;
@@ -165,23 +169,56 @@ public class ShopScene {
             hBoxes.clear();
             HBox hBox = new HBox();
 
-            addRectangle(hBox, 0, 0, 400, 60, 40, 40
+            Group groupText = new Group();
+
+            addRectangle(groupText, 0, 0, 400, 90, 50, 50
                     , Color.rgb(0, 0, 0, 0.7));
 
+            TextField textArea = new TextField();
+            textArea.setPrefHeight(100);
+            textArea.relocate(0, 0);
+            textArea.positionCaret(1);
+            textArea.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 20px; -fx-font-weight: bold;");
+            textArea.setBackground(new Background(new BackgroundFill(
+                    Color.rgb(5, 5, 5, 0.0001),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+            groupText.getChildren().add(textArea);
+
+            hBox.getChildren().addAll(groupText);
             hBox.relocate(600, 200);
             Group group = new Group();
-            addRectangle(group, 0, 0, 80, 60, 40, 40
+            addRectangle(group, 0, 0, 80, 90, 50, 50
                     , Color.rgb(0, 0, 0, 0.7));
+
+
+
             ImageView magnifier = addImage(group,
-                    "pics/shop/research.png", 10, 3, 50, 50);
+                    "pics/shop/research.png", 16, 23, 50, 50);
             hBox.getChildren().addAll(group);
+
+            magnifier.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    String cardName =textArea.getText();
+                    textArea.clear();
+                    Object object =  Shop.getInstance().search(account,cardName);
+                    if(object!=null){
+                        if(object instanceof Card) {
+                            root.getChildren().addAll(CollectionScene.makeCardGroup(
+                                    500, 400,object));
+                        }
+
+
+                    }
+
+
+                }
+            });
 
 
             root.getChildren().addAll(hBox);
             hBoxes.add(hBox);
         });
-
-
     }
 
 

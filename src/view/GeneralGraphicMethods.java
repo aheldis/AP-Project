@@ -69,9 +69,10 @@ public class GeneralGraphicMethods {
     }
 
     static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
+        ImageView imageView = null;
         try {
-            Image image = new Image(new FileInputStream(path));
-            ImageView imageView = new ImageView(image);
+            System.out.println("path = " + path);
+            imageView = new ImageView(new Image(new FileInputStream(path)));
             /*
             imageView.relocate(x,y);
             imageView.setFitHeight(height);
@@ -89,11 +90,11 @@ public class GeneralGraphicMethods {
             imageView.setFitWidth(width);
 
             nodeAdder(imageView, root);
-            return imageView;
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return imageView;
     }
 
     public static void setCursor(Scene scene, Cursor cursor) {

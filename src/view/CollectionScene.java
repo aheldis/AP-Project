@@ -108,14 +108,48 @@ public class CollectionScene {
         }
     }
 
+    public static Group makeCardGroup(int x,int y,Object card){
+        Group group=new Group();
+        group.relocate(x,y);
+        if(card instanceof Card) {
+            ImageView imageView = addImage(group, ((Card) card).getPathOfThePicture(),
+                    0, 0, CARD_WIDTH, CARD_HEIGHT);
+
+            showMana(root, 0, 0, ((Card) card).getMp());
+
+            addText(root, ((Card) card).getAp() + "",
+                    98,
+                    220, Color.WHITE, 20);
+
+            addText(root, ((Card) card).getHp() + "",
+                    53,
+                   220 , Color.WHITE, 20);
+
+            try {
+                imageView.setOnMouseEntered(event -> {
+
+                    ImageView descView = addImage(root, "pics/desc.png", 70,
+                            500, 200, 100);
+
+                    Text desc = addText(root, ((Card) card).getDescription(),
+                            100,
+                            535, Color.WHITE, 15);
+
+                    imageView.setOnMouseExited(event1 -> root.getChildren().removeAll(desc, descView));
+                });
+
+            } catch (Exception ignored) {
+
+            }
+
+        }
+        return group;
+    }
+
     private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
-            Image image = new Image(new FileInputStream(card.getPathOfThePicture()));
-            ImageView imageView = new ImageView(image);
-            imageView.setFitHeight(CARD_HEIGHT);
-            imageView.setFitWidth(CARD_WIDTH);
-            imageView.fitWidthProperty();
-            hBox.getChildren().add(imageView);
+            ImageView imageView = addImage(hBox, card.getPathOfThePicture(),
+                    0, 0, CARD_WIDTH, CARD_HEIGHT);
 
             showMana(root, i * (X_BORDER + CARD_WIDTH) + 40,
                     j * (Y_BORDER + CARD_HEIGHT) + 130, card.getMp());

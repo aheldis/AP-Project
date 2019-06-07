@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Shop {
     private static Shop singleInstance = null;
-    private static String pathOfFiles = "project_Duelyst1/";
+    private static String pathOfFiles = "resource/";
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Item> collectibles = new ArrayList<>();
@@ -108,31 +108,34 @@ public class Shop {
         return pathOfFiles;
     }
 
-    public void search(Account account, String name) {
-        if (!cardExist(name) && !itemExist(name)) {
-            ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
-            accountView.printError(error);
-            return;
+    public Object search(Account account, String name) {
+        if (cardExist(name)==null && !itemExist(name)) {
+            ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP.printMessage();
+            return null;
         }
-        if (cardExist(name)) {
+        if (cardExist(name)!=null) {
             Card card = getCard(name);
+            //card.setPathOfThePicture("pics/minion_background.png");
             int number = account.getCollection().getNumberOfCardId(card);
             accountView.print(account.getUserName() + "_" + name + "_" + number);
+            return card;
         }
         if (itemExist(name)) {
             Usable item = getItem(name);
             int number = account.getCollection().getNumberOfItemId(item);
             accountView.print(account.getUserName() + "_" + name + "_" + number);
+            return item;
         }
+        return null;
     }
 
-    private boolean cardExist(String name) {
+    public Card cardExist(String name) {
         for (Card card : cards) {
             if (card.getName().equals(name)) {
-                return true;
+                return card;
             }
         }
-        return false;
+        return null;
     }
 
     private boolean itemExist(String name) {
