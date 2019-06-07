@@ -125,11 +125,11 @@ public class AccountScene {
         button.setStyle("-fx-background-color: darkorange;" + noChange);
         root.getChildren().add(button);
         button.setOnMouseEntered(event -> {
-            GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN.getPath());
+            GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN);
             button.setStyle("-fx-background-color: red;" + noChange);
         });
         button.setOnMouseExited(event -> {
-            GeneralGraphicMethods.setCursor(accountScene, Cursor.AUTO.getPath());
+            GeneralGraphicMethods.setCursor(accountScene, Cursor.AUTO);
             button.setStyle("-fx-background-color: darkorange;" + noChange);
         });
         return button;
