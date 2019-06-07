@@ -561,13 +561,25 @@ public class CollectionScene {
                             ,Color.rgb(225,225,225,0.6),30);
                     importText.setStyle("-fx-font-weight: bold");
 
+                    ImageView text= addImage(root,"D:\\project_Duelyst1\\pics\\collection\\card_silenced@2x.png",
+                            600-5,100,250,100);
 
+                    TextField deckName = new TextField();
+                    deckName.setPrefHeight(50);
+                    deckName.relocate(600, 120);
+                    deckName.positionCaret(1);
+                    deckName.setStyle("-fx-text-fill: #a3b2cc; -fx-font-size: 25px; -fx-font-weight: bold;");
+                    deckName.setBackground(new Background(new BackgroundFill(Color.rgb(225, 225,225, 0.0001),
+                            CornerRadii.EMPTY, Insets.EMPTY)));
+                    root.getChildren().add(deckName);
+
+                    //todo logic
 
                     close.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
                             root.getChildren().removeAll(newDeck,newDeckText,
-                                    importDeck,importText,rectangle,close);
+                                    importDeck,importText,rectangle,close,text,deckName);
                         }
                     });
 
