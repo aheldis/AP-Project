@@ -8,8 +8,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.card.Card;
 import model.card.Minion;
-import view.AccountScene;
-import view.GeneralGraphicMethods;
+import view.*;
 import view.enums.StateType;
 
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class StageLauncher extends Application {
 //    public void start(Stage primaryStage) throws Exception {
 //        StageLauncher.primaryStage = primaryStage;
 //        primaryStage.setScene(makeScene(StateType.BATTLE));
-//        new BattleScene("pics/maps/abyssian/midground.png", WIDTH, HEIGHT);
+//        new BattleScene("pics/maps/map1/midground.png", WIDTH, HEIGHT);
 //        primaryStage.show();
 //    }
 
@@ -93,6 +92,7 @@ public class StageLauncher extends Application {
         Scene collectionScene = makeScene(StateType.COLLECTION, "pics/cursor/mouse.png");
         Scene selectModeScene = makeScene(StateType.SELECT_MODE, "pics/cursor/mouse_green.png");
         Scene selectGameScene = makeScene(StateType.SELECT_GAME, "pics/cursor/mouse_green.png");
+        Scene battleScene = makeScene(StateType.BATTLE, "pics/cursor/mouse_red.png");
 
 //        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
 //        URL url = null;
@@ -162,10 +162,20 @@ public class StageLauncher extends Application {
 //        CollectionScene.showDeck(decks,collection);
 
 
-        // SelectGameScene.selectGame();
+//         SelectGameScene.selectGame();
 
-        AccountScene.getInstance().makeBackground();
-        primaryStage.setScene(accountScene);
+//        AccountScene.getInstance().makeBackground();
+//        primaryStage.setScene(accountScene);
+
+
+        primaryStage.setScene(battleScene);
+
+
+        for(int i = 1; i <= 12; i++) {
+            BattleScene.getSingleInstance().setBattleScene(i);
+            primaryStage.show();
+        }
+
         primaryStage.show();
     }
 
