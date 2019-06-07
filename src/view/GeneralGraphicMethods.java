@@ -53,14 +53,17 @@ public class GeneralGraphicMethods {
             ((VBox) root).getChildren().add(node);
         if (root instanceof StackPane)
             ((StackPane) root).getChildren().add(node);
-
     }
 
     static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
         try {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);
-
+            /*
+            imageView.relocate(x,y);
+            imageView.setFitHeight(height);
+            imageView.setFitWidth(width);
+*/
             imageView.relocate(x * getRatioX(), y * getRatioY());
             imageView.setX(x * getRatioX());
             imageView.setY(y * getRatioY());
@@ -74,7 +77,6 @@ public class GeneralGraphicMethods {
             imageView.setFitWidth(width);
             */
             nodeAdder(imageView, root);
-
             return imageView;
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -1,14 +1,19 @@
 package view;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -22,11 +27,14 @@ import model.card.Minion;
 import model.card.Spell;
 import view.enums.ErrorType;
 import view.enums.StateType;
+import view.sample.*;
+import view.DragAndDropClass;
 import view.sample.SpriteMaker;
 import view.sample.StageLauncher;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -42,7 +50,64 @@ public class CollectionScene {
     private static int X_BORDER = 45;
     private static int Y_BORDER = 35;
     private static List<Node> deletable = new ArrayList<>();
+    static int pageNumber = 0;
+    static ArrayList<VBox> vBoxes = new ArrayList<>();
 
+
+
+    private  static  void deckCardMaker (Parent root,Card card,Group group){
+
+
+        try {
+            ImageView backPicView = new ImageView(new Image(new FileInputStream(
+                    "pics/collection/deck-select/deck_back.png")));
+            backPicView.setFitHeight(70);
+            backPicView.setFitWidth(300);
+            group.getChildren().add(backPicView);
+
+            SpriteMaker.getInstance().makeSpritePic(card.getPathOfAnimation(), 0, 10,
+                    group, card.getCountOfAnimation(), card.getAnimationRow(), 4000,
+                    card.getFrameSize(), card.getFrameSize(), 256);
+
+            ImageView garbage = new ImageView(new Image(new FileInputStream(
+                    "pics/collection/delete-button.png")));
+            garbage.setFitHeight(20);
+            garbage.setFitWidth(20);
+            garbage.relocate(230, 40);
+            group.getChildren().add(garbage);
+
+            if (root instanceof VBox)
+                ((VBox) root).getChildren().addAll(group);
+            if (root instanceof Group)
+                ((Group) root).getChildren().addAll(group);
+
+
+            garbage.setOnMouseClicked(event16 -> {
+                //todo az commenti to baziye asli dar biyad
+                //collection.removeCardFromDeck(card,deck.getName());
+                if (root instanceof VBox)
+                    ((VBox) root).getChildren().removeAll(group);
+                if (root instanceof Group)
+                    ((Group) root).getChildren().removeAll(group);
+
+                group.getChildren().clear();
+
+            });
+
+            Text text = addText(group, card.getName() + "\n" + card.getDescription(),
+                    60, 10, Color.rgb(200, 200, 225, 0.5), 20);
+            text.setOnMouseEntered(event1 -> {
+                text.setUnderline(true);
+                text.setFill(Color.rgb(49, 255, 245, 0.5));
+            });
+            text.setOnMouseExited(event12 -> {
+                text.setUnderline(false);
+                text.setFill(Color.rgb(200, 200, 225, 0.5));
+            });
+        }catch (Exception ignored){
+
+        }
+    }
 
     private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
@@ -288,28 +353,34 @@ public class CollectionScene {
         return deck;
     }
 
-    private static ArrayList<VBox> dragAndDropCard(Collection collection) {
+    private static ArrayList<VBox> dragAndDropCard(Collection collection,int pageNumber,VBox target) {
+        int NUMBER_IN_EACH_ROW =5;
         ArrayList<VBox> vBoxes = new ArrayList<>();
         int spacing = 13;
         ArrayList<Card> cards = collection.getAllCards();
         VBox vBox = new VBox();
-        for (int i = 0; i < cards.size(); i++) {
-            if (i % 6 == 0) {
+        int startingBound = 2*NUMBER_IN_EACH_ROW*pageNumber;
+        Group group;
+        for (int i = startingBound; i < startingBound+2*NUMBER_IN_EACH_ROW; i++) {
+            if(i>=cards.size())
+                break;
+            if (i % NUMBER_IN_EACH_ROW == 0) {
                 vBox = new VBox();
-                vBox.relocate(370 * (i / 6.0 + 1), 160);
+                vBox.relocate(370 * ((i /(float) NUMBER_IN_EACH_ROW)%2 + 1), 160);
                 vBox.setSpacing(spacing);
                 root.getChildren().addAll(vBox);
                 vBoxes.add(vBox);
             }
-            ImageView card = addImage(vBox, "pics/collection/deck-select/deck_back.png",
-                    0, 0, 300, 70);
+            group = new Group();
 
+            deckCardMaker(vBox,cards.get(i),group);
+            System.out.println(group);
+            DragAndDropClass.dragAndDrop(group,target,collectionScene,vBox);
         }
         return vBoxes;
     }
 
     private static void makeDeck(VBox vBox, int i, Deck deck, Collection collection) throws Exception {
-
         Random random = new Random();
         int a = random.nextInt(6);
         ImageView plateImageView = addImage(root, "pics/collection/deck-select/back-" + a + ".png",
@@ -328,7 +399,6 @@ public class CollectionScene {
             deletable.clear();
             vBox.getChildren().clear();
             ImageView deckImageView;
-            try {
                 addImage(vBox,
                         "pics/collection/deck_ribbons/ribbon-" + a + ".png", 0, 0,
                         324, 150);
@@ -350,25 +420,54 @@ public class CollectionScene {
 
 
                 addCardToDeck.setOnMouseEntered(event15 -> {
+
                     System.out.println("hi");
-                    Rectangle rectangle = new Rectangle(350, 50, 800, 700);
+                    Rectangle rectangle = new Rectangle(350, 50, 800, 750);
                     rectangle.setFill(Color.rgb(0, 0, 0, 0.7));
                     rectangle.setArcHeight(50);
                     rectangle.setArcWidth(50);
                     root.getChildren().add(rectangle);
-                    ArrayList<VBox> vBoxes;
 
-                    vBoxes = dragAndDropCard(collection);
+
+                    vBoxes .addAll( dragAndDropCard(collection,pageNumber,vBox));
 
                     ImageView hero_icon = addImage(root, "pics/collection/deck-select/icon-" + a + ".png",
                             360, 50, 120, 100);
 
                     ImageView close = addImage(root,
                             "pics/collection/button_close@2x.png", 1100, 50, 50, 50);
+                    ImageView backCircle = addImage(root,"pics/circle.png",400,730,70,70);
+                    ImageView back = addImage(root,"pics/back.png",415,750-5,40,40);
+
+                    ImageView nextCircle = addImage(root,"pics/circle.png",1000,730,70,70);
+                    ImageView next = addImage(root,"pics/next.png",1015,750-5,40,40);
+
+                    back.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            pageNumber--;
+                            if(pageNumber<0)
+                                pageNumber = 0;
+                            root.getChildren().removeAll(vBoxes);
+                            vBoxes.addAll( dragAndDropCard(collection,pageNumber,vBox));
+                        }
+                    });
+                    next.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            pageNumber++;
+                            root.getChildren().removeAll(vBoxes);
+                            vBoxes .addAll( dragAndDropCard(collection,pageNumber,vBox));
+                        }
+                    });
+
+
                     close.setOnMouseClicked(event17 ->
                     {
-                        root.getChildren().removeAll(close, rectangle, hero_icon);
+                        root.getChildren().removeAll(close, rectangle, hero_icon,
+                                back,backCircle,next,nextCircle);
                         root.getChildren().removeAll(vBoxes);
+                        vBoxes.clear();
                     });
                 });
 
@@ -397,65 +496,25 @@ public class CollectionScene {
 
                 ArrayList<Card> cards = deck.getCardsOfDeck();
 
-
+                Group group;
                 for (Card card : cards) {
-                    Group group = new Group();
-
-                    ImageView backPicView = new ImageView(new Image(new FileInputStream(
-                            "pics/collection/deck-select/deck_back.png")));
-                    backPicView.setFitHeight(70);
-                    backPicView.setFitWidth(300);
-                    group.getChildren().add(backPicView);
-
-                    SpriteMaker.getInstance().makeSpritePic(card.getPathOfAnimation(), 0, 10,
-                            group, card.getCountOfAnimation(), card.getAnimationRow(), 4000,
-                            card.getFrameSize(), card.getFrameSize(), 256);
-
-                    ImageView garbage = new ImageView(new Image(new FileInputStream(
-                            "pics/collection/delete-button.png")));
-                    garbage.setFitHeight(20);
-                    garbage.setFitWidth(20);
-                    garbage.relocate(230, 40);
-                    group.getChildren().add(garbage);
-
-                    vBox.getChildren().add(group);
-
-                    garbage.setOnMouseClicked(event16 -> {
-                        //todo az commenti to baziye asli dar biyad
-                        //collection.removeCardFromDeck(card,deck.getName());
-                        root.getChildren().remove(group);
-                        group.getChildren().clear();
-
-                    });
-
-                    Text text = addText(group, card.getName() + "\n" + card.getDescription(),
-                            60, 10, Color.rgb(200, 200, 225, 0.5), 20);
-                    text.setOnMouseEntered(event1 -> {
-                        text.setUnderline(true);
-                        text.setFill(Color.rgb(49, 255, 245, 0.5));
-                    });
-                    text.setOnMouseExited(event12 -> {
-                        text.setUnderline(false);
-                        text.setFill(Color.rgb(200, 200, 225, 0.5));
-                    });
+                    group = new Group();
+                    deckCardMaker(vBox,card,group);
                 }
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
         });
 
 
     }
 
     public static void showDeck(ArrayList<Deck> decks, Collection collection) {
-        collectionScene.setRoot(root);
+        //collectionScene.setRoot(root);
         root.getChildren().clear();
 
         setBackground(root, "pics/collection/background@2x.jpg", true, 20, 20);
 
         try {
-            VBox vBox = new VBox();
+            VBox vBox = new VBox();//vobxe baqale safhe
             vBox.relocate(0, 0);
             vBox.setSpacing(5);
             vBox.setPrefSize(200, collectionScene.getHeight());
