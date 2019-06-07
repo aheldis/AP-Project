@@ -1,6 +1,7 @@
 package view.sample;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -8,7 +9,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.card.Card;
 import model.card.Minion;
-import view.BattleScene;
 import view.AccountScene;
 import view.GeneralGraphicMethods;
 import view.enums.Cursor;
@@ -41,7 +41,7 @@ public class StageLauncher extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        GeneralGraphicMethods.setCursor(scene, cursor);
+        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
         return scene;
     }
 
@@ -159,6 +159,7 @@ public class StageLauncher extends Application {
 //        CollectionScene.showDeck(decks,collection);
 
 
+        // SelectGameScene.selectGame();
 
 //        collectionScene.setFill(Color.BLACK);
 //        GeneralGraphicMethods.addImage(collectionScene.getRoot(),"pics/particles/cloud_005@2x.png",200,200,100,100);
