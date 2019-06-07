@@ -1,6 +1,7 @@
 package view.sample;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -40,7 +41,7 @@ public class StageLauncher extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        GeneralGraphicMethods.setCursor(scene, cursor);
+        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
         return scene;
     }
 
@@ -163,13 +164,13 @@ public class StageLauncher extends Application {
 //        collectionScene.setFill(Color.BLACK);
 //        GeneralGraphicMethods.addImage(collectionScene.getRoot(),"pics/particles/cloud_005@2x.png",200,200,100,100);
 
-       //primaryStage.setScene(selectGameScene);
+        //primaryStage.setScene(selectGameScene);
         primaryStage.setScene(accountScene);
         AccountScene.getInstance().makeBackground();
 //
 //        BattleScene.getSingleInstance().setBattleScene(3); //from 1 to 12
 //        primaryStage.setScene(battleScene);
-      //  primaryStage.setScene(collectionScene);
+        //  primaryStage.setScene(collectionScene);
         primaryStage.show();
     }
 

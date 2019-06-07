@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
@@ -17,6 +18,7 @@ import javafx.util.Duration;
 import view.enums.Cursor;
 import view.enums.StateType;
 import view.sample.StageLauncher;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -28,6 +30,7 @@ public class AccountScene {
     private static final HashMap<Node, Bounds> movables = new HashMap<>();
     private static final ArrayList<Node> movableNodes = new ArrayList<>();
     private static final ArrayList<Node> windows = new ArrayList<>();
+    private static Button enterButton = null;
 
     private AccountScene() {
     }
@@ -39,6 +42,7 @@ public class AccountScene {
     public void makeBackground() {
         String backgroundPath = "pics/menu/background@2x.jpg";
         ImageView background = GeneralGraphicMethods.setBackground(root, backgroundPath, true, 0, 0);
+        background.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
         addLanterns();
         addMovables(background);
         addWindows();
@@ -53,28 +57,39 @@ public class AccountScene {
         rectangle.setFill(Color.rgb(40, 40, 36, 0.95));
         root.getChildren().add(rectangle);
         windows.add(rectangle);
-        signUp(sizeY);
+        ImageView brand = GeneralGraphicMethods.addImage(root, "pics/login_pics/brand_duelyst@2x.png",
+                (centerX - 250) / 2, centerY - sizeY / 2 - 200, 1000 / 2, 216 / 2);
+        windows.add(brand);
+        enter("LOG IN", sizeY);
     }
 
-    private void signUp(double sizeY) {
+    private void enter(String enter, double sizeY) {
         double centerX = accountScene.getWidth() / 2;
         double centerY = accountScene.getHeight() / 2;
         TextField userName = new TextField();
         userName.setPromptText("User name");
         userName.setPrefSize(350, 75);
         userName.relocate(centerX - 175, centerY - sizeY / 2 + 100);
-        userName.setStyle("-fx-background-color: gray; -fx-font-size: 20px");
+        userName.setStyle("-fx-background-color: rgba(100,100,100,0.4); -fx-font-size: 20px");
         root.getChildren().add(userName);
-        TextField password = new TextField();
+        windows.add(userName);
+        PasswordField password = new PasswordField();
         password.setPromptText("Password");
         password.setPrefSize(350, 75);
         password.relocate(centerX - 175, centerY - sizeY / 2 + 200);
-        password.setStyle("-fx-background-color: gray; -fx-font-size: 20px");
+        password.setStyle("-fx-background-color: rgba(100,100,100,0.4); -fx-font-size: 20px");
         root.getChildren().add(password);
-        Button signUp = newButton("SIGN UP", sizeY);
+        windows.add(password);
+        root.getChildren().remove(enterButton);
+        windows.remove(enterButton);
+        if (enter.equals("LOG IN"))
+            enterButton = newButton("LOG IN", sizeY);
+        else
+            enterButton = newButton("SIGN UP", sizeY);
+
     }
 
-    Button newButton(String name, double sizeY) {
+    private Button newButton(String name, double sizeY) {
         double centerX = accountScene.getWidth() / 2;
         double centerY = accountScene.getHeight() / 2;
         String noChange = "-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20px";
@@ -83,6 +98,7 @@ public class AccountScene {
         button.relocate(centerX - 175, centerY - sizeY / 2 + 350);
         button.setStyle("-fx-background-color: darkorange;" + noChange);
         root.getChildren().add(button);
+        windows.add(button);
         button.setOnMouseEntered(event -> {
             GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN);
             button.setStyle("-fx-background-color: red;" + noChange);
