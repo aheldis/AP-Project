@@ -59,7 +59,7 @@ public class AccountScene {
         root.getChildren().add(rectangle);
         windows.add(rectangle);
         ImageView brand = GeneralGraphicMethods.addImage(root, "pics/login_pics/brand_duelyst@2x.png",
-                (centerX - 250) / 2, centerY - sizeY / 2 - 200, 1000 / 2, 216 / 2);
+                centerX - 250, centerY - sizeY / 2 - 100, 1000 / 2, 216 / 2);
         windows.add(brand);
         Label logIn = new Label("LOG IN");
         logIn.relocate(centerX - 100, centerY - sizeY / 2 + 45);
@@ -104,7 +104,7 @@ public class AccountScene {
             logIn.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
             signUp.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
             ImageView triangle = GeneralGraphicMethods.addImage(root, "pics/login_pics/bnea-triangle@2x.png",
-                    (logIn.getLayoutX() + 25) / 2, (logIn.getLayoutY() - 20) / 2,15, 10);
+                    logIn.getLayoutX() + 25, logIn.getLayoutY() - 20,15, 10);
             windows.add(triangle);
             changes.add(triangle);
         } else {
@@ -112,7 +112,7 @@ public class AccountScene {
             signUp.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
             logIn.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
             ImageView triangle = GeneralGraphicMethods.addImage(root, "pics/login_pics/bnea-triangle@2x.png",
-                    (signUp.getLayoutX() + 30) / 2, (signUp.getLayoutY() - 20) / 2,15, 10);
+                    signUp.getLayoutX() + 30, signUp.getLayoutY() - 20,15, 10);
             windows.add(triangle);
             changes.add(triangle);
         }
