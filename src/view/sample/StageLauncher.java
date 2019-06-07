@@ -121,17 +121,17 @@ public class StageLauncher extends Application {
 //        hero.setDescription("hello girls");
 ////
 //
-//        Spell spell = new Spell();
-//        spell.setPathOfThePicture("pics/minion_background.png");
-//        spell.setPathOfAnimation("pics/spell/fireBall.png");
-//        spell.setCountOfAnimation(16);
-//        spell.setFrameSize(48);
-//
-//        Spell spell1 = new Spell();
-//        spell1.setPathOfThePicture("pics/minion_background.png");
-//        spell1.setPathOfAnimation("pics/spell/fireBall.png");
-//        spell1.setCountOfAnimation(16);
-//        spell1.setFrameSize(48);
+        Spell spell = new Spell();
+        spell.setPathOfThePicture("pics/minion_background.png");
+        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setCountOfAnimation(16);
+        spell.setFrameSize(48);
+
+        Spell spell1 = new Spell();
+        spell1.setPathOfThePicture("pics/minion_background.png");
+        spell1.setPathOfAnimation("pics/spell/fireBall.png");
+        spell1.setCountOfAnimation(16);
+        spell1.setFrameSize(48);
 //
 ////        cards.add(spell);
 ////
@@ -143,26 +143,27 @@ public class StageLauncher extends Application {
 ////        CollectionScene.showInCollection(cards,new Collection(new Account("zahra","123")));
 ////
 ////        //todo test for deck show inas
-//        ArrayList<Deck> decks = new ArrayList<>();
-//        Deck deck = new Deck();
-//
-//        spell.setDescription("atasssh");
-//        spell.setName("atisih");
-//        spell1.setDescription("atasssh");
-//        spell1.setName("atisih");
-//        deck.getCardsOfDeck().add(spell);
-//        deck.getCardsOfDeck().add(spell);
-//        deck.setName("zahra");
-//        for (int i = 0; i < 10; i++) {
-//            decks.add(deck);
-//        }
-//
-//        Collection collection = new Collection(new Account("zahra","123"));
-//        for(int i=0;i<15;i++){
-//            collection.addToCards(spell);
-//        }
-//
-//        CollectionScene.showDeck(decks,collection);
+        ArrayList<Deck> decks = new ArrayList<>();
+        Deck deck = new Deck();
+
+        spell.setDescription("atasssh");
+        spell.setName("atisih");
+        spell1.setDescription("atasssh");
+        spell1.setName("atisih");
+        deck.getCardsOfDeck().add(spell);
+        deck.getCardsOfDeck().add(spell);
+        deck.setName("zahra");
+        for (int i = 0; i < 10; i++) {
+            decks.add(deck);
+        }
+
+        Collection collection = new Collection(new Account("zahra","123"));
+        for(int i=0;i<15;i++){
+            collection.addToCards(spell);
+        }
+        collection.setDecks(decks);
+
+        CollectionScene.showDeck(decks,collection);
 
 
         // SelectGameScene.selectGame();
@@ -175,9 +176,8 @@ public class StageLauncher extends Application {
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
 
-        BattleScene.getSingleInstance().setBattleScene(3); //from 1 to 12
-        primaryStage.setScene(battleScene);
-      //  primaryStage.setScene(collectionScene);
+//        BattleScene.getSingleInstance().setBattleScene(3); //from 1 to 12
+        primaryStage.setScene(collectionScene);
         primaryStage.show();
     }
 

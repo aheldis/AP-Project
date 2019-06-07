@@ -1,5 +1,7 @@
 package view;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,8 +32,7 @@ import view.DragAndDropClass;
 import view.sample.SpriteMaker;
 import view.sample.StageLauncher;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
@@ -351,7 +352,7 @@ public class CollectionScene {
         return deck;
     }
 
-    private static ArrayList<VBox> dragAndDropCard(Collection collection,int pageNumber,VBox target) {
+    private static ArrayList<VBox> dragAndDropCard(Collection collection,int pageNumber,VBox target,Deck deck) {
         int NUMBER_IN_EACH_ROW =5;
         ArrayList<VBox> vBoxes = new ArrayList<>();
         int spacing = 13;
@@ -374,12 +375,12 @@ public class CollectionScene {
             deckCardMaker(vBox,cards.get(i),group);
             System.out.println(group);
 
-            DragAndDropClass.dragAndDrop(group,target,collectionScene,vBox);
+            DragAndDropClass.dragAndDrop(group,target,deck,cards.get(i));
         }
         return vBoxes;
     }
 
-    private static void makeDeck(VBox vBox, int i, Deck deck, Collection collection) throws Exception {
+    private static void makeDeck(VBox vBox, int i, Deck deck, Collection collection) {
         Random random = new Random();
         int a = random.nextInt(6);
         ImageView plateImageView = addImage(root, "pics/collection/deck-select/back-" + a + ".png",
@@ -397,7 +398,6 @@ public class CollectionScene {
             root.getChildren().removeAll(deletable);
             deletable.clear();
             vBox.getChildren().clear();
-            ImageView deckImageView;
                 addImage(vBox,
                         "pics/collection/deck_ribbons/ribbon-" + a + ".png", 0, 0,
                         324, 150);
@@ -428,7 +428,7 @@ public class CollectionScene {
                     root.getChildren().add(rectangle);
 
 
-                    vBoxes .addAll( dragAndDropCard(collection,pageNumber,vBox));
+                    vBoxes .addAll( dragAndDropCard(collection,pageNumber,vBox,deck));
 
                     ImageView hero_icon = addImage(root, "pics/collection/deck-select/icon-" + a + ".png",
                             360, 50, 120, 100);
@@ -448,7 +448,7 @@ public class CollectionScene {
                             if(pageNumber<0)
                                 pageNumber = 0;
                             root.getChildren().removeAll(vBoxes);
-                            vBoxes.addAll( dragAndDropCard(collection,pageNumber,vBox));
+                            vBoxes.addAll( dragAndDropCard(collection,pageNumber,vBox,deck));
                         }
                     });
                     next.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -456,7 +456,7 @@ public class CollectionScene {
                         public void handle(MouseEvent event) {
                             pageNumber++;
                             root.getChildren().removeAll(vBoxes);
-                            vBoxes .addAll( dragAndDropCard(collection,pageNumber,vBox));
+                            vBoxes .addAll( dragAndDropCard(collection,pageNumber,vBox,deck));
                         }
                     });
 
@@ -513,21 +513,17 @@ public class CollectionScene {
         setBackground(root, "pics/collection/background@2x.jpg", true, 20, 20);
 
         try {
-            VBox vBox = new VBox();//vobxe baqale safhe
-            vBox.relocate(0, 0);
-            vBox.setSpacing(5);
-            vBox.setPrefSize(200, collectionScene.getHeight());
-            vBox.setBackground(new Background(new BackgroundFill(
+            VBox sideVBox = new VBox();//vobxe baqale safhe
+            sideVBox.relocate(0, 0);
+            sideVBox.setSpacing(5);
+            sideVBox.setPrefSize(200, collectionScene.getHeight());
+            sideVBox.setBackground(new Background(new BackgroundFill(
                     Color.rgb(10, 10, 10, 0.5),
                     CornerRadii.EMPTY, Insets.EMPTY)));
 
 
             for (int i = 0; i < decks.size(); i++) {
-                try {
-                    makeDeck(vBox, i, decks.get(i), collection);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                    makeDeck(sideVBox, i, decks.get(i), collection);
             }
 
             ImageView add_deck = addImage(root, "pics/collection/plate@2x.png",
@@ -551,35 +547,108 @@ public class CollectionScene {
                     ImageView close = addImage(root,"pics/collection/button_close@2x.png",
                             1100,100,50,50);
 
-                    ImageView newDeck = addImage(root,"pics/collection/new_deck.png",450,200,250,80);
-                    ImageView importDeck = addImage( root,"pics/collection/import.png",710,200,250,80);
+                    ImageView newDeck = addImage(root,"pics/collection/new_deck.png",
+                            400,200,250,80);
+                    ImageView importDeck = addImage( root,"pics/collection/import.png",
+                            860,200,250,80);
 
-                    Text newDeckText = addText(root,"New Deck",500,235,
+                    ImageView exportDeck = addImage(root,"pics/collection/export_deck.png",
+                           660,200,200,80 );
+
+                    Text newDeckText = addText(root,"New Deck",500-50,235,
                             Color.rgb(225,225,225,0.6),30);
                     newDeckText.setStyle("-fx-font-weight: bold");
-                    Text importText = addText(root,"Import Deck",760-7,235
+
+                    Text exportText = addText(root,"Export",690,235,
+                            Color.rgb(225,225,225,0.6),30);
+                    exportText.setStyle("-fx-font-weight: bold");
+
+                    Text importText = addText(root,"Import Deck",890,235
                             ,Color.rgb(225,225,225,0.6),30);
                     importText.setStyle("-fx-font-weight: bold");
 
-                    ImageView text= addImage(root,"D:\\project_Duelyst1\\pics\\collection\\card_silenced@2x.png",
-                            600-5,100,250,100);
+                    ImageView text= addImage(root,"pics/collection/card_silenced@2x.png",
+                            600-5,100,300,100);
 
                     TextField deckName = new TextField();
                     deckName.setPrefHeight(50);
                     deckName.relocate(600, 120);
                     deckName.positionCaret(1);
                     deckName.setStyle("-fx-text-fill: #a3b2cc; -fx-font-size: 25px; -fx-font-weight: bold;");
-                    deckName.setBackground(new Background(new BackgroundFill(Color.rgb(225, 225,225, 0.0001),
+                    deckName.setBackground(new Background(
+                            new BackgroundFill(Color.rgb(225, 225,225, 0.0001),
                             CornerRadii.EMPTY, Insets.EMPTY)));
                     root.getChildren().add(deckName);
 
-                    //todo logic
+                    importText.setOnMouseClicked(event12 -> {
+                        try {
+                            FileReader fr = new FileReader("exportedDeck/"+ deckName.getText() + ".txt");
+                            Gson gson = new GsonBuilder().create();
+                            Deck deck = gson.fromJson(fr, Deck.class);//load the deck
+                            if (!collection.getAccount().getCollection().checkTheDeckForImport(deck))
+                            {
+                                ErrorType.HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT.printMessage();
+                            }
+                            {
+                                if(collection.passTheDeckIfHaveBeenExist(deck.getName())==null) {
+                                    collection.getDecks().add(deck);
+                                    int i = collection.getDecks().size() - 1;
+                                    root.getChildren().removeAll(newDeck, newDeckText,
+                                            importDeck, importText, rectangle, close, text,
+                                            deckName, exportDeck, exportText);
+                                    makeDeck(sideVBox, i, collection.getDecks().get(i), collection);
+                                    root.getChildren().addAll(rectangle, newDeck, newDeckText,
+                                            importDeck, importText, close, text, deckName, exportDeck, exportText);
+                                }
+                            }
+
+                        } catch (Exception e) {
+                            ErrorType.INVALID_NAME_FOR_IMPORTED_DECK.printMessage();
+                        }
+                        finally {
+                            deckName.clear();
+                        }
+                    });
+
+                    exportText.setOnMouseClicked(event13 -> {
+                        Deck deck = collection.passTheDeckIfHaveBeenExist(deckName.getText());
+                        System.out.println(collection.getDecks());
+                        if (deck == null) {
+                            ErrorType.HAVE_NOT_DECK.printMessage();
+                        }
+                        else {
+                            try {
+                                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                                File file = new File("exportedDeck/" + deckName.getText() + ".txt");
+                                FileWriter fileWriter = new FileWriter(file);
+                                fileWriter.write(gson.toJson(deck));
+                                fileWriter.close();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                        deckName.clear();
+                    });
+
+                    newDeckText.setOnMouseClicked(event1 -> {
+                        if( collection.createDeck(deckName.getText())) {
+                            int i = collection.getDecks().size() - 1;
+                            deckName.clear();
+                            root.getChildren().removeAll(newDeck,newDeckText,
+                                    importDeck,importText,rectangle,close,text,
+                                    deckName,exportDeck,exportText);
+                            makeDeck(sideVBox, i, collection.getDecks().get(i), collection);
+                            root.getChildren().addAll(rectangle,newDeck,newDeckText,
+                                    importDeck,importText,close,text,deckName,exportDeck,exportText);
+                        }
+
+                    });
 
                     close.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
                             root.getChildren().removeAll(newDeck,newDeckText,
-                                    importDeck,importText,rectangle,close,text,deckName);
+                                    importDeck,importText,rectangle,close,text,deckName,exportDeck,exportText);
                         }
                     });
 
@@ -600,7 +669,7 @@ public class CollectionScene {
 //                animationTimer.start();
 //
 //            });
-            root.getChildren().add(vBox);
+            root.getChildren().add(sideVBox);
         } catch (Exception e) {
             e.printStackTrace();
         }
