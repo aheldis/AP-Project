@@ -1,0 +1,16 @@
+{
+  "@type": "view.MapProperties",
+  "@val": {
+    "cellWidth": 82,
+    "cellHeight": 77,
+    "gap": 5,
+    "ulx": 380,
+    "uly": 230,
+    "urx": 1063,
+    "ury": 230,
+    "llx": 280,
+    "lly": 640,
+    "lrx": 1163,
+    "lry": 640
+  }
+}

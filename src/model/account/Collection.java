@@ -29,6 +29,10 @@ public class Collection  implements Cloneable{
         return account;
     }
 
+    public void setDecks(ArrayList<Deck> decks) {
+        this.decks = decks;
+    }
+
     public Collection(Account account) {
         this.account = account;
     }
@@ -154,15 +158,16 @@ public class Collection  implements Cloneable{
 
     }
 
-    public void createDeck(String deckName) {
+    public boolean createDeck(String deckName) {
         if (passTheDeckIfHaveBeenExist(deckName) != null) {
             ErrorType error = ErrorType.DECK_HAVE_BEEN_EXIST;
             error.printMessage();
-            return;
+            return false;
         }
         Deck deck = new Deck();
         deck.setName(deckName);
         decks.add(deck);
+        return true;
 
     }
 

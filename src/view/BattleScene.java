@@ -1,7 +1,10 @@
 package view;
 
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -13,6 +16,8 @@ import view.enums.StateType;
 import view.sample.StageLauncher;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -20,13 +25,12 @@ public class BattleScene {
     private static BattleScene singleInstance = null;
     private Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
     private Group root = (Group) battleScene.getRoot();
+    private Group board = null; //!!!! Har chi roo board gharare bashe be in add she
     private double width = StageLauncher.getWidth();
     private double height = StageLauncher.getHeight();
     private int numberOfMap;
-    private double cellWidth = 82;
-    private double cellHeight = 77;
-    private double gap = 5;
     private Rectangle[][] gameGrid;
+    private MapProperties mapProperties;
 
     private BattleScene() {
     }
@@ -40,8 +44,20 @@ public class BattleScene {
     public void setBattleScene(int numberOfMap) {
         root.getChildren().clear();
         this.numberOfMap = numberOfMap;
+        setMapProperties();
         setMapBackground();
         addGrid();
+    }
+
+    private void setMapProperties(){
+        String path = "pics/maps_categorized/map" + numberOfMap + "/property.json";
+        YaGson yaGson = new YaGson();
+        try {
+            mapProperties = yaGson.fromJson(new FileReader(path), MapProperties.class);
+            mapProperties.setCellSize();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setMapBackground() {
@@ -54,6 +70,8 @@ public class BattleScene {
             for (File file1 : files) {
                 //System.out.println("file1.getName() = " + file1.getName());
                 ImageView imageView = GeneralGraphicMethods.setBackground(root, file1.getPath(), false, 0, 0);
+                imageView.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
+
                 if (file1.getName().contains("middleground") || file1.getName().contains("midground")) {
                     //todo duration ya ye chiz dige
                     moveBackgrounds(imageView, false, false);
@@ -107,9 +125,10 @@ public class BattleScene {
     }
 
     private void addGrid() {
+        board = new Group();
         int numberOfColumns = LandOfGame.getNumberOfColumns();
         int numberOfRows = LandOfGame.getNumberOfRows();
-        double primaryX = 300, primaryY = 150;
+        double primaryX = (mapProperties.ulx + mapProperties.llx) / 2, primaryY = mapProperties.uly;
         double currentX = primaryX, currentY = primaryY;
 
         gameGrid = new Rectangle[numberOfRows][numberOfColumns];
@@ -117,19 +136,44 @@ public class BattleScene {
         for (int i = 0; i < numberOfRows; i++)
             for (int j = 0; j < numberOfColumns; j++) {
                 if(j == 0) {
-                    currentY += cellHeight + gap;
+                    currentY += mapProperties.cellHeight + mapProperties.gap;
                     currentX = primaryX;
                 }
                 else
-                    currentX += cellWidth + gap;
-                Rectangle rectangle = new Rectangle(cellWidth, cellHeight);
+                    currentX += mapProperties.cellWidth + mapProperties.gap;
+                Rectangle rectangle = new Rectangle(mapProperties.cellWidth, mapProperties.cellHeight);
                 rectangle.setFill(Color.rgb(0, 0, 0, 0.2));
                 rectangle.setX(currentX);
                 rectangle.setY(currentY);
                 gameGrid[i][j] = rectangle;
-                root.getChildren().add(rectangle);
+                board.getChildren().add(rectangle);
             }
 
+        root.getChildren().add(board);
+
+        PerspectiveTransform perspectiveTransform = new PerspectiveTransform();
+
+        perspectiveTransform.setUlx(mapProperties.ulx);
+        perspectiveTransform.setUly(mapProperties.uly);
+        perspectiveTransform.setUrx(mapProperties.urx);
+        perspectiveTransform.setUry(mapProperties.ury);
+        perspectiveTransform.setLlx(mapProperties.llx);
+        perspectiveTransform.setLly(mapProperties.lly);
+        perspectiveTransform.setLrx(mapProperties.lrx);
+        perspectiveTransform.setLry(mapProperties.lry);
+        /*
+        perspectiveTransform.setUlx(primaryX + 50);
+        perspectiveTransform.setUly(primaryY);
+        perspectiveTransform.setUrx(primaryX + cellWidth * numberOfColumns + gap * (numberOfColumns - 1) - 50);
+        perspectiveTransform.setUry(primaryY);
+        perspectiveTransform.setLlx(primaryX - 50);
+        perspectiveTransform.setLly(primaryY + cellHeight * numberOfRows + gap * (numberOfRows - 1));
+        perspectiveTransform.setLrx(primaryX + cellWidth * numberOfColumns + gap * (numberOfColumns - 1) + 50);
+        perspectiveTransform.setLry(primaryY + cellHeight * numberOfRows + gap * (numberOfRows - 1));
+        */
+
+
+        board.setEffect(perspectiveTransform);
     }
 
 }
