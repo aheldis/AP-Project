@@ -70,7 +70,7 @@ public class GeneralGraphicMethods {
 ////            imageView.setY(y * getRatioY());
 //            imageView.setFitHeight(height * getRatioY());
 //            imageView.setFitWidth(width * getRatioX());
-//
+////
             imageView.relocate(x, y);
             imageView.setFitHeight(height);
             imageView.setFitWidth(width);
