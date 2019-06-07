@@ -14,17 +14,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import model.account.Account;
+import model.account.AllAccount;
 import view.enums.Cursor;
+import view.enums.ErrorType;
 import view.enums.StateType;
 import view.sample.StageLauncher;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class AccountScene {
     private static final AccountScene instance = new AccountScene();
     private static final Scene accountScene = StageLauncher.getScene(StateType.ACCOUNT_MENU);
-    private static Group root = (Group) accountScene.getRoot();
+    private static Group root = (Group) Objects.requireNonNull(accountScene).getRoot();
     private static final ArrayList<Node> movables = new ArrayList<>();
     private static final ArrayList<Node> windows = new ArrayList<>();
     private static ArrayList<Node> changes = new ArrayList<>();
@@ -39,10 +43,12 @@ public class AccountScene {
     public void makeBackground() {
         String backgroundPath = "pics/menu/background@2x.jpg";
         ImageView background = GeneralGraphicMethods.setBackground(root, backgroundPath, true, 0, 0);
+        assert background != null;
         background.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
         addLanterns();
         addMovables(background);
         addWindows();
+//        MainMenuScene.getInstance().makeMenu(null);
     }
 
     private void addWindows() {
@@ -57,7 +63,7 @@ public class AccountScene {
         root.getChildren().add(rectangle);
         windows.add(rectangle);
         ImageView brand = GeneralGraphicMethods.addImage(root, "pics/login_pics/brand_duelyst@2x.png",
-                centerX / ratioX - 250, centerY / ratioY - sizeY / 2 - 120, 1000 / 2, 216 / 2);
+                centerX / ratioX - 250, (centerY - sizeY / 2 - 120) / ratioY, 1000 / 2, 216 / 2);
         windows.add(brand);
         Label logIn = new Label("LOG IN");
         logIn.relocate(centerX - 100, centerY - sizeY / 2 + 45);
@@ -67,23 +73,26 @@ public class AccountScene {
         signUp.relocate(centerX + 20, centerY - sizeY / 2 + 45);
         root.getChildren().add(signUp);
         windows.add(signUp);
-        commonTextFields(sizeY);
-        Button enterButton = newButton("LOG IN", sizeY);
+        Button enterButton = newButton(sizeY);
+        commonTextFields(sizeY, enterButton);
         enter("LOG IN", enterButton, logIn, signUp);
         logIn.setOnMouseClicked(event -> enter("LOG IN", enterButton, logIn, signUp));
         signUp.setOnMouseClicked(event -> enter("SIGN UP", enterButton, logIn, signUp));
     }
 
-    private void commonTextFields(double sizeY) {
+    private void commonTextFields(double sizeY, Button enterButton) {
         double centerX = StageLauncher.getWidth() / 2;
         double centerY = StageLauncher.getHeight() / 2;
         TextField userName = new TextField();
         userName.setPromptText("Username");
         userName.setPrefSize(350, 75);
         userName.relocate(centerX - 175, centerY - sizeY / 2 + 100);
-        userName.setStyle("-fx-background-color: rgba(100,100,100,0.4); -fx-font-size: 20px");
+        String noChange = "-fx-font-size: 20px; -fx-text-size: 22px; -fx-text-weight: bold; -fx-text-fill: white";
+        userName.setStyle("-fx-background-color: rgba(100,100,100,0.4);" + noChange);
         root.getChildren().add(userName);
         windows.add(userName);
+        userName.setOnMouseEntered(event -> userName.setStyle("-fx-background-color: rgba(130,130,130,0.4);" + noChange));
+        userName.setOnMouseExited(event -> userName.setStyle("-fx-background-color: rgba(100,100,100,0.4);" + noChange));
         PasswordField password = new PasswordField();
         password.setPromptText("Password");
         password.setPrefSize(350, 75);
@@ -91,7 +100,39 @@ public class AccountScene {
         password.setStyle("-fx-background-color: rgba(100,100,100,0.4); -fx-font-size: 20px");
         root.getChildren().add(password);
         windows.add(password);
+        password.setOnMouseEntered(event -> password.setStyle("-fx-background-color: rgba(130,130,130,0.4);" + noChange));
+        password.setOnMouseExited(event -> password.setStyle("-fx-background-color: rgba(100,100,100,0.4);" + noChange));
+        enterButton.setOnMouseClicked(event -> buttonAction(enterButton, userName.getText(), password.getText()));
     }
+
+    private void buttonAction(Button enterButton, String userName, String password) {
+        AllAccount allAccount = AllAccount.getInstance();
+        MainMenuScene mainMenuScene = MainMenuScene.getInstance();
+        Account account;
+        if (enterButton.getText().equals("SIGN UP")) {
+            if (allAccount.userNameHaveBeenExist(userName) != null) {
+                ErrorType.USER_NAME_ALREADY_EXIST.printMessage();
+                return;
+            }
+            allAccount.createAccount(userName, password);
+            account = allAccount.getAccountByName(userName);
+            root.getChildren().removeAll(windows);
+            mainMenuScene.makeMenu(account);
+        } else {
+            if (allAccount.userNameHaveBeenExist(userName) == null) {
+                ErrorType.USER_NAME_NOT_FOUND.printMessage();
+                return;
+            }
+            if (!allAccount.passwordMatcher(userName, password)) {
+                ErrorType.PASSWORD_DOES_NOT_MATCH.printMessage();
+                return;
+            }
+            account = allAccount.getAccountByName(userName);
+            root.getChildren().removeAll(windows);
+            mainMenuScene.makeMenu(account);
+        }
+    }
+
 
     private void enter(String enter, Button enterButton, Label logIn, Label signUp) {
         root.getChildren().removeAll(changes);
@@ -115,19 +156,38 @@ public class AccountScene {
                     signUp.getLayoutX() / ratioX + 30, signUp.getLayoutY() / ratioY - 20, 15, 10);
             windows.add(triangle);
             changes.add(triangle);
+            logIn.setOnMouseExited(event -> logIn.setStyle("-fx-text-fill: gray; -fx-font-size: 20px"));
         }
-
+        logIn.setOnMouseEntered(event -> {
+            GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN);
+            logIn.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
+        });
+        signUp.setOnMouseEntered(event -> {
+            GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN);
+            signUp.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
+        });
+        signUp.setOnMouseExited(event -> {
+            if (enter.equals("LOG IN"))
+                signUp.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
+            GeneralGraphicMethods.setCursor(accountScene, Cursor.AUTO);
+        });
+        logIn.setOnMouseExited(event -> {
+            if (enter.equals("SIGN UP"))
+                logIn.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
+            GeneralGraphicMethods.setCursor(accountScene, Cursor.AUTO);
+        });
     }
 
-    private Button newButton(String name, double sizeY) {
+    private Button newButton(double sizeY) {
         double centerX = accountScene.getWidth() / 2;
         double centerY = accountScene.getHeight() / 2;
         String noChange = "-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20px";
-        Button button = new Button(name);
+        Button button = new Button("LOG IN");
         button.setPrefSize(350, 75);
         button.relocate(centerX - 175, centerY - sizeY / 2 + 350);
         button.setStyle("-fx-background-color: darkorange;" + noChange);
         root.getChildren().add(button);
+        windows.add(button);
         button.setOnMouseEntered(event -> {
             GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN);
             button.setStyle("-fx-background-color: red;" + noChange);
@@ -154,9 +214,10 @@ public class AccountScene {
         double ratioY = GeneralGraphicMethods.getRatioY();
         Random random = new Random();
         for (int i = 0; i < count; i++) {
+            int rnd = random.nextInt(20);
             lanterns[i] = GeneralGraphicMethods.addImage(root, lanternPaths.get(random.nextInt(4)),
                     1050 + random.nextInt(550), 50 + random.nextInt(250),
-                    20, 27);
+                    20 + rnd, 27 + rnd);
             xv[i] = random.nextInt(2) + 2;
             yv[i] = random.nextInt(4) - 4;
         }
@@ -248,16 +309,17 @@ public class AccountScene {
             lighting.setSurfaceScale(0.0);
             lighting.setLight(new Light.Distant(45, 45,
                     Color.rgb(121, 149, 255, 1)));
+            assert mugs[i] != null;
             mugs[i].setEffect(lighting);
         }
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 for (int i = 0; i < count; i++) {
-                    mugs[i].setX(mugs[i].getX() + xv * ratioX);
-                    if (mugs[i].getX() + mugs[i].getFitWidth() < -20) {
+                    mugs[i].setLayoutX(mugs[i].getLayoutX() + xv * ratioX);
+                    if (mugs[i].getLayoutX() + mugs[i].getFitWidth() < -20) {
                         double x = 1300 * ratioX;
-                        mugs[i].setX(x);
+                        mugs[i].setLayoutX(x);
                     }
                 }
             }
