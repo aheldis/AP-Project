@@ -50,11 +50,12 @@ public class BattleScene {
     }
 
     private void setMapProperties(){
+        //todo properties ha ta 4 dorostan
         String path = "pics/maps_categorized/map" + numberOfMap + "/property.json";
         YaGson yaGson = new YaGson();
         try {
             mapProperties = yaGson.fromJson(new FileReader(path), MapProperties.class);
-            mapProperties.setCellSize();
+            mapProperties.init();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -71,7 +72,6 @@ public class BattleScene {
                 //System.out.println("file1.getName() = " + file1.getName());
                 ImageView imageView = GeneralGraphicMethods.setBackground(root, file1.getPath(), false, 0, 0);
                 imageView.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
-
                 if (file1.getName().contains("middleground") || file1.getName().contains("midground")) {
                     //todo duration ya ye chiz dige
                     moveBackgrounds(imageView, false, false);

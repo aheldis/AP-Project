@@ -1,23 +1,17 @@
 package view;
 
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.w3c.dom.css.Rect;
 import view.sample.StageLauncher;
 
-import java.awt.*;
 import java.io.FileInputStream;
 
 /**
@@ -39,7 +33,7 @@ public class MakeAndShowClass {
         return singleInstance;
     }
 
-    public void makeError(String errorMessage){
+    public void makeError(String errorMessage) {
         Stage stage = StageLauncher.getPrimaryStage();
         Scene scene = stage.getScene();
         Group root = (Group) scene.getRoot();
@@ -53,9 +47,9 @@ public class MakeAndShowClass {
                 Rectangle rectangle = new Rectangle(
                         stage.getWidth(),
                         stage.getHeight(),
-                        Color.rgb(225,225,225,0.3));
+                        Color.rgb(225, 225, 225, 0.3));
 
-                rectangle.relocate(0,0);
+                rectangle.relocate(0, 0);
 //                //Setting the width of the box filter
 //                boxblur.setWidth(10.0f);
 //
@@ -67,28 +61,33 @@ public class MakeAndShowClass {
 //
 //                root.setEffect(boxblur);
 
+                double ratioX = GeneralGraphicMethods.getRatioX();
+                double ratioY = GeneralGraphicMethods.getRatioY();
+                double sbasRatioX = GeneralGraphicMethods.getSabasXRatio();
+                double sbasRatioY = GeneralGraphicMethods.getSabasYRatio();
                 javafx.scene.image.Image image = new Image(new FileInputStream("pics/error_box.png"));
                 ImageView imageView = new ImageView(image);
-                imageView.setFitWidth(350);
-                imageView.setFitHeight(200);
-                imageView.relocate(600,300);
+                imageView.setFitWidth(350 / sbasRatioX * ratioX);
+                imageView.setFitHeight(200 / sbasRatioY * ratioY);
+                imageView.relocate((600 / sbasRatioX - 40) * ratioX, 300 / sbasRatioY * ratioY);
 
                 Text text = new Text(errorMessage);
-                text.relocate(620, 380);
+                text.relocate(620 / sbasRatioX * ratioX, 380 / sbasRatioY * ratioY);
                 text.setFont(Font.font(20));
-                text.setFill(Color.rgb(173,225,218,0.5));
-                root.getChildren().addAll(rectangle,imageView,text);
+                text.setFill(Color.rgb(173, 225, 218, 0.5));
+                root.getChildren().addAll(rectangle, imageView, text);
 //                stackPane.getChildren().add(imageView);
 //                stackPane.getChildren().add(text);
                 imageView.setOnMouseClicked(event -> {
                     //root.setEffect(null);
                     //stackPane.getChildren().clear();
                     //scene.setRoot(root);
-                    root.getChildren().removeAll(text,rectangle,imageView);
+                    root.getChildren().removeAll(text, rectangle, imageView);
 
 
                 });
-            }catch (Exception ignored){ }
+            } catch (Exception ignored) {
+            }
 
         });
 

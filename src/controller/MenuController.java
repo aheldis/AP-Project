@@ -64,12 +64,12 @@ public class MenuController  {
                         account = allAccount.getAccountByName(userName);
 
                         try {
-                            File file = new File("D:\\project-Duelyst\\Duelyst\\AccountSaver\\AccountUser.txt");
+                            File file = new File("AccountSaver/AccountUser.txt");
                             FileWriter fileWriter = new FileWriter(file, true);
                             fileWriter.write(userName + "/" + password + '\n');
                             fileWriter.close();
 
-                        } catch (IOException e) {
+                        } catch (IOException ignored) {
                         }
 
 

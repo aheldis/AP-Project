@@ -14,9 +14,6 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import view.BattleScene;
-import view.CollectionScene;
-import view.GeneralGraphicMethods;
 import view.*;
 import view.enums.Cursor;
 import view.enums.StateType;
@@ -179,8 +176,6 @@ public class StageLauncher extends Application {
         Scene battleScene = makeScene(StateType.BATTLE, Cursor.RED);
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
 
-
-
 //        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
 //        URL url = null;
 //        try {
@@ -203,7 +198,7 @@ public class StageLauncher extends Application {
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
 
-//        BattleScene.getSingleInstance().setBattleScene(2); //from 1 to 12
+//        BattleScene.getSingleInstance().setBattleScene(10); //from 1 to 12
 //        primaryStage.setScene(battleScene);
 
         zahraTestShop();
