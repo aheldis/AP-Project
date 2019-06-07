@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import org.omg.CORBA.NO_IMPLEMENT;
 import view.GeneralGraphicMethods;
 import view.sample.StageLauncher;
 

@@ -4,20 +4,12 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.account.Account;
-import model.account.Collection;
-import model.battle.Deck;
 import model.card.Card;
 import model.card.Minion;
 import view.BattleScene;
-import model.card.Spell;
-import view.AccountScene;
-import view.CollectionScene;
 import view.GeneralGraphicMethods;
-import view.SelectGameScene;
 import view.enums.StateType;
 
 import java.util.ArrayList;
@@ -101,7 +93,7 @@ public class StageLauncher extends Application {
         Scene collectionScene = makeScene(StateType.COLLECTION, "pics/cursor/mouse.png");
         Scene selectModeScene = makeScene(StateType.SELECT_MODE, "pics/cursor/mouse_green.png");
         Scene selectGameScene = makeScene(StateType.SELECT_GAME, "pics/cursor/mouse_green.png");
-        Scene battleScene = makeScene(StateType.BATTLE, "pics/cursor/mouse_red.png");
+        Scene battleScene = makeScene(StateType.BATTLE, "/Users/Saba/Desktop/University/Advanced Programming/Project/project-14/pics/cursor/mouse_red.png");
 
 //        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
 //        URL url = null;
@@ -165,17 +157,17 @@ public class StageLauncher extends Application {
 //        CollectionScene.showDeck(decks,collection);
 
 
-        // SelectGameScene.selectGame();
+        //       SelectGameScene.selectGame();
 
 //        collectionScene.setFill(Color.BLACK);
 //        GeneralGraphicMethods.addImage(collectionScene.getRoot(),"pics/particles/cloud_005@2x.png",200,200,100,100);
 
-        //AccountScene.getInstance().makeBackground();
-       //primaryStage.setScene(selectGameScene);
-//        AccountScene.getInstance().makeBackground();
-//        primaryStage.setScene(accountScene);
+        //      AccountScene.getInstance().makeBackground();
+        //   primaryStage.setScene(selectGameScene);
+        //   AccountScene.getInstance().makeBackground();
+        //    primaryStage.setScene(accountScene);
 
-        BattleScene.getSingleInstance().setBattleScene(10); //from 1 to 12
+        BattleScene.getSingleInstance().setBattleScene(3); //from 1 to 12
         primaryStage.setScene(battleScene);
         primaryStage.show();
     }
