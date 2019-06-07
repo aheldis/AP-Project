@@ -57,11 +57,14 @@ public class GeneralGraphicMethods {
         try {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);
-            imageView.relocate(x * getRatioX(), y * getRatioY());
-            imageView.setX(x * getRatioX());
-            imageView.setY(y * getRatioY());
-            imageView.setFitHeight(height * getRatioY());
-            imageView.setFitWidth(width * getRatioY());
+            imageView.relocate(x,y);
+            imageView.setFitHeight(height);
+            imageView.setFitWidth(width);
+//            imageView.relocate(x * getRatioX(), y * getRatioY());
+//            imageView.setX(x * getRatioX());
+//            imageView.setY(y * getRatioY());
+//            imageView.setFitHeight(height * getRatioY());
+//            imageView.setFitWidth(width * getRatioY());
             nodeAdder(imageView, root);
             return imageView;
         } catch (FileNotFoundException e) {
