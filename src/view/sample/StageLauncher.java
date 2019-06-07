@@ -47,7 +47,7 @@ public class StageLauncher extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
+        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor.getPath()));
         return scene;
     }
 
