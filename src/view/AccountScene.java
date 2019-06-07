@@ -57,7 +57,7 @@ public class AccountScene {
         root.getChildren().add(rectangle);
         windows.add(rectangle);
         ImageView brand = GeneralGraphicMethods.addImage(root, "pics/login_pics/brand_duelyst@2x.png",
-                centerX - 250 / ratioX, centerY - (sizeY / 2 - 120) / ratioY, 1000 / 2, 216 / 2);
+                (centerX - 250) / ratioX, (centerY - sizeY / 2 - 120) / ratioY, 1000 / 2, 216 / 2);
         windows.add(brand);
         Label logIn = new Label("LOG IN");
         logIn.relocate(centerX - 100, centerY - sizeY / 2 + 45);
