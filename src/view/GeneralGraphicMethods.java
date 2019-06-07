@@ -4,7 +4,9 @@ import javafx.scene.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -49,7 +51,7 @@ public class GeneralGraphicMethods {
             ((HBox) root).getChildren().add(node);
         if (root instanceof VBox)
             ((VBox) root).getChildren().add(node);
-        if(root instanceof StackPane)
+        if (root instanceof StackPane)
             ((StackPane) root).getChildren().add(node);
     }
 
@@ -57,14 +59,23 @@ public class GeneralGraphicMethods {
         try {
             Image image = new Image(new FileInputStream(path));
             ImageView imageView = new ImageView(image);
+            /*
             imageView.relocate(x,y);
             imageView.setFitHeight(height);
             imageView.setFitWidth(width);
-//            imageView.relocate(x * getRatioX(), y * getRatioY());
-//            imageView.setX(x * getRatioX());
-//            imageView.setY(y * getRatioY());
-//            imageView.setFitHeight(height * getRatioY());
-//            imageView.setFitWidth(width * getRatioY());
+*/
+            imageView.relocate(x * getRatioX(), y * getRatioY());
+            imageView.setX(x * getRatioX());
+            imageView.setY(y * getRatioY());
+            imageView.setFitHeight(height * getRatioY());
+            imageView.setFitWidth(width * getRatioX());
+            /*
+            imageView.relocate(x, y);
+            imageView.setX(x);
+            imageView.setY(y);
+            imageView.setFitHeight(height);
+            imageView.setFitWidth(width);
+            */
             nodeAdder(imageView, root);
             return imageView;
         } catch (FileNotFoundException e) {

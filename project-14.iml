@@ -12,5 +12,6 @@
     <orderEntry type="library" name="yagson-0.5" level="project" />
     <orderEntry type="library" exported="" name="com.google.code.gson:gson:2.8.5" level="project" />
     <orderEntry type="library" exported="" name="com.gilecode.yagson:yagson:0.5" level="project" />
+    <orderEntry type="library" name="yagson-0.51" level="project" />
   </component>
 </module>

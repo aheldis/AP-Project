@@ -29,7 +29,8 @@ public class AccountScene {
     private static final ArrayList<Node> movableNodes = new ArrayList<>();
     private static final ArrayList<Node> windows = new ArrayList<>();
 
-    private AccountScene() { }
+    private AccountScene() {
+    }
 
     public static AccountScene getInstance() {
         return instance;
@@ -48,7 +49,7 @@ public class AccountScene {
         double centerY = accountScene.getHeight() / 2;
         double sizeX = 500;
         double sizeY = 600;
-        Rectangle rectangle = new Rectangle( centerX - sizeX / 2, centerY - sizeY / 2, sizeX, sizeY);
+        Rectangle rectangle = new Rectangle(centerX - sizeX / 2, centerY - sizeY / 2, sizeX, sizeY);
         rectangle.setFill(Color.rgb(40, 40, 36, 0.95));
         root.getChildren().add(rectangle);
         windows.add(rectangle);
