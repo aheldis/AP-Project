@@ -11,9 +11,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -375,6 +373,7 @@ public class CollectionScene {
 
             deckCardMaker(vBox,cards.get(i),group);
             System.out.println(group);
+
             DragAndDropClass.dragAndDrop(group,target,collectionScene,vBox);
         }
         return vBoxes;
@@ -532,13 +531,48 @@ public class CollectionScene {
             }
 
             ImageView add_deck = addImage(root, "pics/collection/plate@2x.png",
-                    collectionScene.getWidth() - 110, collectionScene.getHeight() - 110,
+                    collectionScene.getWidth() - 150, collectionScene.getHeight() - 130,
                     100, 100);
 
 
             ImageView plus = addImage(root, "pics/collection/add.png",
-                    collectionScene.getWidth() - 67, collectionScene.getHeight() - 67,
+                    collectionScene.getWidth() - 67-40, collectionScene.getHeight() - 87,
                     15, 15);
+            plus.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Rectangle rectangle = new Rectangle(800,200
+                            ,Color.rgb(0,0,0,0.8));
+                    rectangle.relocate(350,100);
+                    root.getChildren().add(rectangle);
+                    rectangle.setArcWidth(50);
+                    rectangle.setArcHeight(50);
+
+                    ImageView close = addImage(root,"pics/collection/button_close@2x.png",
+                            1100,100,50,50);
+
+                    ImageView newDeck = addImage(root,"pics/collection/new_deck.png",450,200,250,80);
+                    ImageView importDeck = addImage( root,"pics/collection/import.png",710,200,250,80);
+
+                    Text newDeckText = addText(root,"New Deck",500,235,
+                            Color.rgb(225,225,225,0.6),30);
+                    newDeckText.setStyle("-fx-font-weight: bold");
+                    Text importText = addText(root,"Import Deck",760-7,235
+                            ,Color.rgb(225,225,225,0.6),30);
+                    importText.setStyle("-fx-font-weight: bold");
+
+
+
+                    close.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            root.getChildren().removeAll(newDeck,newDeckText,
+                                    importDeck,importText,rectangle,close);
+                        }
+                    });
+
+                }
+            });
             //todo mizane ro plus ye kofti beshe
 
 
