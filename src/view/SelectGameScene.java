@@ -33,6 +33,20 @@ public class SelectGameScene {
         ImageView storyImage = addImage(selectGameRoot,
                 "pics/battle/select_mode/single_player_story.jpg",900,200,250,400);
 
+        addImage(selectGameRoot,
+                "pics/battle/select_mode/line.png", 340,254,200,1);
+
+        addImage(selectGameRoot,
+                "pics/battle/select_mode/line.png", 640,300,200,1);
+        addImage(selectGameRoot,
+                "pics/battle/select_mode/line.png", 940,300,200,1);
+
+        addImage(selectGameRoot,
+                "pics/battle/select_mode/panel.png", 300,580,250,50);
+        addImage(selectGameRoot,
+                "pics/battle/select_mode/panel.png", 600,580,250,50);
+        addImage(selectGameRoot,
+                "pics/battle/select_mode/panel.png", 900,580,250,50);
 
         multiPlayerImage.setOnMouseClicked(event -> {
             selectMode();
@@ -51,15 +65,15 @@ public class SelectGameScene {
         });
 
         Text multiPlayer  = addText(selectGameRoot,"Multi Player",
-                350,230, Color.rgb(0, 0, 0,0.6),30);
+                350-5,230, Color.rgb(0, 0, 0,0.6),30);
         multiPlayer.setStyle("-fx-font-weight: bold");
 
        Text customGame = addText(selectGameRoot , "Single Player\nCustom Game",
-                650,230,Color.rgb(0,0,0,0.6),30);
+                650-5,230,Color.rgb(0,0,0,0.6),30);
        customGame.setStyle("-fx-font-weight: bold");
 
        Text storyGame = addText(selectGameRoot,"Single Player\nStory  Game"
-       ,950,230,Color.rgb(0,0,0,0.6),30);
+       ,950-5,230,Color.rgb(0,0,0,0.6),30);
        storyGame.setStyle("-fx-font-weight: bold");
 
 

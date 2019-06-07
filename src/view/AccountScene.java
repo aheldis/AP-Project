@@ -14,9 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import view.enums.Cursor;
 import view.enums.StateType;
 import view.sample.StageLauncher;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -84,11 +84,11 @@ public class AccountScene {
         button.setStyle("-fx-background-color: darkorange;" + noChange);
         root.getChildren().add(button);
         button.setOnMouseEntered(event -> {
-            GeneralGraphicMethods.setCursor(accountScene, "pics/cursor/mouse.png");
+            GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN);
             button.setStyle("-fx-background-color: red;" + noChange);
         });
         button.setOnMouseExited(event -> {
-            GeneralGraphicMethods.setCursor(accountScene, "pics/cursor/mouse_auto@2x.png");
+            GeneralGraphicMethods.setCursor(accountScene, Cursor.AUTO);
             button.setStyle("-fx-background-color: darkorange;" + noChange);
         });
         return button;
