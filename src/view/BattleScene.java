@@ -72,7 +72,6 @@ public class BattleScene {
                 //System.out.println("file1.getName() = " + file1.getName());
                 ImageView imageView = GeneralGraphicMethods.setBackground(root, file1.getPath(), false, 0, 0);
                 imageView.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
-
                 if (file1.getName().contains("middleground") || file1.getName().contains("midground")) {
                     //todo duration ya ye chiz dige
                     moveBackgrounds(imageView, false, false);
