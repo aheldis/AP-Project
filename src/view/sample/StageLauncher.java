@@ -168,6 +168,8 @@ public class StageLauncher extends Application {
         Scene battleScene = makeScene(StateType.BATTLE, Cursor.RED);
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
 
+
+
 //        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
 //        URL url = null;
 //        try {
@@ -193,6 +195,8 @@ public class StageLauncher extends Application {
 //        BattleScene.getSingleInstance().setBattleScene(10); //from 1 to 12
 //        primaryStage.setScene(battleScene);
 
+        primaryStage.setScene(shopScene);
+        ShopScene.makeShopScene();
 
         primaryStage.show();
     }
