@@ -50,12 +50,14 @@ public class AccountScene {
         double centerY = StageLauncher.getHeight() / 2;
         double sizeX = 500;
         double sizeY = 600;
+        double ratioX = GeneralGraphicMethods.getRatioX();
+        double ratioY = GeneralGraphicMethods.getRatioY();
         Rectangle rectangle = new Rectangle(centerX - sizeX / 2, centerY - sizeY / 2, sizeX, sizeY - 100);
         rectangle.setFill(Color.rgb(40, 40, 36, 0.95));
         root.getChildren().add(rectangle);
         windows.add(rectangle);
         ImageView brand = GeneralGraphicMethods.addImage(root, "pics/login_pics/brand_duelyst@2x.png",
-                centerX - 250, centerY - sizeY / 2 - 120, 1000 / 2, 216 / 2);
+                (centerX - 250) / ratioX, (centerY - sizeY / 2 - 120) / ratioY, 1000 / 2, 216 / 2);
         windows.add(brand);
         Label logIn = new Label("LOG IN");
         logIn.relocate(centerX - 100, centerY - sizeY / 2 + 45);
@@ -94,13 +96,15 @@ public class AccountScene {
     private void enter(String enter, Button enterButton, Label logIn, Label signUp) {
         root.getChildren().removeAll(changes);
         windows.removeAll(changes);
-        changes.removeAll(changes);
+        changes = new ArrayList<>();
+        double ratioX = GeneralGraphicMethods.getRatioX();
+        double ratioY = GeneralGraphicMethods.getRatioY();
         if (enter.equals("LOG IN")) {
             enterButton.setText("LOG IN");
             logIn.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
             signUp.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
             ImageView triangle = GeneralGraphicMethods.addImage(root, "pics/login_pics/bnea-triangle@2x.png",
-                    logIn.getLayoutX() + 25, logIn.getLayoutY() - 20, 15, 10);
+                    (logIn.getLayoutX() + 25) / ratioX, (logIn.getLayoutY() - 20) / ratioY, 15, 10);
             windows.add(triangle);
             changes.add(triangle);
         } else {
@@ -108,7 +112,7 @@ public class AccountScene {
             signUp.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
             logIn.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
             ImageView triangle = GeneralGraphicMethods.addImage(root, "pics/login_pics/bnea-triangle@2x.png",
-                    signUp.getLayoutX() + 30, signUp.getLayoutY() - 20, 15, 10);
+                    (signUp.getLayoutX() + 30) / ratioX, (signUp.getLayoutY() - 20) / ratioY, 15, 10);
             windows.add(triangle);
             changes.add(triangle);
         }
