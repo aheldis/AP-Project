@@ -112,21 +112,21 @@ public class ShopScene {
                 "pics/shop/spirit_orb.png", "Spirit Orbs", 6);
         root.getChildren().add(orbs);
 
-        Rectangle rectangle = new Rectangle(20, 840, 220, 60);
+        Rectangle rectangle = new Rectangle(20, 750, 220, 60);
         rectangle.setFill(Color.rgb(10, 10, 10));
         rectangle.setArcHeight(100);
         rectangle.setArcWidth(100);
         root.getChildren().add(rectangle);
 
-        addImage(root, "pics/shop/diamond.png", 25, 840, 50, 50);
-        addText(root, "Daric: " + account.getDaric(),
-                80, 865, Color.rgb(225, 225, 225, 0.5), 20);
+        addImage(root, "pics/shop/diamond.png", 25, 750, 50, 50);
+        Text daric=addText(root, "Daric: " + account.getDaric(),
+                80, 775, Color.rgb(225, 225, 225, 0.5), 20);
 
 
         emote.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
             hBoxes.clear();
-            makeRectIcon(200, 200, 4,
+            makeRectIcon(200, 150, 4,
                     "emotes", 5, 20, ".png", 90);
 
         });
@@ -141,7 +141,7 @@ public class ShopScene {
         battle_maps.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
             hBoxes.clear();
-            makeRectIcon(200, 400, 2,
+            makeRectIcon(200, 350, 2,
                     "battle_map", 4,
                     8, ".jpg", 300);
         });
@@ -149,7 +149,7 @@ public class ShopScene {
         bundles.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
             hBoxes.clear();
-            makeRectIcon(210, 200, 4,
+            makeRectIcon(190, 150, 4,
                     "bundles", 5,
                     17, ".png", 90);
         });
@@ -157,24 +157,51 @@ public class ShopScene {
         profile.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
             hBoxes.clear();
-            makeRectIcon(200, 200, 4,
+            makeRectIcon(190, 160, 4,
                     "profile", 5,
                     20, ".jpg", 90);
         });
 
 
-        buyAndSellCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                HBox hbox = new HBox();
-                hbox.relocate(200, 100);
-                Group group = new Group();
-                hbox.getChildren().addAll(group);
-                group.relocate(200, 100);
-                addRectangle(group, 0, 0, 200, 80, 50, 50,
-                        Color.rgb(0, 0, 0, 0.5));
-                root.getChildren().addAll(group);
-            }
+        buyAndSellCard.setOnMouseClicked(event -> {
+            HBox hbox = new HBox();
+            hbox.setSpacing(4);
+            hbox.relocate(400, 100);
+            Group groupText = new Group();
+
+            addRectangle(groupText, 0, 0, 400, 90, 50, 50
+                    , Color.rgb(0, 0, 0, 0.7));
+            hbox.getChildren().addAll(groupText);
+
+            TextField textArea = new TextField();
+            textArea.setPrefHeight(100);
+            textArea.relocate(0, 0);
+            textArea.positionCaret(1);
+            textArea.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 20px; -fx-font-weight: bold;");
+            textArea.setBackground(new Background(new BackgroundFill(
+                    Color.rgb(5, 5, 5, 0.0001),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+            groupText.getChildren().add(textArea);
+
+            Group group = new Group();
+            addRectangle(group,420,50,50,90,
+                    50,50,Color.rgb(5, 5, 5, 0.7));
+            hbox.getChildren().addAll(group);
+
+            addImage(group,"pics/shop/tag.png",3,0,50,90-5);
+
+            groupText.relocate(400, 100);
+            hBoxes.add(hbox);
+            root.getChildren().addAll(hbox);
+
+            group.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Shop.getInstance().sell(account, textArea.getText());
+                    textArea.clear();
+                    daric.setText("Daric :"+account.getDaric());
+                }
+            });
         });
 
         search.setOnMouseClicked(event -> {

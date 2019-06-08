@@ -110,7 +110,7 @@ public class CollectionScene {
         }
     }
 
-    public static Group makeCardGroup(int x, int y, Object card) {
+    static Group makeCardGroup(int x, int y, Object card) {
         Group group = new Group();
         group.relocate(x, y);
         root.getChildren().addAll(group);
@@ -121,11 +121,11 @@ public class CollectionScene {
             showMana(group, 0, 0, ((Card) card).getMp());
 
             addText(group, ((Card) card).getAp() + ""
-                    , 50 - 5,
+                    , 50 - 10,
                     200 - 17, Color.WHITE, 20);
 
             addText(group, ((Card) card).getHp() + "",
-                    180 - 5,
+                    180 - 20,
                     200 - 17, Color.WHITE, 20);
 
             SpriteMaker.getInstance().makeSpritePic(((Card) card).getPathOfAnimation(),
@@ -137,11 +137,11 @@ public class CollectionScene {
 
             try {
                 imageView.setOnMouseEntered(event -> {
-                    ImageView descView = addImage(group, "pics/desc.png", 30,
+                    ImageView descView = addImage(group, "pics/desc.png", 10,
                             303 - 50, 200, 100);
 
                     Text desc = addText(group, ((Card) card).getDescription(),
-                            60,
+                            40,
                             338 - 50, Color.WHITE, 15);
                     imageView.setOnMouseExited(event1 -> group.getChildren().removeAll(desc, descView));
                 });
@@ -279,7 +279,7 @@ public class CollectionScene {
         }
     }
 
-    public static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW, ArrayList<Card> cards, int spacing) {
+    private static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW, ArrayList<Card> cards, int spacing) {
         HBox hBox = new HBox();
         int startingBound = 2 * NUMBER_IN_EACH_ROW * pageNumber;
         int j = -1;
@@ -467,7 +467,6 @@ public class CollectionScene {
      * BackgroundPosition.DEFAULT,
      * BackgroundSize.DEFAULT)));
      */
-
 
     private static ImageView makeIConBarForDeck(String path, int x, int y) {
         ImageView deck = null;

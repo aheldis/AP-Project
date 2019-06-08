@@ -115,15 +115,15 @@ public class Shop {
         }
         if (cardExist(name)!=null) {
             Card card = getCard(name);
-//            card.setMp(10);
-//            card.setHp(10);
-//            card.setAp(10);
-//            card.setDescription("heoo");
-//            card.setPathOfThePicture("pics/minion_background.png");
-//            card.setPathOfAnimation("pics/spell/fireBall.png");
-//            card.setCountOfAnimation(16);
-//            card.setName("Fireball");
-//            card.setFrameSize(48);
+            card.setMp(10);
+            card.setHp(10);
+            card.setAp(10);
+            card.setDescription("heoo");
+            card.setPathOfThePicture("pics/minion_background.png");
+            card.setPathOfAnimation("pics/spell/fireBall.png");
+            card.setCountOfAnimation(16);
+            card.setName("Fireball");
+            card.setFrameSize(48);
             int number = account.getCollection().getNumberOfCardId(card);
             accountView.print(account.getUserName() + "_" + name + "_" + number);
             return card;

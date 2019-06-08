@@ -224,14 +224,15 @@ public class StageLauncher extends Application {
 /*/
         zahraTestDeck();
         primaryStage.setScene(collectionScene);
+//*/
 /*/
         zahraTestCard();
         getPrimaryStage().setScene(collectionScene);
-
-
-//        SelectGameScene.selectGame();
-//        primaryStage.setScene(selectGameScene);
-
+//*/
+/*/
+        SelectGameScene.selectGame();
+        primaryStage.setScene(selectGameScene);
+//*/
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
 /*
@@ -240,9 +241,8 @@ public class StageLauncher extends Application {
         primaryStage.setScene(battleScene);
         battleScene1.test();
 //*/
-//
-//        zahraTestShop();
-//        primaryStage.setScene(shopScene);
+        zahraTestShop();
+        primaryStage.setScene(shopScene);
 
         primaryStage.show();
     }
