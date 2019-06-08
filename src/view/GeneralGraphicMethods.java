@@ -22,6 +22,8 @@ public class GeneralGraphicMethods {
     private static double WIDTH = StageLauncher.getWidth();
     private static double sabasXRatio = 0.7563451776649747;
     private static double sabasYRatio = 0.8592592592592593;
+    private static double zahrasXRatio = 0.7563451776649747;
+    private static double zahrasYRatio = 0.8592592592592593;
 
     public static double getSabasXRatio() {
         return sabasXRatio;
@@ -135,14 +137,19 @@ public class GeneralGraphicMethods {
         }
     }
     static double changeXWithSabasRatio(double x) {
-        //return 1;
         return x / sabasXRatio * getRatioX();
     }
 
     static double changeYWithSabasRatio(double y) {
-        //return 1;
         return y / sabasYRatio * getRatioY();
     }
 
+    static double changeXWithZahrasRatio(double x) {
+        return x / zahrasXRatio * getRatioX();
+    }
+
+    static double changeYWithZahrasRatio(double y) {
+        return y / zahrasYRatio * getRatioY();
+    }
 
 }
