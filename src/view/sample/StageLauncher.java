@@ -229,7 +229,7 @@ public class StageLauncher extends Application {
 //        primaryStage.setScene(accountScene);
 //*
         BattleScene battleScene1 = BattleScene.getSingleInstance();
-        battleScene1.setBattleScene(10); //from 1 to 12
+        battleScene1.setBattleScene(3); //from 1 to 12
         primaryStage.setScene(battleScene);
         battleScene1.test();
 //*/

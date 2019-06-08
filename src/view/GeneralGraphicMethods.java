@@ -134,4 +134,15 @@ public class GeneralGraphicMethods {
             }
         }
     }
+    static double changeXWithSabasRatio(double x) {
+        //return 1;
+        return x / sabasXRatio * getRatioX();
+    }
+
+    static double changeYWithSabasRatio(double y) {
+        //return 1;
+        return y / sabasYRatio * getRatioY();
+    }
+
+
 }
