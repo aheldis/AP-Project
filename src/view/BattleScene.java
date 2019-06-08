@@ -4,12 +4,17 @@ import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontSmoothingType;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 import model.land.LandOfGame;
 import view.enums.StateType;
@@ -143,8 +148,8 @@ public class BattleScene {
                     currentX += mapProperties.cellWidth + mapProperties.gap;
                 Rectangle rectangle = new Rectangle(mapProperties.cellWidth, mapProperties.cellHeight);
                 rectangle.setFill(Color.rgb(0, 0, 0, 0.2));
-                rectangle.setX(currentX);
-                rectangle.setY(currentY);
+                rectangle.setLayoutX(currentX);
+                rectangle.setLayoutY(currentY);
                 gameGrid[i][j] = rectangle;
                 board.getChildren().add(rectangle);
             }
@@ -176,4 +181,7 @@ public class BattleScene {
         board.setEffect(perspectiveTransform);
     }
 
+    public void test(){
+
+    }
 }

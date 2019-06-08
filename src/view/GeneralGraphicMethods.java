@@ -7,14 +7,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import view.enums.Cursor;
 import view.sample.StageLauncher;
 
-import java.awt.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -79,16 +78,16 @@ public class GeneralGraphicMethods {
             imageView.setFitWidth(width);
 */
 
-//            imageView.setFitWidth(width * getRatioX());
-//            imageView.setFitHeight(height * getRatioY());
-//            imageView.setLayoutX(x * getRatioX());
-//            imageView.setLayoutY(y * getRatioY());
-//            imageView.relocate(x * getRatioX(), y * getRatioY());
-
+            imageView.setFitWidth(width * getRatioX());
+            imageView.setFitHeight(height * getRatioY());
+            imageView.setLayoutX(x * getRatioX());
+            imageView.setLayoutY(y * getRatioY());
+            imageView.relocate(x * getRatioX(), y * getRatioY());
+/*
             imageView.relocate(x, y);
             imageView.setFitHeight(height);
             imageView.setFitWidth(width);
-
+*/
             nodeAdder(imageView, root);
 
         } catch (FileNotFoundException e) {
@@ -106,12 +105,12 @@ public class GeneralGraphicMethods {
         }
     }
 
-    static javafx.scene.shape.Rectangle addRectangle(Parent root,int x,int y,int width,int height,int arcW,int arcH,Paint color){
-        javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle(width,height);
+    static javafx.scene.shape.Rectangle addRectangle(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
+        javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle(width, height);
         rectangle.setFill(color);
         rectangle.setArcWidth(arcW);
         rectangle.setArcHeight(arcH);
-        nodeAdder(rectangle,root);
+        nodeAdder(rectangle, root);
         return rectangle;
     }
 
@@ -123,5 +122,16 @@ public class GeneralGraphicMethods {
     static double getRatioY() {
         //return 1;
         return StageLauncher.getHeight() / 1080;
+    }
+
+    {
+        File file = new File("resource/fonts");
+        File[] files = file.listFiles();
+        if (files != null) {
+            for(File file1: files){
+                if(file1.getName().contains("ttf"))
+                    Font.loadFont(file1.getPath(), 50);
+            }
+        }
     }
 }
