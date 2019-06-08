@@ -72,7 +72,7 @@ public class MakeAndShowClass {
                 imageView.relocate((600 / sbasRatioX - 40) * ratioX, 300 / sbasRatioY * ratioY);
 
                 Text text = new Text(errorMessage);
-                text.relocate(620 / sbasRatioX * ratioX, 380 / sbasRatioY * ratioY);
+                text.relocate(620 / sbasRatioX * ratioX-45, 380 / sbasRatioY * ratioY);
                 text.setFont(Font.font(20));
                 text.setFill(Color.rgb(173, 225, 218, 0.5));
                 root.getChildren().addAll(rectangle, imageView, text);

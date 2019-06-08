@@ -174,8 +174,8 @@ public class Shop {
     }
 
     public void searchCollection(Account account, String name) {
-        boolean foundInCards = account.getCollection().searchCardName(name);
-        boolean foundInItems = account.getCollection().searchItemName(name);
+        boolean foundInCards = account.getCollection().searchCardName(name).size()!=0;
+        boolean foundInItems = account.getCollection().searchItemName(name).size()!=0;
         if (!foundInCards && !foundInItems) {
             ErrorType error = ErrorType.HAVE_NOT_CARD_OR_ITEM_IN_COLLECTION;
             accountView.printError(error);

@@ -129,32 +129,30 @@ public class Collection  implements Cloneable{
         return null;
     }
 
-    public boolean searchCardName(String cardName) {
-        boolean have = false;
+    public ArrayList<String> searchCardName(String cardName) {
+        ArrayList<String> ids = new ArrayList<>();
         ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(spells);
         cards.addAll(minions);
         cards.addAll(heroes);
         for (Card card : cards) {
             if (card.getName().equals(cardName)) {
-                accountView.print(card.getCardId().getCardIdAsString());
-                have = true;
+                ids.add(card.getCardId().getCardIdAsString());
             }
         }
-        return have;
+        return ids;
     }
 
-    public boolean searchItemName(String itemName) {
-        boolean have = false;
+    public ArrayList<String> searchItemName(String itemName) {
+        ArrayList<String> ids = new ArrayList<>();
         for (Usable item : items) {
             if (item == null)
                 continue;
             if (item.getUsableId().getUsableIdAsString().equals(itemName)) {
-                accountView.print(item.getUsableId().getUsableIdAsString());
-                have = true;
+                ids.add(item.getUsableId().getUsableIdAsString());
             }
         }
-        return have;
+        return ids;
 
     }
 

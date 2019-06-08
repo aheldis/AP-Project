@@ -122,6 +122,7 @@ public class StageLauncher extends Application {
         hero.setPathOfThePicture("pics/Hero/hero_card/simorgh.png");
         hero.setHp(10);
         hero.setAp(10);
+        hero.setName("ali");
         hero.setDescription("hello girls");
 
         Spell spell = new Spell();
@@ -140,9 +141,13 @@ public class StageLauncher extends Application {
         minionMaker(cards, "pics/gifMinion/giv.gif");
         minionMaker(cards, "pics/gifMinion/gorg.gif");
 
-        for (int i = 0; i < 6; i++)
+        Collection collection = new Collection(new Account("zahra", "123"));
+        for (int i = 0; i < 6; i++) {
             cards.add(hero);
-        CollectionScene.showInCollection(cards, new Collection(new Account("zahra", "123")));
+            collection.addToCards(hero);
+        }
+
+        CollectionScene.showInCollection(cards,collection);
 
     }
 
@@ -216,12 +221,12 @@ public class StageLauncher extends Application {
 //            e.printStackTrace();
 //        }
 
-
-//        zahraTestDeck();
-//        primaryStage.setScene(collectionScene);
-
-//        zahraTestCard();
-//        getPrimaryStage().setScene(collectionScene);
+/*/
+        zahraTestDeck();
+        primaryStage.setScene(collectionScene);
+/*/
+        zahraTestCard();
+        getPrimaryStage().setScene(collectionScene);
 
 
 //        SelectGameScene.selectGame();
@@ -235,9 +240,9 @@ public class StageLauncher extends Application {
         primaryStage.setScene(battleScene);
         battleScene1.test();
 //*/
-
-        zahraTestShop();
-        primaryStage.setScene(shopScene);
+//
+//        zahraTestShop();
+//        primaryStage.setScene(shopScene);
 
         primaryStage.show();
     }

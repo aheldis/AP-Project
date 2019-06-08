@@ -280,14 +280,14 @@ public class MenuController  {
                         break;
                     case COLLECTION_SEARCH_CARD:
                         id = request.getId();
-                        if (!collection.searchCardName(id)) {
+                        if (collection.searchCardName(id).size()==0) {
                             error = ErrorType.HAVE_NOT_CARD_IN_COLLECTION;
                             error.printMessage();
                         }
                         break;
                     case COLLECTION_SEARCH_ITEM:
                         id = request.getId();
-                        if (!collection.searchItemName(id)) {
+                        if (collection.searchItemName(id).size()==0) {
                             error = ErrorType.HAVE_NOT_ITEM_IN_COLLECTION;
                             error.printMessage();
                         }
