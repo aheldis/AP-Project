@@ -20,10 +20,10 @@ import java.io.FileNotFoundException;
 public class GeneralGraphicMethods {
     private static double HEIGHT = StageLauncher.getHeight();
     private static double WIDTH = StageLauncher.getWidth();
-    private static double sabasXRatio = 0.7563451776649747;
-    private static double sabasYRatio = 0.8592592592592593;
-    private static double zahrasXRatio = 0.7563451776649747;
-    private static double zahrasYRatio = 0.8592592592592593;
+    private static double sabasXRatio = 1;//0.7563451776649747;
+    private static double sabasYRatio = 1;//0.8592592592592593;
+    private static double zahrasXRatio = 1;//0.7563451776649747;
+    private static double zahrasYRatio = 1;//0.8592592592592593;
 
     public static double getSabasXRatio() {
         return sabasXRatio;
@@ -116,13 +116,13 @@ public class GeneralGraphicMethods {
     }
 
     static double getRatioX() {
-        //return 1;
-        return StageLauncher.getWidth() / 1970;
+        return 1;
+        //return StageLauncher.getWidth() / 1970;
     }
 
     static double getRatioY() {
-        //return 1;
-        return StageLauncher.getHeight() / 1080;
+        return 1;
+        //return StageLauncher.getHeight() / 1080;
     }
 
     {

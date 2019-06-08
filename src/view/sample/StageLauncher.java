@@ -174,14 +174,16 @@ public class StageLauncher extends Application {
 
 
         StageLauncher.primaryStage = primaryStage;
-        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX(primaryScreenBounds.getMinX());
-        primaryStage.setY(primaryScreenBounds.getMinY());
-        WIDTH = primaryScreenBounds.getWidth() + 50;
-        HEIGHT = primaryScreenBounds.getHeight() + 50;
+        //Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        //primaryStage.setX(primaryScreenBounds.getMinX());
+        //primaryStage.setY(primaryScreenBounds.getMinY());
+        //WIDTH = primaryScreenBounds.getWidth() + 50;
+        //HEIGHT = primaryScreenBounds.getHeight() + 50;
+        WIDTH = 1280;
+        HEIGHT = 820;
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
-        primaryStage.setFullScreen(true);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Duelyst");
         try {
             primaryStage.getIcons().add(new Image(new FileInputStream("pics/duelyst_icon.png")));
@@ -236,7 +238,6 @@ public class StageLauncher extends Application {
 
 //        zahraTestShop();
 //        primaryStage.setScene(shopScene);
-
 
         primaryStage.show();
     }
