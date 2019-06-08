@@ -71,7 +71,6 @@ public class GeneralGraphicMethods {
     static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
         ImageView imageView = null;
         try {
-            System.out.println("path = " + path);
             imageView = new ImageView(new Image(new FileInputStream(path)));
             /*
             imageView.relocate(x,y);
