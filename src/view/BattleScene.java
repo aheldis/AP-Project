@@ -1,15 +1,19 @@
 package view;
 
 import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 import model.land.LandOfGame;
 import view.enums.StateType;
@@ -49,7 +53,7 @@ public class BattleScene {
         addGrid();
     }
 
-    private void setMapProperties(){
+    private void setMapProperties() {
         //todo properties ha ta 4 dorostan
         String path = "pics/maps_categorized/map" + numberOfMap + "/property.json";
         YaGson yaGson = new YaGson();
@@ -116,11 +120,11 @@ public class BattleScene {
         });
     }
 
-    public Rectangle getCell(int row, int column){
+    public Rectangle getCell(int row, int column) {
         return gameGrid[row][column];
     }
 
-    public Pair<Double, Double> getCellPosition(int row, int column){
+    public Pair<Double, Double> getCellPosition(int row, int column) {
         return new Pair<>(gameGrid[row][column].getX(), gameGrid[row][column].getY());
     }
 
@@ -135,16 +139,15 @@ public class BattleScene {
 
         for (int i = 0; i < numberOfRows; i++)
             for (int j = 0; j < numberOfColumns; j++) {
-                if(j == 0) {
+                if (j == 0) {
                     currentY += mapProperties.cellHeight + mapProperties.gap;
                     currentX = primaryX;
-                }
-                else
+                } else
                     currentX += mapProperties.cellWidth + mapProperties.gap;
                 Rectangle rectangle = new Rectangle(mapProperties.cellWidth, mapProperties.cellHeight);
                 rectangle.setFill(Color.rgb(0, 0, 0, 0.2));
-                rectangle.setX(currentX);
-                rectangle.setY(currentY);
+                rectangle.setLayoutX(currentX);
+                rectangle.setLayoutY(currentY);
                 gameGrid[i][j] = rectangle;
                 board.getChildren().add(rectangle);
             }
@@ -161,19 +164,30 @@ public class BattleScene {
         perspectiveTransform.setLly(mapProperties.lly);
         perspectiveTransform.setLrx(mapProperties.lrx);
         perspectiveTransform.setLry(mapProperties.lry);
-        /*
-        perspectiveTransform.setUlx(primaryX + 50);
-        perspectiveTransform.setUly(primaryY);
-        perspectiveTransform.setUrx(primaryX + cellWidth * numberOfColumns + gap * (numberOfColumns - 1) - 50);
-        perspectiveTransform.setUry(primaryY);
-        perspectiveTransform.setLlx(primaryX - 50);
-        perspectiveTransform.setLly(primaryY + cellHeight * numberOfRows + gap * (numberOfRows - 1));
-        perspectiveTransform.setLrx(primaryX + cellWidth * numberOfColumns + gap * (numberOfColumns - 1) + 50);
-        perspectiveTransform.setLry(primaryY + cellHeight * numberOfRows + gap * (numberOfRows - 1));
-        */
-
 
         board.setEffect(perspectiveTransform);
+    }
+
+    private void addTextWithShadow(String textString, double x, double y){
+        Text text = new Text(textString);
+        text.relocate(x, y);
+        text.setFont(Font.font("Arial", FontWeight.BOLD, 27));
+        text.setFill(Color.WHITE);
+        text.setStroke(Color.BLACK);
+        text.setStrokeWidth(1);
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setOffsetY(3.0f);
+        text.setEffect(dropShadow);
+        root.getChildren().add(text);
+    }
+    public void makeHeader() {
+        addTextWithShadow("YOU", GeneralGraphicMethods.changeXWithSabasRatio(248), GeneralGraphicMethods.changeYWithSabasRatio(87));
+        addTextWithShadow("OPPONENT", GeneralGraphicMethods.changeXWithSabasRatio(1111), GeneralGraphicMethods.changeYWithSabasRatio(87));;
+
+    }
+
+    public void test() {
+        makeHeader();
     }
 
 }
