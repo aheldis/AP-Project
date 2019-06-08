@@ -179,8 +179,8 @@ public class StageLauncher extends Application {
         //primaryStage.setY(primaryScreenBounds.getMinY());
         //WIDTH = primaryScreenBounds.getWidth() + 50;
         //HEIGHT = primaryScreenBounds.getHeight() + 50;
-        WIDTH = 1280;
-        HEIGHT = 820;
+        WIDTH = 1380;
+        HEIGHT = 850;
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
         primaryStage.setResizable(false);
@@ -202,42 +202,42 @@ public class StageLauncher extends Application {
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
         //todo add animation to  spell and minions
 
-/*
+
         //make scene with type, can access root with (Group)scene.getRoot
         //all of the scene are in a hashMap with each state we can access to them
 
+//
+//        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
+//        URL url = null;
+//        try {
+//            url = file.toURI().toURL();
+//            collectionScene.getStylesheets().add(url.toExternalForm());
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
 
-        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
-        URL url = null;
-        try {
-            url = file.toURI().toURL();
-            collectionScene.getStylesheets().add(url.toExternalForm());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+
+//        zahraTestDeck();
+//        primaryStage.setScene(collectionScene);
+
+//        zahraTestCard();
+//        getPrimaryStage().setScene(collectionScene);
 
 
-        zahraTestDeck();
-        primaryStage.setScene(collectionScene);
-
-        zahraTestCard();
-        getPrimaryStage().setScene(collectionScene);
-
-*/
 //        SelectGameScene.selectGame();
 //        primaryStage.setScene(selectGameScene);
 
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
-//*
+/*
         BattleScene battleScene1 = BattleScene.getSingleInstance();
         battleScene1.setBattleScene(3); //from 1 to 12
         primaryStage.setScene(battleScene);
         battleScene1.test();
 //*/
 
-//        zahraTestShop();
-//        primaryStage.setScene(shopScene);
+        zahraTestShop();
+        primaryStage.setScene(shopScene);
 
         primaryStage.show();
     }
