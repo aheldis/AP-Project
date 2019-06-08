@@ -83,35 +83,33 @@ public class ShopScene {
 
         root.getChildren().add(sideVBox);
 
-        root.getChildren().add(makeShopIconBar(
-                "pics/shop/buy_card.png", "Buy Card", 0));
-
-        root.getChildren().add(makeShopIconBar(
-                "pics/shop/sellCard.png", "Sell Card", 1));
+        Group buyAndSellCard = makeShopIconBar(
+                "pics/shop/sellCard.png", "Buy And Sell", 0);
+        root.getChildren().add(buyAndSellCard);
 
         Group search = makeShopIconBar(
-                "pics/shop/research.png", "Search", 2
+                "pics/shop/research.png", "Search", 1
         );
         root.getChildren().add(search);
 
         Group emote = makeShopIconBar(
-                "pics/shop/emotes.png", "Emotes", 3);
+                "pics/shop/emotes.png", "Emotes", 2);
         root.getChildren().add(emote);
 
         Group profile = makeShopIconBar(
-                "pics/shop/profile_icon.png", "Profile Icon", 4);
+                "pics/shop/profile_icon.png", "Profile Icon", 3);
         root.getChildren().add(profile);
 
         Group battle_maps = makeShopIconBar(
-                "pics/shop/battle_map.png", "Battle Maps", 5);
+                "pics/shop/battle_map.png", "Battle Maps", 4);
         root.getChildren().add(battle_maps);
 
         Group bundles = makeShopIconBar(
-                "pics/shop/friends.png", "Bundles", 6);
+                "pics/shop/friends.png", "Bundles", 5);
         root.getChildren().add(bundles);
 
         Group orbs = makeShopIconBar(
-                "pics/shop/spirit_orb.png", "Spirit Orbs", 7);
+                "pics/shop/spirit_orb.png", "Spirit Orbs", 6);
         root.getChildren().add(orbs);
 
         Rectangle rectangle = new Rectangle(20, 840, 220, 60);
@@ -164,6 +162,21 @@ public class ShopScene {
                     20, ".jpg", 90);
         });
 
+
+        buyAndSellCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                HBox hbox = new HBox();
+                hbox.relocate(200, 100);
+                Group group = new Group();
+                hbox.getChildren().addAll(group);
+                group.relocate(200, 100);
+                addRectangle(group, 0, 0, 200, 80, 50, 50,
+                        Color.rgb(0, 0, 0, 0.5));
+                root.getChildren().addAll(group);
+            }
+        });
+
         search.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
             hBoxes.clear();
@@ -191,27 +204,28 @@ public class ShopScene {
                     , Color.rgb(0, 0, 0, 0.7));
 
 
-
             ImageView magnifier = addImage(group,
                     "pics/shop/research.png", 16, 23, 50, 50);
             hBox.getChildren().addAll(group);
 
-            magnifier.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    String cardName =textArea.getText();
-                    textArea.clear();
-                    Object object =  Shop.getInstance().search(account,cardName);
-                    if(object!=null){
-                        if(object instanceof Card) {
-                            root.getChildren().addAll(CollectionScene.makeCardGroup(
-                                    500, 400,object));
-                        }
-
-
+            magnifier.setOnMouseClicked(event1 -> {
+                Group group1;
+                String cardName = textArea.getText();
+                textArea.clear();
+                Object object = Shop.getInstance().search(account, cardName);
+                if (object != null) {
+                    if (object instanceof Card) {
+                        group1 = CollectionScene.makeCardGroup(
+                                500, 400, object);
+                        HBox hBox1 = new HBox();
+                        hBox1.relocate(410, 350);
+                        hBox1.getChildren().addAll(group1);
+                        hBoxes.add(hBox1);
+                        root.getChildren().addAll(hBox1);
+                        addText(group1, account.getUserName() + "_" + cardName + "_" +
+                                        account.getCollection().getNumberOfCardId((Card) object),
+                                50, 230, Color.WHITE, 20);
                     }
-
-
                 }
             });
 

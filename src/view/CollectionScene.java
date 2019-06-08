@@ -111,31 +111,37 @@ public class CollectionScene {
     public static Group makeCardGroup(int x,int y,Object card){
         Group group=new Group();
         group.relocate(x,y);
+        root.getChildren().addAll(group);
         if(card instanceof Card) {
             ImageView imageView = addImage(group, ((Card) card).getPathOfThePicture(),
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
 
-            showMana(root, 0, 0, ((Card) card).getMp());
+            showMana(group, 0, 0, ((Card) card).getMp());
 
-            addText(root, ((Card) card).getAp() + "",
-                    98,
-                    220, Color.WHITE, 20);
+            addText(group, ((Card) card).getAp() + ""
+                    ,50-5,
+                    200-17, Color.WHITE, 20);
 
-            addText(root, ((Card) card).getHp() + "",
-                    53,
-                   220 , Color.WHITE, 20);
+            addText(group, ((Card) card).getHp() + "",
+                    180-5,
+                   200-17 , Color.WHITE, 20);
+
+            SpriteMaker.getInstance().makeSpritePic(((Card) card).getPathOfAnimation(),
+                    94,
+                    58,
+                    group, ((Card) card).getCountOfAnimation(),
+                    ((Card) card).getAnimationRow(), 4000,
+                    48, 48, 256);
 
             try {
                 imageView.setOnMouseEntered(event -> {
+                    ImageView descView = addImage(group, "pics/desc.png", 30,
+                            303-50, 200, 100);
 
-                    ImageView descView = addImage(root, "pics/desc.png", 70,
-                            500, 200, 100);
-
-                    Text desc = addText(root, ((Card) card).getDescription(),
-                            100,
-                            535, Color.WHITE, 15);
-
-                    imageView.setOnMouseExited(event1 -> root.getChildren().removeAll(desc, descView));
+                    Text desc = addText(group, ((Card) card).getDescription(),
+                            60,
+                            338-50, Color.WHITE, 15);
+                    imageView.setOnMouseExited(event1 -> group.getChildren().removeAll(desc, descView));
                 });
 
             } catch (Exception ignored) {
@@ -191,7 +197,7 @@ public class CollectionScene {
 
     private static void showMana(Group root, int x, int y, int mana) {
         addImage(root, "pics/icon_mana@2x.png", x, y, 50, 50);
-        addText(root, mana + "", x + 20, y + 20, Color.rgb(22, 22, 225, 0.5), 20);
+        addText(root, mana + "", x + 15, y + 20, Color.rgb(22, 22, 225, 0.5), 20);
     }
 
     private static void textForCollection(Card card, int i, int j, ImageView imageView) {
