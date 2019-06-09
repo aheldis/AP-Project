@@ -113,7 +113,6 @@ public class CollectionScene {
     static Group makeCardGroup(int x, int y, Object card) {
         Group group = new Group();
         group.relocate(x, y);
-        root.getChildren().addAll(group);
         if (card instanceof Card) {
             ImageView imageView = addImage(group, ((Card) card).getPathOfThePicture(),
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -154,7 +153,7 @@ public class CollectionScene {
         return group;
     }
 
-    private static void showEachHero(Card card, HBox hBox, int i, int j) {
+    public static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
             ImageView imageView = addImage(hBox, card.getPathOfThePicture(),
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -237,7 +236,7 @@ public class CollectionScene {
 
     }
 
-    private static void showEachMinion(Card card, HBox hBox, int i, int j) {//todo add desc
+    public static void showEachMinion(Card card, HBox hBox, int i, int j) {//todo add desc
         try {
             ImageView imageView = addImage(hBox,
                     card.getPathOfThePicture(), 0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -258,7 +257,7 @@ public class CollectionScene {
 
     }
 
-    private static void showEachSpell(Card card, HBox hBox, int i, int j) {
+    public static void showEachSpell(Card card, HBox hBox, int i, int j) {
         try {
             ImageView imageView = addImage(hBox, card.getPathOfThePicture(), 0, 0, CARD_WIDTH, CARD_HEIGHT);
             imageView.fitWidthProperty();
@@ -275,11 +274,12 @@ public class CollectionScene {
             showMana(root, i * (X_BORDER + CARD_WIDTH) + 40,
                     j * (Y_BORDER + CARD_HEIGHT) + 130 - 65, card.getMp());
 
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW, ArrayList<Card> cards, int spacing) {
+    public static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW, ArrayList<Card> cards, int spacing) {
         HBox hBox = new HBox();
         int startingBound = 2 * NUMBER_IN_EACH_ROW * pageNumber;
         int j = -1;
@@ -295,8 +295,7 @@ public class CollectionScene {
                 helper.setFont(Font.font(5));
                 helper.setFill(Color.TRANSPARENT);
                 hBox.getChildren().add(helper);
-                hBox.setSpacing(X_BORDER);
-                cardsIcon.add(hBox);
+                hBox.setSpacing(spacing);
                 j++;
             }
             if (cards.get(i) instanceof Hero)

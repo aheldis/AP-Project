@@ -3,6 +3,7 @@ package view;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
@@ -11,15 +12,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.account.Account;
+import model.account.Collection;
 import model.account.Shop;
 import model.card.Card;
+import model.card.Hero;
+import model.card.Minion;
+import model.card.Spell;
 import view.enums.StateType;
 import view.sample.StageLauncher;
 
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import static view.GeneralGraphicMethods.*;
@@ -27,7 +32,9 @@ import static view.GeneralGraphicMethods.*;
 public class ShopScene {
     private static Scene shopScene = StageLauncher.getScene(StateType.SHOP);
     private static Group root = (Group) shopScene.getRoot();
-    private static ArrayList<HBox> hBoxes = new ArrayList<>();
+    private static ArrayList<HBox> hboxes = new ArrayList<>();
+    private static int pageNumberCards =0 ;
+
 
     private static Group makeShopIconBar(String path, String input, int i) {
         Group group = new Group();
@@ -50,6 +57,110 @@ public class ShopScene {
 
     }
 
+    private static HBox sellCard(Text daric, Account account){
+        HBox hbox = new HBox();
+        hbox.setSpacing(4);
+        hbox.relocate(540, 10);
+        Group groupText = new Group();
+
+        addRectangle(groupText, 0, 0, 400, 90, 50, 50
+                , Color.rgb(0, 0, 0, 0.7));
+        hbox.getChildren().addAll(groupText);
+
+        TextField textArea = new TextField();
+        textArea.setPrefHeight(100);
+        textArea.relocate(0, 0);
+        textArea.positionCaret(1);
+        textArea.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 20px; -fx-font-weight: bold;");
+        textArea.setBackground(new Background(new BackgroundFill(
+                Color.rgb(5, 5, 5, 0.0001),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        groupText.getChildren().add(textArea);
+
+        Group group = new Group();
+        groupText.relocate(400, 100);
+        addRectangle(group,0,0,50,90,
+                50,50,Color.rgb(5, 5, 5, 0.7));
+        hbox.getChildren().addAll(group);
+
+        addImage(group,"pics/shop/tag.png",3,0,50,90-5);
+
+
+        hboxes.add(hbox);
+        root.getChildren().addAll(hbox);
+
+        group.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Shop.getInstance().sell(account, textArea.getText());
+                textArea.clear();
+                daric.setText("Daric :"+account.getDaric());
+            }
+        });
+        return hbox;
+    }
+
+    public static void buyCard(HBox hBox){
+        ArrayList<Card> cards =Shop.getInstance().getCards();
+        VBox vBox = new VBox();//todo remember to delete
+        for(int i=0;i<10;i++){
+            if(i>=cards.size()) {
+                break;
+            }
+            makeHboxForCards(4,pageNumberCards,cards);
+        }
+
+
+        ImageView backCircle = addImage(root, "pics/circle.png", 400, 750, 70, 70);
+        ImageView back = addImage(root, "pics/back.png", 415, 765, 40, 40);
+
+        ImageView nextCircle = addImage(root, "pics/circle.png", 1100, 750, 70, 70);
+        ImageView next = addImage(root, "pics/next.png", 1115, 765, 40, 40);
+
+        root.getChildren().addAll(vBox);
+
+        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                pageNumberCards--;
+                if (pageNumberCards < 0)
+                    pageNumberCards = 0;
+                root.getChildren().removeAll(hboxes);
+                root.getChildren().addAll(hBox);
+             makeHboxForCards(4,pageNumberCards,cards);
+            }
+        });
+        next.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                pageNumberCards++;
+                root.getChildren().removeAll(hboxes);
+                root.getChildren().addAll(hBox);
+                makeHboxForCards(4,pageNumberCards,cards);
+            }
+        });
+
+    }
+
+    public static void makeHboxForCards(int column,int pageNumber,ArrayList<Card> cards){
+        HBox hBox = new HBox();
+        int startingBound = 2 * column * pageNumber;
+        int j = -1;
+        for (int i = startingBound; i < startingBound + 2 * column; i++) {
+            if (i >= cards.size())
+                break;
+            if (i % column == 0) {
+                j++;
+                hBox = new HBox();
+                hBox.relocate(350,100+(j)*335);
+                root.getChildren().addAll(hBox);
+                hboxes.add(hBox);
+                hBox.setSpacing(10);
+            }
+            hBox.getChildren().addAll(CollectionScene.makeCardGroup(0,0,cards.get(i)));
+        }
+    }
+
     public static void makeRectIcon(int width, int height, int numberOfRows,
                                     String iconName, int numberOfCulonm,
                                     int numberOfIcons, String typeOfFile, int upperNumber) {
@@ -58,7 +169,7 @@ public class ShopScene {
         ImageView imageIcon;
         for (int i = 0; i < numberOfRows; i++) {
             hBox = new HBox();
-            hBoxes.add(hBox);
+            hboxes.add(hBox);
             hBox.setSpacing(10);
             hBox.relocate(350, height * (i + 1) + 10 * i - upperNumber);
             root.getChildren().add(hBox);
@@ -124,39 +235,39 @@ public class ShopScene {
 
 
         emote.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(hBoxes);
-            hBoxes.clear();
+            root.getChildren().removeAll(hboxes);
+            hboxes.clear();
             makeRectIcon(200, 150, 4,
                     "emotes", 5, 20, ".png", 90);
 
         });
         orbs.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(hBoxes);
-            hBoxes.clear();
+            root.getChildren().removeAll(hboxes);
+            hboxes.clear();
             makeRectIcon(200, 200, 2,
                     "orbs", 4, 7, ".png", 90);
         });
 
 
         battle_maps.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(hBoxes);
-            hBoxes.clear();
+            root.getChildren().removeAll(hboxes);
+            hboxes.clear();
             makeRectIcon(200, 350, 2,
                     "battle_map", 4,
                     8, ".jpg", 300);
         });
 
         bundles.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(hBoxes);
-            hBoxes.clear();
+            root.getChildren().removeAll(hboxes);
+            hboxes.clear();
             makeRectIcon(190, 150, 4,
                     "bundles", 5,
                     17, ".png", 90);
         });
 
         profile.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(hBoxes);
-            hBoxes.clear();
+            root.getChildren().removeAll(hboxes);
+            hboxes.clear();
             makeRectIcon(190, 160, 4,
                     "profile", 5,
                     20, ".jpg", 90);
@@ -164,51 +275,20 @@ public class ShopScene {
 
 
         buyAndSellCard.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(hBoxes);
-            hBoxes.clear();
-            HBox hbox = new HBox();
-            hbox.setSpacing(4);
-            hbox.relocate(400, 100);
-            Group groupText = new Group();
+            root.getChildren().removeAll(hboxes);
+            hboxes.clear();
 
-            addRectangle(groupText, 0, 0, 400, 90, 50, 50
-                    , Color.rgb(0, 0, 0, 0.7));
-            hbox.getChildren().addAll(groupText);
+            HBox hBox= sellCard(daric,account);
 
-            TextField textArea = new TextField();
-            textArea.setPrefHeight(100);
-            textArea.relocate(0, 0);
-            textArea.positionCaret(1);
-            textArea.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 20px; -fx-font-weight: bold;");
-            textArea.setBackground(new Background(new BackgroundFill(
-                    Color.rgb(5, 5, 5, 0.0001),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
-            groupText.getChildren().add(textArea);
+            buyCard(hBox);
 
-            Group group = new Group();
-            addRectangle(group,420,50,50,90,
-                    50,50,Color.rgb(5, 5, 5, 0.7));
-            hbox.getChildren().addAll(group);
 
-            addImage(group,"pics/shop/tag.png",3,0,50,90-5);
 
-            groupText.relocate(400, 100);
-            hBoxes.add(hbox);
-            root.getChildren().addAll(hbox);
-
-            group.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    Shop.getInstance().sell(account, textArea.getText());
-                    textArea.clear();
-                    daric.setText("Daric :"+account.getDaric());
-                }
-            });
         });
 
         search.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(hBoxes);
-            hBoxes.clear();
+            root.getChildren().removeAll(hboxes);
+            hboxes.clear();
             HBox hBox = new HBox();
 
             Group groupText = new Group();
@@ -246,10 +326,11 @@ public class ShopScene {
                     if (object instanceof Card) {
                         group1 = CollectionScene.makeCardGroup(
                                 500, 400, object);
+                        root.getChildren().addAll(group1);
                         HBox hBox1 = new HBox();
                         hBox1.relocate(410, 350);
                         hBox1.getChildren().addAll(group1);
-                        hBoxes.add(hBox1);
+                        hboxes.add(hBox1);
                         root.getChildren().addAll(hBox1);
                         addText(group1, account.getUserName() + "_" + cardName + "_" +
                                         account.getCollection().getNumberOfCardId((Card) object),
@@ -260,7 +341,7 @@ public class ShopScene {
 
 
             root.getChildren().addAll(hBox);
-            hBoxes.add(hBox);
+            hboxes.add(hBox);
         });
 
         log(root,Shop.getInstance().help(),StageLauncher.getScene(StateType.MAIN_MENU),450);

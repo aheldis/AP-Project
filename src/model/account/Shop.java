@@ -24,6 +24,8 @@ public class Shop {
     public static Shop getInstance() {
         if (singleInstance == null) {
             singleInstance = new Shop();
+
+            //todo uncomment
             singleInstance.init();
         }
         return singleInstance;
@@ -48,6 +50,14 @@ public class Shop {
 //        return computerCards;
 //    }
 
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
 
     private void init() {
         for (FilesType typeOfFile : FilesType.values()) {

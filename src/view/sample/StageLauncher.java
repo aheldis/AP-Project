@@ -14,10 +14,7 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import view.AccountScene;
-import view.CollectionScene;
-import view.GeneralGraphicMethods;
-import view.ShopScene;
+import view.*;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -164,11 +161,11 @@ public class StageLauncher extends Application {
         spell.setFrameSize(48);
         spell.setMp(10);
         spell.setHp(10);
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 15; i++) {
             collection.addToCards(spell);
 
-        Shop.getInstance().addCard(spell);
-
+            Shop.getInstance().addCard(spell);
+        }
         account.setDaric(10000);
 
 
@@ -208,20 +205,6 @@ public class StageLauncher extends Application {
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
         //todo add animation to  spell and minions
 
-
-        //make scene with type, can access root with (Group)scene.getRoot
-        //all of the scene are in a hashMap with each state we can access to them
-
-//
-//        File file = new File("D:\\project_Duelyst1\\src\\view\\style.css");
-//        URL url = null;
-//        try {
-//            url = file.toURI().toURL();
-//            collectionScene.getStylesheets().add(url.toExternalForm());
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
-
 /*/
         zahraTestCard();
         getPrimaryStage().setScene(collectionScene);
@@ -229,9 +212,9 @@ public class StageLauncher extends Application {
 /*/
         SelectGameScene.selectGame();
         primaryStage.setScene(selectGameScene);
-//*/
-        AccountScene.getInstance().makeBackground();
-        primaryStage.setScene(accountScene);
+*/
+//        AccountScene.getInstance().makeBackground();
+//        primaryStage.setScene(accountScene);
 /*
         BattleScene battleScene1 = BattleScene.getSingleInstance();
         battleScene1.setBattleScene(3); //from 1 to 12
@@ -245,6 +228,7 @@ public class StageLauncher extends Application {
 
 //        zahraTestShop();
 //        primaryStage.setScene(shopScene);
+//        uncomment init shop
 
         primaryStage.show();
     }

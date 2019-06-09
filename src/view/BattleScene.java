@@ -189,5 +189,4 @@ public class BattleScene {
     public void test() {
         makeHeader();
     }
-
 }
