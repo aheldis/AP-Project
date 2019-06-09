@@ -2,11 +2,9 @@ package view.sample;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.account.Account;
 import model.account.Collection;
@@ -16,7 +14,10 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import view.*;
+import view.AccountScene;
+import view.CollectionScene;
+import view.GeneralGraphicMethods;
+import view.ShopScene;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -233,16 +234,16 @@ public class StageLauncher extends Application {
         SelectGameScene.selectGame();
         primaryStage.setScene(selectGameScene);
 //*/
-//        AccountScene.getInstance().makeBackground();
-//        primaryStage.setScene(accountScene);
+        AccountScene.getInstance().makeBackground();
+        primaryStage.setScene(accountScene);
 /*
         BattleScene battleScene1 = BattleScene.getSingleInstance();
         battleScene1.setBattleScene(3); //from 1 to 12
         primaryStage.setScene(battleScene);
         battleScene1.test();
 //*/
-        zahraTestShop();
-        primaryStage.setScene(shopScene);
+//        zahraTestShop();
+//        primaryStage.setScene(shopScene);
 
         primaryStage.show();
     }
