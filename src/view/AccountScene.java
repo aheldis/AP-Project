@@ -47,8 +47,8 @@ public class AccountScene {
         background.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
         addLanterns();
         addMovables(background);
-        addWindows();
-//        MainMenuScene.getInstance().makeMenu(null);
+//        addWindows();
+        MainMenuScene.getInstance().makeMenu(null);
     }
 
     private void addWindows() {
@@ -63,7 +63,7 @@ public class AccountScene {
         root.getChildren().add(rectangle);
         windows.add(rectangle);
         ImageView brand = GeneralGraphicMethods.addImage(root, "pics/login_pics/brand_duelyst@2x.png",
-                centerX / ratioX - 250, (centerY - sizeY / 2 - 120) / ratioY, 1000 / 2, 216 / 2);
+                centerX / ratioX - 500 / 3, (centerY - sizeY / 2 - 100) / ratioY, 1000 / 3, 216 / 3);
         windows.add(brand);
         Label logIn = new Label("LOG IN");
         logIn.relocate(centerX - 100, centerY - sizeY / 2 + 45);
@@ -216,7 +216,7 @@ public class AccountScene {
         for (int i = 0; i < count; i++) {
             int rnd = random.nextInt(20);
             lanterns[i] = GeneralGraphicMethods.addImage(root, lanternPaths.get(random.nextInt(4)),
-                    1050 + random.nextInt(550), 50 + random.nextInt(250),
+                    700 + random.nextInt(450), 50 + random.nextInt(200),
                     20 + rnd, 27 + rnd);
             xv[i] = random.nextInt(2) + 2;
             yv[i] = random.nextInt(4) - 4;
@@ -238,8 +238,8 @@ public class AccountScene {
                         }
                         if (now > lastTime + second / 2 + second / 4) {
                             lastTime = now;
-                            lantern.setLayoutX((1050 + random.nextInt(450)) * ratioX);
-                            lantern.setLayoutY((270 + random.nextInt(70)) * ratioY);
+                            lantern.setLayoutX((700 + random.nextInt(450)) * ratioX);
+                            lantern.setLayoutY((220 + random.nextInt(70)) * ratioY);
                             lantern.setFitWidth(20 * ratioX);
                             lantern.setFitHeight(27 * ratioY);
                             FadeTransition fade = new FadeTransition();
@@ -250,7 +250,7 @@ public class AccountScene {
                             fade.play();
                             faded[i] = false;
                         }
-                    } else if (lantern.getLayoutX() > 1700 * ratioX || lantern.getLayoutY() < -50) {
+                    } else if (lantern.getLayoutX() > 1200 * ratioX || lantern.getLayoutY() < -50) {
                         FadeTransition fade = new FadeTransition();
                         fade.setDuration(Duration.millis(500));
                         fade.setFromValue(10);
@@ -273,16 +273,16 @@ public class AccountScene {
         double height = StageLauncher.getHeight();
         String pillarsPath = "pics/menu/pillars_far@2x.png";
         ImageView imageView = GeneralGraphicMethods.addImage(root, pillarsPath, -300,
-                250, 2676 / 1.9, 910 / 1.9);
+                250, 2676 / 2.4, 910 / 2.4);
         movables.add(imageView);
         pillarsPath = "pics/menu/pillars_near@2x.png";
         imageView = GeneralGraphicMethods.addImage(root, pillarsPath, -70,
-                60, 2167 / 1.8, 1843 / 1.8);
+                60, 2167 / 2.4, 1843 / 2.4);
         movables.add(imageView);
         addMugs();
         String foregroundPath = "pics/menu/foreground@2x.png";
         imageView = GeneralGraphicMethods.addImage(root, foregroundPath,
-                780, 640, 2676 / 1.8, 810 / 1.8);
+                600, 485, 2676 / 2.4, 810 / 2.4);
         movables.add(imageView);
         moveWithMouse(background, width / 2, height / 2);
     }
@@ -299,9 +299,9 @@ public class AccountScene {
         for (int i = 0; i < count; i++) {
             int randNumber = random.nextInt(2) + 3;
             double x = 1400 - i * random.nextInt(100);
-            double y = 730 + random.nextInt(200);
+            double y = 550 + random.nextInt(200);
             mugs[i] = GeneralGraphicMethods.addImage(root, cloudPaths.get(random.nextInt(7)), x, y,
-                    100 * randNumber, 50 * randNumber);
+                    80 * randNumber, 40 * randNumber);
             Lighting lighting = new Lighting();
             lighting.setDiffuseConstant(1.0);
             lighting.setSpecularConstant(0.0);
