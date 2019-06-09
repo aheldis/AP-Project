@@ -225,19 +225,30 @@ public class AccountView {
         }
     }
 
-    public void helpViewForCollection() {
-        System.out.println("Exit - Exit from collection");
-        System.out.println("Show - Show all cards and items in collection");
-        System.out.println("Save - Save the changes");
-        System.out.println("Create deck [deckName] - Create a deck");
-        System.out.println("Delete deck [deckName] - Delete a deck");
-        System.out.println("Add [cardId|HeroId|ItemId} to deck [deckName] - Add card or item to deck");
-        System.out.println("Remove card [card id] from deck [deckName] - Delete a card from deck");
-        System.out.println("Remove item [item id] from deck [deckName] - Delete an item from deck");
-        System.out.println("Validate deck [deckName] - Have 20 cards and a hero");
-        System.out.println("Show all decks - Show all cards,hero and items of decks in the collection");
-        System.out.println("Show deck [deckName] - Show all cards,hero and items of deck");
-        System.out.println("Help - Help of collection");
+    public String helpViewForCollection() {
+        String strings;
+        strings=
+        "Show - Show all cards and items " +"\n"+
+                "in collection"+"\n"+
+        "Save - Save the changes"+"\n"+
+        "Create deck [deckName] - Create a deck"+"\n"+
+        "Delete deck [deckName] - Delete a deck"+"\n"+
+        "Add [cardId|HeroId|ItemId} to " +"\n"+
+                "deck [deckName]:" +"\n"+
+                " Add card or item to deck"+"\n"+
+        "Remove card [card id] from deck " +"\n"+
+                "[deckName]: " +"\n"+
+                " Delete a card from deck"+"\n"+
+        "Remove item [item id] from deck " +"\n"+
+                "[deckName]:" +"\n"+
+                "Delete an item from deck"+"\n"+
+        "Validate deck [deckName] :" +"\n"+
+                " Have 20 cards and a hero"+"\n"+
+        "Show all decks - Show all cards," +"\n"+
+                "hero and items of decks in the collection"+"\n"+
+        "Show deck [deckName]:" +"\n"+
+                " Show all cards,hero and items of deck"+"\n";
+        return strings;
 
     }
 
@@ -309,14 +320,16 @@ public class AccountView {
         System.out.println("logout");
     }
 
-    public void viewHelpOfShop() {
-        System.out.println("show collection - show cards and items in collection");
-        System.out.println("search [item name| card name]");
-        System.out.println("search collection [item name| card name]");
-        System.out.println("buy [item name| card name]");
-        System.out.println("sell [card id]");
-        System.out.println("show - show all cards and items");
-        System.out.println("exit - exit from shop");
+    public String viewHelpOfShop() {
+        String strings;
+//        strings.add("show collection - show cards and items in collection");
+       strings = "search [item name| card name]"+"\n"+
+       "search collection [item name| card name]"+"\n"+
+        "buy [item name| card name]"+"\n"+
+       "sell [card id]"+"\n"+
+        "show - show all cards and items"+"\n"+
+        "exit - exit from shop"+"\n";
+        return strings;
     }
 
     public void print(String string) {

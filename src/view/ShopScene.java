@@ -164,6 +164,8 @@ public class ShopScene {
 
 
         buyAndSellCard.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hBoxes);
+            hBoxes.clear();
             HBox hbox = new HBox();
             hbox.setSpacing(4);
             hbox.relocate(400, 100);
@@ -260,7 +262,10 @@ public class ShopScene {
             root.getChildren().addAll(hBox);
             hBoxes.add(hBox);
         });
+
+        log(root,Shop.getInstance().help(),StageLauncher.getScene(StateType.MAIN_MENU),450);
     }
+
 
 
 }

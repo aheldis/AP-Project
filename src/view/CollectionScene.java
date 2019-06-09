@@ -636,6 +636,7 @@ public class CollectionScene {
         });
 
 
+
     }
 
     public static void showDeck(ArrayList<Deck> decks, Collection collection) {
@@ -802,6 +803,7 @@ public class CollectionScene {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log(root,collection.helpOfCollection(),StageLauncher.getScene(StateType.MAIN_MENU),600);
 
 
     }

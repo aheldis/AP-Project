@@ -239,8 +239,7 @@ public class Shop {
             account.changeValueOfDaric(item.getCost());
             collection.removeItem(item);
         } else {
-            ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION;
-            accountView.printError(error);
+            ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION.printMessage();
         }
     }
 
@@ -285,7 +284,7 @@ public class Shop {
         collectibles.remove(collectible);
     }
 
-    public void help() {
-        accountView.viewHelpOfShop();
+    public String help() {
+       return accountView.viewHelpOfShop();
     }
 }

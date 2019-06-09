@@ -1,21 +1,37 @@
 package view;
 
+import javafx.animation.AnimationTimer;
+import javafx.animation.PathTransition;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
+import org.omg.CORBA.IMP_LIMIT;
+import org.w3c.dom.css.Rect;
 import view.enums.Cursor;
 import view.sample.StageLauncher;
 
+import javax.xml.ws.soap.Addressing;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.concurrent.Delayed;
 
 public class GeneralGraphicMethods {
     private static double HEIGHT = StageLauncher.getHeight();
@@ -108,6 +124,7 @@ public class GeneralGraphicMethods {
 
     static javafx.scene.shape.Rectangle addRectangle(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
         javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle(width, height);
+        rectangle.relocate(x,y);
         rectangle.setFill(color);
         rectangle.setArcWidth(arcW);
         rectangle.setArcHeight(arcH);
@@ -149,6 +166,52 @@ public class GeneralGraphicMethods {
 
     static double changeYWithZahrasRatio(double y) {
         return y / zahrasYRatio * getRatioY();
+    }
+
+    public static void log(Group root, String helps,Scene backScene,int height){
+       ImageView log = addImage(root,"pics/log.png",-40,200,70,150);
+      ImageView expand = addImage(root,"pics/glow_next.png",0,300-15,20,30);
+      ImageView back = addImage(root,"pics/glow_back.png",40,300-15,20,30);
+      root.getChildren().remove(back);
+        expand.setOnMouseEntered(event -> {
+            root.getChildren().remove(expand);
+            root.getChildren().addAll(back);
+            log.setX(40);
+            ImageView backButton = addImage(root,"pics/left-arrow.png",5,230,20,20);
+            ImageView help = addImage(root,"pics/question.png",7,280,18,20);
+
+            backButton.setOnMouseClicked(event12 -> Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    StageLauncher.getPrimaryStage().setScene(backScene);
+                }
+            }));
+
+            help.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Rectangle rectangle = addRectangle(root,450,200,
+                            400,height,50,50, Color.rgb(0,0,0,0.7));
+                    ImageView close = addImage(root,
+                            "pics/collection/button_close@2x.png", 800, 200, 50, 50);
+                    Text text = addText(root,helps,470,250,
+                            Color.rgb(225,225,225,0.8),20);
+                    close.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            root.getChildren().removeAll(text,close,rectangle);
+                        }
+                    });
+                }
+            });
+
+            back.setOnMouseEntered(event1 -> {
+                root.getChildren().removeAll(back,backButton,help);
+                root.getChildren().addAll(expand);
+                log.setX(0);
+            });
+        });
+
     }
 
 }
