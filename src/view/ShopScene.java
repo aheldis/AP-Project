@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.account.Account;
 import model.account.Collection;
@@ -157,9 +158,11 @@ public class ShopScene {
             hBox.getChildren().addAll(group);
             Text text = addText(group,card.getCost()+"",90,215,Color.WHITE,20);
             group.setOnMouseClicked(event -> {//todo set font
-                Shop.getInstance().sell(account,card.getCardId().getCardIdAsString());
+//                Shop.getInstance().sell(account,card.getCardId().getCardIdAsString());
                 daric.setText("Daric :"+account.getDaric());
-                //daric.setFont(Font.font("Beyond Wonderland",30));
+//                Font family = Font.loadFont("resource/fonts/Chalkduster.ttf", 30);
+//                System.out.println("font = " + family);
+//                daric.setStyle("font-family: \"Chalkduster\"; src: url(\"resource/fonts/Chalkduster.ttf\")");
             });
         }
     }

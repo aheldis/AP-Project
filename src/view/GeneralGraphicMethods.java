@@ -142,7 +142,7 @@ public class GeneralGraphicMethods {
 //        return 850 / 1080;
     }
 
-    {
+    static{
         File file = new File("resource/fonts");
         File[] files = file.listFiles();
         if (files != null) {

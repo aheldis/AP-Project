@@ -189,4 +189,9 @@ public class BattleScene {
     public void test() {
         makeHeader();
     }
+
+    public void addHandAndNextCard(){
+
+
+    }
 }
