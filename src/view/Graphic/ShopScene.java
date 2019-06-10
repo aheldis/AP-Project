@@ -155,10 +155,8 @@ public class ShopScene {
             Text text = addText(group,card.getCost()+"",90,215,Color.WHITE,20);
             group.setOnMouseClicked(event -> {//todo set font
 //                Shop.getInstance().sell(account,card.getCardId().getCardIdAsString());
+                daric.setFont(Font.font("Chalkduster",30));
                 daric.setText("Daric :"+account.getDaric());
-//                Font family = Font.loadFont("resource/fonts/Chalkduster.ttf", 30);
-//                System.out.println("font = " + family);
-//                daric.setStyle("font-family: \"Chalkduster\"; src: url(\"resource/fonts/Chalkduster.ttf\")");
             });
         }
     }

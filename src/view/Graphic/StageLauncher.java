@@ -5,15 +5,22 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.account.Account;
 import model.account.Collection;
 import model.account.Shop;
 import model.battle.Deck;
+import model.battle.Hand;
+import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
+import sun.net.TelnetInputStream;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -21,6 +28,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static view.Graphic.GeneralGraphicMethods.*;
 
 public class StageLauncher extends Application {
 
@@ -171,6 +180,36 @@ public class StageLauncher extends Application {
         ShopScene.makeShopScene(account);
     }
 
+    public static void testzahraFooter(Group root){
+        Group circlesGroup = new Group();
+        circlesGroup.relocate(50,660);
+        root.getChildren().addAll(circlesGroup);
+        addImage(circlesGroup, "pics/battle/next_card.png",
+                0, 0, 170, 170);
+        addImage(circlesGroup, "pics/battle/inner_glow.png",
+                0, 0, 170, 170);
+
+
+        for(int i=0;i<5;i++){
+            addImage(circlesGroup,
+                    "pics/battle/hand_card.png",30+140*(i+1),20,140,120);
+        }
+
+        addImage(circlesGroup,"pics/battle/end_turn_yellow.png",1000,10,200,100);
+        addImage(circlesGroup,"pics/battle/graveYard.png",1000-80,95,150,70);
+        addImage(circlesGroup,"pics/battle/help.png",1000+90,95,150,70);
+        Text text = addText(circlesGroup,"End Turn",1030,53,Color.rgb(225,225,225,0.7),30);
+        text.setFont(Font.font("Andele Mono", FontWeight.BOLD,25));
+        Text graveYard = addText(circlesGroup,"Graveyard",1000-60,122,
+                Color.rgb(225,225,225,0.7),30);
+        graveYard.setFont(Font.font("Andele Mono", FontWeight.BOLD,25));
+        Text help = addText(circlesGroup,"Help",1115,122,Color.rgb(225,225,225,0.7),30);
+        help.setFont(Font.font("Andele Mono", FontWeight.BOLD,25));
+
+
+
+    }
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -214,9 +253,9 @@ public class StageLauncher extends Application {
 */
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
-//*
+//*/
         BattleScene battleScene1 = BattleScene.getSingleInstance();
-        battleScene1.setBattleScene(5); //from 1 to 12
+        battleScene1.setBattleScene(3); //from 1 to 12
         primaryStage.setScene(battleScene);
 //*/
 /*/
@@ -229,6 +268,10 @@ public class StageLauncher extends Application {
 //        primaryStage.setScene(shopScene);
 //        Raining.rain(shopScene);
 //        uncomment init shop
+
+//        collectionScene.setFill(Color.BLACK);
+//        testzahraFooter((Group)collectionScene.getRoot());
+//        primaryStage.setScene(collectionScene);
 
         primaryStage.show();
     }
