@@ -67,6 +67,14 @@ public class GeneralGraphicMethods {
         return text;
     }
 
+    static javafx.scene.shape.Rectangle addRectangleForCollection(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
+        javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle(width, height);
+        rectangle.setFill(color);
+        rectangle.setArcWidth(arcW);
+        rectangle.setArcHeight(arcH);
+        nodeAdder(rectangle, root);
+        return rectangle;
+    }
     private static void nodeAdder(Node node, Parent root) {
         if (root instanceof Group)
             ((Group) root).getChildren().add(node);
@@ -115,7 +123,7 @@ public class GeneralGraphicMethods {
         }
     }
 
-    static javafx.scene.shape.Rectangle addRectangle(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
+    static javafx.scene.shape.Rectangle addRectangle(Parent root, int x, int y,int width, int height, int arcW, int arcH, Paint color) {
         javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle(width, height);
         rectangle.relocate(x,y);
         rectangle.setFill(color);

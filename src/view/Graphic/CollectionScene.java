@@ -2,6 +2,7 @@ package view.Graphic;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -279,33 +281,39 @@ public class CollectionScene {
     }
 
     public static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW, ArrayList<Card> cards, int spacing) {
-        HBox hBox = new HBox();
-        int startingBound = 2 * NUMBER_IN_EACH_ROW * pageNumber;
-        int j = -1;
-        for (int i = startingBound; i < startingBound + 2 * NUMBER_IN_EACH_ROW; i++) {
-            if (i >= cards.size())
-                break;
-            if (i % NUMBER_IN_EACH_ROW == 0) {
-                hBox = new HBox();
-                vBox.getChildren().removeAll(cardsIcon);
-                hBox.relocate(350,100+(j)*335);
-                hBox.setAlignment(Pos.CENTER);
-                vBox.getChildren().addAll(hBox);
-                cardsIcon.add(hBox);
-                hBox.setSpacing(spacing);
-                j++;
+            HBox hBox = new HBox();
+            int startingBound = 2 * NUMBER_IN_EACH_ROW * pageNumber;
+            int j = -1;
+            for (int i = startingBound; i < startingBound + 2 * NUMBER_IN_EACH_ROW; i++) {
+                if (i >= cards.size())
+                    break;
+                if (i % NUMBER_IN_EACH_ROW == 0) {
+                    hBox = new HBox();
+                    vBox.getChildren().addAll(hBox);
+                    cardsIcon.add(hBox);
+                    Text helper = new Text("hiii");
+                    helper.relocate(0, 0);
+                    helper.setFont(Font.font(5));
+                    helper.setFill(Color.TRANSPARENT);
+                    hBox.getChildren().add(helper);
+                    hBox.setSpacing(X_BORDER);
+                    cardsIcon.add(hBox);
+                    j++;
+                }
+                if (cards.get(i) instanceof Hero)
+                    showEachHero(cards.get(i), hBox, i % 5, j);
+                if (cards.get(i) instanceof Minion)
+                    showEachMinion(cards.get(i), hBox, i % 5, j);
+                if (cards.get(i) instanceof Spell)
+                    showEachSpell(cards.get(i), hBox, i % 5, j);
             }
-            Group group = makeCardGroup(0,0,cards.get(i));
-            hBox.getChildren().addAll(group);
-
         }
-    }
 
     public static void searchBar(HBox hBox,VBox vBox,Collection collection){
         Group groupText = new Group();
         groupText.relocate(300, 20);
 
-        addRectangle(groupText, 0, 25, 400, 40, 50, 50
+        addRectangleForCollection(groupText, 0, 25, 400, 40, 50, 50
                 , Color.rgb(0, 0, 0, 0.7));
 
         TextField textArea = new TextField();
@@ -320,7 +328,7 @@ public class CollectionScene {
         hBox.getChildren().addAll(groupText);
         hBox.relocate(600, 200);
         Group group1 = new Group();
-        addRectangle(group1, 0, 20, 50, 40, 60, 60
+        addRectangleForCollection(group1, 0, 20, 50, 40, 60, 60
                 , Color.rgb(0, 0, 0, 0.7));
 
         ImageView magnifier = addImage(group1,
@@ -342,7 +350,7 @@ public class CollectionScene {
                         true, 20, 20);
                 root.getChildren().addAll(group);
 
-                addRectangle(group, 0, 0, 400, 400
+                addRectangleForCollection(group, 0, 0, 400, 400
                         , 50, 50, Color.rgb(0, 0, 0, 0.9));
                 ImageView close = addImage(group,
                         "pics/collection/button_close@2x.png", 350, 0, 50, 50);
@@ -400,6 +408,19 @@ public class CollectionScene {
 
         ImageView nextCircle = addImage(root, "pics/circle.png", 1200, 750, 70, 70);
         ImageView next = addImage(root, "pics/next.png", 1215, 765, 40, 40);
+        ImageView deckSceneButton = addImage(root,"pics/desc.png",600,770,100,50);
+        Text deckScene = addText(root,"Decks",618,785,Color.rgb(225,225,225,0.8),20);
+        deckScene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        showDeck(collection.getDecks(),collection);
+                    }
+                });
+            }
+        });
 
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -425,11 +446,28 @@ public class CollectionScene {
         });
 
         int j = -1;
-        for(int i=0;i<10;i++){
-            if(i>=cards.size()) {
+        for (int i = 0; i < 10; i++) {
+            if (i >= cards.size())
                 break;
+            if (i % 5 == 0) {
+
+                hBox = new HBox();
+                cardsIcon.add(hBox);
+                Text helper = new Text("hiii");
+                helper.relocate(0, 0);
+                helper.setFont(Font.font(5));
+                helper.setFill(Color.TRANSPARENT);
+                hBox.getChildren().add(helper);
+                hBox.setSpacing(X_BORDER);
+                vBox.getChildren().add(hBox);
+                j++;
             }
-            hBoxCardMaker(vBox,pageNumberCards,5,cards,10);
+            if (cards.get(i) instanceof Hero)
+                showEachHero(cards.get(i), hBox, i % 5, j);
+            if (cards.get(i) instanceof Minion)
+                showEachMinion(cards.get(i), hBox, i % 5, j);
+            if (cards.get(i) instanceof Spell)
+                showEachSpell(cards.get(i), hBox, i % 5, j);
         }
 //        try {
 ////            StackPane group = new StackPane();
@@ -502,6 +540,7 @@ public class CollectionScene {
     }
 
     private static void makeDeck(VBox vBox, int i, Deck deck, Collection collection) {
+
         Random random = new Random();
         int a = random.nextInt(6);
         ImageView plateImageView = addImage(root, "pics/collection/deck-select/back-" + a + ".png",

@@ -204,7 +204,7 @@ public class StageLauncher extends Application {
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
         //todo add animation to  spell and minions
 
-/*/
+//*/
         zahraTestCard();
         getPrimaryStage().setScene(collectionScene);
 //*/
@@ -215,9 +215,9 @@ public class StageLauncher extends Application {
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
 //*
-        BattleScene battleScene1 = BattleScene.getSingleInstance();
-        battleScene1.setBattleScene(3); //from 1 to 12
-        primaryStage.setScene(battleScene);
+//        BattleScene battleScene1 = BattleScene.getSingleInstance();
+//        battleScene1.setBattleScene(3); //from 1 to 12
+//        primaryStage.setScene(battleScene);
 //*/
 /*/
         zahraTestDeck();
@@ -225,8 +225,8 @@ public class StageLauncher extends Application {
 //*/
 
 
-        zahraTestShop();
-        primaryStage.setScene(shopScene);
+//        zahraTestShop();
+//        primaryStage.setScene(shopScene);
 //        Raining.rain(shopScene);
 //        uncomment init shop
 
