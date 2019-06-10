@@ -1,13 +1,13 @@
 {
   "@type": "view.MapProperties",
   "@val": {
-    "ulx": 394,
-    "uly": 270,
-    "urx": 1053,
-    "ury": 270,
-    "llx": 310,
-    "lly": 660,
-    "lrx": 1153,
-    "lry": 660
+    "ulx": 380,
+    "uly": 230,
+    "urx": 970,
+    "ury": 230,
+    "llx": 280,
+    "lly": 633,
+    "lrx": 1070,
+    "lry": 633
   }
 }
