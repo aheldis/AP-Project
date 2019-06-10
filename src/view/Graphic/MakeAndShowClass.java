@@ -1,4 +1,4 @@
-package view;
+package view.Graphic;
 
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -10,7 +10,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import view.sample.StageLauncher;
 
 import java.io.FileInputStream;
 

@@ -1,4 +1,4 @@
-package view.sample;
+package view.Graphic;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -14,7 +14,6 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import view.*;
 import view.enums.Cursor;
 import view.enums.StateType;
 

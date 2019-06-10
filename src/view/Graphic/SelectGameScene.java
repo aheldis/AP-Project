@@ -1,4 +1,4 @@
-package view;
+package view.Graphic;
 
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -7,9 +7,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import view.enums.StateType;
-import view.sample.StageLauncher;
+import view.Graphic.StageLauncher;
 
-import static view.GeneralGraphicMethods.*;
+import static view.Graphic.GeneralGraphicMethods.*;
 
 public class SelectGameScene {
     private static Scene selectGameScene = StageLauncher.getScene(StateType.SELECT_GAME);

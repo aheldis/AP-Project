@@ -1,4 +1,4 @@
-package view;
+package view.Graphic;
 
 import javafx.scene.Parent;
 import model.card.makeFile.NewFileAsli;

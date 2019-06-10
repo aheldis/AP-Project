@@ -1,7 +1,5 @@
-package view;
+package view.Graphic;
 
-import javafx.animation.AnimationTimer;
-import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.*;
@@ -14,16 +12,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
-import org.w3c.dom.css.Rect;
 import view.enums.Cursor;
-import view.sample.StageLauncher;
+import view.Graphic.StageLauncher;
 
 import java.io.File;
 import java.io.FileInputStream;
