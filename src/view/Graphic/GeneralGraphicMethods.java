@@ -1,5 +1,6 @@
 package view.Graphic;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.*;
@@ -17,6 +18,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import view.enums.Cursor;
 import view.Graphic.StageLauncher;
 

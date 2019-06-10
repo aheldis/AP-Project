@@ -1,4 +1,4 @@
-package view.sample;
+package view.Graphic;
 
 import javafx.animation.*;
 import javafx.scene.Group;
@@ -11,6 +11,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import view.Graphic.StageLauncher;
 
 import java.util.Random;
 
@@ -60,7 +61,7 @@ public class Raining {
 
 
 
-        c.setCenterX(random.nextInt((int)StageLauncher.getWidth())); //Window width = 950
+        c.setCenterX(random.nextInt((int) StageLauncher.getWidth())); //Window width = 950
 
 
         int time = 10 + random.nextInt(50);

@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-import static view.GeneralGraphicMethods.*;
+import static view.Graphic.GeneralGraphicMethods.*;
+
 
 public class AccountScene {
     private static final AccountScene instance = new AccountScene();
