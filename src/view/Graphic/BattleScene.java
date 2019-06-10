@@ -45,6 +45,7 @@ public class BattleScene {
         this.numberOfMap = numberOfMap;
         setMapProperties();
         setMapBackground();
+        GeneralGraphicMethods.playMusic("resource/music/battle_music/"+numberOfMap+".m4a",true,battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(root);
         battleHeader.test();

@@ -205,8 +205,8 @@ public class StageLauncher extends Application {
         //todo add animation to  spell and minions
 
 //*/
-        zahraTestCard();
-        getPrimaryStage().setScene(collectionScene);
+//        zahraTestDeck();
+//        getPrimaryStage().setScene(collectionScene);
 //*/
 /*/
         SelectGameScene.selectGame();
@@ -215,9 +215,9 @@ public class StageLauncher extends Application {
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
 //*
-//        BattleScene battleScene1 = BattleScene.getSingleInstance();
-//        battleScene1.setBattleScene(3); //from 1 to 12
-//        primaryStage.setScene(battleScene);
+        BattleScene battleScene1 = BattleScene.getSingleInstance();
+        battleScene1.setBattleScene(5); //from 1 to 12
+        primaryStage.setScene(battleScene);
 //*/
 /*/
         zahraTestDeck();
