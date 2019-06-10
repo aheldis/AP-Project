@@ -1,5 +1,6 @@
 package view.Graphic;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.*;
@@ -10,11 +11,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import view.enums.Cursor;
 import view.Graphic.StageLauncher;
 
@@ -63,6 +67,14 @@ public class GeneralGraphicMethods {
         return text;
     }
 
+    static javafx.scene.shape.Rectangle addRectangleForCollection(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
+        javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle(width, height);
+        rectangle.setFill(color);
+        rectangle.setArcWidth(arcW);
+        rectangle.setArcHeight(arcH);
+        nodeAdder(rectangle, root);
+        return rectangle;
+    }
     private static void nodeAdder(Node node, Parent root) {
         if (root instanceof Group)
             ((Group) root).getChildren().add(node);
@@ -111,7 +123,7 @@ public class GeneralGraphicMethods {
         }
     }
 
-    static javafx.scene.shape.Rectangle addRectangle(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
+    static javafx.scene.shape.Rectangle addRectangle(Parent root, int x, int y,int width, int height, int arcW, int arcH, Paint color) {
         javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle(width, height);
         rectangle.relocate(x,y);
         rectangle.setFill(color);
@@ -131,7 +143,7 @@ public class GeneralGraphicMethods {
 //        return 850 / 1080;
     }
 
-    static {
+    static{
         File file = new File("resource/fonts");
         File[] files = file.listFiles();
         if (files != null) {
@@ -203,4 +215,25 @@ public class GeneralGraphicMethods {
 
     }
 
+    static void playMusic(String path, boolean constant, Scene firstScene){
+        //Instantiating Media class
+        Media media = new Media(new File(path).toURI().toString());
+        //Instantiating MediaPlayer class
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        if(constant) {
+            mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+            mediaPlayer.play();
+        }
+        mediaPlayer.setAutoPlay(true);
+        AnimationTimer animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if(StageLauncher.getPrimaryStage().getScene()!=firstScene){
+                    mediaPlayer.stop();
+                    this.stop();
+                }
+            }
+        };
+        animationTimer.start();
+    }
 }

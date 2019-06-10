@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.account.Account;
 import model.account.Shop;
@@ -20,6 +22,7 @@ import view.enums.StateType;
 import view.Graphic.StageLauncher;
 
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 import static view.Graphic.GeneralGraphicMethods.*;
@@ -95,14 +98,14 @@ public class ShopScene {
         return hbox;
     }
 
-    public static void buyCard(HBox hBox){
+    public static void buyCard(HBox hBox,Text daric,Account account){
         ArrayList<Card> cards =Shop.getInstance().getCards();
         VBox vBox = new VBox();//todo remember to delete
         for(int i=0;i<10;i++){
             if(i>=cards.size()) {
                 break;
             }
-            makeHboxForCards(4,pageNumberCards,cards);
+            makeHBoxForCards(4,pageNumberCards,cards,daric,account);
         }
 
 
@@ -114,34 +117,29 @@ public class ShopScene {
 
         root.getChildren().addAll(vBox);
 
-        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                pageNumberCards--;
-                if (pageNumberCards < 0)
-                    pageNumberCards = 0;
-                root.getChildren().removeAll(hboxes);
-                root.getChildren().addAll(hBox);
-             makeHboxForCards(4,pageNumberCards,cards);
-            }
+        back.setOnMouseClicked(event -> {
+            pageNumberCards--;
+            if (pageNumberCards < 0)
+                pageNumberCards = 0;
+            root.getChildren().removeAll(hboxes);
+            root.getChildren().addAll(hBox);
+         makeHBoxForCards(4,pageNumberCards,cards,daric,account);
         });
-        next.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                pageNumberCards++;
-                root.getChildren().removeAll(hboxes);
-                root.getChildren().addAll(hBox);
-                makeHboxForCards(4,pageNumberCards,cards);
-            }
+        next.setOnMouseClicked(event -> {
+            pageNumberCards++;
+            root.getChildren().removeAll(hboxes);
+            root.getChildren().addAll(hBox);
+            makeHBoxForCards(4,pageNumberCards,cards,daric,account);
         });
 
     }
 
-    public static void makeHboxForCards(int column,int pageNumber,ArrayList<Card> cards){
+    private static void makeHBoxForCards(int column, int pageNumber, ArrayList<Card> cards, Text daric, Account account){
         HBox hBox = new HBox();
         int startingBound = 2 * column * pageNumber;
         int j = -1;
         for (int i = startingBound; i < startingBound + 2 * column; i++) {
+            Card card = cards.get(i);
             if (i >= cards.size())
                 break;
             if (i % column == 0) {
@@ -152,13 +150,22 @@ public class ShopScene {
                 hboxes.add(hBox);
                 hBox.setSpacing(10);
             }
-            hBox.getChildren().addAll(CollectionScene.makeCardGroup(0,0,cards.get(i)));
+            Group group =CollectionScene.makeCardGroup(0,0,cards.get(i));
+            hBox.getChildren().addAll(group);
+            Text text = addText(group,card.getCost()+"",90,215,Color.WHITE,20);
+            group.setOnMouseClicked(event -> {//todo set font
+//                Shop.getInstance().sell(account,card.getCardId().getCardIdAsString());
+                daric.setText("Daric :"+account.getDaric());
+//                Font family = Font.loadFont("resource/fonts/Chalkduster.ttf", 30);
+//                System.out.println("font = " + family);
+//                daric.setStyle("font-family: \"Chalkduster\"; src: url(\"resource/fonts/Chalkduster.ttf\")");
+            });
         }
     }
 
-    public static void makeRectIcon(int width, int height, int numberOfRows,
-                                    String iconName, int numberOfCulonm,
-                                    int numberOfIcons, String typeOfFile, int upperNumber) {
+    private static void makeRectIcon(int width, int height, int numberOfRows,
+                                     String iconName, int numberOfCulonm,
+                                     int numberOfIcons, String typeOfFile, int upperNumber) {
         HBox hBox;
         int j = 0;
         ImageView imageIcon;
@@ -179,6 +186,8 @@ public class ShopScene {
     }
 
     public static void makeShopScene(Account account) {
+        playMusic("resource/music/shop.m4a",true,shopScene);
+
         setBackground(root, "pics/shop/shop_background.jpg", false, 15, 15);
         VBox sideVBox = new VBox();
         sideVBox.relocate(0, 0);
@@ -275,7 +284,7 @@ public class ShopScene {
 
             HBox hBox= sellCard(daric,account);
 
-            buyCard(hBox);
+            buyCard(hBox,daric,account);
 
 
 

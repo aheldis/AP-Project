@@ -26,7 +26,7 @@ public class Shop {
             singleInstance = new Shop();
 
             //todo uncomment
-            singleInstance.init();
+            //singleInstance.init();
         }
         return singleInstance;
     }

@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -20,9 +22,13 @@ import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+
+import static view.Graphic.GeneralGraphicMethods.*;
+
 
 public class AccountScene {
     private static final AccountScene instance = new AccountScene();
@@ -40,8 +46,10 @@ public class AccountScene {
     }
 
     public void makeBackground() {
+        playMusic( "resource/music/mainmenu.m4a",true,accountScene);
+
         String backgroundPath = "pics/menu/background@2x.jpg";
-        ImageView background = GeneralGraphicMethods.setBackground(root, backgroundPath, true, 0, 0);
+        ImageView background = setBackground(root, backgroundPath, true, 0, 0);
         assert background != null;
         background.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
         addLanterns();
@@ -55,13 +63,13 @@ public class AccountScene {
         double centerY = StageLauncher.getHeight() / 2;
         double sizeX = 500;
         double sizeY = 600;
-        double ratioX = GeneralGraphicMethods.getRatioX();
-        double ratioY = GeneralGraphicMethods.getRatioY();
+        double ratioX = getRatioX();
+        double ratioY = getRatioY();
         Rectangle rectangle = new Rectangle(centerX - sizeX / 2, centerY - sizeY / 2, sizeX, sizeY - 100);
         rectangle.setFill(Color.rgb(40, 40, 36, 0.95));
         root.getChildren().add(rectangle);
         windows.add(rectangle);
-        ImageView brand = GeneralGraphicMethods.addImage(root, "pics/login_pics/brand_duelyst@2x.png",
+        ImageView brand = addImage(root, "pics/login_pics/brand_duelyst@2x.png",
                 centerX / ratioX - 500 / 3, (centerY - sizeY / 2 - 100) / ratioY, 1000 / 3, 216 / 3);
         windows.add(brand);
         Label logIn = new Label("LOG IN");
@@ -137,13 +145,13 @@ public class AccountScene {
         root.getChildren().removeAll(changes);
         windows.removeAll(changes);
         changes = new ArrayList<>();
-        double ratioX = GeneralGraphicMethods.getRatioX();
-        double ratioY = GeneralGraphicMethods.getRatioY();
+        double ratioX = getRatioX();
+        double ratioY = getRatioY();
         if (enter.equals("LOG IN")) {
             enterButton.setText("LOG IN");
             logIn.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
             signUp.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
-            ImageView triangle = GeneralGraphicMethods.addImage(root, "pics/login_pics/bnea-triangle@2x.png",
+            ImageView triangle = addImage(root, "pics/login_pics/bnea-triangle@2x.png",
                     logIn.getLayoutX() / ratioX + 25, logIn.getLayoutY() / ratioY - 20, 15, 10);
             windows.add(triangle);
             changes.add(triangle);
@@ -151,29 +159,29 @@ public class AccountScene {
             enterButton.setText("SIGN UP");
             signUp.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
             logIn.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
-            ImageView triangle = GeneralGraphicMethods.addImage(root, "pics/login_pics/bnea-triangle@2x.png",
+            ImageView triangle = addImage(root, "pics/login_pics/bnea-triangle@2x.png",
                     signUp.getLayoutX() / ratioX + 30, signUp.getLayoutY() / ratioY - 20, 15, 10);
             windows.add(triangle);
             changes.add(triangle);
             logIn.setOnMouseExited(event -> logIn.setStyle("-fx-text-fill: gray; -fx-font-size: 20px"));
         }
         logIn.setOnMouseEntered(event -> {
-            GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN);
+            setCursor(accountScene, Cursor.LIGHTEN);
             logIn.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
         });
         signUp.setOnMouseEntered(event -> {
-            GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN);
+            setCursor(accountScene, Cursor.LIGHTEN);
             signUp.setStyle("-fx-text-fill: white; -fx-font-size: 20px");
         });
         signUp.setOnMouseExited(event -> {
             if (enter.equals("LOG IN"))
                 signUp.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
-            GeneralGraphicMethods.setCursor(accountScene, Cursor.AUTO);
+            setCursor(accountScene, Cursor.AUTO);
         });
         logIn.setOnMouseExited(event -> {
             if (enter.equals("SIGN UP"))
                 logIn.setStyle("-fx-text-fill: gray; -fx-font-size: 20px");
-            GeneralGraphicMethods.setCursor(accountScene, Cursor.AUTO);
+            setCursor(accountScene, Cursor.AUTO);
         });
     }
 
@@ -188,11 +196,11 @@ public class AccountScene {
         root.getChildren().add(button);
         windows.add(button);
         button.setOnMouseEntered(event -> {
-            GeneralGraphicMethods.setCursor(accountScene, Cursor.LIGHTEN);
+            setCursor(accountScene, Cursor.LIGHTEN);
             button.setStyle("-fx-background-color: red;" + noChange);
         });
         button.setOnMouseExited(event -> {
-            GeneralGraphicMethods.setCursor(accountScene, Cursor.AUTO);
+            setCursor(accountScene, Cursor.AUTO);
             button.setStyle("-fx-background-color: darkorange;" + noChange);
         });
         return button;
@@ -209,12 +217,12 @@ public class AccountScene {
         int[] xv = new int[count];
         int[] yv = new int[count];
         boolean[] faded = new boolean[count];
-        double ratioX = GeneralGraphicMethods.getRatioX();
-        double ratioY = GeneralGraphicMethods.getRatioY();
+        double ratioX = getRatioX();
+        double ratioY = getRatioY();
         Random random = new Random();
         for (int i = 0; i < count; i++) {
             int rnd = random.nextInt(20);
-            lanterns[i] = GeneralGraphicMethods.addImage(root, lanternPaths.get(random.nextInt(4)),
+            lanterns[i] = addImage(root, lanternPaths.get(random.nextInt(4)),
                     700 + random.nextInt(450), 50 + random.nextInt(200),
                     20 + rnd, 27 + rnd);
             xv[i] = random.nextInt(2) + 2;
@@ -271,16 +279,16 @@ public class AccountScene {
         double width = StageLauncher.getWidth();
         double height = StageLauncher.getHeight();
         String pillarsPath = "pics/menu/pillars_far@2x.png";
-        ImageView imageView = GeneralGraphicMethods.addImage(root, pillarsPath, -300,
+        ImageView imageView = addImage(root, pillarsPath, -300,
                 250, 2676 / 2.4, 910 / 2.4);
         movables.add(imageView);
         pillarsPath = "pics/menu/pillars_near@2x.png";
-        imageView = GeneralGraphicMethods.addImage(root, pillarsPath, -70,
+        imageView = addImage(root, pillarsPath, -70,
                 60, 2167 / 2.4, 1843 / 2.4);
         movables.add(imageView);
         addMugs();
         String foregroundPath = "pics/menu/foreground@2x.png";
-        imageView = GeneralGraphicMethods.addImage(root, foregroundPath,
+        imageView = addImage(root, foregroundPath,
                 600, 485, 2676 / 2.4, 810 / 2.4);
         movables.add(imageView);
         moveWithMouse(background, width / 2, height / 2);
@@ -293,13 +301,13 @@ public class AccountScene {
         int count = 40;
         ImageView[] mugs = new ImageView[count];
         double xv = -0.5;
-        double ratioX = GeneralGraphicMethods.getRatioX();
+        double ratioX = getRatioX();
         Random random = new Random();
         for (int i = 0; i < count; i++) {
             int randNumber = random.nextInt(2) + 3;
             double x = 1400 - i * random.nextInt(100);
             double y = 550 + random.nextInt(200);
-            mugs[i] = GeneralGraphicMethods.addImage(root, cloudPaths.get(random.nextInt(7)), x, y,
+            mugs[i] = addImage(root, cloudPaths.get(random.nextInt(7)), x, y,
                     80 * randNumber, 40 * randNumber);
             Lighting lighting = new Lighting();
             lighting.setDiffuseConstant(1.0);
@@ -347,11 +355,11 @@ public class AccountScene {
                     double finalDistanceX;
                     double finalDistanceY;
                     if (movables.get(2) == node) {
-                        finalDistanceX = distanceX * 4 * GeneralGraphicMethods.getRatioX();
-                        finalDistanceY = distanceY * 2 * GeneralGraphicMethods.getRatioY();
+                        finalDistanceX = distanceX * 4 * getRatioX();
+                        finalDistanceY = distanceY * 2 * getRatioY();
                     } else {
-                        finalDistanceX = distanceX * GeneralGraphicMethods.getRatioX();
-                        finalDistanceY = distanceY * GeneralGraphicMethods.getRatioY();
+                        finalDistanceX = distanceX * getRatioX();
+                        finalDistanceY = distanceY * getRatioY();
                     }
                     KeyValue xValue = new KeyValue(node.layoutXProperty(), node.getLayoutX() + finalDistanceX);
                     KeyValue yValue = new KeyValue(node.layoutYProperty(), node.getLayoutY() + finalDistanceY);
