@@ -1,0 +1,9 @@
+{
+  "@type": "view.SpriteAnimationProperties",
+  "@val": {
+    "rows": 5,
+    "columns": 3,
+    "count": 80,
+    "millis": 5000
+  }
+}

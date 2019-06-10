@@ -21,17 +21,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import org.omg.CORBA.IMP_LIMIT;
 import org.w3c.dom.css.Rect;
 import view.enums.Cursor;
 import view.sample.StageLauncher;
 
-import javax.xml.ws.soap.Addressing;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.concurrent.Delayed;
 
 public class GeneralGraphicMethods {
     private static double HEIGHT = StageLauncher.getHeight();

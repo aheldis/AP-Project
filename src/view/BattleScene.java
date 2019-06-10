@@ -181,9 +181,8 @@ public class BattleScene {
         root.getChildren().add(text);
     }
     public void makeHeader() {
-        addTextWithShadow("YOU", GeneralGraphicMethods.changeXWithSabasRatio(248), GeneralGraphicMethods.changeYWithSabasRatio(87));
-        addTextWithShadow("OPPONENT", GeneralGraphicMethods.changeXWithSabasRatio(1111), GeneralGraphicMethods.changeYWithSabasRatio(87));;
-
+        addTextWithShadow("YOU", 248, 87);
+        addTextWithShadow("OPPONENT", 1020, 87);
     }
 
     public void test() {
