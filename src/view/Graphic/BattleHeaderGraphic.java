@@ -32,8 +32,9 @@ public class BattleHeaderGraphic {
     }
 
     private void addPortraitBorder(double x, double y){
-        ImageView imageView1 = GeneralGraphicMethods.addImage(root, "pics/battle_catagorized/general_portrait_border@2x.png", x, y, 125, 125);
-        ImageView imageView2 = GeneralGraphicMethods.addImage(root, "pics/battle_catagorized/general_portrait_border_highlight@2x.png", x, y, 125, 125);
+        GeneralGraphicMethods.addImage(root, "pics/profile/speech_portrait_abyssianalt@2x.png", x + 13,  y + 13, 100, 100);
+        ImageView imageView1 = GeneralGraphicMethods.addImage(root, "pics/battle_catagorized/general_portrait_border@2x.png", x, y, 130, 130);
+        ImageView imageView2 = GeneralGraphicMethods.addImage(root, "pics/battle_catagorized/general_portrait_border_highlight@2x.png", x, y, 130, 130);
         root.getChildren().remove(imageView2);
         imageView2.setOnMouseExited(event -> {
             root.getChildren().add(imageView1);
@@ -45,11 +46,19 @@ public class BattleHeaderGraphic {
         });
     }
 
+    private void addMana(double x, double y, int numberOfMana){
+        for(int i = 0; i < 9; i++){
+            GeneralGraphicMethods.addImage(root,"pics/icon_mana@2x.png", x + i * 28, y, 25, 25);
+        }
+    }
+
     public void makeHeader() {
-        addTextWithShadow("YOU", 248, 87);
-        addTextWithShadow("OPPONENT", 1010, 87);
+        addTextWithShadow("YOU", 248, 78);
+        addTextWithShadow("OPPONENT", 1010, 78);
         addPortraitBorder(120, 25);
         addPortraitBorder(1165, 25);
+        addMana(248, 96, 9);
+        addMana(920, 96, 9);
     }
 
     public void test() {
