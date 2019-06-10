@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import model.battle.Match;
 import model.land.LandOfGame;
 import view.enums.StateType;
 import view.sample.StageLauncher;
@@ -35,6 +36,7 @@ public class BattleScene {
     private int numberOfMap;
     private Rectangle[][] gameGrid;
     private MapProperties mapProperties;
+    private Match match;
 
     private BattleScene() {
     }
@@ -180,9 +182,26 @@ public class BattleScene {
         text.setEffect(dropShadow);
         root.getChildren().add(text);
     }
+
+    private void addPortraitBorder(double x, double y){
+        ImageView imageView1 = GeneralGraphicMethods.addImage(root, "pics/battle_catagorized/general_portrait_border@2x.png", x, y, 125, 125);
+        ImageView imageView2 = GeneralGraphicMethods.addImage(root, "pics/battle_catagorized/general_portrait_border_highlight@2x.png", x, y, 125, 125);
+        root.getChildren().remove(imageView2);
+        imageView2.setOnMouseExited(event -> {
+            root.getChildren().add(imageView1);
+            root.getChildren().remove(imageView2);
+        });
+        imageView1.setOnMouseEntered(event -> {
+            root.getChildren().add(imageView2);
+            root.getChildren().remove(imageView1);
+        });
+    }
+
     public void makeHeader() {
         addTextWithShadow("YOU", 248, 87);
-        addTextWithShadow("OPPONENT", 1020, 87);
+        addTextWithShadow("OPPONENT", 1010, 87);
+        addPortraitBorder(120, 25);
+        addPortraitBorder(1165, 25);
     }
 
     public void test() {
