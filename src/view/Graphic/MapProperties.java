@@ -1,4 +1,4 @@
-package view;
+package view.Graphic;
 
 import model.land.LandOfGame;
 

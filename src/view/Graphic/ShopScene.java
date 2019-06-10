@@ -1,9 +1,8 @@
-package view;
+package view.Graphic;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
@@ -16,20 +15,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.account.Account;
-import model.account.Collection;
 import model.account.Shop;
 import model.card.Card;
-import model.card.Hero;
-import model.card.Minion;
-import model.card.Spell;
+import view.Graphic.CollectionScene;
 import view.enums.StateType;
-import view.sample.StageLauncher;
+import view.Graphic.StageLauncher;
 
 
 import javax.swing.*;
 import java.util.ArrayList;
 
-import static view.GeneralGraphicMethods.*;
+import static view.Graphic.GeneralGraphicMethods.*;
 
 public class ShopScene {
     private static Scene shopScene = StageLauncher.getScene(StateType.SHOP);

@@ -1,4 +1,4 @@
-package view.sample;
+package view.Graphic;
 
 import javafx.animation.Animation;
 import javafx.geometry.Rectangle2D;
@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
@@ -47,7 +46,7 @@ public class SpriteMaker {
 //sprite animation  useful for your project
 
             //root.getChildrenUnmodifiable().add(imageView);
-            final Animation animation = new view.SpriteAnimation(
+            final Animation animation = new SpriteAnimation(
                     imageView,
                     Duration.millis(millis),
                     count, numberOfPicInEachColumn,

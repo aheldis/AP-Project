@@ -1,4 +1,4 @@
-package view;
+package view.Graphic;
 
 import javafx.animation.*;
 import javafx.scene.Group;
@@ -21,7 +21,6 @@ import model.account.AllAccount;
 import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
-import view.sample.StageLauncher;
 
 import java.io.File;
 import java.util.ArrayList;

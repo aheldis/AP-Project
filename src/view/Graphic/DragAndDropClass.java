@@ -1,24 +1,14 @@
-package view;
+package view.Graphic;
 
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 import model.battle.Deck;
 import model.card.Card;
 import model.item.Item;
 import model.item.Usable;
-import view.GeneralGraphicMethods;
-import view.sample.StageLauncher;
-
-import javax.swing.text.html.ImageView;
 
 public class DragAndDropClass {
     static double orgSceneX, orgSceneY;

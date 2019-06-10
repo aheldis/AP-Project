@@ -1,23 +1,16 @@
-package view;
+package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.util.Pair;
+import model.battle.Match;
 import model.land.LandOfGame;
 import view.enums.StateType;
-import view.sample.StageLauncher;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,6 +28,8 @@ public class BattleScene {
     private int numberOfMap;
     private Rectangle[][] gameGrid;
     private MapProperties mapProperties;
+    private Match match;
+    private BattleHeaderGraphic battleHeader;
 
     private BattleScene() {
     }
@@ -51,10 +46,11 @@ public class BattleScene {
         setMapProperties();
         setMapBackground();
         addGrid();
+        battleHeader = new BattleHeaderGraphic(root);
+        battleHeader.test();
     }
 
     private void setMapProperties() {
-        //todo properties ha ta 4 dorostan
         String path = "pics/maps_categorized/map" + numberOfMap + "/property.json";
         YaGson yaGson = new YaGson();
         try {
@@ -168,29 +164,5 @@ public class BattleScene {
         board.setEffect(perspectiveTransform);
     }
 
-    private void addTextWithShadow(String textString, double x, double y){
-        Text text = new Text(textString);
-        text.relocate(x, y);
-        text.setFont(Font.font("Arial", FontWeight.BOLD, 27));
-        text.setFill(Color.WHITE);
-        text.setStroke(Color.BLACK);
-        text.setStrokeWidth(1);
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setOffsetY(3.0f);
-        text.setEffect(dropShadow);
-        root.getChildren().add(text);
-    }
-    public void makeHeader() {
-        addTextWithShadow("YOU", 248, 87);
-        addTextWithShadow("OPPONENT", 1020, 87);
-    }
 
-    public void test() {
-        makeHeader();
-    }
-
-    public void addHandAndNextCard(){
-
-
-    }
 }

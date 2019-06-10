@@ -1,13 +1,6 @@
 package view.enums;
 
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import view.MakeAndShowClass;
-import view.MessageViewer;
-import view.sample.StageLauncher;
-
-import java.awt.*;
+import view.Graphic.MakeAndShowClass;
 
 public enum ErrorType {
 

@@ -1,4 +1,4 @@
-package view;
+package view.Graphic;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import model.account.Account;
 import view.enums.StateType;
-import view.sample.StageLauncher;
 
 import java.util.ArrayList;
 import java.util.Objects;
