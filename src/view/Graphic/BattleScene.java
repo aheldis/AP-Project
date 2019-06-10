@@ -29,6 +29,7 @@ public class BattleScene {
     private Rectangle[][] gameGrid;
     private MapProperties mapProperties;
     private Match match;
+    private BattleHeaderGraphic battleHeader;
 
     private BattleScene() {
     }
@@ -45,6 +46,8 @@ public class BattleScene {
         setMapProperties();
         setMapBackground();
         addGrid();
+        battleHeader = new BattleHeaderGraphic(root);
+        battleHeader.test();
     }
 
     private void setMapProperties() {

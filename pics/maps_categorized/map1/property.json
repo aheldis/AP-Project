@@ -1,5 +1,5 @@
 {
-  "@type": "view.MapProperties",
+  "@type": "view.Graphic.MapProperties",
   "@val": {
     "ulx": 380,
     "uly": 230,

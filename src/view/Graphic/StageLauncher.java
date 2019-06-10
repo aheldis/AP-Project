@@ -218,7 +218,6 @@ public class StageLauncher extends Application {
         BattleScene battleScene1 = BattleScene.getSingleInstance();
         battleScene1.setBattleScene(3); //from 1 to 12
         primaryStage.setScene(battleScene);
-        battleScene1.test();
 //*/
 /*/
         zahraTestDeck();

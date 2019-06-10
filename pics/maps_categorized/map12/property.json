@@ -1,5 +1,5 @@
 {
-  "@type": "view.MapProperties",
+  "@type": "view.Graphic.MapProperties",
   "@val": {
     "cellWidth": 0.0,
     "cellHeight": 0.0,
