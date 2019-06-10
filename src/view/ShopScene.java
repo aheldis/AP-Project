@@ -190,6 +190,8 @@ public class ShopScene {
     }
 
     public static void makeShopScene(Account account) {
+        playMusic("resource/music/shop.m4a",true,shopScene);
+
         setBackground(root, "pics/shop/shop_background.jpg", false, 15, 15);
         VBox sideVBox = new VBox();
         sideVBox.relocate(0, 0);

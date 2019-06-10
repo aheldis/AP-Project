@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.LineTo;
@@ -210,4 +212,25 @@ public class GeneralGraphicMethods {
 
     }
 
+    static void playMusic(String path, boolean constant, Scene firstScene){
+        //Instantiating Media class
+        Media media = new Media(new File(path).toURI().toString());
+        //Instantiating MediaPlayer class
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        if(constant) {
+            mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+            mediaPlayer.play();
+        }
+        mediaPlayer.setAutoPlay(true);
+        AnimationTimer animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if(StageLauncher.getPrimaryStage().getScene()!=firstScene){
+                    mediaPlayer.stop();
+                    this.stop();
+                }
+            }
+        };
+        animationTimer.start();
+    }
 }

@@ -23,6 +23,7 @@ public class SelectGameScene {
     }
 
     public static void selectGame(){
+        playMusic("resource/music/select_mode.m4a",true,selectGameScene);
         setBackground(selectGameRoot,
                 "pics/battle/select_mode/background.jpg",true,10.0f,10.0f);
 
@@ -49,19 +50,19 @@ public class SelectGameScene {
                 "pics/battle/select_mode/panel.png", 900,580,250,50);
 
         multiPlayerImage.setOnMouseClicked(event -> {
-            selectMode();
             changeScene();
+            selectMode();
         });
 
 
         customImage.setOnMouseClicked(event -> {
-            selectMode();
             changeScene();
+            selectMode();
         });
 
         storyImage.setOnMouseClicked(event -> {
-            selectMode();
             changeScene();
+            selectMode();
         });
 
         Text multiPlayer  = addText(selectGameRoot,"Multi Player",
@@ -76,11 +77,14 @@ public class SelectGameScene {
        ,950-5,230,Color.rgb(0,0,0,0.6),30);
        storyGame.setStyle("-fx-font-weight: bold");
 
+       log(selectGameRoot,"select modes\nback",StageLauncher.getScene(StateType.MAIN_MENU),200);
 
 
     }
 
     public static void selectMode(){
+
+        playMusic("resource/music/shop.m4a",true,selectModeScene);
 
         setBackground(selectModeRoot,
                 "pics/battle/select_mode/select_mode_background.jpg",true,10.0f,10.0f);
@@ -108,6 +112,7 @@ public class SelectGameScene {
             //todo go to game ^__^
         });
 
+        log(selectModeRoot,"select mode\nback",selectGameScene,200);
 
     }
 

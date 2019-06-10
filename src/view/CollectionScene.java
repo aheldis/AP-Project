@@ -119,21 +119,24 @@ public class CollectionScene {
 
             showMana(group, 0, 0, ((Card) card).getMp());
 
-            addText(group, ((Card) card).getAp() + ""
-                    , 50 - 10,
-                    200 - 17, Color.WHITE, 20);
 
-            addText(group, ((Card) card).getHp() + "",
-                    180 - 20,
-                    200 - 17, Color.WHITE, 20);
 
-            SpriteMaker.getInstance().makeSpritePic(((Card) card).getPathOfAnimation(),
-                    94,
-                    58,
-                    group, ((Card) card).getCountOfAnimation(),
-                    ((Card) card).getAnimationRow(), 4000,
-                    48, 48, 256);
+            if(!(card instanceof Hero)) {
+                addText(group, ((Card) card).getAp() + ""
+                        , 50 - 10,
+                        200 - 17, Color.WHITE, 20);
 
+                addText(group, ((Card) card).getHp() + "",
+                        180 - 20,
+                        200 - 17, Color.WHITE, 20);
+                SpriteMaker.getInstance().makeSpritePic(((Card) card).getPathOfAnimation(),
+                        94,
+                        58,
+                        group, ((Card) card).getCountOfAnimation(),
+                        ((Card) card).getAnimationRow(), 4000,
+                        48, 48, 256);
+
+            }
             try {
                 imageView.setOnMouseEntered(event -> {
                     ImageView descView = addImage(group, "pics/desc.png", 10,
@@ -288,40 +291,21 @@ public class CollectionScene {
                 break;
             if (i % NUMBER_IN_EACH_ROW == 0) {
                 hBox = new HBox();
+                vBox.getChildren().removeAll(cardsIcon);
+                hBox.relocate(350,100+(j)*335);
+                hBox.setAlignment(Pos.CENTER);
                 vBox.getChildren().addAll(hBox);
                 cardsIcon.add(hBox);
-                Text helper = new Text("hiii");
-                helper.relocate(0, 0);
-                helper.setFont(Font.font(5));
-                helper.setFill(Color.TRANSPARENT);
-                hBox.getChildren().add(helper);
                 hBox.setSpacing(spacing);
                 j++;
             }
-            if (cards.get(i) instanceof Hero)
-                showEachHero(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Minion)
-                showEachMinion(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Spell)
-                showEachSpell(cards.get(i), hBox, i % 5, j);
+            Group group = makeCardGroup(0,0,cards.get(i));
+            hBox.getChildren().addAll(group);
+
         }
     }
 
-    public static void showInCollection(ArrayList<Card> cards, Collection collection) {
-        root.getChildren().clear();
-
-        setBackground(root, "pics/collectionBackground.jpg", true, 20, 20);
-
-        VBox vBox = new VBox();
-        vBox.setAlignment(Pos.CENTER);
-        root.getChildren().add(vBox);
-        vBox.setSpacing(Y_BORDER);
-
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setSpacing(1);
-        hBox.setPrefWidth(1380);
-
+    public static void searchBar(HBox hBox,VBox vBox,Collection collection){
         Group groupText = new Group();
         groupText.relocate(300, 20);
 
@@ -386,7 +370,34 @@ public class CollectionScene {
                 ErrorType.HAVE_NOT_CARD_IN_COLLECTION.printMessage();
             }
         });
+    }
 
+    public static void showInCollection(ArrayList<Card> cards, Collection collection) {
+        root.getChildren().clear();
+
+        playMusic("resource/music/collection.m4a",true,collectionScene);
+
+        setBackground(root, "pics/collectionBackground.jpg", true, 20, 20);
+
+        VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+        root.getChildren().add(vBox);
+        vBox.setSpacing(Y_BORDER);
+//todo ooo
+        HBox goToCollection = new HBox();
+        Text text = new Text("hi");
+        goToCollection.setPrefHeight(20);
+        text.setFont(Font.font(10));
+        goToCollection.getChildren().addAll(text);
+        //vBox.getChildren().addAll(goToCollection);
+
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(1);
+        hBox.setPrefWidth(StageLauncher.getWidth());
+
+
+        searchBar(hBox,vBox,collection);
 
         ImageView backCircle = addImage(root, "pics/circle.png", 100, 750, 70, 70);
         ImageView back = addImage(root, "pics/back.png", 115, 765, 40, 40);
@@ -418,28 +429,11 @@ public class CollectionScene {
         });
 
         int j = -1;
-        for (int i = 0; i < 10; i++) {
-            if (i >= cards.size())
+        for(int i=0;i<10;i++){
+            if(i>=cards.size()) {
                 break;
-            if (i % 5 == 0) {
-
-                hBox = new HBox();
-                cardsIcon.add(hBox);
-                Text helper = new Text("hiii");
-                helper.relocate(0, 0);
-                helper.setFont(Font.font(5));
-                helper.setFill(Color.TRANSPARENT);
-                hBox.getChildren().add(helper);
-                hBox.setSpacing(X_BORDER);
-                vBox.getChildren().add(hBox);
-                j++;
             }
-            if (cards.get(i) instanceof Hero)
-                showEachHero(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Minion)
-                showEachMinion(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Spell)
-                showEachSpell(cards.get(i), hBox, i % 5, j);
+            hBoxCardMaker(vBox,pageNumberCards,5,cards,10);
         }
 //        try {
 ////            StackPane group = new StackPane();
