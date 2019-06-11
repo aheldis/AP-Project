@@ -129,7 +129,7 @@ public class Shop {
             card.setHp(10);
             card.setAp(10);
             card.setDescription("heoo");
-            card.setPathOfThePicture("pics/minion_background.png");
+            card.setPathOfThePicture("pics/other/minion_background.png");
             card.setPathOfAnimation("pics/spell/fireBall.png");
             card.setCountOfAnimation(16);
             card.setName("Fireball");

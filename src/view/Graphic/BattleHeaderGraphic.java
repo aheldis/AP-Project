@@ -2,7 +2,6 @@ package view.Graphic;
 
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -52,7 +51,7 @@ public class BattleHeaderGraphic {
     private void addMana(double x, double y, int numberOfMana, Group group){
         for(int i = 0; i < 9; i++){
             if(i < numberOfMana)
-            GeneralGraphicMethods.addImage(group,"pics/icon_mana@2x.png", x + i * 28, y, 25, 25);
+            GeneralGraphicMethods.addImage(group, "pics/other/icon_mana@2x.png", x + i * 28, y, 25, 25);
             else
                 GeneralGraphicMethods.addImage(group,"pics/icon_mana_inactive@2x.png", x + i * 28, y, 25, 25);
         }

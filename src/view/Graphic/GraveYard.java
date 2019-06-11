@@ -1,12 +1,10 @@
 package view.Graphic;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -87,11 +85,11 @@ public class GraveYard {
 
         pageMaker(cards, pageVbox);
 
-        ImageView backCircle = addImage(root, "pics/circle.png", 100, 750, 70, 70);
-        ImageView back = addImage(root, "pics/back.png", 115, 765, 40, 40);
+        ImageView backCircle = addImage(root, "pics/other/circle.png", 100, 750, 70, 70);
+        ImageView back = addImage(root, "pics/other/back.png", 115, 765, 40, 40);
 
-        ImageView nextCircle = addImage(root, "pics/circle.png", 1200, 750, 70, 70);
-        ImageView next = addImage(root, "pics/next.png", 1215, 765, 40, 40);
+        ImageView nextCircle = addImage(root, "pics/other/circle.png", 1200, 750, 70, 70);
+        ImageView next = addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
 
         back.setOnMouseClicked(event -> {
             pageNumber--;
