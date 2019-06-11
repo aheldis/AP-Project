@@ -10,6 +10,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,6 +34,7 @@ import view.Graphic.SpriteMaker;
 import view.Graphic.StageLauncher;
 
 import java.io.*;
+import java.security.Policy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -377,9 +379,10 @@ public class CollectionScene {
         });
     }
 
-    public static void showInCollection(ArrayList<Card> cards, Collection collection) {
+    public static void showInCollection( Collection collection) {
         root.getChildren().clear();
 
+        ArrayList<Card> cards = collection.getAllCards();
         playMusic("resource/music/collection.m4a", true, collectionScene);
 
         setBackground(root, "pics/collectionBackground.jpg", true, 20, 20);
@@ -540,9 +543,9 @@ public class CollectionScene {
         return vBoxes;
     }
 
-    private static void makeDeck(VBox vBox, int i, Deck deck, Collection collection,Group group) {
-       int a = i%6;
-       group.setOnMouseClicked(event -> {
+    private static void makeDeck(VBox vBox, int i, Deck deck, Collection collection, Group group) {
+        int a = i % 6;
+        group.setOnMouseClicked(event -> {
             root.getChildren().removeAll(deletable);
             deletable.clear();
             vBox.getChildren().clear();
@@ -551,19 +554,19 @@ public class CollectionScene {
                     324, 150);
 
             ImageView addCardToDeck = addImage(root,
-                    "pics/collection/add-blue.png", 40, 10,20,20);
+                    "pics/collection/add-blue.png", 40, 10, 20, 20);
 
 
-            ImageView delete_deck =addImage(root,
-                    "pics/collection/close-deck.png", 70, 10,20,20);
+            ImageView delete_deck = addImage(root,
+                    "pics/collection/close-deck.png", 70, 10, 20, 20);
 
             ImageView checkMainDeck;
             if (deck.getName().equals(collection.getAccount().getMainDeck().getName())) {
                 checkMainDeck = addImage(root,
-                        "pics/collection/checkmark-green.png", 10, 10,20,20);
+                        "pics/collection/checkmark-green.png", 10, 10, 20, 20);
             } else {
                 checkMainDeck = addImage(root,
-                        "pics/collection/checkmark-blue.png", 10, 10,20,20);
+                        "pics/collection/checkmark-blue.png", 10, 10, 20, 20);
             }
 
 
@@ -655,26 +658,26 @@ public class CollectionScene {
 
     }
 
-    private static Group makeDeckCard(Deck deck,int i,VBox vBox,Collection collection){
+    public static Group makeDeckCard(Deck deck, int i, VBox vBox, Collection collection) {
         Group group = new Group();
         group.relocate(650, 130);
 
-        addImage(group, "pics/collection/deck-select/back-" + i%6 + ".png",
-                0,0, 320, 420);
+        addImage(group, "pics/collection/deck-select/back-" + i % 6 + ".png",
+                0, 0, 320, 420);
 
-        Text name= addText(group,deck.getName(),85,300,
+        Text name = addText(group, deck.getName(), 85, 300,
                 Color.rgb(225, 225, 225, 0.5), 40);
-        name.setStroke(Color.rgb(0,225,225,0.1));
+        name.setStroke(Color.rgb(0, 225, 225, 0.1));
         name.setStrokeWidth(1);
 
         groupOfDeck.add(group);
 
-        makeDeck(vBox,i,deck,collection,group);
+        makeDeck(vBox, i, deck, collection, group);
 
         return group;
     }
 
-    private static void addDeck(Collection collection,VBox sideVBox){
+    private static void addDeck(Collection collection, VBox sideVBox) {
         ImageView add_deck = addImage(root, "pics/collection/plate@2x.png",
                 collectionScene.getWidth() - 130, collectionScene.getHeight() - 130,
                 100, 100);
@@ -683,120 +686,117 @@ public class CollectionScene {
         ImageView plus = addImage(root, "pics/collection/add.png",
                 collectionScene.getWidth() - 67 - 20, collectionScene.getHeight() - 87,
                 15, 15);
-        plus.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Rectangle rectangle = new Rectangle(800, 200
-                        , Color.rgb(0, 0, 0, 0.8));
-                rectangle.relocate(350, 100);
-                root.getChildren().add(rectangle);
-                rectangle.setArcWidth(50);
-                rectangle.setArcHeight(50);
+        plus.setOnMouseClicked(event -> {
+            Rectangle rectangle = new Rectangle(800, 200
+                    , Color.rgb(0, 0, 0, 0.8));
+            rectangle.relocate(350, 100);
+            root.getChildren().add(rectangle);
+            rectangle.setArcWidth(50);
+            rectangle.setArcHeight(50);
 
-                ImageView close = addImage(root, "pics/collection/button_close@2x.png",
-                        1100, 100, 50, 50);
+            ImageView close = addImage(root, "pics/collection/button_close@2x.png",
+                    1100, 100, 50, 50);
 
-                ImageView newDeck = addImage(root, "pics/collection/new_deck.png",
-                        400, 200, 250, 80);
-                ImageView importDeck = addImage(root, "pics/collection/import.png",
-                        860, 200, 250, 80);
+            ImageView newDeck = addImage(root, "pics/collection/new_deck.png",
+                    400, 200, 250, 80);
+            ImageView importDeck = addImage(root, "pics/collection/import.png",
+                    860, 200, 250, 80);
 
-                ImageView exportDeck = addImage(root, "pics/collection/export_deck.png",
-                        660, 200, 200, 80);
+            ImageView exportDeck = addImage(root, "pics/collection/export_deck.png",
+                    660, 200, 200, 80);
 
-                Text newDeckText = addText(root, "New Deck", 500 - 50, 235,
-                        Color.rgb(225, 225, 225, 0.6), 30);
-                newDeckText.setStyle("-fx-font-weight: bold");
+            Text newDeckText = addText(root, "New Deck", 500 - 50, 235,
+                    Color.rgb(225, 225, 225, 0.6), 30);
+            newDeckText.setStyle("-fx-font-weight: bold");
 
-                Text exportText = addText(root, "Export", 690, 235,
-                        Color.rgb(225, 225, 225, 0.6), 30);
-                exportText.setStyle("-fx-font-weight: bold");
+            Text exportText = addText(root, "Export", 690, 235,
+                    Color.rgb(225, 225, 225, 0.6), 30);
+            exportText.setStyle("-fx-font-weight: bold");
 
-                Text importText = addText(root, "Import Deck", 890, 235
-                        , Color.rgb(225, 225, 225, 0.6), 30);
-                importText.setStyle("-fx-font-weight: bold");
+            Text importText = addText(root, "Import Deck", 890, 235
+                    , Color.rgb(225, 225, 225, 0.6), 30);
+            importText.setStyle("-fx-font-weight: bold");
 
-                ImageView text = addImage(root, "pics/collection/card_silenced@2x.png",
-                        600 - 5, 100, 300, 100);
+            ImageView text = addImage(root, "pics/collection/card_silenced@2x.png",
+                    600 - 5, 100, 300, 100);
 
-                TextField deckName = new TextField();
-                deckName.setPrefHeight(50);
-                deckName.relocate(600, 120);
-                deckName.positionCaret(1);
-                deckName.setStyle("-fx-text-fill: #a3b2cc; -fx-font-size: 25px; -fx-font-weight: bold;");
-                deckName.setBackground(new Background(
-                        new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
-                                CornerRadii.EMPTY, Insets.EMPTY)));
-                root.getChildren().add(deckName);
+            TextField deckName = new TextField();
+            deckName.setPrefHeight(50);
+            deckName.relocate(600, 120);
+            deckName.positionCaret(1);
+            deckName.setStyle("-fx-text-fill: #a3b2cc; -fx-font-size: 25px; -fx-font-weight: bold;");
+            deckName.setBackground(new Background(
+                    new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
+                            CornerRadii.EMPTY, Insets.EMPTY)));
+            root.getChildren().add(deckName);
 
-                importText.setOnMouseClicked(event12 -> {
-                    try {
-                        FileReader fr = new FileReader("exportedDeck/" + deckName.getText() + ".txt");
-                        Gson gson = new GsonBuilder().create();
-                        Deck deck = gson.fromJson(fr, Deck.class);//load the deck
-                        if (!collection.getAccount().getCollection().checkTheDeckForImport(deck)) {
-                            ErrorType.HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT.printMessage();
-                        }
-                        {
-                            if (collection.passTheDeckIfHaveBeenExist(deck.getName()) == null) {
-                                collection.getDecks().add(deck);
-                                int i = collection.getDecks().size() - 1;
-                                root.getChildren().removeAll(newDeck, newDeckText,
-                                        importDeck, importText, rectangle, close, text,
-                                        deckName, exportDeck, exportText);
-                                makeDeck(sideVBox, i, collection.getDecks().get(i),
-                                        collection,makeDeckCard(collection.getDecks().get(i),i,sideVBox,collection));
-                                root.getChildren().addAll(rectangle, newDeck, newDeckText,
-                                        importDeck, importText, close, text, deckName, exportDeck, exportText);
-                            }
-                        }
-
-                    } catch (Exception e) {
-                        ErrorType.INVALID_NAME_FOR_IMPORTED_DECK.printMessage();
-                    } finally {
-                        deckName.clear();
+            importText.setOnMouseClicked(event12 -> {
+                try {
+                    FileReader fr = new FileReader("exportedDeck/" + deckName.getText() + ".txt");
+                    Gson gson = new GsonBuilder().create();
+                    Deck deck = gson.fromJson(fr, Deck.class);//load the deck
+                    if (!collection.getAccount().getCollection().checkTheDeckForImport(deck)) {
+                        ErrorType.HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT.printMessage();
                     }
-                });
-
-                exportText.setOnMouseClicked(event13 -> {
-                    Deck deck = collection.passTheDeckIfHaveBeenExist(deckName.getText());
-                    System.out.println(collection.getDecks());
-                    if (deck == null) {
-                        ErrorType.HAVE_NOT_DECK.printMessage();
-                    } else {
-                        try {
-                            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                            File file = new File("exportedDeck/" + deckName.getText() + ".txt");
-                            FileWriter fileWriter = new FileWriter(file);
-                            fileWriter.write(gson.toJson(deck));
-                            fileWriter.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                    {
+                        if (collection.passTheDeckIfHaveBeenExist(deck.getName()) == null) {
+                            collection.getDecks().add(deck);
+                            int i = collection.getDecks().size() - 1;
+                            root.getChildren().removeAll(newDeck, newDeckText,
+                                    importDeck, importText, rectangle, close, text,
+                                    deckName, exportDeck, exportText);
+                            makeDeck(sideVBox, i, collection.getDecks().get(i),
+                                    collection, makeDeckCard(collection.getDecks().get(i), i, sideVBox, collection));
+                            root.getChildren().addAll(rectangle, newDeck, newDeckText,
+                                    importDeck, importText, close, text, deckName, exportDeck, exportText);
                         }
                     }
+
+                } catch (Exception e) {
+                    ErrorType.INVALID_NAME_FOR_IMPORTED_DECK.printMessage();
+                } finally {
                     deckName.clear();
-                });
+                }
+            });
 
-                newDeckText.setOnMouseClicked(event1 -> {
-                    if (collection.createDeck(deckName.getText())) {
-                        int i = collection.getDecks().size() - 1;
-                        deckName.clear();
-                        root.getChildren().removeAll(newDeck, newDeckText,
-                                importDeck, importText, rectangle, close, text,
-                                deckName, exportDeck, exportText);
-                        makeDeck(sideVBox, i, collection.getDecks().get(i)
-                                ,collection,makeDeckCard(collection.getDecks().get(i),i,sideVBox,collection));
-                        root.getChildren().addAll(rectangle, newDeck, newDeckText,
-                                importDeck, importText, close, text, deckName, exportDeck, exportText);
+            exportText.setOnMouseClicked(event13 -> {
+                Deck deck = collection.passTheDeckIfHaveBeenExist(deckName.getText());
+                System.out.println(collection.getDecks());
+                if (deck == null) {
+                    ErrorType.HAVE_NOT_DECK.printMessage();
+                } else {
+                    try {
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                        File file = new File("exportedDeck/" + deckName.getText() + ".txt");
+                        FileWriter fileWriter = new FileWriter(file);
+                        fileWriter.write(gson.toJson(deck));
+                        fileWriter.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                }
+                deckName.clear();
+            });
 
-                });
+            newDeckText.setOnMouseClicked(event1 -> {
+                if (collection.createDeck(deckName.getText())) {
+                    int i = collection.getDecks().size() - 1;
+                    deckName.clear();
+                    root.getChildren().removeAll(newDeck, newDeckText,
+                            importDeck, importText, rectangle, close, text,
+                            deckName, exportDeck, exportText);
+                    makeDeck(sideVBox, i, collection.getDecks().get(i)
+                            , collection, makeDeckCard(collection.getDecks().get(i), i, sideVBox, collection));
+                    root.getChildren().addAll(rectangle, newDeck, newDeckText,
+                            importDeck, importText, close, text, deckName, exportDeck, exportText);
+                }
 
-                close.setOnMouseClicked(event14 -> root.getChildren().removeAll(newDeck, newDeckText,
-                        importDeck, importText, rectangle, close, text,
-                        deckName, exportDeck, exportText));
+            });
 
-            }
+            close.setOnMouseClicked(event14 -> root.getChildren().removeAll(newDeck, newDeckText,
+                    importDeck, importText, rectangle, close, text,
+                    deckName, exportDeck, exportText));
+
         });
     }
 
@@ -806,37 +806,37 @@ public class CollectionScene {
         root.getChildren().addAll(group);
         groupOfDeck.add(group);
         addImage(root, "pics/collection/last.png",
-                580+5, 400+2, 35, 35);
+                580 + 5, 400 + 2, 35, 35);
         ImageView back = addImage(root, "pics/collection/last.png",
                 580, 400, 40, 40);
         addImage(group, "pics/collection/shadow.png",
                 0, 0, 300, 400);
         addImage(root, "pics/collection/next.png",
-                1000, 400+3, 35, 35);
+                1000, 400 + 3, 35, 35);
         ImageView next = addImage(root, "pics/collection/next.png",
                 1000, 400, 40, 40);
 
-        if(decks.size()!=0) {
+        if (decks.size() != 0) {
             root.getChildren().removeAll(groupOfDeck);
-            root.getChildren().addAll( makeDeckCard(decks.get(0),0,sideBar,collection));
+            root.getChildren().addAll(makeDeckCard(decks.get(0), 0, sideBar, collection));
         }
 
         back.setOnMouseClicked(event -> {
-            numberOfDeck --;
-            if(numberOfDeck<0)
+            numberOfDeck--;
+            if (numberOfDeck < 0)
                 numberOfDeck = 0;
             root.getChildren().removeAll(groupOfDeck);
-            root.getChildren().addAll( makeDeckCard(decks.get(numberOfDeck),numberOfDeck,sideBar,collection));
+            root.getChildren().addAll(makeDeckCard(decks.get(numberOfDeck), numberOfDeck, sideBar, collection));
 
         });
         next.setOnMouseClicked(event -> {
-            numberOfDeck ++;
-            if(numberOfDeck >=decks.size())
-                numberOfDeck = decks.size()-1;
+            numberOfDeck++;
+            if (numberOfDeck >= decks.size())
+                numberOfDeck = decks.size() - 1;
             root.getChildren().removeAll(groupOfDeck);
-            root.getChildren().addAll( makeDeckCard(decks.get(numberOfDeck),numberOfDeck,sideBar,collection));
+            root.getChildren().addAll(makeDeckCard(decks.get(numberOfDeck), numberOfDeck, sideBar, collection));
         });
-        makeDeck(sideBar,numberOfDeck,decks.get(numberOfDeck),collection,group);
+        makeDeck(sideBar, numberOfDeck, decks.get(numberOfDeck), collection, group);
 
         return group;
     }
@@ -854,13 +854,13 @@ public class CollectionScene {
                     Color.rgb(10, 10, 10, 0.5),
                     CornerRadii.EMPTY, Insets.EMPTY)));
 
-            makeDynamicDeck(decks,sideVBox,collection);
+            makeDynamicDeck(decks, sideVBox, collection);
 
-            addDeck(collection,sideVBox);
+            addDeck(collection, sideVBox);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        log(root,collection.helpOfCollection(),StageLauncher.getScene(StateType.MAIN_MENU),600);
+        log(root, collection.helpOfCollection(), StageLauncher.getScene(StateType.MAIN_MENU), 600);
 
 
     }

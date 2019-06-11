@@ -118,9 +118,6 @@ public class MenuController  {
                         allAccount.showLeaderBoard();
                         break;
                     case MAIN_MENU_SAVE:
-                        // account.accountSave();
-                        break;
-                    case MAIN_MENU_EXIT:
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
                         try {
                             File file = new File("D:\\project-Duelyst\\Duelyst\\AccountSaver\\" +
@@ -131,7 +128,19 @@ public class MenuController  {
                         } catch (Exception e) {
 
                         }
-                        return;
+                        break;
+                    case MAIN_MENU_EXIT:
+//                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//                        try {
+//                            File file = new File("D:\\project-Duelyst\\Duelyst\\AccountSaver\\" +
+//                                    account.getUserName() + ".txt");
+//                            FileWriter fileWriter = new FileWriter(file);
+//                            fileWriter.write(gson.toJson(account));
+//                            fileWriter.close();
+//                        } catch (Exception e) {
+//
+//                        }
+//                        return;
                 }
             }
             else if (state == StateType.ACCOUNT_MENU) {

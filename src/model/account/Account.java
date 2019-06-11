@@ -61,7 +61,7 @@ public class Account implements Comparable<Account> ,Cloneable{
     }
 
     public ArrayList<Deck> getDecks() {
-        return decks;
+        return collection.getDecks();
     }
 
     public Deck getMainDeck() {
@@ -119,9 +119,6 @@ public class Account implements Comparable<Account> ,Cloneable{
         }
     }
 
-    private void setDeckFromCollection() {
-        decks = collection.getDecks();
-    }
 
 //    public void accountSave() {
 //        try {

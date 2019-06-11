@@ -11,8 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -22,7 +20,6 @@ import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -45,7 +42,7 @@ public class AccountScene {
         return instance;
     }
 
-    public void makeBackground() {
+    void makeBackground() {
         playMusic( "resource/music/mainmenu.m4a",true,accountScene);
 
         String backgroundPath = "pics/menu/background@2x.jpg";
@@ -212,7 +209,7 @@ public class AccountScene {
         lanternPaths.add("pics/menu/lantern_large_2.png");
         lanternPaths.add("pics/menu/lantern_large_3.png");
         lanternPaths.add("pics/menu/lantern_small.png");
-        int count = 80;
+        int count = 40;
         ImageView[] lanterns = new ImageView[count];
         int[] xv = new int[count];
         int[] yv = new int[count];
@@ -221,10 +218,9 @@ public class AccountScene {
         double ratioY = getRatioY();
         Random random = new Random();
         for (int i = 0; i < count; i++) {
-            int rnd = random.nextInt(20);
             lanterns[i] = addImage(root, lanternPaths.get(random.nextInt(4)),
-                    700 + random.nextInt(450), 50 + random.nextInt(200),
-                    20 + rnd, 27 + rnd);
+                    600 + random.nextInt(450), 200 + random.nextInt(70),
+                    20, 27);
             xv[i] = random.nextInt(2) + 2;
             yv[i] = random.nextInt(4) - 4;
         }
@@ -243,10 +239,10 @@ public class AccountScene {
                         if (lastTime == 0) {
                             lastTime = now;
                         }
-                        if (now > lastTime + second / 2 + second / 4) {
+                        if (now > lastTime + second) {
                             lastTime = now;
-                            lantern.setLayoutX((700 + random.nextInt(450)) * ratioX);
-                            lantern.setLayoutY((220 + random.nextInt(70)) * ratioY);
+                            lantern.setLayoutX((600 + random.nextInt(450)) * ratioX);
+                            lantern.setLayoutY((200 + random.nextInt(70)) * ratioY);
                             lantern.setFitWidth(20 * ratioX);
                             lantern.setFitHeight(27 * ratioY);
                             FadeTransition fade = new FadeTransition();
@@ -305,7 +301,7 @@ public class AccountScene {
         Random random = new Random();
         for (int i = 0; i < count; i++) {
             int randNumber = random.nextInt(2) + 3;
-            double x = 1400 - i * random.nextInt(100);
+            double x = 1800 - i % 14 * random.nextInt(100);
             double y = 550 + random.nextInt(200);
             mugs[i] = addImage(root, cloudPaths.get(random.nextInt(7)), x, y,
                     80 * randNumber, 40 * randNumber);
