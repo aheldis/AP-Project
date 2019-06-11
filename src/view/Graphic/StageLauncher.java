@@ -66,7 +66,7 @@ public class StageLauncher extends Application {
 
     private static void minionMaker(ArrayList<Card> cards, String path) {
         Minion minion = new Minion();
-        minion.setPathOfThePicture("pics/minion_background.png");
+        minion.setPathOfThePicture("pics/other/minion_background.png");
         minion.setPathOfAnimation(path);
         minion.setHp(10);
         minion.setAp(10);
@@ -86,14 +86,14 @@ public class StageLauncher extends Application {
     private static void zahraTestDeck() {
 
         Spell spell = new Spell();
-        spell.setPathOfThePicture("pics/minion_background.png");
-        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setPathOfThePicture("pics/other/minion_background.png");
+        spell.setPathOfAnimation("pics/Spell/fireBall.png");
         spell.setCountOfAnimation(16);
         spell.setFrameSize(48);
 
         Spell spell1 = new Spell();
-        spell1.setPathOfThePicture("pics/minion_background.png");
-        spell1.setPathOfAnimation("pics/spell/fireBall.png");
+        spell1.setPathOfThePicture("pics/other/minion_background.png");
+        spell1.setPathOfAnimation("pics/Spell/fireBall.png");
         spell1.setCountOfAnimation(16);
         spell1.setFrameSize(48);
 
@@ -134,14 +134,14 @@ public class StageLauncher extends Application {
         hero.setDescription("hello girls");
 
         Spell spell = new Spell();
-        spell.setPathOfThePicture("pics/minion_background.png");
-        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setPathOfThePicture("pics/other/minion_background.png");
+        spell.setPathOfAnimation("pics/Spell/fireBall.png");
         spell.setCountOfAnimation(16);
         spell.setFrameSize(48);
 
         Spell spell1 = new Spell();
-        spell1.setPathOfThePicture("pics/minion_background.png");
-        spell1.setPathOfAnimation("pics/spell/fireBall.png");
+        spell1.setPathOfThePicture("pics/other/minion_background.png");
+        spell1.setPathOfAnimation("pics/Spell/fireBall.png");
         spell1.setCountOfAnimation(16);
         spell1.setFrameSize(48);
         cards.add(spell);
@@ -163,8 +163,8 @@ public class StageLauncher extends Application {
         Spell spell = new Spell();
 
         Collection collection = new Collection(account);
-        spell.setPathOfThePicture("pics/minion_background.png");
-        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setPathOfThePicture("pics/other/minion_background.png");
+        spell.setPathOfAnimation("pics/Spell/fireBall.png");
         spell.setCountOfAnimation(16);
         spell.setName("Fireball");
         spell.setFrameSize(48);
@@ -205,7 +205,7 @@ public class StageLauncher extends Application {
             circlesGroup.getChildren().addAll(handCardGroup);
             ImageView backgroudCircle = addImage(handCardGroup,
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
-            addImage(handCardGroup, "pics/icon_mana@2x.png", 60, 107, 30, 30);
+            addImage(handCardGroup, "pics/other/icon_mana@2x.png", 60, 107, 30, 30);
             makeCircleRotation(backgroudCircle,70,70);
         }
 
@@ -233,8 +233,8 @@ public class StageLauncher extends Application {
         minionMaker(cards, "pics/gifMinion/giv.gif");
 
         Spell spell = new Spell();
-        spell.setPathOfThePicture("pics/minion_background.png");
-        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setPathOfThePicture("pics/other/minion_background.png");
+        spell.setPathOfAnimation("pics/Spell/fireBall.png");
         spell.setCountOfAnimation(16);
         spell.setName("Fireball");
         spell.setFrameSize(48);
@@ -258,7 +258,7 @@ public class StageLauncher extends Application {
         primaryStage.setResizable(false);
         primaryStage.setTitle("Duelyst");
         try {
-            primaryStage.getIcons().add(new Image(new FileInputStream("pics/duelyst_icon.png")));
+            primaryStage.getIcons().add(new Image(new FileInputStream("pics/other/duelyst_icon.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -272,8 +272,8 @@ public class StageLauncher extends Application {
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
         Scene graveyardScene = makeScene(StateType.GRAVE_YARD,Cursor.RED);
 
-        //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
-        //todo add animation to  spell and minions
+        //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of Spell and ... to minion
+        //todo add animation to  Spell and minions
 
 /*/
         zahraTestDeck();

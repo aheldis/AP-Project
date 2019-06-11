@@ -135,7 +135,7 @@ class CollectionScene {
             }
             try {
                 imageView.setOnMouseEntered(event -> {
-                    ImageView descView = addImage(group, "pics/desc.png", 10,
+                    ImageView descView = addImage(group, "pics/other/desc.png", 10,
                             303 - 50, 200, 100);
 
                     Text desc = addText(group, ((Card) card).getDescription(),
@@ -164,15 +164,15 @@ class CollectionScene {
             imageView.setOnMouseEntered(event -> {
 
                 try {
-                    ImageView descView = addImage(root, "pics/desc.png",
+                    ImageView descView = addImage(root, "pics/other/desc.png",
                             i * (X_BORDER + CARD_WIDTH) + 70,
                             j * (Y_BORDER + CARD_HEIGHT) + 390 - 55, 200, 100);
                     cardsIcon.add(descView);
-                    ImageView apView = addImage(root, "pics/ap_show.png",
+                    ImageView apView = addImage(root, "pics/other/ap_show.png",
                             i * (X_BORDER + CARD_WIDTH) - 5,
                             j * (Y_BORDER + CARD_HEIGHT) + 390 - 55, 100, 100);
                     cardsIcon.add(apView);
-                    ImageView hpView = addImage(root, "pics/hp_show.png",
+                    ImageView hpView = addImage(root, "pics/other/hp_show.png",
                             (i + 1) * (X_BORDER + CARD_WIDTH) - 55,
                             j * (Y_BORDER + CARD_HEIGHT) + 390 - 55, 110, 100);
                     cardsIcon.add(hpView);
@@ -201,7 +201,7 @@ class CollectionScene {
     }
 
     private static void showMana(Group root, int x, int y, int mana) {
-        cardsIcon.add(addImage(root, "pics/icon_mana@2x.png", x, y, 50, 50));
+        cardsIcon.add(addImage(root, "pics/other/icon_mana@2x.png", x, y, 50, 50));
         cardsIcon.add(addText(root, mana + "", x + 16, y + 20,
                 Color.rgb(22, 22, 225, 0.5), 20));
     }
@@ -218,7 +218,7 @@ class CollectionScene {
         try {
             imageView.setOnMouseEntered(event -> {
 
-                ImageView descView = addImage(root, "pics/desc.png", i * (X_BORDER + CARD_WIDTH) + 70,
+                ImageView descView = addImage(root, "pics/other/desc.png", i * (X_BORDER + CARD_WIDTH) + 70,
                         j * (Y_BORDER + CARD_HEIGHT) + 400 - 65, 200, 100);
                 cardsIcon.add(descView);
                 Text desc = addText(root, card.getDescription(),
@@ -344,7 +344,7 @@ class CollectionScene {
                 Group group = new Group();
                 group.relocate(440, 150);
 
-                ImageView background = setBackground(root, "pics/collectionBackground.jpg",
+                ImageView background = setBackground(root, "pics/other/collectionBackground.jpg",
                         true, 20, 20);
                 root.getChildren().addAll(group);
 
@@ -372,7 +372,7 @@ class CollectionScene {
 
         playMusic("resource/music/collection.m4a", true, collectionScene);
 
-        setBackground(root, "pics/collectionBackground.jpg", true, 20, 20);
+        setBackground(root, "pics/other/collectionBackground.jpg", true, 20, 20);
 
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
@@ -394,12 +394,12 @@ class CollectionScene {
 
         searchBar(hBox, vBox, collection);
 
-        ImageView backCircle = addImage(root, "pics/circle.png", 100, 750, 70, 70);
-        ImageView back = addImage(root, "pics/back.png", 115, 765, 40, 40);
+        ImageView backCircle = addImage(root, "pics/other/circle.png", 100, 750, 70, 70);
+        ImageView back = addImage(root, "pics/other/back.png", 115, 765, 40, 40);
 
-        ImageView nextCircle = addImage(root, "pics/circle.png", 1200, 750, 70, 70);
-        ImageView next = addImage(root, "pics/next.png", 1215, 765, 40, 40);
-        ImageView deckSceneButton = addImage(root, "pics/desc.png", 600, 770, 100, 50);
+        ImageView nextCircle = addImage(root, "pics/other/circle.png", 1200, 750, 70, 70);
+        ImageView next = addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
+        ImageView deckSceneButton = addImage(root, "pics/other/desc.png", 600, 770, 100, 50);
         Text deckScene = addText(root, "Decks", 618, 785, Color.rgb(225, 225, 225, 0.8), 20);
         deckScene.setOnMouseClicked(event -> Platform.runLater(() -> showDeck(collection.getDecks(), collection)));
 
@@ -557,11 +557,11 @@ class CollectionScene {
 
                 ImageView close = addImage(root,
                         "pics/collection/button_close@2x.png", 1100, 50, 50, 50);
-                ImageView backCircle = addImage(root, "pics/circle.png", 400, 730, 70, 70);
-                ImageView back = addImage(root, "pics/back.png", 415, 750 - 5, 40, 40);
+                ImageView backCircle = addImage(root, "pics/other/circle.png", 400, 730, 70, 70);
+                ImageView back = addImage(root, "pics/other/back.png", 415, 750 - 5, 40, 40);
 
-                ImageView nextCircle = addImage(root, "pics/circle.png", 1000, 730, 70, 70);
-                ImageView next = addImage(root, "pics/next.png", 1015, 750 - 5, 40, 40);
+                ImageView nextCircle = addImage(root, "pics/other/circle.png", 1000, 730, 70, 70);
+                ImageView next = addImage(root, "pics/other/next.png", 1015, 750 - 5, 40, 40);
 
                 back.setOnMouseClicked(event1 -> {
                     pageNumber--;

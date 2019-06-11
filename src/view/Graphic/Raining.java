@@ -63,7 +63,7 @@ public class Raining {
 
         c.setCenterX(random.nextInt((int) StageLauncher.getWidth())); //Window width = 950
 
-
+/*
         int time = 10 + random.nextInt(50);
         Animation fall = TranslateTransitionBuilder.create()
                 .node(c)
@@ -73,5 +73,6 @@ public class Raining {
                 .duration(Duration.seconds(time))
                 .onFinished(t -> Raining(c,root)).build();
         fall.play();
+        */
     }
 }

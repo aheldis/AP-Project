@@ -42,7 +42,7 @@ public class MakeNewFile {
         Object object = null;
         if (typeOfFile == FilesType.BUFF) {
             object = fillObject("BuffCopy");
-        } else { //minion hero spell item
+        } else { //minion hero Spell item
 
             if (typeOfFile == FilesType.ITEM)
                 object = fillObject("ItemCopy");

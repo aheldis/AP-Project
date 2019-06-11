@@ -193,16 +193,16 @@ public class GeneralGraphicMethods {
     }
 
     static void log(Group root, String helps, Scene backScene, int height) {
-        ImageView log = addImage(root, "pics/log.png", -40, 200, 70, 150);
-        ImageView expand = addImage(root, "pics/glow_next.png", 0, 300 - 15, 20, 30);
-        ImageView back = addImage(root, "pics/glow_back.png", 40, 300 - 15, 20, 30);
+        ImageView log = addImage(root, "pics/other/log.png", -40, 200, 70, 150);
+        ImageView expand = addImage(root, "pics/other/glow_next.png", 0, 300 - 15, 20, 30);
+        ImageView back = addImage(root, "pics/other/glow_back.png", 40, 300 - 15, 20, 30);
         root.getChildren().remove(back);
         expand.setOnMouseEntered(event -> {
             root.getChildren().remove(expand);
             root.getChildren().addAll(back);
             log.setX(40);
-            ImageView backButton = addImage(root, "pics/left-arrow.png", 5, 230, 20, 20);
-            ImageView help = addImage(root, "pics/question.png", 7, 280, 18, 20);
+            ImageView backButton = addImage(root, "pics/other/left-arrow.png", 5, 230, 20, 20);
+            ImageView help = addImage(root, "pics/other/question.png", 7, 280, 18, 20);
 
             backButton.setOnMouseClicked(event12 -> Platform.runLater(new Runnable() {
                 @Override

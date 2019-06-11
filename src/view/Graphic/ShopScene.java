@@ -12,17 +12,13 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.account.Account;
 import model.account.Shop;
 import model.card.Card;
-import view.Graphic.CollectionScene;
 import view.enums.StateType;
-import view.Graphic.StageLauncher;
 
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 import static view.Graphic.GeneralGraphicMethods.*;
@@ -109,11 +105,11 @@ public class ShopScene {
         }
 
 
-        ImageView backCircle = addImage(root, "pics/circle.png", 400, 750, 70, 70);
-        ImageView back = addImage(root, "pics/back.png", 415, 765, 40, 40);
+        ImageView backCircle = addImage(root, "pics/other/circle.png", 400, 750, 70, 70);
+        ImageView back = addImage(root, "pics/other/back.png", 415, 765, 40, 40);
 
-        ImageView nextCircle = addImage(root, "pics/circle.png", 1100, 750, 70, 70);
-        ImageView next = addImage(root, "pics/next.png", 1115, 765, 40, 40);
+        ImageView nextCircle = addImage(root, "pics/other/circle.png", 1100, 750, 70, 70);
+        ImageView next = addImage(root, "pics/other/next.png", 1115, 765, 40, 40);
 
         root.getChildren().addAll(vBox);
 

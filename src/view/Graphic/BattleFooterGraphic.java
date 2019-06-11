@@ -1,13 +1,11 @@
 package view.Graphic;
 
-import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
 import model.battle.Player;
 import model.card.Card;
 
@@ -48,7 +46,7 @@ public class BattleFooterGraphic {
             group.getChildren().addAll(handCardGroup);
             ImageView backgroudCircle = addImage(handCardGroup,
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
-            addImage(handCardGroup, "pics/icon_mana@2x.png", 60, 107, 30, 30);
+            addImage(handCardGroup, "pics/other/icon_mana@2x.png", 60, 107, 30, 30);
             makeCircleRotation(backgroudCircle,70,70);
         }
 
