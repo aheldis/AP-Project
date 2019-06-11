@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -43,10 +44,42 @@ public class MainMenuScene {
         ImageView brand = addImage(root, "pics/login_pics/brand_duelyst@2x.png",
                 130, 130, 1000 / 4, 216 / 4);
         menuNodes.add(brand);
-        addGraphs();
+        addGraphsAndLabelButtons();
+        addImageButtons();
     }
 
-    private void addGraphs() {
+    private void addImageButtons() {
+        double x = StageLauncher.getWidth() - 280;
+        double y = StageLauncher.getHeight() - 200;
+        newImageButton("pics/menu/armory@2x.png", "    SHOP", x, y);
+        x += 100;
+        newImageButton("pics/menu/settings@2x.png", "SETTINGS", x, y);
+    }
+
+    private void newImageButton(String path, String name, double x, double y) {
+        ImageView image = addImage(root, path, x, y, 75, 75);
+        menuNodes.add(image);
+        Glow glow = new Glow(0);
+        image.setEffect(glow);
+        Label label = new Label(name);
+        label.relocate(x - 2, y + 80);
+        label.setTextFill(Color.WHITE);
+        label.setFont(Font.font(17));
+        label.setEffect(glow);
+        addToNodes(label);
+        image.setOnMouseEntered(event -> {
+            setCursor(mainMenuScene, Cursor.LIGHTEN);
+            glow.setLevel(3);
+        });
+        image.setOnMouseExited(event -> {
+            setCursor(mainMenuScene, Cursor.AUTO);
+            glow.setLevel(0);
+        });
+
+    }
+
+
+    private void addGraphsAndLabelButtons() {
         playGraph = addImage(root, "pics/menu/1.png", 180, 240, 70, 70);
         playGraph.setOpacity(0.5);
         menuNodes.add(playGraph);
