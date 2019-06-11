@@ -388,8 +388,8 @@ public class Collection  implements Cloneable{
         accountView.DeckAndHandView(deck.getHero(), items, deck.getCardsOfDeck());
     }
 
-    public void helpOfCollection() {
-        accountView.helpViewForCollection();
+    public String helpOfCollection() {
+        return accountView.helpViewForCollection();
     }
 
     public void removeCard(Card card) {

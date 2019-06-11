@@ -1,16 +1,16 @@
 {
-  "@type": "view.MapProperties",
+  "@type": "view.Graphic.MapProperties",
   "@val": {
     "cellWidth": 0.0,
     "cellHeight": 0.0,
     "gap": 4.0,
-    "ulx": 430.0,
-    "uly": 280.0,
-    "urx": 1060.0,
-    "ury": 280.0,
-    "llx": 310.0,
-    "lly": 660.0,
-    "lrx": 1150.0,
-    "lry": 660.0
+    "ulx": 407.0,
+    "uly": 215.0,
+    "urx": 1011.0,
+    "ury": 215.0,
+    "llx": 304.0,
+    "lly": 591.0,
+    "lrx": 1085.0,
+    "lry": 591.0
   }
 }
