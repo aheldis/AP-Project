@@ -16,11 +16,13 @@ public class SpriteAnimationProperties {
     public long millis;
     public double widthOfEachFrame;
     public double heightOfEachFrame;
+    public String gifPath = null;
+    public String pngPath = null;
 
     public SpriteAnimationProperties(String name, FilesType filesType) {
         if(filesType.equals(FilesType.MINION)){
-            String gifPath = "pics/Minion/" + name + ".gif";
-            String pngPath = "pics/Minion/" + name + ".png";
+            gifPath = "pics/Minion/" + name + ".gif";
+            pngPath = "pics/Minion/" + name + ".png";
 
             try {
                 Image gifImage = new Image(new FileInputStream(gifPath));
@@ -42,6 +44,15 @@ public class SpriteAnimationProperties {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+        if(filesType.equals(FilesType.SPELL)){
+            pngPath = "pics/Spell/" + name + ".png";
+            rows = 5;
+            columns = 5;
+            count = 25;
+            millis = 3000;
+            widthOfEachFrame = 51;
+            heightOfEachFrame = 51;
         }
     }
 }
