@@ -184,8 +184,7 @@ public class MenuController  {
                             FileReader fr = new FileReader("exportedDeck\\" + deckName + ".txt");
                             Gson gson1 = new GsonBuilder().create();
                             Deck deck1 = gson1.fromJson(fr, Deck.class);//load the deck
-                            if (!account.getCollection().checkTheDeckForImport(deck1))
-                            {
+                            if (!account.getCollection().checkTheDeckForImport(deck1)) {
                                 ErrorType.HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT.printMessage();
                             }
                             else {

@@ -1,6 +1,5 @@
 package view.Graphic;
 
-import com.sun.prism.shader.AlphaOne_Color_Loader;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -9,7 +8,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -25,18 +23,17 @@ import javafx.scene.transform.Rotate;
 import model.account.Account;
 import model.battle.Deck;
 import view.enums.StateType;
-import view.Graphic.StageLauncher;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-import static view.Graphic.CollectionScene.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
-public class SelectGameScene {
+class SelectGameScene {
     private static Scene selectGameScene = StageLauncher.getScene(StateType.SELECT_GAME);
-    private static Group selectGameRoot = (Group) selectGameScene.getRoot();
+    private static Group selectGameRoot = (Group) Objects.requireNonNull(selectGameScene).getRoot();
     private static Scene selectModeScene = StageLauncher.getScene(StateType.SELECT_MODE);
-    private static Group selectModeRoot = (Group) selectModeScene.getRoot();
+    private static Group selectModeRoot = (Group) Objects.requireNonNull(selectModeScene).getRoot();
     private static Account account;
     private static int numberOfDeck;
     private static ArrayList<Node> groupOfDeck = new ArrayList<>();
@@ -101,7 +98,7 @@ public class SelectGameScene {
         return imageView;
     }
 
-    public static void selectGame(Account account) {
+    static void selectGame(Account account) {
         SelectGameScene.account = account;
         playMusic("resource/music/select_mode.m4a", true, selectGameScene);
         setBackground(selectGameRoot,
@@ -183,7 +180,7 @@ public class SelectGameScene {
 
     }
 
-    public static void selectMode() {
+    private static void selectMode() {
 
         playMusic("resource/music/shop.m4a", true, selectModeScene);
 

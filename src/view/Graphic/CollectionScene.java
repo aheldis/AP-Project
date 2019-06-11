@@ -49,8 +49,8 @@ class CollectionScene {
     private static int pageNumberCards = 0;
     private static ArrayList<VBox> vBoxes = new ArrayList<>();
     private static ArrayList<Node> cardsIcon = new ArrayList<>();
-    static int numberOfDeck = 0;
-    static ArrayList<Node> groupOfDeck = new ArrayList<>();
+    private static int numberOfDeck = 0;
+    private static ArrayList<Node> groupOfDeck = new ArrayList<>();
 
 
     private static void deckCardMaker(Parent root, Card card, Group group) {
@@ -792,7 +792,6 @@ class CollectionScene {
                 numberOfDeck = 0;
             root.getChildren().removeAll(groupOfDeck);
             root.getChildren().addAll(makeDeckCard(decks.get(numberOfDeck), numberOfDeck, sideBar, collection));
-
         });
         next.setOnMouseClicked(event -> {
             numberOfDeck++;
@@ -806,7 +805,7 @@ class CollectionScene {
         return group;
     }
 
-    static void showDeck(ArrayList<Deck> decks, Collection collection) {
+    private static void showDeck(ArrayList<Deck> decks, Collection collection) {
         root.getChildren().clear();
         setBackground(root, "pics/collection/background@2x.jpg", true, 20, 20);
         try {

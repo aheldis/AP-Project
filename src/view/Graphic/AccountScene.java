@@ -46,16 +46,15 @@ public class AccountScene {
     }
 
     void makeBackground() {
-//        playMusic("resource/music/mainmenu.m4a", true, accountScene);
-
+        playMusic("resource/music/mainmenu.m4a", true, accountScene);
         String backgroundPath = "pics/menu/background@2x.jpg";
         ImageView background = setBackground(root, backgroundPath, true, 0, 0);
         assert background != null;
         background.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
         addLanterns();
         addMovables(background);
-//        addWindows();
-        MainMenuScene.getInstance().makeMenu(null);
+        addWindows();
+//        MainMenuScene.getInstance().makeMenu(null);
     }
 
     private void addWindows() {

@@ -49,15 +49,17 @@ public class MainMenuScene {
     }
 
     private void addImageButtons() {
-        double x = StageLauncher.getWidth() - 280;
+        double x = StageLauncher.getWidth() - 380;
         double y = StageLauncher.getHeight() - 200;
+        newImageButton("pics/menu/profile@2x.png", " PROFILE", x, y);
+        x += 100;
         newImageButton("pics/menu/armory@2x.png", "    SHOP", x, y);
         x += 100;
         newImageButton("pics/menu/settings@2x.png", "SETTINGS", x, y);
     }
 
     private void newImageButton(String path, String name, double x, double y) {
-        ImageView image = addImage(root, path, x, y, 75, 75);
+        ImageView image = addImage(root, path, x, y, 70, 70);
         menuNodes.add(image);
         Glow glow = new Glow(0);
         image.setEffect(glow);
@@ -67,15 +69,33 @@ public class MainMenuScene {
         label.setFont(Font.font(17));
         label.setEffect(glow);
         addToNodes(label);
-        image.setOnMouseEntered(event -> {
+        workWithMouse(image, glow, name);
+        workWithMouse(label, glow, name);
+    }
+
+    private void workWithMouse(Node node, Glow glow, String name) {
+        node.setOnMouseEntered(event -> {
             setCursor(mainMenuScene, Cursor.LIGHTEN);
             glow.setLevel(3);
         });
-        image.setOnMouseExited(event -> {
+        node.setOnMouseExited(event -> {
             setCursor(mainMenuScene, Cursor.AUTO);
             glow.setLevel(0);
         });
+        node.setOnMouseClicked(event -> buttonAction(name));
 
+    }
+
+    private void buttonAction(String name) {
+        switch (name) {
+            case " PROFILE":
+                break;
+            case "    SHOP":
+                ShopScene.makeShopScene(account);
+                setScene(StateType.SHOP);
+                break;
+            case "SETTINGS":
+        }
     }
 
 
@@ -105,6 +125,10 @@ public class MainMenuScene {
             setCursor(mainMenuScene, Cursor.AUTO);
             playAnimation.stop();
             playGraph.setOpacity(0.5);
+        });
+        play.setOnMouseClicked(event -> {
+            SelectGameScene.selectGame(account);
+            setScene(StateType.SELECT_GAME);
         });
         Label collection = newLabelButton("COLLECTION", 250, 320);
         Label collectionShadow = addShadow(collection);

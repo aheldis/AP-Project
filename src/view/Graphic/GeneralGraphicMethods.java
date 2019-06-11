@@ -2,12 +2,10 @@ package view.Graphic;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -204,29 +202,16 @@ public class GeneralGraphicMethods {
             ImageView backButton = addImage(root, "pics/other/left-arrow.png", 5, 230, 20, 20);
             ImageView help = addImage(root, "pics/other/question.png", 7, 280, 18, 20);
 
-            backButton.setOnMouseClicked(event12 -> Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    StageLauncher.getPrimaryStage().setScene(backScene);
-                }
-            }));
+            backButton.setOnMouseClicked(event12 -> Platform.runLater(() -> StageLauncher.getPrimaryStage().setScene(backScene)));
 
-            help.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    Rectangle rectangle = addRectangle(root, 450, 200,
-                            400, height, 50, 50, Color.rgb(0, 0, 0, 0.7));
-                    ImageView close = addImage(root,
-                            "pics/collection/button_close@2x.png", 800, 200, 50, 50);
-                    Text text = addText(root, helps, 470, 250,
-                            Color.rgb(225, 225, 225, 0.8), 20);
-                    close.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            root.getChildren().removeAll(text, close, rectangle);
-                        }
-                    });
-                }
+            help.setOnMouseClicked(event13 -> {
+                Rectangle rectangle = addRectangle(root, 450, 200,
+                        400, height, 50, 50, Color.rgb(0, 0, 0, 0.7));
+                ImageView close = addImage(root,
+                        "pics/collection/button_close@2x.png", 800, 200, 50, 50);
+                Text text = addText(root, helps, 470, 250,
+                        Color.rgb(225, 225, 225, 0.8), 20);
+                close.setOnMouseClicked(event131 -> root.getChildren().removeAll(text, close, rectangle));
             });
 
             back.setOnMouseEntered(event1 -> {
