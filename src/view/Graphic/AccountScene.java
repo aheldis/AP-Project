@@ -20,6 +20,9 @@ import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -43,7 +46,7 @@ public class AccountScene {
     }
 
     void makeBackground() {
-        playMusic( "resource/music/mainmenu.m4a",true,accountScene);
+//        playMusic("resource/music/mainmenu.m4a", true, accountScene);
 
         String backgroundPath = "pics/menu/background@2x.jpg";
         ImageView background = setBackground(root, backgroundPath, true, 0, 0);
@@ -67,7 +70,7 @@ public class AccountScene {
         root.getChildren().add(rectangle);
         windows.add(rectangle);
         ImageView brand = addImage(root, "pics/login_pics/brand_duelyst@2x.png",
-                centerX / ratioX - 500 / 3, (centerY - sizeY / 2 - 100) / ratioY, 1000 / 3, 216 / 3);
+                centerX / ratioX - 500.0 / 3, (centerY - sizeY / 2 - 100) / ratioY, 1000 / 3, 216 / 3);
         windows.add(brand);
         Label logIn = new Label("LOG IN");
         logIn.relocate(centerX - 100, centerY - sizeY / 2 + 45);
@@ -117,6 +120,13 @@ public class AccountScene {
             if (allAccount.userNameHaveBeenExist(userName) != null) {
                 ErrorType.USER_NAME_ALREADY_EXIST.printMessage();
                 return;
+            }
+            try {
+                File file = new File("AccountSaver/AccountUser.txt");
+                FileWriter fileWriter = new FileWriter(file, true);
+                fileWriter.write(userName + "/" + password + '\n');
+                fileWriter.close();
+            } catch (IOException ignored) {
             }
             allAccount.createAccount(userName, password);
             account = allAccount.getAccountByName(userName);

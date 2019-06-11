@@ -155,7 +155,7 @@ public class StageLauncher extends Application {
             collection.addToCards(hero);
         }
 
-        CollectionScene.showInCollection( collection);
+        CollectionScene.showInCollection(collection);
 
     }
     public static void zahraTestShop() {
@@ -288,8 +288,8 @@ public class StageLauncher extends Application {
         battleScene1.setBattleScene(7); //from 1 to 12
         primaryStage.setScene(battleScene);
 /*/
-//        AccountScene.getInstance().makeBackground();
-//        primaryStage.setScene(accountScene);
+        AccountScene.getInstance().makeBackground();
+        primaryStage.setScene(accountScene);
 
 
 //       graveYardTest();

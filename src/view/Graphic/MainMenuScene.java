@@ -16,18 +16,23 @@ import view.enums.Cursor;
 import view.enums.StateType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
-import static view.Graphic.GeneralGraphicMethods.setCursor;
+import static view.Graphic.GeneralGraphicMethods.*;
 
 public class MainMenuScene {
     private static final MainMenuScene instance = new MainMenuScene();
     private static final Scene mainMenuScene = StageLauncher.getScene(StateType.ACCOUNT_MENU);
     private static Group root = (Group) Objects.requireNonNull(mainMenuScene).getRoot();
     private static ArrayList<Node> menuNodes = new ArrayList<>();
+    private static ImageView playGraph = null;
+    private static ImageView collectionGraph = null;
+    private static HashMap<ImageView, Integer> graphs = new HashMap<>();
     private Account account = null;
 
-    private MainMenuScene() {}
+    private MainMenuScene() {
+    }
 
     public static MainMenuScene getInstance() {
         return instance;
@@ -35,9 +40,22 @@ public class MainMenuScene {
 
     void makeMenu(Account account) {
         this.account = account;
-        ImageView brand = GeneralGraphicMethods.addImage(root, "pics/login_pics/brand_duelyst@2x.png",
+        ImageView brand = addImage(root, "pics/login_pics/brand_duelyst@2x.png",
                 130, 130, 1000 / 4, 216 / 4);
         menuNodes.add(brand);
+        addGraphs();
+    }
+
+    private void addGraphs() {
+        playGraph = addImage(root, "pics/menu/1.png", 180, 240, 70, 70);
+        playGraph.setOpacity(0.5);
+        menuNodes.add(playGraph);
+        graphs.put(playGraph, 0);
+
+        collectionGraph = addImage(root, "pics/menu/1.png", 180, 310, 70, 70);
+        collectionGraph.setOpacity(0.5);
+        menuNodes.add(collectionGraph);
+        graphs.put(collectionGraph, 0);
         addLabelButtons();
     }
 
@@ -45,22 +63,68 @@ public class MainMenuScene {
         Label play = newLabelButton("PLAY", 250, 250);
         Label playShadow = addShadow(play);
         fadeAnimation(playShadow);
-        play.setOnMouseEntered(event -> setCursor(mainMenuScene, Cursor.LIGHTEN));
-        play.setOnMouseExited(event -> setCursor(mainMenuScene, Cursor.AUTO));
+        AnimationTimer playAnimation = graphAnimation(playGraph);
+        play.setOnMouseEntered(event -> {
+            setCursor(mainMenuScene, Cursor.LIGHTEN);
+            playAnimation.start();
+        });
+        play.setOnMouseExited(event -> {
+            setCursor(mainMenuScene, Cursor.AUTO);
+            playAnimation.stop();
+            playGraph.setOpacity(0.5);
+        });
         Label collection = newLabelButton("COLLECTION", 250, 320);
         Label collectionShadow = addShadow(collection);
+        AnimationTimer collectionAnimation = graphAnimation(collectionGraph);
         root.getChildren().remove(collectionShadow);
         collection.setOnMouseEntered(event -> {
             root.getChildren().add(collectionShadow);
             setCursor(mainMenuScene, Cursor.LIGHTEN);
+            collectionAnimation.start();
         });
         collectionShadow.setOnMouseExited(event -> {
             root.getChildren().remove(collectionShadow);
             setCursor(mainMenuScene, Cursor.AUTO);
+            collectionAnimation.stop();
+            collectionGraph.setOpacity(0.5);
         });
-//        collection.setOnMouseClicked(event -> CollectionScene.);
-
+        collectionShadow.setOnMouseClicked(event -> {
+            CollectionScene.showInCollection(account.getCollection());
+            setScene(StateType.COLLECTION);
+        });
     }
+
+    private AnimationTimer graphAnimation(ImageView firstGraph) {
+        return new AnimationTimer() {
+            private long lastTime = 0;
+            private long second = (long) Math.pow(10, 9);
+            private ImageView graph = firstGraph;
+
+            @Override
+            public void handle(long now) {
+                if (lastTime == 0) {
+                    lastTime = now;
+                }
+                if (now > lastTime + second / 6) {
+                    lastTime = now;
+                    root.getChildren().remove(graph);
+                    menuNodes.remove(graph);
+                    ImageView newGraph = addImage(root,
+                            "pics/menu/" + ((graphs.get(graph) + 1) % 4 + 1) + ".png",
+                            graph.getLayoutX(), graph.getLayoutY(), graph.getFitWidth(), graph.getFitHeight());
+                    menuNodes.add(newGraph);
+                    graphs.put(newGraph, (graphs.get(graph) + 1) % 4);
+                    graphs.remove(graph);
+                    if (graph.equals(playGraph))
+                        playGraph = newGraph;
+                    else
+                        collectionGraph = newGraph;
+                    graph = newGraph;
+                }
+            }
+        };
+    }
+
 
     private void fadeAnimation(Label playShadow) {
         AnimationTimer animationTimer = new AnimationTimer() {
