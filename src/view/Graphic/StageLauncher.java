@@ -17,13 +17,10 @@ import model.account.Account;
 import model.account.Collection;
 import model.account.Shop;
 import model.battle.Deck;
-import model.battle.Hand;
-import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import sun.net.TelnetInputStream;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -31,9 +28,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.Delayed;
 
-import static view.Graphic.GeneralGraphicMethods.*;
+import static view.Graphic.GeneralGraphicMethods.addImage;
+import static view.Graphic.GeneralGraphicMethods.addText;
 
 public class StageLauncher extends Application {
 
@@ -42,15 +39,15 @@ public class StageLauncher extends Application {
     private static double HEIGHT;
     private static double WIDTH;
 
-    public static double getWidth() {
+    static double getWidth() {
         return WIDTH;
     }
 
-    public static double getHeight() {
+    static double getHeight() {
         return HEIGHT;
     }
 
-    public static Stage getPrimaryStage() {
+    static Stage getPrimaryStage() {
         return primaryStage;
     }
 
@@ -62,7 +59,7 @@ public class StageLauncher extends Application {
         return scene;
     }
 
-    public static Scene getScene(StateType stateType) {
+    static Scene getScene(StateType stateType) {
         if (sceneHashMap.containsKey(stateType))
             return sceneHashMap.get(stateType);
         return null;
@@ -281,12 +278,12 @@ public class StageLauncher extends Application {
         SelectGameScene.selectGame();
         primaryStage.setScene(selectGameScene);
 */
-//        AccountScene.getInstance().makeBackground();
-//        primaryStage.setScene(accountScene);
+        AccountScene.getInstance().makeBackground();
+        primaryStage.setScene(accountScene);
 //*/
-        BattleScene battleScene1 = BattleScene.getSingleInstance();
-        battleScene1.setBattleScene(3); //from 1 to 12
-        primaryStage.setScene(battleScene);
+//        BattleScene battleScene1 = BattleScene.getSingleInstance();
+//        battleScene1.setBattleScene(3); //from 1 to 12
+//        primaryStage.setScene(battleScene);
 //*/
 /*/
         zahraTestDeck();

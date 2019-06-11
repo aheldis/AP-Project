@@ -13,10 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -26,13 +25,13 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import view.Graphic.DragAndDropClass;
 import view.enums.ErrorType;
 import view.enums.StateType;
-import view.Graphic.SpriteMaker;
-import view.Graphic.StageLauncher;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,7 +39,7 @@ import java.util.Random;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 
-public class CollectionScene {
+class CollectionScene {
     private static final Scene collectionScene = StageLauncher.getScene(StateType.COLLECTION);
     private static Group root = (Group) collectionScene.getRoot();
     private static int CARD_HEIGHT = 315;
@@ -154,7 +153,7 @@ public class CollectionScene {
         return group;
     }
 
-    public static void showEachHero(Card card, HBox hBox, int i, int j) {
+    private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
             ImageView imageView = addImage(hBox, card.getPathOfThePicture(),
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -237,7 +236,7 @@ public class CollectionScene {
 
     }
 
-    public static void showEachMinion(Card card, HBox hBox, int i, int j) {//todo add desc
+    private static void showEachMinion(Card card, HBox hBox, int i, int j) {//todo add desc
         try {
             ImageView imageView = addImage(hBox,
                     card.getPathOfThePicture(), 0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -258,7 +257,7 @@ public class CollectionScene {
 
     }
 
-    public static void showEachSpell(Card card, HBox hBox, int i, int j) {
+    private static void showEachSpell(Card card, HBox hBox, int i, int j) {
         try {
             ImageView imageView = addImage(hBox, card.getPathOfThePicture(), 0, 0, CARD_WIDTH, CARD_HEIGHT);
             imageView.fitWidthProperty();
@@ -280,7 +279,7 @@ public class CollectionScene {
         }
     }
 
-    public static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW, ArrayList<Card> cards, int spacing) {
+    private static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW, ArrayList<Card> cards, int spacing) {
             HBox hBox = new HBox();
             int startingBound = 2 * NUMBER_IN_EACH_ROW * pageNumber;
             int j = -1;
@@ -290,26 +289,15 @@ public class CollectionScene {
                 if (i % NUMBER_IN_EACH_ROW == 0) {
                     hBox = new HBox();
                     vBox.getChildren().addAll(hBox);
-                    cardsIcon.add(hBox);
-                    Text helper = new Text("hiii");
-                    helper.relocate(0, 0);
-                    helper.setFont(Font.font(5));
-                    helper.setFill(Color.TRANSPARENT);
-                    hBox.getChildren().add(helper);
-                    hBox.setSpacing(X_BORDER);
+                    helper(hBox);
                     cardsIcon.add(hBox);
                     j++;
                 }
-                if (cards.get(i) instanceof Hero)
-                    showEachHero(cards.get(i), hBox, i % 5, j);
-                if (cards.get(i) instanceof Minion)
-                    showEachMinion(cards.get(i), hBox, i % 5, j);
-                if (cards.get(i) instanceof Spell)
-                    showEachSpell(cards.get(i), hBox, i % 5, j);
+                whichClass(cards, hBox, j, i);
             }
         }
 
-    public static void searchBar(HBox hBox,VBox vBox,Collection collection){
+    private static void searchBar(HBox hBox, VBox vBox, Collection collection) {
         Group groupText = new Group();
         groupText.relocate(300, 20);
 
@@ -376,7 +364,8 @@ public class CollectionScene {
         });
     }
 
-    public static void showInCollection(ArrayList<Card> cards, Collection collection) {
+    static void showInCollection(Collection collection) {
+        ArrayList<Card> cards = collection.getAllCards();
         root.getChildren().clear();
 
         playMusic("resource/music/collection.m4a",true,collectionScene);
@@ -452,22 +441,11 @@ public class CollectionScene {
             if (i % 5 == 0) {
 
                 hBox = new HBox();
-                cardsIcon.add(hBox);
-                Text helper = new Text("hiii");
-                helper.relocate(0, 0);
-                helper.setFont(Font.font(5));
-                helper.setFill(Color.TRANSPARENT);
-                hBox.getChildren().add(helper);
-                hBox.setSpacing(X_BORDER);
+                helper(hBox);
                 vBox.getChildren().add(hBox);
                 j++;
             }
-            if (cards.get(i) instanceof Hero)
-                showEachHero(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Minion)
-                showEachMinion(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Spell)
-                showEachSpell(cards.get(i), hBox, i % 5, j);
+            whichClass(cards, hBox, j, i);
         }
 //        try {
 ////            StackPane group = new StackPane();
@@ -484,6 +462,25 @@ public class CollectionScene {
 //        } catch (Exception ignored) {
 //        }
 
+    }
+
+    private static void helper(HBox hBox) {
+        cardsIcon.add(hBox);
+        Text helper = new Text("hiii");
+        helper.relocate(0, 0);
+        helper.setFont(Font.font(5));
+        helper.setFill(Color.TRANSPARENT);
+        hBox.getChildren().add(helper);
+        hBox.setSpacing(X_BORDER);
+    }
+
+    private static void whichClass(ArrayList<Card> cards, HBox hBox, int j, int i) {
+        if (cards.get(i) instanceof Hero)
+            showEachHero(cards.get(i), hBox, i % 5, j);
+        if (cards.get(i) instanceof Minion)
+            showEachMinion(cards.get(i), hBox, i % 5, j);
+        if (cards.get(i) instanceof Spell)
+            showEachSpell(cards.get(i), hBox, i % 5, j);
     }
 
     /**
@@ -504,7 +501,7 @@ public class CollectionScene {
             deck.setFitWidth(20);
             root.getChildren().add(deck);
             deletable.add(deck);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return deck;
@@ -667,7 +664,7 @@ public class CollectionScene {
 
     }
 
-    public static void showDeck(ArrayList<Deck> decks, Collection collection) {
+    static void showDeck(ArrayList<Deck> decks, Collection collection) {
         //collectionScene.setRoot(root);
         root.getChildren().clear();
 
