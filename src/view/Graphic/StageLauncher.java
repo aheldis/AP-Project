@@ -197,7 +197,7 @@ public class StageLauncher extends Application {
                 0, 0, 170, 170);
         addImage(nextCardGroup, "pics/battle/inner_glow.png",
                 0, 0, 170, 170);
-        addImage(nextCardGroup,"pics/battle/outer_ring.png",
+        addImage(nextCardGroup, "pics/battle/outer_ring.png",
                 0, 0, 170, 170);
 
 
@@ -210,14 +210,15 @@ public class StageLauncher extends Application {
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
             addImage(handCardGroup, "pics/icon_mana@2x.png", 60, 107, 30, 30);
             AnimationTimer animationTimer = new AnimationTimer() {
-                private long lastUpdate = 0 ;
+                private long lastUpdate = 0;
+
                 @Override
                 public void handle(long now) {
 
                     for (int i = 0; i < 20; i++) {
                         if (now - lastUpdate >= 120_000_000) {
                             backgroudCircle.getTransforms().add(new Rotate(30, 70, 70));
-                            lastUpdate = now ;
+                            lastUpdate = now;
                         }
                     }
 
@@ -238,6 +239,25 @@ public class StageLauncher extends Application {
         help.setFont(Font.font("Andele Mono", FontWeight.BOLD, 25));
 
 
+    }
+
+    public static void graveYardTest(){
+        ArrayList<Card> cards = new ArrayList<>();
+
+        minionMaker(cards, "pics/gifMinion/giv.gif");
+        minionMaker(cards, "pics/gifMinion/giv.gif");
+
+        Spell spell = new Spell();
+        spell.setPathOfThePicture("pics/minion_background.png");
+        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setCountOfAnimation(16);
+        spell.setName("Fireball");
+        spell.setFrameSize(48);
+        spell.setMp(10);
+        spell.setHp(10);
+        for(int i=0;i<13;i++)
+        cards.add(spell);
+        GraveYard.makeYard(cards );
     }
 
     @Override
@@ -269,6 +289,7 @@ public class StageLauncher extends Application {
         Scene selectGameScene = makeScene(StateType.SELECT_GAME, Cursor.GREEN);
         Scene battleScene = makeScene(StateType.BATTLE, Cursor.RED);
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
+        Scene graveyardScene = makeScene(StateType.GRAVE_YARD,Cursor.RED);
 
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
         //todo add animation to  spell and minions
@@ -277,17 +298,23 @@ public class StageLauncher extends Application {
         zahraTestDeck();
         getPrimaryStage().setScene(collectionScene);
 //*/
+
+//*/
+//        SelectGameScene.selectGame();
+//        primaryStage.setScene(selectGameScene);
 /*/
-        SelectGameScene.selectGame();
-        primaryStage.setScene(selectGameScene);
-*/
+        BattleScene battleScene1 = BattleScene.getSingleInstance();
+        battleScene1.setBattleScene(7); //from 1 to 12
+        primaryStage.setScene(battleScene);
+ */
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
-//*/
-        BattleScene battleScene1 = BattleScene.getSingleInstance();
-        battleScene1.setBattleScene(3); //from 1 to 12
-        primaryStage.setScene(battleScene);
-//*/
+
+
+       graveYardTest();
+        primaryStage.setScene(graveyardScene);
+
+
 /*/
         zahraTestDeck();
         primaryStage.setScene(collectionScene);
