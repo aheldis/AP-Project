@@ -125,7 +125,7 @@ public class MenuController  {
                             FileWriter fileWriter = new FileWriter(file);
                             fileWriter.write(gson.toJson(account));
                             fileWriter.close();
-                        } catch (Exception e) {
+                        } catch (Exception ignored) {
 
                         }
                         break;

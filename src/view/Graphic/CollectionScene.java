@@ -3,21 +3,17 @@ package view.Graphic;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -27,24 +23,23 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import view.Graphic.DragAndDropClass;
 import view.enums.ErrorType;
 import view.enums.StateType;
-import view.Graphic.SpriteMaker;
-import view.Graphic.StageLauncher;
 
-import java.io.*;
-import java.security.Policy;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.Objects;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
 
-public class CollectionScene {
+class CollectionScene {
     private static final Scene collectionScene = StageLauncher.getScene(StateType.COLLECTION);
-    private static Group root = (Group) collectionScene.getRoot();
+    private static Group root = (Group) Objects.requireNonNull(collectionScene).getRoot();
     private static int CARD_HEIGHT = 315;
     private static int CARD_WIDTH = 220;
     private static int X_BORDER = 45;
@@ -140,7 +135,7 @@ public class CollectionScene {
             }
             try {
                 imageView.setOnMouseEntered(event -> {
-                    ImageView descView = addImage(group, "pics/desc.png", 10,
+                    ImageView descView = addImage(group, "pics/other/desc.png", 10,
                             303 - 50, 200, 100);
 
                     Text desc = addText(group, ((Card) card).getDescription(),
@@ -157,7 +152,7 @@ public class CollectionScene {
         return group;
     }
 
-    public static void showEachHero(Card card, HBox hBox, int i, int j) {
+    private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
             ImageView imageView = addImage(hBox, card.getPathOfThePicture(),
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -169,15 +164,15 @@ public class CollectionScene {
             imageView.setOnMouseEntered(event -> {
 
                 try {
-                    ImageView descView = addImage(root, "pics/desc.png",
+                    ImageView descView = addImage(root, "pics/other/desc.png",
                             i * (X_BORDER + CARD_WIDTH) + 70,
                             j * (Y_BORDER + CARD_HEIGHT) + 390 - 55, 200, 100);
                     cardsIcon.add(descView);
-                    ImageView apView = addImage(root, "pics/ap_show.png",
+                    ImageView apView = addImage(root, "pics/other/ap_show.png",
                             i * (X_BORDER + CARD_WIDTH) - 5,
                             j * (Y_BORDER + CARD_HEIGHT) + 390 - 55, 100, 100);
                     cardsIcon.add(apView);
-                    ImageView hpView = addImage(root, "pics/hp_show.png",
+                    ImageView hpView = addImage(root, "pics/other/hp_show.png",
                             (i + 1) * (X_BORDER + CARD_WIDTH) - 55,
                             j * (Y_BORDER + CARD_HEIGHT) + 390 - 55, 110, 100);
                     cardsIcon.add(hpView);
@@ -206,7 +201,7 @@ public class CollectionScene {
     }
 
     private static void showMana(Group root, int x, int y, int mana) {
-        cardsIcon.add(addImage(root, "pics/icon_mana@2x.png", x, y, 50, 50));
+        cardsIcon.add(addImage(root, "pics/other/icon_mana@2x.png", x, y, 50, 50));
         cardsIcon.add(addText(root, mana + "", x + 16, y + 20,
                 Color.rgb(22, 22, 225, 0.5), 20));
     }
@@ -223,7 +218,7 @@ public class CollectionScene {
         try {
             imageView.setOnMouseEntered(event -> {
 
-                ImageView descView = addImage(root, "pics/desc.png", i * (X_BORDER + CARD_WIDTH) + 70,
+                ImageView descView = addImage(root, "pics/other/desc.png", i * (X_BORDER + CARD_WIDTH) + 70,
                         j * (Y_BORDER + CARD_HEIGHT) + 400 - 65, 200, 100);
                 cardsIcon.add(descView);
                 Text desc = addText(root, card.getDescription(),
@@ -240,7 +235,7 @@ public class CollectionScene {
 
     }
 
-    public static void showEachMinion(Card card, HBox hBox, int i, int j) {//todo add desc
+    private static void showEachMinion(Card card, HBox hBox, int i, int j) {//todo add desc
         try {
             ImageView imageView = addImage(hBox,
                     card.getPathOfThePicture(), 0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -261,7 +256,7 @@ public class CollectionScene {
 
     }
 
-    public static void showEachSpell(Card card, HBox hBox, int i, int j) {
+    private static void showEachSpell(Card card, HBox hBox, int i, int j) {
         try {
             ImageView imageView = addImage(hBox, card.getPathOfThePicture(), 0, 0, CARD_WIDTH, CARD_HEIGHT);
             imageView.fitWidthProperty();
@@ -283,7 +278,7 @@ public class CollectionScene {
         }
     }
 
-    public static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW, ArrayList<Card> cards, int spacing) {
+    private static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW, ArrayList<Card> cards, int spacing) {
         HBox hBox = new HBox();
         int startingBound = 2 * NUMBER_IN_EACH_ROW * pageNumber;
         int j = -1;
@@ -312,7 +307,7 @@ public class CollectionScene {
         }
     }
 
-    public static void searchBar(HBox hBox, VBox vBox, Collection collection) {
+    private static void searchBar(HBox hBox, VBox vBox, Collection collection) {
         Group groupText = new Group();
         groupText.relocate(300, 20);
 
@@ -349,7 +344,7 @@ public class CollectionScene {
                 Group group = new Group();
                 group.relocate(440, 150);
 
-                ImageView background = setBackground(root, "pics/collectionBackground.jpg",
+                ImageView background = setBackground(root, "pics/other/collectionBackground.jpg",
                         true, 20, 20);
                 root.getChildren().addAll(group);
 
@@ -361,31 +356,23 @@ public class CollectionScene {
                 vBox1.relocate(30, 30);
                 vBox1.setSpacing(5);
                 group.getChildren().addAll(vBox1);
-                for (int i = 0; i < ids.size(); i++) {
-                    addText(vBox1, ids.get(i), 0,
-                            0, Color.rgb(225, 225, 225), 20);
+                for (String id : ids)
+                    addText(vBox1, id, 0, 0, Color.rgb(225, 225, 225), 20);
 
-                }
-
-                close.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        root.getChildren().removeAll(background, group);
-                    }
-                });
+                close.setOnMouseClicked(event1 -> root.getChildren().removeAll(background, group));
             } else {
                 ErrorType.HAVE_NOT_CARD_IN_COLLECTION.printMessage();
             }
         });
     }
 
-    public static void showInCollection( Collection collection) {
+    static void showInCollection(Collection collection) {
+        ArrayList<Card> cards = collection.getAllCards();
         root.getChildren().clear();
 
-        ArrayList<Card> cards = collection.getAllCards();
         playMusic("resource/music/collection.m4a", true, collectionScene);
 
-        setBackground(root, "pics/collectionBackground.jpg", true, 20, 20);
+        setBackground(root, "pics/other/collectionBackground.jpg", true, 20, 20);
 
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
@@ -407,46 +394,30 @@ public class CollectionScene {
 
         searchBar(hBox, vBox, collection);
 
-        ImageView backCircle = addImage(root, "pics/circle.png", 100, 750, 70, 70);
-        ImageView back = addImage(root, "pics/back.png", 115, 765, 40, 40);
+        ImageView backCircle = addImage(root, "pics/other/circle.png", 100, 750, 70, 70);
+        ImageView back = addImage(root, "pics/other/back.png", 115, 765, 40, 40);
 
-        ImageView nextCircle = addImage(root, "pics/circle.png", 1200, 750, 70, 70);
-        ImageView next = addImage(root, "pics/next.png", 1215, 765, 40, 40);
-        ImageView deckSceneButton = addImage(root, "pics/desc.png", 600, 770, 100, 50);
+        ImageView nextCircle = addImage(root, "pics/other/circle.png", 1200, 750, 70, 70);
+        ImageView next = addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
+        ImageView deckSceneButton = addImage(root, "pics/other/desc.png", 600, 770, 100, 50);
         Text deckScene = addText(root, "Decks", 618, 785, Color.rgb(225, 225, 225, 0.8), 20);
-        deckScene.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        showDeck(collection.getDecks(), collection);
-                    }
-                });
-            }
-        });
+        deckScene.setOnMouseClicked(event -> Platform.runLater(() -> showDeck(collection.getDecks(), collection)));
 
-        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                pageNumberCards--;
-                if (pageNumberCards < 0)
-                    pageNumberCards = 0;
-                vBox.getChildren().removeAll(cardsIcon);
-                root.getChildren().removeAll(cardsIcon);
-                cardsIcon.clear();
-                hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
-            }
+        back.setOnMouseClicked(event -> {
+            pageNumberCards--;
+            if (pageNumberCards < 0)
+                pageNumberCards = 0;
+            vBox.getChildren().removeAll(cardsIcon);
+            root.getChildren().removeAll(cardsIcon);
+            cardsIcon.clear();
+            hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
         });
-        next.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                pageNumberCards++;
-                vBox.getChildren().removeAll(cardsIcon);
-                root.getChildren().removeAll(cardsIcon);
-                cardsIcon.clear();
-                hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
-            }
+        next.setOnMouseClicked(event -> {
+            pageNumberCards++;
+            vBox.getChildren().removeAll(cardsIcon);
+            root.getChildren().removeAll(cardsIcon);
+            cardsIcon.clear();
+            hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
         });
 
         int j = -1;
@@ -586,29 +557,23 @@ public class CollectionScene {
 
                 ImageView close = addImage(root,
                         "pics/collection/button_close@2x.png", 1100, 50, 50, 50);
-                ImageView backCircle = addImage(root, "pics/circle.png", 400, 730, 70, 70);
-                ImageView back = addImage(root, "pics/back.png", 415, 750 - 5, 40, 40);
+                ImageView backCircle = addImage(root, "pics/other/circle.png", 400, 730, 70, 70);
+                ImageView back = addImage(root, "pics/other/back.png", 415, 750 - 5, 40, 40);
 
-                ImageView nextCircle = addImage(root, "pics/circle.png", 1000, 730, 70, 70);
-                ImageView next = addImage(root, "pics/next.png", 1015, 750 - 5, 40, 40);
+                ImageView nextCircle = addImage(root, "pics/other/circle.png", 1000, 730, 70, 70);
+                ImageView next = addImage(root, "pics/other/next.png", 1015, 750 - 5, 40, 40);
 
-                back.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        pageNumber--;
-                        if (pageNumber < 0)
-                            pageNumber = 0;
-                        root.getChildren().removeAll(vBoxes);
-                        vBoxes.addAll(dragAndDropCard(collection, pageNumber, vBox, deck));
-                    }
+                back.setOnMouseClicked(event1 -> {
+                    pageNumber--;
+                    if (pageNumber < 0)
+                        pageNumber = 0;
+                    root.getChildren().removeAll(vBoxes);
+                    vBoxes.addAll(dragAndDropCard(collection, pageNumber, vBox, deck));
                 });
-                next.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        pageNumber++;
-                        root.getChildren().removeAll(vBoxes);
-                        vBoxes.addAll(dragAndDropCard(collection, pageNumber, vBox, deck));
-                    }
+                next.setOnMouseClicked(event12 -> {
+                    pageNumber++;
+                    root.getChildren().removeAll(vBoxes);
+                    vBoxes.addAll(dragAndDropCard(collection, pageNumber, vBox, deck));
                 });
 
 
@@ -658,7 +623,7 @@ public class CollectionScene {
 
     }
 
-    public static Group makeDeckCard(Deck deck, int i, VBox vBox, Collection collection) {
+    private static Group makeDeckCard(Deck deck, int i, VBox vBox, Collection collection) {
         Group group = new Group();
         group.relocate(650, 130);
 
@@ -841,7 +806,7 @@ public class CollectionScene {
         return group;
     }
 
-    public static void showDeck(ArrayList<Deck> decks, Collection collection) {
+    static void showDeck(ArrayList<Deck> decks, Collection collection) {
         root.getChildren().clear();
         setBackground(root, "pics/collection/background@2x.jpg", true, 20, 20);
         try {
@@ -849,6 +814,7 @@ public class CollectionScene {
             sideVBox.relocate(0, 0);
             sideVBox.setSpacing(5);
             root.getChildren().addAll(sideVBox);
+            assert collectionScene != null;
             sideVBox.setPrefSize(200, collectionScene.getHeight());
             sideVBox.setBackground(new Background(new BackgroundFill(
                     Color.rgb(10, 10, 10, 0.5),

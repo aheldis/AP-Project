@@ -64,7 +64,7 @@ public class MakeAndShowClass {
                 double ratioY = GeneralGraphicMethods.getRatioY();
                 double sbasRatioX = GeneralGraphicMethods.getSabasXRatio();
                 double sbasRatioY = GeneralGraphicMethods.getSabasYRatio();
-                javafx.scene.image.Image image = new Image(new FileInputStream("pics/error_box.png"));
+                javafx.scene.image.Image image = new Image(new FileInputStream("pics/other/error_box.png"));
                 ImageView imageView = new ImageView(image);
                 imageView.setFitWidth(350 / sbasRatioX * ratioX);
                 imageView.setFitHeight(200 / sbasRatioY * ratioY);

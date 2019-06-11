@@ -12,7 +12,7 @@ public class Target {
     private LandOfGame land;
     private ArrayList<Square> targets = new ArrayList<>();
     private String counterAttackType = "-"; //ranged hybrid melee
-    private String cardType = "-"; //minion hero spell  -> force ro ezafe kardam baraye hero ya minion
+    private String cardType = "-"; //minion hero Spell  -> force ro ezafe kardam baraye hero ya minion
     //    private String number; // 0 <=
     private boolean one = false;
     private boolean row = false;

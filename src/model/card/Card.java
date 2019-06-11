@@ -53,6 +53,11 @@ public abstract class Card {
     private long millis;
     private int heightOfPicture;
 
+    {
+        pathOfAnimation = "pics/Minion/" + getName() + ".gif";
+        pathOfThePicture = "pics/Minion/" + getName() + ".png";
+    }
+
     public void setHeightOfPicture(int heightOfPicture) {
         this.heightOfPicture = heightOfPicture;
     }

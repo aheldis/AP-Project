@@ -46,7 +46,7 @@ public class Collection  implements Cloneable{
         cards.add(deck.getHero());
         for(int i=0;i<cards.size();i++){
             if(passCardByCardId(cards.get(i).getCardId().getCardIdAsString())==null){
-                return false;//does not have spell or minion
+                return false;//does not have Spell or minion
             }
         }
         //if does not have item
