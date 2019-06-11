@@ -89,7 +89,7 @@ public class StageLauncher extends Application {
             primaryStage.show();
         }
     */
-    public static void zahraTestDeck() {
+    private static void zahraTestDeck() {
 
         Spell spell = new Spell();
         spell.setPathOfThePicture("pics/minion_background.png");
@@ -117,13 +117,17 @@ public class StageLauncher extends Application {
             decks.add(deck);
         }
 
-        Collection collection = new Collection(new Account("zahra", "123"));
+        Account account =  new Account("zahra", "123");
+        Collection collection = new Collection(account);
         for (int i = 0; i < 15; i++) {
             collection.addToCards(spell);
         }
-//        collection.setDecks(decks);
+        collection.setDecks(decks);
+        account.setCollection(collection);
 
-        CollectionScene.showDeck(decks, collection);
+
+        SelectGameScene.selectGame(account);
+        //CollectionScene.showDeck(decks, collection);
     }
 
     public static void zahraTestCard() {
@@ -157,7 +161,7 @@ public class StageLauncher extends Application {
             collection.addToCards(hero);
         }
 
-        CollectionScene.showInCollection(cards, collection);
+        CollectionScene.showInCollection( collection);
 
     }
     public static void zahraTestShop() {
@@ -183,7 +187,7 @@ public class StageLauncher extends Application {
         ShopScene.makeShopScene(account);
     }
 
-    public static void testzahraFooter(Group root) {
+    static void testzahraFooter(Group root) {
         Group circlesGroup = new Group();
         root.getChildren().addAll(circlesGroup);
 
@@ -251,12 +255,8 @@ public class StageLauncher extends Application {
     public void start(Stage primaryStage) {
 
 
+
         StageLauncher.primaryStage = primaryStage;
-        //Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        //primaryStage.setX(primaryScreenBounds.getMinX());
-        //primaryStage.setY(primaryScreenBounds.getMinY());
-        //WIDTH = primaryScreenBounds.getWidth() + 50;
-        //HEIGHT = primaryScreenBounds.getHeight() + 50;
         WIDTH = 1380;
         HEIGHT = 850;
         primaryStage.setWidth(WIDTH);
@@ -281,14 +281,14 @@ public class StageLauncher extends Application {
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
         //todo add animation to  spell and minions
 
-//*/
+/*/
         zahraTestDeck();
         getPrimaryStage().setScene(collectionScene);
 //*/
 
 //*/
-//        SelectGameScene.selectGame();
-//        primaryStage.setScene(selectGameScene);
+
+        primaryStage.setScene(selectGameScene);
 /*/
         BattleScene battleScene1 = BattleScene.getSingleInstance();
         battleScene1.setBattleScene(7); //from 1 to 12
@@ -316,7 +316,7 @@ public class StageLauncher extends Application {
 //        collectionScene.setFill(Color.BLACK);
 //        testzahraFooter((Group)collectionScene.getRoot());
 //        primaryStage.setScene(collectionScene);
-
+zahraTestDeck();
         primaryStage.show();
     }
 
