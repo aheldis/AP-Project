@@ -550,24 +550,24 @@ public class CollectionScene {
                     "pics/collection/deck_ribbons/ribbon-" + a + ".png", 0, 0,
                     324, 150);
 
-            final ImageView addCardToDeck = makeIConBarForDeck(
-                    "pics/collection/add-blue.png", 40, 10);
+            ImageView addCardToDeck = addImage(root,
+                    "pics/collection/add-blue.png", 40, 10,20,20);
 
-            final ImageView delete_deck = makeIConBarForDeck(
-                    "pics/collection/close-deck.png", 70, 10);
 
-            final ImageView checkMainDeck;
+            ImageView delete_deck =addImage(root,
+                    "pics/collection/close-deck.png", 70, 10,20,20);
+
+            ImageView checkMainDeck;
             if (deck.getName().equals(collection.getAccount().getMainDeck().getName())) {
-                checkMainDeck = makeIConBarForDeck(
-                        "pics/collection/checkmark-green.png", 10, 10);
+                checkMainDeck = addImage(root,
+                        "pics/collection/checkmark-green.png", 10, 10,20,20);
             } else {
-                checkMainDeck = makeIConBarForDeck(
-                        "pics/collection/checkmark-blue.png", 10, 10);
+                checkMainDeck = addImage(root,
+                        "pics/collection/checkmark-blue.png", 10, 10,20,20);
             }
 
 
             addCardToDeck.setOnMouseEntered(event15 -> {
-
                 System.out.println("hi");
                 Rectangle rectangle = new Rectangle(350, 50, 800, 750);
                 rectangle.setFill(Color.rgb(0, 0, 0, 0.7));
@@ -619,6 +619,7 @@ public class CollectionScene {
             });
 
             checkMainDeck.setOnMouseClicked(event13 -> {
+                System.out.println("why");
                 if (collection.validateDeck(deck.getName())) {
                     collection.selectADeckAsMainDeck(deck.getName());
                     root.getChildren().remove(checkMainDeck);
@@ -804,16 +805,16 @@ public class CollectionScene {
         group.relocate(650, 130);
         root.getChildren().addAll(group);
         groupOfDeck.add(group);
-        ImageView back = addImage(root, "pics/collection/last.png",
-                580, 400, 40, 40);
         addImage(root, "pics/collection/last.png",
                 580+5, 400+2, 35, 35);
+        ImageView back = addImage(root, "pics/collection/last.png",
+                580, 400, 40, 40);
         addImage(group, "pics/collection/shadow.png",
                 0, 0, 300, 400);
-        ImageView next = addImage(root, "pics/collection/next.png",
-                1000, 400, 40, 40);
         addImage(root, "pics/collection/next.png",
                 1000, 400+3, 35, 35);
+        ImageView next = addImage(root, "pics/collection/next.png",
+                1000, 400, 40, 40);
 
         if(decks.size()!=0) {
             root.getChildren().removeAll(groupOfDeck);

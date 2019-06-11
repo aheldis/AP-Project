@@ -121,7 +121,7 @@ public class StageLauncher extends Application {
         for (int i = 0; i < 15; i++) {
             collection.addToCards(spell);
         }
-        collection.setDecks(decks);
+//        collection.setDecks(decks);
 
         CollectionScene.showDeck(decks, collection);
     }
