@@ -23,7 +23,6 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import sun.net.TelnetInputStream;
 import view.enums.Cursor;
 import view.enums.StateType;
 
