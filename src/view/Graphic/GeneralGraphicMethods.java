@@ -18,6 +18,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import view.enums.Cursor;
 import view.Graphic.StageLauncher;
@@ -167,6 +168,24 @@ public class GeneralGraphicMethods {
 
     static double changeYWithZahrasRatio(double y) {
         return y / zahrasYRatio * getRatioY();
+    }
+
+    public static void makeCircleRotation(ImageView imageView,int centerX,int centerY){
+        AnimationTimer animationTimer = new AnimationTimer() {
+            private long lastUpdate = 0;
+            @Override
+            public void handle(long now) {
+
+                for (int i = 0; i < 20; i++) {
+                    if (now - lastUpdate >= 120_000_000) {
+                        imageView.getTransforms().add(new Rotate(30, centerX,centerY));
+                        lastUpdate = now;
+                    }
+                }
+
+            }
+        };
+        animationTimer.start();
     }
 
     public static void log(Group root, String helps,Scene backScene,int height){

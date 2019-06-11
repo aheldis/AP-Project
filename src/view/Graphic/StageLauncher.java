@@ -17,10 +17,13 @@ import model.account.Account;
 import model.account.Collection;
 import model.account.Shop;
 import model.battle.Deck;
+import model.battle.Hand;
+import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
+import sun.net.TelnetInputStream;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -28,9 +31,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Delayed;
 
-import static view.Graphic.GeneralGraphicMethods.addImage;
-import static view.Graphic.GeneralGraphicMethods.addText;
+import static view.Graphic.GeneralGraphicMethods.*;
 
 public class StageLauncher extends Application {
 
@@ -39,15 +42,15 @@ public class StageLauncher extends Application {
     private static double HEIGHT;
     private static double WIDTH;
 
-    static double getWidth() {
+    public static double getWidth() {
         return WIDTH;
     }
 
-    static double getHeight() {
+    public static double getHeight() {
         return HEIGHT;
     }
 
-    static Stage getPrimaryStage() {
+    public static Stage getPrimaryStage() {
         return primaryStage;
     }
 
@@ -59,7 +62,7 @@ public class StageLauncher extends Application {
         return scene;
     }
 
-    static Scene getScene(StateType stateType) {
+    public static Scene getScene(StateType stateType) {
         if (sceneHashMap.containsKey(stateType))
             return sceneHashMap.get(stateType);
         return null;
@@ -118,7 +121,7 @@ public class StageLauncher extends Application {
         for (int i = 0; i < 15; i++) {
             collection.addToCards(spell);
         }
-        collection.setDecks(decks);
+//        collection.setDecks(decks);
 
         CollectionScene.showDeck(decks, collection);
     }
@@ -157,7 +160,6 @@ public class StageLauncher extends Application {
         CollectionScene.showInCollection(cards, collection);
 
     }
-
     public static void zahraTestShop() {
         Account account = new Account("zahra", "123");
         Spell spell = new Spell();
@@ -194,7 +196,7 @@ public class StageLauncher extends Application {
                 0, 0, 170, 170);
         addImage(nextCardGroup, "pics/battle/inner_glow.png",
                 0, 0, 170, 170);
-        addImage(nextCardGroup,"pics/battle/outer_ring.png",
+        addImage(nextCardGroup, "pics/battle/outer_ring.png",
                 0, 0, 170, 170);
 
 
@@ -206,27 +208,13 @@ public class StageLauncher extends Application {
             ImageView backgroudCircle = addImage(handCardGroup,
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
             addImage(handCardGroup, "pics/icon_mana@2x.png", 60, 107, 30, 30);
-            AnimationTimer animationTimer = new AnimationTimer() {
-                private long lastUpdate = 0 ;
-                @Override
-                public void handle(long now) {
-
-                    for (int i = 0; i < 20; i++) {
-                        if (now - lastUpdate >= 120_000_000) {
-                            backgroudCircle.getTransforms().add(new Rotate(30, 70, 70));
-                            lastUpdate = now ;
-                        }
-                    }
-
-                }
-            };
-            animationTimer.start();
+            makeCircleRotation(backgroudCircle,70,70);
         }
 
         addImage(circlesGroup, "pics/battle/end_turn_yellow.png", 1000, 10, 200, 100);
         addImage(circlesGroup, "pics/battle/graveYard.png", 1000 - 80, 95, 150, 70);
         addImage(circlesGroup, "pics/battle/help.png", 1000 + 90, 95, 150, 70);
-        Text text = addText(circlesGroup, "End Turn", 1030, 53, Color.rgb(225, 225, 225, 0.7), 30);
+        Text text = addText(circlesGroup, "End Turn", 1040, 53, Color.rgb(225, 225, 225, 0.7), 30);
         text.setFont(Font.font("Andele Mono", FontWeight.BOLD, 25));
         Text graveYard = addText(circlesGroup, "Graveyard", 1000 - 60, 122,
                 Color.rgb(225, 225, 225, 0.7), 30);
@@ -235,6 +223,28 @@ public class StageLauncher extends Application {
         help.setFont(Font.font("Andele Mono", FontWeight.BOLD, 25));
 
 
+        text.setStroke(Color.rgb(251,225,60,0.5));
+        graveYard.setStroke(Color.rgb(0,225,225,0.5));
+        help.setStroke(Color.rgb(0,225,225,0.5));
+    }
+
+    public static void graveYardTest(){
+        ArrayList<Card> cards = new ArrayList<>();
+
+        minionMaker(cards, "pics/gifMinion/giv.gif");
+        minionMaker(cards, "pics/gifMinion/giv.gif");
+
+        Spell spell = new Spell();
+        spell.setPathOfThePicture("pics/minion_background.png");
+        spell.setPathOfAnimation("pics/spell/fireBall.png");
+        spell.setCountOfAnimation(16);
+        spell.setName("Fireball");
+        spell.setFrameSize(48);
+        spell.setMp(10);
+        spell.setHp(10);
+        for(int i=0;i<13;i++)
+        cards.add(spell);
+        GraveYard.makeYard(cards );
     }
 
     @Override
@@ -266,28 +276,35 @@ public class StageLauncher extends Application {
         Scene selectGameScene = makeScene(StateType.SELECT_GAME, Cursor.GREEN);
         Scene battleScene = makeScene(StateType.BATTLE, Cursor.RED);
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
+        Scene graveyardScene = makeScene(StateType.GRAVE_YARD,Cursor.RED);
 
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
         //todo add animation to  spell and minions
 
-/*/
+//*/
         zahraTestDeck();
         getPrimaryStage().setScene(collectionScene);
 //*/
-/*/
-        SelectGameScene.selectGame();
-        primaryStage.setScene(selectGameScene);
-*/
-        AccountScene.getInstance().makeBackground();
-        primaryStage.setScene(accountScene);
+
 //*/
-//        BattleScene battleScene1 = BattleScene.getSingleInstance();
-//        battleScene1.setBattleScene(3); //from 1 to 12
-//        primaryStage.setScene(battleScene);
-//*/
+//        SelectGameScene.selectGame();
+//        primaryStage.setScene(selectGameScene);
 /*/
-        zahraTestDeck();
-        primaryStage.setScene(collectionScene);
+        BattleScene battleScene1 = BattleScene.getSingleInstance();
+        battleScene1.setBattleScene(7); //from 1 to 12
+        primaryStage.setScene(battleScene);
+/*/
+//        AccountScene.getInstance().makeBackground();
+//        primaryStage.setScene(accountScene);
+
+
+//       graveYardTest();
+//        primaryStage.setScene(graveyardScene);
+
+
+/*/
+//        zahraTestDeck();
+//        primaryStage.setScene(collectionScene);
 //*/
 
 
