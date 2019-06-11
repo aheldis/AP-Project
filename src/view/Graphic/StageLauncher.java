@@ -160,7 +160,6 @@ public class StageLauncher extends Application {
         CollectionScene.showInCollection(cards, collection);
 
     }
-
     public static void zahraTestShop() {
         Account account = new Account("zahra", "123");
         Spell spell = new Spell();
@@ -209,28 +208,13 @@ public class StageLauncher extends Application {
             ImageView backgroudCircle = addImage(handCardGroup,
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
             addImage(handCardGroup, "pics/icon_mana@2x.png", 60, 107, 30, 30);
-            AnimationTimer animationTimer = new AnimationTimer() {
-                private long lastUpdate = 0;
-
-                @Override
-                public void handle(long now) {
-
-                    for (int i = 0; i < 20; i++) {
-                        if (now - lastUpdate >= 120_000_000) {
-                            backgroudCircle.getTransforms().add(new Rotate(30, 70, 70));
-                            lastUpdate = now;
-                        }
-                    }
-
-                }
-            };
-            animationTimer.start();
+            makeCircleRotation(backgroudCircle,70,70);
         }
 
         addImage(circlesGroup, "pics/battle/end_turn_yellow.png", 1000, 10, 200, 100);
         addImage(circlesGroup, "pics/battle/graveYard.png", 1000 - 80, 95, 150, 70);
         addImage(circlesGroup, "pics/battle/help.png", 1000 + 90, 95, 150, 70);
-        Text text = addText(circlesGroup, "End Turn", 1030, 53, Color.rgb(225, 225, 225, 0.7), 30);
+        Text text = addText(circlesGroup, "End Turn", 1040, 53, Color.rgb(225, 225, 225, 0.7), 30);
         text.setFont(Font.font("Andele Mono", FontWeight.BOLD, 25));
         Text graveYard = addText(circlesGroup, "Graveyard", 1000 - 60, 122,
                 Color.rgb(225, 225, 225, 0.7), 30);
@@ -239,6 +223,9 @@ public class StageLauncher extends Application {
         help.setFont(Font.font("Andele Mono", FontWeight.BOLD, 25));
 
 
+        text.setStroke(Color.rgb(251,225,60,0.5));
+        graveYard.setStroke(Color.rgb(0,225,225,0.5));
+        help.setStroke(Color.rgb(0,225,225,0.5));
     }
 
     public static void graveYardTest(){
@@ -302,22 +289,22 @@ public class StageLauncher extends Application {
 //*/
 //        SelectGameScene.selectGame();
 //        primaryStage.setScene(selectGameScene);
-/*/
+//*/
         BattleScene battleScene1 = BattleScene.getSingleInstance();
         battleScene1.setBattleScene(7); //from 1 to 12
         primaryStage.setScene(battleScene);
- */
+/*/
 //        AccountScene.getInstance().makeBackground();
 //        primaryStage.setScene(accountScene);
 
 
-       graveYardTest();
-        primaryStage.setScene(graveyardScene);
+//       graveYardTest();
+//        primaryStage.setScene(graveyardScene);
 
 
 /*/
-        zahraTestDeck();
-        primaryStage.setScene(collectionScene);
+//        zahraTestDeck();
+//        primaryStage.setScene(collectionScene);
 //*/
 
 

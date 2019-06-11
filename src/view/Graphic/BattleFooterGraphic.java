@@ -49,21 +49,7 @@ public class BattleFooterGraphic {
             ImageView backgroudCircle = addImage(handCardGroup,
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
             addImage(handCardGroup, "pics/icon_mana@2x.png", 60, 107, 30, 30);
-            AnimationTimer animationTimer = new AnimationTimer() {
-                private long lastUpdate = 0 ;
-                @Override
-                public void handle(long now) {
-
-                    for (int i = 0; i < 20; i++) {
-                        if (now - lastUpdate >= 120_000_000) {
-                            backgroudCircle.getTransforms().add(new Rotate(30, 70, 70));
-                            lastUpdate = now ;
-                        }
-                    }
-
-                }
-            };
-            animationTimer.start();
+            makeCircleRotation(backgroudCircle,70,70);
         }
 
     }
@@ -72,13 +58,22 @@ public class BattleFooterGraphic {
         addImage(group,"pics/battle/end_turn_yellow.png",1000,10,200,100);
         addImage(group,"pics/battle/graveYard.png",1000-80,95,150,70);
         addImage(group,"pics/battle/help.png",1000+90,95,150,70);
-        Text text = addText(group,"End Turn",1030,53,Color.rgb(225,225,225,0.7),30);
+
+        Text text = addText(group,"End Turn",1040,53,Color.rgb(225,225,225,0.7),30);
         text.setFont(Font.font("Andele Mono", FontWeight.BOLD,25));
+
+
         Text graveYard = addText(group,"Graveyard",1000-60,122,
                 Color.rgb(225,225,225,0.7),30);
+
+
         graveYard.setFont(Font.font("Andele Mono", FontWeight.BOLD,25));
         Text help = addText(group,"Help",1115,122,Color.rgb(225,225,225,0.7),30);
         help.setFont(Font.font("Andele Mono", FontWeight.BOLD,25));
+
+        text.setStroke(Color.rgb(251,225,60,0.5));
+        graveYard.setStroke(Color.rgb(0,225,225,0.5));
+        help.setStroke(Color.rgb(0,225,225,0.5));
     }
 
     public void makeFooter(Player player){
