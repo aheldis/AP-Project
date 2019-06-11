@@ -47,8 +47,8 @@ public class AccountScene {
         background.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
         addLanterns();
         addMovables(background);
-//        addWindows();
-        MainMenuScene.getInstance().makeMenu(null);
+        addWindows();
+//        MainMenuScene.getInstance().makeMenu(null);
     }
 
     private void addWindows() {

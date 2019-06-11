@@ -14,7 +14,6 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import view.AccountScene;
 import view.CollectionScene;
 import view.GeneralGraphicMethods;
 import view.ShopScene;
@@ -222,26 +221,26 @@ public class StageLauncher extends Application {
 //            e.printStackTrace();
 //        }
 
-/*/
-        zahraTestDeck();
-        primaryStage.setScene(collectionScene);
-//*/
+
+//        zahraTestDeck();
+//        primaryStage.setScene(collectionScene);
+//
 /*/
         zahraTestCard();
         getPrimaryStage().setScene(collectionScene);
 //*/
-/*/
-        SelectGameScene.selectGame();
-        primaryStage.setScene(selectGameScene);
-//*/
-        AccountScene.getInstance().makeBackground();
-        primaryStage.setScene(accountScene);
+
+//        SelectGameScene.selectGame();
+//        primaryStage.setScene(selectGameScene);
+//
+//        AccountScene.getInstance().makeBackground();
+//        primaryStage.setScene(accountScene);
 /*
         BattleScene battleScene1 = BattleScene.getSingleInstance();
-        battleScene1.setBattleScene(3); //from 1 to 12
+        battleScene1.setBattleScene(4); //from 1 to 12
         primaryStage.setScene(battleScene);
-        battleScene1.test();
-//*/
+        battleScene1.test();*/
+//
 //        zahraTestShop();
 //        primaryStage.setScene(shopScene);
 
