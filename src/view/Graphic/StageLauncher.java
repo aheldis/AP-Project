@@ -1,6 +1,5 @@
 package view.Graphic;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -11,19 +10,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import model.account.Account;
 import model.account.Collection;
 import model.account.Shop;
 import model.battle.Deck;
-import model.battle.Hand;
-import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import sun.net.TelnetInputStream;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -31,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.Delayed;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -42,15 +36,15 @@ public class StageLauncher extends Application {
     private static double HEIGHT;
     private static double WIDTH;
 
-    public static double getWidth() {
+    static double getWidth() {
         return WIDTH;
     }
 
-    public static double getHeight() {
+    static double getHeight() {
         return HEIGHT;
     }
 
-    public static Stage getPrimaryStage() {
+    static Stage getPrimaryStage() {
         return primaryStage;
     }
 
@@ -183,7 +177,7 @@ public class StageLauncher extends Application {
         ShopScene.makeShopScene(account);
     }
 
-    public static void testzahraFooter(Group root) {
+    static void testzahraFooter(Group root) {
         Group circlesGroup = new Group();
         root.getChildren().addAll(circlesGroup);
 
