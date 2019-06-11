@@ -1,5 +1,7 @@
 package view.Graphic;
 
+import com.sun.prism.shader.AlphaOne_Color_Loader;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -7,7 +9,10 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -16,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import model.account.Account;
 import model.battle.Deck;
 import view.enums.StateType;
@@ -67,6 +73,34 @@ public class SelectGameScene {
 
     }
 
+    private static void showDescForStoryGame(ImageView imageView, String input, int x) {
+        Text text = addText(selectGameRoot, input, x - 150, 600,
+                Color.rgb(225, 225, 225, 0.8), 30);
+        text.setStroke(Color.rgb(0, 0, 0, 0.5));
+
+    }
+
+    private static ImageView makeHeroPic(String path, int x, int y) {
+        ImageView imageView = addImage(selectGameRoot,
+                path, x, y, 500, 500);
+        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                AnimationTimer animationTimer = new AnimationTimer() {
+                    @Override
+                    public void handle(long now) {
+                        for(int i=0;i<20;i++){
+                            imageView.getTransforms().add(new Rotate(30,x+250,y+250));
+                        }
+                        this.stop();
+                    }
+                };
+                animationTimer.start();
+            }
+        });
+        return imageView;
+    }
+
     public static void selectGame(Account account) {
         SelectGameScene.account = account;
         playMusic("resource/music/select_mode.m4a", true, selectGameScene);
@@ -107,13 +141,30 @@ public class SelectGameScene {
                     "pics/battle/select_mode/background.jpg", true, 10.0f, 10.0f);
 
             makeDeck();
-            // changeScene();
-            // selectMode();
+
         });
 
         storyImage.setOnMouseClicked(event -> {
-            changeScene();
-            selectMode();
+            selectGameRoot.getChildren().clear();
+            setBackground(selectGameRoot,
+                    "pics/battle/select_mode/background.jpg", true, 20.0f, 20.0f);
+
+
+            ImageView arash = makeHeroPic(
+                    "pics\\battle\\select_mode\\arash_mode.png", 60, 100);
+
+            ImageView zahhak = makeHeroPic( "pics\\battle\\select_mode\\zahak_mode.png",
+                    400, 131);
+            ImageView dive_sepid = makeHeroPic( "pics\\battle\\select_mode\\dive_sepid_mode.png",
+                    800 - 30, 125);
+
+            showDescForStoryGame(zahhak, "Save Flag", 740);
+            showDescForStoryGame(arash, "Collect Flags", 410);
+            showDescForStoryGame(dive_sepid, "Death Mode", 1120);
+
+
+            getNumberOfFlagPage(arash, selectGameRoot, selectGameScene);
+
         });
 
         Text multiPlayer = addText(selectGameRoot, "Multi Player",
@@ -134,29 +185,6 @@ public class SelectGameScene {
 
     public static void selectMode() {
 
-//        {
-//            int mode = 0;
-//            int numberOfFLags = 0;
-//            boolean valid = false;
-//            String deckName = null;
-//            String command;
-//            menuView.showDecksAndModes(account);
-//            do {
-//
-//                mode = Integer.parseInt(command.split(" ")[3]);
-//                if (command.split(" ").length > 4)
-//                    numberOfFLags = Integer.parseInt(command.split(" ")[4]);
-//                if (mode != 0 && deckName != null)
-//                    valid = true;
-//
-//            } while (!valid);
-//            match = game.makeNewCustomGame(account, deckName, mode, numberOfFLags);
-//            if (match == null) {
-//                state = StateType.ACCOUNT_MENU;
-//            }
-//            state = StateType.BATTLE;
-//            break;
-//        }
         playMusic("resource/music/shop.m4a", true, selectModeScene);
 
         setBackground(selectModeRoot,
@@ -182,36 +210,8 @@ public class SelectGameScene {
                 Color.rgb(25, 205, 225, 0.6), 30);
         deathModeText.setFont(Font.font("Lato-bold", FontWeight.BOLD, 30));
 
-        collectFlagImage.setOnMouseClicked(event -> {
-            selectModeRoot.getChildren().clear();
-            setBackground(selectModeRoot,
-                    "pics/battle/select_mode/select_mode_background.jpg",
-                    true, 10.0f, 10.0f);
-            Text enterNumbersOfFlag= addText(selectModeRoot,"Enter Numbers Of Flags",500,200,
-                    Color.rgb(0,25,225,0.8),40);
-            enterNumbersOfFlag.setFont(Font.font("Luminari",30));
-            enterNumbersOfFlag.setStrokeWidth(1);
-            enterNumbersOfFlag.setStroke(Color.rgb(0,0,0,0.2));
 
-
-
-            ImageView text = addImage(selectModeRoot, "pics/collection/card_silenced@2x.png",
-                    600-5-20,240, 200, 100);
-
-            TextField deckName = new TextField();
-            deckName.setPrefHeight(50);
-            deckName.relocate(605, 255);
-            deckName.positionCaret(1);
-            deckName.setStyle("-fx-text-fill: #80ffff; -fx-font-size: 25px; -fx-font-weight: bold;");
-            deckName.setFont(Font.font("Luminari",30));
-            deckName.setBackground(new Background(
-                    new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
-                            CornerRadii.EMPTY, Insets.EMPTY)));
-            selectModeRoot.getChildren().add(deckName);
-
-            //todo go to game ^__^
-        });
-
+        getNumberOfFlagPage(collectFlagImage, selectModeRoot, selectModeScene);
         saveFlagImage.setOnMouseClicked(event -> {
 
             //todo go to game ^__^
@@ -226,4 +226,46 @@ public class SelectGameScene {
 
     }
 
+    private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene) {
+        try {
+            imageView.setOnMouseClicked(event -> {
+
+                root.getChildren().clear();
+                setBackground(root,
+                        "pics/battle/select_mode/select_mode_background.jpg",
+                        true, 10.0f, 10.0f);
+                Text enterNumbersOfFlag = addText(root, "Enter Numbers Of Flags", 500, 200,
+                        Color.rgb(0, 25, 225, 0.8), 40);
+                enterNumbersOfFlag.setFont(Font.font("Luminari", 30));
+                enterNumbersOfFlag.setStrokeWidth(1);
+                enterNumbersOfFlag.setStroke(Color.rgb(0, 0, 0, 0.2));
+
+
+                ImageView text = addImage(root, "pics/collection/card_silenced@2x.png",
+                        600 - 5 - 20, 240, 200, 100);
+
+                TextField deckName = new TextField();
+                deckName.setPrefHeight(50);
+                deckName.relocate(605, 255);
+                deckName.positionCaret(1);
+                deckName.setStyle("-fx-text-fill: #80ffff; -fx-font-size: 25px; -fx-font-weight: bold;");
+                deckName.setFont(Font.font("Luminari", 30));
+                deckName.setBackground(new Background(
+                        new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
+                                CornerRadii.EMPTY, Insets.EMPTY)));
+                root.getChildren().add(deckName);
+                scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+                    if (key.getCode() == KeyCode.ENTER) {
+                        // match = game.makeNewCustomGame(account, deckName, mode, numberOfFLags);
+                        //todo go to game ^__^
+                    }
+                });
+
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }
+
