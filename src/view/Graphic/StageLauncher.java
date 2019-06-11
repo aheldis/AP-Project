@@ -1,14 +1,17 @@
 package view.Graphic;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import model.account.Account;
 import model.account.Collection;
@@ -28,6 +31,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Delayed;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -153,12 +157,12 @@ public class StageLauncher extends Application {
             collection.addToCards(hero);
         }
 
-        CollectionScene.showInCollection(cards,collection);
+        CollectionScene.showInCollection(cards, collection);
 
     }
 
-    public static void zahraTestShop(){
-        Account account = new Account("zahra","123");
+    public static void zahraTestShop() {
+        Account account = new Account("zahra", "123");
         Spell spell = new Spell();
 
         Collection collection = new Collection(account);
@@ -180,32 +184,58 @@ public class StageLauncher extends Application {
         ShopScene.makeShopScene(account);
     }
 
-    public static void testzahraFooter(Group root){
+    public static void testzahraFooter(Group root) {
         Group circlesGroup = new Group();
-        circlesGroup.relocate(50,660);
         root.getChildren().addAll(circlesGroup);
-        addImage(circlesGroup, "pics/battle/next_card.png",
+
+        Group nextCardGroup = new Group();
+        circlesGroup.relocate(50, 660);
+        circlesGroup.getChildren().addAll(nextCardGroup);
+        nextCardGroup.relocate(0, 0);
+
+        addImage(nextCardGroup, "pics/battle/next_card.png",
                 0, 0, 170, 170);
-        addImage(circlesGroup, "pics/battle/inner_glow.png",
+        addImage(nextCardGroup, "pics/battle/inner_glow.png",
+                0, 0, 170, 170);
+        addImage(nextCardGroup,"pics/battle/outer_ring.png",
                 0, 0, 170, 170);
 
 
-        for(int i=0;i<5;i++){
-            addImage(circlesGroup,
-                    "pics/battle/hand_card.png",30+140*(i+1),20,140,120);
+        Group handCardGroup;
+        for (int i = 0; i < 5; i++) {
+            handCardGroup = new Group();
+            handCardGroup.relocate(30 + 140 * (i + 1), 20);
+            circlesGroup.getChildren().addAll(handCardGroup);
+            ImageView backgroudCircle = addImage(handCardGroup,
+                    "pics/battle/hand_card.png", 0, 0, 140, 140);
+            addImage(handCardGroup, "pics/icon_mana@2x.png", 60, 107, 30, 30);
+            AnimationTimer animationTimer = new AnimationTimer() {
+                private long lastUpdate = 0 ;
+                @Override
+                public void handle(long now) {
+
+                    for (int i = 0; i < 20; i++) {
+                        if (now - lastUpdate >= 120_000_000) {
+                            backgroudCircle.getTransforms().add(new Rotate(30, 70, 70));
+                            lastUpdate = now ;
+                        }
+                    }
+
+                }
+            };
+            animationTimer.start();
         }
 
-        addImage(circlesGroup,"pics/battle/end_turn_yellow.png",1000,10,200,100);
-        addImage(circlesGroup,"pics/battle/graveYard.png",1000-80,95,150,70);
-        addImage(circlesGroup,"pics/battle/help.png",1000+90,95,150,70);
-        Text text = addText(circlesGroup,"End Turn",1030,53,Color.rgb(225,225,225,0.7),30);
-        text.setFont(Font.font("Andele Mono", FontWeight.BOLD,25));
-        Text graveYard = addText(circlesGroup,"Graveyard",1000-60,122,
-                Color.rgb(225,225,225,0.7),30);
-        graveYard.setFont(Font.font("Andele Mono", FontWeight.BOLD,25));
-        Text help = addText(circlesGroup,"Help",1115,122,Color.rgb(225,225,225,0.7),30);
-        help.setFont(Font.font("Andele Mono", FontWeight.BOLD,25));
-
+        addImage(circlesGroup, "pics/battle/end_turn_yellow.png", 1000, 10, 200, 100);
+        addImage(circlesGroup, "pics/battle/graveYard.png", 1000 - 80, 95, 150, 70);
+        addImage(circlesGroup, "pics/battle/help.png", 1000 + 90, 95, 150, 70);
+        Text text = addText(circlesGroup, "End Turn", 1030, 53, Color.rgb(225, 225, 225, 0.7), 30);
+        text.setFont(Font.font("Andele Mono", FontWeight.BOLD, 25));
+        Text graveYard = addText(circlesGroup, "Graveyard", 1000 - 60, 122,
+                Color.rgb(225, 225, 225, 0.7), 30);
+        graveYard.setFont(Font.font("Andele Mono", FontWeight.BOLD, 25));
+        Text help = addText(circlesGroup, "Help", 1115, 122, Color.rgb(225, 225, 225, 0.7), 30);
+        help.setFont(Font.font("Andele Mono", FontWeight.BOLD, 25));
 
 
     }
@@ -243,9 +273,9 @@ public class StageLauncher extends Application {
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of spell and ... to minion
         //todo add animation to  spell and minions
 
-//*/
-//        zahraTestDeck();
-//        getPrimaryStage().setScene(collectionScene);
+/*/
+        zahraTestDeck();
+        getPrimaryStage().setScene(collectionScene);
 //*/
 /*/
         SelectGameScene.selectGame();

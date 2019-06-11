@@ -46,10 +46,22 @@ public class BattleHeaderGraphic {
         });
     }
 
-    private void addMana(double x, double y, int numberOfMana){
+    private void addManaRight(double x, double y, int numberOfMana){
+        double round = 0;
         for(int i = 0; i < 9; i++){
-            GeneralGraphicMethods.addImage(root,"pics/icon_mana@2x.png", x + i * 28, y, 25, 25);
+            round=-Math.sqrt(660000-Math.pow(x + i * 28-900,2))+900;
+            GeneralGraphicMethods.addImage(root,"pics/icon_mana@2x.png",
+                    x + i * 28, round, 25, 25);
         }
+    }
+    public void addManaLeft(double x, double y, int numberOfMana){
+        double round = 0;
+        for(int i = 0; i < 9; i++){
+            round=-Math.sqrt(700000-Math.pow(x + i * 28-500,2))+920;
+            GeneralGraphicMethods.addImage(root,"pics/icon_mana@2x.png",
+                    x + i * 28, round, 25, 25);
+        }
+
     }
 
     public void makeHeader() {
@@ -57,8 +69,8 @@ public class BattleHeaderGraphic {
         addTextWithShadow("OPPONENT", 1010, 78);
         addPortraitBorder(120, 25);
         addPortraitBorder(1165, 25);
-        addMana(248, 96, 9);
-        addMana(920, 96, 9);
+        addManaLeft(248, 96, 9);
+        addManaRight(920, 96, 9);
     }
 
     public void test() {

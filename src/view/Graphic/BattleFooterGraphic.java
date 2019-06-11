@@ -1,11 +1,13 @@
 package view.Graphic;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import model.battle.Player;
 import model.card.Card;
 
@@ -23,16 +25,47 @@ public class BattleFooterGraphic {
     }
 
     private void addNextCard(Group group){
-        addImage(group, "pics/battle/next_card.png",
-                0, 0, 160, 160);
-        addImage(group, "pics/battle/inner_glow.png",
+
+        Group nextCardGroup = new Group();
+        group.relocate(50,660);
+        group.getChildren().addAll(nextCardGroup);
+        nextCardGroup.relocate(0, 0);
+
+        addImage(nextCardGroup, "pics/battle/next_card.png",
                 0, 0, 170, 170);
+        addImage(nextCardGroup, "pics/battle/inner_glow.png",
+                0, 0, 170, 170);
+        addImage(nextCardGroup,"pics/battle/outer_ring.png",
+                0, 0, 170, 170);
+
     }
     private void addCardsOfHand(Player player, Group group){
         ArrayList<Card> gameCards = player.getHand().getGameCards();
-        for(int i=0;i<gameCards.size();i++){
-            addImage(group,"pics/battle/hand_card.png",30+130*(i+1),20,140,120);
+        Group handCardGroup;
+        for (int i = 0; i < gameCards.size(); i++) {
+            handCardGroup = new Group();
+            handCardGroup.relocate(30 + 140 * (i + 1), 20);
+            group.getChildren().addAll(handCardGroup);
+            ImageView backgroudCircle = addImage(handCardGroup,
+                    "pics/battle/hand_card.png", 0, 0, 140, 140);
+            addImage(handCardGroup, "pics/icon_mana@2x.png", 60, 107, 30, 30);
+            AnimationTimer animationTimer = new AnimationTimer() {
+                private long lastUpdate = 0 ;
+                @Override
+                public void handle(long now) {
+
+                    for (int i = 0; i < 20; i++) {
+                        if (now - lastUpdate >= 120_000_000) {
+                            backgroudCircle.getTransforms().add(new Rotate(30, 70, 70));
+                            lastUpdate = now ;
+                        }
+                    }
+
+                }
+            };
+            animationTimer.start();
         }
+
     }
 
     private void addButtons(Group group){

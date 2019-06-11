@@ -33,16 +33,8 @@ public class SpriteMaker {
             imageView.setY(y);
             imageView.setScaleX(2);
             imageView.setScaleY(2);
-            if(root instanceof Group){
-                ((Group) root).getChildren().add(imageView);
-            }
-            if(root instanceof HBox){
-                ((HBox) root).getChildren().add(imageView);
-            }
-            if(root instanceof StackPane){
-                ((StackPane) root).getChildren().add(imageView);
-            }
-            imageView.setViewport(new Rectangle2D(0, 0, widthOfEachFrame * numberOfPicInEachColumn, totalHeight));
+
+            imageView.setViewport(new Rectangle2D(0, 0, widthOfEachFrame, heightOfEachFrame));
 //sprite animation  useful for your project
 
             //root.getChildrenUnmodifiable().add(imageView);
@@ -55,6 +47,15 @@ public class SpriteMaker {
             );
             animation.setCycleCount(Animation.INDEFINITE);
             animation.play();
+            if(root instanceof Group){
+                ((Group) root).getChildren().add(imageView);
+            }
+            if(root instanceof HBox){
+                ((HBox) root).getChildren().add(imageView);
+            }
+            if(root instanceof StackPane){
+                ((StackPane) root).getChildren().add(imageView);
+            }
         } catch (Exception e) {
 
         }
