@@ -19,7 +19,7 @@ public class Shop {
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Item> collectibles = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
-//    private String[] type = {"hero", "minion", "spell", "item"}; //ina ye enumi chizi mibood behtar mibood
+//    private String[] type = {"hero", "minion", "Spell", "item"}; //ina ye enumi chizi mibood behtar mibood
 
     public static Shop getInstance() {
         if (singleInstance == null) {
@@ -130,7 +130,7 @@ public class Shop {
             card.setAp(10);
             card.setDescription("heoo");
             card.setPathOfThePicture("pics/other/minion_background.png");
-            card.setPathOfAnimation("pics/spell/fireBall.png");
+            card.setPathOfAnimation("pics/Spell/fireBall.png");
             card.setCountOfAnimation(16);
             card.setName("Fireball");
             card.setFrameSize(48);

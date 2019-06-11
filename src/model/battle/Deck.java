@@ -16,7 +16,7 @@ import java.util.Collections;
 
 public class Deck {//if it is normal deck you had initialize it in collection
     // else call setRandomCardsAndItemsInDeck()
-    private ArrayList<Card> cardsOfDeck = new ArrayList<>(20);//minon spell
+    private ArrayList<Card> cardsOfDeck = new ArrayList<>(20);//minon Spell
     private String deckName;
     private Usable item;
     private Hero hero = null;
