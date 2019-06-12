@@ -179,6 +179,7 @@ public class AccountScene {
             root.getChildren().removeAll(windows);
             mainMenuScene.makeMenu(account);
         }
+        StageLauncher.setAccount(account);
     }
 
 

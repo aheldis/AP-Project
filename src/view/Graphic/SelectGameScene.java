@@ -24,10 +24,13 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import model.account.Account;
 import model.battle.Deck;
+import model.battle.Game;
+import model.battle.Match;
 import view.enums.StateType;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -39,6 +42,8 @@ class SelectGameScene {
     private static Account account;
     private static int numberOfDeck;
     private static ArrayList<Node> groupOfDeck = new ArrayList<>();
+    private static Match match;
+    private static Game game = new Game();
 
     private static void changeScene() {
         Platform.runLater(() ->
@@ -102,7 +107,10 @@ class SelectGameScene {
 
     static void selectGame(Account account) {
         SelectGameScene.account = account;
-        playMusic("resource/music/select_mode.m4a", true, selectGameScene);
+        if(!stopper) {
+            playMusic("resource/music/select_mode.m4a", true, selectGameScene);
+            stopper = false;
+        }
         setBackground(selectGameRoot,
                 "pics/battle/select_mode/background.jpg", true, 10.0f, 10.0f);
 
@@ -129,6 +137,7 @@ class SelectGameScene {
                 "pics/battle/select_mode/panel.png", 900, 580, 250, 50);
 
         multiPlayerImage.setOnMouseClicked(event -> {
+            //playMusic("resource\\music\\choose_button.m4a",false,selectGameScene);
             changeScene();
             selectMode();
         });
@@ -140,6 +149,7 @@ class SelectGameScene {
                     "pics/battle/select_mode/background.jpg", true, 10.0f, 10.0f);
 
             makeDeck();
+            log(selectGameRoot, "select modes\nback", StateType.SELECT_GAME, 200);
 
         });
 
@@ -161,22 +171,44 @@ class SelectGameScene {
             showDescForStoryGame( "Collect Flags", 410);
            showDescForStoryGame( "Death Mode", 1120);
 
+            Random random = new Random();
 
-           zahhak.setOnMouseClicked(new EventHandler<MouseEvent>() {
-               @Override
-               public void handle(MouseEvent event) {
-                   //todo start game
+            diveSepid.setOnMouseClicked(event12 -> {//story game-1
+                if(game.checkPlayerDeck(account,1)) {
+                    Platform.runLater(() ->
+                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+                BattleScene battleScene = BattleScene.getSingleInstance();
+                battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+                game = new Game();
+                    match = game.makeNewStoryGame(1);
+                }
+                //todo start a game
+            });
+            zahhak.setOnMouseClicked(event1 -> {//story game -2
+               if(game.checkPlayerDeck(account,1)) {
+                   Platform.runLater(() ->
+                           StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+                   BattleScene battleScene = BattleScene.getSingleInstance();
+                   battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+                   game = new Game();
+                   match = game.makeNewStoryGame(2);
+               }
+               //todo start game
+           });
+
+           arash.setOnMouseClicked(event13 -> {//story game -3
+               if(game.checkPlayerDeck(account,1)) {
+                   Platform.runLater(() ->
+                           StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+                   BattleScene battleScene = BattleScene.getSingleInstance();
+                   battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+                   game = new Game();
+                   match = game.makeNewStoryGame(3);
                }
            });
-           diveSepid.setOnMouseClicked(new EventHandler<MouseEvent>() {
-               @Override
-               public void handle(MouseEvent event) {
-                   //todo start a game
-               }
-           });
-            getNumberOfFlagPage(arash, selectGameRoot, selectGameScene);
+           //getNumberOfFlagPage(arash, selectGameRoot, selectGameScene);
 
-
+            log(selectGameRoot, "select modes\nback",StateType.SELECT_GAME, 200);
 
         });
 
@@ -192,7 +224,7 @@ class SelectGameScene {
                 , 950 - 5, 230, Color.rgb(0, 0, 0, 0.6), 30);
         storyGame.setFont(Font.font("Lato-Light", FontWeight.BOLD, 30));
 
-        log(selectGameRoot, "select modes\nback", StageLauncher.getScene(StateType.MAIN_MENU), 200);
+        log(selectGameRoot, "select modes\nback", StateType.MAIN_MENU, 200);
 
     }
 
@@ -235,7 +267,7 @@ class SelectGameScene {
             //todo go to game ^__^
         });
 
-        log(selectModeRoot, "select mode\nback", selectGameScene, 200);
+        log(selectModeRoot, "select mode\nback", StateType.SELECT_GAME, 200);
 
     }
 
@@ -278,6 +310,7 @@ class SelectGameScene {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log(selectGameRoot, "select modes\nback", StateType.SELECT_GAME, 200);
 
     }
 }

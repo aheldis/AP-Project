@@ -53,7 +53,7 @@ public class BattleHeaderGraphic {
             if(i < numberOfMana)
             GeneralGraphicMethods.addImage(group, "pics/other/icon_mana@2x.png", x + i * 28, y, 25, 25);
             else
-                GeneralGraphicMethods.addImage(group,"pics/icon_mana_inactive@2x.png", x + i * 28, y, 25, 25);
+                GeneralGraphicMethods.addImage(group,"pics/battle_catagorized/icon_mana_inactive@2x.png", x + i * 28, y, 25, 25);
         }
     }
     /*

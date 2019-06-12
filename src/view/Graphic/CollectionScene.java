@@ -828,7 +828,7 @@ class CollectionScene {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        log(root, collection.helpOfCollection(), StageLauncher.getScene(StateType.MAIN_MENU), 600);
+        log(root, collection.helpOfCollection(), StateType.MAIN_MENU, 600);
 
 
     }
