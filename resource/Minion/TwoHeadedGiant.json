@@ -3,8 +3,8 @@
   "@val": {
     "name": "TwoHeadedGiant",
     "CardNumber": 35,
-    "countOfAnimation": 80,
-    "millis": 8000,
+    "countOfAnimation": 86,
+    "millis": 7000,
     "cost": 550,
     "mp": 4,
     "hp": 10,

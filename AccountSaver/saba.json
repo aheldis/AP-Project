@@ -2,7 +2,7 @@
   "@type": "model.account.Account",
   "@val": {
     "userName": "saba",
-    "password": "123",
+    "password": "456",
     "daric": 150000,
     "wins": 0,
     "matchHistory": [],
