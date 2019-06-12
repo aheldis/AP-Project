@@ -1,5 +1,7 @@
 package view.Graphic;
 
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.animation.AnimationTimer;

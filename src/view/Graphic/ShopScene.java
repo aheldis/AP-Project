@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import model.account.Account;
 import model.account.Shop;
 import model.card.Card;
+import model.item.Usable;
 import view.enums.StateType;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ class ShopScene {
     private static ArrayList<HBox> hBoxes = new ArrayList<>();
     private static int pageNumberCards = 0;
     private static ArrayList<Node> deletable = new ArrayList<>();
+    private static int indexOfItem = 0;
 
 
 
@@ -91,14 +93,14 @@ class ShopScene {
         return hbox;
     }
 
-    private static void buyCard(HBox hBox, Text daric, Account account) {
+    private static void buyCard(HBox hBox, Text daric, Account account,Usable[] items) {
         ArrayList<Card> cards = Shop.getInstance().getCards();
         VBox vBox = new VBox();//todo remember to delete
         for (int i = 0; i < 10; i++) {
             if (i >= cards.size()) {
                 break;
             }
-            makeHBoxForCards(4, pageNumberCards, cards, daric, account);
+            makeHBoxForCards(4, pageNumberCards, cards, daric, account,items);
         }
 
 
@@ -122,24 +124,41 @@ class ShopScene {
                 pageNumberCards = 0;
             root.getChildren().removeAll(hBoxes);
             root.getChildren().addAll(hBox);
-            makeHBoxForCards(4, pageNumberCards, cards, daric, account);
+            makeHBoxForCards(4, pageNumberCards, cards, daric, account,items);
         });
         next.setOnMouseClicked(event -> {
             pageNumberCards++;
             root.getChildren().removeAll(hBoxes);
             root.getChildren().addAll(hBox);
-            makeHBoxForCards(4, pageNumberCards, cards, daric, account);
+            makeHBoxForCards(4, pageNumberCards, cards, daric, account,items);
         });
 
     }
 
-    private static void makeHBoxForCards(int column, int pageNumber, ArrayList<Card> cards, Text daric, Account account) {
+    private static void makeHBoxForCards(int column, int pageNumber, ArrayList<Card> cards,
+                                         Text daric, Account account, Usable[] items) {
         HBox hBox = new HBox();
         int startingBound = 2 * column * pageNumber;
         int j = -1;
+        outer:
         for (int i = startingBound; i < startingBound + 2 * column; i++) {
-            if (i >= cards.size())
+            if (i >= cards.size()){
+                for(int k=indexOfItem;k<startingBound + 2 * column;k++){
+                    if (i % column == 0) {
+                        j++;
+                        hBox = new HBox();
+                        hBox.relocate(350, 100 + (j) * 335);
+                        root.getChildren().addAll(hBox);
+                        hBoxes.add(hBox);
+                        hBox.setSpacing(10);
+                    }
+                    if(k>=items.length)
+                        break outer;
+                    hBox.getChildren().addAll(CollectionScene.makeItemCard(items[k],k));
+                    indexOfItem++;
+                }
                 break;
+            }
             Card card = cards.get(i);
             if (i % column == 0) {
                 j++;
@@ -161,7 +180,7 @@ class ShopScene {
     }
 
     private static void makeRectIcon(int width, int height, int numberOfRows,
-                                     String iconName, int numberOfCulonm,
+                                     String iconName, int numberOfColumn,
                                      int numberOfIcons, String typeOfFile, int upperNumber) {
         HBox hBox;
         int j = 0;
@@ -172,7 +191,7 @@ class ShopScene {
             hBox.setSpacing(10);
             hBox.relocate(350, height * (i + 1) + 10 * i - upperNumber);
             root.getChildren().add(hBox);
-            for (int k = 0; k < numberOfCulonm; k++) {
+            for (int k = 0; k < numberOfColumn; k++) {
                 j++;
                 if (j > numberOfIcons)
                     return;
@@ -286,7 +305,7 @@ class ShopScene {
 
             HBox hBox = sellCard(daric, account);
 
-            buyCard(hBox, daric, account);
+            buyCard(hBox, daric, account,account.getCollection().getItems());
 
 
         });
