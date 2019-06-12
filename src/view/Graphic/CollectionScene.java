@@ -18,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.account.Collection;
+import model.account.FilesType;
 import model.battle.Deck;
 import model.card.Card;
 import model.card.Hero;
@@ -92,7 +93,7 @@ class CollectionScene {
 
             });
 
-            Text text = addText(group, card.getName() + "\n" ,
+            Text text = addText(group, card.getName() + "\n",
                     60, 10, Color.rgb(200, 200, 225, 0.5), 20);
             text.setOnMouseEntered(event1 -> {
                 text.setUnderline(true);
@@ -117,22 +118,28 @@ class CollectionScene {
             showMana(group, 0, 0, ((Card) card).getMp());
 
 
-            if (!(card instanceof Hero)) {
-                addText(group, ((Card) card).getAp() + ""
-                        , 50 - 10,
-                        200 - 17, Color.WHITE, 20);
+            addText(group, ((Card) card).getAp() + ""
+                    , 50 - 10,
+                    200 - 17, Color.WHITE, 20);
 
-                addText(group, ((Card) card).getHp() + "",
-                        180 - 20,
-                        200 - 17, Color.WHITE, 20);
+            addText(group, ((Card) card).getHp() + "",
+                    180 - 20,
+                    200 - 17, Color.WHITE, 20);
+            if(card instanceof Spell) {
                 SpriteMaker.getInstance().makeSpritePic(((Card) card).getPathOfAnimation(),
                         94,
                         58,
                         group, ((Card) card).getCountOfAnimation(),
                         ((Card) card).getAnimationRow(), 4000,
                         48, 48, 256);
+            }
+            if(card instanceof Minion){
+               addImage(group, "pics\\Minion\\" + ((Minion) card).getName() + ".gif",
+                        64,
+                        28, 110, 150);
 
             }
+
             try {
                 imageView.setOnMouseEntered(event -> {
                     ImageView descView = addImage(group, "pics/other/desc.png", 10,
@@ -140,7 +147,7 @@ class CollectionScene {
 
                     Text desc = addText(group, ((Card) card).getDescription(),
                             40,
-                            338 - 50-8, Color.WHITE, 15);
+                            338 - 50 - 8, Color.WHITE, 15);
                     imageView.setOnMouseExited(event1 -> group.getChildren().removeAll(desc, descView));
                 });
 
@@ -154,7 +161,8 @@ class CollectionScene {
 
     private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
-            ImageView imageView = addImage(hBox, card.getPathOfThePicture(),
+
+            ImageView imageView = addImage(hBox, "pics\\heroCard\\" + card.getName() + ".png",
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
 
             showMana(root, i * (X_BORDER + CARD_WIDTH) + 40,
@@ -184,7 +192,7 @@ class CollectionScene {
                             j * (Y_BORDER + CARD_HEIGHT) + 430 - 55, Color.WHITE, 20);
                     cardsIcon.add(ap);
                     Text desc = addText(root, card.getDescription(), i * (X_BORDER + CARD_WIDTH) + 100,
-                            j * (Y_BORDER + CARD_HEIGHT) + 430 - 55, Color.WHITE, 20);
+                            j * (Y_BORDER + CARD_HEIGHT) + 430 - 60, Color.WHITE, 13);
                     cardsIcon.add(desc);
 
 
@@ -195,7 +203,8 @@ class CollectionScene {
                 }
             });
 
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
@@ -241,7 +250,7 @@ class CollectionScene {
                     "pics/other/minion_background.png", 0, 0, CARD_WIDTH, CARD_HEIGHT);
             imageView.fitWidthProperty();
 
-            ImageView animationImageView = addImage(root, card.getPathOfAnimation(),
+            ImageView animationImageView = addImage(root, "pics\\Minion\\" + card.getName() + ".gif",
                     i * (X_BORDER + CARD_WIDTH) + 75 + 37,
                     j * (Y_BORDER + CARD_HEIGHT) + 120 - 55, 110, 150);
             cardsIcon.add(animationImageView);
@@ -258,9 +267,12 @@ class CollectionScene {
 
     private static void showEachSpell(Card card, HBox hBox, int i, int j) {
         try {
-            ImageView imageView = addImage(hBox, "pics/other/spell_background.png", 0, 0, CARD_WIDTH, CARD_HEIGHT);
+            ImageView imageView = addImage(hBox, "pics/other/spell_background.png",
+                    0, 0, CARD_WIDTH, CARD_HEIGHT);
             imageView.fitWidthProperty();
 
+//            SpriteAnimationProperties sprite = new SpriteAnimationProperties(
+//                    card.getName(), FilesType.SPELL,card.getCountOfAnimation());
             cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(card.getPathOfAnimation(),
                     i * (X_BORDER + CARD_WIDTH) + 140,
                     i * (Y_BORDER + CARD_HEIGHT) + 200 - 55,
@@ -589,7 +601,7 @@ class CollectionScene {
                 try {
                     collection.deleteDeck(deck.getName());
                     root.getChildren().removeAll(group,
-                            checkMainDeck,delete_deck,addCardToDeck);
+                            checkMainDeck, delete_deck, addCardToDeck);
                     root.getChildren().removeAll(groupOfDeck);
                     root.getChildren().removeAll(deletable);
                     deletable.clear();
@@ -637,7 +649,7 @@ class CollectionScene {
 
     private static void addDeck(Collection collection, VBox sideVBox) {
         ImageView add_deck = addImage(root, "pics/collection/plate@2x.png",
-                StageLauncher.getWidth()- 130, StageLauncher.getHeight() - 130,
+                StageLauncher.getWidth() - 130, StageLauncher.getHeight() - 130,
                 100, 100);
 
 
@@ -743,11 +755,11 @@ class CollectionScene {
                     root.getChildren().removeAll(newDeck, newDeckText,
                             importDeck, importText, rectangle, close, text,
                             deckName, exportDeck, exportText);
-                    Group group =  makeDeckCard(collection.getDecks().get(i), i, sideVBox, collection);
+                    Group group = makeDeckCard(collection.getDecks().get(i), i, sideVBox, collection);
                     root.getChildren().removeAll(groupOfDeck);
                     root.getChildren().addAll(group);
                     makeDeck(sideVBox, i, collection.getDecks().get(i)
-                            , collection,group);
+                            , collection, group);
                     root.getChildren().addAll(rectangle, newDeck, newDeckText,
                             importDeck, importText, close, text, deckName, exportDeck, exportText);
                 }
@@ -788,16 +800,16 @@ class CollectionScene {
             if (numberOfDeck < 0)
                 numberOfDeck = 0;
             root.getChildren().removeAll(groupOfDeck);
-            if(decks.size()!=0)
-            root.getChildren().addAll(makeDeckCard(decks.get(numberOfDeck), numberOfDeck, sideBar, collection));
+            if (decks.size() != 0)
+                root.getChildren().addAll(makeDeckCard(decks.get(numberOfDeck), numberOfDeck, sideBar, collection));
         });
         next.setOnMouseClicked(event -> {
             numberOfDeck++;
             if (numberOfDeck >= decks.size())
                 numberOfDeck = decks.size() - 1;
             root.getChildren().removeAll(groupOfDeck);
-            if(decks.size()!=0)
-            root.getChildren().addAll(makeDeckCard(decks.get(numberOfDeck), numberOfDeck, sideBar, collection));
+            if (decks.size() != 0)
+                root.getChildren().addAll(makeDeckCard(decks.get(numberOfDeck), numberOfDeck, sideBar, collection));
         });
 
 
