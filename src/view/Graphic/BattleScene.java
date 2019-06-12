@@ -14,6 +14,7 @@ import model.account.FilesType;
 import model.account.Shop;
 import model.battle.Match;
 import model.card.Card;
+import model.card.Hero;
 import model.card.Minion;
 import model.land.LandOfGame;
 import view.enums.StateType;
@@ -157,8 +158,6 @@ public class BattleScene {
                 Rectangle rectangle = new Rectangle(mapProperties.cellWidth, mapProperties.cellHeight);
                 rectangle.setFill(Color.rgb(0, 0, 0, 0.2));
                 rectangle.relocate(currentX, currentY);
-                System.out.println("currentX = " + currentX);
-                System.out.println("currentY = " + currentY);
                 gameGrid[i][j] = rectangle;
                 board.getChildren().add(rectangle);
             }
@@ -190,30 +189,30 @@ public class BattleScene {
     }
 
 
-    public ImageView addCardToBoard(int row, int column, Card card, FilesType filesType, String mode) {
+    public ImageView addCardToBoard(int row, int column, Card card, String mode) {
+        FilesType filesType = FilesType.MINION;
+        if(card instanceof Hero)
+            filesType = FilesType.HERO;
+
         ImageView imageView = null;
         Pair<Double, Double> position = getCellPosition(row, column);
 
         if (mode.equals("ATTACK")) {
             SpriteAnimationProperties spriteProperties = new SpriteAnimationProperties(
-                    card.getName(), FilesType.MINION, card.getCountOfAnimation());
+                    card.getName(), filesType, card.getCountOfAnimation());
             imageView = SpriteMaker.getInstance().makeSpritePic(spriteProperties.spriteSheetPath,
                     0, 0,
                     board, spriteProperties.count,
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
-            imageView.relocate(position.getKey() - 10, position.getValue() - 48);
-            imageView.setFitWidth(mapProperties.cellWidth + 10);
-            imageView.setFitHeight(mapProperties.cellHeight + 20);
         } else {
             String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
             try {
                 imageView = new ImageView(new Image(new FileInputStream(path)));
                 imageView.setScaleX(2);
                 imageView.setScaleY(2);
-                imageView.relocate(position.getKey(), position.getValue() - 45);
-                imageView.setFitWidth(mapProperties.cellWidth + 10);
-                imageView.setFitHeight(mapProperties.cellHeight + 20);
+
+
                 board.getChildren().add(imageView);
                 //root.getChildren().add(imageView);
             } catch (FileNotFoundException e) {
@@ -221,10 +220,9 @@ public class BattleScene {
             }
         }
 
-        System.out.println("position x = " + position.getKey());
-        System.out.println("position y = " + position.getValue());
-
-
+        imageView.relocate(position.getKey() - 8, position.getValue() - 48);
+        imageView.setFitWidth(mapProperties.cellWidth + 10);
+        imageView.setFitHeight(mapProperties.cellHeight + 20);
 
         return imageView;
     }
@@ -234,20 +232,20 @@ public class BattleScene {
         /*
         Minion minion = (Minion) Shop.getInstance().getNewCardByName("Siavash");
         System.out.println(minion.getName());
-        addCardToBoard(2, 3, minion, FilesType.MINION, "ATTACK");
+        addCardToBoard(2, 3, minion, "ATTACK");
         */
 
         ArrayList<Card> cards = Shop.getInstance().getCards();
         int number = 0;
         for(int i = 0; i < 5; i++)
             for(int j = 0; j < 9; j++) {
-                while(number < cards.size() && !(cards.get(number) instanceof Minion))
+                while(number < cards.size() && !(cards.get(number) instanceof Hero))
                     number++;
                 if(number == cards.size())
                     break;
                 System.out.println("number = " + number);
                 System.out.println(cards.get(number).getName());
-                addCardToBoard(i, j, cards.get(number), FilesType.MINION, "ATTACK");
+                addCardToBoard(i, j, cards.get(number), "ATTACK");
                 number++;
             }
 
