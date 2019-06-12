@@ -2,17 +2,21 @@ package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.PerspectiveTransform;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
+import model.account.FilesType;
 import model.battle.Match;
 import model.land.LandOfGame;
 import view.enums.StateType;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Arrays;
@@ -46,11 +50,11 @@ public class BattleScene {
         this.numberOfMap = numberOfMap;
         setMapProperties();
         setMapBackground();
-        GeneralGraphicMethods.playMusic("resource/music/battle_music/"+numberOfMap+".m4a",true,battleScene);
+        GeneralGraphicMethods.playMusic("resource/music/battle_music/" + numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(root);
         StageLauncher.testzahraFooter(root);
-       // battleFooter = new BattleFooterGraphic(root,match.getPlayers()[0]);
+        // battleFooter = new BattleFooterGraphic(root,match.getPlayers()[0]);
         battleHeader.test();
     }
 
@@ -168,5 +172,37 @@ public class BattleScene {
         board.setEffect(perspectiveTransform);
     }
 
+    public void addNodeToBoard(int x, int y, Node node) {
+        Pair<Double, Double> position = getCellPosition(x, y);
+        node.relocate(x + mapProperties.cellWidth / 2, y + mapProperties.cellHeight / 2);
+        board.getChildren().add(node);
+    }
+
+    public void removeNodeFromBoard(Node node) {
+        board.getChildren().remove(node);
+    }
+
+
+    public ImageView addCardToBoard(int x, int y, String name, FilesType filesType, String mode) {
+        ImageView imageView = null;
+
+        if (mode == "ATTACK") {
+
+        } else {
+            String path = "pics/" + filesType.getName() + "/" + name + ".gif";
+            try {
+                imageView = new ImageView(new Image(new FileInputStream(path)));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+        imageView.relocate(x + mapProperties.cellWidth / 2, y + mapProperties.cellHeight / 2);
+        board.getChildren().add(imageView);
+
+        return imageView;
+    }
 
 }

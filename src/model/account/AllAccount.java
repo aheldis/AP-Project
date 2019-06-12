@@ -1,9 +1,11 @@
 package model.account;
 
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import view.AccountView;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -13,12 +15,11 @@ public class AllAccount {
     private static ArrayList<Account> accounts = new ArrayList<>();
 
 
-
     private AllAccount() {
     }
 
     public static AllAccount getInstance() {
-        if (singleInstance == null){
+        if (singleInstance == null) {
             singleInstance = new AllAccount();
 //            try{
 //                Account account;
@@ -58,17 +59,17 @@ public class AllAccount {
         return null;
     }
 
-    public boolean userNameHaveBeenExist(String userName){
+    public boolean userNameHaveBeenExist(String userName) {
         try {
             File file = new File("AccountSaver\\AccountUser.txt");
             Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()){
-                if(scanner.nextLine().equals(userName))
+            while (scanner.hasNextLine()) {
+                if (scanner.nextLine().equals(userName))
                     return true;
             }
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return false;
@@ -99,8 +100,8 @@ public class AllAccount {
     }
 
     public void createAccount(String userName, String password) {
-            Account account = new Account(userName, password);
-            addToAccounts(account);
+        Account account = new Account(userName, password);
+        addToAccounts(account);
 
     }
 
@@ -110,5 +111,20 @@ public class AllAccount {
 
     public ArrayList<Account> getAccounts() {
         return accounts;
+    }
+
+    public void saveAccount(Account account) {
+        try {
+            String path = "AccountSaver/" + account.getUserName() + ".json";
+            File file = new File(path);
+            if(file.exists())
+                file.delete();
+            YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
+            FileWriter fileWriter = new FileWriter(path);
+            altMapper.toJson(account, fileWriter);
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import model.account.Account;
+import model.account.AllAccount;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -102,15 +103,7 @@ public class MainMenuScene {
             case "SETTINGS":
                 root.getChildren().removeAll(menuNodes);
                 AccountScene.getInstance().addWindows();
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                try {
-                    File file = new File("AccountSaver\\" +
-                            account.getUserName() + ".txt");
-                    FileWriter fileWriter = new FileWriter(file);
-                    fileWriter.write(gson.toJson(account));
-                    fileWriter.close();
-                } catch (Exception ignored) {
-                }
+                AllAccount.getInstance().saveAccount(account);
                 account = null;
         }
     }

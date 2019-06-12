@@ -146,6 +146,7 @@ public class AccountScene {
         enterButton.setOnMouseClicked(event -> buttonAction(enterButton, userName.getText(), password.getText()));
     }
 
+
     private void buttonAction(Button enterButton, String userName, String password) {
         AllAccount allAccount = AllAccount.getInstance();
         MainMenuScene mainMenuScene = MainMenuScene.getInstance();
@@ -166,16 +167,7 @@ public class AccountScene {
             allAccount.createAccount(userName, password);
             account = allAccount.getAccountByName(userName);
 
-            YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
-            try {
-                File file = new File("AccountSaver\\" +
-                        account.getUserName() + ".json");
-                FileWriter fileWriter = new FileWriter(file, true);
-                fileWriter.write(gson.toJson(account));
-                fileWriter.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            allAccount.saveAccount(account);
 
             root.getChildren().removeAll(windows);
             mainMenuScene.makeMenu(account);
