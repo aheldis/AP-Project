@@ -1,9 +1,6 @@
 package view.Graphic;
 
-import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -12,7 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -20,8 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
-import javafx.util.Duration;
 import model.account.Account;
 import model.battle.Deck;
 import model.battle.Game;
@@ -88,19 +82,13 @@ class SelectGameScene {
     private static ImageView makeHeroPic(String path, int x, int y) {
         ImageView imageView = addImage(selectGameRoot,
                 path, x, y, 500, 500);
-        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imageView.setScaleX(1.5);
-                imageView.setScaleY(1.5);
-            }
+        imageView.setOnMouseEntered(event -> {
+            imageView.setScaleX(1.5);
+            imageView.setScaleY(1.5);
         });
-        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imageView.setScaleX(1);
-                imageView.setScaleY(1);
-            }
+        imageView.setOnMouseExited(event -> {
+            imageView.setScaleX(1);
+            imageView.setScaleY(1);
         });
         return imageView;
     }

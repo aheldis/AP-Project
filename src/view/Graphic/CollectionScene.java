@@ -467,8 +467,7 @@ class CollectionScene {
             deck.setFitWidth(20);
             root.getChildren().add(deck);
             deletable.add(deck);
-        } catch (Exception e) {
-
+        } catch (Exception ignored) {
         }
         return deck;
     }

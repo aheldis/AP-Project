@@ -49,14 +49,14 @@ public class StageLauncher extends Application {
         return HEIGHT;
     }
 
-    public static void decorateScene(StateType stateType) {
+    static void decorateScene(StateType stateType) {
         switch (stateType) {
             case MAIN_MENU:
                 Platform.runLater(() -> {
                     primaryStage.setScene(StageLauncher.getScene(StateType.ACCOUNT_MENU));
                     primaryStage.show();
                 });
-                playMusic("resource/music/mainmenu.m4a",
+                playMusic("resource/music/main_menu.m4a",
                         true, StageLauncher.getScene(StateType.ACCOUNT_MENU));
                 break;
             case SHOP:
@@ -69,7 +69,7 @@ public class StageLauncher extends Application {
                 break;
             case SELECT_GAME:
                 if (primaryStage.getScene() == StageLauncher.getScene(StateType.SELECT_GAME)) {
-                    stopper=true;
+                    stopper = true;
                 }
                 Platform.runLater(() -> {
                     primaryStage.setScene(StageLauncher.getScene(StateType.SELECT_GAME));
