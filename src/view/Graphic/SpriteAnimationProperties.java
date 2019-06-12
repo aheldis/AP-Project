@@ -36,7 +36,7 @@ public class SpriteAnimationProperties {
                 millis = count * 100; //todo ZAHRA ino set kon khodet
 
                 widthOfEachFrame = gifWidth;
-                heightOfEachFrame = gifHeight;
+                heightOfEachFrame = gifHeight + 1;
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
