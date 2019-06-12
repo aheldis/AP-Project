@@ -17,9 +17,9 @@ public class SpriteAnimationProperties {
     public String spriteSheetPath = null;
 
     public SpriteAnimationProperties(String name, FilesType filesType, int count) {
-        if(filesType.equals(FilesType.MINION)){
-            gifPath = "pics/Minion/" + name + ".gif";
-            spriteSheetPath = "pics/Minion/" + name + ".png";
+        if(filesType.equals(FilesType.MINION) || filesType.equals(FilesType.HERO)){
+            gifPath = "pics/" + filesType.getName() + "/" + name + ".gif";
+            spriteSheetPath = "pics/" + filesType.getName() + "/" + name + ".png";
 
             try {
                 Image gifImage = new Image(new FileInputStream(gifPath));
