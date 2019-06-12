@@ -2,8 +2,11 @@ package model.account;
 
 import view.AccountView;
 
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class AllAccount {
     private static AllAccount singleInstance = new AllAccount();
@@ -45,7 +48,8 @@ public class AllAccount {
         return accounts;
     }
 
-    public Account userNameHaveBeenExist(String userName) {
+    public Account passuserNameHaveBeenExist(String userName) {
+
         for (Account account : accounts) {
             if (account.getUserName().equals(userName)) {
                 return account;
@@ -53,6 +57,23 @@ public class AllAccount {
         }
         return null;
     }
+
+    public boolean userNameHaveBeenExist(String userName){
+        try {
+            File file = new File("AccountSaver\\AccountUser.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()){
+                if(scanner.nextLine().equals(userName))
+                    return true;
+            }
+
+
+        }catch (Exception e){
+
+        }
+        return false;
+    }
+
 
     public boolean passwordMatcher(String userName, String password) {
         Account account = getAccountByName(userName);
@@ -83,7 +104,7 @@ public class AllAccount {
 
     }
 
-    private void addToAccounts(Account account) {
+    public void addToAccounts(Account account) {
         accounts.add(account);
     }
 

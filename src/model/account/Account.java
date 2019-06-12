@@ -15,22 +15,14 @@ public class Account implements Comparable<Account> ,Cloneable{
     private int wins;
     private ArrayList<MatchInfo> matchHistory = new ArrayList<>();
     private Collection collection = new Collection(this);
-    private Collection clonedCollection = new Collection(this);
     private Deck mainDeck = new Deck();
-    private Player player = new OrdinaryPlayer();
+    private Player player ;
     private ArrayList<Deck> decks = new ArrayList<>();
 
     public Account(String userName, String password) {
         this.userName = userName;
         this.password = password;
-    }
-
-    public void setClonedCollection(Collection clonedCollection) {
-        this.clonedCollection = clonedCollection;
-    }
-
-    public Collection getClonedCollection() {
-        return clonedCollection;
+        this.player=new OrdinaryPlayer();
     }
 
     public void setCollection(Collection collection) {

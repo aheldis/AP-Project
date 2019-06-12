@@ -52,7 +52,7 @@ public class MenuController  {
                 switch (request.getRequestType()) {
                     case MAIN_MENU_SIGN_UP: {
                         userName = request.getCommand().split(" ")[2];
-                        if (allAccount.userNameHaveBeenExist(userName) != null) {
+                        if (allAccount.userNameHaveBeenExist(userName) ) {
                             menuView.printer("UserName have been exist");
                             break;
                         }
@@ -71,6 +71,16 @@ public class MenuController  {
 
                         } catch (IOException ignored) {
                         }
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                        try {
+                            File file = new File("AccountSaver\\" +
+                                    account.getUserName() + ".txt");
+                            FileWriter fileWriter = new FileWriter(file);
+                            fileWriter.write(gson.toJson(account));
+                            fileWriter.close();
+                        } catch (Exception ignored) {
+
+                        }
 
 
                         state = StateType.ACCOUNT_MENU;
@@ -82,9 +92,9 @@ public class MenuController  {
                         request.getNewLine();
                         userName = request.getCommand();
                         boolean breaker = false;
-                        while (allAccount.userNameHaveBeenExist(userName) == null) {
+                        while (!allAccount.userNameHaveBeenExist(userName) ) {
                             menuView.printer("This name have not  been exist");
-                            menuView.printer("Enter you UserName");
+                            menuView.printer("Enter your UserName");
                             request.getNewLine();
                             userName = request.getCommand();
                             if (userName.equals("exit")) {
@@ -120,7 +130,7 @@ public class MenuController  {
                     case MAIN_MENU_SAVE:
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
                         try {
-                            File file = new File("D:\\project-Duelyst\\Duelyst\\AccountSaver\\" +
+                            File file = new File("AccountSaver\\" +
                                     account.getUserName() + ".txt");
                             FileWriter fileWriter = new FileWriter(file);
                             fileWriter.write(gson.toJson(account));
@@ -381,7 +391,7 @@ public class MenuController  {
                             menuView.printer("Select user [user name]");
                             request.getNewLine();
                             userName = request.getCommand();
-                            secondAccount = allAccount.userNameHaveBeenExist(userName);
+                            secondAccount = allAccount.passuserNameHaveBeenExist(userName);
                             if (secondAccount == account) {
                                 ErrorType error = ErrorType.SECOND_PLAYER_NOT_VALID;
                                 menuView.printError(error);

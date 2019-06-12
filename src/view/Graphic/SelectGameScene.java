@@ -1,6 +1,7 @@
 package view.Graphic;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -20,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 import model.account.Account;
 import model.battle.Deck;
 import view.enums.StateType;
@@ -70,11 +72,12 @@ class SelectGameScene {
 
     }
 
-    private static void showDescForStoryGame(ImageView imageView, String input, int x) {
+    private static Text showDescForStoryGame( String input, int x) {
         Text text = addText(selectGameRoot, input, x - 150, 600,
                 Color.rgb(225, 225, 225, 0.8), 30);
         text.setStroke(Color.rgb(0, 0, 0, 0.5));
 
+        return text;
     }
 
     private static ImageView makeHeroPic(String path, int x, int y) {
@@ -83,16 +86,15 @@ class SelectGameScene {
         imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                AnimationTimer animationTimer = new AnimationTimer() {
-                    @Override
-                    public void handle(long now) {
-                        for(int i=0;i<20;i++){
-                            imageView.getTransforms().add(new Rotate(30,x+250,y+250));
-                        }
-                        this.stop();
-                    }
-                };
-                animationTimer.start();
+                imageView.setScaleX(1.5);
+                imageView.setScaleY(1.5);
+            }
+        });
+        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imageView.setScaleX(1);
+                imageView.setScaleY(1);
             }
         });
         return imageView;
@@ -147,20 +149,34 @@ class SelectGameScene {
                     "pics/battle/select_mode/background.jpg", true, 20.0f, 20.0f);
 
 
-            ImageView arash = makeHeroPic(
+            ImageView arash= makeHeroPic(
                     "pics\\battle\\select_mode\\arash_mode.png", 60, 100);
 
-            ImageView zahhak = makeHeroPic( "pics\\battle\\select_mode\\zahak_mode.png",
+           ImageView zahhak = makeHeroPic("pics\\battle\\select_mode\\zahak_mode.png",
                     400, 131);
-            ImageView dive_sepid = makeHeroPic( "pics\\battle\\select_mode\\dive_sepid_mode.png",
+           ImageView diveSepid=  makeHeroPic("pics\\battle\\select_mode\\dive_sepid_mode.png",
                     800 - 30, 125);
 
-            showDescForStoryGame(zahhak, "Save Flag", 740);
-            showDescForStoryGame(arash, "Collect Flags", 410);
-            showDescForStoryGame(dive_sepid, "Death Mode", 1120);
+            showDescForStoryGame("Save Flag", 740);
+            showDescForStoryGame( "Collect Flags", 410);
+           showDescForStoryGame( "Death Mode", 1120);
 
 
+           zahhak.setOnMouseClicked(new EventHandler<MouseEvent>() {
+               @Override
+               public void handle(MouseEvent event) {
+                   //todo start game
+               }
+           });
+           diveSepid.setOnMouseClicked(new EventHandler<MouseEvent>() {
+               @Override
+               public void handle(MouseEvent event) {
+                   //todo start a game
+               }
+           });
             getNumberOfFlagPage(arash, selectGameRoot, selectGameScene);
+
+
 
         });
 

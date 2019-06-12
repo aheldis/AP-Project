@@ -111,7 +111,7 @@ class CollectionScene {
         Group group = new Group();
         group.relocate(x, y);
         if (card instanceof Card) {
-            ImageView imageView = addImage(group, ((Card) card).getPathOfThePicture(),
+            ImageView imageView = addImage(group, "pics/other/minion_background.png",
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
 
             showMana(group, 0, 0, ((Card) card).getMp());
@@ -140,7 +140,7 @@ class CollectionScene {
 
                     Text desc = addText(group, ((Card) card).getDescription(),
                             40,
-                            338 - 50, Color.WHITE, 15);
+                            338 - 50-8, Color.WHITE, 15);
                     imageView.setOnMouseExited(event1 -> group.getChildren().removeAll(desc, descView));
                 });
 
@@ -782,6 +782,7 @@ class CollectionScene {
                 1000, 400, 40, 40);
 
         if (decks.size() != 0) {
+            makeDeck(sideBar, numberOfDeck, decks.get(numberOfDeck), collection, group);
             root.getChildren().removeAll(groupOfDeck);
             root.getChildren().addAll(makeDeckCard(decks.get(0), 0, sideBar, collection));
         }
@@ -791,6 +792,7 @@ class CollectionScene {
             if (numberOfDeck < 0)
                 numberOfDeck = 0;
             root.getChildren().removeAll(groupOfDeck);
+            if(decks.size()!=0)
             root.getChildren().addAll(makeDeckCard(decks.get(numberOfDeck), numberOfDeck, sideBar, collection));
         });
         next.setOnMouseClicked(event -> {
@@ -798,9 +800,10 @@ class CollectionScene {
             if (numberOfDeck >= decks.size())
                 numberOfDeck = decks.size() - 1;
             root.getChildren().removeAll(groupOfDeck);
+            if(decks.size()!=0)
             root.getChildren().addAll(makeDeckCard(decks.get(numberOfDeck), numberOfDeck, sideBar, collection));
         });
-        makeDeck(sideBar, numberOfDeck, decks.get(numberOfDeck), collection, group);
+
 
         return group;
     }

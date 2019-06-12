@@ -2,6 +2,7 @@ package view.Graphic;
 
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
@@ -25,6 +26,8 @@ class ShopScene {
     private static Group root = (Group) shopScene.getRoot();
     private static ArrayList<HBox> hBoxes = new ArrayList<>();
     private static int pageNumberCards = 0;
+    private static ArrayList<Node> deletable = new ArrayList<>();
+
 
 
     private static Group makeShopIconBar(String path, String input, int i) {
@@ -105,6 +108,12 @@ class ShopScene {
         ImageView nextCircle = addImage(root, "pics/other/circle.png", 1100, 750, 70, 70);
         ImageView next = addImage(root, "pics/other/next.png", 1115, 765, 40, 40);
 
+        deletable.add(backCircle);
+        deletable.add(back);
+        deletable.add(next);
+        deletable.add(nextCircle);
+
+
         root.getChildren().addAll(vBox);
 
         back.setOnMouseClicked(event -> {
@@ -142,10 +151,10 @@ class ShopScene {
             }
             Group group = CollectionScene.makeCardGroup(0, 0, cards.get(i));
             hBox.getChildren().addAll(group);
-            Text text = addText(group, card.getCost() + "", 90, 215, Color.WHITE, 20);
+            addText(group,card.getName() , 20, 225, Color.WHITE, 20);
+            addText(group,card.getCost()+"",20,245, Color.WHITE, 20);
             group.setOnMouseClicked(event -> {//todo set font
-//                Shop.getInstance().sell(account,card.getCardId().getCardIdAsString());
-                daric.setFont(Font.font("Chalkduster", 30));
+                Shop.getInstance().buy(account,card.getName());
                 daric.setText("Daric :" + account.getDaric());
             });
         }
@@ -228,6 +237,7 @@ class ShopScene {
 
         emote.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
+            root.getChildren().removeAll(deletable);
             hBoxes.clear();
             makeRectIcon(200, 150, 4,
                     "emotes", 5, 20, ".png", 90);
@@ -235,6 +245,7 @@ class ShopScene {
         });
         orbs.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
+            root.getChildren().removeAll(deletable);
             hBoxes.clear();
             makeRectIcon(200, 200, 2,
                     "orbs", 4, 7, ".png", 90);
@@ -243,6 +254,7 @@ class ShopScene {
 
         battle_maps.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
+            root.getChildren().removeAll(deletable);
             hBoxes.clear();
             makeRectIcon(200, 350, 2,
                     "battle_map", 4,
@@ -251,6 +263,7 @@ class ShopScene {
 
         bundles.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
+            root.getChildren().removeAll(deletable);
             hBoxes.clear();
             makeRectIcon(190, 150, 4,
                     "bundles", 5,
@@ -268,6 +281,7 @@ class ShopScene {
 
         buyAndSellCard.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
+            root.getChildren().removeAll(deletable);
             hBoxes.clear();
 
             HBox hBox = sellCard(daric, account);
@@ -279,6 +293,7 @@ class ShopScene {
 
         search.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hBoxes);
+            root.getChildren().removeAll(deletable);
             hBoxes.clear();
             HBox hBox = new HBox();
 

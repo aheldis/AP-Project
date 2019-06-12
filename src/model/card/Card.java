@@ -726,8 +726,22 @@ public abstract class Card {
         return attackRange;
     }
 
+    public static String stringMakerForDesc(String string){
+        String outPut ="";
+        String[] strings= string.split(" ");
+        for(int i=0;i<strings.length;i++){
+            if(i!=0 && i%3==0){
+                outPut+="\n";
+            }
+            outPut+= " "+strings[i];
+        }
+        return outPut;
+    }
+
     public String getDescription() {
-        return description;
+
+
+        return stringMakerForDesc(description);
     }
 
     public void setDescription(String description) {

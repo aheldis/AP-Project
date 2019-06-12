@@ -1,5 +1,10 @@
 package view.Graphic;
 
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -16,13 +21,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.account.Account;
 import model.account.AllAccount;
+import model.battle.Deck;
 import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -116,7 +120,7 @@ public class AccountScene {
         MainMenuScene mainMenuScene = MainMenuScene.getInstance();
         Account account;
         if (enterButton.getText().equals("SIGN UP")) {
-            if (allAccount.userNameHaveBeenExist(userName) != null) {
+            if (allAccount.userNameHaveBeenExist(userName)) {
                 ErrorType.USER_NAME_ALREADY_EXIST.printMessage();
                 return;
             }
@@ -127,14 +131,45 @@ public class AccountScene {
                 fileWriter.close();
             } catch (IOException ignored) {
             }
+
             allAccount.createAccount(userName, password);
             account = allAccount.getAccountByName(userName);
+
+            YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
+            try {
+                File file = new File("AccountSaver\\" +
+                        account.getUserName() + ".txt");
+                FileWriter fileWriter = new FileWriter(file, true);
+                fileWriter.write(gson.toJson(account));
+                fileWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             root.getChildren().removeAll(windows);
             mainMenuScene.makeMenu(account);
         } else {
-            if (allAccount.userNameHaveBeenExist(userName) == null) {
+            if (allAccount.userNameHaveBeenExist(userName)) {
                 ErrorType.USER_NAME_NOT_FOUND.printMessage();
                 return;
+            } else {
+                FileReader fr = null;
+                try {
+                    fr = new FileReader("AccountSaver\\" + userName + ".txt");
+                    Gson gson1 = new GsonBuilder().create();
+                    JsonReader reader = new JsonReader(fr);
+                    reader.setLenient(true);
+                    Account account1 = gson1.fromJson(reader, Account.class);//load the deck
+                    allAccount.addToAccounts(account1);
+
+
+                    System.out.println(account1.getUserName());
+                    System.out.println(account1.getDaric());
+                    System.out.println(allAccount.getAccounts());
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
             if (!allAccount.passwordMatcher(userName, password)) {
                 ErrorType.PASSWORD_DOES_NOT_MATCH.printMessage();
