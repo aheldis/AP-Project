@@ -64,21 +64,21 @@ class CollectionScene {
             backPicView.setFitWidth(300);
             group.getChildren().add(backPicView);
 
-           if(card instanceof Spell) {
-               SpriteAnimationProperties sprite = new SpriteAnimationProperties(
-                       card.getName(), FilesType.SPELL,card.getCountOfAnimation());
-               cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                      0,10,
-                       root, sprite.count,
-                       sprite.rows, 4000,
-                       (int)sprite.widthOfEachFrame, (int)sprite.heightOfEachFrame));
-           }
-           if(card instanceof Hero){
-               addImage(group,"pics/Hero/"+card.getName()+".gif",0,0,80,80);
-           }
-           if(card instanceof Minion){
-               addImage(group,"pics/Minion/"+card.getName()+".gif",0,0,80,80);
-           }
+            if (card instanceof Spell) {
+                SpriteAnimationProperties sprite = new SpriteAnimationProperties(
+                        card.getName(), FilesType.SPELL, card.getCountOfAnimation());
+                cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
+                        0, 10,
+                        root, sprite.count,
+                        sprite.rows, 4000,
+                        (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
+            }
+            if (card instanceof Hero) {
+                addImage(group, "pics/Hero/" + card.getName() + ".gif", 0, 0, 80, 80);
+            }
+            if (card instanceof Minion) {
+                addImage(group, "pics/Minion/" + card.getName() + ".gif", 0, 0, 80, 80);
+            }
 
             ImageView garbage = new ImageView(new Image(new FileInputStream(
                     "pics/collection/delete-button.png")));
@@ -137,23 +137,23 @@ class CollectionScene {
             addText(group, ((Card) card).getHp() + "",
                     180 - 20,
                     200 - 17, Color.WHITE, 20);
-            if(card instanceof Spell) {
+            if (card instanceof Spell) {
                 SpriteAnimationProperties sprite = new SpriteAnimationProperties(
-                        ((Spell) card).getName(), FilesType.SPELL,((Spell) card).getCountOfAnimation());
+                        ((Spell) card).getName(), FilesType.SPELL, ((Spell) card).getCountOfAnimation());
                 cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                        94,58,
+                        94, 58,
                         group, sprite.count,
                         sprite.rows, 4000,
-                        (int)sprite.widthOfEachFrame, (int)sprite.heightOfEachFrame));
+                        (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
             }
-            if(card instanceof Minion){
-               addImage(group, "pics\\Minion\\" + ((Minion) card).getName() + ".gif",
+            if (card instanceof Minion) {
+                addImage(group, "pics\\Minion\\" + ((Minion) card).getName() + ".gif",
                         64,
                         28, 110, 150);
 
             }
-            if(card instanceof Hero){
-                addImage(group,"pics\\Hero\\"+((Hero) card).getName()+".gif",
+            if (card instanceof Hero) {
+                addImage(group, "pics\\Hero\\" + ((Hero) card).getName() + ".gif",
                         64,
                         28, 110, 150);
             }
@@ -175,6 +175,12 @@ class CollectionScene {
 
         }
         return group;
+    }
+
+    private static void showMana(Group root, int x, int y, int mana) {
+        cardsIcon.add(addImage(root, "pics/other/icon_mana@2x.png", x, y, 50, 50));
+        cardsIcon.add(addText(root, mana + "", x + 16, y + 20,
+                Color.rgb(22, 22, 225, 0.5), 20));
     }
 
     private static void showEachHero(Card card, HBox hBox, int i, int j) {
@@ -225,12 +231,6 @@ class CollectionScene {
             e.printStackTrace();
         }
 
-    }
-
-    private static void showMana(Group root, int x, int y, int mana) {
-        cardsIcon.add(addImage(root, "pics/other/icon_mana@2x.png", x, y, 50, 50));
-        cardsIcon.add(addText(root, mana + "", x + 16, y + 20,
-                Color.rgb(22, 22, 225, 0.5), 20));
     }
 
     private static void textForCollection(Card card, int i, int j, ImageView imageView) {
@@ -290,13 +290,13 @@ class CollectionScene {
             imageView.fitWidthProperty();
 
             SpriteAnimationProperties sprite = new SpriteAnimationProperties(
-                    card.getName(), FilesType.SPELL,card.getCountOfAnimation());
+                    card.getName(), FilesType.SPELL, card.getCountOfAnimation());
             cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
                     i * (X_BORDER + CARD_WIDTH) + 140,
                     i * (Y_BORDER + CARD_HEIGHT) + 200 - 55,
                     root, sprite.count,
                     sprite.rows, 4000,
-                    (int)sprite.widthOfEachFrame, (int)sprite.heightOfEachFrame));
+                    (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
 
             textForCollection(card, i, j, imageView);
 

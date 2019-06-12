@@ -48,7 +48,7 @@ public class MapProperties {
 
     public void setCellSize() {
         cellWidth = (((urx + lrx) / 2 - (ulx + llx) / 2) - gap * (LandOfGame.getNumberOfColumns() - 1)) / LandOfGame.getNumberOfColumns();
-        cellHeight = ((lly - uly) - gap * (LandOfGame.getNumberOfColumns() - 1)) / LandOfGame.getNumberOfColumns();
+        cellHeight = ((lly - uly) - gap * (LandOfGame.getNumberOfRows() - 1)) / LandOfGame.getNumberOfRows();
     }
 /*
     public static void main(String[] args) {
