@@ -202,7 +202,7 @@ public class BattleScene {
                     board, spriteProperties.count,
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
-            imageView.relocate(position.getKey() - 10, position.getValue() - 52);
+            imageView.relocate(position.getKey() - 10, position.getValue() - 48);
             imageView.setFitWidth(mapProperties.cellWidth + 10);
             imageView.setFitHeight(mapProperties.cellHeight + 20);
         } else {
