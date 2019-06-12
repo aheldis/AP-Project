@@ -52,7 +52,7 @@ public class StageLauncher extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
+//        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
         return scene;
     }
 
@@ -111,7 +111,7 @@ public class StageLauncher extends Application {
             decks.add(deck);
         }
 
-        Account account =  new Account("zahra", "123");
+        Account account = new Account("zahra", "123");
         Collection collection = new Collection(account);
         for (int i = 0; i < 15; i++) {
             collection.addToCards(spell);
@@ -158,6 +158,7 @@ public class StageLauncher extends Application {
         CollectionScene.showInCollection(collection);
 
     }
+
     public static void zahraTestShop() {
         Account account = new Account("zahra", "123");
         Spell spell = new Spell();
@@ -206,7 +207,7 @@ public class StageLauncher extends Application {
             ImageView backgroudCircle = addImage(handCardGroup,
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
             addImage(handCardGroup, "pics/other/icon_mana@2x.png", 60, 107, 30, 30);
-            makeCircleRotation(backgroudCircle,70,70);
+            makeCircleRotation(backgroudCircle, 70, 70);
         }
 
         addImage(circlesGroup, "pics/battle/end_turn_yellow.png", 1000, 10, 200, 100);
@@ -221,12 +222,12 @@ public class StageLauncher extends Application {
         help.setFont(Font.font("Andele Mono", FontWeight.BOLD, 25));
 
 
-        text.setStroke(Color.rgb(251,225,60,0.5));
-        graveYard.setStroke(Color.rgb(0,225,225,0.5));
-        help.setStroke(Color.rgb(0,225,225,0.5));
+        text.setStroke(Color.rgb(251, 225, 60, 0.5));
+        graveYard.setStroke(Color.rgb(0, 225, 225, 0.5));
+        help.setStroke(Color.rgb(0, 225, 225, 0.5));
     }
 
-    public static void graveYardTest(){
+    public static void graveYardTest() {
         ArrayList<Card> cards = new ArrayList<>();
 
         minionMaker(cards, "pics/gifMinion/giv.gif");
@@ -240,14 +241,13 @@ public class StageLauncher extends Application {
         spell.setFrameSize(48);
         spell.setMp(10);
         spell.setHp(10);
-        for(int i=0;i<13;i++)
-        cards.add(spell);
-        GraveYard.makeYard(cards );
+        for (int i = 0; i < 13; i++)
+            cards.add(spell);
+        GraveYard.makeYard(cards);
     }
 
     @Override
     public void start(Stage primaryStage) {
-
 
 
         StageLauncher.primaryStage = primaryStage;
@@ -256,6 +256,7 @@ public class StageLauncher extends Application {
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
         primaryStage.setResizable(false);
+        primaryStage.setFullScreen(false);
         primaryStage.setTitle("Duelyst");
         try {
             primaryStage.getIcons().add(new Image(new FileInputStream("pics/other/duelyst_icon.png")));
@@ -270,7 +271,7 @@ public class StageLauncher extends Application {
         Scene selectGameScene = makeScene(StateType.SELECT_GAME, Cursor.GREEN);
         Scene battleScene = makeScene(StateType.BATTLE, Cursor.RED);
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
-        Scene graveyardScene = makeScene(StateType.GRAVE_YARD,Cursor.RED);
+        Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
 
         //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of Spell and ... to minion
         //todo add animation to  Spell and minions
@@ -282,14 +283,14 @@ public class StageLauncher extends Application {
 
 //*/
 
-        primaryStage.setScene(selectGameScene);
+//        primaryStage.setScene(selectGameScene);
 /*/
         BattleScene battleScene1 = BattleScene.getSingleInstance();
         battleScene1.setBattleScene(7); //from 1 to 12
         primaryStage.setScene(battleScene);
 /*/
-//        AccountScene.getInstance().makeBackground();
-//        primaryStage.setScene(accountScene);
+        AccountScene.getInstance().makeBackground();
+        primaryStage.setScene(accountScene);
 
 
 //       graveYardTest();
@@ -310,7 +311,7 @@ public class StageLauncher extends Application {
 //        collectionScene.setFill(Color.BLACK);
 //        testzahraFooter((Group)collectionScene.getRoot());
 //        primaryStage.setScene(collectionScene);
-zahraTestDeck();
+//        zahraTestDeck();
         primaryStage.show();
     }
 
