@@ -2,9 +2,6 @@ package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -13,17 +10,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Glow;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.account.Account;
 import model.account.AllAccount;
-import model.account.FilesType;
-import model.battle.Deck;
-import model.card.Hero;
 import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
@@ -52,7 +49,7 @@ public class AccountScene {
     }
 
     void makeBackground() {
-        playMusic("resource/music/mainmenu.m4a", true, accountScene);
+        playMusic("resource/music/main_menu.m4a", true, accountScene);
         String backgroundPath = "pics/menu/background@2x.jpg";
         ImageView background = setBackground(root, backgroundPath, true, 0, 0);
         assert background != null;
@@ -60,10 +57,36 @@ public class AccountScene {
         addLanterns();
         addMovables(background);
         addWindows();
-//        MainMenuScene.getInstance().makeMenu(null);
     }
 
-    private void addWindows() {
+    private void addQuit() {
+        double width = StageLauncher.getWidth();
+        double height = StageLauncher.getHeight();
+        Button quit = new Button("QUIT");
+        quit.setPrefSize(174, 54);
+        quit.relocate(width - 250, height - 100);
+        BackgroundImage backgroundImage = new BackgroundImage(new Image("pics/menu/quit.png"),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage);
+        quit.setBackground(background);
+        quit.setTextFill(Color.WHITE);
+        quit.setStyle("-fx-font-weight: bold");
+        root.getChildren().add(quit);
+        windows.add(quit);
+        Glow glow = new Glow(0);
+        quit.setEffect(glow);
+        quit.setOnMouseEntered(event -> {
+            setCursor(accountScene, Cursor.LIGHTEN);
+            glow.setLevel(1);
+        });
+        quit.setOnMouseExited(event -> {
+            setCursor(accountScene, Cursor.AUTO);
+            glow.setLevel(0);
+        });
+        quit.setOnMouseClicked(event -> StageLauncher.getPrimaryStage().close());
+    }
+
+    void addWindows() {
         double centerX = StageLauncher.getWidth() / 2;
         double centerY = StageLauncher.getHeight() / 2;
         double sizeX = 500;
@@ -90,6 +113,7 @@ public class AccountScene {
         enter("LOG IN", enterButton, logIn, signUp);
         logIn.setOnMouseClicked(event -> enter("LOG IN", enterButton, logIn, signUp));
         signUp.setOnMouseClicked(event -> enter("SIGN UP", enterButton, logIn, signUp));
+        addQuit();
     }
 
     private void commonTextFields(double sizeY, Button enterButton) {
@@ -155,7 +179,7 @@ public class AccountScene {
                 ErrorType.USER_NAME_NOT_FOUND.printMessage();
                 return;
             } else {
-                FileReader fr = null;
+//                FileReader fr = null;
                 try {
                     InputStream input = new FileInputStream("AccountSaver/" + userName + ".json");
                     Reader reader = new InputStreamReader(input);

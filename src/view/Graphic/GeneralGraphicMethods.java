@@ -1,7 +1,6 @@
 package view.Graphic;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.scene.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
@@ -255,6 +254,5 @@ public class GeneralGraphicMethods {
         Stage primaryStage = StageLauncher.getPrimaryStage();
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 }

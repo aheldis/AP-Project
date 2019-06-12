@@ -1,5 +1,7 @@
 package view.Graphic;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.scene.Group;
@@ -16,9 +18,12 @@ import model.account.Account;
 import view.enums.Cursor;
 import view.enums.StateType;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -95,17 +100,31 @@ public class MainMenuScene {
                 setScene(StateType.SHOP);
                 break;
             case "SETTINGS":
+                root.getChildren().removeAll(menuNodes);
+                AccountScene.getInstance().addWindows();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                try {
+                    File file = new File("AccountSaver\\" +
+                            account.getUserName() + ".txt");
+                    FileWriter fileWriter = new FileWriter(file);
+                    fileWriter.write(gson.toJson(account));
+                    fileWriter.close();
+                } catch (Exception ignored) {
+                }
+                account = null;
         }
     }
 
 
     private void addGraphsAndLabelButtons() {
-        playGraph = addImage(root, "pics/menu/1.png", 180, 240, 70, 70);
+        Random random = new Random();
+        int randomNumber = random.nextInt(16) + 1;
+        playGraph = addImage(root, "pics/menu/" + randomNumber + ".png", 180, 240, 70, 70);
         playGraph.setOpacity(0.5);
         menuNodes.add(playGraph);
         graphs.put(playGraph, 0);
 
-        collectionGraph = addImage(root, "pics/menu/1.png", 180, 310, 70, 70);
+        collectionGraph = addImage(root, "pics/menu/" + randomNumber + ".png", 180, 310, 70, 70);
         collectionGraph.setOpacity(0.5);
         menuNodes.add(collectionGraph);
         graphs.put(collectionGraph, 0);
@@ -113,7 +132,7 @@ public class MainMenuScene {
     }
 
     private void addLabelButtons() {
-        Label play = newLabelButton("PLAY", 250, 250);
+        Label play = newLabelButton("PLAY", 250);
         Label playShadow = addShadow(play);
         fadeAnimation(playShadow);
         AnimationTimer playAnimation = graphAnimation(playGraph);
@@ -130,7 +149,7 @@ public class MainMenuScene {
             SelectGameScene.selectGame(account);
             setScene(StateType.SELECT_GAME);
         });
-        Label collection = newLabelButton("COLLECTION", 250, 320);
+        Label collection = newLabelButton("COLLECTION", 320);
         Label collectionShadow = addShadow(collection);
         AnimationTimer collectionAnimation = graphAnimation(collectionGraph);
         root.getChildren().remove(collectionShadow);
@@ -167,10 +186,10 @@ public class MainMenuScene {
                     root.getChildren().remove(graph);
                     menuNodes.remove(graph);
                     ImageView newGraph = addImage(root,
-                            "pics/menu/" + ((graphs.get(graph) + 1) % 4 + 1) + ".png",
+                            "pics/menu/" + ((graphs.get(graph) + 1) % 16 + 1) + ".png",
                             graph.getLayoutX(), graph.getLayoutY(), graph.getFitWidth(), graph.getFitHeight());
                     menuNodes.add(newGraph);
-                    graphs.put(newGraph, (graphs.get(graph) + 1) % 4);
+                    graphs.put(newGraph, (graphs.get(graph) + 1) % 16);
                     graphs.remove(graph);
                     if (graph.equals(playGraph))
                         playGraph = newGraph;
@@ -208,9 +227,9 @@ public class MainMenuScene {
         animationTimer.start();
     }
 
-    private Label newLabelButton(String name, double x, double y) {
+    private Label newLabelButton(String name, double y) {
         Label button = new Label(name);
-        button.relocate(x, y);
+        button.relocate((double) 250, y);
         button.setFont(Font.font("Lato Light", 35));
         button.setTextFill(Color.WHITE);
         addToNodes(button);
