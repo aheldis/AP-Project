@@ -32,7 +32,7 @@ public class GeneralGraphicMethods {
     private static double sabasYRatio = 1;//0.8592592592592593;
     private static double zahrasXRatio = 1;//0.7868020304568528;
     private static double zahrasYRatio = 1;//0.9351851851851852;
-    public static boolean stopper =false;
+    static boolean stopper = false;
 
     static double getSabasXRatio() {
         return sabasXRatio;
@@ -62,7 +62,7 @@ public class GeneralGraphicMethods {
         Text text = new Text(input);
         text.relocate(x, y);
         text.setFill(color);
-        text.setFont(Font.font(fontSize));
+        text.setFont(Font.font("Lato Regular", fontSize));
         nodeAdder(text, root);
         return text;
     }

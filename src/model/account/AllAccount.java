@@ -67,9 +67,7 @@ public class AllAccount {
                 if (scanner.nextLine().equals(userName))
                     return true;
             }
-
-
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return false;

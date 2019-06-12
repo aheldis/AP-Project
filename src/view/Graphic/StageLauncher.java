@@ -225,7 +225,7 @@ public class StageLauncher extends Application {
         root.getChildren().addAll(circlesGroup);
 
         Group nextCardGroup = new Group();
-        circlesGroup.relocate(50, 660);
+        circlesGroup.relocate(50, 640);
         circlesGroup.getChildren().addAll(nextCardGroup);
         nextCardGroup.relocate(0, 0);
 
@@ -322,11 +322,11 @@ public class StageLauncher extends Application {
 //*/
 
 //        primaryStage.setScene(selectGameScene);
-/*/
-        BattleScene battleScene1 = BattleScene.getSingleInstance();
-        battleScene1.setBattleScene(7); //from 1 to 12
-        primaryStage.setScene(battleScene);
-/*/
+
+//        BattleScene battleScene1 = BattleScene.getSingleInstance();
+//        battleScene1.setBattleScene(7); //from 1 to 12
+//        primaryStage.setScene(battleScene);
+
         AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);
 
@@ -335,7 +335,7 @@ public class StageLauncher extends Application {
 //        primaryStage.setScene(graveyardScene);
 
 
-//*/
+/*/
 //        zahraTestDeck();
 //        primaryStage.setScene(collectionScene);
 //*/

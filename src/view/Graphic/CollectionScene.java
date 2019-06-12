@@ -64,21 +64,21 @@ class CollectionScene {
             backPicView.setFitWidth(300);
             group.getChildren().add(backPicView);
 
-           if(card instanceof Spell) {
-               SpriteAnimationProperties sprite = new SpriteAnimationProperties(
-                       card.getName(), FilesType.SPELL,card.getCountOfAnimation());
-               cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                      0,10,
-                       root, sprite.count,
-                       sprite.rows, 4000,
-                       (int)sprite.widthOfEachFrame, (int)sprite.heightOfEachFrame));
-           }
-           if(card instanceof Hero){
-               addImage(group,"pics/Hero/"+card.getName()+".gif",0,0,80,80);
-           }
-           if(card instanceof Minion){
-               addImage(group,"pics/Minion/"+card.getName()+".gif",0,0,80,80);
-           }
+            if (card instanceof Spell) {
+                SpriteAnimationProperties sprite = new SpriteAnimationProperties(
+                        card.getName(), FilesType.SPELL, card.getCountOfAnimation());
+                cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
+                        0, 10,
+                        root, sprite.count,
+                        sprite.rows, 4000,
+                        (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
+            }
+            if (card instanceof Hero) {
+                addImage(group, "pics/Hero/" + card.getName() + ".gif", 0, 0, 80, 80);
+            }
+            if (card instanceof Minion) {
+                addImage(group, "pics/Minion/" + card.getName() + ".gif", 0, 0, 80, 80);
+            }
 
             ImageView garbage = new ImageView(new Image(new FileInputStream(
                     "pics/collection/delete-button.png")));
@@ -137,23 +137,23 @@ class CollectionScene {
             addText(group, ((Card) card).getHp() + "",
                     180 - 20,
                     200 - 17, Color.WHITE, 20);
-            if(card instanceof Spell) {
+            if (card instanceof Spell) {
                 SpriteAnimationProperties sprite = new SpriteAnimationProperties(
-                        ((Spell) card).getName(), FilesType.SPELL,((Spell) card).getCountOfAnimation());
+                        ((Spell) card).getName(), FilesType.SPELL, ((Spell) card).getCountOfAnimation());
                 cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                        94,58,
+                        94, 58,
                         group, sprite.count,
                         sprite.rows, 4000,
-                        (int)sprite.widthOfEachFrame, (int)sprite.heightOfEachFrame));
+                        (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
             }
-            if(card instanceof Minion){
-               addImage(group, "pics\\Minion\\" + ((Minion) card).getName() + ".gif",
+            if (card instanceof Minion) {
+                addImage(group, "pics\\Minion\\" + ((Minion) card).getName() + ".gif",
                         64,
                         28, 110, 150);
 
             }
-            if(card instanceof Hero){
-                addImage(group,"pics\\Hero\\"+((Hero) card).getName()+".gif",
+            if (card instanceof Hero) {
+                addImage(group, "pics\\Hero\\" + ((Hero) card).getName() + ".gif",
                         64,
                         28, 110, 150);
             }
@@ -290,13 +290,13 @@ class CollectionScene {
             imageView.fitWidthProperty();
 
             SpriteAnimationProperties sprite = new SpriteAnimationProperties(
-                    card.getName(), FilesType.SPELL,card.getCountOfAnimation());
+                    card.getName(), FilesType.SPELL, card.getCountOfAnimation());
             cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
                     i * (X_BORDER + CARD_WIDTH) + 140,
                     i * (Y_BORDER + CARD_HEIGHT) + 200 - 55,
                     root, sprite.count,
                     sprite.rows, 4000,
-                    (int)sprite.widthOfEachFrame, (int)sprite.heightOfEachFrame));
+                    (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
 
             textForCollection(card, i, j, imageView);
 
@@ -503,30 +503,25 @@ class CollectionScene {
     }
 
     private static ArrayList<VBox> dragAndDropCard(Collection collection, int pageNumber, VBox target, Deck deck) {
-        int NUMBER_IN_EACH_ROW = 5;
+        final int NUMBER_IN_EACH_ROW = 5;
+        final int SPACING = 13;
         ArrayList<VBox> vBoxes = new ArrayList<>();
-        int spacing = 13;
-        ArrayList<Card> cards =
-                collection.getAllCards();
+        ArrayList<Card> cards = collection.getAllCards();
         VBox vBox = new VBox();
         int startingBound = 2 * NUMBER_IN_EACH_ROW * pageNumber;
-        Group group;
         for (int i = startingBound; i < startingBound + 2 * NUMBER_IN_EACH_ROW; i++) {
             if (i >= cards.size())
                 break;
             if (i % NUMBER_IN_EACH_ROW == 0) {
                 vBox = new VBox();
                 vBox.relocate(370 * ((i / (float) NUMBER_IN_EACH_ROW) % 2 + 1), 160);
-                vBox.setSpacing(spacing);
+                vBox.setSpacing(SPACING);
                 root.getChildren().addAll(vBox);
                 vBoxes.add(vBox);
             }
-            group = new Group();
-
+            Group group = new Group();
             deckCardMaker(vBox, cards.get(i), group);
-            System.out.println(group);
-
-            DragAndDropClass.dragAndDrop(group, target, deck, cards.get(i));
+            DragAndDropClass.dragAndDrop(group, target, deck, cards.get(i), vBox, root, 150, 35);
         }
         return vBoxes;
     }
@@ -558,7 +553,7 @@ class CollectionScene {
             }
 
 
-            addCardToDeck.setOnMouseEntered(event15 -> {
+            addCardToDeck.setOnMouseClicked(event15 -> {
                 System.out.println("hi");
                 Rectangle rectangle = new Rectangle(350, 50, 800, 750);
                 rectangle.setFill(Color.rgb(0, 0, 0, 0.7));
