@@ -3,8 +3,8 @@
   "@val": {
     "name": "AreaDispel",
     "CardNumber": 2,
-    "countOfAnimation": 53,
-    "millis": 2500,
+    "countOfAnimation": 14,
+    "millis": 2000,
     "cost": 1500,
     "mp": 2,
     "hp": 0,

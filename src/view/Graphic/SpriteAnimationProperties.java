@@ -48,8 +48,8 @@ public class SpriteAnimationProperties {
             columns = 5;
             this.count = count;
             millis = 3000;
-            widthOfEachFrame = 51;
-            heightOfEachFrame = 51;
+            widthOfEachFrame = 48;
+            heightOfEachFrame = 48;
         }
     }
 }
