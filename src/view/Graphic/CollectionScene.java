@@ -444,20 +444,8 @@ class CollectionScene {
             if (cards.get(i) instanceof Spell)
                 showEachSpell(cards.get(i), hBox, i % 5, j);
         }
-//        try {
-////            StackPane group = new StackPane();
-////            addImage(group, "pics/menu/button_cancel.png",
-////                    500, 10, 200, 80);
-////
-////            addText(group, "BACK", 567, 40, Color.WHITE, 30);
-////            vBox.getChildren().add(group);
-////            group.setOnMouseClicked(event -> {
-////                //todo go to menu for haniyeh
-////            });
-//
-//
-//        } catch (Exception ignored) {
-//        }
+
+        log(root, collection.helpOfCollection(), StateType.MAIN_MENU, 600);
 
     }
 

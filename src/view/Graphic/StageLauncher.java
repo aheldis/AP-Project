@@ -56,8 +56,8 @@ public class StageLauncher extends Application {
                     primaryStage.setScene(StageLauncher.getScene(StateType.ACCOUNT_MENU));
                     primaryStage.show();
                 });
-                AccountScene.getInstance().makeBackground();
-
+                playMusic("resource/music/mainmenu.m4a",
+                        true, StageLauncher.getScene(StateType.ACCOUNT_MENU));
                 break;
             case SHOP:
                 ShopScene.makeShopScene(account);
