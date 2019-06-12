@@ -27,8 +27,6 @@ public class Spell extends Card {
         this.buffs = buffs;
     }
 
-
-
     public int getApChanges() {
         return apChanges;
     }
