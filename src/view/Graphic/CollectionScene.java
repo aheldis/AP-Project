@@ -20,7 +20,6 @@ import javafx.scene.text.Text;
 import model.account.Collection;
 import model.account.FilesType;
 import model.battle.Deck;
-import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
@@ -178,6 +177,14 @@ class CollectionScene {
         }
         return group;
     }
+
+
+    private static void showMana(Group root, int x, int y, int mana) {
+        cardsIcon.add(addImage(root, "pics/other/icon_mana@2x.png", x, y, 50, 50));
+        cardsIcon.add(addText(root, mana + "", x + 16, y + 20,
+                Color.rgb(22, 22, 225, 0.5), 20));
+    }
+
 
     private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {

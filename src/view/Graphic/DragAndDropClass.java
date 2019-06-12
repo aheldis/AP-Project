@@ -1,6 +1,5 @@
 package view.Graphic;
 
-import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
