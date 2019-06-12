@@ -36,7 +36,7 @@ public class SpriteAnimationProperties {
                 millis = count * 100; //todo ZAHRA ino set kon khodet
 
                 widthOfEachFrame = gifWidth;
-                heightOfEachFrame = gifHeight;
+                heightOfEachFrame = gifHeight + 1;
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -50,6 +50,16 @@ public class SpriteAnimationProperties {
             millis = 3000;
             widthOfEachFrame = 48;
             heightOfEachFrame = 48;
+        }
+        if(filesType.equals(FilesType.USABLE)){
+            spriteSheetPath = "pics/items/" + name + ".png";
+            rows = 5;
+            columns = 6;
+            this.count = 29;
+            millis = 3000;
+            widthOfEachFrame = 48;
+            heightOfEachFrame = 48;
+
         }
     }
 }

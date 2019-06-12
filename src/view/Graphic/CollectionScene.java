@@ -20,10 +20,12 @@ import javafx.scene.text.Text;
 import model.account.Collection;
 import model.account.FilesType;
 import model.battle.Deck;
+import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
+import model.item.Usable;
 import view.enums.ErrorType;
 import view.enums.StateType;
 
@@ -70,7 +72,7 @@ class CollectionScene {
                 cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
                         0, 10,
                         root, sprite.count,
-                        sprite.rows, 4000,
+                        sprite.rows, card.getMillis(),
                         (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
             }
             if (card instanceof Hero) {
@@ -143,7 +145,7 @@ class CollectionScene {
                 cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
                         94, 58,
                         group, sprite.count,
-                        sprite.rows, 4000,
+                        sprite.rows, ((Spell) card).getMillis(),
                         (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
             }
             if (card instanceof Minion) {
@@ -227,12 +229,6 @@ class CollectionScene {
 
     }
 
-    private static void showMana(Group root, int x, int y, int mana) {
-        cardsIcon.add(addImage(root, "pics/other/icon_mana@2x.png", x, y, 50, 50));
-        cardsIcon.add(addText(root, mana + "", x + 16, y + 20,
-                Color.rgb(22, 22, 225, 0.5), 20));
-    }
-
     private static void textForCollection(Card card, int i, int j, ImageView imageView) {
         cardsIcon.add(addText(root, card.getAp() + "",
                 i * (X_BORDER + CARD_WIDTH) + 90,
@@ -285,7 +281,7 @@ class CollectionScene {
 
     private static void showEachSpell(Card card, HBox hBox, int i, int j) {
         try {
-            ImageView imageView = addImage(hBox, "pics/other/spell_background.png",
+            ImageView imageView = addImage(hBox, "pics/other/minion_background.png",
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
             imageView.fitWidthProperty();
 
@@ -293,9 +289,9 @@ class CollectionScene {
                     card.getName(), FilesType.SPELL, card.getCountOfAnimation());
             cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
                     i * (X_BORDER + CARD_WIDTH) + 140,
-                    i * (Y_BORDER + CARD_HEIGHT) + 200 - 55,
+                    j * (Y_BORDER + CARD_HEIGHT) + 200 - 55,
                     root, sprite.count,
-                    sprite.rows, 4000,
+                    sprite.rows, card.getMillis(),
                     (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
 
             textForCollection(card, i, j, imageView);
@@ -308,7 +304,8 @@ class CollectionScene {
         }
     }
 
-    private static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW, ArrayList<Card> cards, int spacing) {
+    private static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW,
+                                      ArrayList<Card> cards, int spacing) {
         HBox hBox = new HBox();
         int startingBound = 2 * NUMBER_IN_EACH_ROW * pageNumber;
         int j = -1;
@@ -396,8 +393,37 @@ class CollectionScene {
         });
     }
 
+    public static Group makeItemCard(Usable item, int i) {
+        Group group = new Group();
+        ImageView imageView = addImage(group, "pics/other/spell_background.png",
+                0, 0, CARD_WIDTH, CARD_HEIGHT);
+
+        SpriteAnimationProperties sprite = new SpriteAnimationProperties(
+                item.getName(), FilesType.USABLE, item.getCountOfAnimation());
+        cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
+                i * (X_BORDER + CARD_WIDTH) + 140,
+                (Y_BORDER + CARD_HEIGHT) + 200 - 55,
+                group, sprite.count,
+                sprite.rows, item.getMillis(),
+                (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
+        return group;
+    }
+
+    private static void addItemCard(Usable[] items, VBox vBox) {
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(1);
+        vBox.getChildren().addAll(hBox);
+        Group group;
+        for (int i = 0; i < items.length; i++) {
+            group = makeItemCard(items[i], i);
+            hBox.getChildren().addAll(group);
+        }
+    }
+
     static void showInCollection(Collection collection) {
         ArrayList<Card> cards = collection.getAllCards();
+        Usable[] items = collection.getItems();
         root.getChildren().clear();
 
         playMusic("resource/music/collection.m4a", true, collectionScene);
@@ -430,7 +456,8 @@ class CollectionScene {
         ImageView nextCircle = addImage(root, "pics/other/circle.png", 1200, 750, 70, 70);
         ImageView next = addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
         ImageView deckSceneButton = addImage(root, "pics/other/desc.png", 600, 770, 100, 50);
-        Text deckScene = addText(root, "Decks", 618, 785, Color.rgb(225, 225, 225, 0.8), 20);
+        Text deckScene = addText(root, "Decks", 618, 785, Color.rgb(225, 225, 225,
+                0.8), 20);
         deckScene.setOnMouseClicked(event -> Platform.runLater(() -> showDeck(collection.getDecks(), collection)));
 
         back.setOnMouseClicked(event -> {
@@ -440,6 +467,9 @@ class CollectionScene {
             vBox.getChildren().removeAll(cardsIcon);
             root.getChildren().removeAll(cardsIcon);
             cardsIcon.clear();
+            if (pageNumberCards == Math.floor(cards.size() / 10.0)) {
+                addItemCard(items,vBox);
+            }
             hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
         });
         next.setOnMouseClicked(event -> {
@@ -447,9 +477,15 @@ class CollectionScene {
             vBox.getChildren().removeAll(cardsIcon);
             root.getChildren().removeAll(cardsIcon);
             cardsIcon.clear();
+            if (pageNumberCards == Math.floor(cards.size() / 10.0)) {
+                addItemCard(items,vBox);
+            }
             hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
         });
 
+        if (pageNumberCards == Math.floor(cards.size() / 10.0)) {
+            addItemCard(items,vBox);
+        }
         int j = -1;
         for (int i = 0; i < 10; i++) {
             if (i >= cards.size())
@@ -474,6 +510,7 @@ class CollectionScene {
             if (cards.get(i) instanceof Spell)
                 showEachSpell(cards.get(i), hBox, i % 5, j);
         }
+
 
         log(root, collection.helpOfCollection(), StateType.MAIN_MENU, 600);
 

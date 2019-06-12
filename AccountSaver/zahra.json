@@ -41,4 +41,121 @@
     },
     "decks": []
   }
+}{
+  "@type": "model.account.Account",
+  "@val": {
+    "userName": "zahra",
+    "password": "123",
+    "daric": 140000,
+    "wins": 0,
+    "matchHistory": [],
+    "collection": {
+      "spells": [],
+      "heroes": [
+        {
+          "buffs": [],
+          "mpRequiredForSpell": 0,
+          "coolDown": 2,
+          "turnNotUsedSpecialPower": 0,
+          "numberOfAttacks": 0,
+          "numberOfBeingAttacked": 0,
+          "haveSpecialPower": false,
+          "change": {
+            "targetType": "force",
+            "opponentCanMove": true,
+            "opponentCanAttack": true,
+            "opponentCanCounterAttack": true,
+            "turnOfCanNotMoveForOpponent": 0,
+            "turnOfCanNotAttackForOpponent": 0,
+            "turnOfCanNotCounterAttackForOpponent": 0,
+            "hpChange": -4,
+            "apChange": 0,
+            "buffs": {},
+            "unaffectBuffs": false,
+            "changeInApOrHpForWeakness": 0,
+            "changeInApOrHpForPower": 0,
+            "changeInManaForMana": 0,
+            "changeInHpForDecreaserHp": 0
+          },
+          "target": {
+            "targets": [],
+            "counterAttackType": "ranged",
+            "cardType": "hero",
+            "one": false,
+            "row": true,
+            "column": false,
+            "all": false,
+            "random": false,
+            "distance": -1,
+            "self": false,
+            "enemy": true,
+            "ally": false,
+            "haveRange": false,
+            "notHaveRange": false,
+            "theOneWhoCollects": "-",
+            "theOneWhoDoesTheThing": "-"
+          },
+          "mp": 2,
+          "hp": 30,
+          "ap": 2,
+          "turnOfCanNotMove": 0,
+          "turnOfCanNotAttack": 0,
+          "turnOfCanNotCounterAttack": 0,
+          "name": "Arash",
+          "cardId": {
+            "cardId": "zahra_Arash_1",
+            "account": "@root",
+            "card": "@root.collection.heroes.0",
+            "number": 1
+          },
+          "turnsOfPickingUp": [],
+          "counterAttack": "ranges",
+          "attackRange": 6,
+          "cost": 10000,
+          "buffsOnThisCard": [],
+          "CardNumber": 7,
+          "canMove": true,
+          "canAttack": true,
+          "canCounterAttack": true,
+          "hpChangeAfterAttack": 0,
+          "description": "attack to the row of hero 4 units",
+          "countOfAnimation": 111,
+          "animationRow": 5,
+          "frameSize": 0,
+          "millis": 10000,
+          "heightOfPicture": 0
+        }
+      ],
+      "minions": [],
+      "items": [
+        null,
+        null,
+        null
+      ],
+      "account": "@root",
+      "decks": [],
+      "accountView": {}
+    },
+    "mainDeck": {
+      "cardsOfDeck": [],
+      "indexOfCards": 0
+    },
+    "player": {
+      "@type": "model.battle.OrdinaryPlayer",
+      "@val": {
+        "cardsOnLand": [],
+        "turnForSavingFlag": 0,
+        "ownFlags": [],
+        "turnsPlayed": 0,
+        "manaOfThisTurn": 2,
+        "mana": 2,
+        "graveYard": {
+          "cards": [],
+          "player": "@root.player"
+        },
+        "buffsOnThisPlayer": []
+      }
+    },
+    "decks": []
+  }
 }

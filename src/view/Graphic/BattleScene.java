@@ -11,7 +11,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 import model.account.FilesType;
+import model.account.Shop;
 import model.battle.Match;
+import model.card.Card;
+import model.card.Hero;
+import model.card.Minion;
 import model.land.LandOfGame;
 import view.enums.StateType;
 
@@ -19,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -129,7 +134,7 @@ public class BattleScene {
     }
 
     public Pair<Double, Double> getCellPosition(int row, int column) {
-        return new Pair<>(gameGrid[row][column].getX(), gameGrid[row][column].getY());
+        return new Pair<>(gameGrid[row][column].getLayoutX(), gameGrid[row][column].getLayoutY());
     }
 
     private void addGrid() {
@@ -139,6 +144,8 @@ public class BattleScene {
         double primaryX = (mapProperties.ulx + mapProperties.llx) / 2, primaryY = mapProperties.uly;
         double currentX = primaryX, currentY = primaryY;
 
+        System.out.println("mapProperties.cellHeight = " + mapProperties.cellHeight);
+        System.out.println("mapProperties = " + mapProperties.cellHeight);
         gameGrid = new Rectangle[numberOfRows][numberOfColumns];
 
         for (int i = 0; i < numberOfRows; i++)
@@ -150,8 +157,7 @@ public class BattleScene {
                     currentX += mapProperties.cellWidth + mapProperties.gap;
                 Rectangle rectangle = new Rectangle(mapProperties.cellWidth, mapProperties.cellHeight);
                 rectangle.setFill(Color.rgb(0, 0, 0, 0.2));
-                rectangle.setLayoutX(currentX);
-                rectangle.setLayoutY(currentY);
+                rectangle.relocate(currentX, currentY);
                 gameGrid[i][j] = rectangle;
                 board.getChildren().add(rectangle);
             }
@@ -183,26 +189,66 @@ public class BattleScene {
     }
 
 
-    public ImageView addCardToBoard(int x, int y, String name, FilesType filesType, String mode) {
+    public ImageView addCardToBoard(int row, int column, Card card, String mode) {
+        FilesType filesType = FilesType.MINION;
+        if(card instanceof Hero)
+            filesType = FilesType.HERO;
+
         ImageView imageView = null;
+        Pair<Double, Double> position = getCellPosition(row, column);
 
-        if (mode == "ATTACK") {
-
+        if (mode.equals("ATTACK")) {
+            SpriteAnimationProperties spriteProperties = new SpriteAnimationProperties(
+                    card.getName(), filesType, card.getCountOfAnimation());
+            imageView = SpriteMaker.getInstance().makeSpritePic(spriteProperties.spriteSheetPath,
+                    0, 0,
+                    board, spriteProperties.count,
+                    spriteProperties.rows, card.getMillis(),
+                    (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
         } else {
-            String path = "pics/" + filesType.getName() + "/" + name + ".gif";
+            String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
             try {
                 imageView = new ImageView(new Image(new FileInputStream(path)));
+                imageView.setScaleX(2);
+                imageView.setScaleY(2);
+
+
+                board.getChildren().add(imageView);
+                //root.getChildren().add(imageView);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-
         }
 
-
-        imageView.relocate(x + mapProperties.cellWidth / 2, y + mapProperties.cellHeight / 2);
-        board.getChildren().add(imageView);
+        imageView.relocate(position.getKey() - 8, position.getValue() - 48);
+        imageView.setFitWidth(mapProperties.cellWidth + 10);
+        imageView.setFitHeight(mapProperties.cellHeight + 20);
 
         return imageView;
+    }
+
+    public void test() {
+
+        /*
+        Minion minion = (Minion) Shop.getInstance().getNewCardByName("Siavash");
+        System.out.println(minion.getName());
+        addCardToBoard(2, 3, minion, "ATTACK");
+        */
+
+        ArrayList<Card> cards = Shop.getInstance().getCards();
+        int number = 0;
+        for(int i = 0; i < 5; i++)
+            for(int j = 0; j < 9; j++) {
+                while(number < cards.size() && !(cards.get(number) instanceof Hero))
+                    number++;
+                if(number == cards.size())
+                    break;
+                System.out.println("number = " + number);
+                System.out.println(cards.get(number).getName());
+                addCardToBoard(i, j, cards.get(number), "ATTACK");
+                number++;
+            }
+
     }
 
 }
