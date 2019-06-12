@@ -294,6 +294,7 @@ public class StageLauncher extends Application {
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
         primaryStage.setResizable(false);
+        primaryStage.setFullScreen(false);
         primaryStage.setTitle("Duelyst");
         try {
             primaryStage.getIcons().add(new Image(new FileInputStream("pics/other/duelyst_icon.png")));
@@ -320,7 +321,7 @@ public class StageLauncher extends Application {
 
 //*/
 
-      //  primaryStage.setScene(selectGameScene);
+//        primaryStage.setScene(selectGameScene);
 /*/
         BattleScene battleScene1 = BattleScene.getSingleInstance();
         battleScene1.setBattleScene(7); //from 1 to 12
@@ -348,7 +349,7 @@ public class StageLauncher extends Application {
 //        collectionScene.setFill(Color.BLACK);
 //        testzahraFooter((Group)collectionScene.getRoot());
 //        primaryStage.setScene(collectionScene);
-     //   zahraTestDeck();
+//        zahraTestDeck();
         primaryStage.show();
     }
 

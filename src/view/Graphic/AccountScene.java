@@ -21,7 +21,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.account.Account;
 import model.account.AllAccount;
+import model.account.FilesType;
 import model.battle.Deck;
+import model.card.Hero;
 import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
@@ -138,7 +140,7 @@ public class AccountScene {
             YaGson gson = new YaGsonBuilder().setPrettyPrinting().create();
             try {
                 File file = new File("AccountSaver\\" +
-                        account.getUserName() + ".txt");
+                        account.getUserName() + ".json");
                 FileWriter fileWriter = new FileWriter(file, true);
                 fileWriter.write(gson.toJson(account));
                 fileWriter.close();
@@ -155,11 +157,14 @@ public class AccountScene {
             } else {
                 FileReader fr = null;
                 try {
-                    fr = new FileReader("AccountSaver\\" + userName + ".txt");
-                    Gson gson1 = new GsonBuilder().create();
-                    JsonReader reader = new JsonReader(fr);
-                    reader.setLenient(true);
-                    Account account1 = gson1.fromJson(reader, Account.class);//load the deck
+                    InputStream input = new FileInputStream("AccountSaver/" + userName + ".json");
+                    Reader reader = new InputStreamReader(input);
+                    YaGson mapper = new YaGson();
+
+//                    Gson gson1 = new GsonBuilder().create();
+//                    JsonReader reader = new JsonReader(fr);
+//                    reader.setLenient(true);
+                    Account account1 = mapper.fromJson(reader, Account.class);//load the deck
                     allAccount.addToAccounts(account1);
 
 
