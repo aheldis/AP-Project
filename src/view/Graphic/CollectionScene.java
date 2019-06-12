@@ -92,7 +92,7 @@ class CollectionScene {
 
             });
 
-            Text text = addText(group, card.getName() + "\n" + card.getDescription(),
+            Text text = addText(group, card.getName() + "\n" ,
                     60, 10, Color.rgb(200, 200, 225, 0.5), 20);
             text.setOnMouseEntered(event1 -> {
                 text.setUnderline(true);
@@ -235,10 +235,10 @@ class CollectionScene {
 
     }
 
-    private static void showEachMinion(Card card, HBox hBox, int i, int j) {//todo add desc
+    private static void showEachMinion(Card card, HBox hBox, int i, int j) {
         try {
             ImageView imageView = addImage(hBox,
-                    card.getPathOfThePicture(), 0, 0, CARD_WIDTH, CARD_HEIGHT);
+                    "pics/other/minion_background.png", 0, 0, CARD_WIDTH, CARD_HEIGHT);
             imageView.fitWidthProperty();
 
             ImageView animationImageView = addImage(root, card.getPathOfAnimation(),
@@ -258,7 +258,7 @@ class CollectionScene {
 
     private static void showEachSpell(Card card, HBox hBox, int i, int j) {
         try {
-            ImageView imageView = addImage(hBox, card.getPathOfThePicture(), 0, 0, CARD_WIDTH, CARD_HEIGHT);
+            ImageView imageView = addImage(hBox, "pics/other/spell_background.png", 0, 0, CARD_WIDTH, CARD_HEIGHT);
             imageView.fitWidthProperty();
 
             cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(card.getPathOfAnimation(),
@@ -588,9 +588,14 @@ class CollectionScene {
                 System.out.println("hi");
                 try {
                     collection.deleteDeck(deck.getName());
+                    root.getChildren().removeAll(group,
+                            checkMainDeck,delete_deck,addCardToDeck);
+                    root.getChildren().removeAll(groupOfDeck);
                     root.getChildren().removeAll(deletable);
                     deletable.clear();
                     vBox.getChildren().clear();
+                    addImage(root, "pics/collection/shadow.png",
+                            650, 130, 300, 400);
 
                 } catch (Exception ignored) {
                 }
@@ -632,12 +637,12 @@ class CollectionScene {
 
     private static void addDeck(Collection collection, VBox sideVBox) {
         ImageView add_deck = addImage(root, "pics/collection/plate@2x.png",
-                collectionScene.getWidth() - 130, collectionScene.getHeight() - 130,
+                StageLauncher.getWidth()- 130, StageLauncher.getHeight() - 130,
                 100, 100);
 
 
         ImageView plus = addImage(root, "pics/collection/add.png",
-                collectionScene.getWidth() - 67 - 20, collectionScene.getHeight() - 87,
+                StageLauncher.getWidth() - 67 - 20, StageLauncher.getHeight() - 87,
                 15, 15);
         plus.setOnMouseClicked(event -> {
             Rectangle rectangle = new Rectangle(800, 200
@@ -738,8 +743,11 @@ class CollectionScene {
                     root.getChildren().removeAll(newDeck, newDeckText,
                             importDeck, importText, rectangle, close, text,
                             deckName, exportDeck, exportText);
+                    Group group =  makeDeckCard(collection.getDecks().get(i), i, sideVBox, collection);
+                    root.getChildren().removeAll(groupOfDeck);
+                    root.getChildren().addAll(group);
                     makeDeck(sideVBox, i, collection.getDecks().get(i)
-                            , collection, makeDeckCard(collection.getDecks().get(i), i, sideVBox, collection));
+                            , collection,group);
                     root.getChildren().addAll(rectangle, newDeck, newDeckText,
                             importDeck, importText, close, text, deckName, exportDeck, exportText);
                 }
@@ -796,7 +804,7 @@ class CollectionScene {
         return group;
     }
 
-    private static void showDeck(ArrayList<Deck> decks, Collection collection) {
+    static void showDeck(ArrayList<Deck> decks, Collection collection) {
         root.getChildren().clear();
         setBackground(root, "pics/collection/background@2x.jpg", true, 20, 20);
         try {
@@ -817,7 +825,6 @@ class CollectionScene {
             e.printStackTrace();
         }
         log(root, collection.helpOfCollection(), StateType.MAIN_MENU, 600);
-
 
     }
 

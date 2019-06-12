@@ -55,9 +55,9 @@ public class StageLauncher extends Application {
                 Platform.runLater(() -> {
                     primaryStage.setScene(StageLauncher.getScene(StateType.ACCOUNT_MENU));
                     primaryStage.show();
+                    playMusic("resource/music/mainmenu.m4a",
+                            true, StageLauncher.getScene(StateType.ACCOUNT_MENU));
                 });
-                playMusic("resource/music/mainmenu.m4a",
-                        true, StageLauncher.getScene(StateType.ACCOUNT_MENU));
                 break;
             case SHOP:
                 ShopScene.makeShopScene(account);
@@ -122,44 +122,44 @@ public class StageLauncher extends Application {
     */
     private static void zahraTestDeck() {
 
-        Spell spell = new Spell();
-        spell.setPathOfThePicture("pics/other/minion_background.png");
-        spell.setPathOfAnimation("pics/Spell/fireBall.png");
-        spell.setCountOfAnimation(16);
-        spell.setFrameSize(48);
-
-        Spell spell1 = new Spell();
-        spell1.setPathOfThePicture("pics/other/minion_background.png");
-        spell1.setPathOfAnimation("pics/Spell/fireBall.png");
-        spell1.setCountOfAnimation(16);
-        spell1.setFrameSize(48);
-
+//        Spell spell = new Spell();
+//        spell.setPathOfThePicture("pics/other/minion_background.png");
+//        spell.setPathOfAnimation("pics/Spell/fireBall.png");
+//        spell.setCountOfAnimation(16);
+//        spell.setFrameSize(48);
+//
+//        Spell spell1 = new Spell();
+//        spell1.setPathOfThePicture("pics/other/minion_background.png");
+//        spell1.setPathOfAnimation("pics/Spell/fireBall.png");
+//        spell1.setCountOfAnimation(16);
+//        spell1.setFrameSize(48);
+//
         ArrayList<Deck> decks = new ArrayList<>();
-        Deck deck = new Deck();
-
-        spell.setDescription("atasssh");
-        spell.setName("atisih");
-        spell1.setDescription("atasssh");
-        spell1.setName("atisih");
-        deck.getCardsOfDeck().add(spell);
-        deck.getCardsOfDeck().add(spell);
-        deck.setName("zahra");
-        for (int i = 0; i < 10; i++) {
-            decks.add(deck);
-        }
-
-        Account account = new Account("zahra", "123");
-        StageLauncher.account = account;
+//        Deck deck = new Deck();
+//
+//        spell.setDescription("atasssh");
+//        spell.setName("atisih");
+//        spell1.setDescription("atasssh");
+//        spell1.setName("atisih");
+//        deck.getCardsOfDeck().add(spell);
+//        deck.getCardsOfDeck().add(spell);
+//        deck.setName("zahra");
+//        for (int i = 0; i < 10; i++) {
+//            decks.add(deck);
+//        }
+//
+//        Account account = new Account("zahra", "123");
+//        StageLauncher.account = account;
         Collection collection = new Collection(account);
-        for (int i = 0; i < 15; i++) {
-            collection.addToCards(spell);
-        }
-        collection.setDecks(decks);
-        account.setCollection(collection);
+//        for (int i = 0; i < 15; i++) {
+//            collection.addToCards(spell);
+//        }
+//        collection.setDecks(decks);
+//        account.setCollection(collection);
 
 
-        SelectGameScene.selectGame(account);
-        //CollectionScene.showDeck(decks, collection);
+        //SelectGameScene.selectGame(account);
+        CollectionScene.showDeck(decks, collection);
     }
 
     public static void zahraTestCard() {
@@ -335,7 +335,7 @@ public class StageLauncher extends Application {
 //        primaryStage.setScene(graveyardScene);
 
 
-/*/
+//*/
 //        zahraTestDeck();
 //        primaryStage.setScene(collectionScene);
 //*/

@@ -160,17 +160,8 @@ public class AccountScene {
                     InputStream input = new FileInputStream("AccountSaver/" + userName + ".json");
                     Reader reader = new InputStreamReader(input);
                     YaGson mapper = new YaGson();
-
-//                    Gson gson1 = new GsonBuilder().create();
-//                    JsonReader reader = new JsonReader(fr);
-//                    reader.setLenient(true);
                     Account account1 = mapper.fromJson(reader, Account.class);//load the deck
                     allAccount.addToAccounts(account1);
-
-
-                    System.out.println(account1.getUserName());
-                    System.out.println(account1.getDaric());
-                    System.out.println(allAccount.getAccounts());
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
