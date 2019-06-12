@@ -192,6 +192,8 @@ public class BattleScene {
 
     public ImageView addCardToBoard(int row, int column, Card card, FilesType filesType, String mode) {
         ImageView imageView = null;
+        Pair<Double, Double> position = getCellPosition(row, column);
+
         if (mode.equals("ATTACK")) {
             SpriteAnimationProperties spriteProperties = new SpriteAnimationProperties(
                     card.getName(), FilesType.MINION, card.getCountOfAnimation());
@@ -200,12 +202,18 @@ public class BattleScene {
                     board, spriteProperties.count,
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
+            imageView.relocate(position.getKey() - 10, position.getValue() - 52);
+            imageView.setFitWidth(mapProperties.cellWidth + 10);
+            imageView.setFitHeight(mapProperties.cellHeight + 20);
         } else {
             String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
             try {
                 imageView = new ImageView(new Image(new FileInputStream(path)));
                 imageView.setScaleX(2);
                 imageView.setScaleY(2);
+                imageView.relocate(position.getKey(), position.getValue() - 45);
+                imageView.setFitWidth(mapProperties.cellWidth + 10);
+                imageView.setFitHeight(mapProperties.cellHeight + 20);
                 board.getChildren().add(imageView);
                 //root.getChildren().add(imageView);
             } catch (FileNotFoundException e) {
@@ -213,13 +221,10 @@ public class BattleScene {
             }
         }
 
-        Pair<Double, Double> position = getCellPosition(row, column);
         System.out.println("position x = " + position.getKey());
         System.out.println("position y = " + position.getValue());
 
-        imageView.relocate(position.getKey(), position.getValue() - 45);
-        imageView.setFitWidth(mapProperties.cellWidth + 10);
-        imageView.setFitHeight(mapProperties.cellHeight + 20);
+
 
         return imageView;
     }
@@ -240,6 +245,7 @@ public class BattleScene {
                     number++;
                 if(number == cards.size())
                     break;
+                System.out.println("number = " + number);
                 System.out.println(cards.get(number).getName());
                 addCardToBoard(i, j, cards.get(number), FilesType.MINION, "ATTACK");
                 number++;
