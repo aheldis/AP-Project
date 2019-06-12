@@ -64,9 +64,17 @@ class CollectionScene {
             backPicView.setFitWidth(300);
             group.getChildren().add(backPicView);
 
-            SpriteMaker.getInstance().makeSpritePic(card.getPathOfAnimation(), 0, 10,
-                    group, card.getCountOfAnimation(), card.getAnimationRow(), 4000,
-                    card.getFrameSize(), card.getFrameSize(), 256);
+           if(card instanceof Spell) {
+               SpriteMaker.getInstance().makeSpritePic(card.getPathOfAnimation(), 0, 10,
+                       group, card.getCountOfAnimation(), card.getAnimationRow(), 4000,
+                       card.getFrameSize(), card.getFrameSize(), 256);
+           }
+           if(card instanceof Hero){
+               addImage(group,"pics/Hero/"+card.getName()+".gif",0,0,80,80);
+           }
+           if(card instanceof Minion){
+               addImage(group,"pics/Minion/"+card.getName()+".gif",0,0,80,80);
+           }
 
             ImageView garbage = new ImageView(new Image(new FileInputStream(
                     "pics/collection/delete-button.png")));
@@ -138,6 +146,11 @@ class CollectionScene {
                         64,
                         28, 110, 150);
 
+            }
+            if(card instanceof Hero){
+                addImage(group,"pics\\Hero\\"+((Hero) card).getName()+".gif",
+                        64,
+                        28, 110, 150);
             }
 
             try {
