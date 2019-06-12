@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "Siavash",
+    "countOfAnimation": 73,
+    "millis": 7000,
     "CardNumber": 38,
     "cost": 350,
     "mp": 4,

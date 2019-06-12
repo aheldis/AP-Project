@@ -3,6 +3,8 @@
   "@val": {
     "name": "Empower",
     "CardNumber": 3,
+    "countOfAnimation": 23,
+    "millis": 3000,
     "cost": 250,
     "mp": 1,
     "hp": 0,

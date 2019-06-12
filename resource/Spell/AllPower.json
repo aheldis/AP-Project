@@ -3,6 +3,8 @@
   "@val": {
     "name": "AllPower",
     "CardNumber": 15,
+    "countOfAnimation": 23,
+    "millis": 3000,
     "cost": 2000,
     "mp": 4,
     "hp": 0,

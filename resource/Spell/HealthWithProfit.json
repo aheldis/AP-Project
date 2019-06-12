@@ -3,6 +3,8 @@
   "@val": {
     "name": "HealthWithProfit",
     "CardNumber": 13,
+    "countOfAnimation": 16,
+    "millis": 3000,
     "cost": 2250,
     "mp": 0,
     "hp": 0,

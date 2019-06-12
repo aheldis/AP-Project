@@ -2,6 +2,8 @@
   "@type": "model.card.Spell",
   "@val": {
     "name": "AllAttack",
+    "countOfAnimation": 25,
+    "millis": 3000,
     "CardNumber": 16,
     "cost": 1500,
     "mp": 4,

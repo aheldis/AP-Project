@@ -3,6 +3,8 @@
   "@val": {
     "name": "Piran",
     "CardNumber": 29,
+    "countOfAnimation": 48,
+    "millis": 4500,
     "cost": 400,
     "mp": 8,
     "hp": 20,

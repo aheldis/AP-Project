@@ -3,6 +3,8 @@
   "@val": {
     "name": "ShockHammer",
     "type": "Usable",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "disarm a random opponent minion",
     "cost": 15000,
     "itemNumber": 17,

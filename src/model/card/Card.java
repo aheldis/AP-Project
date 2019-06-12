@@ -47,7 +47,7 @@ public abstract class Card {
     private static final int DEFAULT = -1;
     private String pathOfThePicture;
     private String pathOfAnimation;
-    private int countOfAnimation;
+    private int countOfAnimation =16;
     private int animationRow = 5;
     private int frameSize;
     private long millis;
@@ -55,13 +55,7 @@ public abstract class Card {
 
 
 
-    public void setHeightOfPicture(int heightOfPicture) {
-        this.heightOfPicture = heightOfPicture;
-    }
 
-    public int getHeightOfPicture() {
-        return heightOfPicture;
-    }
 
     public void setMillis(long millis) {
         this.millis = millis;

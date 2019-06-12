@@ -3,6 +3,8 @@
   "@val": {
     "name": "SoulEater",
     "type": "Usable",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "power buff on your minion (ap+1)",
     "cost": 2500,
     "itemNumber": 18,

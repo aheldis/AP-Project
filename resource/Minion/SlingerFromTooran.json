@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "SlingerFromTooran",
+    "countOfAnimation": 115,
+    "millis": 10000,
     "CardNumber": 8,
     "cost": 600,
     "mp": 1,

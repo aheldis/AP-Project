@@ -3,6 +3,8 @@
   "@val": {
     "name": "Madness",
     "CardNumber": 9,
+    "countOfAnimation": 20,
+    "millis": 3000,
     "cost": 650,
     "mp": 0,
     "hp": 0,

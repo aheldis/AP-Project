@@ -3,6 +3,8 @@
   "@val": {
     "name": "Weakening",
     "CardNumber": 17,
+    "countOfAnimation": 25,
+    "millis": 3500,
     "cost": 1000,
     "mp": 1,
     "hp": 0,

@@ -2,7 +2,8 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "Rostam",
-    "PATH_OF_THE_PICTURE": "pics/rostam.png",
+    "countOfAnimation": 82,
+    "millis": 8000,
     "CardNumber": 10,
     "cost": 8000,
     "mp": 0,

@@ -3,6 +3,8 @@
   "@val": {
     "name": "Fireball",
     "CardNumber": 4,
+    "countOfAnimation": 16,
+    "millis": 3000,
     "cost": 400,
     "mp": 1,
     "hp": 0,

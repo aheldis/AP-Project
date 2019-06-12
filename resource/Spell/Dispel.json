@@ -3,6 +3,8 @@
   "@val": {
     "name": "Dispel",
     "CardNumber": 12,
+    "countOfAnimation": 21,
+    "millis": 3000,
     "cost": 2100,
     "mp": 0,
     "hp": 0,

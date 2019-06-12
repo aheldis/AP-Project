@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "GladiatorFromFars",
+    "countOfAnimation": 57,
+    "millis": 5000,
     "CardNumber": 5,
     "cost": 600,
     "mp": 9,

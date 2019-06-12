@@ -2,6 +2,8 @@
   "@type": "model.card.Spell",
   "@val": {
     "name": "KingsGuard",
+    "countOfAnimation": 20,
+    "millis": 3000,
     "CardNumber": 19,
     "cost": 1750,
     "mp": 9,

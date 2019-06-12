@@ -3,6 +3,8 @@
   "@val": {
     "name": "PowerUp",
     "CardNumber": 14,
+    "countOfAnimation": 16,
+    "millis": 3000,
     "cost": 2500,
     "mp": 2,
     "hp": 0,

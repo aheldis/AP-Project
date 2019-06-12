@@ -3,6 +3,8 @@
   "@val": {
     "name": "StonnerGiant",
     "CardNumber": 14,
+    "countOfAnimation": 67,
+    "millis": 6000,
     "cost": 300,
     "mp": 9,
     "hp": 12,

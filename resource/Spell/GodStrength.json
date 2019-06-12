@@ -3,6 +3,8 @@
   "@val": {
     "name": "GodStrength",
     "CardNumber": 5,
+    "countOfAnimation": 18,
+    "millis": 3000,
     "cost": 450,
     "mp": 2,
     "hp": 0,

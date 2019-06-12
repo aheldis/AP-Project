@@ -3,6 +3,8 @@
   "@val": {
     "name": "Wolf",
     "CardNumber": 24,
+    "countOfAnimation": 66,
+    "millis": 6000,
     "cost": 400,
     "mp": 3,
     "hp": 6,

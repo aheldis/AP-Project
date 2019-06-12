@@ -2,6 +2,8 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "Arash",
+    "countOfAnimation": 111,
+    "millis": 10000,
     "PATH_OF_THE_PICTURE": "pics/default.png",
     "CardNumber": 7,
     "cost": 10000,

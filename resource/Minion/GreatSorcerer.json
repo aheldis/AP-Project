@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "GreatSorcerer",
+    "countOfAnimation": 92,
+    "millis": 9000,
     "CardNumber": 26,
     "cost": 550,
     "mp": 6,

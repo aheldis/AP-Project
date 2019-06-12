@@ -2,6 +2,8 @@
   "@type": "model.item.Usable",
   "@val": {
     "name": "Baptism",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "type": "Usable",
     "description": "have 2 turns holy buff for a minion",
     "cost": 20000,

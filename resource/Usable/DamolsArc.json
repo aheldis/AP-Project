@@ -2,6 +2,8 @@
   "@type": "model.item.Usable",
   "@val": {
     "name": "DamolsArc",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "type": "Usable",
     "description": "disarm opponent hero for one turn",
     "cost": 3000,

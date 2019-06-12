@@ -3,6 +3,8 @@
   "@val": {
     "name": "AllDisarm",
     "CardNumber": 10,
+    "countOfAnimation": 11,
+    "millis": 2000,
     "cost": 2000,
     "mp": 9,
     "hp": 0,

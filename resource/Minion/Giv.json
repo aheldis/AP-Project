@@ -3,6 +3,8 @@
   "@val": {
     "name": "Giv",
     "CardNumber": 30,
+    "countOfAnimation": 109,
+    "millis": 10000,
     "cost": 450,
     "mp": 4,
     "hp": 5,

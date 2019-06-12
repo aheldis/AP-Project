@@ -3,6 +3,8 @@
   "@val": {
     "name": "AllPoison",
     "CardNumber": 11,
+    "countOfAnimation": 11,
+    "millis": 2000,
     "cost": 1500,
     "mp": 8,
     "hp": 0,

@@ -2,7 +2,8 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "Esfandiar",
-    "PATH_OF_THE_PICTURE": "pics/esfandiyar.png",
+    "countOfAnimation": 93,
+    "millis": 9000,
     "CardNumber": 9,
     "cost": 12000,
     "mp": 0,

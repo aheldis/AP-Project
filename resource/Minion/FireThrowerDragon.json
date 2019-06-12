@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "FireThrowerDragon",
+    "countOfAnimation": 102,
+    "millis": 10000,
     "CardNumber": 19,
     "cost": 250,
     "mp": 5,

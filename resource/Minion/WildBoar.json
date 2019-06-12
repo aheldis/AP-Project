@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "WildBoar",
+    "countOfAnimation": 104,
+    "millis": 10000,
     "CardNumber": 28,
     "cost": 500,
     "mp": 6,

@@ -3,6 +3,8 @@
   "@val": {
     "name": "Shock",
     "CardNumber": 20,
+    "countOfAnimation": 22,
+    "millis": 3000,
     "cost": 1200,
     "mp": 1,
     "hp": 0,

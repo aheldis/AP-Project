@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "ArcherFromFars",
+    "countOfAnimation": 53,
+    "millis": 5000,
     "PATH_OF_THE_PICTURE": "pics/minion_background.png",
     "PATH_OF_ANIMATION": "pics/gifMinion/kamandar_fars.gif",
     "CardNumber": 1,

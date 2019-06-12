@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import model.account.FilesType;
 import model.card.Card;
 import model.card.Spell;
 import view.enums.StateType;
@@ -34,11 +35,15 @@ public class GraveYard {
         Random random = new Random();
         int a = random.nextInt(6);
         addImage(group, "pics/battle/graveyard/runes-" + a + ".png", 20, 20, 80, 80);
-        if (card instanceof Spell)
-            SpriteMaker.getInstance().makeSpritePic(card.getPathOfAnimation(), 120, 160
-                    , group
-                    , card.getCountOfAnimation(), card.getAnimationRow(),
-                    4000, card.getFrameSize(), card.getFrameSize(), 264);
+        if (card instanceof Spell) {
+            SpriteAnimationProperties sprite = new SpriteAnimationProperties(
+                    ((Spell) card).getName(), FilesType.SPELL,((Spell) card).getCountOfAnimation());
+            SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
+                    94,58,
+                    group, sprite.count,
+                    sprite.rows, 4000,
+                    (int)sprite.widthOfEachFrame, (int)sprite.heightOfEachFrame);
+        }
         else {
             addImage(group, card.getPathOfAnimation(), 85, 100, 150, 150);
         }

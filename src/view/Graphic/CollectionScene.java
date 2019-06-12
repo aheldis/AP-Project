@@ -65,9 +65,13 @@ class CollectionScene {
             group.getChildren().add(backPicView);
 
            if(card instanceof Spell) {
-               SpriteMaker.getInstance().makeSpritePic(card.getPathOfAnimation(), 0, 10,
-                       group, card.getCountOfAnimation(), card.getAnimationRow(), 4000,
-                       card.getFrameSize(), card.getFrameSize(), 256);
+               SpriteAnimationProperties sprite = new SpriteAnimationProperties(
+                       card.getName(), FilesType.SPELL,card.getCountOfAnimation());
+               cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
+                      0,10,
+                       root, sprite.count,
+                       sprite.rows, 4000,
+                       (int)sprite.widthOfEachFrame, (int)sprite.heightOfEachFrame));
            }
            if(card instanceof Hero){
                addImage(group,"pics/Hero/"+card.getName()+".gif",0,0,80,80);
@@ -134,12 +138,13 @@ class CollectionScene {
                     180 - 20,
                     200 - 17, Color.WHITE, 20);
             if(card instanceof Spell) {
-                SpriteMaker.getInstance().makeSpritePic(((Card) card).getPathOfAnimation(),
-                        94,
-                        58,
-                        group, ((Card) card).getCountOfAnimation(),
-                        ((Card) card).getAnimationRow(), 4000,
-                        48, 48, 256);
+                SpriteAnimationProperties sprite = new SpriteAnimationProperties(
+                        ((Spell) card).getName(), FilesType.SPELL,((Spell) card).getCountOfAnimation());
+                cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
+                        94,58,
+                        group, sprite.count,
+                        sprite.rows, 4000,
+                        (int)sprite.widthOfEachFrame, (int)sprite.heightOfEachFrame));
             }
             if(card instanceof Minion){
                addImage(group, "pics\\Minion\\" + ((Minion) card).getName() + ".gif",
@@ -284,14 +289,14 @@ class CollectionScene {
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
             imageView.fitWidthProperty();
 
-//            SpriteAnimationProperties sprite = new SpriteAnimationProperties(
-//                    card.getName(), FilesType.SPELL,card.getCountOfAnimation());
-            cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(card.getPathOfAnimation(),
+            SpriteAnimationProperties sprite = new SpriteAnimationProperties(
+                    card.getName(), FilesType.SPELL,card.getCountOfAnimation());
+            cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
                     i * (X_BORDER + CARD_WIDTH) + 140,
                     i * (Y_BORDER + CARD_HEIGHT) + 200 - 55,
-                    root, card.getCountOfAnimation(),
-                    card.getAnimationRow(), 4000,
-                    48, 48, 256));
+                    root, sprite.count,
+                    sprite.rows, 4000,
+                    (int)sprite.widthOfEachFrame, (int)sprite.heightOfEachFrame));
 
             textForCollection(card, i, j, imageView);
 

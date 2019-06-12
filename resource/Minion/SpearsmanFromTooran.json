@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "SpearsmanFromTooran",
+    "countOfAnimation": 76,
+    "millis": 7000,
     "CardNumber": 9,
     "cost": 600,
     "mp": 1,

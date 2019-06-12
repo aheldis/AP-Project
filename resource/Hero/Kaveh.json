@@ -2,7 +2,8 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "Kaveh",
-    "PATH_OF_THE_PICTURE": "pics/kaveh.png",
+    "countOfAnimation": 85,
+    "millis": 8000,
     "CardNumber": 6,
     "cost": 8000,
     "mp": 1,

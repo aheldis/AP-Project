@@ -3,6 +3,8 @@
   "@val": {
     "name": "GreatGiant",
     "CardNumber": 34,
+    "countOfAnimation": 74,
+    "millis": 7000,
     "cost": 600,
     "mp": 9,
     "hp": 30,

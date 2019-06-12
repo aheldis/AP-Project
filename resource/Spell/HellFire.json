@@ -3,6 +3,8 @@
   "@val": {
     "name": "HellFire",
     "CardNumber": 6,
+    "countOfAnimation": 13,
+    "millis": 2500,
     "cost": 600,
     "mp": 3,
     "hp": 0,

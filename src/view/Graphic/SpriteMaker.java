@@ -24,7 +24,7 @@ public class SpriteMaker {
 
     public ImageView makeSpritePic(String path, int x, int y,Parent root, int count,
                               int numberOfPicInEachColumn, long millis,
-                              int widthOfEachFrame, int heightOfEachFrame, int totalHeight) {
+                              int widthOfEachFrame, int heightOfEachFrame) {
         ImageView imageView = null;
         try {
             Image image = new Image(new FileInputStream(path));

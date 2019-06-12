@@ -3,6 +3,8 @@
   "@val": {
     "name": "SpyFromTooran",
     "CardNumber": 10,
+    "countOfAnimation": 75,
+    "millis": 7000,
     "cost": 700,
     "mp": 4,
     "hp": 6,

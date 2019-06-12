@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "SteelChainMail",
+    "countOfAnimation": 51,
+    "millis": 5000,
     "CardNumber": 37,
     "cost": 650,
     "mp": 3,

@@ -2,7 +2,8 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "Afsaneh",
-    "PATH_OF_THE_PICTURE": "pics/afsaneh.png",
+    "countOfAnimation": 80,
+    "millis": 8000,
     "CardNumber": 8,
     "cost": 11000,
     "mp": 1,

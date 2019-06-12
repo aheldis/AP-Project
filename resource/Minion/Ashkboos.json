@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "Ashkboos",
+    "countOfAnimation": 97,
+    "millis": 9000,
     "PATH_OF_THE_PICTURE": "pics/minion_background.png",
     "PATH_OF_ANIMATION": "pics/gifMinion/ashkboos.gif",
     "CardNumber": 32,

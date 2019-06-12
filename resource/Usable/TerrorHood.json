@@ -3,6 +3,8 @@
   "@val": {
     "name": "TerrorHood",
     "type": "Usable",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "weakness buff(ap-2) for a random minion",
     "cost": 5000,
     "itemNumber": 12,

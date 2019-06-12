@@ -65,8 +65,13 @@ public class AccountScene {
         Button quit = new Button("QUIT");
         quit.setPrefSize(174, 54);
         quit.relocate(width - 250, height - 100);
-        BackgroundImage backgroundImage = new BackgroundImage(new Image("pics/menu/quit.png"),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage backgroundImage = null;
+        try {
+            backgroundImage = new BackgroundImage(new Image(new FileInputStream("pics/menu/quit.png")),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         Background background = new Background(backgroundImage);
         quit.setBackground(background);
         quit.setTextFill(Color.WHITE);

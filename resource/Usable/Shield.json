@@ -3,6 +3,8 @@
   "@val": {
     "name": "Shield",
     "type": "Usable",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "12 holy buff to your minion",
     "cost": 4000,
     "itemNumber": 2,

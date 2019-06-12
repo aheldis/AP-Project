@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "GiantKing",
+    "countOfAnimation": 56,
+    "millis": 5000,
     "CardNumber": 39,
     "cost": 600,
     "mp": 5,

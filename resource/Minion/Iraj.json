@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "Iraj",
+    "countOfAnimation": 61,
+    "millis": 6000,
     "CardNumber": 33,
     "cost": 500,
     "mp": 4,

@@ -3,6 +3,8 @@
   "@val": {
     "name": "LightingBolt",
     "CardNumber": 7,
+    "countOfAnimation": 18,
+    "millis": 3000,
     "cost": 1250,
     "mp": 2,
     "hp": 0,

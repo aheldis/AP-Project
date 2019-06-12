@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "FierceLion",
+    "countOfAnimation": 94,
+    "millis": 9000,
     "CardNumber": 20,
     "cost": 600,
     "mp": 2,

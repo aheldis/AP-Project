@@ -2,7 +2,8 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "WhiteBeast",
-    "PATH_OF_THE_PICTURE": "pics/diveSepid.png",
+    "countOfAnimation": 105,
+    "millis": 10000,
     "CardNumber": 1,
     "cost": 8000,
     "mp": 1,

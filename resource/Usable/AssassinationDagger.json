@@ -3,6 +3,8 @@
   "@val": {
     "name": "AssassinationDagger",
     "type": "Usable",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "hp change for all opponent cards",
     "cost": 15000,
     "itemNumber": 15,

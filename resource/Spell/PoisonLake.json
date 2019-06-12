@@ -2,6 +2,8 @@
   "@type": "model.card.Spell",
   "@val": {
     "name": "PoisonLake",
+    "countOfAnimation": 14,
+    "millis": 2000,
     "CardNumber": 8,
     "cost": 900,
     "mp": 5,

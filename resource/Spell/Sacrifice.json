@@ -4,6 +4,8 @@
     "name": "Sacrifice",
     "CardNumber": 18,
     "cost": 1600,
+    "countOfAnimation": 11,
+    "millis": 2000,
     "mp": 2,
     "hp": 0,
     "ap": 0,

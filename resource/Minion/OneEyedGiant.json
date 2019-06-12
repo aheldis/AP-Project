@@ -2,6 +2,8 @@
   "@type": "model.card.Minion",
   "@val": {
     "name": "OneEyedGiant",
+    "countOfAnimation": 93,
+    "millis": 9000,
     "CardNumber": 17,
     "cost": 500,
     "mp": 7,
