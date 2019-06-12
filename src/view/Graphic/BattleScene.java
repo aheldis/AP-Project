@@ -225,6 +225,13 @@ public class BattleScene {
     }
 
     public void test() {
+
+        /*
+        Minion minion = (Minion) Shop.getInstance().getNewCardByName("Siavash");
+        System.out.println(minion.getName());
+        addCardToBoard(2, 3, minion, FilesType.MINION, "ATTACK");
+        */
+
         ArrayList<Card> cards = Shop.getInstance().getCards();
         int number = 0;
         for(int i = 0; i < 5; i++)
@@ -234,9 +241,10 @@ public class BattleScene {
                 if(number == cards.size())
                     break;
                 System.out.println(cards.get(number).getName());
-                addCardToBoard(i, j, cards.get(number), FilesType.MINION, "normal");
+                addCardToBoard(i, j, cards.get(number), FilesType.MINION, "ATTACK");
                 number++;
             }
+
     }
 
 }
