@@ -350,7 +350,7 @@ class ShopScene {
             hBoxes.add(hBox);
         });
 
-        log(root, Shop.getInstance().help(), StageLauncher.getScene(StateType.MAIN_MENU), 450);
+        log(root, Shop.getInstance().help(),StateType.MAIN_MENU, 450);
     }
 
 

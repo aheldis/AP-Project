@@ -53,11 +53,14 @@ public class Match {
         for (int i = 0; i < numberOfFlags; i++) {
             randomX = random.nextInt(land.getNumberOfRows());
             randomY = random.nextInt(land.getNumberOfColumns());
-            while (squares[randomX][randomY].getObject() != null) {
+            while (squares[randomX][randomY].getObject() != null
+                    && squares[randomX][randomY].getFlags().size() != 0) {
+
                 randomX = random.nextInt(land.getNumberOfRows());
                 randomY = random.nextInt(land.getNumberOfColumns());
             }
-            //todo aval bazi momkene chandta flag ro add kone to ye khoone. okeye; vali age nemikhaim to oon while balaee e ino ezafe kon: || squares[randomX][randomY].getFlags().size() != 0
+            //todo aval bazi momkene chandta flag ro add kone to ye khoone. okeye; vali age nemikhaim to
+            // oon while balaee e ino ezafe kon: || squares[randomX][randomY].getFlags().size() != 0
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
             squares[randomX][randomY].addToFlags(flag);

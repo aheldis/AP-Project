@@ -105,7 +105,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
     public static Deck getDeckForStoryMode(int level) {
         Deck deck = new Deck();
         try {
-            FileReader fileReader = new FileReader(Shop.getPathOfFiles() + "Game/" + level + ".txt");
+            FileReader fileReader = new FileReader("Game/" + level + ".txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             String type = "Hero";

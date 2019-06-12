@@ -42,7 +42,7 @@ public class MainMenuScene {
     void makeMenu(Account account) {
         this.account = account;
         ImageView brand = addImage(root, "pics/login_pics/brand_duelyst@2x.png",
-                130, 130, 1000 / 4, 216 / 4);
+                130, 130, 1000 / 4.0, 216 / 4.0);
         menuNodes.add(brand);
         addGraphsAndLabelButtons();
         addImageButtons();

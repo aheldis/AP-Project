@@ -42,9 +42,9 @@ public class GraveYard {
         else {
             addImage(group, card.getPathOfAnimation(), 85, 100, 150, 150);
         }
-        Text name =addText(group,card.getName(),85,250,
-                Color.rgb(0,225,225,0.7),30);
-        name.setFont(Font.font("Luminari",30));
+        Text name = addText(group, card.getName(), 85, 250,
+                Color.rgb(0, 225, 225, 0.7), 30);
+        name.setFont(Font.font("Luminari", 30));
         name.setTextAlignment(TextAlignment.CENTER);
         name.setStroke(Color.BLACK);
         return group;
@@ -108,6 +108,8 @@ public class GraveYard {
             pageMaker(cards, pageVbox);
         });
 
-    }
+        log(root, "See Death Cards", StateType.BATTLE, 100);
 
+
+    }
 }

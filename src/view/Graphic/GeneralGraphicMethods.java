@@ -33,6 +33,7 @@ public class GeneralGraphicMethods {
     private static double sabasYRatio = 1;//0.8592592592592593;
     private static double zahrasXRatio = 1;//0.7868020304568528;
     private static double zahrasYRatio = 1;//0.9351851851851852;
+    public static boolean stopper =false;
 
     static double getSabasXRatio() {
         return sabasXRatio;
@@ -190,7 +191,7 @@ public class GeneralGraphicMethods {
         animationTimer.start();
     }
 
-    static void log(Group root, String helps, Scene backScene, int height) {
+    static void log(Group root, String helps, StateType backState, int height) {
         ImageView log = addImage(root, "pics/other/log.png", -40, 200, 70, 150);
         ImageView expand = addImage(root, "pics/other/glow_next.png", 0, 300 - 15, 20, 30);
         ImageView back = addImage(root, "pics/other/glow_back.png", 40, 300 - 15, 20, 30);
@@ -202,7 +203,10 @@ public class GeneralGraphicMethods {
             ImageView backButton = addImage(root, "pics/other/left-arrow.png", 5, 230, 20, 20);
             ImageView help = addImage(root, "pics/other/question.png", 7, 280, 18, 20);
 
-            backButton.setOnMouseClicked(event12 -> Platform.runLater(() -> StageLauncher.getPrimaryStage().setScene(backScene)));
+            backButton.setOnMouseClicked(event12 -> {
+                root.getChildren().clear();
+                StageLauncher.decorateScene(backState);
+            });
 
             help.setOnMouseClicked(event13 -> {
                 Rectangle rectangle = addRectangle(root, 450, 200,
@@ -227,12 +231,13 @@ public class GeneralGraphicMethods {
         //Instantiating Media class
         Media media = new Media(new File(path).toURI().toString());
         //Instantiating MediaPlayer class
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
+       MediaPlayer mediaPlayer = new MediaPlayer(media);
         if (constant) {
             mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
             mediaPlayer.play();
         }
         mediaPlayer.setAutoPlay(true);
+
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {

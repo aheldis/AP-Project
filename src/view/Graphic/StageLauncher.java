@@ -30,6 +30,11 @@ import java.util.HashMap;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class StageLauncher extends Application {
+    private static Account account;
+
+    public static void setAccount(Account account) {
+        StageLauncher.account = account;
+    }
 
     private static Stage primaryStage;
     private static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
@@ -44,6 +49,38 @@ public class StageLauncher extends Application {
         return HEIGHT;
     }
 
+    public static void decorateScene(StateType stateType) {
+        switch (stateType) {
+            case MAIN_MENU:
+                Platform.runLater(() -> {
+                    primaryStage.setScene(StageLauncher.getScene(StateType.ACCOUNT_MENU));
+                    primaryStage.show();
+                });
+                playMusic("resource/music/mainmenu.m4a",
+                        true, StageLauncher.getScene(StateType.ACCOUNT_MENU));
+                break;
+            case SHOP:
+                ShopScene.makeShopScene(account);
+                setScene(StateType.SHOP);
+                break;
+            case COLLECTION:
+                CollectionScene.showInCollection(account.getCollection());
+                setScene(StateType.COLLECTION);
+                break;
+            case SELECT_GAME:
+                if (primaryStage.getScene() == StageLauncher.getScene(StateType.SELECT_GAME)) {
+                    stopper=true;
+                }
+                Platform.runLater(() -> {
+                    primaryStage.setScene(StageLauncher.getScene(StateType.SELECT_GAME));
+                    primaryStage.show();
+                });
+                SelectGameScene.selectGame(account);
+                break;
+
+        }
+    }
+
     static Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -52,7 +89,7 @@ public class StageLauncher extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-//        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
+        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
         return scene;
     }
 
@@ -112,6 +149,7 @@ public class StageLauncher extends Application {
         }
 
         Account account = new Account("zahra", "123");
+        StageLauncher.account = account;
         Collection collection = new Collection(account);
         for (int i = 0; i < 15; i++) {
             collection.addToCards(spell);
