@@ -15,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 import model.account.FilesType;
 import model.account.Shop;
+import model.battle.Game;
 import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
@@ -27,12 +28,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class BattleScene {
     private static BattleScene singleInstance = null;
     private Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
-    private Group root = (Group) battleScene.getRoot();
+    private Group root = (Group) Objects.requireNonNull(battleScene).getRoot();
     private Group board = null; //!!!! Har chi roo board gharare bashe be in add she
     private double width = StageLauncher.getWidth();
     private double height = StageLauncher.getHeight();
@@ -40,6 +42,7 @@ public class BattleScene {
     private Rectangle[][] gameGrid;
     private MapProperties mapProperties;
     private Match match;
+    private Game game;
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
 
@@ -51,7 +54,11 @@ public class BattleScene {
         return match;
     }
 
-    public int getNumberOfMap() {
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    int getNumberOfMap() {
         return numberOfMap;
     }
 
@@ -73,8 +80,9 @@ public class BattleScene {
                 numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(root);
-        StageLauncher.testzahraFooter(root);
-        // battleFooter = new BattleFooterGraphic(root,match.getPlayers()[0]);
+        // StageLauncher.testzahraFooter(root);
+        battleFooter = new BattleFooterGraphic(root, game.getPlayers()[0]);
+        battleFooter.makeFooter();
         battleHeader.test();
     }
 
@@ -99,6 +107,7 @@ public class BattleScene {
             for (File file1 : files) {
                 //System.out.println("file1.getName() = " + file1.getName());
                 ImageView imageView = GeneralGraphicMethods.setBackground(root, file1.getPath(), false, 0, 0);
+                assert imageView != null;
                 imageView.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
 
                 if (file1.getName().contains("middleground") || file1.getName().contains("midground")) {
@@ -149,7 +158,7 @@ public class BattleScene {
         return gameGrid[row][column];
     }
 
-    public Pair<Double, Double> getCellPosition(int row, int column) {
+    private Pair<Double, Double> getCellPosition(int row, int column) {
         return new Pair<>(gameGrid[row][column].getLayoutX(), gameGrid[row][column].getLayoutY());
     }
 
@@ -244,7 +253,11 @@ public class BattleScene {
 
     public void addNodeToBoard(int x, int y, Node node) {
         Pair<Double, Double> position = getCellPosition(x, y);
-        node.relocate(x, y);
+        node.relocate(position.getKey(), position.getValue() - 10);
+        if (node instanceof ImageView) {
+            ((ImageView) node).setFitWidth(mapProperties.cellWidth);
+            ((ImageView) node).setFitHeight(mapProperties.cellHeight);
+        }
         board.getChildren().add(node);
     }
 
@@ -277,7 +290,7 @@ public class BattleScene {
 
     public ImageView addCardToBoard(int row, int column, Card card, String mode) {
         FilesType filesType = FilesType.MINION;
-        if (card instanceof Hero)
+        if(card instanceof Hero)
             filesType = FilesType.HERO;
 
         ImageView imageView = null;
@@ -306,6 +319,7 @@ public class BattleScene {
             }
         }
 
+        assert imageView != null;
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);

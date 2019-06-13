@@ -3,6 +3,7 @@ package view.Graphic;
 import javafx.animation.AnimationTimer;
 import javafx.scene.*;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -87,7 +88,20 @@ public class GeneralGraphicMethods {
             ((StackPane) root).getChildren().add(node);
     }
 
-    static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
+    public static ImageView createImage( String path,double width, double height){
+        ImageView imageView = null;
+        try {
+            imageView = new ImageView(new Image(new FileInputStream(path)));
+        imageView.setFitWidth(width * getRatioX());
+        imageView.setFitHeight(height * getRatioY());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return imageView;
+
+    }
+
+    public static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
         ImageView imageView = null;
         try {
             imageView = new ImageView(new Image(new FileInputStream(path)));
@@ -254,5 +268,30 @@ public class GeneralGraphicMethods {
         Stage primaryStage = StageLauncher.getPrimaryStage();
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    static void setOnMouseEntered(Node node, Scene scene, boolean glowBoolean) {
+        Glow glow = new Glow(0);
+        node.setEffect(glow);
+        node.setOnMouseEntered(event -> {
+            setCursor(scene, Cursor.LIGHTEN);
+            if (glowBoolean)
+                glow.setLevel(1);
+        });
+        node.setOnMouseExited(event -> {
+            setCursor(scene, Cursor.AUTO);
+            if (glowBoolean)
+                glow.setLevel(0);
+        });
+    }
+
+    static ImageView addBack(Group root) {
+        addImage(root, "pics/other/circle.png", 100, 750, 70, 70);
+        return addImage(root, "pics/other/back.png", 115, 765, 40, 40);
+    }
+
+    static ImageView addNext(Group root) {
+        addImage(root, "pics/other/circle.png", 1200, 750, 70, 70);
+        return addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
     }
 }

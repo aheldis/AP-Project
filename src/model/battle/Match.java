@@ -1,5 +1,6 @@
 package model.battle;
 
+import javafx.scene.image.ImageView;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
@@ -9,10 +10,11 @@ import model.item.Flag;
 import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
+import org.omg.CORBA.IMP_LIMIT;
 import view.BattleView;
 import view.Graphic.BattleScene;
+import view.Graphic.GeneralGraphicMethods;
 import view.enums.StateType;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,27 +49,31 @@ public class Match {
     }
 
     private void setFlagsRandomly(int mode) {
+        if(mode == 2)
+            numberOfFlags =1;
         flags = new ArrayList<>();
         Flag flag;
         Random random = new Random();
         Square[][] squares = land.getSquares();
         int randomX, randomY;
         for (int i = 0; i < numberOfFlags; i++) {
-            randomX = random.nextInt(land.getNumberOfRows());
-            randomY = random.nextInt(land.getNumberOfColumns());
+            randomX = random.nextInt(LandOfGame.getNumberOfRows());
+            randomY = random.nextInt(LandOfGame.getNumberOfColumns());
             while (squares[randomX][randomY].getObject() != null
                     && squares[randomX][randomY].getFlags().size() != 0) {
 
-                randomX = random.nextInt(land.getNumberOfRows());
-                randomY = random.nextInt(land.getNumberOfColumns());
+                randomX = random.nextInt(LandOfGame.getNumberOfRows());
+                randomY = random.nextInt(LandOfGame.getNumberOfColumns());
             }
             //todo aval bazi momkene chandta flag ro add kone to ye khoone. okeye; vali age nemikhaim to
             // oon while balaee e ino ezafe kon: || squares[randomX][randomY].getFlags().size() != 0
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
             squares[randomX][randomY].addToFlags(flag);
+            ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_catagorized/flag.gif",10,10);
+            flag.setImageView(flagView);
+            BattleScene.getSingleInstance().addNodeToBoard(randomX,randomY,flagView);
         }
-        return;
     }
 
     private void setCollectiblesRandomly() {
@@ -89,6 +95,10 @@ public class Match {
             Shop.getInstance().removeCollectible(collectible);
             this.collectibles.add(collectible);
             squares[randomX][randomY].setObject(collectible);
+            ImageView collectibleImage =GeneralGraphicMethods.createImage(
+                    "pics/collectibles/"+collectible.getName()+".png",20,20);
+            BattleScene.getSingleInstance().addNodeToBoard(randomX,randomY,collectibleImage);
+            collectible.setImageView(collectibleImage);
 
         }
 

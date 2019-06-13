@@ -3,9 +3,6 @@ package view.Graphic;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -17,23 +14,20 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import model.account.Account;
 import model.account.Collection;
 import model.account.FilesType;
-import model.account.Shop;
 import model.battle.Deck;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
-import model.item.Item;
 import model.item.Usable;
+import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
 
@@ -65,7 +59,7 @@ class CollectionScene {
 
 
     private static void deckLittleCardMaker(Parent root, Object card, Group group,
-                                      Collection collection, Deck deck) {
+                                            Collection collection, Deck deck) {
 
         try {
             ImageView backPicView = new ImageView(new Image(new FileInputStream(
@@ -109,7 +103,7 @@ class CollectionScene {
 
 
             Text text = addText(group, name + "\n",
-                    60+25, 10, Color.rgb(200, 200, 225, 0.5), 20);
+                    60 + 25, 10, Color.rgb(200, 200, 225, 0.5), 20);
             text.setOnMouseEntered(event1 -> {
                 text.setUnderline(true);
                 text.setFill(Color.rgb(49, 255, 245, 0.5));
@@ -134,9 +128,9 @@ class CollectionScene {
 
             garbage.setOnMouseClicked(event16 -> {
                 if (card instanceof Card)
-                    collection.removeCardFromDeck((Card)card, deck.getName());
-                if(card instanceof Usable)
-                    collection.removeItemFromDeck((Usable)card,deck.getName());
+                    collection.removeCardFromDeck((Card) card, deck.getName());
+                if (card instanceof Usable)
+                    collection.removeItemFromDeck((Usable) card, deck.getName());
                 if (root instanceof VBox)
                     ((VBox) root).getChildren().removeAll(group);
                 if (root instanceof Group)
@@ -151,7 +145,7 @@ class CollectionScene {
         }
     }
 
-    static Group makeCardGroup(int x, int y, Object card) {
+    static Group makeCardGroup(int x, int y, Object card, Scene scene) {
         Group group = new Group();
         group.relocate(x, y);
         if (card instanceof Card) {
@@ -193,11 +187,14 @@ class CollectionScene {
                 imageView.setOnMouseEntered(event -> {
                     ImageView descView = addImage(group, "pics/other/desc.png", 10,
                             303 - 50, 200, 100);
-
                     Text desc = addText(group, ((Card) card).getDescription(),
                             40,
                             338 - 50 - 8, Color.WHITE, 15);
-                    imageView.setOnMouseExited(event1 -> group.getChildren().removeAll(desc, descView));
+                    setCursor(scene, Cursor.LIGHTEN);
+                    imageView.setOnMouseExited(event1 -> {
+                        group.getChildren().removeAll(desc, descView);
+                        setCursor(scene, Cursor.AUTO);
+                    });
                 });
 
             } catch (Exception ignored) {
@@ -352,23 +349,31 @@ class CollectionScene {
             if (i % NUMBER_IN_EACH_ROW == 0) {
                 hBox = new HBox();
                 vBox.getChildren().addAll(hBox);
-                cardsIcon.add(hBox);
-                Text helper = new Text("hiii");
-                helper.relocate(0, 0);
-                helper.setFont(Font.font(5));
-                helper.setFill(Color.TRANSPARENT);
-                hBox.getChildren().add(helper);
-                hBox.setSpacing(X_BORDER);
+                helper(hBox);
                 cardsIcon.add(hBox);
                 j++;
             }
-            if (cards.get(i) instanceof Hero)
-                showEachHero(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Minion)
-                showEachMinion(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Spell)
-                showEachSpell(cards.get(i), hBox, i % 5, j);
+            instanceOf(cards, hBox, j, i);
         }
+    }
+
+    private static void instanceOf(ArrayList<Card> cards, HBox hBox, int j, int i) {
+        if (cards.get(i) instanceof Hero)
+            showEachHero(cards.get(i), hBox, i % 5, j);
+        if (cards.get(i) instanceof Minion)
+            showEachMinion(cards.get(i), hBox, i % 5, j);
+        if (cards.get(i) instanceof Spell)
+            showEachSpell(cards.get(i), hBox, i % 5, j);
+    }
+
+    private static void helper(HBox hBox) {
+        cardsIcon.add(hBox);
+        Text helper = new Text("hiii");
+        helper.relocate(0, 0);
+        helper.setFont(Font.font(5));
+        helper.setFill(Color.TRANSPARENT);
+        hBox.getChildren().add(helper);
+        hBox.setSpacing(X_BORDER);
     }
 
     private static void searchBar(HBox hBox, VBox vBox, Collection collection) {
@@ -382,14 +387,7 @@ class CollectionScene {
         textArea.relocate(3, 5);
         textArea.positionCaret(1);
         textArea.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 15px; -fx-font-weight: bold;");
-        textArea.setBackground(new Background(new BackgroundFill(
-                Color.rgb(5, 5, 5, 0.0001),
-                CornerRadii.EMPTY, Insets.EMPTY)));
-        groupText.getChildren().add(textArea);
-
-        hBox.getChildren().addAll(groupText);
-        hBox.relocate(600, 200);
-        Group group1 = new Group();
+        Group group1 = textArea(hBox, groupText, textArea);
         addRectangleForCollection(group1, 0, 20, 50, 40, 60, 60
                 , Color.rgb(0, 0, 0, 0.7));
 
@@ -430,7 +428,19 @@ class CollectionScene {
         });
     }
 
-    public static Group makeItemCard(Usable item) {
+    static Group textArea(HBox hBox, Group groupText, TextField textArea) {
+        textArea.setBackground(new Background(new BackgroundFill(
+                Color.rgb(5, 5, 5, 0.0001),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        groupText.getChildren().add(textArea);
+
+        hBox.getChildren().addAll(groupText);
+        hBox.relocate(600, 200);
+        Group group1 = new Group();
+        return group1;
+    }
+
+    static Group makeItemCard(Usable item) {
         Group group = new Group();
         ImageView imageView = addImage(group, "pics/other/spell_background.png",
                 0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -501,11 +511,8 @@ class CollectionScene {
 
         searchBar(hBox, vBox, collection);
 
-        ImageView backCircle = addImage(root, "pics/other/circle.png", 100, 750, 70, 70);
-        ImageView back = addImage(root, "pics/other/back.png", 115, 765, 40, 40);
-
-        ImageView nextCircle = addImage(root, "pics/other/circle.png", 1200, 750, 70, 70);
-        ImageView next = addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
+        ImageView back = addBack(root);
+        ImageView next = addNext(root);
         ImageView deckSceneButton = addImage(root, "pics/other/desc.png", 600, 770, 100, 50);
         Text deckScene = addText(root, "Decks", 618, 785, Color.rgb(225, 225, 225,
                 0.8), 20);
@@ -515,24 +522,11 @@ class CollectionScene {
             pageNumberCards--;
             if (pageNumberCards < 0)
                 pageNumberCards = 0;
-            vBox.getChildren().removeAll(cardsIcon);
-            root.getChildren().removeAll(cardsIcon);
-            cardsIcon.clear();
-
-            if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
-                addItemCard(items, vBox);
-            }
-            hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
+            nextPage(cards, items, vBox);
         });
         next.setOnMouseClicked(event -> {
             pageNumberCards++;
-            vBox.getChildren().removeAll(cardsIcon);
-            root.getChildren().removeAll(cardsIcon);
-            cardsIcon.clear();
-            if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
-                addItemCard(items, vBox);
-            }
-            hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
+            nextPage(cards, items, vBox);
         });
 
         if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
@@ -545,27 +539,26 @@ class CollectionScene {
             if (i % 5 == 0) {
 
                 hBox = new HBox();
-                cardsIcon.add(hBox);
-                Text helper = new Text("hiii");
-                helper.relocate(0, 0);
-                helper.setFont(Font.font(5));
-                helper.setFill(Color.TRANSPARENT);
-                hBox.getChildren().add(helper);
-                hBox.setSpacing(X_BORDER);
+                helper(hBox);
                 vBox.getChildren().add(hBox);
                 j++;
             }
-            if (cards.get(i) instanceof Hero)
-                showEachHero(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Minion)
-                showEachMinion(cards.get(i), hBox, i % 5, j);
-            if (cards.get(i) instanceof Spell)
-                showEachSpell(cards.get(i), hBox, i % 5, j);
+            instanceOf(cards, hBox, j, i);
         }
 
 
         log(root, collection.helpOfCollection(), StateType.MAIN_MENU, 600);
 
+    }
+
+    private static void nextPage(ArrayList<Card> cards, Usable[] items, VBox vBox) {
+        vBox.getChildren().removeAll(cardsIcon);
+        root.getChildren().removeAll(cardsIcon);
+        cardsIcon.clear();
+        if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
+            addItemCard(items, vBox);
+        }
+        hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
     }
 
     /**
@@ -600,38 +593,38 @@ class CollectionScene {
         VBox vBox = new VBox();
         int startingBound = 2 * NUMBER_IN_EACH_ROW * pageNumber;
         for (int i = startingBound; i < startingBound + 2 * NUMBER_IN_EACH_ROW; i++) {
-            if (i >= cards.size()){
-                for(int h=i-cards.size();h<items.length;h++){
-                    if(items[h]==null)
+            if (i >= cards.size()) {
+                for (int h = i - cards.size(); h < items.length; h++) {
+                    if (items[h] == null)
                         continue;
-                    if (i % NUMBER_IN_EACH_ROW == 0) {
-                        vBox = new VBox();
-                        vBox.relocate(370 * ((i / (float) NUMBER_IN_EACH_ROW) % 2 + 1), 160);
-                        vBox.setSpacing(SPACING);
-                        root.getChildren().addAll(vBox);
-                        vBoxes.add(vBox);
-                    }
+                    vBox = getVBox(NUMBER_IN_EACH_ROW, SPACING, vBoxes, vBox, i);
                     Group group = new Group();
-                    deckLittleCardMaker(vBox, items[h], group,collection,deck);
-                    DragAndDropClass.dragAndDrop(group, target, deck, items[h]
-                            , vBox, root, 150, 35);
+                    deckLittleCardMaker(vBox, items[h], group, collection, deck);
+                    DragAndDropClass.dragAndDrop(group, target, deck, items[h], vBox, root, 150, 35);
                     i++;
                 }
                 break;
             }
-            if (i % NUMBER_IN_EACH_ROW == 0) {
-                vBox = new VBox();
-                vBox.relocate(370 * ((i / (float) NUMBER_IN_EACH_ROW) % 2 + 1), 160);
-                vBox.setSpacing(SPACING);
-                root.getChildren().addAll(vBox);
-                vBoxes.add(vBox);
+            vBox = getVBox(NUMBER_IN_EACH_ROW, SPACING, vBoxes, vBox, i);
+            if (deck.cardHaveBeenExistInThisDeck(cards.get(i).getCardId().getCardIdAsString()) == null &&
+                    !(cards.get(i) instanceof Hero)) {
+                Group group = new Group();
+                deckLittleCardMaker(vBox, cards.get(i), group, collection, deck);
+                DragAndDropClass.dragAndDrop(group, target, deck, cards.get(i), vBox, root, 150, 35);
             }
-            Group group = new Group();
-            deckLittleCardMaker(vBox, cards.get(i), group,collection,deck);
-            DragAndDropClass.dragAndDrop(group, target, deck, cards.get(i), vBox
-                    , root, 150, 35);
         }
         return vBoxes;
+    }
+
+    private static VBox getVBox(int NUMBER_IN_EACH_ROW, int SPACING, ArrayList<VBox> vBoxes, VBox vBox, int i) {
+        if (i % NUMBER_IN_EACH_ROW == 0) {
+            vBox = new VBox();
+            vBox.relocate(370 * ((i / (float) NUMBER_IN_EACH_ROW) % 2 + 1), 160);
+            vBox.setSpacing(SPACING);
+            root.getChildren().addAll(vBox);
+            vBoxes.add(vBox);
+        }
+        return vBox;
     }
 
     private static void makeDeckSide(VBox vBox, int i, Deck deck, Collection collection, Group group) {
@@ -741,9 +734,9 @@ class CollectionScene {
                 group1 = new Group();
                 deckLittleCardMaker(vBox, card, group1, collection, deck);
             }
-            if( deck.getItem()!=null){
+            if (deck.getItem() != null) {
                 group1 = new Group();
-                deckLittleCardMaker(vBox,deck.getItem(),group1,collection,deck);
+                deckLittleCardMaker(vBox, deck.getItem(), group1, collection, deck);
             }
 
         });
