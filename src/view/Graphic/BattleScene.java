@@ -201,6 +201,9 @@ public class BattleScene {
         board.getChildren().remove(node);
     }
 
+    public ImageView addCardToBoard(int row, int column, Card card){
+        return new ImageView();
+    }
 
     public ImageView addCardToBoard(int row, int column, Card card, String mode) {
         FilesType filesType = FilesType.MINION;
