@@ -39,6 +39,7 @@ class SelectGameScene {
     private static Match match;
     private static Game game = new Game();
     private static String mode;
+    private static String deckName;
 
     private static void changeScene() {
         Platform.runLater(() ->
@@ -50,13 +51,15 @@ class SelectGameScene {
         int column = -1;
         ArrayList<Deck> decks = account.getDecks();
         for (int i = 0; i < decks.size(); i++) {
+            Deck deck = decks.get(i);
             if (i % 7 == 0) {
                 column++;
             }
-            if (decks.get(i).validate()) {
+            if (deck.validate()) {
                 group = new Group();
                 group.relocate(210 * (column) + 10, 110 * (i % 7) + 10);
-                addImage(group, "pics/battle/select_mode/notification_quest_small@2x.png", 0, 0, 200, 100);
+                addImage(group, "pics/battle/select_mode/notification_quest_small@2x.png"
+                        , 0, 0, 200, 100);
                 addText(group, decks.get(i).getName(), 50, 40,
                         Color.rgb(225, 225, 225, 0.5), 20);
 
@@ -65,6 +68,7 @@ class SelectGameScene {
                 group.setOnMouseClicked(event -> {
                     //playMusic("resource\\music\\choose_button.m4a",false,selectGameScene);
                     changeScene();
+                    deckName = deck.getName();
                     mode = "custom";
                     selectMode();
                 });
@@ -171,7 +175,7 @@ class SelectGameScene {
                     BattleScene battleScene = BattleScene.getSingleInstance();
                     battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                     match = game.makeNewStoryGame(1);
-                    battleScene.setMatch(match);//chonke graveyard matche dorosto dashte bashe
+                    battleScene.setMatch(match);
 
                 }
                 //game started
@@ -252,18 +256,40 @@ class SelectGameScene {
                 Color.rgb(25, 205, 225, 0.6), 30);
         deathModeText.setFont(Font.font("Lato-bold", FontWeight.BOLD, 30));
 
+        Random random = new Random();
 
         getNumberOfFlagPage(collectFlagImage, selectModeRoot, selectModeScene);
         saveFlagImage.setOnMouseClicked(event -> {
+            if (mode.equals("custom")) {
 
-            //todo go to game ^__^
+                game = new Game();
+                if (game.checkPlayerDeck(account, 1)) {
+
+                    Platform.runLater(() ->
+                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+                    BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+                    match = game.makeNewCustomGame(account, deckName, 2, 0);
+                    battleScene.setMatch(match);
+
+
+                }
+            }
         });
 
         deathImage.setOnMouseClicked(event -> {
             if (mode.equals("custom")) {
-               // match = game.makeNewCustomGame(account, deckName, mode, numberOfFLags);
+                game = new Game();
+                if (game.checkPlayerDeck(account, 1)) {
+
+                    Platform.runLater(() ->
+                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+                    BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+                    match = game.makeNewCustomGame(account, deckName, 1, 0);
+                    battleScene.setMatch(match);
+                }
             }
-            //todo go to game ^__^
         });
 
         log(selectModeRoot, "select mode\nback", StateType.SELECT_GAME, 200);
@@ -273,6 +299,7 @@ class SelectGameScene {
     private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene) {
         try {
             imageView.setOnMouseClicked(event -> {
+                Random random = new Random();
 
                 root.getChildren().clear();
                 setBackground(root,
@@ -288,20 +315,31 @@ class SelectGameScene {
                 ImageView text = addImage(root, "pics/collection/card_silenced@2x.png",
                         600 - 5 - 20, 240, 200, 100);
 
-                TextField deckName = new TextField();
-                deckName.setPrefHeight(50);
-                deckName.relocate(605, 255);
-                deckName.positionCaret(1);
-                deckName.setStyle("-fx-text-fill: #80ffff; -fx-font-size: 25px; -fx-font-weight: bold;");
-                deckName.setFont(Font.font("Luminari", 30));
-                deckName.setBackground(new Background(
+                TextField number = new TextField();
+                number.setPrefHeight(50);
+                number.relocate(605, 255);
+                number.positionCaret(1);
+                number.setStyle("-fx-text-fill: #80ffff; -fx-font-size: 25px; -fx-font-weight: bold;");
+                number.setFont(Font.font("Luminari", 30));
+                number.setBackground(new Background(
                         new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
                                 CornerRadii.EMPTY, Insets.EMPTY)));
-                root.getChildren().add(deckName);
+                root.getChildren().add(number);
                 scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
                     if (key.getCode() == KeyCode.ENTER) {
-                        // match = game.makeNewCustomGame(account, deckName, mode, numberOfFLags);
-                        //todo go to game ^__^
+                        game = new Game();
+                        if (game.checkPlayerDeck(account, 1)) {
+                            if (number.getText().matches("\\d+")) {
+                                Platform.runLater(() ->
+                                        StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+                                BattleScene battleScene = BattleScene.getSingleInstance();
+                                battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+                                match = game.makeNewCustomGame(account, deckName,
+                                        3, Integer.parseInt(number.getText()));
+                                battleScene.setMatch(match);
+
+                            }
+                        }
                     }
                 });
 
