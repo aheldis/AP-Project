@@ -88,7 +88,20 @@ public class GeneralGraphicMethods {
             ((StackPane) root).getChildren().add(node);
     }
 
-    static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
+    public static ImageView createImage( String path,double width, double height){
+        ImageView imageView = null;
+        try {
+            imageView = new ImageView(new Image(new FileInputStream(path)));
+        imageView.setFitWidth(width * getRatioX());
+        imageView.setFitHeight(height * getRatioY());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return imageView;
+
+    }
+
+    public static ImageView addImage(Parent root, String path, double x, double y, double width, double height) {
         ImageView imageView = null;
         try {
             imageView = new ImageView(new Image(new FileInputStream(path)));

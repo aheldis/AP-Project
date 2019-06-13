@@ -50,6 +50,7 @@ public class BattleScene {
     public Match getMatch() {
         return match;
     }
+
     public void setGame(Game game) {
         this.game = game;
     }
@@ -76,8 +77,8 @@ public class BattleScene {
                 numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(root);
-       // StageLauncher.testzahraFooter(root);
-        battleFooter = new BattleFooterGraphic(root,game.getPlayers()[0]);
+        // StageLauncher.testzahraFooter(root);
+        battleFooter = new BattleFooterGraphic(root, game.getPlayers()[0]);
         battleFooter.makeFooter();
         battleHeader.test();
     }
@@ -200,7 +201,11 @@ public class BattleScene {
 
     public void addNodeToBoard(int x, int y, Node node) {
         Pair<Double, Double> position = getCellPosition(x, y);
-        node.relocate(x + mapProperties.cellWidth / 2, y + mapProperties.cellHeight / 2);
+        node.relocate(position.getKey(), position.getValue() - 10);
+        if (node instanceof ImageView) {
+            ((ImageView) node).setFitWidth(mapProperties.cellWidth);
+            ((ImageView) node).setFitHeight(mapProperties.cellHeight);
+        }
         board.getChildren().add(node);
     }
 
@@ -208,13 +213,13 @@ public class BattleScene {
         board.getChildren().remove(node);
     }
 
-    public ImageView addCardToBoard(int row, int column, Card card){
+    public ImageView addCardToBoard(int row, int column, Card card) {
         return new ImageView();
     }
 
     public ImageView addCardToBoard(int row, int column, Card card, String mode) {
         FilesType filesType = FilesType.MINION;
-        if(card instanceof Hero)
+        if (card instanceof Hero)
             filesType = FilesType.HERO;
 
         ImageView imageView = null;
@@ -261,11 +266,11 @@ public class BattleScene {
 
         ArrayList<Card> cards = Shop.getInstance().getCards();
         int number = 0;
-        for(int i = 0; i < 5; i++)
-            for(int j = 0; j < 9; j++) {
-                while(number < cards.size() && !(cards.get(number) instanceof Hero))
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 9; j++) {
+                while (number < cards.size() && !(cards.get(number) instanceof Hero))
                     number++;
-                if(number == cards.size())
+                if (number == cards.size())
                     break;
                 System.out.println("number = " + number);
                 System.out.println(cards.get(number).getName());
