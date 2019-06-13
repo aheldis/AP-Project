@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 import model.account.FilesType;
 import model.account.Shop;
+import model.battle.Game;
 import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
@@ -38,6 +39,7 @@ public class BattleScene {
     private Rectangle[][] gameGrid;
     private MapProperties mapProperties;
     private Match match;
+    private Game game;
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
 
@@ -47,6 +49,9 @@ public class BattleScene {
 
     public Match getMatch() {
         return match;
+    }
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public int getNumberOfMap() {
@@ -71,8 +76,9 @@ public class BattleScene {
                 numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(root);
-        StageLauncher.testzahraFooter(root);
-        // battleFooter = new BattleFooterGraphic(root,match.getPlayers()[0]);
+       // StageLauncher.testzahraFooter(root);
+        battleFooter = new BattleFooterGraphic(root,game.getPlayers()[0]);
+        battleFooter.makeFooter();
         battleHeader.test();
     }
 

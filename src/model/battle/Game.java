@@ -10,6 +10,10 @@ public class Game {
     private int numberOfFlags = 0;
     private int reward = 0;
 
+    public Player[] getPlayers() {
+        return players;
+    }
+
     public boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
 
         Deck deck = account.getMainDeck();

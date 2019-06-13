@@ -173,6 +173,7 @@ class SelectGameScene {
                     Platform.runLater(() ->
                             StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
                     BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.setGame(game);
                     battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                     match = game.makeNewStoryGame(1);
                     battleScene.setMatch(match);
@@ -186,6 +187,7 @@ class SelectGameScene {
                     Platform.runLater(() ->
                             StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
                     BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.setGame(game);
                     battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                     match = game.makeNewStoryGame(2);
                     battleScene.setMatch(match);
@@ -201,6 +203,7 @@ class SelectGameScene {
                             StageLauncher.getPrimaryStage().setScene
                                     (StageLauncher.getScene(StateType.BATTLE)));
                     BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.setGame(game);
                     battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                     match = game.makeNewStoryGame(3);
                     battleScene.setMatch(match);
@@ -268,6 +271,7 @@ class SelectGameScene {
                     Platform.runLater(() ->
                             StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
                     BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.setGame(game);
                     battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                     match = game.makeNewCustomGame(account, deckName, 2, 0);
                     battleScene.setMatch(match);
@@ -285,6 +289,7 @@ class SelectGameScene {
                     Platform.runLater(() ->
                             StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
                     BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.setGame(game);
                     battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                     match = game.makeNewCustomGame(account, deckName, 1, 0);
                     battleScene.setMatch(match);
@@ -333,6 +338,7 @@ class SelectGameScene {
                                 Platform.runLater(() ->
                                         StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
                                 BattleScene battleScene = BattleScene.getSingleInstance();
+                                battleScene.setGame(game);
                                 battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                                 match = game.makeNewCustomGame(account, deckName,
                                         3, Integer.parseInt(number.getText()));
