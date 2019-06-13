@@ -180,6 +180,9 @@ public class StageLauncher extends Application {
 
         AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);
+/*/
+ //       AccountScene.getInstance().makeBackground();
+ //       primaryStage.setScene(accountScene);
 
 
 //       graveYardTest();

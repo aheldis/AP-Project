@@ -1,12 +1,23 @@
 package model.item;
 
+import javafx.scene.image.ImageView;
 import model.card.Card;
 import model.land.Square;
+
 
 public class Collectible extends model.item.Item {
     private model.item.CollectibleId collectibleId;
     private Square square;
     private Card theOneWhoCollects;
+    private ImageView imageView;
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
 
     public model.item.CollectibleId getCollectibleId() {
         return collectibleId;
