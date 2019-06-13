@@ -170,7 +170,7 @@ class ShopScene {
                     i++;
                 }
 
-                break outer;
+                break;
             }
             Card card = cards.get(i);
             if (i % column == 0) {
@@ -331,15 +331,15 @@ class ShopScene {
 
             Group groupText = new Group();
 
-            addRectangle(groupText, 0, 0, 400, 90, 50, 50
-                    , Color.rgb(0, 0, 0, 0.7));
+            addRectangle(groupText, 0, 0, 400, 90, 50, 50,
+                    Color.rgb(0, 0, 0, 0.7));
 
             TextField textArea = new TextField();
             textArea.setPrefHeight(100);
             textArea.relocate(0, 0);
             textArea.positionCaret(1);
             textArea.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 20px; -fx-font-weight: bold;");
-            CollectionScene.textArea(hBox, groupText, textArea);
+            Group group = CollectionScene.textArea(hBox, groupText, textArea);
             addRectangle(group, 0, 0, 80, 90, 50, 50
                     , Color.rgb(0, 0, 0, 0.7));
 
