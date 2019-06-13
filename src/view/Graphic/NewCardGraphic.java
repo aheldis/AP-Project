@@ -60,6 +60,10 @@ class NewCardGraphic {
         ImageView spell = addImage(root, "pics/other/spell.png", 450, 300, 200, 200);
         ImageView minion = addImage(root, "pics/other/minion.png", 750, 300, 200, 200);
         ImageView buff = addImage(root, "pics/other/buff.png", 1050, 300, 200, 200);
+        setOnMouseEntered(hero, scene, true);
+        setOnMouseEntered(spell, scene, true);
+        setOnMouseEntered(minion, scene, true);
+        setOnMouseEntered(buff, scene, true);
 
         hero.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hero, spell, minion, buff);
@@ -74,7 +78,7 @@ class NewCardGraphic {
                     makeOneRowOfForm("specialPower", 200, 690 - 20),
                     makeOneRowOfForm("special power cooldown", 200, 760 - 20),
                     makeOneRowOfForm("cost", 200, 830 - 20));
-            enter(root);
+            enter(root, scene);
         });
         minion.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hero, spell, minion, buff);
@@ -89,7 +93,7 @@ class NewCardGraphic {
                     makeOneRowOfForm("specialPower(spell name)", 200, 690 - 20),
                     makeOneRowOfForm("special power activation", 200, 760 - 20),
                     makeOneRowOfForm("cost", 200, 830 - 20));
-            enter(root);
+            enter(root, scene);
         });
         spell.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hero, spell, minion, buff);
@@ -101,7 +105,7 @@ class NewCardGraphic {
                     makeOneRowOfForm("target", 200, 410 - 20),
                     makeOneRowOfForm("buff", 200, 480 - 20),
                     makeOneRowOfForm("cost", 200, 550 - 20));
-            enter(root);
+            enter(root, scene);
         });
         buff.setOnMouseClicked(event -> {
             root.getChildren().removeAll(hero, spell, minion, buff);
@@ -112,7 +116,7 @@ class NewCardGraphic {
                     makeOneRowOfForm("delay", 200, 410 - 20),
                     makeOneRowOfForm("last", 200, 480 - 20),
                     makeOneRowOfForm("friend or enemy", 200, 550 - 20));
-            enter(root);
+            enter(root, scene);
         });
 
 
@@ -133,7 +137,7 @@ class NewCardGraphic {
 
     }
 
-    private static void enter(Group root) {
+    private static void enter(Group root, Scene scene) {
         enter = new Group();
         enter.relocate(1100, 700);
         root.getChildren().addAll(enter);
@@ -142,6 +146,7 @@ class NewCardGraphic {
                 Color.rgb(225, 225, 225, 0.7), 30);
         text.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         text.setStroke(Color.rgb(225, 225, 225, 0.3));
+        setOnMouseEntered(enter, scene, true);
     }
 
 

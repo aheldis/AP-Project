@@ -3,6 +3,7 @@ package view.Graphic;
 import javafx.animation.AnimationTimer;
 import javafx.scene.*;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -254,5 +255,20 @@ public class GeneralGraphicMethods {
         Stage primaryStage = StageLauncher.getPrimaryStage();
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    static void setOnMouseEntered(Node node, Scene scene, boolean glowBoolean) {
+        Glow glow = new Glow(0);
+        node.setEffect(glow);
+        node.setOnMouseEntered(event -> {
+            setCursor(scene, Cursor.LIGHTEN);
+            if (glowBoolean)
+                glow.setLevel(1);
+        });
+        node.setOnMouseExited(event -> {
+            setCursor(scene, Cursor.AUTO);
+            if (glowBoolean)
+                glow.setLevel(0);
+        });
     }
 }

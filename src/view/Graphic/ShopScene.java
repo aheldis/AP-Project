@@ -181,7 +181,7 @@ class ShopScene {
                 hBoxes.add(hBox);
                 hBox.setSpacing(10);
             }
-            group = CollectionScene.makeCardGroup(0, 0, cards.get(i));
+            group = CollectionScene.makeCardGroup(0, 0, cards.get(i), shopScene);
             hBox.getChildren().addAll(group);
             addText(group, card.getName(), 20, 225, Color.WHITE, 20);
             addText(group, card.getCost() + "", 20, 245, Color.WHITE, 20);
@@ -362,8 +362,7 @@ class ShopScene {
                 Object object = Shop.getInstance().search(account, cardName);
                 if (object != null) {
                     if (object instanceof Card) {
-                        group1 = CollectionScene.makeCardGroup(
-                                500, 400, object);
+                        group1 = CollectionScene.makeCardGroup(500, 400, object, shopScene);
                         root.getChildren().addAll(group1);
                         HBox hBox1 = new HBox();
                         hBox1.relocate(410, 350);
