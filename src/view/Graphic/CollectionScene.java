@@ -511,11 +511,8 @@ class CollectionScene {
 
         searchBar(hBox, vBox, collection);
 
-        ImageView backCircle = addImage(root, "pics/other/circle.png", 100, 750, 70, 70);
-        ImageView back = addImage(root, "pics/other/back.png", 115, 765, 40, 40);
-
-        ImageView nextCircle = addImage(root, "pics/other/circle.png", 1200, 750, 70, 70);
-        ImageView next = addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
+        ImageView back = addBack(root);
+        ImageView next = addNext(root);
         ImageView deckSceneButton = addImage(root, "pics/other/desc.png", 600, 770, 100, 50);
         Text deckScene = addText(root, "Decks", 618, 785, Color.rgb(225, 225, 225,
                 0.8), 20);
@@ -525,24 +522,11 @@ class CollectionScene {
             pageNumberCards--;
             if (pageNumberCards < 0)
                 pageNumberCards = 0;
-            vBox.getChildren().removeAll(cardsIcon);
-            root.getChildren().removeAll(cardsIcon);
-            cardsIcon.clear();
-
-            if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
-                addItemCard(items, vBox);
-            }
-            hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
+            nextPage(cards, items, vBox);
         });
         next.setOnMouseClicked(event -> {
             pageNumberCards++;
-            vBox.getChildren().removeAll(cardsIcon);
-            root.getChildren().removeAll(cardsIcon);
-            cardsIcon.clear();
-            if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
-                addItemCard(items, vBox);
-            }
-            hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
+            nextPage(cards, items, vBox);
         });
 
         if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
@@ -565,6 +549,16 @@ class CollectionScene {
 
         log(root, collection.helpOfCollection(), StateType.MAIN_MENU, 600);
 
+    }
+
+    private static void nextPage(ArrayList<Card> cards, Usable[] items, VBox vBox) {
+        vBox.getChildren().removeAll(cardsIcon);
+        root.getChildren().removeAll(cardsIcon);
+        cardsIcon.clear();
+        if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
+            addItemCard(items, vBox);
+        }
+        hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
     }
 
     /**

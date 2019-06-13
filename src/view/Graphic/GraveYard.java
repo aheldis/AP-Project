@@ -17,13 +17,14 @@ import model.card.Spell;
 import view.enums.StateType;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
-public class GraveYard {
+class GraveYard {
     private static Scene graveYardScene = StageLauncher.getScene(StateType.GRAVE_YARD);
-    private static Group root = (Group) graveYardScene.getRoot();
+    private static Group root = (Group) Objects.requireNonNull(graveYardScene).getRoot();
     private static final int column = 4;
     private static int pageNumber = 0;
     private static ArrayList<Node> deleteable = new ArrayList<>();
@@ -77,7 +78,7 @@ public class GraveYard {
 
     }
 
-    public static void makeYard(ArrayList<Card> cards) {
+    static void makeYard(ArrayList<Card> cards) {
 
         playMusic("resource/music/graveyard.m4a", true, graveYardScene);
         setBackground(root, "pics/battle/graveyard/graveyard_background.jpg", true, 5, 5);
@@ -90,11 +91,8 @@ public class GraveYard {
 
         pageMaker(cards, pageVbox);
 
-        ImageView backCircle = addImage(root, "pics/other/circle.png", 100, 750, 70, 70);
-        ImageView back = addImage(root, "pics/other/back.png", 115, 765, 40, 40);
-
-        ImageView nextCircle = addImage(root, "pics/other/circle.png", 1200, 750, 70, 70);
-        ImageView next = addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
+        ImageView back = addBack(root);
+        ImageView next = addNext(root);
 
         back.setOnMouseClicked(event -> {
             pageNumber--;

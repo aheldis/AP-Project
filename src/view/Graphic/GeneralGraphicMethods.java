@@ -271,4 +271,14 @@ public class GeneralGraphicMethods {
                 glow.setLevel(0);
         });
     }
+
+    static ImageView addBack(Group root) {
+        addImage(root, "pics/other/circle.png", 100, 750, 70, 70);
+        return addImage(root, "pics/other/back.png", 115, 765, 40, 40);
+    }
+
+    static ImageView addNext(Group root) {
+        addImage(root, "pics/other/circle.png", 1200, 750, 70, 70);
+        return addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
+    }
 }
