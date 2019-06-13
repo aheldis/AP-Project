@@ -594,7 +594,7 @@ class CollectionScene {
                     vBox = getVBox(NUMBER_IN_EACH_ROW, SPACING, vBoxes, vBox, i);
                     Group group = new Group();
                     deckLittleCardMaker(vBox, items[h], group, collection, deck);
-                    DragAndDropClass.dragAndDrop(group, target, deck, items[h], vBox, root, 150, 35);
+                    DragAndDropClass.dragAndDropForCollection(group, target, deck, items[h], vBox, root, 150, 35);
                     i++;
                 }
                 break;
@@ -604,7 +604,7 @@ class CollectionScene {
                     !(cards.get(i) instanceof Hero)) {
                 Group group = new Group();
                 deckLittleCardMaker(vBox, cards.get(i), group, collection, deck);
-                DragAndDropClass.dragAndDrop(group, target, deck, cards.get(i), vBox, root, 150, 35);
+                DragAndDropClass.dragAndDropForCollection(group, target, deck, cards.get(i), vBox, root, 150, 35);
             }
         }
         return vBoxes;

@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import model.account.FilesType;
 import model.battle.Player;
 import model.card.Card;
+import model.card.Minion;
 import model.card.Spell;
 import view.enums.StateType;
 
@@ -69,8 +70,9 @@ class BattleFooterGraphic {
             addImage(handCardGroup, "pics/other/icon_mana@2x.png", 60, 107, 30, 30);
             makeCircleRotation(backgroundCircle, 70, 70);
             ImageView gif = addGif(group, handCardGroup, card, 0, 0);
-            DragAndDropClass.dragAndDrop(gif, null, null, card, handCardGroup, root,
-                    gif.getFitWidth() / 2 - 10, gif.getFitHeight() / 2 + 20);
+            if (card instanceof Minion)
+                DragAndDropClass.dragAndDropForGame(gif, card, handCardGroup, root,
+                        gif.getFitWidth() / 2 - 10, gif.getFitHeight() / 2 + 20, 15, -21);
         }
 
     }
