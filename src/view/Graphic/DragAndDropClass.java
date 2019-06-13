@@ -24,8 +24,10 @@ class DragAndDropClass {
             orgSceneY = event.getSceneY();
             DragAndDropClass.dx = dx;
             DragAndDropClass.dy = dy;
+//            for collection
             if (sourceRoot instanceof VBox)
                 ((VBox) sourceRoot).getChildren().remove(source);
+//            for game
             else {
                 if (DragAndDropClass.sourceRoot == null)
                     DragAndDropClass.sourceRoot = sourceRoot;
@@ -53,6 +55,7 @@ class DragAndDropClass {
         source.setOnMouseReleased(event -> {
             sceneRoot.getChildren().remove(source);
             boolean breaker = false;
+//            for game
             if (target == null) {
                 BattleScene battleScene = BattleScene.getSingleInstance();
                 Group group = battleScene.addCardToBoard(event.getSceneX(), event.getSceneY(),
@@ -62,6 +65,7 @@ class DragAndDropClass {
                     DragAndDropClass.sourceRoot = group;
                 }
             }
+//            for collection
             if (target != null && target.contains(event.getSceneX(), event.getSceneY())) {
                 try {
                     if (target instanceof VBox) {
@@ -79,11 +83,14 @@ class DragAndDropClass {
                     e.printStackTrace();
                 }
             } else if (!breaker) {
+//                for collection
                 if (sourceRoot instanceof VBox) {
                     ((VBox) sourceRoot).getChildren().add(source);
                     if (deck.cardHaveBeenExistInThisDeck(((Card) card).getCardId().getCardIdAsString()) != null)
                         deck.removeFromCardsOfDeck((Card) card);
-                } else {
+                }
+//                for game
+                else {
                     source.relocate(firstX, firstY);
                     ((Group) DragAndDropClass.sourceRoot).getChildren().add(source);
                 }
