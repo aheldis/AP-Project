@@ -246,27 +246,6 @@ public class Collection  implements Cloneable{
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (!errorForDeck(deck))
             return;
-
-        if (card instanceof Hero) {
-            if (deck.getHero() != null) {
-                error = ErrorType.HAVE_HERO_IN_DECK;
-                error.printMessage();
-                return;
-            }
-            deck.setHero((Hero) card);
-            return;
-        }
-
-        if (deck.getCardsOfDeck().size() == 20) {
-            error = ErrorType.CAN_NOT_ADD_CARD;
-            error.printMessage();
-            return;
-        }
-        if(deck.cardHaveBeenExistInThisDeck(card.getCardId().getCardIdAsString())!=null){
-            error=ErrorType.HAVE_CARD_IN_DECK;
-            error.printMessage();
-            return;
-        }
         deck.addToCardsOfDeck(card);
 
 
@@ -288,11 +267,6 @@ public class Collection  implements Cloneable{
         if (!errorForDeck(deck))
             return;
 
-        if (deck.getItem() != null) {
-            error = ErrorType.HAVE_ONE_ITEM_IN_DECK;
-            error.printMessage();
-            return;
-        }
         deck.addItemToDeck(item);
 
 

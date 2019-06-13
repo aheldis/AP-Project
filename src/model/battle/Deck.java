@@ -8,6 +8,7 @@ import model.card.Card;
 import model.card.Hero;
 import model.item.Usable;
 import model.item.UsableId;
+import view.enums.ErrorType;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -54,8 +55,55 @@ public class Deck {//if it is normal deck you had initialize it in collection
         return cardsOfDeck.size() == 20 && hero!= null;
     }
 
-    public void addToCardsOfDeck(Card card) {
+    public boolean addToCardsOfDeck(Card card) {
+        ErrorType error;
+        if (card instanceof Hero) {
+            if (getHero() != null) {
+                error = ErrorType.HAVE_HERO_IN_DECK;
+                error.printMessage();
+                return false;
+            }
+            setHero((Hero) card);
+            return true;
+        }
+
+        if (getCardsOfDeck().size() == 20) {
+            error = ErrorType.CAN_NOT_ADD_CARD;
+            error.printMessage();
+            return false;
+        }
+        if(cardHaveBeenExistInThisDeck(card.getCardId().getCardIdAsString())!=null){
+            error=ErrorType.HAVE_CARD_IN_DECK;
+            error.printMessage();
+            return false;
+        }
         cardsOfDeck.add(card);
+        return true;
+    }
+
+    public  boolean canAddCard(Card card){
+        ErrorType error;
+        if (card instanceof Hero) {
+            if (getHero() != null) {
+                error = ErrorType.HAVE_HERO_IN_DECK;
+                error.printMessage();
+                return false;
+            }
+            setHero((Hero) card);
+            return true;
+        }
+
+        if (getCardsOfDeck().size() == 20) {
+            error = ErrorType.CAN_NOT_ADD_CARD;
+            error.printMessage();
+            return false;
+        }
+        if(cardHaveBeenExistInThisDeck(card.getCardId().getCardIdAsString())!=null){
+            error=ErrorType.HAVE_CARD_IN_DECK;
+            error.printMessage();
+            return false;
+        }
+        return true;
     }
 
     public void removeFromCardsOfDeck(Card card) {
@@ -63,7 +111,12 @@ public class Deck {//if it is normal deck you had initialize it in collection
     }
 
     public void addItemToDeck(Usable item) {
-        if (this.item != null)
+        ErrorType error;
+        if (getItem() != null) {
+            ErrorType.HAVE_ONE_ITEM_IN_DECK.printMessage();
+            return;
+        }
+        if (this.item == null)
             this.item = item;
     }
 

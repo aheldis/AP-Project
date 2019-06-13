@@ -64,7 +64,7 @@ public class AllAccount {
             File file = new File("AccountSaver\\AccountUser.txt");
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
-                if (scanner.nextLine().equals(userName))
+                if (scanner.nextLine().split("/")[0].equals(userName))
                     return true;
             }
         } catch (Exception ignored) {
