@@ -43,7 +43,8 @@ public abstract class Item {
     }
 
     public String getDescription() {
-        return description;
+        return
+               Card.stringMakerForDesc( description);
     }
 
     public void setDescription(String description) {

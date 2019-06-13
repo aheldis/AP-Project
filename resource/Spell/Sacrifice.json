@@ -12,7 +12,7 @@
     "counterAttack": "-",
     "attackRange": 0,
     "ActivationTimeOfSpecialPower": "-",
-    "description": "weackness buff(hp-6) power buff (ap+8)",
+    "description": "weackness buff (hp-6) power buff (ap+8)",
     "change": {
       "targetType": "minion",
       "opponentCanMove": true,

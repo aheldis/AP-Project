@@ -1,5 +1,6 @@
 package view.Graphic;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -7,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -15,6 +17,7 @@ import javafx.scene.text.Text;
 import model.account.Account;
 import model.account.Shop;
 import model.card.Card;
+import model.item.Item;
 import model.item.Usable;
 import view.enums.StateType;
 
@@ -93,7 +96,7 @@ class ShopScene {
         return hbox;
     }
 
-    private static void buyCard(HBox hBox, Text daric, Account account,Usable[] items) {
+    private static void buyCard(HBox hBox, Text daric, Account account,ArrayList<Usable> items) {
         ArrayList<Card> cards = Shop.getInstance().getCards();
         VBox vBox = new VBox();//todo remember to delete
         for (int i = 0; i < 10; i++) {
@@ -136,14 +139,18 @@ class ShopScene {
     }
 
     private static void makeHBoxForCards(int column, int pageNumber, ArrayList<Card> cards,
-                                         Text daric, Account account, Usable[] items) {
+                                         Text daric, Account account, ArrayList<Usable> items) {
         HBox hBox = new HBox();
         int startingBound = 2 * column * pageNumber;
         int j = -1;
+        Group group;
         outer:
         for (int i = startingBound; i < startingBound + 2 * column; i++) {
             if (i >= cards.size()){
+                indexOfItem = i-cards.size();
                 for(int k=indexOfItem;k<startingBound + 2 * column;k++){
+                    if(i>=startingBound+ 2 * column)
+                        break outer;
                     if (i % column == 0) {
                         j++;
                         hBox = new HBox();
@@ -152,12 +159,24 @@ class ShopScene {
                         hBoxes.add(hBox);
                         hBox.setSpacing(10);
                     }
-                    if(k>=items.length)
+                    if(k>=items.size())
                         break outer;
-                    hBox.getChildren().addAll(CollectionScene.makeItemCard(items[k],k));
+                    Usable item =items.get(k);
+                    group = CollectionScene.makeItemCard(item);
+
+                    group.setOnMouseClicked(event -> {
+                        Shop.getInstance().buy(account,item.getName());
+                        daric.setText("Daric :" + account.getDaric());
+                    });
+
+                    addText(group,items.get(k).getName()+"\n"+items.get(k).getCost()
+                            ,20,225,Color.WHITE,20);
+                    hBox.getChildren().addAll(group);
                     indexOfItem++;
+                    i++;
                 }
-                break;
+
+                break outer;
             }
             Card card = cards.get(i);
             if (i % column == 0) {
@@ -168,7 +187,7 @@ class ShopScene {
                 hBoxes.add(hBox);
                 hBox.setSpacing(10);
             }
-            Group group = CollectionScene.makeCardGroup(0, 0, cards.get(i));
+            group = CollectionScene.makeCardGroup(0, 0, cards.get(i));
             hBox.getChildren().addAll(group);
             addText(group,card.getName() , 20, 225, Color.WHITE, 20);
             addText(group,card.getCost()+"",20,245, Color.WHITE, 20);
@@ -305,7 +324,7 @@ class ShopScene {
 
             HBox hBox = sellCard(daric, account);
 
-            buyCard(hBox, daric, account,account.getCollection().getItems());
+            buyCard(hBox, daric, account,Shop.getInstance().getItems());
 
 
         });

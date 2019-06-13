@@ -16,7 +16,7 @@ public class Shop {
     private static Shop singleInstance = null;
     private static String pathOfFiles = "resource/";
     private ArrayList<Card> cards = new ArrayList<>();
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Usable> items = new ArrayList<>();
     private ArrayList<Item> collectibles = new ArrayList<>();
     private AccountView accountView = AccountView.getInstance();
 //    private String[] type = {"hero", "minion", "Spell", "item"}; //ina ye enumi chizi mibood behtar mibood
@@ -53,7 +53,7 @@ public class Shop {
         return cards;
     }
 
-    public ArrayList<Item> getItems() {
+    public ArrayList<Usable> getItems() {
         return items;
     }
 
@@ -104,7 +104,7 @@ public class Shop {
         cards.add(card);
     }
 
-    public void addUsable(Item item) {
+    public void addUsable(Usable item) {
         items.add(item);
     }
 

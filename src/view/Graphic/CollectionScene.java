@@ -3,6 +3,7 @@ package view.Graphic;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -12,13 +13,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.account.Account;
 import model.account.Collection;
 import model.account.FilesType;
+import model.account.Shop;
 import model.battle.Deck;
 import model.card.Card;
 import model.card.Hero;
@@ -400,7 +404,7 @@ class CollectionScene {
         });
     }
 
-    public static Group makeItemCard(Usable item, int i) {
+    public static Group makeItemCard(Usable item) {
         Group group = new Group();
         ImageView imageView = addImage(group, "pics/other/spell_background.png",
                 0, 0, CARD_WIDTH, CARD_HEIGHT);
@@ -408,11 +412,22 @@ class CollectionScene {
         SpriteAnimationProperties sprite = new SpriteAnimationProperties(
                 item.getName(), FilesType.USABLE, item.getCountOfAnimation());
         cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                i * (X_BORDER + CARD_WIDTH) + 140,
-                (Y_BORDER + CARD_HEIGHT) + 200 - 55,
+                80, 75,
                 group, sprite.count,
                 sprite.rows, item.getMillis(),
                 (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
+
+
+        imageView.setOnMouseEntered(event -> {
+            ImageView descView = addImage(group, "pics/other/desc.png", 10,
+                    303 - 50, 200, 100);
+
+            Text desc = addText(group, item.getDescription(),
+                    40,
+                    338 - 50 - 8, Color.WHITE, 15);
+            imageView.setOnMouseExited(event1 -> group.getChildren().removeAll(desc, descView));
+        });
+
         return group;
     }
 
@@ -421,9 +436,12 @@ class CollectionScene {
         hBox.setAlignment(Pos.CENTER);
         hBox.setSpacing(1);
         vBox.getChildren().addAll(hBox);
+        cardsIcon.add(hBox);
         Group group;
         for (int i = 0; i < items.length; i++) {
-            group = makeItemCard(items[i], i);
+            if (items[i] == null)
+                continue;
+            group = makeItemCard(items[i]);
             hBox.getChildren().addAll(group);
         }
     }
@@ -474,8 +492,9 @@ class CollectionScene {
             vBox.getChildren().removeAll(cardsIcon);
             root.getChildren().removeAll(cardsIcon);
             cardsIcon.clear();
-            if (pageNumberCards == Math.floor(cards.size() / 10.0)) {
-                addItemCard(items,vBox);
+
+            if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
+                addItemCard(items, vBox);
             }
             hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
         });
@@ -484,14 +503,14 @@ class CollectionScene {
             vBox.getChildren().removeAll(cardsIcon);
             root.getChildren().removeAll(cardsIcon);
             cardsIcon.clear();
-            if (pageNumberCards == Math.floor(cards.size() / 10.0)) {
-                addItemCard(items,vBox);
+            if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
+                addItemCard(items, vBox);
             }
             hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
         });
 
-        if (pageNumberCards == Math.floor(cards.size() / 10.0)) {
-            addItemCard(items,vBox);
+        if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
+            addItemCard(items, vBox);
         }
         int j = -1;
         for (int i = 0; i < 10; i++) {

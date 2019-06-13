@@ -353,6 +353,9 @@ public class Collection  implements Cloneable{
         ErrorType error;
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck != null) {
+            if(!deck.validate()){
+                ErrorType.SELECTED_INVALID_DECK.printMessage();
+            }
             return deck.validate();
         }
         error = ErrorType.HAVE_NOT_DECK;

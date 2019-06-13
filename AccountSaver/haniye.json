@@ -1,0 +1,369 @@
+{
+  "@type": "model.account.Account",
+  "@val": {
+    "userName": "haniye",
+    "password": "123",
+    "daric": 123100,
+    "wins": 0,
+    "matchHistory": [],
+    "collection": {
+      "spells": [
+        {
+          "playerNameByNumber": 0,
+          "numberOfAttack": 0,
+          "turn": 0,
+          "apChanges": 0,
+          "turnForApChanges": 0,
+          "hpChanges": 0,
+          "turnForHpChanges": 0,
+          "change": {
+            "targetType": "square",
+            "opponentCanMove": true,
+            "opponentCanAttack": true,
+            "opponentCanCounterAttack": true,
+            "turnOfCanNotMoveForOpponent": 0,
+            "turnOfCanNotAttackForOpponent": 0,
+            "turnOfCanNotCounterAttackForOpponent": 0,
+            "hpChange": 0,
+            "apChange": 0,
+            "buffs": {
+              "Fire": [
+                2
+              ]
+            },
+            "unaffectBuffs": false,
+            "changeInApOrHpForWeakness": 0,
+            "changeInApOrHpForPower": 0,
+            "changeInManaForMana": 0,
+            "changeInHpForDecreaserHp": 0
+          },
+          "target": {
+            "targets": [],
+            "counterAttackType": "-",
+            "cardType": "spell",
+            "one": false,
+            "row": false,
+            "column": false,
+            "all": false,
+            "random": false,
+            "distance": -1,
+            "self": false,
+            "enemy": false,
+            "ally": false,
+            "haveRange": false,
+            "notHaveRange": false,
+            "theOneWhoCollects": "-",
+            "theOneWhoDoesTheThing": "-"
+          },
+          "mp": 3,
+          "hp": 0,
+          "ap": 0,
+          "turnOfCanNotMove": 0,
+          "turnOfCanNotAttack": 0,
+          "turnOfCanNotCounterAttack": 0,
+          "name": "HellFire",
+          "cardId": {
+            "cardId": "haniye_HellFire_1",
+            "account": "@root",
+            "card": "@root.collection.spells.0",
+            "number": 1
+          },
+          "turnsOfPickingUp": [],
+          "counterAttack": "-",
+          "attackRange": 2,
+          "cost": 600,
+          "buffsOnThisCard": [],
+          "CardNumber": 6,
+          "canMove": true,
+          "canAttack": true,
+          "canCounterAttack": true,
+          "hpChangeAfterAttack": 0,
+          "description": "fire buff for 2 turns in choosen cells",
+          "countOfAnimation": 13,
+          "animationRow": 5,
+          "frameSize": 0,
+          "millis": 2500,
+          "heightOfPicture": 0
+        }
+      ],
+      "heroes": [],
+      "minions": [
+        {
+          "numberOfBeingAttacked": 0,
+          "numberOfAttack": 0,
+          "turn": 0,
+          "forWhichPlayer": 0,
+          "price": 0,
+          "activationTimeOfSpecialPowerString": "ON_DEFEND",
+          "comboAbility": false,
+          "haveSpecialPower": false,
+          "change": {
+            "targetType": "force",
+            "opponentCanMove": true,
+            "opponentCanAttack": false,
+            "opponentCanCounterAttack": true,
+            "turnOfCanNotMoveForOpponent": 0,
+            "turnOfCanNotAttackForOpponent": 0,
+            "turnOfCanNotCounterAttackForOpponent": 0,
+            "hpChange": 0,
+            "apChange": 0,
+            "buffs": {},
+            "unaffectBuffs": false,
+            "changeInApOrHpForWeakness": 0,
+            "changeInApOrHpForPower": 0,
+            "changeInManaForMana": 0,
+            "changeInHpForDecreaserHp": 0
+          },
+          "target": {
+            "targets": [],
+            "counterAttackType": "melee",
+            "cardType": "minion",
+            "one": false,
+            "row": false,
+            "column": false,
+            "all": false,
+            "random": false,
+            "distance": -1,
+            "self": true,
+            "enemy": false,
+            "ally": false,
+            "haveRange": false,
+            "notHaveRange": false,
+            "theOneWhoCollects": "-",
+            "theOneWhoDoesTheThing": "-"
+          },
+          "mp": 6,
+          "hp": 10,
+          "ap": 14,
+          "turnOfCanNotMove": 0,
+          "turnOfCanNotAttack": 0,
+          "turnOfCanNotCounterAttack": 0,
+          "name": "WildBoar",
+          "cardId": {
+            "cardId": "haniye_WildBoar_1",
+            "account": "@root",
+            "card": "@root.collection.minions.0",
+            "number": 1
+          },
+          "turnsOfPickingUp": [],
+          "counterAttack": "melee",
+          "attackRange": 1,
+          "cost": 500,
+          "buffsOnThisCard": [],
+          "CardNumber": 28,
+          "canMove": true,
+          "canAttack": true,
+          "canCounterAttack": true,
+          "hpChangeAfterAttack": 0,
+          "description": "won't be disarm",
+          "countOfAnimation": 104,
+          "animationRow": 5,
+          "frameSize": 0,
+          "millis": 10000,
+          "heightOfPicture": 0
+        }
+      ],
+      "items": [
+        {
+          "usableId": {
+            "usableId": "haniye_ShockHammer_1",
+            "number": 1,
+            "usable": "@root.collection.items.0",
+            "account": "@root"
+          },
+          "countOfAnimation": 29,
+          "millis": 4000,
+          "name": "ShockHammer",
+          "type": "Usable",
+          "description": "disarm a random opponent minion",
+          "cost": 15000,
+          "itemNumber": 17,
+          "target": {
+            "targets": [],
+            "counterAttackType": "-",
+            "cardType": "usable",
+            "one": false,
+            "row": false,
+            "column": false,
+            "all": false,
+            "random": true,
+            "distance": -1,
+            "self": false,
+            "enemy": true,
+            "ally": false,
+            "haveRange": false,
+            "notHaveRange": false,
+            "theOneWhoCollects": "-",
+            "theOneWhoDoesTheThing": "hero"
+          },
+          "change": {
+            "targetType": "force",
+            "opponentCanMove": true,
+            "opponentCanAttack": true,
+            "opponentCanCounterAttack": true,
+            "turnOfCanNotMoveForOpponent": 0,
+            "turnOfCanNotAttackForOpponent": 0,
+            "turnOfCanNotCounterAttackForOpponent": 0,
+            "hpChange": 0,
+            "apChange": 0,
+            "buffs": {
+              "disarm": [
+                1
+              ]
+            },
+            "unaffectBuffs": false,
+            "changeInApOrHpForWeakness": 0,
+            "changeInApOrHpForPower": 0,
+            "changeInManaForMana": 0,
+            "changeInHpForDecreaserHp": 0
+          },
+          "activationTimeOfItemString": "ON_ATTACK",
+          "activationTimeOfItem": "EACH_ROUND"
+        },
+        {
+          "usableId": {
+            "usableId": "haniye_Shield_1",
+            "number": 1,
+            "usable": "@root.collection.items.1",
+            "account": "@root"
+          },
+          "countOfAnimation": 29,
+          "millis": 4000,
+          "name": "Shield",
+          "type": "Usable",
+          "description": "12 holy buff to your minion",
+          "cost": 4000,
+          "itemNumber": 2,
+          "target": {
+            "targets": [],
+            "counterAttackType": "-",
+            "cardType": "usable",
+            "one": true,
+            "row": false,
+            "column": false,
+            "all": false,
+            "random": false,
+            "distance": -1,
+            "self": false,
+            "enemy": false,
+            "ally": true,
+            "haveRange": false,
+            "notHaveRange": false,
+            "theOneWhoCollects": "-",
+            "theOneWhoDoesTheThing": "-"
+          },
+          "change": {
+            "targetType": "hero",
+            "opponentCanMove": true,
+            "opponentCanAttack": true,
+            "opponentCanCounterAttack": true,
+            "turnOfCanNotMoveForOpponent": 0,
+            "turnOfCanNotAttackForOpponent": 0,
+            "turnOfCanNotCounterAttackForOpponent": 0,
+            "hpChange": 0,
+            "apChange": 0,
+            "buffs": {
+              "holy": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+              ]
+            },
+            "unaffectBuffs": false,
+            "changeInApOrHpForWeakness": 0,
+            "changeInApOrHpForPower": 0,
+            "changeInManaForMana": 0,
+            "changeInHpForDecreaserHp": 0
+          },
+          "activationTimeOfItemString": "EACH_ROUND",
+          "activationTimeOfItem": "EACH_ROUND"
+        },
+        {
+          "usableId": {
+            "usableId": "haniye_FeatherOfSimurgh_1",
+            "number": 1,
+            "usable": "@root.collection.items.2",
+            "account": "@root"
+          },
+          "countOfAnimation": 29,
+          "millis": 4000,
+          "name": "FeatherOfSimurgh",
+          "type": "Usable",
+          "description": "ap - 2 for hybrid or ranged hero",
+          "cost": 3500,
+          "itemNumber": 6,
+          "target": {
+            "targets": [],
+            "counterAttackType": "-",
+            "cardType": "usable",
+            "one": true,
+            "row": false,
+            "column": false,
+            "all": false,
+            "random": false,
+            "distance": -1,
+            "self": false,
+            "enemy": true,
+            "ally": false,
+            "haveRange": true,
+            "notHaveRange": false,
+            "theOneWhoCollects": "-",
+            "theOneWhoDoesTheThing": "-"
+          },
+          "change": {
+            "targetType": "hero",
+            "opponentCanMove": true,
+            "opponentCanAttack": true,
+            "opponentCanCounterAttack": true,
+            "turnOfCanNotMoveForOpponent": 0,
+            "turnOfCanNotAttackForOpponent": 0,
+            "turnOfCanNotCounterAttackForOpponent": 0,
+            "hpChange": 0,
+            "apChange": -2,
+            "buffs": {},
+            "unaffectBuffs": false,
+            "changeInApOrHpForWeakness": 0,
+            "changeInApOrHpForPower": 0,
+            "changeInManaForMana": 0,
+            "changeInHpForDecreaserHp": 0
+          },
+          "activationTimeOfItemString": "EACH_ROUND",
+          "activationTimeOfItem": "EACH_ROUND"
+        }
+      ],
+      "account": "@root",
+      "decks": [],
+      "accountView": {}
+    },
+    "mainDeck": {
+      "cardsOfDeck": [],
+      "indexOfCards": 0
+    },
+    "player": {
+      "@type": "model.battle.OrdinaryPlayer",
+      "@val": {
+        "cardsOnLand": [],
+        "turnForSavingFlag": 0,
+        "ownFlags": [],
+        "turnsPlayed": 0,
+        "manaOfThisTurn": 2,
+        "mana": 2,
+        "graveYard": {
+          "cards": [],
+          "player": "@root.player"
+        },
+        "buffsOnThisPlayer": []
+      }
+    },
+    "decks": []
+  }
+}

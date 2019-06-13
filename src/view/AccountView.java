@@ -46,7 +46,7 @@ public class AccountView {
         }
     }
 
-    public void cardsAndItemsView(ArrayList<Spell> spells, ArrayList<Minion> minions, ArrayList<Hero> heroes, ArrayList<Item> items) {
+    public void cardsAndItemsView(ArrayList<Spell> spells, ArrayList<Minion> minions, ArrayList<Hero> heroes, ArrayList<Usable> items) {
         int counter = 1;
         System.out.println("Heroes : ");
         for (Hero hero : heroes) {
