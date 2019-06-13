@@ -1,7 +1,6 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -156,13 +155,6 @@ public class AccountScene {
                 ErrorType.USER_NAME_ALREADY_EXIST.printMessage();
                 return;
             }
-            try {
-                File file = new File("AccountSaver/AccountUser.txt");
-                FileWriter fileWriter = new FileWriter(file, true);
-                fileWriter.write(userName + "/" + password + '\n');
-                fileWriter.close();
-            } catch (IOException ignored) {
-            }
 
             allAccount.createAccount(userName, password);
             account = allAccount.getAccountByName(userName);
@@ -171,21 +163,10 @@ public class AccountScene {
 
             root.getChildren().removeAll(windows);
             mainMenuScene.makeMenu(account);
-        }  else {
-                if (!allAccount.userNameHaveBeenExist(userName)) {
-                    ErrorType.USER_NAME_NOT_FOUND.printMessage();
-                    return;
-                }
-                try {
-                    InputStream input = new FileInputStream("AccountSaver/" + userName + ".json");
-                    Reader reader = new InputStreamReader(input);
-                    YaGson mapper = new YaGson();
-                    Account account1 = mapper.fromJson(reader, Account.class);//load the deck
-                    allAccount.addToAccounts(account1);
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+        } else if (!allAccount.userNameHaveBeenExist(userName)) {
+            ErrorType.USER_NAME_NOT_FOUND.printMessage();
+            return;
+        } else {
             if (!allAccount.passwordMatcher(userName, password)) {
                 ErrorType.PASSWORD_DOES_NOT_MATCH.printMessage();
                 return;
