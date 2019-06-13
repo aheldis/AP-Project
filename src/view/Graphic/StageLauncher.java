@@ -17,7 +17,6 @@ import model.account.Account;
 import model.account.Collection;
 import model.account.Shop;
 import model.battle.Deck;
-import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
@@ -348,12 +347,14 @@ public class StageLauncher extends Application {
 //*/
 
 //        primaryStage.setScene(selectGameScene);
-/*/
+/*
+
         BattleScene battleScene1 = BattleScene.getSingleInstance();
         battleScene1.setBattleScene(7); //from 1 to 12
         battleScene1.test();
         primaryStage.setScene(battleScene);
-/*/
+*/
+
         AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);
 
