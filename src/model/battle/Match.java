@@ -113,7 +113,7 @@ public class Match {
         }
     }
 
-    public Match(Player[] players, String mode, int numberOfFlags, int reward) {
+    Match(Player[] players, String mode, int numberOfFlags, int reward) {
         this.battleScene = BattleScene.getSingleInstance();
         land = new LandOfGame();
         Hero firstHero = players[0].getMainDeck().getHero();
@@ -143,11 +143,11 @@ public class Match {
 
         square[2][0].setObject(players[0].getMainDeck().getHero());
         firstHero.setPosition(square[2][0]);
-        battleScene.addCardToBoard(2, 0, firstHero, "Breathing");
+        battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null);
 
         square[2][8].setObject(players[1].getMainDeck().getHero());
         secondHero.setPosition(square[2][8]);
-        battleScene.addCardToBoard(2, 8, secondHero, "Breathing");
+        battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null);
 //        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
 //        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
         if (mode.equals(Game.getModeAsString(3))) {
@@ -224,7 +224,7 @@ public class Match {
             return -1;
     }
 
-    public void initGame() {
+    private void initGame() {
         players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
         players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
     }

@@ -2,6 +2,8 @@ package view.Graphic;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import model.battle.Deck;
 import model.card.Card;
@@ -10,16 +12,23 @@ import model.item.Usable;
 
 class DragAndDropClass {
     private static double orgSceneX, orgSceneY;
+    private static double firstX, firstY;
     private static Node source = null;
 
-    static void dragAndDrop(Node source, Node target, Deck deck, Object card, VBox sourceRoot, Group sceneRoot,
+    static void dragAndDrop(Node source, Node target, Deck deck, Object card, Parent sourceRoot, Group sceneRoot,
                             double dx, double dy) {
         source.setOnMousePressed(event -> {
             orgSceneX = event.getSceneX();
             orgSceneY = event.getSceneY();
-            sourceRoot.getChildren().remove(source);
+            firstX = source.getLayoutX();
+            firstY = source.getLayoutY();
+            if (sourceRoot instanceof VBox)
+                ((VBox) sourceRoot).getChildren().remove(source);
+            else
+                ((Group) sourceRoot).getChildren().remove(source);
             source.relocate(orgSceneX - dx, orgSceneY - dy);
             sceneRoot.getChildren().add(source);
+
         });
 
         source.setOnMouseDragged(event -> {
@@ -33,7 +42,15 @@ class DragAndDropClass {
 
         source.setOnMouseReleased(event -> {
             sceneRoot.getChildren().remove(source);
-            if (target.contains(event.getSceneX(), event.getSceneY())) {
+            boolean breaker = false;
+            if (target == null) {
+                BattleScene battleScene = BattleScene.getSingleInstance();
+                ImageView imageView = battleScene.addCardToBoard(event.getSceneX(), event.getSceneY(),
+                        (Card) card, (ImageView) source);
+                if (imageView != null)
+                    breaker = true;
+            }
+            if (target != null && target.contains(event.getSceneX(), event.getSceneY())) {
                 try {
                     if (target instanceof VBox) {
                         ((VBox) target).getChildren().add(source);
@@ -49,8 +66,13 @@ class DragAndDropClass {
                     System.out.println(DragAndDropClass.source);
                     e.printStackTrace();
                 }
-            } else {
-                sourceRoot.getChildren().add(source);
+            } else if (!breaker) {
+                if (sourceRoot instanceof VBox)
+                    ((VBox) sourceRoot).getChildren().add(source);
+                else {
+                    source.relocate(firstX, firstY);
+                    ((Group) sourceRoot).getChildren().add(source);
+                }
             }
         });
     }

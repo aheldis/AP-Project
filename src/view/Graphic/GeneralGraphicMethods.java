@@ -311,7 +311,7 @@ public class GeneralGraphicMethods {
         Background background = new Background(backgroundImage);
         button.setBackground(background);
         button.setTextFill(Color.WHITE);
-        button.setStyle("-fx-font-weight: bold");
+        button.setStyle("-fx-font-weight: bold; -fx-font-size: 19");
         root.getChildren().add(button);
         setOnMouseEntered(button, scene, true);
         return button;

@@ -37,25 +37,26 @@ class BattleFooterGraphic {
         addImage(nextCardGroup, "pics/battle/outer_ring.png",
                 0, 0, 170, 160);
         Card nextCard = player.getMainDeck().passNextCard();
-        addGif(group, nextCardGroup, nextCard, 20, 20);
+        addGif(group, nextCardGroup, nextCard, 10, 10);
     }
 
-    private void addGif(Group group, Group nextCardGroup, Card nextCard, int dx, int dy) {
+    private ImageView addGif(Group group, Group circleGroup, Card card, int dx, int dy) {
         ImageView gif;
-        if (nextCard instanceof Spell) {
+        if (card instanceof Spell) {
             SpriteAnimationProperties sprite = new SpriteAnimationProperties(
-                    nextCard.getName(), FilesType.SPELL, nextCard.getCountOfAnimation());
+                    card.getName(), FilesType.SPELL, card.getCountOfAnimation());
             gif = SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                    45 + dx, 40 + dy, group, sprite.count, sprite.rows, nextCard.getMillis(),
+                    45 + dx, 40 + dy, group, sprite.count, sprite.rows, card.getMillis(),
                     (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame);
         } else {
-            gif = addImage(group, "pics\\Minion\\" + nextCard.getName() + ".gif",
+            gif = addImage(group, "pics\\Minion\\" + card.getName() + ".gif",
                     15 + dx, -21 + dy, 110, 150);
         }
-        nextCardGroup.getChildren().add(gif);
+        circleGroup.getChildren().add(gif);
+        return gif;
     }
 
-    private void addCardsOfHand(Group group) {
+    private void addCardsOfHand(Group root, Group group) {
         ArrayList<Card> gameCards = player.getHand().getGameCards();
         Group handCardGroup;
         for (int i = 0; i < gameCards.size(); i++) {
@@ -67,7 +68,9 @@ class BattleFooterGraphic {
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
             addImage(handCardGroup, "pics/other/icon_mana@2x.png", 60, 107, 30, 30);
             makeCircleRotation(backgroundCircle, 70, 70);
-            addGif(group, handCardGroup, card, 0, 0);
+            ImageView gif = addGif(group, handCardGroup, card, 0, 0);
+            DragAndDropClass.dragAndDrop(gif, null, null, card, handCardGroup, root,
+                    gif.getFitWidth() / 2, gif.getFitHeight() / 2);
         }
 
     }
@@ -92,7 +95,7 @@ class BattleFooterGraphic {
         circlesGroup.relocate(50, 680);
         root.getChildren().addAll(circlesGroup);
         addNextCard(circlesGroup);
-        addCardsOfHand(circlesGroup);
+        addCardsOfHand((Group) scene.getRoot(), circlesGroup);
         addButtons(scene, circlesGroup);
     }
 

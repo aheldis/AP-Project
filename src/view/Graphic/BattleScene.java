@@ -5,7 +5,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.PerspectiveTransform;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -19,12 +18,13 @@ import model.land.LandOfGame;
 import view.enums.StateType;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
+
+import static view.Graphic.GeneralGraphicMethods.addImage;
 
 public class BattleScene {
     private static BattleScene singleInstance = null;
@@ -48,6 +48,7 @@ public class BattleScene {
     public Match getMatch() {
         return match;
     }
+
     public void setGame(Game game) {
         this.game = game;
     }
@@ -74,8 +75,8 @@ public class BattleScene {
                 numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(root);
-       // StageLauncher.testzahraFooter(root);
-        battleFooter = new BattleFooterGraphic(root,game.getPlayers()[0]);
+        // StageLauncher.testzahraFooter(root);
+        battleFooter = new BattleFooterGraphic(root, game.getPlayers()[0]);
         battleFooter.makeFooter(battleScene);
         battleHeader.test();
     }
@@ -193,7 +194,7 @@ public class BattleScene {
         perspectiveTransform.setLrx(mapProperties.lrx);
         perspectiveTransform.setLry(mapProperties.lry);
 
-    //    board.setEffect(perspectiveTransform);
+        //    board.setEffect(perspectiveTransform);
 /*
         board.setOnMouseClicked(event -> {
             System.out.println("board: " + event.getX() + " " + event.getY());
@@ -263,28 +264,31 @@ public class BattleScene {
         Pair<Double, Double> cellPosition = getCellPosition(row, column);
         if (!(x > cellPosition.getKey() && x < cellPosition.getKey() + mapProperties.cellWidth + mapProperties.gap))
             return false;
-        if (!(y > cellPosition.getValue() && y < cellPosition.getValue() + mapProperties.cellHeight + mapProperties.gap))
-            return false;
-        return true;
+        return y > cellPosition.getValue() && y < cellPosition.getValue() + mapProperties.cellHeight + mapProperties.gap;
     }
 
-    public ImageView addCardToBoard(double x, double y, Card card) {
+    ImageView addCardToBoard(double x, double y, Card card, ImageView imageView) {
         int numberOfColumns = LandOfGame.getNumberOfColumns();
         int numberOfRows = LandOfGame.getNumberOfRows();
         for (int i = 0; i < numberOfRows; i++)
             for (int j = 0; j < numberOfColumns; j++) {
-                if (gameGrid[i][j].contains(x, y)) {
+                Rectangle grid = gameGrid[i][j];
+                double minX = grid.getLayoutX();
+                double maxX = grid.getLayoutX() + grid.getWidth();
+                double minY = grid.getLayoutY();
+                double maxY = grid.getLayoutY() + grid.getHeight();
+//                if (gameGrid[i][j].contains(x, y)) {
+                if (x <= maxX && x >= minX && y <= maxY && y >= minY) {
                     //withinRange(x, y, i, j)
-                    return addCardToBoard(i, j, card, "normal");
+                    return addCardToBoard(i, j, card, "normal", imageView);
                 }
-
             }
         return null;
     }
 
-    public ImageView addCardToBoard(int row, int column, Card card, String mode) {
+    public ImageView addCardToBoard(int row, int column, Card card, String mode, ImageView image) {
         FilesType filesType = FilesType.MINION;
-        if(card instanceof Hero)
+        if (card instanceof Hero)
             filesType = FilesType.HERO;
 
         ImageView imageView = null;
@@ -299,25 +303,25 @@ public class BattleScene {
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
         } else {
-            String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
-            try {
-                imageView = new ImageView(new Image(new FileInputStream(path)));
+            if (card instanceof Hero) {
+                String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
+                imageView = addImage(board, path, 0, 0, 110, 150);
                 imageView.setScaleX(2);
                 imageView.setScaleY(2);
-
-
-                board.getChildren().add(imageView);
-                //root.getChildren().add(imageView);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            } else {
+                imageView = image;
+                imageView.relocate(0, 0);
+                imageView.setScaleX(1.5);
+                imageView.setScaleY(1.5);
+                board.getChildren().add(image);
             }
+            //root.getChildren().add(imageView);
         }
 
         assert imageView != null;
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
-
         return imageView;
     }
 

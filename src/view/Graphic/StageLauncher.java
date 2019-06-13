@@ -148,11 +148,11 @@ public class StageLauncher extends Application {
         }
 
         Scene accountScene = makeScene(StateType.ACCOUNT_MENU, Cursor.AUTO);
-        Scene mainMenuScene = makeScene(StateType.MAIN_MENU, Cursor.LIGHTEN);
-        Scene collectionScene = makeScene(StateType.COLLECTION, Cursor.LIGHTEN);
+        Scene mainMenuScene = makeScene(StateType.MAIN_MENU, Cursor.AUTO);
+        Scene collectionScene = makeScene(StateType.COLLECTION, Cursor.AUTO);
         Scene selectModeScene = makeScene(StateType.SELECT_MODE, Cursor.GREEN);
         Scene selectGameScene = makeScene(StateType.SELECT_GAME, Cursor.GREEN);
-        Scene battleScene = makeScene(StateType.BATTLE, Cursor.RED);
+        Scene battleScene = makeScene(StateType.BATTLE, Cursor.AUTO);
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
         Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
 
