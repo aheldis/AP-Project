@@ -280,18 +280,18 @@ public class BattleScene {
 //                if (gameGrid[i][j].contains(x, y)) {
                 if (x <= maxX && x >= minX && y <= maxY && y >= minY) {
                     //withinRange(x, y, i, j)
-                    return addCardToBoard(i, j, card, "normal", imageView);
+                    return addCardToBoard(i, j, card, "normal", imageView, false);
                 }
             }
         return null;
     }
 
-    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image) {
+    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image, boolean drag) {
         FilesType filesType = FilesType.MINION;
         if (card instanceof Hero)
             filesType = FilesType.HERO;
 
-        ImageView imageView = null;
+        ImageView imageView;
         Pair<Double, Double> position = getCellPosition(row, column);
 
         if (mode.equals("ATTACK")) {
@@ -303,7 +303,7 @@ public class BattleScene {
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
         } else {
-            if (card instanceof Hero) {
+            if (card instanceof Hero && image == null) {
                 String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
                 imageView = addImage(board, path, 0, 0, 110, 150);
                 imageView.setScaleX(2);
@@ -322,6 +322,13 @@ public class BattleScene {
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
+
+        if (drag) {
+            DragAndDrop dragAndDrop = new DragAndDrop();
+            dragAndDrop.dragAndDropForGame(imageView, card, board, root,
+                    imageView.getFitWidth() / 2, imageView.getFitHeight() / 2,
+                    imageView.getLayoutX(), imageView.getLayoutY());
+        }
         return board;
     }
 

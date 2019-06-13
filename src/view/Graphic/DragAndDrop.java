@@ -101,7 +101,6 @@ class DragAndDrop {
             source.relocate(source.getLayoutX() + offsetX, source.getLayoutY() + offsetY);
             orgSceneX = event.getSceneX();
             orgSceneY = event.getSceneY();
-            event.consume();
         });
     }
 }

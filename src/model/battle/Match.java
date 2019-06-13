@@ -143,11 +143,11 @@ public class Match {
 
         square[2][0].setObject(players[0].getMainDeck().getHero());
         firstHero.setPosition(square[2][0]);
-        battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null);
+        battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null, true);
 
         square[2][8].setObject(players[1].getMainDeck().getHero());
         secondHero.setPosition(square[2][8]);
-        battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null);
+        battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null, false);
 //        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
 //        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
         if (mode.equals(Game.getModeAsString(3))) {
