@@ -25,7 +25,6 @@ class BattleFooterGraphic {
     }
 
     private void addNextCard(Group group) {
-
         Group nextCardGroup = new Group();
         group.relocate(50, 660);
         group.getChildren().addAll(nextCardGroup);
@@ -37,10 +36,26 @@ class BattleFooterGraphic {
                 0, 0, 170, 160);
         addImage(nextCardGroup, "pics/battle/outer_ring.png",
                 0, 0, 170, 160);
-
+        Card nextCard = player.getMainDeck().passNextCard();
+        addGif(group, nextCardGroup, nextCard, 20, 20);
     }
 
-    private void addCardsOfHand(Player player, Group group) {
+    private void addGif(Group group, Group nextCardGroup, Card nextCard, int dx, int dy) {
+        ImageView gif;
+        if (nextCard instanceof Spell) {
+            SpriteAnimationProperties sprite = new SpriteAnimationProperties(
+                    nextCard.getName(), FilesType.SPELL, nextCard.getCountOfAnimation());
+            gif = SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
+                    45 + dx, 40 + dy, group, sprite.count, sprite.rows, nextCard.getMillis(),
+                    (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame);
+        } else {
+            gif = addImage(group, "pics\\Minion\\" + nextCard.getName() + ".gif",
+                    15 + dx, -21 + dy, 110, 150);
+        }
+        nextCardGroup.getChildren().add(gif);
+    }
+
+    private void addCardsOfHand(Group group) {
         ArrayList<Card> gameCards = player.getHand().getGameCards();
         Group handCardGroup;
         for (int i = 0; i < gameCards.size(); i++) {
@@ -52,18 +67,7 @@ class BattleFooterGraphic {
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
             addImage(handCardGroup, "pics/other/icon_mana@2x.png", 60, 107, 30, 30);
             makeCircleRotation(backgroundCircle, 70, 70);
-            ImageView gif;
-            if (card instanceof Spell) {
-                SpriteAnimationProperties sprite = new SpriteAnimationProperties(
-                        card.getName(), FilesType.SPELL, card.getCountOfAnimation());
-                gif = SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                        45, 40, group, sprite.count, sprite.rows, card.getMillis(),
-                        (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame);
-            } else {
-                gif = addImage(group, "pics\\Minion\\" + card.getName() + ".gif",
-                        15, -21, 110, 150);
-            }
-            handCardGroup.getChildren().add(gif);
+            addGif(group, handCardGroup, card, 0, 0);
         }
 
     }
@@ -88,7 +92,7 @@ class BattleFooterGraphic {
         circlesGroup.relocate(50, 680);
         root.getChildren().addAll(circlesGroup);
         addNextCard(circlesGroup);
-        addCardsOfHand(player, circlesGroup);
+        addCardsOfHand(circlesGroup);
         addButtons(scene, circlesGroup);
     }
 

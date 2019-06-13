@@ -10,11 +10,11 @@ import model.item.Flag;
 import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
-import org.omg.CORBA.IMP_LIMIT;
 import view.BattleView;
 import view.Graphic.BattleScene;
 import view.Graphic.GeneralGraphicMethods;
 import view.enums.StateType;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,8 +49,8 @@ public class Match {
     }
 
     private void setFlagsRandomly(int mode) {
-        if(mode == 2)
-            numberOfFlags =1;
+        if (mode == 2)
+            numberOfFlags = 1;
         flags = new ArrayList<>();
         Flag flag;
         Random random = new Random();
@@ -70,9 +70,9 @@ public class Match {
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
             squares[randomX][randomY].addToFlags(flag);
-            ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_catagorized/flag.gif",10,10);
+            ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_catagorized/flag.gif", 10, 10);
             flag.setImageView(flagView);
-            BattleScene.getSingleInstance().addNodeToBoard(randomX,randomY,flagView);
+            BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, flagView);
         }
     }
 
@@ -95,9 +95,9 @@ public class Match {
             Shop.getInstance().removeCollectible(collectible);
             this.collectibles.add(collectible);
             squares[randomX][randomY].setObject(collectible);
-            ImageView collectibleImage =GeneralGraphicMethods.createImage(
-                    "pics/collectibles/"+collectible.getName()+".png",20,20);
-            BattleScene.getSingleInstance().addNodeToBoard(randomX,randomY,collectibleImage);
+            ImageView collectibleImage = GeneralGraphicMethods.createImage(
+                    "pics/collectibles/" + collectible.getName() + ".png", 20, 20);
+            BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, collectibleImage);
             collectible.setImageView(collectibleImage);
 
         }
@@ -147,7 +147,7 @@ public class Match {
 
         square[2][8].setObject(players[1].getMainDeck().getHero());
         secondHero.setPosition(square[2][8]);
-        battleScene.addCardToBoard(2,8,secondHero,"Breathing");
+        battleScene.addCardToBoard(2, 8, secondHero, "Breathing");
 //        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
 //        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
         if (mode.equals(Game.getModeAsString(3))) {

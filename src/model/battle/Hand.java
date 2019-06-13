@@ -12,7 +12,7 @@ public class Hand {
     private ArrayList<Card> gameCards;
     private ArrayList<Collectible> CollectibleItems = new ArrayList<>();
 
-    public Hand(Deck deck) {
+    Hand(Deck deck) {
         this.deck = deck;
     }
 
@@ -36,7 +36,7 @@ public class Hand {
         return null;
     }
 
-    public void setCards() {//set cards for start of game after shuttle cards in deck
+    void setCards() {//set cards for start of game after shuttle cards in deck
 //        Random random = new Random();
 //        if (random.nextInt() % RAND_NUMBER == 0) {//to have item sometimes in game not never or always
 //            this.gameCards = new ArrayList<>(deck.getCardsOfDeck().subList(0, 3));
@@ -49,7 +49,7 @@ public class Hand {
         deck.setIndexOfCards(5);
     }
 
-    public void checkTheHandAndAddToIt() {//call it after each turn
+    void checkTheHandAndAddToIt() {//call it after each turn
         while (gameCards.size() < 5) {
             deck.increaseIndexOfCards();
             gameCards.add(deck.passNextCard());
@@ -74,12 +74,12 @@ public class Hand {
 
     }
 
-    public void removeUsedCardsFromHand(Card card) {
+    void removeUsedCardsFromHand(Card card) {
         gameCards.remove(card);
     }
 
 
-    public Card chooseARandomCard() {
+    Card chooseARandomCard() {
         Random random = new Random();
         return gameCards.get(random.nextInt(100) % gameCards.size());
     }
