@@ -13,6 +13,8 @@ import model.item.Usable;
 class DragAndDropClass {
     private static double orgSceneX, orgSceneY;
     private static double firstX, firstY;
+    private static double dx, dy;
+    private static Parent sourceRoot;
     private static Node source = null;
 
     static void dragAndDrop(Node source, Node target, Deck deck, Object card, Parent sourceRoot, Group sceneRoot,
@@ -20,15 +22,23 @@ class DragAndDropClass {
         source.setOnMousePressed(event -> {
             orgSceneX = event.getSceneX();
             orgSceneY = event.getSceneY();
-            firstX = source.getLayoutX();
-            firstY = source.getLayoutY();
+            DragAndDropClass.dx = dx;
+            DragAndDropClass.dy = dy;
             if (sourceRoot instanceof VBox)
                 ((VBox) sourceRoot).getChildren().remove(source);
-            else
+            else {
+                if (DragAndDropClass.sourceRoot == null)
+                    DragAndDropClass.sourceRoot = sourceRoot;
                 ((Group) sourceRoot).getChildren().remove(source);
-            source.relocate(orgSceneX - dx, orgSceneY - dy);
+                firstX = source.getLayoutX();
+                firstY = source.getLayoutY();
+                if (firstX != 15 && firstY != -21) {
+                    DragAndDropClass.dx = orgSceneX - firstX;
+                    DragAndDropClass.dy = orgSceneY - firstY;
+                }
+            }
+            source.relocate(orgSceneX - DragAndDropClass.dx, orgSceneY - DragAndDropClass.dy);
             sceneRoot.getChildren().add(source);
-
         });
 
         source.setOnMouseDragged(event -> {
@@ -45,10 +55,12 @@ class DragAndDropClass {
             boolean breaker = false;
             if (target == null) {
                 BattleScene battleScene = BattleScene.getSingleInstance();
-                ImageView imageView = battleScene.addCardToBoard(event.getSceneX(), event.getSceneY(),
+                Group group = battleScene.addCardToBoard(event.getSceneX(), event.getSceneY(),
                         (Card) card, (ImageView) source);
-                if (imageView != null)
+                if (group != null) {
                     breaker = true;
+                    DragAndDropClass.sourceRoot = group;
+                }
             }
             if (target != null && target.contains(event.getSceneX(), event.getSceneY())) {
                 try {
@@ -67,11 +79,13 @@ class DragAndDropClass {
                     e.printStackTrace();
                 }
             } else if (!breaker) {
-                if (sourceRoot instanceof VBox)
+                if (sourceRoot instanceof VBox) {
                     ((VBox) sourceRoot).getChildren().add(source);
-                else {
+                    if (deck.cardHaveBeenExistInThisDeck(((Card) card).getCardId().getCardIdAsString()) != null)
+                        deck.removeFromCardsOfDeck((Card) card);
+                } else {
                     source.relocate(firstX, firstY);
-                    ((Group) sourceRoot).getChildren().add(source);
+                    ((Group) DragAndDropClass.sourceRoot).getChildren().add(source);
                 }
             }
         });

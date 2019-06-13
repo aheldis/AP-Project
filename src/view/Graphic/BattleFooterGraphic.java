@@ -70,7 +70,7 @@ class BattleFooterGraphic {
             makeCircleRotation(backgroundCircle, 70, 70);
             ImageView gif = addGif(group, handCardGroup, card, 0, 0);
             DragAndDropClass.dragAndDrop(gif, null, null, card, handCardGroup, root,
-                    gif.getFitWidth() / 2, gif.getFitHeight() / 2);
+                    gif.getFitWidth() / 2 - 10, gif.getFitHeight() / 2 + 20);
         }
 
     }

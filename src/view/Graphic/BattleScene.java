@@ -267,7 +267,7 @@ public class BattleScene {
         return y > cellPosition.getValue() && y < cellPosition.getValue() + mapProperties.cellHeight + mapProperties.gap;
     }
 
-    ImageView addCardToBoard(double x, double y, Card card, ImageView imageView) {
+    Group addCardToBoard(double x, double y, Card card, ImageView imageView) {
         int numberOfColumns = LandOfGame.getNumberOfColumns();
         int numberOfRows = LandOfGame.getNumberOfRows();
         for (int i = 0; i < numberOfRows; i++)
@@ -286,7 +286,7 @@ public class BattleScene {
         return null;
     }
 
-    public ImageView addCardToBoard(int row, int column, Card card, String mode, ImageView image) {
+    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image) {
         FilesType filesType = FilesType.MINION;
         if (card instanceof Hero)
             filesType = FilesType.HERO;
@@ -311,8 +311,8 @@ public class BattleScene {
             } else {
                 imageView = image;
                 imageView.relocate(0, 0);
-                imageView.setScaleX(1.5);
-                imageView.setScaleY(1.5);
+                imageView.setScaleX(1.8);
+                imageView.setScaleY(1.8);
                 board.getChildren().add(image);
             }
             //root.getChildren().add(imageView);
@@ -322,7 +322,7 @@ public class BattleScene {
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
-        return imageView;
+        return board;
     }
 
     public void test() {
