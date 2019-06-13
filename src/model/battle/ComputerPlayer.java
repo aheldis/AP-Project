@@ -140,5 +140,4 @@ public class ComputerPlayer extends Player {
         //nothing
     }
 
-
 }

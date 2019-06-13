@@ -2086,6 +2086,22 @@
           "item": "@root.collection.items.0",
           "hero": "@root.collection.heroes.0",
           "indexOfCards": 0
+        },
+        {
+          "cardsOfDeck": [
+            "@root.collection.minions.3",
+            "@root.collection.minions.2",
+            "@root.collection.minions.1",
+            "@root.collection.minions.0",
+            "@root.collection.spells.2"
+          ],
+          "deckName": "zahra'sDeck",
+          "indexOfCards": 0
+        },
+        {
+          "cardsOfDeck": [],
+          "deckName": "saba'Deck",
+          "indexOfCards": 0
         }
       ],
       "accountView": {}
