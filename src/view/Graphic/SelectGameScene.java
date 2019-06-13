@@ -38,6 +38,7 @@ class SelectGameScene {
     private static ArrayList<Node> groupOfDeck = new ArrayList<>();
     private static Match match;
     private static Game game = new Game();
+    private static String mode;
 
     private static void changeScene() {
         Platform.runLater(() ->
@@ -64,6 +65,7 @@ class SelectGameScene {
                 group.setOnMouseClicked(event -> {
                     //playMusic("resource\\music\\choose_button.m4a",false,selectGameScene);
                     changeScene();
+                    mode = "custom";
                     selectMode();
                 });
             }
@@ -71,7 +73,7 @@ class SelectGameScene {
 
     }
 
-    private static Text showDescForStoryGame( String input, int x) {
+    private static Text showDescForStoryGame(String input, int x) {
         Text text = addText(selectGameRoot, input, x - 150, 600,
                 Color.rgb(225, 225, 225, 0.8), 30);
         text.setStroke(Color.rgb(0, 0, 0, 0.5));
@@ -95,7 +97,7 @@ class SelectGameScene {
 
     static void selectGame(Account account) {
         SelectGameScene.account = account;
-        if(!stopper) {
+        if (!stopper) {
             playMusic("resource/music/select_mode.m4a", true, selectGameScene);
             stopper = false;
         }
@@ -147,56 +149,62 @@ class SelectGameScene {
                     "pics/battle/select_mode/background.jpg", true, 20.0f, 20.0f);
 
 
-            ImageView arash= makeHeroPic(
+            ImageView arash = makeHeroPic(
                     "pics\\battle\\select_mode\\arash_mode.png", 60, 100);
 
-           ImageView zahhak = makeHeroPic("pics\\battle\\select_mode\\zahak_mode.png",
+            ImageView zahhak = makeHeroPic("pics\\battle\\select_mode\\zahak_mode.png",
                     400, 131);
-           ImageView diveSepid=  makeHeroPic("pics\\battle\\select_mode\\dive_sepid_mode.png",
+            ImageView diveSepid = makeHeroPic("pics\\battle\\select_mode\\dive_sepid_mode.png",
                     800 - 30, 125);
 
             showDescForStoryGame("Save Flag", 740);
-            showDescForStoryGame( "Collect Flags", 410);
-           showDescForStoryGame( "Death Mode", 1120);
+            showDescForStoryGame("Collect Flags", 410);
+            showDescForStoryGame("Death Mode", 1120);
 
             Random random = new Random();
 
             diveSepid.setOnMouseClicked(event12 -> {//story game-1
-                if(game.checkPlayerDeck(account,1)) {
+                game = new Game();
+                if (game.checkPlayerDeck(account, 1)) {
                     Platform.runLater(() ->
                             StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
-                BattleScene battleScene = BattleScene.getSingleInstance();
-                battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
-                game = new Game();
+                    BattleScene battleScene = BattleScene.getSingleInstance();
                     match = game.makeNewStoryGame(1);
+                    battleScene.setMatch(match);
+                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+
                 }
-                //todo start a game
+                //game started
             });
             zahhak.setOnMouseClicked(event1 -> {//story game -2
-               if(game.checkPlayerDeck(account,1)) {
-                   Platform.runLater(() ->
-                           StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
-                   BattleScene battleScene = BattleScene.getSingleInstance();
-                   battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
-                   game = new Game();
-                   match = game.makeNewStoryGame(2);
-               }
-               //todo start game
-           });
+                game = new Game();
+                if (game.checkPlayerDeck(account, 1)) {
+                    Platform.runLater(() ->
+                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+                    BattleScene battleScene = BattleScene.getSingleInstance();
+                    match = game.makeNewStoryGame(2);
+                    battleScene.setMatch(match);
+                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
 
-           arash.setOnMouseClicked(event13 -> {//story game -3
-               if(game.checkPlayerDeck(account,1)) {
-                   Platform.runLater(() ->
-                           StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
-                   BattleScene battleScene = BattleScene.getSingleInstance();
-                   battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
-                   game = new Game();
-                   match = game.makeNewStoryGame(3);
-               }
-           });
-           //getNumberOfFlagPage(arash, selectGameRoot, selectGameScene);
+                }
+                //game started
+            });
 
-            log(selectGameRoot, "select modes\nback",StateType.SELECT_GAME, 200);
+            arash.setOnMouseClicked(event13 -> {//story game -3
+                game = new Game();
+                if (game.checkPlayerDeck(account, 1)) {
+                    Platform.runLater(() ->
+                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+                    BattleScene battleScene = BattleScene.getSingleInstance();
+                    match = game.makeNewStoryGame(3);
+                    battleScene.setMatch(match);
+                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+
+                }
+            });
+            //getNumberOfFlagPage(arash, selectGameRoot, selectGameScene);
+
+            log(selectGameRoot, "select modes\nback", StateType.SELECT_GAME, 200);
 
         });
 
@@ -251,7 +259,9 @@ class SelectGameScene {
         });
 
         deathImage.setOnMouseClicked(event -> {
-
+            if (mode.equals("custom")) {
+               // match = game.makeNewCustomGame(account, deckName, mode, numberOfFLags);
+            }
             //todo go to game ^__^
         });
 

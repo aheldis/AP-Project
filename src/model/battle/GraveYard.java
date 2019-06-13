@@ -21,6 +21,10 @@ public class GraveYard {
         this.player = player;
     }
 
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
     public Card cardHaveBeenExistInGraveYard(String cardId) {
         for (Card card : cards) {
             if (card.getCardId().getCardIdAsString().equals(cardId))

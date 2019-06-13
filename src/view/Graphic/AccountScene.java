@@ -171,12 +171,11 @@ public class AccountScene {
 
             root.getChildren().removeAll(windows);
             mainMenuScene.makeMenu(account);
-        } else {
-            if (allAccount.userNameHaveBeenExist(userName)) {
-                ErrorType.USER_NAME_NOT_FOUND.printMessage();
-                return;
-            } else {
-//                FileReader fr = null;
+        }  else {
+                if (!allAccount.userNameHaveBeenExist(userName)) {
+                    ErrorType.USER_NAME_NOT_FOUND.printMessage();
+                    return;
+                }
                 try {
                     InputStream input = new FileInputStream("AccountSaver/" + userName + ".json");
                     Reader reader = new InputStreamReader(input);
@@ -187,7 +186,6 @@ public class AccountScene {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-            }
             if (!allAccount.passwordMatcher(userName, password)) {
                 ErrorType.PASSWORD_DOES_NOT_MATCH.printMessage();
                 return;

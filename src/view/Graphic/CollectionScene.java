@@ -712,7 +712,7 @@ class CollectionScene {
                     collection.selectADeckAsMainDeck(deck.getName());
                     root.getChildren().remove(checkMainDeck);
                     makeIConBarForDeck("pics/collection/checkmark-green.png",
-                            20, 10);
+                            10, 10);
                 }
             });
 

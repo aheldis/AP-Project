@@ -41,6 +41,10 @@ public class BattleScene {
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
 
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
     private BattleScene() {
     }
 
@@ -58,7 +62,7 @@ public class BattleScene {
         GeneralGraphicMethods.playMusic("resource/music/battle_music/" + numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(root);
-        StageLauncher.testzahraFooter(root);
+        StageLauncher.testzahraFooter(root,match);
         // battleFooter = new BattleFooterGraphic(root,match.getPlayers()[0]);
         battleHeader.test();
     }

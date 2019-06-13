@@ -103,6 +103,8 @@ public class Match {
 
     public Match(Player[] players, String mode, int numberOfFlags, int reward) {
         land = new LandOfGame();
+        System.out.println(players[0]);
+        System.out.println(players[0].getMainDeck());
         ArrayList<Card> cards = players[0].getMainDeck().getCardsOfDeck();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();

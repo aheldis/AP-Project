@@ -1,13 +1,17 @@
 package view.Graphic;
 
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.battle.Player;
 import model.card.Card;
+import view.enums.StateType;
 
 import java.util.ArrayList;
 
@@ -64,6 +68,15 @@ public class BattleFooterGraphic {
         Text graveYard = addText(group,"Graveyard",1000-60,122,
                 Color.rgb(225,225,225,0.7),30);
 
+        graveYard.setOnMouseClicked(event -> {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.GRAVE_YARD));
+                }
+            });
+            GraveYard.makeYard(player.getGraveYard().getCards());
+        });
 
         graveYard.setFont(Font.font("Andele Mono", FontWeight.BOLD,25));
         Text help = addText(group,"Help",1115,122,Color.rgb(225,225,225,0.7),30);

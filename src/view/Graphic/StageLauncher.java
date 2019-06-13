@@ -2,10 +2,12 @@ package view.Graphic;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -15,6 +17,7 @@ import model.account.Account;
 import model.account.Collection;
 import model.account.Shop;
 import model.battle.Deck;
+import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
@@ -220,7 +223,7 @@ public class StageLauncher extends Application {
         ShopScene.makeShopScene(account);
     }
 
-    static void testzahraFooter(Group root) {
+    static void testzahraFooter(Group root, Match match) {
         Group circlesGroup = new Group();
         root.getChildren().addAll(circlesGroup);
 
@@ -259,6 +262,19 @@ public class StageLauncher extends Application {
         Text help = addText(circlesGroup, "Help", 1115, 122, Color.rgb(225, 225, 225, 0.7), 30);
         help.setFont(Font.font("Andele Mono", FontWeight.BOLD, 25));
 
+
+        graveYard.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.GRAVE_YARD));
+                    }
+                });
+                GraveYard.makeYard(match.getPlayers()[0].getGraveYard().getCards());
+            }
+        });
 
         text.setStroke(Color.rgb(251, 225, 60, 0.5));
         graveYard.setStroke(Color.rgb(0, 225, 225, 0.5));

@@ -2,8 +2,8 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "Zahhak",
-    "countOfAnimation": 97,
-    "millis": 9000,
+    "countOfAnimation": 85,
+    "millis": 8000,
     "CardNumber": 5,
     "cost": 10000,
     "mp": 0,

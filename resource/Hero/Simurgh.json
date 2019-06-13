@@ -2,8 +2,8 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "Simurgh",
-    "countOfAnimation": 115,
-    "millis": 10000,
+    "countOfAnimation": 75,
+    "millis": 7000,
     "CardNumber": 2,
     "cost": 9000,
     "mp": 5,

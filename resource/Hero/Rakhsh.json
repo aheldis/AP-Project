@@ -2,7 +2,7 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "Rakhsh",
-    "countOfAnimation": 113,
+    "countOfAnimation": 118,
     "millis": 10000,
     "CardNumber": 4,
     "cost": 8000,

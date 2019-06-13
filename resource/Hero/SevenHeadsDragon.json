@@ -2,7 +2,7 @@
   "@type": "model.card.Hero",
   "@val": {
     "name": "SevenHeadsDragon",
-    "countOfAnimation": 105,
+    "countOfAnimation": 111,
     "millis": 10000,
     "CardNumber": 3,
     "cost": 8000,
