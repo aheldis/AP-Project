@@ -347,6 +347,8 @@ public class StageLauncher extends Application {
 //*/
 
 //        primaryStage.setScene(selectGameScene);
+
+
 /*
 
         BattleScene battleScene1 = BattleScene.getSingleInstance();
@@ -354,6 +356,7 @@ public class StageLauncher extends Application {
         battleScene1.test();
         primaryStage.setScene(battleScene);
 */
+
 
         AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);

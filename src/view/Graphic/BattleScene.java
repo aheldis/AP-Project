@@ -15,7 +15,6 @@ import model.account.Shop;
 import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
-import model.card.Minion;
 import model.land.LandOfGame;
 import view.enums.StateType;
 
@@ -25,12 +24,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class BattleScene {
     private static BattleScene singleInstance = null;
     private Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
-    private Group root = (Group) battleScene.getRoot();
+    private Group root = (Group) Objects.requireNonNull(battleScene).getRoot();
     private Group board = null; //!!!! Har chi roo board gharare bashe be in add she
     private double width = StageLauncher.getWidth();
     private double height = StageLauncher.getHeight();
@@ -49,7 +49,7 @@ public class BattleScene {
         return match;
     }
 
-    public int getNumberOfMap() {
+    int getNumberOfMap() {
         return numberOfMap;
     }
 
@@ -62,7 +62,7 @@ public class BattleScene {
         return singleInstance;
     }
 
-    public void setBattleScene(int numberOfMap) {
+    void setBattleScene(int numberOfMap) {
         root.getChildren().clear();
         this.numberOfMap = numberOfMap;
         setMapProperties();
@@ -97,6 +97,7 @@ public class BattleScene {
             for (File file1 : files) {
                 //System.out.println("file1.getName() = " + file1.getName());
                 ImageView imageView = GeneralGraphicMethods.setBackground(root, file1.getPath(), false, 0, 0);
+                assert imageView != null;
                 imageView.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
                 if (file1.getName().contains("middleground") || file1.getName().contains("midground")) {
                     //todo duration ya ye chiz dige
@@ -146,7 +147,7 @@ public class BattleScene {
         return gameGrid[row][column];
     }
 
-    public Pair<Double, Double> getCellPosition(int row, int column) {
+    private Pair<Double, Double> getCellPosition(int row, int column) {
         return new Pair<>(gameGrid[row][column].getLayoutX(), gameGrid[row][column].getLayoutY());
     }
 
@@ -236,6 +237,7 @@ public class BattleScene {
             }
         }
 
+        assert imageView != null;
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
@@ -243,7 +245,7 @@ public class BattleScene {
         return imageView;
     }
 
-    public void test() {
+    void test() {
 
         /*
         Minion minion = (Minion) Shop.getInstance().getNewCardByName("Siavash");

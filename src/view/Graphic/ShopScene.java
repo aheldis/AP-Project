@@ -339,14 +339,7 @@ class ShopScene {
             textArea.relocate(0, 0);
             textArea.positionCaret(1);
             textArea.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 20px; -fx-font-weight: bold;");
-            textArea.setBackground(new Background(new BackgroundFill(
-                    Color.rgb(5, 5, 5, 0.0001),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
-            groupText.getChildren().add(textArea);
-
-            hBox.getChildren().addAll(groupText);
-            hBox.relocate(600, 200);
-            Group group = new Group();
+            CollectionScene.textArea(hBox, groupText, textArea);
             addRectangle(group, 0, 0, 80, 90, 50, 50
                     , Color.rgb(0, 0, 0, 0.7));
 

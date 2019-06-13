@@ -23,7 +23,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
     private Hero hero = null;
     private int indexOfCards = 0;
 
-    public void setIndexOfCards(int indexOfCards) {
+    void setIndexOfCards(int indexOfCards) {
         this.indexOfCards = indexOfCards;
     }
 
@@ -47,12 +47,12 @@ public class Deck {//if it is normal deck you had initialize it in collection
         this.deckName = deckName;
     }
 
-    public void increaseIndexOfCards() {
+    void increaseIndexOfCards() {
         this.indexOfCards++;
     }
 
     public boolean validate() {//have 20 cards and 1 hero
-        return cardsOfDeck.size() == 20 && hero!= null;
+        return cardsOfDeck.size() == 20 && hero != null;
     }
 
     public boolean addToCardsOfDeck(Card card) {
@@ -72,8 +72,8 @@ public class Deck {//if it is normal deck you had initialize it in collection
             error.printMessage();
             return false;
         }
-        if(cardHaveBeenExistInThisDeck(card.getCardId().getCardIdAsString())!=null){
-            error=ErrorType.HAVE_CARD_IN_DECK;
+        if (cardHaveBeenExistInThisDeck(card.getCardId().getCardIdAsString()) != null) {
+            error = ErrorType.HAVE_CARD_IN_DECK;
             error.printMessage();
             return false;
         }
@@ -81,43 +81,17 @@ public class Deck {//if it is normal deck you had initialize it in collection
         return true;
     }
 
-    public  boolean canAddCard(Card card){
-        ErrorType error;
-        if (card instanceof Hero) {
-            if (getHero() != null) {
-                error = ErrorType.HAVE_HERO_IN_DECK;
-                error.printMessage();
-                return false;
-            }
-            setHero((Hero) card);
-            return true;
-        }
-
-        if (getCardsOfDeck().size() == 20) {
-            error = ErrorType.CAN_NOT_ADD_CARD;
-            error.printMessage();
-            return false;
-        }
-        if(cardHaveBeenExistInThisDeck(card.getCardId().getCardIdAsString())!=null){
-            error=ErrorType.HAVE_CARD_IN_DECK;
-            error.printMessage();
-            return false;
-        }
-        return true;
-    }
 
     public void removeFromCardsOfDeck(Card card) {
         cardsOfDeck.remove(card);
     }
 
     public void addItemToDeck(Usable item) {
-        ErrorType error;
-        if (getItem() != null) {
+        if (this.item != null) {
             ErrorType.HAVE_ONE_ITEM_IN_DECK.printMessage();
             return;
         }
-        if (this.item == null)
-            this.item = item;
+        this.item = item;
     }
 
     public void removeItemOfDeck(Item item) {
@@ -138,7 +112,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
         return cardsOfDeck.get(indexOfCards);
     }
 
-    public void setRandomOrderForDeck() {//faqat shoroye bazi seda kon
+    void setRandomOrderForDeck() {//faqat shoroye bazi seda kon
         Collections.shuffle(cardsOfDeck);
     }
 
@@ -155,7 +129,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
         return cardsOfDeck;
     }
 
-    public static Deck getDeckForStoryMode(int level) {
+    static Deck getDeckForStoryMode(int level) {
         Deck deck = new Deck();
         try {
             FileReader fileReader = new FileReader("Game/" + level + ".txt");
@@ -173,7 +147,7 @@ public class Deck {//if it is normal deck you had initialize it in collection
                         deck.setHero(hero);
                     } else if (FilesType.ITEM.getName().equals(type)) {
                         Item item = Shop.getInstance().getNewItemByName(line.trim());
-                        new UsableId((Usable)item, number++);
+                        new UsableId((Usable) item, number++);
                         deck.addItemToDeck((Usable) item);
                     } else {
                         Card card = Shop.getInstance().getNewCardByName(line.trim());
