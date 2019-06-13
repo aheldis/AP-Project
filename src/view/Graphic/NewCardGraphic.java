@@ -12,6 +12,10 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.util.HashMap;
 
@@ -20,13 +24,15 @@ import static view.Graphic.GeneralGraphicMethods.*;
 
 public class NewCardGraphic {
     private static HashMap<String, TextField> hashMap = new HashMap();
+    private static Group enter;
+
 
     private static TextField textFieldMaker(int x, int y) {
         TextField textField = new javafx.scene.control.TextField();
         textField.setPrefHeight(50);
-        textField.relocate(x, y);
+        textField.relocate(x+30,0);
         textField.positionCaret(1);
-        textField.setStyle("-fx-text-fill: #a3b2cc; -fx-font-size: 25px; -fx-font-weight: bold;");
+        textField.setStyle("-fx-text-fill: #a3b2cc; -fx-font-size: 20px; -fx-font-weight: bold;");
         textField.setBackground(new Background(
                 new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
                         CornerRadii.EMPTY, Insets.EMPTY)));
@@ -37,7 +43,7 @@ public class NewCardGraphic {
         Group group = new Group();
         group.relocate(x, y);
 
-        addText(group, input, 0, 0, Color.rgb(225, 225, 225, 0.6), 20);
+        addText(group, input, 20, 0, Color.rgb(225, 225, 225, 0.6), 20);
         TextField textField = textFieldMaker(30, 10);
         hashMap.put(input, textField);
 
@@ -47,83 +53,118 @@ public class NewCardGraphic {
     }
 
     public static void makeCardForm(Scene scene) {
-        Group root = new Group();
-
-
+        Group root =(Group) scene.getRoot();
+        Rectangle rectangle =addRectangle(root,0,0,(int)StageLauncher.getWidth(),(int)StageLauncher.getHeight()
+                ,0,0,Color.rgb(0,0,0,0.85));
+        VBox vBox = new VBox();
+        root.getChildren().addAll(vBox);
+        vBox.relocate(200,100);
 
         ImageView hero = addImage(root, "pics/other/hero.png", 150, 300, 200, 200);
         ImageView spell = addImage(root, "pics/other/spell.png", 450, 300, 200, 200);
         ImageView minion = addImage(root, "pics/other/minion.png", 750, 300, 200, 200);
         ImageView buff = addImage(root, "pics/other/buff.png", 1050, 300, 200, 200);
 
-        hero.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                root.getChildren().removeAll(hero, spell, minion);
-
-                VBox vBox = new VBox();
-
-                vBox.getChildren().addAll(
-                        makeOneRowOfForm("name",200,200-20 ),
-                        makeOneRowOfForm("type", 200,270-20),
-                        makeOneRowOfForm("Mp", 200,340-20),
-                        makeOneRowOfForm("Ap",200,410 -20),
-                        makeOneRowOfForm("Hp",200,480 -20),
-                        makeOneRowOfForm("Attack Type",200,550-20 ),
-                        makeOneRowOfForm("range",200,620-20 ),
-                        makeOneRowOfForm("specialPower", 200,690-20),
-                        makeOneRowOfForm("special power cooldown",200,760-20 ),
-                        makeOneRowOfForm("cost",200,830 -20));
-            }
+        hero.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hero, spell, minion,buff);
+            vBox.getChildren().addAll(
+                    makeOneRowOfForm("name",200,200-20 ),
+                    makeOneRowOfForm("type", 200,270-20),
+                    makeOneRowOfForm("Mp", 200,340-20),
+                    makeOneRowOfForm("Ap",200,410 -20),
+                    makeOneRowOfForm("Hp",200,480 -20),
+                    makeOneRowOfForm("Attack Type",200,550-20 ),
+                    makeOneRowOfForm("range",200,620-20 ),
+                    makeOneRowOfForm("specialPower", 200,690-20),
+                    makeOneRowOfForm("special power cooldown",200,760-20 ),
+                    makeOneRowOfForm("cost",200,830 -20));
+            enter = new Group();
+            enter.relocate(1100,700);
+            root.getChildren().addAll(enter);
+            addImage(enter,"pics/menu/quit.png",0,0,200,80);
+            Text text=addText(enter,"ENTER",50,40,
+                    Color.rgb(225,225,225,0.7),30);
+            text.setFont(Font.font("Arial", FontWeight.BOLD,30));
+            text.setStroke(Color.rgb(225,225,225,0.3));
         });
-        minion.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                root.getChildren().removeAll(hero, spell, minion);
+        minion.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hero, spell, minion,buff);
+            vBox.getChildren().addAll(
+                    makeOneRowOfForm("name", 200,200-20),
+                    makeOneRowOfForm("type", 200,270-20),
+                    makeOneRowOfForm("Mp",200,340-20 ),
+                    makeOneRowOfForm("Ap", 200,410-20),
+                    makeOneRowOfForm("Hp",200,480-20 ),
+                    makeOneRowOfForm("Attack Type",200,550-20 ),
+                    makeOneRowOfForm("range",200,620-20 ),
+                    makeOneRowOfForm("specialPower(spell name)",200,690-20 ),
+                    makeOneRowOfForm("special power activation",200,760-20 ),
+                    makeOneRowOfForm("cost", 200,830-20));
+            enter = new Group();
+            enter.relocate(1100,700);
+            root.getChildren().addAll(enter);
+            addImage(enter,"pics/menu/quit.png",0,0,200,80);
+            Text text=addText(enter,"ENTER",50,40,
+                    Color.rgb(225,225,225,0.7),30);
+            text.setFont(Font.font("Arial", FontWeight.BOLD,30));
+            text.setStroke(Color.rgb(225,225,225,0.3));
+        });
+        spell.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hero, spell, minion,buff);
 
-                VBox vBox = new VBox();
-                vBox.getChildren().addAll(
-                        makeOneRowOfForm("name", 200,200-20),
-                        makeOneRowOfForm("type", 200,270-20),
-                        makeOneRowOfForm("Mp",200,340-20 ),
-                        makeOneRowOfForm("Ap", 200,410-20),
-                        makeOneRowOfForm("Hp",200,480-20 ),
-                        makeOneRowOfForm("Attack Type",200,550-20 ),
-                        makeOneRowOfForm("range",200,620-20 ),
-                        makeOneRowOfForm("specialPower(spell name)",200,690-20 ),
-                        makeOneRowOfForm("special power activation",200,760-20 ),
-                        makeOneRowOfForm("cost", 200,830-20));
-            }
+            vBox.getChildren().addAll(
+                    makeOneRowOfForm("name",200,200-20 ),
+                    makeOneRowOfForm("type", 200,270-20),
+                    makeOneRowOfForm("Mp",200,340-20 ),
+                    makeOneRowOfForm("target",200,410-20 ),
+                    makeOneRowOfForm("buff",200,480-20 ),
+                    makeOneRowOfForm("cost",200,550-20 ));
+            enter = new Group();
+            enter.relocate(1100,700);
+            root.getChildren().addAll(enter);
+            addImage(enter,"pics/menu/quit.png",0,0,200,80);
+            Text text=addText(enter,"ENTER",50,40,
+                    Color.rgb(225,225,225,0.7),30);
+            text.setFont(Font.font("Arial", FontWeight.BOLD,30));
+            text.setStroke(Color.rgb(225,225,225,0.3));
         });
-        spell.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                root.getChildren().removeAll(hero, spell, minion);
-                VBox vBox = new VBox();
-                vBox.getChildren().addAll(
-                        makeOneRowOfForm("name",200,200-20 ),
-                        makeOneRowOfForm("type", 200,270-20),
-                        makeOneRowOfForm("Mp",200,340-20 ),
-                        makeOneRowOfForm("target",200,410-20 ),
-                        makeOneRowOfForm("buff",200,480-20 ),
-                        makeOneRowOfForm("cost",200,550-20 ));
-            }
+        buff.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(hero, spell, minion,buff);
+            vBox.getChildren().addAll(
+                    makeOneRowOfForm("name",200,200-20 ),
+                    makeOneRowOfForm("buff type",200,270-20 ),
+                    makeOneRowOfForm("effect value", 200,340-20),
+                    makeOneRowOfForm("delay", 200,410-20),
+                    makeOneRowOfForm("last", 200,480-20),
+                    makeOneRowOfForm("friend or enemy", 200,550-20));
+            enter = new Group();
+            enter.relocate(1100,700);
+            root.getChildren().addAll(enter);
+            addImage(enter,"pics/menu/quit.png",0,0,200,80);
+            Text text=addText(enter,"ENTER",50,40,
+                    Color.rgb(225,225,225,0.7),30);
+            text.setFont(Font.font("Arial", FontWeight.BOLD,30));
+            text.setStroke(Color.rgb(225,225,225,0.3));
         });
-        buff.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
 
-                root.getChildren().removeAll(hero, spell, minion);
-                VBox vBox = new VBox();
-                vBox.getChildren().addAll(
-                        makeOneRowOfForm("name",200,200-20 ),
-                        makeOneRowOfForm("buff type",200,270-20 ),
-                        makeOneRowOfForm("effect value", 200,340-20),
-                        makeOneRowOfForm("delay", 200,410-20),
-                        makeOneRowOfForm("last", 200,480-20),
-                        makeOneRowOfForm("friend or enemy", 200,550-20));
-            }
-        });
+
+        if(enter!=null){
+            enter.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    //todo get hash map
+
+
+                    enter = null;
+                }
+            });
+        }
+
+        ImageView close = addImage(root,"pics/menu/button_close@2x.png",
+                StageLauncher.getWidth()-70,0,60,60);
+        close.setOnMouseClicked(event -> root.getChildren().removeAll(rectangle,vBox,
+                close,buff,hero,spell,minion,enter));
+
 
 
     }

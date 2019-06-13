@@ -57,13 +57,15 @@ public class MainMenuScene {
     }
 
     private void addImageButtons() {
-        double x = StageLauncher.getWidth() - 380;
+        double x = StageLauncher.getWidth() - 410;
         double y = StageLauncher.getHeight() - 200;
         newImageButton("pics/menu/profile@2x.png", " PROFILE", x, y);
         x += 100;
         newImageButton("pics/menu/armory@2x.png", "    SHOP", x, y);
         x += 100;
         newImageButton("pics/menu/settings@2x.png", "SETTINGS", x, y);
+        x += 100;
+        newImageButton("pics/menu/quests@2x.png", "NEW CARD", x, y);
     }
 
     private void newImageButton(String path, String name, double x, double y) {
@@ -107,6 +109,10 @@ public class MainMenuScene {
                 AccountScene.getInstance().addWindows();
                 AllAccount.getInstance().saveAccount(account);
                 account = null;
+                break;
+            case "NEW CARD":
+                NewCardGraphic.makeCardForm(mainMenuScene);
+                break;
         }
     }
 
