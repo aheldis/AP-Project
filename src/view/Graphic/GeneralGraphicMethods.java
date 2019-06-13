@@ -2,13 +2,12 @@ package view.Graphic;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -280,5 +279,28 @@ public class GeneralGraphicMethods {
     static ImageView addNext(Group root) {
         addImage(root, "pics/other/circle.png", 1200, 750, 70, 70);
         return addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
+    }
+
+    static Button imageButton(Scene scene, Group root, String path, String name,
+                              double x, double y, double width, double height) {
+        Button button = new javafx.scene.control.Button(name);
+        button.setPrefSize(width, height);
+        button.relocate(x, y);
+        BackgroundImage backgroundImage = null;
+        try {
+            backgroundImage = new BackgroundImage(
+                    new Image(new FileInputStream(path), width, height, false, false),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Background background = new Background(backgroundImage);
+        button.setBackground(background);
+        button.setTextFill(Color.WHITE);
+        button.setStyle("-fx-font-weight: bold");
+        root.getChildren().add(button);
+        setOnMouseEntered(button, scene, true);
+        return button;
     }
 }

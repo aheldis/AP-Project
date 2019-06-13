@@ -1,6 +1,5 @@
 package view.Graphic;
 
-import com.gilecode.yagson.YaGson;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -9,12 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Glow;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -24,7 +20,6 @@ import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -61,32 +56,9 @@ public class AccountScene {
     private void addQuit() {
         double width = StageLauncher.getWidth();
         double height = StageLauncher.getHeight();
-        Button quit = new Button("QUIT");
-        quit.setPrefSize(174, 54);
-        quit.relocate(width - 250, height - 100);
-        BackgroundImage backgroundImage = null;
-        try {
-            backgroundImage = new BackgroundImage(new Image(new FileInputStream("pics/menu/quit.png")),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        Background background = new Background(backgroundImage);
-        quit.setBackground(background);
-        quit.setTextFill(Color.WHITE);
-        quit.setStyle("-fx-font-weight: bold");
-        root.getChildren().add(quit);
+        Button quit = imageButton(accountScene, root, "pics/menu/quit.png", "QUIT",
+                width - 250, height - 100, 174, 54);
         windows.add(quit);
-        Glow glow = new Glow(0);
-        quit.setEffect(glow);
-        quit.setOnMouseEntered(event -> {
-            setCursor(accountScene, Cursor.LIGHTEN);
-            glow.setLevel(1);
-        });
-        quit.setOnMouseExited(event -> {
-            setCursor(accountScene, Cursor.AUTO);
-            glow.setLevel(0);
-        });
         quit.setOnMouseClicked(event -> StageLauncher.getPrimaryStage().close());
     }
 

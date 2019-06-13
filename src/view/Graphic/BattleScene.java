@@ -78,7 +78,7 @@ public class BattleScene {
         battleHeader = new BattleHeaderGraphic(root);
        // StageLauncher.testzahraFooter(root);
         battleFooter = new BattleFooterGraphic(root,game.getPlayers()[0]);
-        battleFooter.makeFooter();
+        battleFooter.makeFooter(battleScene);
         battleHeader.test();
     }
 

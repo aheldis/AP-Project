@@ -155,29 +155,24 @@ class CollectionScene {
             showMana(group, 0, 0, ((Card) card).getMp());
 
 
-            addText(group, ((Card) card).getAp() + ""
-                    , 50 - 10,
+            addText(group, ((Card) card).getAp() + "", 50 - 10,
                     200 - 17, Color.WHITE, 20);
 
-            addText(group, ((Card) card).getHp() + "",
-                    180 - 20,
+            addText(group, ((Card) card).getHp() + "", 180 - 20,
                     200 - 17, Color.WHITE, 20);
             if (card instanceof Spell) {
                 SpriteAnimationProperties sprite = new SpriteAnimationProperties(
                         ((Spell) card).getName(), FilesType.SPELL, ((Spell) card).getCountOfAnimation());
                 cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                        94, 58,
-                        group, sprite.count,
+                        94, 58, group, sprite.count,
                         sprite.rows, ((Spell) card).getMillis(),
                         (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
-            }
-            if (card instanceof Minion) {
+            } else if (card instanceof Minion) {
                 addImage(group, "pics\\Minion\\" + ((Minion) card).getName() + ".gif",
                         64,
                         28, 110, 150);
 
-            }
-            if (card instanceof Hero) {
+            } else if (card instanceof Hero) {
                 addImage(group, "pics\\Hero\\" + ((Hero) card).getName() + ".gif",
                         64,
                         28, 110, 150);
@@ -436,8 +431,7 @@ class CollectionScene {
 
         hBox.getChildren().addAll(groupText);
         hBox.relocate(600, 200);
-        Group group1 = new Group();
-        return group1;
+        return new Group();
     }
 
     static Group makeItemCard(Usable item) {
