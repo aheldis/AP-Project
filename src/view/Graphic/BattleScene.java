@@ -45,6 +45,14 @@ public class BattleScene {
         this.match = match;
     }
 
+    public Match getMatch() {
+        return match;
+    }
+
+    public int getNumberOfMap() {
+        return numberOfMap;
+    }
+
     private BattleScene() {
     }
 
@@ -59,10 +67,11 @@ public class BattleScene {
         this.numberOfMap = numberOfMap;
         setMapProperties();
         setMapBackground();
-        GeneralGraphicMethods.playMusic("resource/music/battle_music/" + numberOfMap + ".m4a", true, battleScene);
+        GeneralGraphicMethods.playMusic("resource/music/battle_music/" +
+                numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(root);
-        StageLauncher.testzahraFooter(root,match);
+        StageLauncher.testzahraFooter(root);
         // battleFooter = new BattleFooterGraphic(root,match.getPlayers()[0]);
         battleHeader.test();
     }

@@ -57,10 +57,10 @@ public class StageLauncher extends Application {
             case MAIN_MENU:
                 Platform.runLater(() -> {
                     primaryStage.setScene(StageLauncher.getScene(StateType.ACCOUNT_MENU));
+                    playMusic("resource/music/main_menu.m4a",
+                            true, StageLauncher.getScene(StateType.ACCOUNT_MENU));
                     primaryStage.show();
                 });
-                playMusic("resource/music/main_menu.m4a",
-                        true, StageLauncher.getScene(StateType.ACCOUNT_MENU));
                 break;
             case SHOP:
                 ShopScene.makeShopScene(account);
@@ -79,6 +79,15 @@ public class StageLauncher extends Application {
                     primaryStage.show();
                 });
                 SelectGameScene.selectGame(account);
+                break;
+            case BATTLE:
+                Platform.runLater(() -> {
+                    primaryStage.setScene(StageLauncher.getScene(StateType.BATTLE));
+                    GeneralGraphicMethods.playMusic("resource/music/battle_music/" +
+                            BattleScene.getSingleInstance().getNumberOfMap() +
+                            ".m4a", true,StageLauncher.getScene(StateType.BATTLE));
+                    primaryStage.show();
+                });
                 break;
 
         }
@@ -223,7 +232,7 @@ public class StageLauncher extends Application {
         ShopScene.makeShopScene(account);
     }
 
-    static void testzahraFooter(Group root, Match match) {
+    static void testzahraFooter(Group root) {
         Group circlesGroup = new Group();
         root.getChildren().addAll(circlesGroup);
 
@@ -272,7 +281,8 @@ public class StageLauncher extends Application {
                         StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.GRAVE_YARD));
                     }
                 });
-                GraveYard.makeYard(match.getPlayers()[0].getGraveYard().getCards());
+                GraveYard.makeYard(BattleScene.getSingleInstance().
+                        getMatch().getPlayers()[0].getGraveYard().getCards());
             }
         });
 

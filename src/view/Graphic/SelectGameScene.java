@@ -169,9 +169,9 @@ class SelectGameScene {
                     Platform.runLater(() ->
                             StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
                     BattleScene battleScene = BattleScene.getSingleInstance();
-                    match = game.makeNewStoryGame(1);
-                    battleScene.setMatch(match);
                     battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+                    match = game.makeNewStoryGame(1);
+                    battleScene.setMatch(match);//chonke graveyard matche dorosto dashte bashe
 
                 }
                 //game started
@@ -182,9 +182,9 @@ class SelectGameScene {
                     Platform.runLater(() ->
                             StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
                     BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                     match = game.makeNewStoryGame(2);
                     battleScene.setMatch(match);
-                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
 
                 }
                 //game started
@@ -194,11 +194,12 @@ class SelectGameScene {
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
                     Platform.runLater(() ->
-                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+                            StageLauncher.getPrimaryStage().setScene
+                                    (StageLauncher.getScene(StateType.BATTLE)));
                     BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                     match = game.makeNewStoryGame(3);
                     battleScene.setMatch(match);
-                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
 
                 }
             });

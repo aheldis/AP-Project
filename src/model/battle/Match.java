@@ -10,6 +10,7 @@ import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
 import view.BattleView;
+import view.Graphic.BattleScene;
 import view.enums.StateType;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class Match {
     private Date date;
     private int BOUND_FOR_COLLECTIBLES = 6;
     private ArrayList<Collectible> collectibles = new ArrayList<>();
+    private BattleScene battleScene;
 
 
     public int getReward() {
@@ -102,44 +104,40 @@ public class Match {
     }
 
     public Match(Player[] players, String mode, int numberOfFlags, int reward) {
+        this.battleScene = BattleScene.getSingleInstance();
         land = new LandOfGame();
-        System.out.println(players[0]);
-        System.out.println(players[0].getMainDeck());
-        ArrayList<Card> cards = players[0].getMainDeck().getCardsOfDeck();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
-        players[0].setMatch(this);
-        players[1].setMatch(this);
-        for (Card card : cards) {
-            card.setPlayer(players[0]);
-            card.setLandOfGame(land);
+        for (int i = 0; i < 2; i++) {
+            ArrayList<Card> cards = players[i].getMainDeck().getCardsOfDeck();
+            Hero hero = players[i].getMainDeck().getHero();
+            players[i].setMatch(this);
+            for (Card card : cards) {
+                card.setPlayer(players[i]);
+                card.setLandOfGame(land);
+            }
+            hero.setPlayer(players[0]);
+            hero.setLandOfGame(land);
+            hero.setCanMove(true, 1);
+            hero.setCanAttack(true, 1);
+            players[i].setOpponent(players[1 - i]);
+            players[i].setMana(2);
         }
-        firstHero.setPlayer(players[0]);
-        firstHero.setLandOfGame(land);
-        firstHero.setCanMove(true, 1);
-        firstHero.setCanAttack(true, 1);
-        cards = players[1].getMainDeck().getCardsOfDeck();
-        for (Card card : cards) {
-            card.setPlayer(players[1]);
-            card.setLandOfGame(land);
-        }
-        secondHero.setPlayer(players[1]);
-        secondHero.setLandOfGame(land);
-        secondHero.setCanMove(true, 1);
-        secondHero.setCanAttack(true, 1);
 
-        players[0].setOpponent(players[1]);
-        players[1].setOpponent(players[0]);
         this.players = players;
         this.mode = mode;
         this.numberOfFlags = numberOfFlags;
         this.reward = reward;
 
         Square[][] square = land.getSquares();
+
         square[2][0].setObject(players[0].getMainDeck().getHero());
         firstHero.setPosition(square[2][0]);
+        battleScene.addCardToBoard(2, 0, firstHero, "Breathing");
+
         square[2][8].setObject(players[1].getMainDeck().getHero());
         secondHero.setPosition(square[2][8]);
+        battleScene.addCardToBoard(2,8,secondHero,"Breathing");
 //        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
 //        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
         if (mode.equals(Game.getModeAsString(3))) {
@@ -151,8 +149,7 @@ public class Match {
         setCollectiblesRandomly();
         date = new Date();
         //set mana : meqdare avaliye mana baraye player inline behesh 2 dadam
-        players[0].setMana(2);
-        players[1].setMana(2);
+
         initGame();
     }
 

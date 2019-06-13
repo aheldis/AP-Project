@@ -230,7 +230,7 @@ public class GeneralGraphicMethods {
         //Instantiating Media class
         Media media = new Media(new File(path).toURI().toString());
         //Instantiating MediaPlayer class
-       MediaPlayer mediaPlayer = new MediaPlayer(media);
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
         if (constant) {
             mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
             mediaPlayer.play();
