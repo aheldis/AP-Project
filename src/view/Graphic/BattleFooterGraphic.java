@@ -87,12 +87,13 @@ public class BattleFooterGraphic {
         help.setStroke(Color.rgb(0,225,225,0.5));
     }
 
-    public void makeFooter(Player player){
+    public void makeFooter(){
         Group circlesGroup = new Group();
         circlesGroup.relocate(50,680);
         root.getChildren().addAll(circlesGroup);
         addNextCard(circlesGroup);
         addCardsOfHand(player,circlesGroup);
+        addButtons(circlesGroup);
     }
 
 }
