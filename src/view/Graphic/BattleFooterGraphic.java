@@ -83,6 +83,8 @@ class BattleFooterGraphic {
         Button help = imageButton(scene, group, "pics/battle/help.png",
                 "HELP", 1000 + 90, 75, 150, 70);
 
+        endTurn.setOnMouseClicked(event -> BattleScene.getSingleInstance().getMatch().changeTurn());
+
         graveYard.setOnMouseClicked(event -> {
             Platform.runLater(() -> StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.GRAVE_YARD)));
             GraveYard.makeYard(player.getGraveYard().getCards());

@@ -946,7 +946,7 @@ class CollectionScene {
             root.getChildren().addAll(sideVBox);
             root.getChildren().addAll(sc);
             sc.valueProperty().addListener((ov, old_val, new_val) ->
-                    sideVBox.setLayoutY(-new_val.doubleValue()));
+                    sideVBox.setLayoutY(-new_val.doubleValue()*11));
 
 
             sideVBox.relocate(0, 0);
