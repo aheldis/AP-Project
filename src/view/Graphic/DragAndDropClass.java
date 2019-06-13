@@ -26,7 +26,7 @@ class DragAndDropClass {
             sceneRoot.getChildren().add(source);
         });
 
-        setOnMouseDragged();
+        setOnMouseDragged(source);
 
         source.setOnMouseReleased(event -> {
             sceneRoot.getChildren().remove(source);
@@ -74,7 +74,7 @@ class DragAndDropClass {
             sceneRoot.getChildren().add(source);
         });
 
-        setOnMouseDragged();
+        setOnMouseDragged(source);
 
 
         source.setOnMouseReleased(event -> {
@@ -94,7 +94,7 @@ class DragAndDropClass {
         });
     }
 
-    private static void setOnMouseDragged() {
+    private static void setOnMouseDragged(Node source) {
         source.setOnMouseDragged(event -> {
             double offsetX = event.getSceneX() - orgSceneX;
             double offsetY = event.getSceneY() - orgSceneY;
