@@ -70,9 +70,11 @@ class BattleFooterGraphic {
             addImage(handCardGroup, "pics/other/icon_mana@2x.png", 60, 107, 30, 30);
             makeCircleRotation(backgroundCircle, 70, 70);
             ImageView gif = addGif(group, handCardGroup, card, 0, 0);
-            if (card instanceof Minion)
-                DragAndDropClass.dragAndDropForGame(gif, card, handCardGroup, root,
+            if (card instanceof Minion) {
+                DragAndDrop dragAndDrop = new DragAndDrop();
+                dragAndDrop.dragAndDropForGame(gif, card, handCardGroup, root,
                         gif.getFitWidth() / 2 - 10, gif.getFitHeight() / 2 + 20, 15, -21);
+            }
         }
 
     }
