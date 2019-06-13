@@ -63,6 +63,7 @@ public class MenuController  {
                         allAccount.createAccount(userName, password);
                         account = allAccount.getAccountByName(userName);
 
+                        /*
                         try {
                             File file = new File("AccountSaver/AccountUser.txt");
                             FileWriter fileWriter = new FileWriter(file, true);
@@ -81,8 +82,7 @@ public class MenuController  {
                         } catch (Exception ignored) {
 
                         }
-
-
+*/
                         state = StateType.ACCOUNT_MENU;
                         menuView.printer("you have signed up ");
                     }
@@ -128,16 +128,7 @@ public class MenuController  {
                         allAccount.showLeaderBoard();
                         break;
                     case MAIN_MENU_SAVE:
-                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                        try {
-                            File file = new File("AccountSaver\\" +
-                                    account.getUserName() + ".txt");
-                            FileWriter fileWriter = new FileWriter(file);
-                            fileWriter.write(gson.toJson(account));
-                            fileWriter.close();
-                        } catch (Exception ignored) {
-
-                        }
+                        AllAccount.getInstance().saveAccount(account);
                         break;
                     case MAIN_MENU_EXIT:
 //                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -391,7 +382,7 @@ public class MenuController  {
                             menuView.printer("Select user [user name]");
                             request.getNewLine();
                             userName = request.getCommand();
-                            secondAccount = allAccount.passuserNameHaveBeenExist(userName);
+                            secondAccount = allAccount.getAccountByName(userName);
                             if (secondAccount == account) {
                                 ErrorType error = ErrorType.SECOND_PLAYER_NOT_VALID;
                                 menuView.printError(error);

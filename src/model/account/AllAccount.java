@@ -4,23 +4,46 @@ import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import view.AccountView;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class AllAccount {
     private static AllAccount singleInstance = new AllAccount();
-    private static ArrayList<Account> accounts = new ArrayList<>();
+    private ArrayList<Account> accounts = new ArrayList<>();
 
 
     private AllAccount() {
+        try {
+            FileReader fileReader = new FileReader("AccountSaver/AccountUser.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while (true) {
+
+                String line = bufferedReader.readLine();
+                if (line == null)
+                    break;
+                String userName = line.split("/")[0];
+                try {
+                    InputStream input = new FileInputStream("AccountSaver/" + userName + ".json");
+                    Reader reader = new InputStreamReader(input);
+                    YaGson mapper = new YaGson();
+                    Account account = mapper.fromJson(reader, Account.class);//load the deck
+                    addToAccounts(account);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static AllAccount getInstance() {
         if (singleInstance == null) {
             singleInstance = new AllAccount();
+
 //            try{
 //                Account account;
 //                FileReader fr = new FileReader("D:\\project-Duelyst\\Duelyst\\AccountSaver\\AccountUser.txt");
@@ -49,26 +72,11 @@ public class AllAccount {
         return accounts;
     }
 
-    public Account passuserNameHaveBeenExist(String userName) {
-
+    public boolean userNameHaveBeenExist(String userName) {
         for (Account account : accounts) {
             if (account.getUserName().equals(userName)) {
-                return account;
+                return true;
             }
-        }
-        return null;
-    }
-
-    public boolean userNameHaveBeenExist(String userName) {
-        try {
-            File file = new File("AccountSaver\\AccountUser.txt");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                if (scanner.nextLine().split("/")[0].equals(userName))
-                    return true;
-            }
-        } catch (Exception ignored) {
-
         }
         return false;
     }
@@ -98,9 +106,15 @@ public class AllAccount {
     }
 
     public void createAccount(String userName, String password) {
+        try {
+            File file = new File("AccountSaver/AccountUser.txt");
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.write(userName + "/" + password + '\n');
+            fileWriter.close();
+        } catch (IOException ignored) {
+        }
         Account account = new Account(userName, password);
         addToAccounts(account);
-
     }
 
     public void addToAccounts(Account account) {
@@ -115,7 +129,7 @@ public class AllAccount {
         try {
             String path = "AccountSaver/" + account.getUserName() + ".json";
             File file = new File(path);
-            if(file.exists())
+            if (file.exists())
                 file.delete();
             YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
             FileWriter fileWriter = new FileWriter(path);
