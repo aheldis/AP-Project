@@ -17,7 +17,7 @@ public enum FilesType {
 
     public static FilesType getEnum(String input) {
         switch (input.trim().toLowerCase()) {
-            case "Spell":
+            case "spell":
                 return FilesType.SPELL;
             case "hero":
                 return FilesType.HERO;

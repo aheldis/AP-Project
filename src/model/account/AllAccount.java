@@ -33,6 +33,8 @@ public class AllAccount {
                     e.printStackTrace();
                 }
             }
+            bufferedReader.close();
+            fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
