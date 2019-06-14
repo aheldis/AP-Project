@@ -35,7 +35,7 @@ public class Match {
     private ArrayList<Collectible> collectibles = new ArrayList<>();
     private BattleScene battleScene;
 
-    public BattleScene getBattleScene() {
+    BattleScene getBattleScene() {
         return battleScene;
     }
 
@@ -197,7 +197,6 @@ public class Match {
             if (gameEnded()) {
                 endGame();
                 controller.MenuController.state = StateType.ACCOUNT_MENU;
-                return;
             }
         }
     }
