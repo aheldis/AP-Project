@@ -154,11 +154,11 @@ class SelectGameScene {
 
 
             ImageView arash = makeHeroPic(
-                    "pics\\battle\\select_mode\\arash_mode.png", 60, 100);
+                    "pics/battle/select_mode/arash_mode.png", 60, 100);
 
-            ImageView zahhak = makeHeroPic("pics\\battle\\select_mode\\zahak_mode.png",
+            ImageView zahhak = makeHeroPic("pics/battle/select_mode/zahak_mode.png",
                     400, 131);
-            ImageView diveSepid = makeHeroPic("pics\\battle\\select_mode\\dive_sepid_mode.png",
+            ImageView diveSepid = makeHeroPic("pics/battle/select_mode/dive_sepid_mode.png",
                     800 - 30, 125);
 
             showDescForStoryGame("Save Flag", 740);
@@ -170,21 +170,19 @@ class SelectGameScene {
             diveSepid.setOnMouseClicked(event12 -> {//story game-1
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
-                    startGame(game, match);
 
                     match = game.makeNewStoryGame(1);
-
-
+                    startGame(game, match);
                 }
                 //game started
             });
             zahhak.setOnMouseClicked(event1 -> {//story game -2
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
-                    startGame(game, match);
+
 
                     match = game.makeNewStoryGame(2);
-
+                    startGame(game, match);
                 }
                 //game started
             });
@@ -194,10 +192,7 @@ class SelectGameScene {
                 if (game.checkPlayerDeck(account, 1)) {
 
                     match = game.makeNewStoryGame(3);
-
                     startGame(game, match);
-
-
                 }
             });
             //getNumberOfFlagPage(arash, selectGameRoot, selectGameScene);
@@ -271,10 +266,9 @@ class SelectGameScene {
             if (mode.equals("custom")) {
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
-                    startGame(game, match);
 
                     match = game.makeNewCustomGame(account, deckName, 1, 0);
-
+                    startGame(game, match);
                 }
             }
         });
@@ -315,11 +309,11 @@ class SelectGameScene {
                         game = new Game();
                         if (game.checkPlayerDeck(account, 1)) {
                             if (number.getText().matches("\\d+")) {
-                                startGame(game, match);
+
 
                                 match = game.makeNewCustomGame(account, deckName,
                                         3, Integer.parseInt(number.getText()));
-
+                                startGame(game, match);
                             }
                         }
                     }
