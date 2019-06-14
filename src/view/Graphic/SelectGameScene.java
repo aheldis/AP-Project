@@ -1,14 +1,18 @@
 package view.Graphic;
 
+import com.gilecode.yagson.YaGson;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -22,6 +26,7 @@ import model.battle.Game;
 import model.battle.Match;
 import view.enums.StateType;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -107,6 +112,28 @@ class SelectGameScene {
         }
         setBackground(selectGameRoot,
                 "pics/battle/select_mode/background.jpg", true, 10.0f, 10.0f);
+
+        Button button= imageButton(selectGameScene,selectGameRoot,"pics/battle/select_mode/multi_player.jpg",
+                "hello",100, 100, 100, 100);
+        selectGameRoot.getChildren().remove(button);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                        try {
+                            InputStream input = new FileInputStream("D:\\project_Duelyst1\\PausedGames\\1.json" );
+                            Reader reader = new InputStreamReader(input);
+                            YaGson mapper = new YaGson();
+                            BattleScene battleScene = mapper.fromJson(reader, BattleScene.class);//load the deck
+                            Platform.runLater(() ->
+                                    StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+
+                            BattleScene.changeSingleInstance(battleScene);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+        });
 
         ImageView multiPlayerImage = addImage(selectGameRoot,
                 "pics/battle/select_mode/multi_player.jpg", 300, 200, 250, 400);

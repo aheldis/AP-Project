@@ -1,5 +1,8 @@
 package view.Graphic;
 
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
+import com.google.gson.Gson;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -15,6 +18,8 @@ import model.card.Minion;
 import model.card.Spell;
 import view.enums.StateType;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 import static view.Graphic.GeneralGraphicMethods.*;
@@ -96,21 +101,40 @@ public class BattleFooterGraphic {
                 "GRAVE YARD", 1000 - 80, 75, 150, 70);
         Button cancel = imageButton(scene, group, "pics/battle/help.png",
                 "CANCEL", 1000 + 90, 75, 150, 70);
+        Button a = imageButton(scene,group,"pics\\collection\\close-deck.png","save",1000 +90,75 ,30,30);
+        root.getChildren().remove(a);
 
         endTurn.setOnMouseClicked(event -> BattleScene.getSingleInstance().getMatch().changeTurn());
-        cancel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                BattleScene.getSingleInstance().getMatch().setLoser(player);
-                BattleScene.getSingleInstance().getMatch().setWinner(player.getOpponent());
-                BattleScene.getSingleInstance().getMatch().endGame();
-                StageLauncher.decorateScene(StateType.MAIN_MENU);
-            }
+        cancel.setOnMouseClicked(event -> {
+            BattleScene.getSingleInstance().getMatch().setLoser(player);
+            BattleScene.getSingleInstance().getMatch().setWinner(player.getOpponent());
+            BattleScene.getSingleInstance().getMatch().endGame();
+            StageLauncher.decorateScene(StateType.MAIN_MENU);
         });
 
         graveYard.setOnMouseClicked(event -> {
             Platform.runLater(() -> StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.GRAVE_YARD)));
             GraveYard.makeYard(player.getGraveYard().getCards());
+        });
+        a.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            BattleScene battleScene = BattleScene.getSingleInstance();
+            @Override
+            public void handle(MouseEvent event) {
+                new Thread(() -> {
+                    try {
+                        String path = "PausedGames/" + battleScene.getMatch().getMatchNumber() + ".json";
+                        File file = new File(path);
+                        if (file.exists())
+                            file.delete();
+                        YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
+                        FileWriter fileWriter = new FileWriter(file);
+                        altMapper.toJson(battleScene, fileWriter);
+                        fileWriter.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            }
         });
 
     }

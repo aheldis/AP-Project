@@ -41,6 +41,10 @@ public class BattleScene {
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
 
+    public static void changeSingleInstance(BattleScene battleScene){
+        singleInstance =battleScene;
+    }
+
     public void setMatch(Match match) {
         this.match = match;
     }
