@@ -117,8 +117,23 @@ public class Match {
         }
     }
 
-    Match(Player[] players, String mode, int numberOfFlags, int reward) {
+    public void initGraphic(){
         this.battleScene = BattleScene.getSingleInstance();
+        Hero firstHero = players[0].getMainDeck().getHero();
+        Hero secondHero = players[1].getMainDeck().getHero();
+        battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null, true);
+        battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null, false);
+
+        if (mode.equals(Game.getModeAsString(3))) {
+            setFlagsRandomly(3);
+        }
+        if (mode.equals(Game.getModeAsString(2))) {
+            setFlagsRandomly(2);
+        }
+        setCollectiblesRandomly();
+    }
+
+    Match(Player[] players, String mode, int numberOfFlags, int reward) {
         land = new LandOfGame();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
@@ -147,20 +162,13 @@ public class Match {
 
         square[2][0].setObject(players[0].getMainDeck().getHero());
         firstHero.setPosition(square[2][0]);
-        battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null, true);
 
         square[2][8].setObject(players[1].getMainDeck().getHero());
         secondHero.setPosition(square[2][8]);
-        battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null, false);
+
 //        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
 //        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
-        if (mode.equals(Game.getModeAsString(3))) {
-            setFlagsRandomly(3);
-        }
-        if (mode.equals(Game.getModeAsString(2))) {
-            setFlagsRandomly(2);
-        }
-        setCollectiblesRandomly();
+
         date = new Date();
         //set mana : meqdare avaliye mana baraye player inline behesh 2 dadam
 

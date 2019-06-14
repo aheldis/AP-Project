@@ -170,9 +170,9 @@ class SelectGameScene {
             diveSepid.setOnMouseClicked(event12 -> {//story game-1
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
+                    startGame(game, match);
 
                     match = game.makeNewStoryGame(1);
-                    startGame(game, match);
 
 
                 }
@@ -181,9 +181,9 @@ class SelectGameScene {
             zahhak.setOnMouseClicked(event1 -> {//story game -2
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
+                    startGame(game, match);
 
                     match = game.makeNewStoryGame(2);
-                    startGame(game, match);
 
                 }
                 //game started
@@ -258,8 +258,10 @@ class SelectGameScene {
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
 
+
                     match = game.makeNewCustomGame(account, deckName, 2, 0);
                     startGame(game, match);
+
 
                 }
             }
@@ -269,8 +271,9 @@ class SelectGameScene {
             if (mode.equals("custom")) {
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
-                    match = game.makeNewCustomGame(account, deckName, 1, 0);
                     startGame(game, match);
+
+                    match = game.makeNewCustomGame(account, deckName, 1, 0);
 
                 }
             }
@@ -312,9 +315,10 @@ class SelectGameScene {
                         game = new Game();
                         if (game.checkPlayerDeck(account, 1)) {
                             if (number.getText().matches("\\d+")) {
+                                startGame(game, match);
+
                                 match = game.makeNewCustomGame(account, deckName,
                                         3, Integer.parseInt(number.getText()));
-                                startGame(game, match);
 
                             }
                         }
@@ -338,6 +342,7 @@ class SelectGameScene {
         battleScene.setGame(game);
         battleScene.setMatch(match);
         battleScene.setBattleScene(random.nextInt(12) + 1);
+        match.initGraphic();
     }
 }
 

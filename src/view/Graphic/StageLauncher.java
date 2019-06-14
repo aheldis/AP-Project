@@ -176,7 +176,7 @@ public class StageLauncher extends Application {
         battleScene1.setBattleScene(7); //from 1 to 12
         battleScene1.test();
         primaryStage.setScene(battleScene);
-*/
+//*/
 
 
         AccountScene.getInstance().makeBackground();

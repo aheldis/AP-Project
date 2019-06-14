@@ -59,7 +59,7 @@ public class BattleFooterGraphic {
                     45 + dx, 40 + dy, group, sprite.count, sprite.rows, card.getMillis(),
                     (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame);
         } else {
-            gif = addImage(group, "pics\\Minion\\" + card.getName() + ".gif",
+            gif = addImage(group, "pics/Minion/" + card.getName() + ".gif",
                     15 + dx, -21 + dy, 110, 150);
         }
         circleGroup.getChildren().add(gif);
