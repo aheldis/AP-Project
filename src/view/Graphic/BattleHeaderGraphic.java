@@ -12,12 +12,19 @@ public class BattleHeaderGraphic {
     Group root;
     Group rightHeader = new Group();
     Group leftHeader = new Group();
+    private static BattleHeaderGraphic instance = null;
 
     public BattleHeaderGraphic(Group root) {
         this.root = root;
         test();
         root.getChildren().addAll(rightHeader, leftHeader);
+        BattleHeaderGraphic.instance = this;
     }
+
+    public static BattleHeaderGraphic getInstance(){
+        return instance;
+    }
+
 
     private void addTextWithShadow(String textString, double x, double y, Group group){
         Text text = new Text(textString);
@@ -51,34 +58,19 @@ public class BattleHeaderGraphic {
     private void addMana(double x, double y, int numberOfMana, Group group){
         for(int i = 0; i < 9; i++){
             if(i < numberOfMana)
-            GeneralGraphicMethods.addImage(group, "pics/other/icon_mana@2x.png", x + i * 28, y, 25, 25);
+            GeneralGraphicMethods.addImage(group,
+                    "pics/other/icon_mana@2x.png", x + i * 28, y, 25, 25);
             else
-                GeneralGraphicMethods.addImage(group,"pics/battle_catagorized/icon_mana_inactive@2x.png", x + i * 28, y, 25, 25);
+                GeneralGraphicMethods.addImage(group,
+                        "pics/battle_catagorized/icon_mana_inactive@2x.png",
+                        x + i * 28, y, 25, 25);
         }
     }
-    /*
-    private void addManaRight(double x, double y, int numberOfMana){
-        double round = 0;
-        for(int i = 0; i < 9; i++){
-            round=-Math.sqrt(660000-Math.pow(x + i * 28-900,2))+900;
-            GeneralGraphicMethods.addImage(group,"pics/icon_mana@2x.png",
-                    x + i * 28, round, 25, 25);
-        }
-    }
-    public void addManaLeft(double x, double y, int numberOfMana){
-        double round = 0;
-        for(int i = 0; i < 9; i++){
-            round=-Math.sqrt(700000-Math.pow(x + i * 28-500,2))+920;
-            GeneralGraphicMethods.addImage(group,"pics/icon_mana@2x.png",
-                    x + i * 28, round, 25, 25);
-        }
-    }
-    */
 
-    public void makeHeader() {
+    private void makeHeader() {
         //Left header:
         addTextWithShadow("YOU", 248, 78, leftHeader);
-        addMana(245,100 ,4, leftHeader);
+        addMana(245,100 ,2, leftHeader);
         addPortraitBorder(120, 25, leftHeader);
 
         /*
@@ -96,12 +88,28 @@ public class BattleHeaderGraphic {
 */
         //Right header:
         addTextWithShadow("OPPONENT", 1010, 78, rightHeader);
-        addMana(911,100,5, rightHeader);
+        addMana(911,100,2, rightHeader);
         addPortraitBorder(1165, 25, rightHeader);
         /*
         addManaLeft(248, 96, 9);
         addManaRight(920, 96, 9);
         */
+    }
+
+    public void makeHeaderEachTurn(int playerNumber,int numberOfMana){
+        if(playerNumber ==0) {
+            leftHeader.getChildren().clear();
+            addTextWithShadow("YOU", 248, 78, leftHeader);
+            addMana(245, 100, numberOfMana, leftHeader);
+            addPortraitBorder(120, 25, leftHeader);
+        }
+        else {
+            rightHeader.getChildren().clear();
+            addTextWithShadow("OPPONENT", 1010, 78, rightHeader);
+            addMana(911, 100, numberOfMana, rightHeader);
+            addPortraitBorder(1165, 25, rightHeader);
+        }
+
     }
 
     public void test() {

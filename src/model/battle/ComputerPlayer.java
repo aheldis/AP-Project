@@ -1,5 +1,6 @@
 package model.battle;
 
+import model.account.Account;
 import model.card.Card;
 import model.item.ActivationTimeOfItem;
 import model.land.Square;
@@ -11,6 +12,7 @@ import java.util.Random;
 public class ComputerPlayer extends Player {
 
     public ComputerPlayer(Deck deck) {
+        this.setAccount(new Account("computer","12"));
         this.setMainDeck(deck);
         this.setType("ComputerPlayer");
         getMainDeck().setRandomOrderForDeck();

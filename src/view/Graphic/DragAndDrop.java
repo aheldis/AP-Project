@@ -48,8 +48,14 @@ class DragAndDrop {
                 }
             } else {
                 sourceRoot.getChildren().add(source);
-                if (deck.cardHaveBeenExistInThisDeck(((Card) card).getCardId().getCardIdAsString()) != null)
+                if(card instanceof Item){
+                    if(deck.getItem().getUsableId().getUsableIdAsString().equals(((Usable) card).getUsableId().getUsableIdAsString() )){
+                        deck.removeItemOfDeck((Usable)(card));
+                    }
+                }
+               else if (deck.cardHaveBeenExistInThisDeck(((Card) card).getCardId().getCardIdAsString()) != null)
                     deck.removeFromCardsOfDeck((Card) card);
+
             }
         });
     }

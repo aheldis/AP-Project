@@ -45,7 +45,7 @@ public class Hand {
 //
 //            return;
 //        }
-        this.gameCards = new ArrayList<>(deck.getCardsOfDeck().subList(0, 4));
+        this.gameCards = new ArrayList<>(deck.getCardsOfDeck().subList(0, 5));
         deck.setIndexOfCards(5);
     }
 

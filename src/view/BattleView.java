@@ -60,6 +60,7 @@ public class BattleView {
     }
 
     public void endGameView(Match match) {
+
         System.out.println("GAME ENDED");
         Player winner = match.getWinner();
         Player loser = match.getLoser();

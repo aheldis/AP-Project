@@ -8,6 +8,8 @@ import model.item.Flag;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
+import view.Graphic.BattleFooterGraphic;
+import view.Graphic.BattleHeaderGraphic;
 import view.enums.ErrorType;
 
 import java.util.ArrayList;
@@ -166,8 +168,9 @@ public abstract class Player {
         return card;
     }
 
-    public void initPerTurn() {
+    void initPerTurn(int numberOfPlayer) {
         hand.checkTheHandAndAddToIt();
+        BattleFooterGraphic.getInstance().changeFooterEachTurn();
         for (Card card : cardsOnLand) {
             card.changeTurnOfCanNotAttack(-1);
             card.changeTurnOfCanNotCounterAttack(-1);
@@ -199,7 +202,8 @@ public abstract class Player {
             }
 
             if (card instanceof Minion && ((Minion) card).getHaveSpecialPower() &&
-                    ((Minion) card).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.PASSIVE)
+                    ((Minion) card).getActivationTimeOfSpecialPower() ==
+                            ActivationTimeOfSpecialPower.PASSIVE)
                 card.useSpecialPower(card.getPosition());
         }
 
@@ -225,6 +229,7 @@ public abstract class Player {
         if (manaOfThisTurn < 9) {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
+            BattleHeaderGraphic.getInstance().makeHeaderEachTurn(numberOfPlayer,mana);
         }
         mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
 

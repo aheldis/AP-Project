@@ -184,12 +184,12 @@ public class Match {
             return;
         }
         if (passComputerPlayer() == -1) {
-            players[whichPlayer].initPerTurn();
+            players[whichPlayer].initPerTurn(whichPlayer);
             whichPlayer = 1 - whichPlayer;
         } else {
-            players[whichPlayer].initPerTurn();
+            players[whichPlayer].initPerTurn(whichPlayer);
             players[passComputerPlayer()].playTurnForComputer();
-            players[1 - whichPlayer].initPerTurn();//init for computer
+            players[1 - whichPlayer].initPerTurn(1-whichPlayer);//init for computer
             if (gameEnded()) {
                 endGame();
                 controller.MenuController.state = StateType.ACCOUNT_MENU;

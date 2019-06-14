@@ -33,8 +33,6 @@ public class AllAccount {
                     e.printStackTrace();
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -132,7 +130,7 @@ public class AllAccount {
             if (file.exists())
                 file.delete();
             YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
-            FileWriter fileWriter = new FileWriter(path);
+            FileWriter fileWriter = new FileWriter(file);
             altMapper.toJson(account, fileWriter);
             fileWriter.close();
         } catch (Exception e) {
