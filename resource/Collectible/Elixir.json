@@ -3,6 +3,8 @@
   "@val": {
     "name": "Elixir",
     "type": "Collectible",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "hp + 3 power buff(ap+3)",
     "cost": 0,
     "itemNumber": 7,

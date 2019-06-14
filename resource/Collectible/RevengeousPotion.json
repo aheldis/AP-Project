@@ -3,6 +3,8 @@
   "@val": {
     "name": "RevengeousPotion",
     "type": "Collectible",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "10 holy buff for 2 turns",
     "cost": 0,
     "itemNumber": 9,

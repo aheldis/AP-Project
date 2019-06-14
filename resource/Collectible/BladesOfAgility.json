@@ -3,6 +3,8 @@
   "@val": {
     "name": "BladesOfAgility",
     "type": "Collectible",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "add to ap of a random minion  6 units",
     "cost": 0,
     "itemNumber": 13,

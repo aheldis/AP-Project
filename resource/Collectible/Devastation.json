@@ -3,6 +3,8 @@
   "@val": {
     "name": "Devastation",
     "type": "Collectible",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "hp+6 for a random card",
     "cost": 0,
     "itemNumber": 4,

@@ -3,6 +3,8 @@
   "@val": {
     "name": "ManaPotion",
     "type": "Collectible",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "add to mana 3 units",
     "cost": 0,
     "itemNumber": 8,

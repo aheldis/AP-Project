@@ -3,6 +3,8 @@
   "@val": {
     "name": "ChineseSword",
     "type": "Collectible",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "ap + 5",
     "cost": 0,
     "itemNumber": 20,

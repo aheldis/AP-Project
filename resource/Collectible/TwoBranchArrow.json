@@ -3,6 +3,8 @@
   "@val": {
     "name": "TwoBranchArrow",
     "type": "Collectible",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "ap + 2 for a hybrid or ranged minion",
     "cost": 0,
     "itemNumber": 5,

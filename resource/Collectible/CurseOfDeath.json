@@ -3,6 +3,8 @@
   "@val": {
     "name": "CurseOfDeath",
     "type": "Collectible",
+    "countOfAnimation": 29,
+    "millis": 4000,
     "description": "a random minion decrease hp ON_DEATH 8 units",
     "cost": 0,
     "itemNumber": 10,
