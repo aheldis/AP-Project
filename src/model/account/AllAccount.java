@@ -22,7 +22,7 @@ public class AllAccount {
                 String line = bufferedReader.readLine();
                 if (line == null)
                     break;
-                String userName = line.split("/")[0];
+                String userName = line.trim();
                 try {
                     InputStream input = new FileInputStream("AccountSaver/" + userName + ".json");
                     Reader reader = new InputStreamReader(input);
