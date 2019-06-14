@@ -102,7 +102,7 @@ public class BattleFooterGraphic {
         Button cancel = imageButton(scene, group, "pics/battle/help.png",
                 "CANCEL", 1000 + 90, 75, 150, 70);
         Button a = imageButton(scene,group,"pics\\collection\\close-deck.png","save",1000 +90,75 ,30,30);
-        root.getChildren().remove(a);
+        group.getChildren().remove(a);
 
         endTurn.setOnMouseClicked(event -> BattleScene.getSingleInstance().getMatch().changeTurn());
         cancel.setOnMouseClicked(event -> {
