@@ -74,11 +74,8 @@ public class BattleScene {
         GeneralGraphicMethods.playMusic("resource/music/battle_music/" +
                 numberOfMap + ".m4a", true, battleScene);
         addGrid();
-        battleHeader = new BattleHeaderGraphic(root);
-        // StageLauncher.testzahraFooter(root);
-        battleFooter = new BattleFooterGraphic(root, game.getPlayers()[0]);
-        battleFooter.makeFooter(battleScene);
-        battleHeader.test();
+        battleHeader = new BattleHeaderGraphic(this, root);
+        battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
     }
 
     private void setMapProperties() {
@@ -149,6 +146,14 @@ public class BattleScene {
         });
     }
 
+    public BattleHeaderGraphic getBattleHeader() {
+        return battleHeader;
+    }
+
+    public BattleFooterGraphic getBattleFooter() {
+        return battleFooter;
+    }
+
     public Rectangle getCell(int row, int column) {
         return gameGrid[row][column];
     }
@@ -156,6 +161,8 @@ public class BattleScene {
     private Pair<Double, Double> getCellPosition(int row, int column) {
         return new Pair<>(gameGrid[row][column].getLayoutX(), gameGrid[row][column].getLayoutY());
     }
+
+
 
     private void addGrid() {
         board = new Group();
@@ -355,6 +362,7 @@ public class BattleScene {
             }
 */
     }
+
 
 
 }

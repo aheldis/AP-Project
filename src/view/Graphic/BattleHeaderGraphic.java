@@ -7,26 +7,28 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import model.battle.Player;
 
 public class BattleHeaderGraphic {
-    Group root;
-    Group rightHeader = new Group();
-    Group leftHeader = new Group();
-    private static BattleHeaderGraphic instance = null;
+    private Group root;
+    private Group rightHeader = new Group();
+    private Group leftHeader = new Group();
+    private BattleScene battleScene;
+    private ImageView[] imageViews = new ImageView[2];
 
-    public BattleHeaderGraphic(Group root) {
+    public BattleHeaderGraphic(BattleScene battleScene, Group root) {
+        this.battleScene = battleScene;
         this.root = root;
-        test();
         root.getChildren().addAll(rightHeader, leftHeader);
-        BattleHeaderGraphic.instance = this;
+        initHeader();
+        imageViews[0] = null;
+        imageViews[1] = null;
     }
 
-    public static BattleHeaderGraphic getInstance(){
-        return instance;
-    }
+    //TODO Mana ke avas mishe avas kone -> listener
+    //TODO TODO TODO TODO SABAAAAA
 
-
-    private void addTextWithShadow(String textString, double x, double y, Group group){
+    private void addTextWithShadow(String textString, double x, double y, Group group) {
         Text text = new Text(textString);
         text.relocate(x, y);
         text.setFont(Font.font("Arial", FontWeight.BOLD, 27));
@@ -39,8 +41,16 @@ public class BattleHeaderGraphic {
         group.getChildren().add(text);
     }
 
-    private void addPortraitBorder(double x, double y, Group group){
-        GeneralGraphicMethods.addImage(group, "pics/profile/speech_portrait_abyssianalt@2x.png", x + 13,  y + 13, 100, 100);
+    private void addPortraitBorder(double x, double y, Group group, boolean turnOfThisPlayer, String avatarPath) {
+        if (avatarPath != null)
+            GeneralGraphicMethods.addImage(group, avatarPath, x + 13, y + 13, 100, 100);
+        if (turnOfThisPlayer) {
+            GeneralGraphicMethods.addImage(group, "pics/battle_catagorized/general_portrait_border_highlight@2x.png", x, y, 130, 130);
+        } else {
+            GeneralGraphicMethods.addImage(group, "pics/battle_catagorized/general_portrait_border@2x.png", x, y, 130, 130);
+        }
+
+        /*
         ImageView imageView1 = GeneralGraphicMethods.addImage(group, "pics/battle_catagorized/general_portrait_border@2x.png", x, y, 130, 130);
         ImageView imageView2 = GeneralGraphicMethods.addImage(group, "pics/battle_catagorized/general_portrait_border_highlight@2x.png", x, y, 130, 130);
         group.getChildren().remove(imageView2);
@@ -52,14 +62,15 @@ public class BattleHeaderGraphic {
             group.getChildren().add(imageView2);
             group.getChildren().remove(imageView1);
         });
+        */
     }
 
 
-    private void addMana(double x, double y, int numberOfMana, Group group){
-        for(int i = 0; i < 9; i++){
-            if(i < numberOfMana)
-            GeneralGraphicMethods.addImage(group,
-                    "pics/other/icon_mana@2x.png", x + i * 28, y, 25, 25);
+    private void addMana(double x, double y, int numberOfMana, Group group) {
+        for (int i = 0; i < 9; i++) {
+            if (i < numberOfMana)
+                GeneralGraphicMethods.addImage(group,
+                        "pics/other/icon_mana@2x.png", x + i * 28, y, 25, 25);
             else
                 GeneralGraphicMethods.addImage(group,
                         "pics/battle_catagorized/icon_mana_inactive@2x.png",
@@ -67,11 +78,9 @@ public class BattleHeaderGraphic {
         }
     }
 
-    private void makeHeader() {
-        //Left header:
-        addTextWithShadow("YOU", 248, 78, leftHeader);
-        addMana(245,100 ,2, leftHeader);
-        addPortraitBorder(120, 25, leftHeader);
+    public void initHeader() {
+        makeLeftHeader(battleScene.getMatch().getPlayers()[0]);
+        makeRightHeader(battleScene.getMatch().getPlayers()[1]);
 
         /*
         PerspectiveTransform perspectiveTransform = new PerspectiveTransform();
@@ -86,33 +95,33 @@ public class BattleHeaderGraphic {
 
         leftHeader.setEffect(perspectiveTransform);
 */
-        //Right header:
-        addTextWithShadow("OPPONENT", 1010, 78, rightHeader);
-        addMana(911,100,2, rightHeader);
-        addPortraitBorder(1165, 25, rightHeader);
         /*
         addManaLeft(248, 96, 9);
         addManaRight(920, 96, 9);
         */
     }
 
-    public void makeHeaderEachTurn(int playerNumber,int numberOfMana){
-        if(playerNumber ==0) {
-            leftHeader.getChildren().clear();
-            addTextWithShadow("YOU", 248, 78, leftHeader);
-            addMana(245, 100, numberOfMana, leftHeader);
-            addPortraitBorder(120, 25, leftHeader);
-        }
-        else {
-            rightHeader.getChildren().clear();
-            addTextWithShadow("OPPONENT", 1010, 78, rightHeader);
-            addMana(911, 100, numberOfMana, rightHeader);
-            addPortraitBorder(1165, 25, rightHeader);
-        }
-
+    public void makeLeftHeader(Player player) {
+        leftHeader.getChildren().clear();
+        addTextWithShadow(player.getUserName(), 248, 78, leftHeader);
+        addMana(245, 100, player.getMana(), leftHeader);
+        addPortraitBorder(120, 25, leftHeader, true, player.getAvatarPath());
+        addPortraitBorder(1165, 25, rightHeader, false, null);
     }
 
-    public void test() {
-        makeHeader();
+    public void makeRightHeader(Player player) {
+        rightHeader.getChildren().clear();
+        addTextWithShadow(player.getUserName(), 1010, 78, rightHeader);
+        addMana(911, 100, player.getMana(), rightHeader);
+        addPortraitBorder(1165, 25, rightHeader, true, player.getAvatarPath());
+        addPortraitBorder(120, 25, leftHeader, false, null);
+    }
+
+    public void makeHeaderEachTurn(int numberOfPlayer, Player player) {
+        if (numberOfPlayer == 0) {
+            makeLeftHeader(player);
+        } else {
+            makeRightHeader(player);
+        }
     }
 }

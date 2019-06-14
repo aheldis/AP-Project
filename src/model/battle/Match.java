@@ -35,6 +35,10 @@ public class Match {
     private ArrayList<Collectible> collectibles = new ArrayList<>();
     private BattleScene battleScene;
 
+    public BattleScene getBattleScene() {
+        return battleScene;
+    }
+
 
     public int getReward() {
         return reward;

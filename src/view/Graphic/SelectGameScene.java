@@ -170,13 +170,10 @@ class SelectGameScene {
             diveSepid.setOnMouseClicked(event12 -> {//story game-1
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
-                    Platform.runLater(() ->
-                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
-                    BattleScene battleScene = BattleScene.getSingleInstance();
-                    battleScene.setGame(game);
-                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+
                     match = game.makeNewStoryGame(1);
-                    battleScene.setMatch(match);
+                    startGame(game, match);
+
 
                 }
                 //game started
@@ -184,13 +181,9 @@ class SelectGameScene {
             zahhak.setOnMouseClicked(event1 -> {//story game -2
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
-                    Platform.runLater(() ->
-                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
-                    BattleScene battleScene = BattleScene.getSingleInstance();
-                    battleScene.setGame(game);
-                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+
                     match = game.makeNewStoryGame(2);
-                    battleScene.setMatch(match);
+                    startGame(game, match);
 
                 }
                 //game started
@@ -199,14 +192,11 @@ class SelectGameScene {
             arash.setOnMouseClicked(event13 -> {//story game -3
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
-                    Platform.runLater(() ->
-                            StageLauncher.getPrimaryStage().setScene
-                                    (StageLauncher.getScene(StateType.BATTLE)));
-                    BattleScene battleScene = BattleScene.getSingleInstance();
-                    battleScene.setGame(game);
-                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
+
                     match = game.makeNewStoryGame(3);
-                    battleScene.setMatch(match);
+
+                    startGame(game, match);
+
 
                 }
             });
@@ -268,14 +258,8 @@ class SelectGameScene {
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
 
-                    Platform.runLater(() ->
-                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
-                    BattleScene battleScene = BattleScene.getSingleInstance();
-                    battleScene.setGame(game);
-                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                     match = game.makeNewCustomGame(account, deckName, 2, 0);
-                    battleScene.setMatch(match);
-
+                    startGame(game, match);
 
                 }
             }
@@ -285,14 +269,9 @@ class SelectGameScene {
             if (mode.equals("custom")) {
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
-
-                    Platform.runLater(() ->
-                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
-                    BattleScene battleScene = BattleScene.getSingleInstance();
-                    battleScene.setGame(game);
-                    battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                     match = game.makeNewCustomGame(account, deckName, 1, 0);
-                    battleScene.setMatch(match);
+                    startGame(game, match);
+
                 }
             }
         });
@@ -304,8 +283,6 @@ class SelectGameScene {
     private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene) {
         try {
             imageView.setOnMouseClicked(event -> {
-                Random random = new Random();
-
                 root.getChildren().clear();
                 setBackground(root,
                         "pics/battle/select_mode/select_mode_background.jpg",
@@ -335,14 +312,9 @@ class SelectGameScene {
                         game = new Game();
                         if (game.checkPlayerDeck(account, 1)) {
                             if (number.getText().matches("\\d+")) {
-                                Platform.runLater(() ->
-                                        StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
-                                BattleScene battleScene = BattleScene.getSingleInstance();
-                                battleScene.setGame(game);
-                                battleScene.setBattleScene(random.nextInt(11) + 1); //from 1 to 12
                                 match = game.makeNewCustomGame(account, deckName,
                                         3, Integer.parseInt(number.getText()));
-                                battleScene.setMatch(match);
+                                startGame(game, match);
 
                             }
                         }
@@ -355,6 +327,17 @@ class SelectGameScene {
         }
         log(selectGameRoot, "select modes\nback", StateType.SELECT_GAME, 200);
 
+    }
+
+
+    private static void startGame(Game game, Match match) {
+        Random random = new Random();
+        Platform.runLater(() ->
+                StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+        BattleScene battleScene = BattleScene.getSingleInstance();
+        battleScene.setGame(game);
+        battleScene.setMatch(match);
+        battleScene.setBattleScene(random.nextInt(12) + 1);
     }
 }
 

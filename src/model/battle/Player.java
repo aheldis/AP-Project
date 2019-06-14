@@ -29,6 +29,12 @@ public abstract class Player {
     private int manaOfThisTurn = 2 /*don't change this except in initPerTurn*/, mana = 2;
     private GraveYard graveYard = new GraveYard(this);
     private ArrayList<Buff> buffsOnThisPlayer = new ArrayList<>();
+    private String avatarPath = "pics/profile/speech_portrait_abyssianalt@2x.png";
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
     //Collectible item to hand ast :D
 
     //    public abstract void move(Card card, Square newPosition);
@@ -170,7 +176,7 @@ public abstract class Player {
 
     void initPerTurn(int numberOfPlayer) {
         hand.checkTheHandAndAddToIt();
-        BattleFooterGraphic.getInstance().changeFooterEachTurn();
+        match.getBattleScene().getBattleFooter().changeFooterEachTurn();
         for (Card card : cardsOnLand) {
             card.changeTurnOfCanNotAttack(-1);
             card.changeTurnOfCanNotCounterAttack(-1);
@@ -229,7 +235,7 @@ public abstract class Player {
         if (manaOfThisTurn < 9) {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
-            BattleHeaderGraphic.getInstance().makeHeaderEachTurn(numberOfPlayer,mana);
+            match.getBattleScene().getBattleHeader().makeHeaderEachTurn(numberOfPlayer, this);
         }
         mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
 
@@ -238,7 +244,7 @@ public abstract class Player {
             mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
         }
 
-        if(ownFlags.size() > 0)
+        if (ownFlags.size() > 0)
             turnForSavingFlag++;
     }
 

@@ -24,17 +24,14 @@ public class BattleFooterGraphic {
     private Player player;
     private Group circlesGroup = new Group();
     private Scene scene;
-    private static BattleFooterGraphic singleInstance = null;
+    private BattleScene battleScene;
 
-    BattleFooterGraphic(Group root, Player player) {
+    BattleFooterGraphic(BattleScene battleScene, Group root, Player player, Scene scene) {
+        this.battleScene = battleScene;
         this.root = root;
         this.player = player;
-        BattleFooterGraphic.singleInstance = this;
-
-    }
-
-    public static BattleFooterGraphic getInstance() {
-        return singleInstance;
+        this.scene = scene;
+        initFooter();
     }
 
     private void addNextCard(Group group) {
@@ -118,9 +115,8 @@ public class BattleFooterGraphic {
 
     }
 
-    void makeFooter(Scene scene) {
+    void initFooter() {
 //        Group circlesGroup = new Group();
-        this.scene = scene;
         circlesGroup.relocate(50, 680);
         root.getChildren().addAll(circlesGroup);
         addNextCard(circlesGroup);
