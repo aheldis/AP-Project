@@ -114,7 +114,7 @@ public class Account implements Comparable<Account>, Cloneable {
 
 //    public void accountSave() {
 //        try {
-//            FileWriter file = new FileWriter("D:\\project-Duelyst\\Duelyst\\AccountSaver\\AccountUser.txt");
+//            FileWriter file = new FileWriter("D:/project-Duelyst/Duelyst/AccountSaver/AccountUser.txt");
 //            file.append("\n"+userName);
 //            file.close();
 //        }
@@ -123,7 +123,7 @@ public class Account implements Comparable<Account>, Cloneable {
 //        }
 //        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 //        try {
-//            FileWriter file = new FileWriter("D:\\project-Duelyst\\Duelyst\\AccountSaver\\" + userName + ".txt");
+//            FileWriter file = new FileWriter("D:/project-Duelyst/Duelyst/AccountSaver/" + userName + ".txt");
 //            file.write(gson.toJson(this));
 //            file.close();
 //

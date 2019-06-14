@@ -157,7 +157,7 @@ public class StageLauncher extends Application {
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
         Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
 
-        //todo add "D:\\project_Duelyst1\\pics\\minion_background.png" to PATH_OF_THE_PICTURE of Spell and ... to minion
+        //todo add "D:/project_Duelyst1/pics/minion_background.png" to PATH_OF_THE_PICTURE of Spell and ... to minion
         //todo add animation to  Spell and minions
 
 /*/
@@ -179,12 +179,12 @@ public class StageLauncher extends Application {
 //*/
 
 
-//        AccountScene.getInstance().makeBackground();
+        AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);
 
-        MainMenuScene mainMenuScene1 = MainMenuScene.getInstance();
-        mainMenuScene1.makeMenu(new Account("2","2"));
-        NewCardGraphic.makeCardForm(mainMenuScene, new Account("2", "2"));/*/
+//        MainMenuScene mainMenuScene1 = MainMenuScene.getInstance();
+//        mainMenuScene1.makeMenu(new Account("2","2"));
+//        NewCardGraphic.makeCardForm(mainMenuScene, new Account("2", "2"));/*/
 //*/
  //       AccountScene.getInstance().makeBackground();
  //       primaryStage.setScene(accountScene);

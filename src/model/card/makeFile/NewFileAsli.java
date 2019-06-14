@@ -7,7 +7,6 @@ import model.account.Account;
 import model.account.FilesType;
 import model.account.Shop;
 import model.card.Buff;
-import model.card.Card;
 import view.Graphic.NewCardGraphic;
 import view.NewCardMessages;
 import view.Request;
@@ -37,45 +36,53 @@ public class NewFileAsli {
     }
 
     public static void makeNewCard(Account account, FilesType typeOfFile) {
-        String name = hashMaps.get(0).get("name").getText();
-        String path = Shop.getPathOfFiles() + typeOfFile.getName() + "/" + name + ".json";
-        File file = new File(path);
-        if (file.exists()) {
-            NewCardGraphic.setError("Card with this name already exist!");
-            return;
-        }
-
-        Object object = fillObject("model.card.makeFile.CardCopy", typeOfFile, 0);
-        if (typeOfFile == FilesType.SPELL || typeOfFile == FilesType.MINION) {
-            Object change = fillObject("model.card.makeFile.ChangeCopy", null, 1);
-            Object target = fillObject("model.card.makeFile.TargetCopy", null, 2);
-            ((CardCopy) object).setChange((ChangeCopy) change);
-            ((CardCopy) object).setTarget((TargetCopy) target);
-        }
-
-        toJson(object, path);
-        switch (typeOfFile) {
-            case HERO:
-                changeInFile(path, "@type", "model.card.Hero");
-                break;
-            case SPELL:
-                changeInFile(path, "@type", "model.card.Spell");
-                break;
-            case MINION:
-                changeInFile(path, "@type", "model.card.Minion");
-                break;
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (account != null) {
-                    account.getCollection().addToCards((Card) object);
-                }
-                Shop.getInstance().makeNewFromFile(path, typeOfFile);
+        try {
+            String name = hashMaps.get(0).get("name").getText();
+            if (name.equals("")) {
+                NewCardGraphic.setError("Cannot make card!");
+                return;
             }
-        }).start();
-        return;
+            String path = Shop.getPathOfFiles() + typeOfFile.getName() + "/" + name + ".json";
+            File file = new File(path);
+            if (file.exists()) {
+                NewCardGraphic.setError("Card with this name already exist!");
+                return;
+            }
+
+            Object object = fillObject("model.card.makeFile.CardCopy", typeOfFile, 0);
+            if (typeOfFile == FilesType.SPELL || typeOfFile == FilesType.MINION) {
+                Object change = fillObject("model.card.makeFile.ChangeCopy", null, 1);
+                Object target = fillObject("model.card.makeFile.TargetCopy", null, 2);
+                ((CardCopy) object).setChange((ChangeCopy) change);
+                ((CardCopy) object).setTarget((TargetCopy) target);
+            }
+
+            toJson(object, path);
+            switch (typeOfFile) {
+                case HERO:
+                    changeInFile(path, "@type", "model.card.Hero");
+                    break;
+                case SPELL:
+                    changeInFile(path, "@type", "model.card.Spell");
+                    break;
+                case MINION:
+                    changeInFile(path, "@type", "model.card.Minion");
+                    break;
+            }
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Shop.getInstance().makeNewFromFile(path, typeOfFile);
+                    if (account != null)
+                        account.getCollection().addToCards(Shop.getInstance().getNewCardByName(name));
+                }
+            }).start();
+            return;
+        } catch (Exception e) {
+            NewCardGraphic.setError("Cannot make card!");
+
+        }
     }
 
     public static Object fillObject(String className, FilesType typeOfFile, int hashMapNumber) {
@@ -112,30 +119,29 @@ public class NewFileAsli {
 //                                System.out.println("this buff already exist so you can't change properties");
                             }
 
-                            newCardMessages.printLine("enter how many of this buff:");
-                            int count = Integer.parseInt(hashMaps.get(hashMapNumber).get("how many of this buff").getText());
-
-                            int num = Integer.parseInt(hashMaps.get(hashMapNumber).get("for how many turn").getText());
+                            int count = Integer.parseInt(hashMaps.get(numberOfBuffHashmap).get("how many of this buff").getText());
+                            int num = Integer.parseInt(hashMaps.get(numberOfBuffHashmap).get("for how many turn").getText());
+                            System.out.println("count = " + count);
+                            System.out.println("num = " + num);
                             ArrayList<Integer> array = new ArrayList<>();
                             for (int j = 0; j < count; j++) {
                                 array.add(num);
                             }
                             if (makeNewBuff) {
-                                Object object1 = fillObject("model.card.makeFile.BuffCopy", FilesType.BUFF, numberOfBuffHashmap++);
+                                Object object1 = fillObject("model.card.makeFile.BuffCopy", FilesType.BUFF, numberOfBuffHashmap);
                                 toJson(object1, pathOfBuff);
                                 changeInFile(pathOfBuff, "@type", "model.card.Buff");
                             }
+                            numberOfBuffHashmap++;
+
                             hashMap.put(buffName, array);
                         }
                         field.set(object, hashMap);
                     }
 
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    newCardMessages.printLine(e.getMessage());
+                    // e.printStackTrace();
                 }
-
-
             }
             return object;
 
@@ -236,6 +242,7 @@ public class NewFileAsli {
                 fieldAnnotatedTyped.add(field.getAnnotatedType().getType().getTypeName());
                 AnnotatedType annotatedType = field.getAnnotatedType();
                 if (annotatedType.getType().getTypeName().equals("java.util.HashMap<java.lang.String, java.util.ArrayList<java.lang.Integer>>")) {
+                    fieldNames.remove(field.getName());
                     fieldNames.add("number of buffs");
                     fieldAnnotatedTyped.add("java.lang.String");
                     buffFieldNames.add("how many of this buff");
@@ -253,7 +260,7 @@ public class NewFileAsli {
             return true;
         if (fieldName.equals("ActivationTimeOfSpecialPower") && typeOfFile != FilesType.MINION)
             return true;
-        if (!fieldName.equals("cost") && typeOfFile == FilesType.SPELL)
+        if (!fieldName.equals("cost") && !fieldName.equals("name") && typeOfFile == FilesType.SPELL)
             return true;
         return false;
     }

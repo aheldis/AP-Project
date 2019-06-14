@@ -43,6 +43,7 @@ public class NewCardGraphic {
         }
 
         Text fieldName = addText(new Group(), input, 20, 0, Color.rgb(250, 250, 250, 0.8), 20);
+        BorderPane.setMargin(fieldName, new Insets(4, 5, 2, 5));
 
         StackPane stackPane = new StackPane();
         addRectangle(stackPane, 0, 0, 200, 30, 5, 5, Color.rgb(225, 225, 225, 0.3));
@@ -56,14 +57,12 @@ public class NewCardGraphic {
                         CornerRadii.EMPTY, Insets.EMPTY)));
         stackPane.getChildren().add(textField);
         stackPane.setAlignment(Pos.CENTER);
+        BorderPane.setMargin(stackPane, new Insets(2, 5, 2, 5));
 
         BorderPane borderPane = new BorderPane();
         borderPane.setRight(stackPane);
         borderPane.setLeft(fieldName);
         BorderPane.setAlignment(textField, Pos.CENTER);
-        borderPane.getChildren().forEach(node -> {
-            BorderPane.setMargin(node, new Insets(2, 5, 2, 5));
-        });
 
         hashMaps.get(numberOfHashMap).put(input, textField);
         group.getChildren().add(borderPane);
@@ -83,16 +82,14 @@ public class NewCardGraphic {
 
     private static void done(VBox vBox, String type) {
         vBox.getChildren().clear();
-        enter = null;
+        group.getChildren().remove(enter);
         NewFileAsli.setHashMaps(hashMaps);
         NewFileAsli.makeNewCard(account, FilesType.getEnum(type));
-        System.out.println("error.getText() = " + error.getText());
         if (error.getText() != null && !error.getText().equals("")) {
             error = addText(vBox, error.getText(), 600, 400, Color.RED, 30);
         } else {
             error = addText(vBox, "Card successfully created.", 600, 400, Color.WHITE, 30);
         }
-
     }
 
     private static void changeVbox(VBox vBox, ArrayList<String> arrayList, int ind, String type) {
@@ -162,7 +159,7 @@ public class NewCardGraphic {
 
 
         VBox vBox = new VBox();
-        vBox.relocate(125, 100);
+        vBox.relocate(150, 125);
         vBox.setAlignment(Pos.CENTER_LEFT);
 
         group.getChildren().add(vBox);

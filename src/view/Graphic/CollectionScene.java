@@ -175,12 +175,12 @@ class CollectionScene {
                         sprite.rows, ((Spell) card).getMillis(),
                         (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
             } else if (card instanceof Minion) {
-                addImage(group, "pics\\Minion\\" + ((Minion) card).getName() + ".gif",
+                addImage(group, "pics\\Minion/" + ((Minion) card).getName() + ".gif",
                         64,
                         28, 110, 150);
 
             } else if (card instanceof Hero) {
-                addImage(group, "pics\\Hero\\" + ((Hero) card).getName() + ".gif",
+                addImage(group, "pics/Hero/" + ((Hero) card).getName() + ".gif",
                         64,
                         28, 110, 150);
             }
@@ -218,7 +218,7 @@ class CollectionScene {
     private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
 
-            ImageView imageView = addImage(hBox, "pics\\heroCard\\" + card.getName() + ".png",
+            ImageView imageView = addImage(hBox, "pics/heroCard/" + card.getName() + ".png",
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
 
             showMana(root, i * (X_BORDER + CARD_WIDTH) + 40,
@@ -300,7 +300,7 @@ class CollectionScene {
                     "pics/other/minion_background.png", 0, 0, CARD_WIDTH, CARD_HEIGHT);
             imageView.fitWidthProperty();
 
-            ImageView animationImageView = addImage(root, "pics\\Minion\\" + card.getName() + ".gif",
+            ImageView animationImageView = addImage(root, "pics/Minion/" + card.getName() + ".gif",
                     i * (X_BORDER + CARD_WIDTH) + 75 + 37,
                     j * (Y_BORDER + CARD_HEIGHT) + 120 - 55, 110, 150);
             cardsIcon.add(animationImageView);
@@ -564,7 +564,7 @@ class CollectionScene {
 
     /**
      * //todo code for image background
-     * Image image = new Image(new FileInputStream("D:\\project_Duelyst1\\pics\\minion_background.png"));
+     * Image image = new Image(new FileInputStream("D:/project_Duelyst1/pics/minion_background.png"));
      * vBox.setBackground(new Background(new BackgroundImage(image,BackgroundRepeat.REPEAT,
      * BackgroundRepeat.REPEAT,
      * BackgroundPosition.DEFAULT,
