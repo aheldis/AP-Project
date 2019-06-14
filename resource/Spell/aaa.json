@@ -1,0 +1,12 @@
+{
+"@type": "model.card.Spell",
+  "@val": {
+    "name": "aaa",
+    "cost": 3000,
+    "mp": 0,
+    "hp": 0,
+    "ap": 0,
+    "attackRange": 0,
+    "coolDown": 0
+  }
+}

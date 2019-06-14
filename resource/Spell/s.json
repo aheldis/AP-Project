@@ -1,0 +1,31 @@
+{
+"@type": "model.card.Spell",
+  "@val": {
+    "name": "s",
+    "cost": 1,
+    "mp": 0,
+    "hp": 0,
+    "ap": 0,
+    "attackRange": 0,
+    "coolDown": 0,
+    "change": {
+      "buffs": {
+        "aaa": [
+          1,
+          1
+        ]
+      }
+    },
+    "target": {
+      "distance": 2,
+      "one": true,
+      "row": false,
+      "column": true,
+      "all": false,
+      "random": false,
+      "self": false,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}

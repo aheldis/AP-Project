@@ -1,0 +1,15 @@
+{
+  "@type": "model.card.makeFile.BuffCopy",
+  "@val": {
+    "name": "aaa",
+    "goodBuff": false,
+    "buffType": "true",
+    "apChange": 3,
+    "hpChange": 2,
+    "canMove": false,
+    "canAttack": true,
+    "canCounterAttack": false,
+    "hpChangeAfterAttack": false,
+    "changeInSecondTurn": false
+  }
+}
