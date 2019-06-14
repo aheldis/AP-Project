@@ -272,7 +272,7 @@ public class GeneralGraphicMethods {
         primaryStage.show();
     }
 
-    static void addTextWithShadow(String textString, double x, double y, Parent group, String fontFamily, int size) {
+    static Text addTextWithShadow(String textString, double x, double y, Parent group, String fontFamily, int size) {
         Text text = new Text(textString);
         text.relocate(x, y);
         text.setFont(Font.font(fontFamily, FontWeight.BOLD, size));
@@ -283,6 +283,7 @@ public class GeneralGraphicMethods {
         dropShadow.setOffsetY(3.0f);
         text.setEffect(dropShadow);
         nodeAdder(text, group);
+        return text;
     }
 
     static void setOnMouseEntered(Node node, Scene scene, boolean glowBoolean) {
