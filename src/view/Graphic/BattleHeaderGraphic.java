@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import view.Graphic.GeneralGraphicMethods;
 import model.battle.Player;
 
 public class BattleHeaderGraphic {
@@ -28,18 +29,6 @@ public class BattleHeaderGraphic {
     //TODO Mana ke avas mishe avas kone -> listener
     //TODO TODO TODO TODO SABAAAAA
 
-    private void addTextWithShadow(String textString, double x, double y, Group group) {
-        Text text = new Text(textString);
-        text.relocate(x, y);
-        text.setFont(Font.font("Arial", FontWeight.BOLD, 27));
-        text.setFill(Color.WHITE);
-        text.setStroke(Color.BLACK);
-        text.setStrokeWidth(1);
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setOffsetY(3.0f);
-        text.setEffect(dropShadow);
-        group.getChildren().add(text);
-    }
 
     private void addPortraitBorder(double x, double y, Group group, boolean turnOfThisPlayer, String avatarPath) {
         if (avatarPath != null)
@@ -103,7 +92,7 @@ public class BattleHeaderGraphic {
 
     public void makeLeftHeader(Player player) {
         leftHeader.getChildren().clear();
-        addTextWithShadow(player.getUserName(), 248, 78, leftHeader);
+        GeneralGraphicMethods.addTextWithShadow(player.getUserName(), 248, 78, leftHeader, "Arial", 27);
         addMana(245, 100, player.getMana(), leftHeader);
         addPortraitBorder(120, 25, leftHeader, true, player.getAvatarPath());
         addPortraitBorder(1165, 25, rightHeader, false, null);
@@ -111,7 +100,7 @@ public class BattleHeaderGraphic {
 
     public void makeRightHeader(Player player) {
         rightHeader.getChildren().clear();
-        addTextWithShadow(player.getUserName(), 1010, 78, rightHeader);
+        GeneralGraphicMethods.addTextWithShadow(player.getUserName(), 1010, 78, leftHeader, "Arial", 27);
         addMana(911, 100, player.getMana(), rightHeader);
         addPortraitBorder(1165, 25, rightHeader, true, player.getAvatarPath());
         addPortraitBorder(120, 25, leftHeader, false, null);

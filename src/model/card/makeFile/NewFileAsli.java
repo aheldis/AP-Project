@@ -29,6 +29,7 @@ public class NewFileAsli {
     public static void main(String[] args) {
         makeNewCard(null);
     }
+
     public static void makeNewCard(Account account) {
             newCardMessages.printLine("enter type: (Spell/Minion/Hero)");
             request.getNewLine();
@@ -39,6 +40,11 @@ public class NewFileAsli {
             request.getNewLine();
             String name = request.getCommand();
             String path = Shop.getPathOfFiles() + typeOfFile.getName() + "/" + name + ".json";
+            File file = new File(path);
+            if(file.exists()){
+                newCardMessages.printLine("Card with this name already exist");
+                return;
+            }
             Object object = fillObject("model.card.makeFile.CardCopy", typeOfFile, name);
 
             if (typeOfFile == FilesType.SPELL || typeOfFile == FilesType.MINION) {

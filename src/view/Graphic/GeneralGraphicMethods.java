@@ -1,9 +1,11 @@
 package view.Graphic;
 
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -87,12 +90,12 @@ public class GeneralGraphicMethods {
             ((StackPane) root).getChildren().add(node);
     }
 
-    public static ImageView createImage( String path,double width, double height){
+    public static ImageView createImage(String path, double width, double height) {
         ImageView imageView = null;
         try {
             imageView = new ImageView(new Image(new FileInputStream(path)));
-        imageView.setFitWidth(width * getRatioX());
-        imageView.setFitHeight(height * getRatioY());
+            imageView.setFitWidth(width * getRatioX());
+            imageView.setFitHeight(height * getRatioY());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -269,6 +272,19 @@ public class GeneralGraphicMethods {
         primaryStage.show();
     }
 
+    static void addTextWithShadow(String textString, double x, double y, Parent group, String fontFamily, int size) {
+        Text text = new Text(textString);
+        text.relocate(x, y);
+        text.setFont(Font.font(fontFamily, FontWeight.BOLD, size));
+        text.setFill(Color.WHITE);
+        text.setStroke(Color.BLACK);
+        text.setStrokeWidth(1);
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setOffsetY(3.0f);
+        text.setEffect(dropShadow);
+        nodeAdder(text, group);
+    }
+
     static void setOnMouseEntered(Node node, Scene scene, boolean glowBoolean) {
         Glow glow = new Glow(0);
         node.setEffect(glow);
@@ -311,7 +327,7 @@ public class GeneralGraphicMethods {
         Background background = new Background(backgroundImage);
         button.setBackground(background);
         button.setTextFill(Color.WHITE);
-        button.setStyle("-fx-font-weight: bold; -fx-font-size: 19");
+        button.setStyle("-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 19");
         root.getChildren().add(button);
         setOnMouseEntered(button, scene, true);
         return button;

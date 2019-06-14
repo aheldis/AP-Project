@@ -1,4 +1,5 @@
 package model.account;
+
 import model.battle.Deck;
 import model.battle.MatchInfo;
 import model.battle.OrdinaryPlayer;
@@ -8,7 +9,7 @@ import view.AccountView;
 import java.util.ArrayList;
 
 
-public class Account implements Comparable<Account> ,Cloneable{
+public class Account implements Comparable<Account>, Cloneable {
     private String userName;
     private String password;
     private int daric = 150000;
@@ -16,13 +17,13 @@ public class Account implements Comparable<Account> ,Cloneable{
     private ArrayList<MatchInfo> matchHistory = new ArrayList<>();
     private Collection collection = new Collection(this);
     private Deck mainDeck = new Deck();
-    private Player player ;
+    private Player player;
     private ArrayList<Deck> decks = new ArrayList<>();
 
     public Account(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        this.player=new OrdinaryPlayer();
+        this.player = new OrdinaryPlayer();
     }
 
     public void setCollection(Collection collection) {
@@ -35,8 +36,7 @@ public class Account implements Comparable<Account> ,Cloneable{
     }
 
     public Object clone() throws
-            CloneNotSupportedException
-    {
+            CloneNotSupportedException {
         return super.clone();
     }
 
