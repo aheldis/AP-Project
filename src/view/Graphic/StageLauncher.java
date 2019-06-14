@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.account.Account;
@@ -14,7 +13,6 @@ import model.card.Spell;
 import view.enums.Cursor;
 import view.enums.StateType;
 
-import javax.swing.plaf.ScrollBarUI;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -91,7 +89,7 @@ public class StageLauncher extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
+        GeneralGraphicMethods.setCursor(scene, cursor);
         return scene;
     }
 
@@ -181,10 +179,10 @@ public class StageLauncher extends Application {
 
         AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);
-
-//        MainMenuScene mainMenuScene1 = MainMenuScene.getInstance();
-//        mainMenuScene1.makeMenu(new Account("2","2"));
-//        NewCardGraphic.makeCardForm(mainMenuScene, new Account("2", "2"));/*/
+/*
+        MainMenuScene mainMenuScene1 = MainMenuScene.getInstance();
+        mainMenuScene1.makeMenu(new Account("2","2"));
+        NewCardGraphic.makeCardForm(mainMenuScene, new Account("2", "2"));/*/
 //*/
  //       AccountScene.getInstance().makeBackground();
  //       primaryStage.setScene(accountScene);

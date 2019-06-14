@@ -15,10 +15,10 @@ import view.Graphic.BattleScene;
 import view.Graphic.GeneralGraphicMethods;
 import view.enums.StateType;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Random;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.*;
 
 public class Match {
     private Player[] players;
@@ -34,6 +34,7 @@ public class Match {
     private int BOUND_FOR_COLLECTIBLES = 6;
     private ArrayList<Collectible> collectibles = new ArrayList<>();
     private BattleScene battleScene;
+    private int matchNumber = 0;
 
     BattleScene getBattleScene() {
         return battleScene;
@@ -42,6 +43,10 @@ public class Match {
 
     public int getReward() {
         return reward;
+    }
+
+    public int getMatchNumber() {
+        return matchNumber;
     }
 
     public ArrayList<Flag> getFlags() {
@@ -74,7 +79,7 @@ public class Match {
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
             squares[randomX][randomY].addToFlags(flag);
-            ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_catagorized/flag.gif", 10, 10);
+            ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_categorized/flag.gif", 10, 10);
             flag.setImageView(flagView);
             BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, flagView);
         }
@@ -123,7 +128,6 @@ public class Match {
         Hero secondHero = players[1].getMainDeck().getHero();
         battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null, true);
         battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null, false);
-
         if (mode.equals(Game.getModeAsString(3))) {
             setFlagsRandomly(3);
         }
@@ -134,6 +138,33 @@ public class Match {
     }
 
     Match(Player[] players, String mode, int numberOfFlags, int reward) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("hi");
+                try {
+                    File file = new File("PausedGames\\NumberOfMap");
+                    Scanner fileReader = new Scanner(file);
+                    FileWriter fileWriter = new FileWriter(file, true);
+                    int line = 1;
+                    while (fileReader.hasNextLine()) {
+                        fileReader.nextLine();
+                        line++;
+                    }
+                    if (line != 1)
+                        line--;//we add \n at each writing
+
+
+                    fileWriter.write(line+"\n");
+                    matchNumber = line;
+                    fileWriter.close();
+                    fileReader.close();
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }).start();
         land = new LandOfGame();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
@@ -201,7 +232,7 @@ public class Match {
         } else {
             players[whichPlayer].initPerTurn(whichPlayer);
             players[passComputerPlayer()].playTurnForComputer();
-            players[1 - whichPlayer].initPerTurn(1-whichPlayer);//init for computer
+            players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
             if (gameEnded()) {
                 endGame();
                 controller.MenuController.state = StateType.ACCOUNT_MENU;
@@ -282,9 +313,9 @@ public class Match {
     public void endGame() {
         MatchInfo matchInfo = new MatchInfo();
         if (this.winner instanceof OrdinaryPlayer)
-            matchInfo.winner = this.winner.getAccount();
+            matchInfo.winner = this.winner.getAccount().getUserName();
         if (this.loser instanceof OrdinaryPlayer)
-            matchInfo.loser = this.loser.getAccount();
+            matchInfo.loser = this.loser.getAccount().getUserName();
         matchInfo.date = date;
 
         winner.addToAccountWins();

@@ -15,14 +15,14 @@ import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
 import model.land.LandOfGame;
+import model.land.Square;
+import model.requirment.Coordinate;
 import view.enums.StateType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static view.Graphic.GeneralGraphicMethods.addImage;
 
@@ -35,11 +35,17 @@ public class BattleScene {
     private double height = StageLauncher.getHeight();
     private int numberOfMap;
     private Rectangle[][] gameGrid;
+    private HashMap<Rectangle, Square> positionHashMap = new HashMap<>();
+    private ArrayList<Rectangle> coloredRectangles = new ArrayList<>();
     private MapProperties mapProperties;
     private Match match;
     private Game game;
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
+
+    public static void changeSingleInstance(BattleScene battleScene){
+        singleInstance =battleScene;
+    }
 
     public void setMatch(Match match) {
         this.match = match;
@@ -163,7 +169,6 @@ public class BattleScene {
     }
 
 
-
     private void addGrid() {
         board = new Group();
         int numberOfColumns = LandOfGame.getNumberOfColumns();
@@ -181,11 +186,12 @@ public class BattleScene {
                 } else
                     currentX += mapProperties.cellWidth + mapProperties.gap;
                 Rectangle rectangle = new Rectangle(mapProperties.cellWidth, mapProperties.cellHeight);
-                rectangle.setFill(Color.rgb(0, 0, 0, 0.2));
+                rectangle.setFill(Color.BLACK);
+                rectangle.setOpacity(0.2);
                 rectangle.relocate(currentX, currentY);
                 gameGrid[i][j] = rectangle;
+                positionHashMap.put(gameGrid[i][j], match.getLand().getSquares()[i][j]);
                 board.getChildren().add(rectangle);
-
             }
 
         root.getChildren().add(board);
@@ -274,7 +280,9 @@ public class BattleScene {
         return y > cellPosition.getValue() && y < cellPosition.getValue() + mapProperties.cellHeight + mapProperties.gap;
     }
 
-    Group addCardToBoard(double x, double y, Card card, ImageView imageView) {
+    Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
+//        PUT = true;
+//        MOVE = false;
         int numberOfColumns = LandOfGame.getNumberOfColumns();
         int numberOfRows = LandOfGame.getNumberOfRows();
         for (int i = 0; i < numberOfRows; i++)
@@ -284,10 +292,14 @@ public class BattleScene {
                 double maxX = grid.getLayoutX() + grid.getWidth();
                 double minY = grid.getLayoutY();
                 double maxY = grid.getLayoutY() + grid.getHeight();
-//                if (gameGrid[i][j].contains(x, y)) {
                 if (x <= maxX && x >= minX && y <= maxY && y >= minY) {
-                    //withinRange(x, y, i, j)
-                    return addCardToBoard(i, j, card, "normal", imageView, false);
+                    if (putOrMove)
+                        match.getPlayers()[0].putCardOnLand(card,
+                                positionHashMap.get(gameGrid[i][j]).getCoordinate(), match.getLand());
+                    else
+                        card.move(positionHashMap.get(gameGrid[i][j]).getCoordinate());
+                    if (coloredRectangles.contains(grid))
+                        return addCardToBoard(i, j, card, "normal", imageView, false);
                 }
             }
         return null;
@@ -332,7 +344,7 @@ public class BattleScene {
 
         if (drag) {
             DragAndDrop dragAndDrop = new DragAndDrop();
-            dragAndDrop.dragAndDropForGame(imageView, card, board, root,
+            dragAndDrop.dragAndDropForGame(imageView, card, null, board, root,
                     imageView.getFitWidth() / 2, imageView.getFitHeight() / 2,
                     imageView.getLayoutX(), imageView.getLayoutY());
         }
@@ -363,6 +375,28 @@ public class BattleScene {
 */
     }
 
+    void showCanMoveToCoordinations(Card card) {
+        ArrayList<Coordinate> coordinates = card.getCanMoveToCoordinations();
+        for (Coordinate coordinate : coordinates) {
+            Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
+            grid.setFill(Color.ALICEBLUE);
+            coloredRectangles.add(grid);
+        }
+    }
 
+    void showCanPutInCoordinations(Card card) {
+        ArrayList<Coordinate> coordinates = card.getCanPutInCoordinations();
+        for (Coordinate coordinate : coordinates) {
+            Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
+            grid.setFill(Color.GOLD);
+            coloredRectangles.add(grid);
+        }
+    }
+
+    void removeColorFromRectangles() {
+        for (Rectangle rectangle : coloredRectangles)
+            rectangle.setFill(Color.BLACK);
+        coloredRectangles.removeAll(coloredRectangles);
+    }
 
 }

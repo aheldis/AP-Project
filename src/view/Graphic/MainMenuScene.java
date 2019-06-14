@@ -2,6 +2,7 @@ package view.Graphic;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -101,8 +102,13 @@ public class MainMenuScene {
             case "SETTINGS":
                 root.getChildren().removeAll(menuNodes);
                 AccountScene.getInstance().addWindows();
-                AllAccount.getInstance().saveAccount(account);
-                account = null;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AllAccount.getInstance().saveAccount(account);
+                        account = null;
+                    }
+                }).start();
                 break;
             case "NEW CARD":
                 NewCardGraphic.makeCardForm(mainMenuScene, account);

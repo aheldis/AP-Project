@@ -1,7 +1,6 @@
 package view.Graphic;
 
 import javafx.scene.Group;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -18,7 +17,7 @@ public class BattleHeaderGraphic {
     private BattleScene battleScene;
     private ImageView[] imageViews = new ImageView[2];
 
-    public BattleHeaderGraphic(BattleScene battleScene, Group root) {
+    BattleHeaderGraphic(BattleScene battleScene, Group root) {
         this.battleScene = battleScene;
         this.root = root;
         root.getChildren().addAll(rightHeader, leftHeader);
@@ -40,14 +39,14 @@ public class BattleHeaderGraphic {
             }
         }
         if (turnOfThisPlayer) {
-            GeneralGraphicMethods.addImage(group, "pics/battle_catagorized/general_portrait_border_highlight@2x.png", x, y, 130, 130);
+            GeneralGraphicMethods.addImage(group, "pics/battle_categorized/general_portrait_border_highlight@2x.png", x, y, 130, 130);
         } else {
-            GeneralGraphicMethods.addImage(group, "pics/battle_catagorized/general_portrait_border@2x.png", x, y, 130, 130);
+            GeneralGraphicMethods.addImage(group, "pics/battle_categorized/general_portrait_border@2x.png", x, y, 130, 130);
         }
 
         /*
-        ImageView imageView1 = GeneralGraphicMethods.addImage(group, "pics/battle_catagorized/general_portrait_border@2x.png", x, y, 130, 130);
-        ImageView imageView2 = GeneralGraphicMethods.addImage(group, "pics/battle_catagorized/general_portrait_border_highlight@2x.png", x, y, 130, 130);
+        ImageView imageView1 = GeneralGraphicMethods.addImage(group, "pics/battle_categorized/general_portrait_border@2x.png", x, y, 130, 130);
+        ImageView imageView2 = GeneralGraphicMethods.addImage(group, "pics/battle_categorized/general_portrait_border_highlight@2x.png", x, y, 130, 130);
         group.getChildren().remove(imageView2);
         imageView2.setOnMouseExited(event -> {
             group.getChildren().add(imageView1);
@@ -68,12 +67,12 @@ public class BattleHeaderGraphic {
                         "pics/other/icon_mana@2x.png", x + i * 28, y, 25, 25);
             else
                 GeneralGraphicMethods.addImage(group,
-                        "pics/battle_catagorized/icon_mana_inactive@2x.png",
+                        "pics/battle_categorized/icon_mana_inactive@2x.png",
                         x + i * 28, y, 25, 25);
         }
     }
 
-    public void initHeader() {
+    private void initHeader() {
         makeLeftHeader(battleScene.getMatch().getPlayers()[0]);
         makeRightHeader(battleScene.getMatch().getPlayers()[1]);
 
@@ -96,7 +95,7 @@ public class BattleHeaderGraphic {
         */
     }
 
-    public void makeLeftHeader(Player player) {
+    private void makeLeftHeader(Player player) {
         leftHeader.getChildren().clear();
         GeneralGraphicMethods.addTextWithShadow(player.getUserName(), 248, 78, leftHeader, "Arial", 27);
         addMana(245, 100, player.getMana(), leftHeader);
@@ -104,7 +103,7 @@ public class BattleHeaderGraphic {
         addPortraitBorder(1165, 25, rightHeader, false, null, false);
     }
 
-    public void makeRightHeader(Player player) {
+    private void makeRightHeader(Player player) {
         rightHeader.getChildren().clear();
         GeneralGraphicMethods.addTextWithShadow(player.getUserName(), 1010, 78, leftHeader, "Arial", 27);
         addMana(911, 100, player.getMana(), rightHeader);

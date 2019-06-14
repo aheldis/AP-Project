@@ -253,15 +253,15 @@ public class AccountView {
     }
 
     public void viewAMatch(MatchInfo matchInfo, Account me) {
-        Account opponent;
-        if (matchInfo.winner == me) {
+        String opponent;
+        if (matchInfo.winner.equals(me.getUserName())) {
             opponent = matchInfo.loser;
-            System.out.println(opponent.getUserName());
+            System.out.println(opponent);
             System.out.println("win");
             printDate(matchInfo.date);
         } else {
             opponent = matchInfo.winner;
-            System.out.println(opponent.getUserName());
+            System.out.println(opponent);
             System.out.println("loss");
             printDate(matchInfo.date);
         }

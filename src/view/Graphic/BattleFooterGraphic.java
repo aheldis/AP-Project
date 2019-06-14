@@ -1,12 +1,13 @@
 package view.Graphic;
 
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
+import com.google.gson.Gson;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import model.account.FilesType;
 import model.battle.Player;
@@ -15,6 +16,8 @@ import model.card.Minion;
 import model.card.Spell;
 import view.enums.StateType;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 import static view.Graphic.GeneralGraphicMethods.*;
@@ -77,12 +80,13 @@ public class BattleFooterGraphic {
             ImageView backgroundCircle = addImage(handCardGroup,
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
             addImage(handCardGroup, "pics/other/icon_mana@2x.png", 60, 107, 30, 30);
-            addText(handCardGroup, card.getMp() + "", 72, 115, Color.rgb(0, 0, 0, 0.5), 15);
+            addText(handCardGroup, card.getMp() + "", 72, 115,
+                    Color.rgb(0, 0, 0, 0.5), 15);
             makeCircleRotation(backgroundCircle, 70, 70);
             ImageView gif = addGif(group, handCardGroup, card, 0, 0);
             if (card instanceof Minion) {
                 DragAndDrop dragAndDrop = new DragAndDrop();
-                dragAndDrop.dragAndDropForGame(gif, card, handCardGroup, root,
+                dragAndDrop.dragAndDropForGame(gif, card, player.getHand(), handCardGroup, root,
                         gif.getFitWidth() / 2 - 10, gif.getFitHeight() / 2 + 20, 15, -21);
             }
         }
@@ -96,26 +100,45 @@ public class BattleFooterGraphic {
                 "GRAVE YARD", 1000 - 80, 75, 150, 70);
         Button cancel = imageButton(scene, group, "pics/battle/help.png",
                 "CANCEL", 1000 + 90, 75, 150, 70);
+        Button a = imageButton(scene,group,"pics\\collection\\close-deck.png","save",1000 +90,75 ,30,30);
+        root.getChildren().remove(a);
 
         endTurn.setOnMouseClicked(event -> BattleScene.getSingleInstance().getMatch().changeTurn());
-        cancel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                BattleScene.getSingleInstance().getMatch().setLoser(player);
-                BattleScene.getSingleInstance().getMatch().setWinner(player.getOpponent());
-                BattleScene.getSingleInstance().getMatch().endGame();
-                StageLauncher.decorateScene(StateType.MAIN_MENU);
-            }
+        cancel.setOnMouseClicked(event -> {
+            BattleScene.getSingleInstance().getMatch().setLoser(player);
+            BattleScene.getSingleInstance().getMatch().setWinner(player.getOpponent());
+            BattleScene.getSingleInstance().getMatch().endGame();
+            StageLauncher.decorateScene(StateType.MAIN_MENU);
         });
 
         graveYard.setOnMouseClicked(event -> {
             Platform.runLater(() -> StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.GRAVE_YARD)));
             GraveYard.makeYard(player.getGraveYard().getCards());
         });
+        a.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            BattleScene battleScene = BattleScene.getSingleInstance();
+            @Override
+            public void handle(MouseEvent event) {
+                new Thread(() -> {
+                    try {
+                        String path = "PausedGames/" + battleScene.getMatch().getMatchNumber() + ".json";
+                        File file = new File(path);
+                        if (file.exists())
+                            file.delete();
+                        YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
+                        FileWriter fileWriter = new FileWriter(file);
+                        altMapper.toJson(battleScene, fileWriter);
+                        fileWriter.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            }
+        });
 
     }
 
-    void initFooter() {
+    private void initFooter() {
 //        Group circlesGroup = new Group();
         circlesGroup.relocate(50, 680);
         root.getChildren().addAll(circlesGroup);

@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class MatchInfo {
     //momkene yekish computer bashe null bashe
-    public Account winner;
-    public Account loser;
+    public String winner;
+    public String loser;
     public Date date;
 }
