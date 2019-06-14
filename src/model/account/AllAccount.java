@@ -33,6 +33,8 @@ public class AllAccount {
                     e.printStackTrace();
                 }
             }
+            bufferedReader.close();
+            fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -107,7 +109,7 @@ public class AllAccount {
         try {
             File file = new File("AccountSaver/AccountUser.txt");
             FileWriter fileWriter = new FileWriter(file, true);
-            fileWriter.write(userName + "/" + password + '\n');
+            fileWriter.write(userName + '\n');
             fileWriter.close();
         } catch (IOException ignored) {
         }

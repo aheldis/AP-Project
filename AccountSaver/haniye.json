@@ -2120,7 +2120,8 @@
           "cards": [],
           "player": "@root.player"
         },
-        "buffsOnThisPlayer": []
+        "buffsOnThisPlayer": [],
+        "avatarPath": "pics/profile/speech_portrait_abyssianalt@2x.png"
       }
     },
     "decks": []
