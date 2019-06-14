@@ -58,8 +58,8 @@ class CollectionScene {
     private static ArrayList<Node> groupOfDeck = new ArrayList<>();
 
 
-    private static void deckLittleCardMaker(Parent root, Object card, Group group,
-                                            Collection collection, Deck deck) {
+    private static void deckLittleCardMaker(Parent root, Object card, Group group, Collection collection,
+                                            Deck deck, VBox sideVBox) {
 
         try {
             ImageView backPicView = new ImageView(new Image(new FileInputStream(
@@ -127,17 +127,24 @@ class CollectionScene {
 
 
             garbage.setOnMouseClicked(event16 -> {
-                if (card instanceof Card)
-                    collection.removeCardFromDeck((Card) card, deck.getName());
-                if (card instanceof Usable)
-                    collection.removeItemFromDeck((Usable) card, deck.getName());
-                if (root instanceof VBox)
-                    ((VBox) root).getChildren().removeAll(group);
-                if (root instanceof Group)
-                    ((Group) root).getChildren().removeAll(group);
-
-                group.getChildren().clear();
-
+                if (sideVBox.getChildren().contains(group)) {
+                    final int NUMBER_OF_ROWS = 5;
+                    if (card instanceof Card)
+                        collection.removeCardFromDeck((Card) card, deck.getName());
+                    if (deck.getHero() == card)
+                        deck.setHero(null);
+                    if (card instanceof Usable)
+                        collection.removeItemFromDeck((Usable) card, deck.getName());
+                    if (root instanceof VBox)
+                        sideVBox.getChildren().remove(group);
+                    if (root instanceof Group)
+                        sideVBox.getChildren().remove(group);
+                    for (VBox vBox : vBoxes) {
+                        if (vBox.getChildren().size() < NUMBER_OF_ROWS)
+                            vBox.getChildren().add(group);
+                        break;
+                    }
+                }
             });
 
         } catch (Exception ignored) {
@@ -468,10 +475,10 @@ class CollectionScene {
         vBox.getChildren().addAll(hBox);
         cardsIcon.add(hBox);
         Group group;
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] == null)
+        for (Usable item : items) {
+            if (item == null)
                 continue;
-            group = makeItemCard(items[i]);
+            group = makeItemCard(item);
             hBox.getChildren().addAll(group);
         }
     }
@@ -593,20 +600,19 @@ class CollectionScene {
                         continue;
                     vBox = getVBox(NUMBER_IN_EACH_ROW, SPACING, vBoxes, vBox, i);
                     Group group = new Group();
-                    deckLittleCardMaker(vBox, items[h], group, collection, deck);
+                    deckLittleCardMaker(vBox, items[h], group, collection, deck, target);
                     DragAndDrop dragAndDrop = new DragAndDrop();
-                    dragAndDrop.dragAndDropForCollection(group, target, deck, items[h], vBox, root, 150, 35);
+                    dragAndDrop.dragAndDropForCollection(group, target, deck, items[h], vBox, root, 150, 35, vBoxes);
                     i++;
                 }
                 break;
             }
             vBox = getVBox(NUMBER_IN_EACH_ROW, SPACING, vBoxes, vBox, i);
-            if (deck.cardHaveBeenExistInThisDeck(cards.get(i).getCardId().getCardIdAsString()) == null &&
-                    !(cards.get(i) instanceof Hero)) {
+            if (deck.cardHaveBeenExistInThisDeck(cards.get(i).getCardId().getCardIdAsString()) == null) {
                 Group group = new Group();
-                deckLittleCardMaker(vBox, cards.get(i), group, collection, deck);
+                deckLittleCardMaker(vBox, cards.get(i), group, collection, deck, target);
                 DragAndDrop dragAndDrop = new DragAndDrop();
-                dragAndDrop.dragAndDropForCollection(group, target, deck, cards.get(i), vBox, root, 150, 35);
+                dragAndDrop.dragAndDropForCollection(group, target, deck, cards.get(i), vBox, root, 150, 35, vBoxes);
             }
         }
         return vBoxes;
@@ -660,7 +666,6 @@ class CollectionScene {
 
 
                 vBoxes.addAll(dragAndDropCard(collection, pageNumber, vBox, deck));
-
                 ImageView hero_icon = addImage(root, "pics/collection/deck-select/icon-" + a + ".png",
                         360, 50, 120, 100);
 
@@ -671,6 +676,22 @@ class CollectionScene {
 
                 ImageView nextCircle = addImage(root, "pics/other/circle.png", 1000, 730, 70, 70);
                 ImageView next = addImage(root, "pics/other/next.png", 1015, 750 - 5, 40, 40);
+
+                ArrayList<Card> cards = deck.getCardsOfDeck();
+
+                Group group1;
+                for (Card card : cards) {
+                    group1 = new Group();
+                    deckLittleCardMaker(vBox, card, group1, collection, deck, vBox);
+                    DragAndDrop dragAndDrop = new DragAndDrop();
+                    dragAndDrop.dragAndDropForCollection(group1, null, deck, card, vBox, root, 150, 35, vBoxes);
+                }
+                if (deck.getItem() != null) {
+                    group1 = new Group();
+                    deckLittleCardMaker(vBox, deck.getItem(), group1, collection, deck, vBox);
+                    DragAndDrop dragAndDrop = new DragAndDrop();
+                    dragAndDrop.dragAndDropForCollection(group1, null, deck, deck.getItem(), vBox, root, 150, 35, vBoxes);
+                }
 
                 back.setOnMouseClicked(event1 -> {
                     pageNumber--;
@@ -722,18 +743,6 @@ class CollectionScene {
                 }
 
             });
-
-            ArrayList<Card> cards = deck.getCardsOfDeck();
-
-            Group group1;
-            for (Card card : cards) {
-                group1 = new Group();
-                deckLittleCardMaker(vBox, card, group1, collection, deck);
-            }
-            if (deck.getItem() != null) {
-                group1 = new Group();
-                deckLittleCardMaker(vBox, deck.getItem(), group1, collection, deck);
-            }
 
         });
 
@@ -935,7 +944,7 @@ class CollectionScene {
         try {
             VBox sideVBox = new VBox();//vobxe baqale safhe
             ScrollBar sc = new ScrollBar();
-            sc.relocate(0, 135);
+            sc.relocate(300, 135);
             sc.setBackground(new Background(
                     new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
                             CornerRadii.EMPTY, Insets.EMPTY)));
@@ -948,7 +957,7 @@ class CollectionScene {
             root.getChildren().addAll(sideVBox);
             root.getChildren().addAll(sc);
             sc.valueProperty().addListener((ov, old_val, new_val) ->
-                    sideVBox.setLayoutY(-new_val.doubleValue()*11));
+                    sideVBox.setLayoutY(-new_val.doubleValue() * 11));
 
 
             sideVBox.relocate(0, 0);
