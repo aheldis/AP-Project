@@ -107,7 +107,7 @@ public class BattleView {
             for (int j = -2; j <= 2; j++) {
                 int x = player.getHero().getPosition().getXCoordinate() + i;
                 int y = player.getHero().getPosition().getYCoordinate() + j;
-                if (x < 0 || x >= landOfGame.getNumberOfRows() || y < 0 || y >= landOfGame.getNumberOfColumns())
+                if (x < 0 || x >= LandOfGame.getNumberOfRows() || y < 0 || y >= LandOfGame.getNumberOfColumns())
                     continue;
                 if (Math.abs(i) + Math.abs(j) <= 2 && !squares[x][y].squareHasMinionOrHero())
                     System.out.println("(" + x + "," + y + ")");

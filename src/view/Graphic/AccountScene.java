@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -318,13 +317,7 @@ public class AccountScene {
             double y = 550 + random.nextInt(200);
             mugs[i] = addImage(root, cloudPaths.get(random.nextInt(7)), x, y,
                     80 * randNumber, 40 * randNumber);
-            Lighting lighting = new Lighting();
-            lighting.setDiffuseConstant(1.0);
-            lighting.setSpecularConstant(0.0);
-            lighting.setSpecularExponent(0.0);
-            lighting.setSurfaceScale(0.0);
-            lighting.setLight(new Light.Distant(45, 45,
-                    Color.rgb(121, 149, 255, 1)));
+            Lighting lighting = getLighting();
             assert mugs[i] != null;
             mugs[i].setEffect(lighting);
         }

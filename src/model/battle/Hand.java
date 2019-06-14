@@ -74,7 +74,7 @@ public class Hand {
 
     }
 
-    void removeUsedCardsFromHand(Card card) {
+    public void removeUsedCardsFromHand(Card card) {
         gameCards.remove(card);
     }
 

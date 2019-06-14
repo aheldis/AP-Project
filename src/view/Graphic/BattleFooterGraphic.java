@@ -1,12 +1,10 @@
 package view.Graphic;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import model.account.FilesType;
 import model.battle.Player;
@@ -77,12 +75,13 @@ public class BattleFooterGraphic {
             ImageView backgroundCircle = addImage(handCardGroup,
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
             addImage(handCardGroup, "pics/other/icon_mana@2x.png", 60, 107, 30, 30);
-            addText(handCardGroup, card.getMp() + "", 72, 115, Color.rgb(0, 0, 0, 0.5), 15);
+            addText(handCardGroup, card.getMp() + "", 72, 115,
+                    Color.rgb(0, 0, 0, 0.5), 15);
             makeCircleRotation(backgroundCircle, 70, 70);
             ImageView gif = addGif(group, handCardGroup, card, 0, 0);
             if (card instanceof Minion) {
                 DragAndDrop dragAndDrop = new DragAndDrop();
-                dragAndDrop.dragAndDropForGame(gif, card, handCardGroup, root,
+                dragAndDrop.dragAndDropForGame(gif, card, player.getHand(), handCardGroup, root,
                         gif.getFitWidth() / 2 - 10, gif.getFitHeight() / 2 + 20, 15, -21);
             }
         }
@@ -98,14 +97,11 @@ public class BattleFooterGraphic {
                 "CANCEL", 1000 + 90, 75, 150, 70);
 
         endTurn.setOnMouseClicked(event -> BattleScene.getSingleInstance().getMatch().changeTurn());
-        cancel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                BattleScene.getSingleInstance().getMatch().setLoser(player);
-                BattleScene.getSingleInstance().getMatch().setWinner(player.getOpponent());
-                BattleScene.getSingleInstance().getMatch().endGame();
-                StageLauncher.decorateScene(StateType.MAIN_MENU);
-            }
+        cancel.setOnMouseClicked(event -> {
+            BattleScene.getSingleInstance().getMatch().setLoser(player);
+            BattleScene.getSingleInstance().getMatch().setWinner(player.getOpponent());
+            BattleScene.getSingleInstance().getMatch().endGame();
+            StageLauncher.decorateScene(StateType.MAIN_MENU);
         });
 
         graveYard.setOnMouseClicked(event -> {
@@ -115,7 +111,7 @@ public class BattleFooterGraphic {
 
     }
 
-    void initFooter() {
+    private void initFooter() {
 //        Group circlesGroup = new Group();
         circlesGroup.relocate(50, 680);
         root.getChildren().addAll(circlesGroup);
