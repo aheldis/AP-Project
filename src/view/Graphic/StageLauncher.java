@@ -91,7 +91,7 @@ public class StageLauncher extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         sceneHashMap.put(stateType, scene);
-        Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
+     //   Platform.runLater(() -> GeneralGraphicMethods.setCursor(scene, cursor));
         return scene;
     }
 
@@ -133,7 +133,6 @@ public class StageLauncher extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
 
         StageLauncher.primaryStage = primaryStage;
         WIDTH = 1380;
@@ -180,9 +179,12 @@ public class StageLauncher extends Application {
 */
 
 
-        AccountScene.getInstance().makeBackground();
+//        AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);
-/*/
+
+        MainMenuScene mainMenuScene1 = MainMenuScene.getInstance();
+        mainMenuScene1.makeMenu(new Account("2","2"));
+        NewCardGraphic.makeCardForm(mainMenuScene, new Account("2", "2"));/*/
  //       AccountScene.getInstance().makeBackground();
  //       primaryStage.setScene(accountScene);
 

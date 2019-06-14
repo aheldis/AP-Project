@@ -3,7 +3,6 @@ package model.card.makeFile;
 
 public class CardCopy {
     public String name;
-    public String type;
     public int cost;
     public int mp;
     public int hp;

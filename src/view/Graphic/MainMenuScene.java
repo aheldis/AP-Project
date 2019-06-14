@@ -105,7 +105,7 @@ public class MainMenuScene {
                 account = null;
                 break;
             case "NEW CARD":
-                NewCardGraphic.makeCardForm(mainMenuScene);
+                NewCardGraphic.makeCardForm(mainMenuScene, account);
                 break;
         }
     }
