@@ -2,7 +2,6 @@ package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import com.google.gson.Gson;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -115,10 +114,8 @@ public class BattleFooterGraphic {
             Platform.runLater(() -> StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.GRAVE_YARD)));
             GraveYard.makeYard(player.getGraveYard().getCards());
         });
-        a.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        a.setOnMouseClicked(event -> {
             BattleScene battleScene = BattleScene.getSingleInstance();
-            @Override
-            public void handle(MouseEvent event) {
                 new Thread(() -> {
                     try {
                         String path = "PausedGames/" + battleScene.getMatch().getMatchNumber() + ".json";
@@ -133,7 +130,6 @@ public class BattleFooterGraphic {
                         e.printStackTrace();
                     }
                 }).start();
-            }
         });
 
     }

@@ -43,8 +43,8 @@ public class BattleScene {
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
 
-    public static void changeSingleInstance(BattleScene battleScene){
-        singleInstance =battleScene;
+    public static void changeSingleInstance(BattleScene battleScene) {
+        singleInstance = battleScene;
     }
 
     public void setMatch(Match match) {
@@ -293,11 +293,16 @@ public class BattleScene {
                 double minY = grid.getLayoutY();
                 double maxY = grid.getLayoutY() + grid.getHeight();
                 if (x <= maxX && x >= minX && y <= maxY && y >= minY) {
-                    if (putOrMove)
-                        match.getPlayers()[0].putCardOnLand(card,
+                    if (putOrMove) {
+                        boolean canPut = match.getPlayers()[0].putCardOnLand(card,
                                 positionHashMap.get(gameGrid[i][j]).getCoordinate(), match.getLand());
-                    else
-                        card.move(positionHashMap.get(gameGrid[i][j]).getCoordinate());
+                        if (!canPut)
+                            return null;
+                    } else {
+                        boolean canMove = card.move(positionHashMap.get(gameGrid[i][j]).getCoordinate());
+                        if (!canMove)
+                            return null;
+                    }
                     if (coloredRectangles.contains(grid))
                         return addCardToBoard(i, j, card, "normal", imageView, false);
                 }

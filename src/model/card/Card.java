@@ -144,23 +144,23 @@ public abstract class Card {
     }
 
 
-    public void move(Coordinate newCoordination) {
+    public boolean move(Coordinate newCoordination) {
         Square newPosition = landOfGame.passSquareInThisCoordinate(newCoordination);
 
         if (player instanceof OrdinaryPlayer) {
             if (newPosition == null) {
                 ErrorType.CAN_NOT_MOVE_IN_SQUARE.printMessage();
-                return;
+                return false;
             }
 
             if (!canMove) {
                 ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
-                return;
+                return false;
             }
 
             if (!withinRange(newCoordination, 2) || !(canMoveToCoordination(newCoordination))) {
                 ErrorType.INVALID_TARGET.printMessage();
-                return;
+                return false;
             }
         }
 
@@ -203,6 +203,7 @@ public abstract class Card {
         for (Flag flag : player.getOwnFlags())
             if (flag.getOwnerCard().equalCard(cardId.getCardIdAsString()))
                 flag.setSquare(newPosition);
+        return true;
     }
 
     public boolean canInsertToCoordination(Coordinate heroCoordination, Coordinate destination) {
@@ -238,7 +239,7 @@ public abstract class Card {
             } else {
                 x += distanceOfX;
                 Square square = landOfGame.getSquares()[x][y];
-                if (!(square.squareHasMinionOrHero())) {
+                if ((square.squareHasMinionOrHero())) {
                     x -= distanceOfX;
                     y += distanceOfY;
                     square = landOfGame.getSquares()[x][y];
