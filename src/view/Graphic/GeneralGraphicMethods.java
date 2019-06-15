@@ -1,12 +1,9 @@
 package view.Graphic;
 
 import javafx.animation.AnimationTimer;
-import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.Button;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Glow;
+import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -272,7 +269,7 @@ public class GeneralGraphicMethods {
         primaryStage.show();
     }
 
-    static void addTextWithShadow(String textString, double x, double y, Parent group, String fontFamily, int size) {
+    static Text addTextWithShadow(String textString, double x, double y, Parent group, String fontFamily, int size) {
         Text text = new Text(textString);
         text.relocate(x, y);
         text.setFont(Font.font(fontFamily, FontWeight.BOLD, size));
@@ -283,6 +280,7 @@ public class GeneralGraphicMethods {
         dropShadow.setOffsetY(3.0f);
         text.setEffect(dropShadow);
         nodeAdder(text, group);
+        return text;
     }
 
     static void setOnMouseEntered(Node node, Scene scene, boolean glowBoolean) {
@@ -331,5 +329,17 @@ public class GeneralGraphicMethods {
         root.getChildren().add(button);
         setOnMouseEntered(button, scene, true);
         return button;
+    }
+
+
+    static Lighting getLighting() {
+        Lighting lighting = new Lighting();
+        lighting.setDiffuseConstant(1.0);
+        lighting.setSpecularConstant(0.0);
+        lighting.setSpecularExponent(0.0);
+        lighting.setSurfaceScale(0.0);
+        lighting.setLight(new Light.Distant(45, 45,
+                Color.rgb(121, 149, 255, 1)));
+        return lighting;
     }
 }

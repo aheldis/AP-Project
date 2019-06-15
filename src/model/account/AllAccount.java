@@ -46,12 +46,12 @@ public class AllAccount {
 
 //            try{
 //                Account account;
-//                FileReader fr = new FileReader("D:\\project-Duelyst\\Duelyst\\AccountSaver\\AccountUser.txt");
+//                FileReader fr = new FileReader("D:/project-Duelyst/Duelyst/AccountSaver/AccountUser.txt");
 //                BufferedReader br = new BufferedReader(fr);
 //                String username = br.readLine();
 //                username = br.readLine();
 //                while(username != null) {
-//                    fr = new FileReader("D:\\project-Duelyst\\Duelyst\\AccountSaver\\" + username.trim() + ".txt");
+//                    fr = new FileReader("D:/project-Duelyst/Duelyst/AccountSaver/" + username.trim() + ".txt");
 //                    Gson gson = new GsonBuilder().create();
 //                    account= gson.fromJson(fr, Account.class);
 //                    accounts.add(account);

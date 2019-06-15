@@ -79,7 +79,7 @@ public class Match {
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
             squares[randomX][randomY].addToFlags(flag);
-            ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_catagorized/flag.gif", 10, 10);
+            ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_categorized/flag.gif", 10, 10);
             flag.setImageView(flagView);
             BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, flagView);
         }
@@ -128,7 +128,6 @@ public class Match {
         Hero secondHero = players[1].getMainDeck().getHero();
         battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null, true);
         battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null, false);
-
         if (mode.equals(Game.getModeAsString(3))) {
             setFlagsRandomly(3);
         }

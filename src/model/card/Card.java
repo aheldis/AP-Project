@@ -47,14 +47,11 @@ public abstract class Card {
     private static final int DEFAULT = -1;
     private String pathOfThePicture;
     private String pathOfAnimation;
-    private int countOfAnimation =16;
+    private int countOfAnimation = 16;
     private int animationRow = 5;
     private int frameSize;
     private long millis;
     private int heightOfPicture;
-
-
-
 
 
     public void setMillis(long millis) {
@@ -161,7 +158,7 @@ public abstract class Card {
                 return;
             }
 
-            if (!withinRange(newCoordination, 2) || !(canMoveToCoordination(this, newCoordination))) {
+            if (!withinRange(newCoordination, 2) || !(canMoveToCoordination(newCoordination))) {
                 ErrorType.INVALID_TARGET.printMessage();
                 return;
             }
@@ -211,29 +208,27 @@ public abstract class Card {
     public boolean canInsertToCoordination(Coordinate heroCoordination, Coordinate destination) {
         int x = destination.getX();
         int y = destination.getY();
-        if (x < 0 || x >= landOfGame.getNumberOfRows() || y < 0 || y > landOfGame.getNumberOfColumns())
+        if (x < 0 || x >= LandOfGame.getNumberOfRows() || y < 0 || y > LandOfGame.getNumberOfColumns())
             return false;
 
         if (Math.abs(heroCoordination.getX() - x) + Math.abs(heroCoordination.getY() - y) <= 2) {
             Square square = landOfGame.getSquares()[x][y];
-            if (!(this instanceof Spell) && square.squareHasMinionOrHero())
-                return false;
-            return true;
+            return this instanceof Spell || !square.squareHasMinionOrHero();
         }
         return false;
 
     }
 
-    public boolean canMoveToCoordination(Card card, Coordinate destination) {
-        if (card.getManhatanDistance(destination) == 2) {
-            int x = card.position.getXCoordinate();
-            int y = card.position.getYCoordinate();
+    private boolean canMoveToCoordination(Coordinate destination) {
+        if (getManhatanDistance(destination) == 2) {
+            int x = position.getXCoordinate();
+            int y = position.getYCoordinate();
 
-            if (x < 0 || x >= landOfGame.getNumberOfRows() || y < 0 || y >= landOfGame.getNumberOfColumns())
+            if (x < 0 || x >= LandOfGame.getNumberOfRows() || y < 0 || y >= LandOfGame.getNumberOfColumns())
                 return false;
 
-            int distanceOfX = destination.getX() - card.position.getXCoordinate();
-            int distanceOfY = destination.getY() - card.position.getYCoordinate();
+            int distanceOfX = destination.getX() - position.getXCoordinate();
+            int distanceOfY = destination.getY() - position.getYCoordinate();
             if (Math.abs(distanceOfX) == 2 || Math.abs(distanceOfY) == 2) {
                 x += distanceOfX / 2;
                 y += distanceOfY / 2;
@@ -256,10 +251,35 @@ public abstract class Card {
         return !Objects.requireNonNull(landOfGame.passSquareInThisCoordinate(destination)).squareHasMinionOrHero();
     }
 
-    public boolean withinRange(Coordinate coordinate, int range) {
+    public ArrayList<Coordinate> getCanMoveToCoordinations() {
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
+        Square[][] squares = landOfGame.getSquares();
+        for (int i = 0; i < LandOfGame.getNumberOfRows(); i++)
+            for (int j = 0; j < LandOfGame.getNumberOfColumns(); j++)
+                if (withinRange(squares[i][j].getCoordinate(), 2)
+                        && canMoveToCoordination(squares[i][j].getCoordinate()))
+                    coordinates.add(squares[i][j].getCoordinate());
+        return coordinates;
+    }
+
+    boolean withinRange(Coordinate coordinate, int range) {
         if (counterAttack.equals("Ranged") && getNormalDistance(coordinate) == 1)
             return false;
         return getManhatanDistance(coordinate) <= range;
+    }
+
+    public ArrayList<Coordinate> getCanPutInCoordinations() {
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
+        for (int i = -2; i <= 2; i++)
+            for (int j = -2; j <= 2; j++) {
+                int x = player.getHero().getPosition().getXCoordinate() + i;
+                int y = player.getHero().getPosition().getYCoordinate() + j;
+                if (x < 0 || x >= LandOfGame.getNumberOfRows() || y < 0 || y >= LandOfGame.getNumberOfColumns())
+                    continue;
+                if (Math.abs(i) + Math.abs(j) <= 2 && !landOfGame.getSquares()[x][y].squareHasMinionOrHero())
+                    coordinates.add(landOfGame.getSquares()[x][y].getCoordinate());
+            }
+        return coordinates;
     }
 
     private boolean checkTarget(Square check, String targetType) {
@@ -717,16 +737,16 @@ public abstract class Card {
         return attackRange;
     }
 
-    public static String stringMakerForDesc(String string){
-        String outPut ="";
-        String[] strings= string.split(" ");
-        for(int i=0;i<strings.length;i++){
-            if(i!=0 && i%3==0){
-                outPut+="\n";
+    public static String stringMakerForDesc(String string) {
+        StringBuilder outPut = new StringBuilder();
+        String[] strings = string.split(" ");
+        for (int i = 0; i < strings.length; i++) {
+            if (i != 0 && i % 3 == 0) {
+                outPut.append("\n");
             }
-            outPut+= " "+strings[i];
+            outPut.append(" ").append(strings[i]);
         }
-        return outPut;
+        return outPut.toString();
     }
 
     public String getDescription() {

@@ -1,6 +1,5 @@
 package view.Graphic;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -21,47 +20,34 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static view.Graphic.GeneralGraphicMethods.*;
-import static view.Graphic.GeneralGraphicMethods.setOnMouseEntered;
 
 public class NewCardGraphic {
-    private static HashMap<String, TextField> hashMap = new HashMap();
+    private static ArrayList<ArrayList<String>> arrayLists = new ArrayList<>();
+    private static int numberOfBuffs;
+    private static boolean firstTimeIndEquals3 = true;
+    private static ArrayList<HashMap<String, TextField>> hashMaps = new ArrayList<>(); //Be tartib: 0: khod card - 1: change - 2: target - 3 be bad buffHa
     private static StackPane enter;
     private static Scene scene;
     private static Group group;
+    private static int numberOfHashMap;
+    private static Account account;
+    private static Text error = new Text();
 
-    private static TextField textField;
-    private static Boolean textFieldReady = false;
-    private static Text fieldName;
-    private static Text description;
-    private static Text error;
-
-    //TODO _____________ DONT TOUCH PLEASEEEE
-
-   /* public static void changeText(String text) {
-        System.out.println("changeText " + text);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                fieldName.setText(text);
-                textField.clear();
-                textFieldReady = false;
-            }
-        });
+    public static void setError(String text) {
+        error.setText(text);
     }
 
-    public static String getTextOfTextField() {
-        while (!textFieldReady)
-        {}
-        return textField.getText();
-    }
+    private static BorderPane makeOneRowOfForm(String input, int x, int y, int numberOfHashMap) {
+        if (hashMaps.size() == numberOfHashMap) {
+            hashMaps.add(new HashMap<>());
+        }
 
-*/
-    private static HBox makeOneRowOfForm(String input, int x, int y) {
-        HBox hbox = new HBox();
-        fieldName = addText(hbox, input, 20, 0, Color.rgb(250, 250, 250, 0.8), 20);
+        Text fieldName = addText(new Group(), input, 20, 0, Color.rgb(250, 250, 250, 0.8), 20);
+        BorderPane.setMargin(fieldName, new Insets(4, 5, 2, 5));
+
         StackPane stackPane = new StackPane();
         addRectangle(stackPane, 0, 0, 200, 30, 5, 5, Color.rgb(225, 225, 225, 0.3));
-        textField = new TextField();
+        TextField textField = new TextField();
         textField.setPrefHeight(30);
         textField.setPrefWidth(200);
         textField.positionCaret(0);
@@ -70,23 +56,17 @@ public class NewCardGraphic {
                 new BackgroundFill(Color.TRANSPARENT,
                         CornerRadii.EMPTY, Insets.EMPTY)));
         stackPane.getChildren().add(textField);
+        stackPane.setAlignment(Pos.CENTER);
+        BorderPane.setMargin(stackPane, new Insets(2, 5, 2, 5));
 
-        hbox.getChildren().add(stackPane);
-        ImageView imageView = addImage(hbox, "pics/menu/Confirm-512.png", 0, 0, 30, 30);
-        setOnMouseEntered(imageView, scene, true);
-        //imageView.setOnMouseClicked(event -> {textFieldReady = true; });
+        BorderPane borderPane = new BorderPane();
+        borderPane.setRight(stackPane);
+        borderPane.setLeft(fieldName);
+        BorderPane.setAlignment(textField, Pos.CENTER);
 
-        hbox.relocate(x, y);
-        hbox.setAlignment(Pos.CENTER);
-        hbox.getChildren().forEach(node -> HBox.setMargin(node, new Insets(5, 5, 5, 5)));
-        group.getChildren().add(hbox);
-        return hbox;
-    }
-
-
-    private static void f(Account account, String type) {
-        makeOneRowOfForm("blah blah", 150, 100);
-        NewFileAsli.makeNewCard(account, FilesType.getEnum(type));
+        hashMaps.get(numberOfHashMap).put(input, textField);
+        group.getChildren().add(borderPane);
+        return borderPane;
     }
 
     private static VBox addImageAndText(String name, double x, double y) {
@@ -100,8 +80,70 @@ public class NewCardGraphic {
         return vBox;
     }
 
+    private static void done(VBox vBox, String type) {
+        vBox.getChildren().clear();
+        group.getChildren().remove(enter);
+        NewFileAsli.setHashMaps(hashMaps);
+        NewFileAsli.makeNewCard(account, FilesType.getEnum(type));
+        if (error.getText() != null && !error.getText().equals("")) {
+            error = addText(vBox, error.getText(), 600, 400, Color.RED, 30);
+        } else {
+            error = addText(vBox, "Card successfully created.", 600, 400, Color.WHITE, 30);
+        }
+    }
+
+    private static void changeVbox(VBox vBox, ArrayList<String> arrayList, int ind, String type) {
+        vBox.getChildren().clear();
+        arrayList.forEach(name -> {
+            if (name.contains("__")) {
+                Text text = addTextWithShadow(name.substring(2), 0, 0, vBox, "Arial", 20);
+                VBox.setMargin(text, new Insets(2, 5, 10, 5));
+            } else {
+                vBox.getChildren().add(makeOneRowOfForm(name, 0, 0, numberOfHashMap));
+            }
+        });
+        numberOfHashMap++;
+        enter.setOnMouseClicked(event -> {
+            if (ind == 3) {
+                if (firstTimeIndEquals3) {
+                    try {
+                        numberOfBuffs = Integer.parseInt(hashMaps.get(1).get("number of buffs").getText());
+                    } catch (Exception e) {
+                        numberOfBuffs = 0;
+                    }
+                    firstTimeIndEquals3 = false;
+                }
+                if (numberOfBuffs > 0) {
+                    numberOfBuffs--;
+                    changeVbox(vBox, arrayLists.get(ind), ind, type);
+                } else {
+                    vBox.getChildren().clear();
+                    done(vBox, type);
+                }
+            } else {
+                if (ind == 1 && arrayLists.get(1) == null || arrayLists.get(1).size() == 0)
+                    done(vBox, type);
+                else
+                    changeVbox(vBox, arrayLists.get(ind), ind + 1, type);
+            }
+        });
+    }
+
+    private static void setVbox(VBox vBox, String type) {
+        arrayLists.clear();
+        arrayLists.add(NewFileAsli.getFieldNames(FilesType.getEnum(type)));
+        arrayLists.add(NewFileAsli.getChangeFieldNames());
+        arrayLists.add(NewFileAsli.getTargetFieldNames());
+        arrayLists.add(NewFileAsli.getBuffFieldNames());
+        changeVbox(vBox, arrayLists.get(0), 1, type);
+    }
+
     static void makeCardForm(Scene scene, Account account) {
-        account = null;
+        firstTimeIndEquals3 = true;
+        arrayLists.clear();
+        hashMaps.clear();
+        numberOfHashMap = 0;
+        NewCardGraphic.account = account;
         NewCardGraphic.scene = scene;
         group = new Group();
         ((Group) scene.getRoot()).getChildren().add(group);
@@ -117,10 +159,10 @@ public class NewCardGraphic {
 
 
         VBox vBox = new VBox();
-        group.getChildren().addAll(vBox);
-        vBox.relocate(200, 100);
+        vBox.relocate(150, 125);
+        vBox.setAlignment(Pos.CENTER_LEFT);
 
-        //f(account, "hero");
+        group.getChildren().add(vBox);
 
         VBox hero = addImageAndText("hero", 240, 300);
         VBox spell = addImageAndText("spell", 580, 300);
@@ -128,79 +170,21 @@ public class NewCardGraphic {
 
         hero.setOnMouseClicked(event -> {
             group.getChildren().removeAll(hero, spell, minion);
-            ArrayList<String> fieldNames =  NewFileAsli.getFieldNames(FilesType.getEnum("hero"));
-            fieldNames.forEach(name -> {
-                vBox.getChildren().add(makeOneRowOfForm(name, 0, 0));
-
-            });
-
-            /*
-            vBox.getChildren().addAll(
-                    makeOneRowOfForm("name", 200, 200 - 20),
-                    makeOneRowOfForm("type", 200, 270 - 20),
-                    makeOneRowOfForm("Mp", 200, 340 - 20),
-                    makeOneRowOfForm("Ap", 200, 410 - 20),
-                    makeOneRowOfForm("Hp", 200, 480 - 20),
-                    makeOneRowOfForm("Attack Type", 200, 550 - 20),
-                    makeOneRowOfForm("range", 200, 620 - 20),
-                    makeOneRowOfForm("specialPower", 200, 690 - 20),
-                    makeOneRowOfForm("special power cooldown", 200, 760 - 20),
-                    makeOneRowOfForm("cost", 200, 830 - 20));
-                    */
             enter(group, scene);
-
+            setVbox(vBox, "hero");
         });
         minion.setOnMouseClicked(event -> {
             group.getChildren().removeAll(hero, spell, minion);
-            vBox.getChildren().addAll(
-                    makeOneRowOfForm("name", 200, 200 - 20),
-                    makeOneRowOfForm("type", 200, 270 - 20),
-                    makeOneRowOfForm("Mp", 200, 340 - 20),
-                    makeOneRowOfForm("Ap", 200, 410 - 20),
-                    makeOneRowOfForm("Hp", 200, 480 - 20),
-                    makeOneRowOfForm("Attack Type", 200, 550 - 20),
-                    makeOneRowOfForm("range", 200, 620 - 20),
-                    makeOneRowOfForm("specialPower(spell name)", 200, 690 - 20),
-                    makeOneRowOfForm("special power activation", 200, 760 - 20),
-                    makeOneRowOfForm("cost", 200, 830 - 20));
             enter(group, scene);
+            setVbox(vBox, "minion");
+
         });
         spell.setOnMouseClicked(event -> {
             group.getChildren().removeAll(hero, spell, minion);
-
-            vBox.getChildren().addAll(
-                    makeOneRowOfForm("name", 200, 200 - 20),
-                    makeOneRowOfForm("type", 200, 270 - 20),
-                    makeOneRowOfForm("Mp", 200, 340 - 20),
-                    makeOneRowOfForm("target", 200, 410 - 20),
-                    makeOneRowOfForm("buff", 200, 480 - 20),
-                    makeOneRowOfForm("cost", 200, 550 - 20));
             enter(group, scene);
+            setVbox(vBox, "spell");
+
         });
-        /*
-        buff.setOnMouseClicked(event -> {
-            group.getChildren().removeAll(hero, spell, minion);
-            vBox.getChildren().addAll(
-                    makeOneRowOfForm("name", 200, 200 - 20),
-                    makeOneRowOfForm("buff type", 200, 270 - 20),
-                    makeOneRowOfForm("effect value", 200, 340 - 20),
-                    makeOneRowOfForm("delay", 200, 410 - 20),
-                    makeOneRowOfForm("last", 200, 480 - 20),
-                    makeOneRowOfForm("friend or enemy", 200, 550 - 20));
-            enter(group, scene);
-        });
-*/
-
-        if (enter != null) {
-            enter.setOnMouseClicked(event -> {
-                //todo get hash map
-
-
-                enter = null;
-            });
-        }
-
-
     }
 
     private static void enter(Group root, Scene scene) {

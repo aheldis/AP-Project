@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import model.battle.Deck;
+import model.battle.Hand;
 import model.card.Card;
 import model.item.Item;
 import model.item.Usable;
@@ -107,8 +108,9 @@ class DragAndDrop {
         });
     }
 
-    void dragAndDropForGame(Node source, Object card, Group sourceRoot, Group sceneRoot,
+    void dragAndDropForGame(Node source, Object card, Hand hand, Group sourceRoot, Group sceneRoot,
                             double dx, double dy, double firstX, double firstY) {
+
         source.setOnMousePressed(event -> {
             orgSceneX = event.getSceneX();
             orgSceneY = event.getSceneY();
@@ -123,6 +125,10 @@ class DragAndDrop {
                 this.dx = orgSceneX - this.firstX;
                 this.dy = orgSceneY - this.firstY;
             }
+            if (hand != null && (hand.getGameCards().contains(card)))
+                BattleScene.getSingleInstance().showCanPutInCoordinations((Card) card);
+            else
+                BattleScene.getSingleInstance().showCanMoveToCoordinations((Card) card);
             source.relocate(orgSceneX - this.dx, orgSceneY - this.dy);
             sceneRoot.getChildren().add(source);
         });
@@ -135,10 +141,13 @@ class DragAndDrop {
             boolean breaker = false;
             BattleScene battleScene = BattleScene.getSingleInstance();
             Group group = battleScene.addCardToBoard(event.getSceneX(), event.getSceneY(),
-                    (Card) card, (ImageView) source);
+                    (Card) card, (ImageView) source, hand != null && (hand.getGameCards().contains(card)));
+            BattleScene.getSingleInstance().removeColorFromRectangles();
             if (group != null) {
                 breaker = true;
                 this.sourceRoot = group;
+                if (hand != null && hand.getGameCards().contains(card))
+                    hand.removeUsedCardsFromHand((Card) card);
             }
             if (!breaker) {
                 source.relocate(this.firstX, this.firstY);

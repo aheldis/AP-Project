@@ -74,7 +74,7 @@ public class MenuController  {
                         }
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
                         try {
-                            File file = new File("AccountSaver\\" +
+                            File file = new File("AccountSaver/" +
                                     account.getUserName() + ".txt");
                             FileWriter fileWriter = new FileWriter(file);
                             fileWriter.write(gson.toJson(account));
@@ -133,7 +133,7 @@ public class MenuController  {
                     case MAIN_MENU_EXIT:
 //                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 //                        try {
-//                            File file = new File("D:\\project-Duelyst\\Duelyst\\AccountSaver\\" +
+//                            File file = new File("D:/project-Duelyst/Duelyst/AccountSaver/" +
 //                                    account.getUserName() + ".txt");
 //                            FileWriter fileWriter = new FileWriter(file);
 //                            fileWriter.write(gson.toJson(account));
@@ -150,7 +150,7 @@ public class MenuController  {
                     case MENU_ENTER_COLLECTION:
 //                        Gson gson =new GsonBuilder().setPrettyPrinting().create();
 //                        try {
-//                            File file = new File("D:\\project-Duelyst\\Duelyst\\Collection.txt");
+//                            File file = new File("D:/project-Duelyst/Duelyst/Collection.txt");
 //                            FileWriter fileWriter = new FileWriter(file);
 //                            fileWriter.write(gson.toJson(account.getCollection()));
 //                            fileWriter.close();
@@ -171,7 +171,7 @@ public class MenuController  {
                             break;
                         }
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                        File file = new File("D:\\project-Duelyst\\Duelyst\\exportedDeck\\" + deckName + ".txt");
+                        File file = new File("D:/project-Duelyst/Duelyst/exportedDeck/" + deckName + ".txt");
                         FileWriter fileWriter = new FileWriter(file);
                         fileWriter.write(gson.toJson(deck));
                         fileWriter.close();
@@ -182,7 +182,7 @@ public class MenuController  {
                         request.getNewLine();
                         deckName = request.getCommand();
                         try {
-                            FileReader fr = new FileReader("exportedDeck\\" + deckName + ".txt");
+                            FileReader fr = new FileReader("exportedDeck/" + deckName + ".txt");
                             Gson gson1 = new GsonBuilder().create();
                             Deck deck1 = gson1.fromJson(fr, Deck.class);//load the deck
                             if (!account.getCollection().checkTheDeckForImport(deck1)) {
@@ -319,7 +319,7 @@ public class MenuController  {
                     case COLLECTION_EXIT:
 //                        if(!haveSavedInCollection){
 //                            try{
-//                                FileReader fr = new FileReader("D:\\project-Duelyst\\Duelyst\\Collection.txt");
+//                                FileReader fr = new FileReader("D:/project-Duelyst/Duelyst/Collection.txt");
 //
 //                                Gson gson1 = new GsonBuilder().create();
 //                                Collection lastCollection = gson1.fromJson(fr, Collection.class);
