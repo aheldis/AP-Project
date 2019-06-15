@@ -8,8 +8,6 @@ import model.item.Flag;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
-import view.Graphic.BattleFooterGraphic;
-import view.Graphic.BattleHeaderGraphic;
 import view.enums.ErrorType;
 
 import java.util.ArrayList;
@@ -41,26 +39,26 @@ public abstract class Player {
 //    public abstract void attack(Card card, Square target);
 //    public abstract void useSpecialPower(Card card);
 
-    public void putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
+    public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
 
         ErrorType error;
         if (playerCard == null) {
             error = ErrorType.INVALID_CARD_ID;
             error.printMessage();
-            return;
+            return false;
         }
         playerCard.setPosition(getHero().getPosition());
         if (!playerCard.canInsertToCoordination(this.getHero().getPosition().getCoordinate(), coordinate)) {
             error = ErrorType.INVALID_TARGET;
             error.printMessage();
-            return;
+            return false;
         }
         Square square = land.passSquareInThisCoordinate(coordinate);
         if (square == null) {
 
             error = ErrorType.INVALID_SQUARE;
             error.printMessage();
-            return;
+            return false;
         }
 
         if (playerCard instanceof Spell) {
@@ -69,7 +67,7 @@ public abstract class Player {
             graveYard.addCardToGraveYard(playerCard, land.passSquareInThisCoordinate(coordinate));
             mana -= playerCard.getMp();
             hand.removeUsedCardsFromHand(playerCard);
-            return;
+            return false;
         }
 
         playerCard.setPosition(null);
@@ -113,6 +111,7 @@ public abstract class Player {
             mainDeck.getItem().setTarget(this);
             mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
         }
+        return true;
     }
 
     public String getUserName() {

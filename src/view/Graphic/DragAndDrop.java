@@ -146,8 +146,6 @@ class DragAndDrop {
             if (group != null) {
                 breaker = true;
                 this.sourceRoot = group;
-                if (hand != null && hand.getGameCards().contains(card))
-                    hand.removeUsedCardsFromHand((Card) card);
             }
             if (!breaker) {
                 source.relocate(this.firstX, this.firstY);
