@@ -290,6 +290,8 @@ public class GeneralGraphicMethods {
             setCursor(scene, Cursor.LIGHTEN);
             if (glowBoolean)
                 glow.setLevel(1);
+            if(!glowBoolean)
+                glow.setLevel(0);
         });
         node.setOnMouseExited(event -> {
             setCursor(scene, Cursor.AUTO);
