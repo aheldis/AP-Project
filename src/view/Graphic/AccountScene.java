@@ -317,7 +317,7 @@ public class AccountScene {
             double y = 550 + random.nextInt(200);
             mugs[i] = addImage(root, cloudPaths.get(random.nextInt(7)), x, y,
                     80 * randNumber, 40 * randNumber);
-            Lighting lighting = getLighting();
+            Lighting lighting = getLighting(Color.rgb(121, 149, 255, 1));
             assert mugs[i] != null;
             mugs[i].setEffect(lighting);
         }

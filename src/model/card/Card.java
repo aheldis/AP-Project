@@ -418,11 +418,16 @@ public abstract class Card {
         attackedCard.counterAttack(this);
         setCanAttack(false, 1);
 
-        if (player.getMainDeck().getItem() != null && player.getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
+        if (player.getMainDeck().getItem() != null &&
+                player.getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
                 player.getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
             player.getMainDeck().getItem().setTarget(player);
             player.getMainDeck().getItem().getChange().affect(player, player.getMainDeck().getItem().getTarget().getTargets());
         }
+    }
+
+    public boolean canAttack(Card opponentCard) {
+        return withinRange(opponentCard.position.getCoordinate(), attackRange) && canAttack;
     }
 
     public ArrayList<Card> getTheCardsInRange() {

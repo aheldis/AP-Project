@@ -19,6 +19,7 @@ import model.card.Hero;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
+import view.enums.Cursor;
 import view.enums.StateType;
 
 import java.io.File;
@@ -26,7 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
-import static view.Graphic.GeneralGraphicMethods.addImage;
+import static view.Graphic.GeneralGraphicMethods.*;
 
 public class BattleScene {
     private static BattleScene singleInstance = null;
@@ -44,7 +45,7 @@ public class BattleScene {
     private Game game;
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
-    private Square onMousedPressedPosition;
+    private Square onMousePressedPosition;
     private Card selectedCard;
     private Glow glow = new Glow();
 
@@ -286,7 +287,7 @@ public class BattleScene {
         return y > cellPosition.getValue() && y < cellPosition.getValue() + mapProperties.cellHeight + mapProperties.gap;
     }
 
-    public Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
+    Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
 //        PUT = true;
 //        MOVE = false;
         int numberOfColumns = LandOfGame.getNumberOfColumns();
@@ -300,7 +301,7 @@ public class BattleScene {
                 double maxY = grid.getLayoutY() + grid.getHeight();
                 Square position = positionHashMap.get(gameGrid[i][j]);
                 if (x <= maxX && x >= minX && y <= maxY && y >= minY) {
-                    if (position.equals(onMousedPressedPosition)) {
+                    if (position.equals(onMousePressedPosition)) {
                         removeColorFromRectangles();
                         selectCard(card, imageView, gameGrid[i][j]);
                         return null;
@@ -321,6 +322,7 @@ public class BattleScene {
                     }
                     if (coloredRectangles.contains(grid)) {
                         removeColorFromRectangles();
+                        selectedCard = null;
                         return addCardToBoard(i, j, card, "normal", imageView, false, false);
                     }
                 }
@@ -344,7 +346,7 @@ public class BattleScene {
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
         } else {
-            if (/*card instanceof Hero &&*/ image == null) {
+            if (image == null) {
                 String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
                 imageView = addImage(board, path, 0, 0, 110, 150);
                 imageView.setScaleX(2);
@@ -352,6 +354,7 @@ public class BattleScene {
                 if (flip) {
                     imageView.setRotationAxis(Rotate.Y_AXIS);
                     imageView.setRotate(180);
+                    getCell(row, column).setFill(Color.RED);
                 }
             } else {
                 imageView = image;
@@ -367,6 +370,7 @@ public class BattleScene {
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
+        setOnMouseEntered(imageView, card, flip);
 
         if (drag) {
             DragAndDrop dragAndDrop = new DragAndDrop();
@@ -375,6 +379,24 @@ public class BattleScene {
                     imageView.getLayoutX(), imageView.getLayoutY());
         }
         return board;
+    }
+
+    private void setOnMouseEntered(ImageView imageOfCard, Card card, boolean enemy) {
+        imageOfCard.setOnMouseEntered(event -> {
+            if (selectedCard != null && selectedCard.canAttack(card))
+                setCursor(battleScene, Cursor.ATTACK);
+            else
+                setCursor(battleScene, Cursor.LIGHTEN);
+            if (enemy)
+                imageOfCard.setEffect(getLighting(Color.RED));
+            else
+                imageOfCard.setEffect(getLighting(Color.WHITE));
+        });
+
+        imageOfCard.setOnMouseExited(event -> {
+            setCursor(battleScene, Cursor.AUTO);
+            imageOfCard.setEffect(null);
+        });
     }
 
     public void test() {
@@ -425,10 +447,9 @@ public class BattleScene {
         coloredRectangles.removeAll(coloredRectangles);
     }
 
-    void setOnMousedPressedPosition(Card card) {
-        glow.setLevel(0);
-        removeColorFromRectangles();
-        this.onMousedPressedPosition = card.getPosition();
+    void setOnMousePressedPosition(Card card) {
+        backToDefault();
+        this.onMousePressedPosition = card.getPosition();
     }
 
     private void selectCard(Card card, ImageView gifOfCard, Rectangle grid) {
@@ -437,6 +458,16 @@ public class BattleScene {
         coloredRectangles.add(grid);
         glow = new Glow(1);
         gifOfCard.setEffect(glow);
+    }
+
+    void backToDefault() {
+        selectedCard = null;
+        removeColorFromRectangles();
+        glow.setLevel(0);
+    }
+
+    Scene getBattleScene() {
+        return battleScene;
     }
 
 }

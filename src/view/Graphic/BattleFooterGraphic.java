@@ -138,6 +138,7 @@ public class BattleFooterGraphic {
         addNextCard(circlesGroup);
         addCardsOfHand((Group) scene.getRoot(), circlesGroup);
         addButtons(scene, circlesGroup);
+        battleScene.backToDefault();
     }
 
 }

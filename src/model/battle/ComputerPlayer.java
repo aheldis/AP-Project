@@ -1,16 +1,11 @@
 package model.battle;
 
-import javafx.scene.image.ImageView;
 import model.account.Account;
-import model.account.FilesType;
 import model.card.Card;
-import model.card.Spell;
 import model.item.ActivationTimeOfItem;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.Graphic.BattleScene;
-import view.Graphic.SpriteAnimationProperties;
-import view.Graphic.SpriteMaker;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -72,7 +67,7 @@ public class ComputerPlayer extends Player {
         int x, y;
         //put card
         int RANDOM_NUMBER_FOR_PUT_CARD = 2;
-        // if (random.nextInt() % RANDOM_NUMBER_FOR_PUT_CARD == 0) {
+         if (random.nextInt() % RANDOM_NUMBER_FOR_PUT_CARD == 0) {
         int randomNumberForCards = random.nextInt(4);
         for (int i = 0; i < randomNumberForCards; i++) {
             x = getMainDeck().getHero().getPosition().getXCoordinate();
@@ -93,12 +88,12 @@ public class ComputerPlayer extends Player {
             coordinate.setX(x);
             Card card = getHand().chooseARandomCard();
             if (getMana() >= card.getMp()) {
-                if (putCardOnLand(card, coordinate, getMatch().getLand(), false)) {
-                    //BattleScene.getSingleInstance().addCardToBoard(x, y, card, "Breathing", null, false);
-                }
+                if (putCardOnLand(card, coordinate, getMatch().getLand(), false))
+                    BattleScene.getSingleInstance().addCardToBoard(x, y, card,
+                            "Breathing", null, false,true);
             }
         }
-        //}
+        }
 
         int RANDOM_NUMBER_FOR_MOVE = 5;
         if (random.nextInt() % RANDOM_NUMBER_FOR_MOVE == 0) {
