@@ -4,6 +4,7 @@ import com.gilecode.yagson.YaGson;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -44,7 +45,9 @@ public class BattleScene {
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
     private Square onMousedPressedPosition;
-    private Square onMousedReleasedPosition;
+    private Card selectedCard;
+    private Glow glow = new Glow();
+
 
     public static void changeSingleInstance(BattleScene battleScene) {
         singleInstance = battleScene;
@@ -297,18 +300,29 @@ public class BattleScene {
                 double maxY = grid.getLayoutY() + grid.getHeight();
                 Square position = positionHashMap.get(gameGrid[i][j]);
                 if (x <= maxX && x >= minX && y <= maxY && y >= minY) {
+                    if (position.equals(onMousedPressedPosition)) {
+                        removeColorFromRectangles();
+                        selectCard(card, imageView, gameGrid[i][j]);
+                        return null;
+                    }
                     if (putOrMove) {
                         boolean canPut = match.getPlayers()[0].putCardOnLand(card,
                                 position.getCoordinate(), match.getLand(), true);
-                        if (!canPut)
+                        if (!canPut) {
+                            removeColorFromRectangles();
                             return null;
+                        }
                     } else {
                         boolean canMove = card.move(position.getCoordinate());
-                        if (!canMove)
+                        if (!canMove) {
+                            removeColorFromRectangles();
                             return null;
+                        }
                     }
-                    if (coloredRectangles.contains(grid))
+                    if (coloredRectangles.contains(grid)) {
+                        removeColorFromRectangles();
                         return addCardToBoard(i, j, card, "normal", imageView, false, false);
+                    }
                 }
             }
         return null;
@@ -326,8 +340,7 @@ public class BattleScene {
             SpriteAnimationProperties spriteProperties = new SpriteAnimationProperties(
                     card.getName(), filesType, card.getCountOfAnimation());
             imageView = SpriteMaker.getInstance().makeSpritePic(spriteProperties.spriteSheetPath,
-                    0, 0,
-                    board, spriteProperties.count,
+                    0, 0, board, spriteProperties.count,
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
         } else {
@@ -412,11 +425,18 @@ public class BattleScene {
         coloredRectangles.removeAll(coloredRectangles);
     }
 
-    public void setOnMousedPressedPosition(Card card) {
+    void setOnMousedPressedPosition(Card card) {
+        glow.setLevel(0);
+        removeColorFromRectangles();
         this.onMousedPressedPosition = card.getPosition();
     }
 
-    public void setOnMousedReleasedPosition(Square onMousedReleasedPosition) {
-        this.onMousedReleasedPosition = onMousedReleasedPosition;
+    private void selectCard(Card card, ImageView gifOfCard, Rectangle grid) {
+        selectedCard = card;
+        grid.setFill(Color.GOLD);
+        coloredRectangles.add(grid);
+        glow = new Glow(1);
+        gifOfCard.setEffect(glow);
     }
+
 }
