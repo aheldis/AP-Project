@@ -84,6 +84,7 @@ public class BattleFooterGraphic {
                 dragAndDrop.dragAndDropForGame(gif, card, player.getHand(), handCardGroup, root,
                         gif.getFitWidth() / 2 - 10, gif.getFitHeight() / 2 + 20, 15, -21);
             }
+            setOnMouseEntered(gif, scene, false);
         }
 
     }

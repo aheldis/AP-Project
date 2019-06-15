@@ -43,7 +43,7 @@ class DragAndDrop {
             sceneRoot.getChildren().add(source);
         });
 
-        setOnMouseDragged(source, false);
+        setOnMouseDragged(source, null, null, false);
 
         source.setOnMouseReleased(event -> {
             sceneRoot.getChildren().remove(source);
@@ -138,7 +138,7 @@ class DragAndDrop {
             sceneRoot.getChildren().add(source);
         });
 
-        setOnMouseDragged(source, true);
+        setOnMouseDragged(source, hand, (Card) card, true);
 
 
         source.setOnMouseReleased(event -> {
@@ -156,7 +156,7 @@ class DragAndDrop {
         });
     }
 
-    private void setOnMouseDragged(Node source, boolean moveCursor) {
+    private void setOnMouseDragged(Node source, Hand hand, Card card, boolean moveCursor) {
         source.setOnMouseDragged(event -> {
             double offsetX = event.getSceneX() - orgSceneX;
             double offsetY = event.getSceneY() - orgSceneY;
@@ -165,7 +165,10 @@ class DragAndDrop {
             orgSceneY = event.getSceneY();
             if (moveCursor) {
                 BattleScene battleScene = BattleScene.getSingleInstance();
-                setCursor(battleScene.getBattleScene(), Cursor.MOVE);
+                if (hand != null && (hand.getGameCards().contains(card)))
+                    setCursor(battleScene.getBattleScene(), Cursor.CARD);
+                else
+                    setCursor(battleScene.getBattleScene(), Cursor.MOVE);
             }
         });
     }
