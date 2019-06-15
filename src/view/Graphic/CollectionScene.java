@@ -1,9 +1,6 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -22,7 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import model.account.Account;
 import model.account.Collection;
 import model.account.FilesType;
 import model.battle.Deck;
@@ -76,8 +72,7 @@ class CollectionScene {
                 SpriteAnimationProperties sprite = new SpriteAnimationProperties(
                         name, FilesType.SPELL, ((Spell) card).getCountOfAnimation());
                 cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                        25, 10,
-                        group, sprite.count,
+                        25, 10, group, sprite.count,
                         sprite.rows, ((Spell) card).getMillis(),
                         (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
             }
@@ -515,7 +510,7 @@ class CollectionScene {
 
         ImageView back = addBack(root);
         ImageView next = addNext(root);
-        Button deckScene = imageButton(collectionScene,root,"pics/other/desc.png","Decks",600, 770, 100, 50);
+        Button deckScene = imageButton(collectionScene, root, "pics/other/desc.png", "Decks", 600, 770, 100, 50);
 //        ImageView deckSceneButton = addImage(root, "pics/other/desc.png", 600, 770, 100, 50);
 //        Text deckScene = addText(root, "Decks", 618, 785, Color.rgb(225, 225, 225,
 //                0.8), 20);
@@ -659,7 +654,7 @@ class CollectionScene {
 
 
             addCardToDeck.setOnMouseClicked(event15 -> {
-                pageNumberCards =0;
+                pageNumberCards = 0;
                 System.out.println("hi");
                 Rectangle rectangle = new Rectangle(350, 50, 800, 750);
                 rectangle.setFill(Color.rgb(0, 0, 0, 0.7));
@@ -827,7 +822,7 @@ class CollectionScene {
             importText.setOnMouseClicked(event12 -> {
                 try {
                     InputStream input = new FileInputStream("exportedDeck/"
-                            +collection.getAccount().getUserName()+"."+ deckName.getText()+ ".json");
+                            + collection.getAccount().getUserName() + "." + deckName.getText() + ".json");
                     Reader reader = new InputStreamReader(input);
                     YaGson mapper = new YaGson();
                     Deck deck = mapper.fromJson(reader, Deck.class);//load the deck
@@ -849,8 +844,8 @@ class CollectionScene {
                     }
                 } catch (FileNotFoundException e) {
                     ErrorType.INVALID_NAME_FOR_IMPORTED_DECK.printMessage();
-                  //  e.printStackTrace();
-                }finally {
+                    //  e.printStackTrace();
+                } finally {
                     deckName.clear();
                 }
             });
@@ -863,14 +858,8 @@ class CollectionScene {
                 } else {
                     try {
                         String path = "exportedDeck/" + collection.getAccount().getUserName()
-                                +"."+deckName.getText() + ".json";
-                        File file = new File(path);
-                        if (file.exists())
-                            file.delete();
-                        YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
-                        FileWriter fileWriter = new FileWriter(file);
-                        altMapper.toJson(deck, fileWriter);
-                        fileWriter.close();
+                                + "." + deckName.getText() + ".json";
+                        GeneralGraphicMethods.saveInFile(path, deck);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

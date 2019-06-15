@@ -419,11 +419,7 @@ public abstract class Card {
         setCanAttack(false, 1);
 
         if (player.getMainDeck().getItem() != null && player.getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
-                player.
-                        getMainDeck().
-                        getItem().
-                        getTarget().
-                        checkTheOneWhoDoesTheThing(this)) {
+                player.getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
             player.getMainDeck().getItem().setTarget(player);
             player.getMainDeck().getItem().getChange().affect(player, player.getMainDeck().getItem().getTarget().getTargets());
         }

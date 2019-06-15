@@ -16,7 +16,6 @@ import view.Graphic.GeneralGraphicMethods;
 import view.enums.StateType;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.*;
 
@@ -126,8 +125,8 @@ public class Match {
         this.battleScene = BattleScene.getSingleInstance();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
-        battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null, true);
-        battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null, false);
+        battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null, true, false);
+        battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null, false, true);
         if (mode.equals(Game.getModeAsString(3))) {
             setFlagsRandomly(3);
         }
@@ -138,31 +137,28 @@ public class Match {
     }
 
     Match(Player[] players, String mode, int numberOfFlags, int reward) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("hi");
-                try {
-                    File file = new File("PausedGames\\NumberOfMap");
-                    Scanner fileReader = new Scanner(file);
-                    FileWriter fileWriter = new FileWriter(file, true);
-                    int line = 1;
-                    while (fileReader.hasNextLine()) {
-                        fileReader.nextLine();
-                        line++;
-                    }
-                    if (line != 1)
-                        line--;//we add \n at each writing
-
-
-                    fileWriter.write(line+"\n");
-                    matchNumber = line;
-                    fileWriter.close();
-                    fileReader.close();
-
-                } catch (Exception e) {
-                    System.out.println(e);
+        new Thread(() -> {
+            System.out.println("hi");
+            try {
+                File file = new File("PausedGames/NumberOfMap");
+                Scanner fileReader = new Scanner(file);
+                FileWriter fileWriter = new FileWriter(file, true);
+                int line = 1;
+                while (fileReader.hasNextLine()) {
+                    fileReader.nextLine();
+                    line++;
                 }
+                if (line != 1)
+                    line--;//we add \n at each writing
+
+
+                fileWriter.write(line + "\n");
+                matchNumber = line;
+                fileWriter.close();
+                fileReader.close();
+
+            } catch (Exception e) {
+                System.out.println(e);
             }
         }).start();
         land = new LandOfGame();

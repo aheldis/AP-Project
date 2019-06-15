@@ -102,7 +102,9 @@ public abstract class Player {
         hand.removeUsedCardsFromHand(playerCard);
         playerCard.setPosition(square);
         getCardsOnLand().add(playerCard);
-        land.getSquares()[coordinate.getX()][coordinate.getY()].setObject(playerCard);
+        Square[][] squares = land.getSquares();
+        squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
+        playerCard.setCanMove(false, 0);
 
         if (mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
                 mainDeck.getItem().getTarget().checkTheOneWhoDoesTheThing(playerCard)) {

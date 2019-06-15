@@ -1,14 +1,10 @@
 package view.Graphic;
 
-import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import model.account.FilesType;
 import model.battle.Player;
@@ -17,8 +13,6 @@ import model.card.Minion;
 import model.card.Spell;
 import view.enums.StateType;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 import static view.Graphic.GeneralGraphicMethods.*;
@@ -101,7 +95,7 @@ public class BattleFooterGraphic {
                 "GRAVE YARD", 1000 - 80, 75, 150, 70);
         Button cancel = imageButton(scene, group, "pics/battle/help.png",
                 "CANCEL", 1000 + 90, 75, 150, 70);
-        Button a = imageButton(scene,group,"pics\\collection\\close-deck.png","save",1000 +90,75 ,30,30);
+        Button a = imageButton(scene, group, "pics/collection/close-deck.png", "save", 1000 + 90, 75, 30, 30);
         group.getChildren().remove(a);
 
         endTurn.setOnMouseClicked(event -> BattleScene.getSingleInstance().getMatch().changeTurn());
@@ -121,13 +115,7 @@ public class BattleFooterGraphic {
                 new Thread(() -> {
                     try {
                         String path = "PausedGames/" + battleScene.getMatch().getMatchNumber() + ".json";
-                        File file = new File(path);
-                        if (file.exists())
-                            file.delete();
-                        YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
-                        FileWriter fileWriter = new FileWriter(file);
-                        altMapper.toJson(battleScene, fileWriter);
-                        fileWriter.close();
+                        GeneralGraphicMethods.saveInFile(path, battleScene);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
