@@ -58,7 +58,7 @@ public class GeneralGraphicMethods {
         return imageView;
     }
 
-    static Text addText(Parent root, String input, double x, double y, Paint color, double fontSize) {
+    public static Text addText(Parent root, String input, double x, double y, Paint color, double fontSize) {
         Text text = new Text(input);
         text.relocate(x, y);
         text.setFill(color);

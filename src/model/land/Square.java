@@ -69,7 +69,6 @@ public class Square {
     }
 
     public static boolean checkerForSquare(int x, int y, LandOfGame landOfGame) {
-        System.out.println(x+"     "+y);
         if (x >= LandOfGame.getNumberOfRows() || x < 0)
             return false;
         if (y < 0 || y >= LandOfGame.getNumberOfColumns())
