@@ -72,8 +72,7 @@ class CollectionScene {
                 SpriteAnimationProperties sprite = new SpriteAnimationProperties(
                         name, FilesType.SPELL, ((Spell) card).getCountOfAnimation());
                 cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                        25, 10,
-                        group, sprite.count,
+                        25, 10, group, sprite.count,
                         sprite.rows, ((Spell) card).getMillis(),
                         (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
             }

@@ -105,6 +105,7 @@ public abstract class Player {
         getCardsOnLand().add(playerCard);
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
+        playerCard.setCanMove(false, 0);
 
         if (mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
                 mainDeck.getItem().getTarget().checkTheOneWhoDoesTheThing(playerCard)) {

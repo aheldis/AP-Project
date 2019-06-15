@@ -17,7 +17,7 @@ public class SpriteAnimationProperties {
     public String spriteSheetPath = null;
 
     public SpriteAnimationProperties(String name, FilesType filesType, int count) {
-        if(filesType.equals(FilesType.MINION) || filesType.equals(FilesType.HERO)){
+        if (filesType.equals(FilesType.MINION) || filesType.equals(FilesType.HERO)) {
             gifPath = "pics/" + filesType.getName() + "/" + name + ".gif";
             spriteSheetPath = "pics/" + filesType.getName() + "/" + name + ".png";
 
@@ -42,7 +42,7 @@ public class SpriteAnimationProperties {
                 e.printStackTrace();
             }
         }
-        if(filesType.equals(FilesType.SPELL)){
+        if (filesType.equals(FilesType.SPELL)) {
             spriteSheetPath = "pics/Spell/" + name + ".png";
             rows = 5;
             columns = 5;
@@ -51,7 +51,7 @@ public class SpriteAnimationProperties {
             widthOfEachFrame = 48;
             heightOfEachFrame = 48;
         }
-        if(filesType.equals(FilesType.USABLE)){
+        if (filesType.equals(FilesType.USABLE)) {
             spriteSheetPath = "pics/items/" + name + ".png";
             rows = 5;
             columns = 6;

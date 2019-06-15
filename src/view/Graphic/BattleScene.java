@@ -8,6 +8,7 @@ import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.util.Pair;
 import model.account.FilesType;
 import model.battle.Game;
@@ -42,6 +43,8 @@ public class BattleScene {
     private Game game;
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
+    private Square onMousedPressedPosition = null;
+    private Square onMousedReleasedPosition = null;
 
     public static void changeSingleInstance(BattleScene battleScene) {
         singleInstance = battleScene;
@@ -292,25 +295,26 @@ public class BattleScene {
                 double maxX = grid.getLayoutX() + grid.getWidth();
                 double minY = grid.getLayoutY();
                 double maxY = grid.getLayoutY() + grid.getHeight();
+                Square position = positionHashMap.get(gameGrid[i][j]);
                 if (x <= maxX && x >= minX && y <= maxY && y >= minY) {
                     if (putOrMove) {
                         boolean canPut = match.getPlayers()[0].putCardOnLand(card,
-                                positionHashMap.get(gameGrid[i][j]).getCoordinate(), match.getLand());
+                                position.getCoordinate(), match.getLand());
                         if (!canPut)
                             return null;
                     } else {
-                        boolean canMove = card.move(positionHashMap.get(gameGrid[i][j]).getCoordinate());
+                        boolean canMove = card.move(position.getCoordinate());
                         if (!canMove)
                             return null;
                     }
                     if (coloredRectangles.contains(grid))
-                        return addCardToBoard(i, j, card, "normal", imageView, false);
+                        return addCardToBoard(i, j, card, "normal", imageView, false, false);
                 }
             }
         return null;
     }
 
-    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image, boolean drag) {
+    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image, boolean drag, boolean flip) {
         FilesType filesType = FilesType.MINION;
         if (card instanceof Hero)
             filesType = FilesType.HERO;
@@ -332,6 +336,10 @@ public class BattleScene {
                 imageView = addImage(board, path, 0, 0, 110, 150);
                 imageView.setScaleX(2);
                 imageView.setScaleY(2);
+                if (flip) {
+                    imageView.setRotationAxis(Rotate.Y_AXIS);
+                    imageView.setRotate(180);
+                }
             } else {
                 imageView = image;
                 imageView.relocate(0, 0);
@@ -393,7 +401,7 @@ public class BattleScene {
         ArrayList<Coordinate> coordinates = card.getCanPutInCoordinations();
         for (Coordinate coordinate : coordinates) {
             Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
-            grid.setFill(Color.GOLD);
+            grid.setFill(Color.BLUEVIOLET);
             coloredRectangles.add(grid);
         }
     }
@@ -404,4 +412,11 @@ public class BattleScene {
         coloredRectangles.removeAll(coloredRectangles);
     }
 
+    public void setOnMousedPressedPosition(Card card) {
+        this.onMousedPressedPosition = card.getPosition();
+    }
+
+    public void setOnMousedReleasedPosition(Square onMousedReleasedPosition) {
+        this.onMousedReleasedPosition = onMousedReleasedPosition;
+    }
 }
