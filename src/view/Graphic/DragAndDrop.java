@@ -126,11 +126,11 @@ class DragAndDrop {
                 this.dy = orgSceneY - this.firstY;
             }
             BattleScene battleScene = BattleScene.getSingleInstance();
+            battleScene.setOnMousedPressedPosition((Card) card);
             if (hand != null && (hand.getGameCards().contains(card)))
                 battleScene.showCanPutInCoordinations((Card) card);
             else
                 battleScene.showCanMoveToCoordinations((Card) card);
-            battleScene.setOnMousedPressedPosition((Card) card);
             source.relocate(orgSceneX - this.dx, orgSceneY - this.dy);
             sceneRoot.getChildren().add(source);
         });
@@ -143,7 +143,6 @@ class DragAndDrop {
             BattleScene battleScene = BattleScene.getSingleInstance();
             Group group = battleScene.addCardToBoard(event.getSceneX(), event.getSceneY(),
                     (Card) card, (ImageView) source, hand != null && (hand.getGameCards().contains(card)));
-            BattleScene.getSingleInstance().removeColorFromRectangles();
             if (group != null) {
                 this.sourceRoot = group;
             } else {
