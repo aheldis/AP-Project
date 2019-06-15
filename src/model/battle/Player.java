@@ -41,10 +41,9 @@ public abstract class Player {
 
     public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean showError) {
 
-        ErrorType error;
         if (playerCard == null) {
-            error = ErrorType.INVALID_CARD_ID;
-            error.printMessage();
+            if (showError)
+                ErrorType.INVALID_CARD_ID.printMessage();
             return false;
         }
         playerCard.setPosition(getHero().getPosition());
@@ -56,7 +55,7 @@ public abstract class Player {
         Square square = land.passSquareInThisCoordinate(coordinate);
         if (square == null) {
             if (showError)
-             ErrorType.INVALID_SQUARE.printMessage();
+                ErrorType.INVALID_SQUARE.printMessage();
             return false;
         }
 
@@ -92,7 +91,8 @@ public abstract class Player {
         }
 
         if (playerCard instanceof Minion) {
-            if (((Minion) playerCard).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN) {
+            if (((Minion) playerCard).getActivationTimeOfSpecialPower() ==
+                    ActivationTimeOfSpecialPower.ON_SPAWN) {
                 playerCard.useSpecialPower(square);
                 playerCard.getChange().affect(this, playerCard.getTargetClass().getTargets());
             }

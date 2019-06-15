@@ -1,10 +1,16 @@
 package model.battle;
 
+import javafx.scene.image.ImageView;
 import model.account.Account;
+import model.account.FilesType;
 import model.card.Card;
+import model.card.Spell;
 import model.item.ActivationTimeOfItem;
 import model.land.Square;
 import model.requirment.Coordinate;
+import view.Graphic.BattleScene;
+import view.Graphic.SpriteAnimationProperties;
+import view.Graphic.SpriteMaker;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,7 +18,7 @@ import java.util.Random;
 public class ComputerPlayer extends Player {
 
     public ComputerPlayer(Deck deck) {
-        this.setAccount(new Account("computer","12"));
+        this.setAccount(new Account("computer", "12"));
         this.setMainDeck(deck);
         this.setType("ComputerPlayer");
         getMainDeck().setRandomOrderForDeck();
@@ -25,7 +31,6 @@ public class ComputerPlayer extends Player {
     }
 
     private int yMovement(int x, int y) {
-        //todo zahra in pore buge
         y++;
         if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
             y++;
@@ -49,7 +54,7 @@ public class ComputerPlayer extends Player {
             x++;
             if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
                 x -= 3;
-                if (Square.checkerForSquare(x, y, getMatch().getLand())) {
+                if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
                     x--;
                     if (!Square.checkerForSquare(x, y, getMatch().getLand())) {
                         return -1;
@@ -67,29 +72,32 @@ public class ComputerPlayer extends Player {
         int x, y;
         //put card
         int RANDOM_NUMBER_FOR_PUT_CARD = 2;
-        if (random.nextInt() % RANDOM_NUMBER_FOR_PUT_CARD == 0) {
-            int randomNumberForCards = random.nextInt(4);
-            for (int i = 0; i < randomNumberForCards; i++) {
-                x = getMainDeck().getHero().getPosition().getXCoordinate();
-                y = getMainDeck().getHero().getPosition().getYCoordinate();
-                if (random.nextInt() % 2 == 0) {//x =x hero
-                    y = yMovement(x, y);
-                    if (y == -1)
-                        continue;
-
-                } else {//y = y hero
-                    x = xMovement(x, y);
-                    if (x == -1)
-                        continue;
+        // if (random.nextInt() % RANDOM_NUMBER_FOR_PUT_CARD == 0) {
+        int randomNumberForCards = random.nextInt(4);
+        for (int i = 0; i < randomNumberForCards; i++) {
+            x = getMainDeck().getHero().getPosition().getXCoordinate();
+            y = getMainDeck().getHero().getPosition().getYCoordinate();
+            if (random.nextInt(100) % 2 == 0) {//x =x hero
+                y = yMovement(x, y);
+                if (y == -1) {
+                    continue;
                 }
-                coordinate = new Coordinate();
-                coordinate.setY(y);
-                coordinate.setX(x);
-                Card card = getHand().chooseARandomCard();
-                if (getMana() >= card.getMp())
-                    putCardOnLand(card, coordinate, getMatch().getLand(),false);
+
+            } else {//y = y hero
+                x = xMovement(x, y);
+                if (x == -1)
+                    continue;
+            }
+            coordinate = new Coordinate();
+            coordinate.setY(y);
+            coordinate.setX(x);
+            Card card = getHand().chooseARandomCard();
+            if (getMana() >= card.getMp()) {
+                if (putCardOnLand(card, coordinate, getMatch().getLand(), false))
+                    BattleScene.getSingleInstance().addCardToBoard(x, y, card, "Breathing", null, false);
             }
         }
+        //}
 
         int RANDOM_NUMBER_FOR_MOVE = 5;
         if (random.nextInt() % RANDOM_NUMBER_FOR_MOVE == 0) {
