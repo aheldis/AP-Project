@@ -283,7 +283,7 @@ public class BattleScene {
         return y > cellPosition.getValue() && y < cellPosition.getValue() + mapProperties.cellHeight + mapProperties.gap;
     }
 
-    public Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
+    Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
 //        PUT = true;
 //        MOVE = false;
         int numberOfColumns = LandOfGame.getNumberOfColumns();

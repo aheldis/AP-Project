@@ -72,7 +72,7 @@ public class ComputerPlayer extends Player {
         int x, y;
         //put card
         int RANDOM_NUMBER_FOR_PUT_CARD = 2;
-        // if (random.nextInt() % RANDOM_NUMBER_FOR_PUT_CARD == 0) {
+         if (random.nextInt() % RANDOM_NUMBER_FOR_PUT_CARD == 0) {
         int randomNumberForCards = random.nextInt(4);
         for (int i = 0; i < randomNumberForCards; i++) {
             x = getMainDeck().getHero().getPosition().getXCoordinate();
@@ -94,10 +94,11 @@ public class ComputerPlayer extends Player {
             Card card = getHand().chooseARandomCard();
             if (getMana() >= card.getMp()) {
                 if (putCardOnLand(card, coordinate, getMatch().getLand(), false))
-                    BattleScene.getSingleInstance().addCardToBoard(x, y, card, "Breathing", null, false);
+                    BattleScene.getSingleInstance().addCardToBoard(x, y, card,
+                            "Breathing", null, false,false);
             }
         }
-        //}
+        }
 
         int RANDOM_NUMBER_FOR_MOVE = 5;
         if (random.nextInt() % RANDOM_NUMBER_FOR_MOVE == 0) {

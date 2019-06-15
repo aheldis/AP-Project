@@ -1,6 +1,12 @@
 package model.battle;
 
+import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
@@ -13,6 +19,7 @@ import model.land.Square;
 import view.BattleView;
 import view.Graphic.BattleScene;
 import view.Graphic.GeneralGraphicMethods;
+import view.Graphic.StageLauncher;
 import view.enums.StateType;
 
 import java.io.File;
@@ -121,7 +128,7 @@ public class Match {
         }
     }
 
-    public void initGraphic(){
+    public void initGraphic() {
         this.battleScene = BattleScene.getSingleInstance();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
@@ -228,11 +235,36 @@ public class Match {
         } else {
             players[whichPlayer].initPerTurn(whichPlayer);
             players[passComputerPlayer()].playTurnForComputer();
-            players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
-            if (gameEnded()) {
-                endGame();
-                controller.MenuController.state = StateType.ACCOUNT_MENU;
-            }
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Group root = (Group) StageLauncher.getScene(StateType.BATTLE).getRoot();
+                    ImageView image = GeneralGraphicMethods.addImage(root,
+                            "pics/battle/notification_go@2x.png", 300, 400 - 50, 800, 200);
+                    Text text = GeneralGraphicMethods.addText(root, "YOUR TURN", 550, 460
+                            , Color.rgb(225, 225, 225, 0.7), 60);
+                    long currentTime = System.currentTimeMillis();
+
+                    AnimationTimer animationTimer = new AnimationTimer() {
+                        @Override
+                        public void handle(long now) {
+                            if (System.currentTimeMillis() - currentTime >= 1000) {
+                                root.getChildren().removeAll(text, image);
+                                this.stop();
+                            }
+                        }
+                    };
+                    animationTimer.start();
+
+                }
+            });
+        }
+
+        players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
+        if (gameEnded()) {
+            endGame();
+            controller.MenuController.state = StateType.ACCOUNT_MENU;
         }
     }
 
