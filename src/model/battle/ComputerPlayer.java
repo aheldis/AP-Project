@@ -1,16 +1,11 @@
 package model.battle;
 
-import javafx.scene.image.ImageView;
 import model.account.Account;
-import model.account.FilesType;
 import model.card.Card;
-import model.card.Spell;
 import model.item.ActivationTimeOfItem;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.Graphic.BattleScene;
-import view.Graphic.SpriteAnimationProperties;
-import view.Graphic.SpriteMaker;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -94,7 +89,8 @@ public class ComputerPlayer extends Player {
             Card card = getHand().chooseARandomCard();
             if (getMana() >= card.getMp()) {
                 if (putCardOnLand(card, coordinate, getMatch().getLand(), false))
-                    BattleScene.getSingleInstance().addCardToBoard(x, y, card, "Breathing", null, false);
+                    BattleScene.getSingleInstance().addCardToBoard(x, y, card,
+                            "Breathing", null, false, true);
             }
         }
         //}

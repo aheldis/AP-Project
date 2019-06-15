@@ -10,8 +10,11 @@ import model.battle.Hand;
 import model.card.Card;
 import model.item.Item;
 import model.item.Usable;
+import view.enums.Cursor;
 
 import java.util.ArrayList;
+
+import static view.Graphic.GeneralGraphicMethods.setCursor;
 
 class DragAndDrop {
     private double orgSceneX, orgSceneY;
@@ -40,7 +43,7 @@ class DragAndDrop {
             sceneRoot.getChildren().add(source);
         });
 
-        setOnMouseDragged(source);
+        setOnMouseDragged(source, false);
 
         source.setOnMouseReleased(event -> {
             sceneRoot.getChildren().remove(source);
@@ -126,7 +129,7 @@ class DragAndDrop {
                 this.dy = orgSceneY - this.firstY;
             }
             BattleScene battleScene = BattleScene.getSingleInstance();
-            battleScene.setOnMousedPressedPosition((Card) card);
+            battleScene.setOnMousePressedPosition((Card) card);
             if (hand != null && (hand.getGameCards().contains(card)))
                 battleScene.showCanPutInCoordinations((Card) card);
             else
@@ -135,12 +138,13 @@ class DragAndDrop {
             sceneRoot.getChildren().add(source);
         });
 
-        setOnMouseDragged(source);
+        setOnMouseDragged(source, true);
 
 
         source.setOnMouseReleased(event -> {
             sceneRoot.getChildren().remove(source);
             BattleScene battleScene = BattleScene.getSingleInstance();
+            setCursor(battleScene.getBattleScene(), Cursor.AUTO);
             Group group = battleScene.addCardToBoard(event.getSceneX(), event.getSceneY(),
                     (Card) card, (ImageView) source, hand != null && (hand.getGameCards().contains(card)));
             if (group != null) {
@@ -152,13 +156,17 @@ class DragAndDrop {
         });
     }
 
-    private void setOnMouseDragged(Node source) {
+    private void setOnMouseDragged(Node source, boolean moveCursor) {
         source.setOnMouseDragged(event -> {
             double offsetX = event.getSceneX() - orgSceneX;
             double offsetY = event.getSceneY() - orgSceneY;
             source.relocate(source.getLayoutX() + offsetX, source.getLayoutY() + offsetY);
             orgSceneX = event.getSceneX();
             orgSceneY = event.getSceneY();
+            if (moveCursor) {
+                BattleScene battleScene = BattleScene.getSingleInstance();
+                setCursor(battleScene.getBattleScene(), Cursor.MOVE);
+            }
         });
     }
 }

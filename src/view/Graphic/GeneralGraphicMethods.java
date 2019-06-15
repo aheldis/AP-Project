@@ -332,14 +332,14 @@ public class GeneralGraphicMethods {
     }
 
 
-    static Lighting getLighting() {
+    static Lighting getLighting(Color color) {
         Lighting lighting = new Lighting();
         lighting.setDiffuseConstant(1.0);
         lighting.setSpecularConstant(0.0);
         lighting.setSpecularExponent(0.0);
         lighting.setSurfaceScale(0.0);
         lighting.setLight(new Light.Distant(45, 45,
-                Color.rgb(121, 149, 255, 1)));
+                color));
         return lighting;
     }
 
