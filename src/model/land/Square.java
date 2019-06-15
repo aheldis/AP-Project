@@ -69,9 +69,10 @@ public class Square {
     }
 
     public static boolean checkerForSquare(int x, int y, LandOfGame landOfGame) {
-        if (x >= LandOfGame.getNumberOfColumns() || x < 0)
+        System.out.println(x+"     "+y);
+        if (x >= LandOfGame.getNumberOfRows() || x < 0)
             return false;
-        if (y < 0 || y >= LandOfGame.getNumberOfRows())
+        if (y < 0 || y >= LandOfGame.getNumberOfColumns())
             return false;
         return landOfGame.getSquares()[x][y].getObject() == null && landOfGame.getSquares()[x][y].flags.size()==0;
         //todo in vase chie? flag ro check nemikone lazeme begin

@@ -280,7 +280,7 @@ public class BattleScene {
         return y > cellPosition.getValue() && y < cellPosition.getValue() + mapProperties.cellHeight + mapProperties.gap;
     }
 
-    Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
+    public Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
 //        PUT = true;
 //        MOVE = false;
         int numberOfColumns = LandOfGame.getNumberOfColumns();
@@ -327,7 +327,7 @@ public class BattleScene {
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
         } else {
-            if (card instanceof Hero && image == null) {
+            if (/*card instanceof Hero &&*/ image == null) {
                 String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
                 imageView = addImage(board, path, 0, 0, 110, 150);
                 imageView.setScaleX(2);
