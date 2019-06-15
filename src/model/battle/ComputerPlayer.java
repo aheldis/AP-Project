@@ -93,8 +93,9 @@ public class ComputerPlayer extends Player {
             coordinate.setX(x);
             Card card = getHand().chooseARandomCard();
             if (getMana() >= card.getMp()) {
-                if (putCardOnLand(card, coordinate, getMatch().getLand(), false))
-                    BattleScene.getSingleInstance().addCardToBoard(x, y, card, "Breathing", null, false);
+                if (putCardOnLand(card, coordinate, getMatch().getLand(), false)) {
+                    //BattleScene.getSingleInstance().addCardToBoard(x, y, card, "Breathing", null, false);
+                }
             }
         }
         //}

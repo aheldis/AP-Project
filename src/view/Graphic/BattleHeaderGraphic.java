@@ -3,27 +3,27 @@ package view.Graphic;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
-import view.Graphic.GeneralGraphicMethods;
 import model.battle.Player;
+import view.enums.StateType;
+
+import java.io.File;
+import java.util.Random;
 
 public class BattleHeaderGraphic {
     private Group root;
     private Group rightHeader = new Group();
     private Group leftHeader = new Group();
     private BattleScene battleScene;
-    private ImageView[] imageViews = new ImageView[2];
+    private String[] specialPowersPath = new String[2];
 
     BattleHeaderGraphic(BattleScene battleScene, Group root) {
         this.battleScene = battleScene;
         this.root = root;
         root.getChildren().addAll(rightHeader, leftHeader);
+
         initHeader();
-        imageViews[0] = null;
-        imageViews[1] = null;
+
     }
 
     //TODO Mana ke avas mishe avas kone -> listener
@@ -33,7 +33,7 @@ public class BattleHeaderGraphic {
     private void addPortraitBorder(double x, double y, Group group, boolean turnOfThisPlayer, String avatarPath, boolean leftSide) {
         if (avatarPath != null) {
             ImageView imageView = GeneralGraphicMethods.addImage(group, avatarPath, x + 13, y + 13, 100, 100);
-            if(!leftSide) {
+            if (!leftSide) {
                 imageView.setRotationAxis(Rotate.Y_AXIS);
                 imageView.setRotate(180);
             }
@@ -72,7 +72,50 @@ public class BattleHeaderGraphic {
         }
     }
 
+    private void addCoolDown(double x, double y, Group group, int turnNotUsedSpecialPower, int coolDown) {
+        Group coolDownGroup = new Group();
+        group.getChildren().add(coolDownGroup);
+        int currentX = 0, currentY = 0, tillNow = 0;
+        for (int i = 0; i < coolDown; i++) {
+            Color color = Color.rgb(200, 200, 200, 0.8);
+            if (i < turnNotUsedSpecialPower)
+                color = Color.rgb(0, 200, 200, 0.8);
+            GeneralGraphicMethods.addRectangle(coolDownGroup, currentX, currentY, 10, 10, 3, 3, color);
+            currentX += 12;
+            tillNow ++;
+            if(tillNow > 3) {
+            tillNow = 0;
+            currentX = 0;
+            currentY += 12;
+            }
+        }
+        coolDownGroup.relocate(x, y);
+    }
+
+
+    private void chooseHeroSpecialPowerPath(int ind) {
+        File file = new File("pics/battle_categorized/heroSpecialPower/type1");
+        Random random = new Random();
+        if (file.listFiles() == null)
+            return;
+        int index = random.nextInt(file.listFiles().length);
+        specialPowersPath[ind] = file.listFiles()[index].getPath();
+    }
+
+    private void addHeroSpecialPower(double x, double y, Group group, int ind, int turnNotUsedSpecialPower, int coolDown) {
+        ImageView imageView = SpriteMaker.getInstance().makeSpritePic(specialPowersPath[ind],
+                x, y, group, 19, 3, 2500, 35, 34.5);
+        GeneralGraphicMethods.setOnMouseEntered(imageView, StageLauncher.getScene(StateType.BATTLE), true);
+        imageView.setOnMouseClicked(event -> {
+            //todo Logic;
+        });
+
+        addCoolDown(x, y + 50, group, turnNotUsedSpecialPower, coolDown);
+    }
+
     private void initHeader() {
+        chooseHeroSpecialPowerPath(0);
+        chooseHeroSpecialPowerPath(1);
         makeLeftHeader(battleScene.getMatch().getPlayers()[0]);
         makeRightHeader(battleScene.getMatch().getPlayers()[1]);
 
@@ -99,6 +142,8 @@ public class BattleHeaderGraphic {
         leftHeader.getChildren().clear();
         GeneralGraphicMethods.addTextWithShadow(player.getUserName(), 248, 78, leftHeader, "Arial", 27);
         addMana(245, 100, player.getMana(), leftHeader);
+        addHeroSpecialPower(110, 195, leftHeader, 0, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown());
+        ;
         addPortraitBorder(120, 25, leftHeader, true, player.getAvatarPath(), true);
         addPortraitBorder(1165, 25, rightHeader, false, null, false);
     }
@@ -107,6 +152,7 @@ public class BattleHeaderGraphic {
         rightHeader.getChildren().clear();
         GeneralGraphicMethods.addTextWithShadow(player.getUserName(), 1010, 78, leftHeader, "Arial", 27);
         addMana(911, 100, player.getMana(), rightHeader);
+        addHeroSpecialPower(1275, 195, rightHeader, 1, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown());
         addPortraitBorder(1165, 25, rightHeader, true, player.getAvatarPath(), false);
         addPortraitBorder(120, 25, leftHeader, false, null, true);
     }

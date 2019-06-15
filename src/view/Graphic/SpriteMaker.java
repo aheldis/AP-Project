@@ -22,9 +22,9 @@ public class SpriteMaker {
     private SpriteMaker() {
     }
 
-    public ImageView makeSpritePic(String path, int x, int y, Parent root, int count,
+    public ImageView makeSpritePic(String path, double x, double y, Parent root, int count,
                                    int numberOfPicInEachColumn, long millis,
-                                   int widthOfEachFrame, int heightOfEachFrame) {
+                                   double widthOfEachFrame, double heightOfEachFrame) {
         ImageView imageView = null;
         try {
             Image image = new Image(new FileInputStream(path));
