@@ -69,11 +69,12 @@ public class Square {
     }
 
     public static boolean checkerForSquare(int x, int y, LandOfGame landOfGame) {
-        if (x >= landOfGame.getNumberOfRows() || x < 0)
+        if (x >= LandOfGame.getNumberOfColumns() || x < 0)
             return false;
-        if (y < 0 || y >= landOfGame.getNumberOfColumns())
+        if (y < 0 || y >= LandOfGame.getNumberOfRows())
             return false;
-        return landOfGame.getSquares()[x][y].getObject() == null; //todo in vase chie? flag ro check nemikone lazeme begin
+        return landOfGame.getSquares()[x][y].getObject() == null && landOfGame.getSquares()[x][y].flags.size()==0;
+        //todo in vase chie? flag ro check nemikone lazeme begin
     }
 
     public boolean squareHasMinionOrHero() {

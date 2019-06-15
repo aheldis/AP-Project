@@ -87,7 +87,7 @@ public class ComputerPlayer extends Player {
                 coordinate.setX(x);
                 Card card = getHand().chooseARandomCard();
                 if (getMana() >= card.getMp())
-                    putCardOnLand(card, coordinate, getMatch().getLand());
+                    putCardOnLand(card, coordinate, getMatch().getLand(),false);
             }
         }
 

@@ -92,7 +92,7 @@ public class NewCardGraphic {
         }
     }
 
-    private static void changeVbox(VBox vBox, ArrayList<String> arrayList, int ind, String type) {
+    private static void changeVBox(VBox vBox, ArrayList<String> arrayList, int ind, String type) {
         vBox.getChildren().clear();
         arrayList.forEach(name -> {
             if (name.contains("__")) {
@@ -115,7 +115,7 @@ public class NewCardGraphic {
                 }
                 if (numberOfBuffs > 0) {
                     numberOfBuffs--;
-                    changeVbox(vBox, arrayLists.get(ind), ind, type);
+                    changeVBox(vBox, arrayLists.get(ind), ind, type);
                 } else {
                     vBox.getChildren().clear();
                     done(vBox, type);
@@ -124,18 +124,18 @@ public class NewCardGraphic {
                 if (ind == 1 && arrayLists.get(1) == null || arrayLists.get(1).size() == 0)
                     done(vBox, type);
                 else
-                    changeVbox(vBox, arrayLists.get(ind), ind + 1, type);
+                    changeVBox(vBox, arrayLists.get(ind), ind + 1, type);
             }
         });
     }
 
-    private static void setVbox(VBox vBox, String type) {
+    private static void setVBox(VBox vBox, String type) {
         arrayLists.clear();
         arrayLists.add(NewFileAsli.getFieldNames(FilesType.getEnum(type)));
         arrayLists.add(NewFileAsli.getChangeFieldNames());
         arrayLists.add(NewFileAsli.getTargetFieldNames());
         arrayLists.add(NewFileAsli.getBuffFieldNames());
-        changeVbox(vBox, arrayLists.get(0), 1, type);
+        changeVBox(vBox, arrayLists.get(0), 1, type);
     }
 
     static void makeCardForm(Scene scene, Account account) {
@@ -150,7 +150,7 @@ public class NewCardGraphic {
 
         Rectangle rectangle = addRectangle(group, 80, 80, (int) StageLauncher.getWidth() - 160, (int) StageLauncher.getHeight() - 160
                 , 50, 50, Color.rgb(0, 0, 0, 0.85));
-        rectangle.setStroke(Color.rgb(40, 100, 250));
+        rectangle.setStroke(Color.rgb(40, 100, 250,0.5));
         rectangle.setStrokeWidth(7);
 
         ImageView close = addImage(group, "pics/menu/button_close@2x.png",
@@ -171,18 +171,18 @@ public class NewCardGraphic {
         hero.setOnMouseClicked(event -> {
             group.getChildren().removeAll(hero, spell, minion);
             enter(group, scene);
-            setVbox(vBox, "hero");
+            setVBox(vBox, "hero");
         });
         minion.setOnMouseClicked(event -> {
             group.getChildren().removeAll(hero, spell, minion);
             enter(group, scene);
-            setVbox(vBox, "minion");
+            setVBox(vBox, "minion");
 
         });
         spell.setOnMouseClicked(event -> {
             group.getChildren().removeAll(hero, spell, minion);
             enter(group, scene);
-            setVbox(vBox, "spell");
+            setVBox(vBox, "spell");
 
         });
     }

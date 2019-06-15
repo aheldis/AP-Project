@@ -39,7 +39,7 @@ public abstract class Player {
 //    public abstract void attack(Card card, Square target);
 //    public abstract void useSpecialPower(Card card);
 
-    public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
+    public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean showError) {
 
         ErrorType error;
         if (playerCard == null) {
@@ -49,15 +49,14 @@ public abstract class Player {
         }
         playerCard.setPosition(getHero().getPosition());
         if (!playerCard.canInsertToCoordination(this.getHero().getPosition().getCoordinate(), coordinate)) {
-            error = ErrorType.INVALID_TARGET;
-            error.printMessage();
+            if (showError)
+                ErrorType.INVALID_TARGET.printMessage();
             return false;
         }
         Square square = land.passSquareInThisCoordinate(coordinate);
         if (square == null) {
-
-            error = ErrorType.INVALID_SQUARE;
-            error.printMessage();
+            if (showError)
+             ErrorType.INVALID_SQUARE.printMessage();
             return false;
         }
 

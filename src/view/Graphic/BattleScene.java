@@ -8,7 +8,6 @@ import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 import javafx.util.Pair;
 import model.account.FilesType;
 import model.battle.Game;
@@ -43,8 +42,6 @@ public class BattleScene {
     private Game game;
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
-    private Square onMousedPressedPosition = null;
-    private Square onMousedReleasedPosition = null;
 
     public static void changeSingleInstance(BattleScene battleScene) {
         singleInstance = battleScene;
@@ -314,7 +311,7 @@ public class BattleScene {
         return null;
     }
 
-    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image, boolean drag, boolean flip) {
+    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image, boolean drag) {
         FilesType filesType = FilesType.MINION;
         if (card instanceof Hero)
             filesType = FilesType.HERO;
