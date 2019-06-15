@@ -427,6 +427,8 @@ public abstract class Card {
     }
 
     public boolean canAttack(Card opponentCard) {
+        System.out.println("can attack: " + canAttack);
+
         return withinRange(opponentCard.position.getCoordinate(), attackRange) && canAttack &&
                 !player.getCardsOnLand().contains(opponentCard);
     }

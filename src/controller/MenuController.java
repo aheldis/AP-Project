@@ -586,11 +586,6 @@ public class MenuController  {
                             error.printMessage();
                             break;
                         }
-                        if (player.getMana() < card.getMp()) {
-                            error = ErrorType.HAVE_NOT_ENOUGH_MANA;
-                            error.printMessage();
-                            break;
-                        }
                         player.putCardOnLand(card, coordinate, match.getLand(),true);
                         break;
                     case GAME_SELECT_Collectible:

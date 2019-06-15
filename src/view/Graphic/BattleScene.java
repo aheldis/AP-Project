@@ -397,6 +397,15 @@ public class BattleScene {
             setCursor(battleScene, Cursor.AUTO);
             imageOfCard.setEffect(null);
         });
+
+        if (enemy) {
+            imageOfCard.setOnMouseClicked(event -> {
+                if (selectedCard != null && selectedCard.canAttack(card)) {
+                    selectedCard.attack(card);
+                    backToDefault();
+                }
+            });
+        }
     }
 
     public void test() {
