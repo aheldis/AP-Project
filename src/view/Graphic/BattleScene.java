@@ -8,6 +8,7 @@ import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.util.Pair;
 import model.account.FilesType;
 import model.battle.Game;
@@ -42,6 +43,8 @@ public class BattleScene {
     private Game game;
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
+    private Square onMousedPressedPosition;
+    private Square onMousedReleasedPosition;
 
     public static void changeSingleInstance(BattleScene battleScene) {
         singleInstance = battleScene;
@@ -296,7 +299,7 @@ public class BattleScene {
                 if (x <= maxX && x >= minX && y <= maxY && y >= minY) {
                     if (putOrMove) {
                         boolean canPut = match.getPlayers()[0].putCardOnLand(card,
-                                position.getCoordinate(), match.getLand());
+                                position.getCoordinate(), match.getLand(), true);
                         if (!canPut)
                             return null;
                     } else {
@@ -311,7 +314,7 @@ public class BattleScene {
         return null;
     }
 
-    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image, boolean drag) {
+    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image, boolean drag, boolean flip) {
         FilesType filesType = FilesType.MINION;
         if (card instanceof Hero)
             filesType = FilesType.HERO;
