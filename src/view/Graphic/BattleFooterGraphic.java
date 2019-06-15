@@ -1,7 +1,5 @@
 package view.Graphic;
 
-import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,8 +13,6 @@ import model.card.Minion;
 import model.card.Spell;
 import view.enums.StateType;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 import static view.Graphic.GeneralGraphicMethods.*;
@@ -119,13 +115,7 @@ public class BattleFooterGraphic {
                 new Thread(() -> {
                     try {
                         String path = "PausedGames/" + battleScene.getMatch().getMatchNumber() + ".json";
-                        File file = new File(path);
-                        if (file.exists())
-                            file.delete();
-                        YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
-                        FileWriter fileWriter = new FileWriter(file);
-                        altMapper.toJson(battleScene, fileWriter);
-                        fileWriter.close();
+                        GeneralGraphicMethods.saveInFile(path, battleScene);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

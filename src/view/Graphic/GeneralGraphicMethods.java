@@ -1,5 +1,7 @@
 package view.Graphic;
 
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import javafx.animation.AnimationTimer;
 import javafx.scene.*;
 import javafx.scene.control.Button;
@@ -21,9 +23,7 @@ import javafx.util.Duration;
 import view.enums.Cursor;
 import view.enums.StateType;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 public class GeneralGraphicMethods {
     private static double HEIGHT = StageLauncher.getHeight();
@@ -341,5 +341,19 @@ public class GeneralGraphicMethods {
         lighting.setLight(new Light.Distant(45, 45,
                 Color.rgb(121, 149, 255, 1)));
         return lighting;
+    }
+
+    public static void saveInFile(String path, Object object) {
+        try {
+            File file = new File(path);
+            if (file.exists())
+                file.delete();
+            YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
+            FileWriter fileWriter = new FileWriter(file);
+            altMapper.toJson(object, fileWriter);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

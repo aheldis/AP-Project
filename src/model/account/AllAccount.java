@@ -1,8 +1,8 @@
 package model.account;
 
 import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import view.AccountView;
+import view.Graphic.GeneralGraphicMethods;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -128,13 +128,7 @@ public class AllAccount {
     public void saveAccount(Account account) {
         try {
             String path = "AccountSaver/" + account.getUserName() + ".json";
-            File file = new File(path);
-            if (file.exists())
-                file.delete();
-            YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
-            FileWriter fileWriter = new FileWriter(file);
-            altMapper.toJson(account, fileWriter);
-            fileWriter.close();
+            GeneralGraphicMethods.saveInFile(path, account);
         } catch (Exception e) {
             e.printStackTrace();
         }
