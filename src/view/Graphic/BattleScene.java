@@ -295,7 +295,7 @@ public class BattleScene {
                 if (x <= maxX && x >= minX && y <= maxY && y >= minY) {
                     if (putOrMove) {
                         boolean canPut = match.getPlayers()[0].putCardOnLand(card,
-                                positionHashMap.get(gameGrid[i][j]).getCoordinate(), match.getLand());
+                                positionHashMap.get(gameGrid[i][j]).getCoordinate(), match.getLand(),true);
                         if (!canPut)
                             return null;
                     } else {
