@@ -1,6 +1,7 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ import model.card.Hero;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
+import view.Graphic.GeneralGraphicMethods;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -50,220 +52,17 @@ public class BattleScene {
     private Glow glow = new Glow();
 
 
+    private BattleScene() {
+    }
+
     public static void changeSingleInstance(BattleScene battleScene) {
         singleInstance = battleScene;
-    }
-
-    public void setMatch(Match match) {
-        this.match = match;
-    }
-
-    public Match getMatch() {
-        return match;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    int getNumberOfMap() {
-        return numberOfMap;
-    }
-
-    private BattleScene() {
     }
 
     public static BattleScene getSingleInstance() {
         if (singleInstance == null)
             singleInstance = new BattleScene();
         return singleInstance;
-    }
-
-    void setBattleScene(int numberOfMap) {
-        root.getChildren().clear();
-        this.numberOfMap = numberOfMap;
-        setMapProperties();
-        setMapBackground();
-        GeneralGraphicMethods.playMusic("resource/music/battle_music/" +
-                numberOfMap + ".m4a", true, battleScene);
-        addGrid();
-        battleHeader = new BattleHeaderGraphic(this, root);
-        battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
-    }
-
-    private void setMapProperties() {
-        String path = "pics/maps_categorized/map" + numberOfMap + "/property.json";
-        YaGson yaGson = new YaGson();
-        try {
-            mapProperties = yaGson.fromJson(new FileReader(path), MapProperties.class);
-            mapProperties.init();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setMapBackground() {
-        //System.out.println("numberOfMap = " + numberOfMap);
-        String pathOfFile = "pics/maps_categorized/map" + numberOfMap + "/background";
-        File file = new File(pathOfFile);
-        File[] files = file.listFiles();
-        if (files != null) {
-            Arrays.sort(files);
-            for (File file1 : files) {
-                //System.out.println("file1.getName() = " + file1.getName());
-                ImageView imageView = GeneralGraphicMethods.setBackground(root, file1.getPath(), false, 0, 0);
-                assert imageView != null;
-                imageView.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
-
-                if (file1.getName().contains("middleground") || file1.getName().contains("midground")) {
-                    //todo duration ya ye chiz dige
-                    moveBackgrounds(imageView, false, false);
-                }
-                if (file1.getName().contains("foreground")) {
-                    moveBackgrounds(imageView, false, true);
-                }
-            }
-        }
-    }
-
-    private void moveBackgrounds(ImageView imageView, boolean horizontal, boolean vertical) {
-        int randomNumber = (new Random().nextInt(3)) - 1;
-        if (randomNumber == 0) randomNumber = 1;
-        if (vertical)
-            randomNumber *= 15;
-        else
-            randomNumber *= 10;
-        if (vertical && (imageView.getX() - randomNumber > width || imageView.getX() - randomNumber < 0))
-            randomNumber *= -1;
-        if (horizontal && (imageView.getY() - randomNumber > height || imageView.getY() - randomNumber < 0))
-            randomNumber *= -1;
-
-        final int moveDistance = randomNumber;
-
-        imageView.setOnMouseEntered(event -> {
-            double primaryX = imageView.getX();
-            double primaryY = imageView.getY();
-            if (vertical)
-                imageView.setX(primaryX + moveDistance);
-            if (horizontal) {
-                imageView.setY(primaryY + moveDistance);
-            }
-        });
-        imageView.setOnMouseExited(event -> {
-            double primaryX = imageView.getX();
-            double primaryY = imageView.getY();
-            if (vertical)
-                imageView.setX(primaryX - moveDistance);
-            if (horizontal)
-                imageView.setY(primaryY - moveDistance);
-        });
-    }
-
-    public BattleHeaderGraphic getBattleHeader() {
-        return battleHeader;
-    }
-
-    public BattleFooterGraphic getBattleFooter() {
-        return battleFooter;
-    }
-
-    public Rectangle getCell(int row, int column) {
-        return gameGrid[row][column];
-    }
-
-    private Pair<Double, Double> getCellPosition(int row, int column) {
-        return new Pair<>(gameGrid[row][column].getLayoutX(), gameGrid[row][column].getLayoutY());
-    }
-
-
-    private void addGrid() {
-        board = new Group();
-        int numberOfColumns = LandOfGame.getNumberOfColumns();
-        int numberOfRows = LandOfGame.getNumberOfRows();
-        double primaryX = (mapProperties.ulx + mapProperties.llx) / 2, primaryY = mapProperties.uly;
-        double currentX = primaryX, currentY = primaryY;
-
-        gameGrid = new Rectangle[numberOfRows][numberOfColumns];
-
-        for (int i = 0; i < numberOfRows; i++)
-            for (int j = 0; j < numberOfColumns; j++) {
-                if (j == 0) {
-                    currentY += mapProperties.cellHeight + mapProperties.gap;
-                    currentX = primaryX;
-                } else
-                    currentX += mapProperties.cellWidth + mapProperties.gap;
-                Rectangle rectangle = new Rectangle(mapProperties.cellWidth, mapProperties.cellHeight);
-                rectangle.setFill(Color.BLACK);
-                rectangle.setOpacity(0.2);
-                rectangle.relocate(currentX, currentY);
-                gameGrid[i][j] = rectangle;
-                positionHashMap.put(gameGrid[i][j], match.getLand().getSquares()[i][j]);
-                board.getChildren().add(rectangle);
-            }
-
-        root.getChildren().add(board);
-
-        PerspectiveTransform perspectiveTransform = new PerspectiveTransform();
-
-        perspectiveTransform.setUlx(mapProperties.ulx);
-        perspectiveTransform.setUly(mapProperties.uly);
-        perspectiveTransform.setUrx(mapProperties.urx);
-        perspectiveTransform.setUry(mapProperties.ury);
-        perspectiveTransform.setLlx(mapProperties.llx);
-        perspectiveTransform.setLly(mapProperties.lly);
-        perspectiveTransform.setLrx(mapProperties.lrx);
-        perspectiveTransform.setLry(mapProperties.lry);
-
-        //    board.setEffect(perspectiveTransform);
-/*
-        board.setOnMouseClicked(event -> {
-            System.out.println("board: " + event.getX() + " " + event.getY());
-            Point2D point2D = new Point2D(event.getX(), event.getY());
-            Rectangle rectangle = new Rectangle(1,1);
-            rectangle.relocate(event.getX(), event.getY());
-            rectangle.setEffect(perspectiveTransform);
-            for (int ii = 0; ii < 5; ii++)
-                for (int jj = 0; jj < 9; jj++) {
-                    Bounds bounds = rectangle.getBoundsInParent();
-                    if (bounds.intersects(gameGrid[ii][jj].getBoundsInParent()))
-                        gameGrid[ii][jj].setFill(Color.RED);
-                }
-
-
-            for (int ii = 0; ii < 5; ii++)
-                for (int jj = 0; jj < 9; jj++) {
-                    Point2D[] point = new Point2D[7];
-                    point[0] = new Point2D(event.getX(), event.getY());
-                    point[1] = new Point2D(event.getSceneX(), event.getSceneY());
-                    point[2] = new Point2D(event.getScreenX(), event.getScreenY());
-                    point[3] = gameGrid[ii][jj].parentToLocal(board.parentToLocal(point[0]));
-                    point[4] = gameGrid[ii][jj].parentToLocal(board.parentToLocal(point[1]));
-                    point[5] = gameGrid[ii][jj].parentToLocal(board.parentToLocal(point[2]));
-                    point[6] = board.localToParent(point[0]);
-
-                    Bounds[] bounds = new Bounds[6];
-                    bounds[0] = gameGrid[ii][jj].getBoundsInLocal();
-                    bounds[1] = gameGrid[ii][jj].localToParent(bounds[0]);
-                    bounds[2] = board.localToParent(bounds[0]);
-
-                    bounds[3] = gameGrid[ii][jj].getBoundsInParent();
-                    bounds[4] = gameGrid[ii][jj].localToParent(bounds[1]);
-                    bounds[5] = board.localToParent(bounds[1]);
-
-                    for(int k = 0; k < 6; k++)
-                        for(int g = 0; g < 7; g++)
-                    if (bounds[k].contains(point[g])) {
-                        gameGrid[ii][jj].setFill(Color.RED);
-                        System.out.println("i = " + ii);
-                        System.out.println("j = " + jj);
-                        System.out.println("k = " + k);
-                        System.out.println("g = " + g);
-                    }
-
-                }
-
-        });
-        */
     }
 
     public void addNodeToBoard(int x, int y, Node node) {
@@ -276,17 +75,15 @@ public class BattleScene {
         board.getChildren().add(node);
     }
 
+    private Pair<Double, Double> getCellPosition(int row, int column) {
+        return new Pair<>(gameGrid[row][column].getLayoutX(), gameGrid[row][column].getLayoutY());
+    }
+
     public void removeNodeFromBoard(Node node) {
         board.getChildren().remove(node);
     }
 
-    private boolean withinRange(double x, double y, int row, int column) {
-        Pair<Double, Double> cellPosition = getCellPosition(row, column);
-        if (!(x > cellPosition.getKey() && x < cellPosition.getKey() + mapProperties.cellWidth + mapProperties.gap))
-            return false;
-        return y > cellPosition.getValue() && y < cellPosition.getValue() + mapProperties.cellHeight + mapProperties.gap;
-    }
-
+   /*
     Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
 //        PUT = true;
 //        MOVE = false;
@@ -328,6 +125,74 @@ public class BattleScene {
                 }
             }
         return null;
+    }
+    //*/
+
+    Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
+//        PUT = true;
+//        MOVE = false;
+
+        Pair <Integer, Integer> coordinate = withinRange(new Point2D(x, y));
+        if (coordinate == null)
+            return null;
+        int i = coordinate.getKey(), j = coordinate.getValue();
+        Rectangle grid = gameGrid[i][j];
+        Square position = positionHashMap.get(gameGrid[i][j]);
+
+
+
+
+        if (position.equals(onMousePressedPosition)) {
+            removeColorFromRectangles();
+            selectCard(card, imageView, gameGrid[i][j]);
+            return null;
+        }
+        if (putOrMove) {
+            boolean canPut = match.getPlayers()[0].putCardOnLand(card,
+                    position.getCoordinate(), match.getLand(), true);
+            if (!canPut) {
+                removeColorFromRectangles();
+                return null;
+            }
+        } else {
+            boolean canMove = card.move(position.getCoordinate());
+            if (!canMove) {
+                removeColorFromRectangles();
+                return null;
+            }
+        }
+        if (coloredRectangles.contains(grid)) {
+            removeColorFromRectangles();
+            selectedCard = null;
+            return addCardToBoard(i, j, card, "normal", imageView, false, false);
+        }
+
+        return null;
+    }
+
+
+    private Pair<Integer, Integer> withinRange(Point2D point2D) {
+        for (int ii = 0; ii < 5; ii++)
+            for (int jj = 0; jj < 9; jj++) {
+                if (gameGrid[ii][jj].getBoundsInParent().contains(point2D))
+                    return new Pair<>(ii, jj);
+            }
+        return null;
+    }
+
+
+    void removeColorFromRectangles() {
+        for (Rectangle rectangle : coloredRectangles)
+            rectangle.setFill(Color.BLACK);
+        coloredRectangles.removeAll(coloredRectangles);
+    }
+
+    private void selectCard(Card card, ImageView gifOfCard, Rectangle grid) {
+        selectedCard = card;
+        grid.setFill(Color.GOLD);
+        coloredRectangles.add(grid);
+        glow = new Glow(1);
+        gifOfCard.setEffect(glow);
     }
 
     public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image, boolean drag, boolean flip) {
@@ -381,6 +246,10 @@ public class BattleScene {
         return board;
     }
 
+    public Rectangle getCell(int row, int column) {
+        return gameGrid[row][column];
+    }
+
     private void setOnMouseEntered(ImageView imageOfCard, Card card, boolean enemy) {
         imageOfCard.setOnMouseEntered(event -> {
             if (selectedCard != null && selectedCard.canAttack(card))
@@ -408,7 +277,17 @@ public class BattleScene {
         }
     }
 
+    void backToDefault() {
+        selectedCard = null;
+        removeColorFromRectangles();
+        glow.setLevel(0);
+    }
+
     public void test() {
+        numberOfMap = 7;
+        setMapProperties();
+        setMapBackground();
+        addGrid();
 
         /*
         Minion minion = (Minion) Shop.getInstance().getNewCardByName("Siavash");
@@ -432,6 +311,192 @@ public class BattleScene {
 */
     }
 
+    private void setMapProperties() {
+        String path = "pics/maps_categorized/map" + numberOfMap + "/property.json";
+        YaGson yaGson = new YaGson();
+        try {
+            mapProperties = yaGson.fromJson(new FileReader(path), MapProperties.class);
+            mapProperties.init();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setMapBackground() {
+        //System.out.println("numberOfMap = " + numberOfMap);
+        String pathOfFile = "pics/maps_categorized/map" + numberOfMap + "/background";
+        File file = new File(pathOfFile);
+        File[] files = file.listFiles();
+        if (files != null) {
+            Arrays.sort(files);
+            for (File file1 : files) {
+                //System.out.println("file1.getName() = " + file1.getName());
+                ImageView imageView = GeneralGraphicMethods.setBackground(root, file1.getPath(), false, 0, 0);
+                assert imageView != null;
+                imageView.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
+
+                if (file1.getName().contains("middleground") || file1.getName().contains("midground")) {
+                    //todo duration ya ye chiz dige
+                    moveBackgrounds(imageView, false, false);
+                }
+                if (file1.getName().contains("foreground")) {
+                    moveBackgrounds(imageView, false, true);
+                }
+            }
+        }
+    }
+
+    private void addGrid() {
+        board = new Group();
+        int numberOfColumns = LandOfGame.getNumberOfColumns();
+        int numberOfRows = LandOfGame.getNumberOfRows();
+        double primaryX = (mapProperties.ulx + mapProperties.llx) / 2, primaryY = mapProperties.uly;
+        double currentX = primaryX, currentY = primaryY;
+
+        gameGrid = new Rectangle[numberOfRows][numberOfColumns];
+
+        for (int i = 0; i < numberOfRows; i++)
+            for (int j = 0; j < numberOfColumns; j++) {
+                if (j == 0) {
+                    if (i != 0)
+                        currentY += mapProperties.cellHeight + mapProperties.gap;
+                    currentX = primaryX;
+                } else
+                    currentX += mapProperties.cellWidth + mapProperties.gap;
+                Rectangle rectangle = new Rectangle(mapProperties.cellWidth, mapProperties.cellHeight);
+                rectangle.setFill(Color.BLACK);
+                rectangle.setOpacity(0.2);
+                rectangle.relocate(currentX, currentY);
+                gameGrid[i][j] = rectangle;
+                positionHashMap.put(gameGrid[i][j], match.getLand().getSquares()[i][j]);
+                board.getChildren().add(rectangle);
+            }
+
+        root.getChildren().add(board);
+
+        PerspectiveTransform perspectiveTransform = new PerspectiveTransform();
+
+        perspectiveTransform.setUlx(mapProperties.ulx);
+        perspectiveTransform.setUly(mapProperties.uly);
+        perspectiveTransform.setUrx(mapProperties.urx);
+        perspectiveTransform.setUry(mapProperties.ury);
+        perspectiveTransform.setLlx(mapProperties.llx);
+        perspectiveTransform.setLly(mapProperties.lly);
+        perspectiveTransform.setLrx(mapProperties.lrx);
+        perspectiveTransform.setLry(mapProperties.lry);
+
+        board.setEffect(perspectiveTransform);
+
+        /*
+        Rectangle rectangle = new Rectangle(currentX - primaryX + mapProperties.cellWidth, currentY - primaryY + mapProperties.cellHeight);
+        rectangle.setFill(Color.gray(1, 0.5));
+        board.getChildren().add(rectangle);
+        rectangle.relocate(primaryX, primaryY);
+
+
+        Transform localToSceneTransform = board.getLocalToSceneTransform();
+        System.out.println("localToSceneTransform = " + localToSceneTransform);
+        System.out.println("localToSceneTransform.getMxx() = " + localToSceneTransform.getMxx());
+        System.out.println("localToSceneTransform.getMxy() = " + localToSceneTransform.getMxy());
+        System.out.println("localToSceneTransform.getMyx() = " + localToSceneTransform.getMyx());
+        System.out.println("localToSceneTransform.getMyy() = " + localToSceneTransform.getMyy());
+*/
+        /*
+        board.setOnMouseClicked(event -> {
+
+            Point2D point2D = new Point2D(event.getX(), event.getY());
+
+            for (int ii = 0; ii < 5; ii++)
+                for (int jj = 0; jj < 9; jj++) {
+                    if (gameGrid[ii][jj].getBoundsInParent().contains(point2D))
+                        gameGrid[ii][jj].setFill(Color.RED);
+                }
+
+            System.out.println("board: " + event.getX() + " " + event.getY());
+
+            Point2D point2D = new Point2D(event.getX(), event.getY());
+            Rectangle rectangle = new Rectangle(1,1);
+            rectangle.relocate(event.getX(), event.getY());
+            rectangle.setEffect(perspectiveTransform);
+            for (int ii = 0; ii < 5; ii++)
+                for (int jj = 0; jj < 9; jj++) {
+                    Bounds bounds = rectangle.getBoundsInParent();
+                    if (bounds.intersects(gameGrid[ii][jj].getBoundsInParent()))
+                        gameGrid[ii][jj].setFill(Color.RED);
+                }
+
+
+            for (int ii = 0; ii < 5; ii++)
+                for (int jj = 0; jj < 9; jj++) {
+                    Point2D[] point = new Point2D[7];
+                    point[0] = new Point2D(event.getX(), event.getY());
+                    point[1] = new Point2D(event.getSceneX(), event.getSceneY());
+                    point[2] = new Point2D(event.getScreenX(), event.getScreenY());
+                    point[3] = gameGrid[ii][jj].parentToLocal(board.parentToLocal(point[0]));
+                    point[4] = gameGrid[ii][jj].parentToLocal(board.parentToLocal(point[1]));
+                    point[5] = gameGrid[ii][jj].parentToLocal(board.parentToLocal(point[2]));
+                    point[6] = board.localToParent(point[0]);
+
+                    Bounds[] bounds = new Bounds[6];
+                    bounds[0] = gameGrid[ii][jj].getBoundsInLocal();
+                    bounds[1] = gameGrid[ii][jj].localToParent(bounds[0]);
+                    bounds[2] = board.localToParent(bounds[0]);
+
+                    bounds[3] = gameGrid[ii][jj].getBoundsInParent();
+                    bounds[4] = gameGrid[ii][jj].localToParent(bounds[1]);
+                    bounds[5] = board.localToParent(bounds[1]);
+
+                    for(int k = 0; k < 6; k++)
+                        for(int g = 0; g < 7; g++)
+                    if (bounds[k].contains(point[g])) {
+                        gameGrid[ii][jj].setFill(Color.RED);
+                        System.out.println("i = " + ii);
+                        System.out.println("j = " + jj);
+                        System.out.println("k = " + k);
+                        System.out.println("g = " + g);
+                    }
+
+                }
+
+
+        });
+
+*/
+    }
+
+    private void moveBackgrounds(ImageView imageView, boolean horizontal, boolean vertical) {
+        int randomNumber = (new Random().nextInt(3)) - 1;
+        if (randomNumber == 0) randomNumber = 1;
+        if (vertical)
+            randomNumber *= 15;
+        else
+            randomNumber *= 10;
+        if (vertical && (imageView.getX() - randomNumber > width || imageView.getX() - randomNumber < 0))
+            randomNumber *= -1;
+        if (horizontal && (imageView.getY() - randomNumber > height || imageView.getY() - randomNumber < 0))
+            randomNumber *= -1;
+
+        final int moveDistance = randomNumber;
+
+        imageView.setOnMouseEntered(event -> {
+            double primaryX = imageView.getX();
+            double primaryY = imageView.getY();
+            if (vertical)
+                imageView.setX(primaryX + moveDistance);
+            if (horizontal) {
+                imageView.setY(primaryY + moveDistance);
+            }
+        });
+        imageView.setOnMouseExited(event -> {
+            double primaryX = imageView.getX();
+            double primaryY = imageView.getY();
+            if (vertical)
+                imageView.setX(primaryX - moveDistance);
+            if (horizontal)
+                imageView.setY(primaryY - moveDistance);
+        });
+    }
+
     void showCanMoveToCoordinations(Card card) {
         ArrayList<Coordinate> coordinates = card.getCanMoveToCoordinations();
         for (Coordinate coordinate : coordinates) {
@@ -450,10 +515,8 @@ public class BattleScene {
         }
     }
 
-    void removeColorFromRectangles() {
-        for (Rectangle rectangle : coloredRectangles)
-            rectangle.setFill(Color.BLACK);
-        coloredRectangles.removeAll(coloredRectangles);
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     void setOnMousePressedPosition(Card card) {
@@ -461,22 +524,40 @@ public class BattleScene {
         this.onMousePressedPosition = card.getPosition();
     }
 
-    private void selectCard(Card card, ImageView gifOfCard, Rectangle grid) {
-        selectedCard = card;
-        grid.setFill(Color.GOLD);
-        coloredRectangles.add(grid);
-        glow = new Glow(1);
-        gifOfCard.setEffect(glow);
+    public Match getMatch() {
+        return match;
     }
 
-    void backToDefault() {
-        selectedCard = null;
-        removeColorFromRectangles();
-        glow.setLevel(0);
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
+    int getNumberOfMap() {
+        return numberOfMap;
+    }
+
+    public BattleHeaderGraphic getBattleHeader() {
+        return battleHeader;
+    }
+
+    public BattleFooterGraphic getBattleFooter() {
+        return battleFooter;
     }
 
     Scene getBattleScene() {
         return battleScene;
+    }
+
+    void setBattleScene(int numberOfMap) {
+        root.getChildren().clear();
+        this.numberOfMap = numberOfMap;
+        setMapProperties();
+        setMapBackground();
+        GeneralGraphicMethods.playMusic("resource/music/battle_music/" +
+                numberOfMap + ".m4a", true, battleScene);
+        addGrid();
+        battleHeader = new BattleHeaderGraphic(this, root);
+        battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
     }
 
 }
