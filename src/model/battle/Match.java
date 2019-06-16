@@ -1,12 +1,6 @@
 package model.battle;
 
-import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
@@ -19,7 +13,6 @@ import model.land.Square;
 import view.BattleView;
 import view.Graphic.BattleScene;
 import view.Graphic.GeneralGraphicMethods;
-import view.Graphic.StageLauncher;
 import view.enums.StateType;
 
 import java.io.File;
@@ -235,6 +228,7 @@ public class Match {
         } else {
             players[whichPlayer].initPerTurn(whichPlayer);
             players[passComputerPlayer()].playTurnForComputer();
+/*
 
             //your turn notification
             Platform.runLater(new Runnable() {
@@ -260,6 +254,7 @@ public class Match {
 
                 }
             });
+*/
         }
 
         players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer

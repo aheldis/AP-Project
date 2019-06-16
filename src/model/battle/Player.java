@@ -49,7 +49,8 @@ public abstract class Player {
     public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean showError) {
 
         if (opponent.opponent.getMana() < playerCard.getMp()) {
-            ErrorType.HAVE_NOT_ENOUGH_MANA.printMessage();
+            if (showError)
+                ErrorType.HAVE_NOT_ENOUGH_MANA.printMessage();
             return false;
         }
         if (playerCard == null) {

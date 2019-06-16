@@ -87,7 +87,7 @@ public class BattleScene {
         board.getChildren().remove(node);
     }
 
-   //*
+    //*
     Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
 //        PUT = true;
 //        MOVE = false;
@@ -241,7 +241,7 @@ public class BattleScene {
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
         setOnMouseEntered(imageView, card, flip);
-        cardsHashMap.put(card,imageView);
+        cardsHashMap.put(card, imageView);
 
         if (drag) {
             DragAndDrop dragAndDrop = new DragAndDrop();
@@ -508,8 +508,9 @@ public class BattleScene {
     }
 
     void showCanMoveToCoordinations(Card card) {
-        ArrayList<Coordinate> coordinates = card.getCanMoveToCoordinations();
-        for (Coordinate coordinate : coordinates) {
+        ArrayList<Square> squares = card.getCanMoveToSquares();
+        for (Square square : squares) {
+            Coordinate coordinate = square.getCoordinate();
             Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
             grid.setFill(Color.ALICEBLUE);
             coloredRectangles.add(grid);
@@ -517,8 +518,9 @@ public class BattleScene {
     }
 
     void showCanPutInCoordinations(Card card) {
-        ArrayList<Coordinate> coordinates = card.getCanPutInCoordinations();
-        for (Coordinate coordinate : coordinates) {
+        ArrayList<Square> squares = card.getCanPutInSquares();
+        for (Square square : squares) {
+            Coordinate coordinate = square.getCoordinate();
             Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
             grid.setFill(Color.BLUEVIOLET);
             coloredRectangles.add(grid);
@@ -554,7 +556,7 @@ public class BattleScene {
         return battleFooter;
     }
 
-    Scene getBattleScene() {
+    public Scene getBattleScene() {
         return battleScene;
     }
 
@@ -570,4 +572,11 @@ public class BattleScene {
         battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
     }
 
+    public Group getBoard() {
+        return board;
+    }
+
+    public Group getRoot() {
+        return root;
+    }
 }
