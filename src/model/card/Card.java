@@ -43,7 +43,7 @@ public abstract class Card {
     /**
      * mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
      */
-    private String description;
+    private String description = "";
     private static final int DEFAULT = -1;
     private String pathOfThePicture;
     private String pathOfAnimation;
