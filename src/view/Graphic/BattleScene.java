@@ -50,7 +50,7 @@ public class BattleScene {
     private Square onMousePressedPosition;
     private Card selectedCard;
     private Glow glow = new Glow();
-
+    private HashMap<Card, ImageView> cardsHashMap = new HashMap<>();
 
     private BattleScene() {
     }
@@ -75,8 +75,12 @@ public class BattleScene {
         board.getChildren().add(node);
     }
 
-    private Pair<Double, Double> getCellPosition(int row, int column) {
+    public Pair<Double, Double> getCellPosition(int row, int column) {
         return new Pair<>(gameGrid[row][column].getLayoutX(), gameGrid[row][column].getLayoutY());
+    }
+
+    public HashMap<Card, ImageView> getCardsHashMap() {
+        return cardsHashMap;
     }
 
     public void removeNodeFromBoard(Node node) {
@@ -236,6 +240,7 @@ public class BattleScene {
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
         setOnMouseEntered(imageView, card, flip);
+        cardsHashMap.put(card,imageView);
 
         if (drag) {
             DragAndDrop dragAndDrop = new DragAndDrop();
