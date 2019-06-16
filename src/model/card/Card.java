@@ -43,7 +43,7 @@ public abstract class Card {
     /**
      * mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
      */
-    private String description;
+    private String description = "";
     private static final int DEFAULT = -1;
     private String pathOfThePicture;
     private String pathOfAnimation;
@@ -427,7 +427,6 @@ public abstract class Card {
     }
 
     public boolean canAttack(Card opponentCard) {
-        System.out.println("can attack: " + canAttack);
 
         return withinRange(opponentCard.position.getCoordinate(), attackRange) && canAttack &&
                 !player.getCardsOnLand().contains(opponentCard);
@@ -795,4 +794,6 @@ public abstract class Card {
     public Target getTarget() {
         return target;
     }
+
+
 }

@@ -194,7 +194,7 @@ public abstract class Player {
             card.changeTurnOfCanNotCounterAttack(-1);
             card.changeTurnOfCanNotMove(-1);
             if (card.getTurnOfCanNotAttack() <= 0)
-                card.setCanCounterAttack(true, 1);
+                card.setCanAttack(true, 1);
             if (card.getTurnOfCanNotCounterAttack() <= 0)
                 card.setCanCounterAttack(true, 1);
             if (card.getTurnOfCanNotMove() <= 0)
