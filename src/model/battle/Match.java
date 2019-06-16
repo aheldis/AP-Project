@@ -236,6 +236,7 @@ public class Match {
             players[whichPlayer].initPerTurn(whichPlayer);
             players[passComputerPlayer()].playTurnForComputer();
 
+            //your turn notification
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {

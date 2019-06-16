@@ -1,14 +1,24 @@
 package view.Graphic;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import model.battle.Player;
+import view.enums.Cursor;
 import view.enums.StateType;
 
 import java.io.File;
 import java.util.Random;
+
+import static view.Graphic.GeneralGraphicMethods.setCursor;
 
 public class BattleHeaderGraphic {
     private Group root;
@@ -59,6 +69,25 @@ public class BattleHeaderGraphic {
         */
     }
 
+    private void addNumberToMana(Group group, int numberOfMana, double x, double y) {
+        Text text;
+        if(x>500){
+            x-= 60;
+        }
+        else
+            x=x + 9 * 28+8;
+        text= GeneralGraphicMethods.addText(group, numberOfMana + " / 9",
+                x, y + 5, Color.rgb(225, 225, 225), 25);
+        text.setStroke(Color.rgb(0, 0, 0, 0.5));
+        text.setStrokeWidth(1);
+        text.setFont(Font.font("Arial", FontWeight.BOLD, 25));
+        text.setOnMouseEntered(event -> {
+            Glow glow = new Glow();
+            glow.setLevel(10);
+            text.setEffect(glow);
+            text.setOnMouseExited(event1 -> text.setEffect(null));
+        });
+    }
 
     private void addMana(double x, double y, int numberOfMana, Group group) {
         for (int i = 0; i < 9; i++) {
@@ -69,6 +98,7 @@ public class BattleHeaderGraphic {
                 GeneralGraphicMethods.addImage(group,
                         "pics/battle_categorized/icon_mana_inactive@2x.png",
                         x + i * 28, y, 25, 25);
+            addNumberToMana(group, numberOfMana, x, y);
         }
     }
 
@@ -82,11 +112,11 @@ public class BattleHeaderGraphic {
                 color = Color.rgb(0, 200, 200, 0.8);
             GeneralGraphicMethods.addRectangle(coolDownGroup, currentX, currentY, 10, 10, 3, 3, color);
             currentX += 12;
-            tillNow ++;
-            if(tillNow > 3) {
-            tillNow = 0;
-            currentX = 0;
-            currentY += 12;
+            tillNow++;
+            if (tillNow > 3) {
+                tillNow = 0;
+                currentX = 0;
+                currentY += 12;
             }
         }
         coolDownGroup.relocate(x, y);

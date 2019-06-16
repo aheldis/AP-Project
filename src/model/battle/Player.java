@@ -39,6 +39,13 @@ public abstract class Player {
 //    public abstract void attack(Card card, Square target);
 //    public abstract void useSpecialPower(Card card);
 
+    private int getNumberOfPlayer() {
+        if (this.equals(match.getPlayers()[0]))
+            return 0;
+        else
+            return 1;
+    }
+
     public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean showError) {
 
         if (opponent.opponent.getMana() < playerCard.getMp()) {
@@ -103,6 +110,8 @@ public abstract class Player {
         }
 
         mana -= playerCard.getMp();
+        match.getBattleScene().getBattleHeader().makeHeaderEachTurn(getNumberOfPlayer(), this);
+
         hand.removeUsedCardsFromHand(playerCard);
         playerCard.setPosition(square);
         getCardsOnLand().add(playerCard);
