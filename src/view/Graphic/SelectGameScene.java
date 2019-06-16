@@ -357,13 +357,14 @@ class SelectGameScene {
 
     private static void startGame(Game game, Match match) {
         Random random = new Random();
-        Platform.runLater(() ->
-                StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+        Platform.runLater(() ->{
+                StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
         BattleScene battleScene = BattleScene.getSingleInstance();
         battleScene.setGame(game);
         battleScene.setMatch(match);
         battleScene.setBattleScene(random.nextInt(12) + 1);
         match.initGraphic();
+        });
     }
 }
 

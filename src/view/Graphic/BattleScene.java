@@ -200,7 +200,8 @@ public class BattleScene {
         gifOfCard.setEffect(glow);
     }
 
-    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image, boolean drag, boolean flip) {
+    public Group addCardToBoard(int row, int column, Card card, String mode,
+                                ImageView image, boolean drag, boolean flip) {
         FilesType filesType = FilesType.MINION;
         if (card instanceof Hero)
             filesType = FilesType.HERO;
@@ -215,6 +216,7 @@ public class BattleScene {
                     0, 0, board, spriteProperties.count,
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
+            playMusic("resource\\music\\attack\\attack-2.m4a",false,battleScene);
         } else {
             if (image == null) {
                 String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
@@ -565,7 +567,7 @@ public class BattleScene {
         this.numberOfMap = numberOfMap;
         setMapProperties();
         setMapBackground();
-        GeneralGraphicMethods.playMusic("resource/music/battle_music/" +
+        playMusic("resource/music/battle_music/" +
                 numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(this, root);
