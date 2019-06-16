@@ -41,8 +41,8 @@ public class MakeAndShowClass {
 //                BoxBlur boxblur = new BoxBlur();
 //                StackPane stackPane = new StackPane(root);
 //                scene.setRoot(stackPane);
-//                stackPane.setPadding(Insets.EMPTY);
-
+//                stackPane.setPadding(Insets.EMPTY);Ge
+                GeneralGraphicMethods.playMusic("resource\\music\\error.m4a",false,scene);
                 Rectangle rectangle = new Rectangle(
                         stage.getWidth(),
                         stage.getHeight(),
