@@ -14,7 +14,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.account.Account;
 import model.account.FilesType;
-import model.card.makeFile.NewFileAsli;
+import model.card.makeFile.MakeNewFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,8 +83,8 @@ public class NewCardGraphic {
     private static void done(VBox vBox, String type) {
         vBox.getChildren().clear();
         group.getChildren().remove(enter);
-        NewFileAsli.setHashMaps(hashMaps);
-        NewFileAsli.makeNewCard(account, FilesType.getEnum(type));
+        MakeNewFile.setHashMaps(hashMaps);
+        MakeNewFile.makeNewCard(account, FilesType.getEnum(type));
         if (error.getText() != null && !error.getText().equals("")) {
             error = addText(vBox, error.getText(), 600, 400, Color.RED, 30);
         } else {
@@ -131,10 +131,10 @@ public class NewCardGraphic {
 
     private static void setVBox(VBox vBox, String type) {
         arrayLists.clear();
-        arrayLists.add(NewFileAsli.getFieldNames(FilesType.getEnum(type)));
-        arrayLists.add(NewFileAsli.getChangeFieldNames());
-        arrayLists.add(NewFileAsli.getTargetFieldNames());
-        arrayLists.add(NewFileAsli.getBuffFieldNames());
+        arrayLists.add(MakeNewFile.getFieldNames(FilesType.getEnum(type)));
+        arrayLists.add(MakeNewFile.getChangeFieldNames());
+        arrayLists.add(MakeNewFile.getTargetFieldNames());
+        arrayLists.add(MakeNewFile.getBuffFieldNames());
         changeVBox(vBox, arrayLists.get(0), 1, type);
     }
 

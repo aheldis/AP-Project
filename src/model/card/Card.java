@@ -53,6 +53,9 @@ public abstract class Card {
     private long millis;
     private int heightOfPicture;
 
+    public void setAnimationRow(int animationRow) {
+        this.animationRow = animationRow;
+    }
 
     public void setMillis(long millis) {
         this.millis = millis;
@@ -81,6 +84,7 @@ public abstract class Card {
     public int getCountOfAnimation() {
         return countOfAnimation;
     }
+
 
     public String getPathOfAnimation() {
         return pathOfAnimation;
