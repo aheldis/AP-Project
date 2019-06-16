@@ -42,7 +42,7 @@ public class NewCardGraphic {
             hashMaps.add(new HashMap<>());
         }
 
-        Text fieldName = addText(new Group(), 0, 20, input, Color.rgb(250, 250, 250, 0.8), 20);
+        Text fieldName = addText(new Group(), 20, 0, input, Color.rgb(250, 250, 250, 0.8), 20);
         BorderPane.setMargin(fieldName, new Insets(4, 5, 2, 5));
 
         StackPane stackPane = new StackPane();
@@ -86,9 +86,9 @@ public class NewCardGraphic {
         MakeNewFile.setHashMaps(hashMaps);
         MakeNewFile.makeNewCard(account, FilesType.getEnum(type));
         if (error.getText() != null && !error.getText().equals("")) {
-            error = addText(vBox, 400, 600, error.getText(), Color.RED, 30);
+            error = addText(vBox, 600, 400, error.getText(), Color.RED, 30);
         } else {
-            error = addText(vBox, 400, 600, "Card successfully created.", Color.WHITE, 30);
+            error = addText(vBox, 600, 400, "Card successfully created.", Color.WHITE, 30);
         }
     }
 
@@ -202,7 +202,7 @@ public class NewCardGraphic {
         enter.relocate(1130, 720);
         root.getChildren().addAll(enter);
         addImage(enter, "pics/menu/quit.png", 0, 0, 200, 80);
-        Text text = addText(enter, 30, 70, "ENTER",
+        Text text = addText(enter, 70, 30, "ENTER",
                 Color.rgb(225, 225, 225, 0.7), 30);
         text.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         text.setStroke(Color.rgb(225, 225, 225, 0.3));

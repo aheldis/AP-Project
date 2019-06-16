@@ -35,7 +35,7 @@ class ShopScene {
         Group group = new Group();
         group.relocate(20, (i + 1) * 100 - 50);
         addImage(group, path, 0, 0, 100, 100);
-        Text text = addText(group, 50, 120, input,
+        Text text = addText(group, 120, 50, input,
                 Color.rgb(225, 225, 225, 0.5), 30);
         text.setOnMouseEntered(event -> {
             Glow glow = new Glow();
@@ -163,7 +163,7 @@ class ShopScene {
                         daric.setText("Daric :" + account.getDaric());
                     });
 
-                    addText(group, 225, 20, items.get(k).getName() + "\n" + items.get(k).getCost()
+                    addText(group, 20, 225, items.get(k).getName() + "\n" + items.get(k).getCost()
                             , Color.WHITE, 20);
                     hBox.getChildren().addAll(group);
                     indexOfItem++;
@@ -183,8 +183,8 @@ class ShopScene {
             }
             group = CollectionScene.makeCardGroup(0, 0, cards.get(i), shopScene);
             hBox.getChildren().addAll(group);
-            addText(group, 225, 20, card.getName(), Color.WHITE, 20);
-            addText(group, 245, 20, card.getCost() + "", Color.WHITE, 20);
+            addText(group, 20, 225, card.getName(), Color.WHITE, 20);
+            addText(group, 20, 245, card.getCost() + "", Color.WHITE, 20);
             group.setOnMouseClicked(event -> {//todo set font
                 Shop.getInstance().buy(account, card.getName());
                 daric.setText("Daric :" + account.getDaric());
@@ -263,7 +263,7 @@ class ShopScene {
         root.getChildren().add(rectangle);
 
         addImage(root, "pics/shop/diamond.png", 25, 750, 50, 50);
-        Text daric = addText(root, 775, 80, "Daric: " + account.getDaric(),
+        Text daric = addText(root, 80, 775, "Daric: " + account.getDaric(),
                 Color.rgb(225, 225, 225, 0.5), 20);
 
 
@@ -362,7 +362,7 @@ class ShopScene {
                         hBox1.getChildren().addAll(group1);
                         hBoxes.add(hBox1);
                         root.getChildren().addAll(hBox1);
-                        addText(group1, 230, 50, account.getUserName() + "_" + cardName + "_" +
+                        addText(group1, 50, 230, account.getUserName() + "_" + cardName + "_" +
                                         account.getCollection().getNumberOfCardId((Card) object),
                                 Color.WHITE, 20);
                     }

@@ -613,7 +613,7 @@ public abstract class Card {
     }
 
     public void useSpecialPower(Square cardSquare) {
-
+        System.out.println("Card.useSpecialPower");
         ErrorType error;
         if (this instanceof Spell) {
             error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;

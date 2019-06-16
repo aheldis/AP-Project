@@ -225,7 +225,7 @@ public class GeneralGraphicMethods {
                         400, height, 50, 50, Color.rgb(0, 0, 0, 0.7));
                 ImageView close = addImage(root,
                         "pics/collection/button_close@2x.png", 800, 200, 50, 50);
-                Text text = addText(root, 250, 470, helps,
+                Text text = addText(root, 470, 250, helps,
                         Color.rgb(225, 225, 225, 0.8), 20);
                 close.setOnMouseClicked(event131 -> root.getChildren().removeAll(text, close, rectangle));
             });
@@ -282,7 +282,7 @@ public class GeneralGraphicMethods {
     }
 
     static void setOnMouseEntered(Node node, Scene scene, boolean glowBoolean) {
-        playMusic("resource\\music\\sfx_ui_tab_in.m4a",false,scene);
+        playMusic("resource/music/sfx_ui_tab_in.m4a",false,scene);
         Glow glow = new Glow(0);
         node.setEffect(glow);
         node.setOnMouseEntered(event -> {

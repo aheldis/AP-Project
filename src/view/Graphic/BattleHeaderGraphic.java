@@ -4,12 +4,16 @@ import javafx.scene.Group;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import model.battle.Player;
 import view.enums.StateType;
+
 
 import java.io.File;
 import java.util.Random;
@@ -65,12 +69,11 @@ public class BattleHeaderGraphic {
 
     private void addNumberToMana(Group group, int numberOfMana, double x, double y) {
         Text text;
-        if(x>500){
-            x-= 60;
-        }
-        else
-            x=x + 9 * 28+8;
-        text= GeneralGraphicMethods.addText(group, y + 5, x, numberOfMana + " / 9",
+        if (x > 500) {
+            x -= 60;
+        } else
+            x = x + 9 * 28 + 8;
+        text = GeneralGraphicMethods.addText(group, x, y + 5, numberOfMana + " / 9",
                 Color.rgb(225, 225, 225), 25);
         text.setStroke(Color.rgb(0, 0, 0, 0.5));
         text.setStrokeWidth(1);
@@ -93,6 +96,7 @@ public class BattleHeaderGraphic {
                         "pics/battle_categorized/icon_mana_inactive@2x.png",
                         x + i * 28, y, 25, 25);
         }
+        addNumberToMana(group, numberOfMana, x + 9 * 28 + 5, y);
     }
 
     private void addCoolDown(double x, double y, Group group, int turnNotUsedSpecialPower, int coolDown) {
@@ -103,7 +107,10 @@ public class BattleHeaderGraphic {
             Color color = Color.rgb(200, 200, 200, 0.8);
             if (i < turnNotUsedSpecialPower)
                 color = Color.rgb(0, 200, 200, 0.8);
-            GeneralGraphicMethods.addRectangle(coolDownGroup, currentX, currentY, 10, 10, 3, 3, color);
+            Rectangle rectangle = GeneralGraphicMethods.addRectangle(coolDownGroup, currentX, currentY, 10,
+                    10, 3, 3, color);
+            rectangle.setStroke(Color.BLACK);
+            rectangle.setStrokeWidth(1.5);
             currentX += 12;
             tillNow++;
             if (tillNow > 3) {
@@ -127,10 +134,31 @@ public class BattleHeaderGraphic {
 
     private void addHeroSpecialPower(double x, double y, Group group, int ind, int turnNotUsedSpecialPower, int coolDown) {
         ImageView imageView = SpriteMaker.getInstance().makeSpritePic(specialPowersPath[ind],
-                x, y, group, 19, 3, 2500, 35, 34.5);
+                x, y, group, 19, 3, 2500, 34.5, 34.5);
+
+
+        imageView.setFitWidth(35);
+        imageView.setFitHeight(35);
+
+        Circle circle = new Circle(x + imageView.getFitWidth() / 2,
+                y+ imageView.getFitHeight() / 2, imageView.getFitWidth() + 5);
+        circle.setStroke(Color.rgb(0, 204, 255));
+        circle.setStrokeWidth(0);
+        circle.setFill(Color.gray(1,0.01));
+        group.getChildren().add(circle);
+
+        GeneralGraphicMethods.setOnMouseEntered(circle, StageLauncher.getScene(StateType.BATTLE), true);
         GeneralGraphicMethods.setOnMouseEntered(imageView, StageLauncher.getScene(StateType.BATTLE), true);
-        imageView.setOnMouseClicked(event -> {
-            //todo Logic;
+        circle.setOnMouseClicked(event -> {
+            if (!battleScene.isHeroSpecialPowerClicked()) {
+                battleScene.setHeroSpecialPowerClicked(true);
+                circle.setStrokeWidth(5);
+            }
+            else {
+                battleScene.setHeroSpecialPowerClicked(false);
+                circle.setStrokeWidth(0);
+            }
+
         });
 
         addCoolDown(x, y + 50, group, turnNotUsedSpecialPower, coolDown);

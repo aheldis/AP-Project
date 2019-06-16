@@ -75,7 +75,7 @@ public class BattleFooterGraphic {
             ImageView backgroundCircle = addImage(handCardGroup,
                     "pics/battle/hand_card.png", 0, 0, 140, 140);
             addImage(handCardGroup, "pics/other/icon_mana@2x.png", 60, 107, 30, 30);
-            addText(handCardGroup, 115, 72, card.getMp() + "",
+            addText(handCardGroup, 72, 115, card.getMp() + "",
                     Color.rgb(0, 0, 0, 0.5), 15);
             makeCircleRotation(backgroundCircle, 70, 70);
             ImageView gif = addGif(group, handCardGroup, card, 0, 0);

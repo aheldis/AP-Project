@@ -51,6 +51,7 @@ public class BattleScene {
     private ImageView imageOfSelectedCard;
     private Glow glow = new Glow();
     private HashMap<Card, ImageView> cardsHashMap = new HashMap<>();
+    private boolean heroSpecialPowerClicked = false;
 
     private BattleScene() {
     }
@@ -62,6 +63,7 @@ public class BattleScene {
     public static BattleScene getSingleInstance() {
         if (singleInstance == null)
             singleInstance = new BattleScene();
+        singleInstance.heroSpecialPowerClicked = false;
         return singleInstance;
     }
 
@@ -77,10 +79,6 @@ public class BattleScene {
 
     public Pair<Double, Double> getCellPosition(int row, int column) {
         return new Pair<>(gameGrid[row][column].getLayoutX(), gameGrid[row][column].getLayoutY());
-    }
-
-    public HashMap<Card, ImageView> getCardsHashMap() {
-        return cardsHashMap;
     }
 
     public void removeNodeFromBoard(Node node) {
@@ -130,6 +128,78 @@ public class BattleScene {
             }
         return null;
     }
+
+    private Pair<Integer, Integer> withinRange(Point2D point2D) {
+        for (int ii = 0; ii < 5; ii++)
+            for (int jj = 0; jj < 9; jj++) {
+                if (gameGrid[ii][jj].getBoundsInParent().contains(point2D))
+                    return new Pair<>(ii, jj);
+            }
+        return null;
+    }
+
+    private void selectCard(Card card, ImageView gifOfCard, Rectangle grid) {
+        selectedCard = card;
+        imageOfSelectedCard = gifOfCard;
+        grid.setFill(Color.GOLD);
+        coloredRectangles.add(grid);
+        glow = new Glow(1);
+        gifOfCard.setEffect(glow);
+    }
+
+    public Group addCardToBoard(int row, int column, Card card, String mode,
+                                ImageView image, boolean drag, boolean flip) {
+        FilesType filesType = FilesType.MINION;
+        if (card instanceof Hero)
+            filesType = FilesType.HERO;
+
+        ImageView imageView;
+        Pair<Double, Double> position = getCellPosition(row, column);
+
+        if (mode.equals("ATTACK")) {
+            SpriteAnimationProperties spriteProperties = new SpriteAnimationProperties(
+                    card.getName(), filesType, card.getCountOfAnimation());
+            imageView = SpriteMaker.getInstance().makeSpritePic(spriteProperties.spriteSheetPath,
+                    0, 0, board, spriteProperties.count,
+                    spriteProperties.rows, card.getMillis(),
+                    (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
+            playMusic("resource/music/attack/attack-2.m4a", false, battleScene);
+        } else {
+            if (image == null) {
+                String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
+                imageView = addImage(board, path, 0, 0, 110, 150);
+                imageView.setScaleX(2);
+                imageView.setScaleY(2);
+                if (flip) {
+                    imageView.setRotationAxis(Rotate.Y_AXIS);
+                    imageView.setRotate(180);
+                    getCell(row, column).setFill(Color.RED);
+                }
+            } else {
+                imageView = image;
+                imageView.relocate(0, 0);
+                imageView.setScaleX(1.8);
+                imageView.setScaleY(1.8);
+                board.getChildren().add(image);
+            }
+            //root.getChildren().add(imageView);
+        }
+
+        assert imageView != null;
+        imageView.relocate(position.getKey() - 8, position.getValue() - 48);
+        imageView.setFitWidth(mapProperties.cellWidth + 10);
+        imageView.setFitHeight(mapProperties.cellHeight + 20);
+        setOnMouseEntered(imageView, card, flip);
+        cardsHashMap.put(card, imageView);
+
+        if (drag) {
+            DragAndDrop dragAndDrop = new DragAndDrop();
+            dragAndDrop.dragAndDropForGame(imageView, card, null, board, root,
+                    imageView.getFitWidth() / 2, imageView.getFitHeight() / 2,
+                    imageView.getLayoutX(), imageView.getLayoutY());
+        }
+        return board;
+    }
     //*/
 /*
     Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
@@ -175,87 +245,22 @@ public class BattleScene {
     }
 //*/
 
-    private Pair<Integer, Integer> withinRange(Point2D point2D) {
-        for (int ii = 0; ii < 5; ii++)
-            for (int jj = 0; jj < 9; jj++) {
-                if (gameGrid[ii][jj].getBoundsInParent().contains(point2D))
-                    return new Pair<>(ii, jj);
-            }
-        return null;
-    }
-
-
-    void removeColorFromRectangles() {
-        for (Rectangle rectangle : coloredRectangles)
-            rectangle.setFill(Color.BLACK);
-        coloredRectangles.removeAll(coloredRectangles);
-    }
-
-    private void selectCard(Card card, ImageView gifOfCard, Rectangle grid) {
-        selectedCard = card;
-        imageOfSelectedCard = gifOfCard;
-        grid.setFill(Color.GOLD);
-        coloredRectangles.add(grid);
-        glow = new Glow(1);
-        gifOfCard.setEffect(glow);
-    }
-
-    public Group addCardToBoard(int row, int column, Card card, String mode,
-                                ImageView image, boolean drag, boolean flip) {
-        FilesType filesType = FilesType.MINION;
-        if (card instanceof Hero)
-            filesType = FilesType.HERO;
-
-        ImageView imageView;
-        Pair<Double, Double> position = getCellPosition(row, column);
-
-        if (mode.equals("ATTACK")) {
-            SpriteAnimationProperties spriteProperties = new SpriteAnimationProperties(
-                    card.getName(), filesType, card.getCountOfAnimation());
-            imageView = SpriteMaker.getInstance().makeSpritePic(spriteProperties.spriteSheetPath,
-                    0, 0, board, spriteProperties.count,
-                    spriteProperties.rows, card.getMillis(),
-                    (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
-            playMusic("resource/music/attack/attack-2.m4a",false,battleScene);
-        } else {
-            if (image == null) {
-                String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
-                imageView = addImage(board, path, 0, 0, 110, 150);
-                imageView.setScaleX(2);
-                imageView.setScaleY(2);
-                if (flip) {
-                    imageView.setRotationAxis(Rotate.Y_AXIS);
-                    imageView.setRotate(180);
-                    getCell(row, column).setFill(Color.RED);
-                }
-            } else {
-                imageView = image;
-                imageView.relocate(0, 0);
-                imageView.setScaleX(1.8);
-                imageView.setScaleY(1.8);
-                board.getChildren().add(image);
-            }
-            //root.getChildren().add(imageView);
-        }
-
-        assert imageView != null;
-        imageView.relocate(position.getKey() - 8, position.getValue() - 48);
-        imageView.setFitWidth(mapProperties.cellWidth + 10);
-        imageView.setFitHeight(mapProperties.cellHeight + 20);
-        setOnMouseEntered(imageView, card, flip);
-        cardsHashMap.put(card, imageView);
-
-        if (drag) {
-            DragAndDrop dragAndDrop = new DragAndDrop();
-            dragAndDrop.dragAndDropForGame(imageView, card, null, board, root,
-                    imageView.getFitWidth() / 2, imageView.getFitHeight() / 2,
-                    imageView.getLayoutX(), imageView.getLayoutY());
-        }
-        return board;
-    }
-
     public Rectangle getCell(int row, int column) {
         return gameGrid[row][column];
+    }
+
+
+    private void setOnMouseClickedForSpecialPower(Node node, Coordinate coordinate){
+        //todo add for minion and hero :-?
+        /*todo yani inkenegah kone age oon boolean e true bood select nakone o ina
+          todo for more information contact Sba
+         */
+        node.setOnMouseClicked(event -> {
+            if (isHeroSpecialPowerClicked()) {
+                match.getPlayers()[0].getHero().useSpecialPower(match.getLand().passSquareInThisCoordinate(coordinate));
+                setHeroSpecialPowerClicked(false);
+            }
+        });
     }
 
     private void setOnMouseEntered(ImageView imageOfCard, Card card, boolean enemy) {
@@ -277,6 +282,7 @@ public class BattleScene {
 
         if (enemy) {
             imageOfCard.setOnMouseClicked(event -> {
+
                 if (selectedCard != null && selectedCard.canAttack(card)) {
                     selectedCard.attack(card);
                     imageOfSelectedCard.setOpacity(0);
@@ -285,14 +291,9 @@ public class BattleScene {
                             "ATTACK", null, false, false);
                     backToDefault();
                 }
+
             });
         }
-    }
-
-    void backToDefault() {
-        selectedCard = null;
-        removeColorFromRectangles();
-        glow.setLevel(0);
     }
 
     public void test() {
@@ -380,6 +381,13 @@ public class BattleScene {
                 rectangle.setOpacity(0.2);
                 rectangle.relocate(currentX, currentY);
                 gameGrid[i][j] = rectangle;
+
+                Coordinate coordinate = new Coordinate();
+                coordinate.setX(i);
+                coordinate.setY(j);
+
+                setOnMouseClickedForSpecialPower(rectangle, coordinate);
+
                 positionHashMap.put(gameGrid[i][j], match.getLand().getSquares()[i][j]);
                 board.getChildren().add(rectangle);
             }
@@ -509,6 +517,14 @@ public class BattleScene {
         });
     }
 
+    public boolean isHeroSpecialPowerClicked() {
+        return heroSpecialPowerClicked;
+    }
+
+    public void setHeroSpecialPowerClicked(boolean heroSpecialPowerClicked) {
+        this.heroSpecialPowerClicked = heroSpecialPowerClicked;
+    }
+
     void showCanMoveToCoordinations(Card card) {
         ArrayList<Square> squares = card.getCanMoveToSquares();
         for (Square square : squares) {
@@ -536,6 +552,22 @@ public class BattleScene {
     void setOnMousePressedPosition(Card card) {
         backToDefault();
         this.onMousePressedPosition = card.getPosition();
+    }
+
+    void backToDefault() {
+        selectedCard = null;
+        removeColorFromRectangles();
+        glow.setLevel(0);
+    }
+
+    void removeColorFromRectangles() {
+        for (Rectangle rectangle : coloredRectangles)
+            rectangle.setFill(Color.BLACK);
+        coloredRectangles.removeAll(coloredRectangles);
+    }
+
+    public HashMap<Card, ImageView> getCardsHashMap() {
+        return cardsHashMap;
     }
 
     public Match getMatch() {

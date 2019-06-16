@@ -44,25 +44,94 @@ public class Match {
     private BattleScene battleScene;
     private int matchNumber = 0;
 
-    BattleScene getBattleScene() {
-        return battleScene;
+    Match(Player[] players, String mode, int numberOfFlags, int reward) {
+        new Thread(() -> {
+            System.out.println("hi");
+            try {
+                File file = new File("PausedGames/NumberOfMap");
+                Scanner fileReader = new Scanner(file);
+                FileWriter fileWriter = new FileWriter(file, true);
+                int line = 1;
+                while (fileReader.hasNextLine()) {
+                    fileReader.nextLine();
+                    line++;
+                }
+                if (line != 1)
+                    line--;//we add \n at each writing
+
+
+                fileWriter.write(line + "\n");
+                matchNumber = line;
+                fileWriter.close();
+                fileReader.close();
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }).start();
+        land = new LandOfGame();
+        Hero firstHero = players[0].getMainDeck().getHero();
+        Hero secondHero = players[1].getMainDeck().getHero();
+        for (int i = 0; i < 2; i++) {
+            ArrayList<Card> cards = players[i].getMainDeck().getCardsOfDeck();
+            Hero hero = players[i].getMainDeck().getHero();
+            players[i].setMatch(this);
+            for (Card card : cards) {
+                card.setPlayer(players[i]);
+                card.setLandOfGame(land);
+            }
+            hero.setPlayer(players[0]);
+            hero.setLandOfGame(land);
+            hero.setCanMove(true, 1);
+            hero.setCanAttack(true, 1);
+            players[i].setOpponent(players[1 - i]);
+            players[i].setMana(2);
+        }
+
+        this.players = players;
+        this.mode = mode;
+        this.numberOfFlags = numberOfFlags;
+        this.reward = reward;
+
+        Square[][] square = land.getSquares();
+
+        square[2][0].setObject(players[0].getMainDeck().getHero());
+        firstHero.setPosition(square[2][0]);
+
+        square[2][8].setObject(players[1].getMainDeck().getHero());
+        secondHero.setPosition(square[2][8]);
+
+//        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
+//        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
+
+        date = new Date();
+        //set mana : meqdare avaliye mana baraye player inline behesh 2 dadam
+
+        initGame();
     }
 
-
-    public int getReward() {
-        return reward;
-    }
-
-    public int getMatchNumber() {
-        return matchNumber;
-    }
-
-    public ArrayList<Flag> getFlags() {
-        return flags;
+    private void initGame() {
+        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
+        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
     }
 
     public void addToGameFlags(Flag flag) {
         this.flags.add(flag);
+    }
+
+    public void initGraphic() {
+        this.battleScene = BattleScene.getSingleInstance();
+        Hero firstHero = players[0].getMainDeck().getHero();
+        Hero secondHero = players[1].getMainDeck().getHero();
+        battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null, true, false);
+        battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null, false, true);
+        if (mode.equals(Game.getModeAsString(3))) {
+            setFlagsRandomly(3);
+        }
+        if (mode.equals(Game.getModeAsString(2))) {
+            setFlagsRandomly(2);
+        }
+        setCollectiblesRandomly();
     }
 
     private void setFlagsRandomly(int mode) {
@@ -130,87 +199,6 @@ public class Match {
         }
     }
 
-    public void initGraphic() {
-        this.battleScene = BattleScene.getSingleInstance();
-        Hero firstHero = players[0].getMainDeck().getHero();
-        Hero secondHero = players[1].getMainDeck().getHero();
-        battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null, true, false);
-        battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null, false, true);
-        if (mode.equals(Game.getModeAsString(3))) {
-            setFlagsRandomly(3);
-        }
-        if (mode.equals(Game.getModeAsString(2))) {
-            setFlagsRandomly(2);
-        }
-        setCollectiblesRandomly();
-    }
-
-    Match(Player[] players, String mode, int numberOfFlags, int reward) {
-        new Thread(() -> {
-            System.out.println("hi");
-            try {
-                File file = new File("PausedGames/NumberOfMap");
-                Scanner fileReader = new Scanner(file);
-                FileWriter fileWriter = new FileWriter(file, true);
-                int line = 1;
-                while (fileReader.hasNextLine()) {
-                    fileReader.nextLine();
-                    line++;
-                }
-                if (line != 1)
-                    line--;//we add \n at each writing
-
-
-                fileWriter.write(line + "\n");
-                matchNumber = line;
-                fileWriter.close();
-                fileReader.close();
-
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }).start();
-        land = new LandOfGame();
-        Hero firstHero = players[0].getMainDeck().getHero();
-        Hero secondHero = players[1].getMainDeck().getHero();
-        for (int i = 0; i < 2; i++) {
-            ArrayList<Card> cards = players[i].getMainDeck().getCardsOfDeck();
-            Hero hero = players[i].getMainDeck().getHero();
-            players[i].setMatch(this);
-            for (Card card : cards) {
-                card.setPlayer(players[i]);
-                card.setLandOfGame(land);
-            }
-            hero.setPlayer(players[0]);
-            hero.setLandOfGame(land);
-            hero.setCanMove(true, 1);
-            hero.setCanAttack(true, 1);
-            players[i].setOpponent(players[1 - i]);
-            players[i].setMana(2);
-        }
-
-        this.players = players;
-        this.mode = mode;
-        this.numberOfFlags = numberOfFlags;
-        this.reward = reward;
-
-        Square[][] square = land.getSquares();
-
-        square[2][0].setObject(players[0].getMainDeck().getHero());
-        firstHero.setPosition(square[2][0]);
-
-        square[2][8].setObject(players[1].getMainDeck().getHero());
-        secondHero.setPosition(square[2][8]);
-
-//        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
-//        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
-
-        date = new Date();
-        //set mana : meqdare avaliye mana baraye player inline behesh 2 dadam
-
-        initGame();
-    }
-
     public Player passPlayerWithTurn() {
         if (whichPlayer == 0)
             return players[0];
@@ -273,37 +261,6 @@ public class Match {
         }
     }
 
-//    public void startMatch() {
-//        date = new Date();
-//
-//        initGame();
-//        players[0].initPerTurn();
-//        players[1].initPerTurn();
-//
-//        while (true) {
-//            players[whichPlayer].playTurn();
-//            if (gameEnded()) {
-//                endGame();
-//                break;
-//            }
-//            whichPlayer = 1 - whichPlayer;
-//        }
-//    }
-
-    private int passComputerPlayer() {
-        if (players[0] instanceof ComputerPlayer)
-            return 0;
-        if (players[1] instanceof ComputerPlayer)
-            return 1;
-        else
-            return -1;
-    }
-
-    private void initGame() {
-        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
-        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
-    }
-
     private boolean gameEnded() {
         switch (mode) {
             case "DeathMode": {
@@ -360,10 +317,9 @@ public class Match {
         loser.addMatchInfo(matchInfo);
         winner.getAccount().changeValueOfDaric(reward);
 
-        if(winner instanceof ComputerPlayer){
+        if (winner instanceof ComputerPlayer) {
             loss();
-        }
-        else {
+        } else {
             win();
         }
 
@@ -371,75 +327,117 @@ public class Match {
 //        battleView.endGameView(this);
     }
 
-    public static void win(){
-        Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
-        Group root =(Group)battleScene.getRoot();
-        root.getChildren().clear();
-        setBackground(root,
-                "pics/battle/back.png",true,20,20);
-
-        playMusic("resource/music/sfx_victory_match_w_vo.m4a",false,battleScene);
-
-        addImage(root,"pics/battle/general_f1@2x.png",-200,-100,1800,1200);
-        addImage(root,"pics/battle/scene_diamonds_background_victory@2x.png",0,0,
-                (int)StageLauncher.getWidth(),(int)StageLauncher.getHeight());
-        addImage(root,"pics/battle/scene_diamonds_background_victory@2x.png",300,-300,
-                1000,1000);
-        addImage(root,"pics\\battle\\scene_diamonds_middleground_victory@2x.png",
-                0,0,StageLauncher.getWidth(),StageLauncher.getHeight());
-
-        Text text = addText(root, 100, 600, "VICTORY",
-                Color.rgb(225,225,225,0.8),70);
-        addImage(root,"pics/battle/highlight_white.png",300,-35,800,250);
-        addText(root, 130, 630, "click anywhere to continue", Color.WHITE,20);
-        Glow glow = new Glow();
-        glow.setLevel(20);
-        text.setEffect(glow);
-        BattleScene.changeSingleInstance(null);
-        battleScene.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                StageLauncher.decorateScene(StateType.MAIN_MENU);
-            }
-        });
+    private int passComputerPlayer() {
+        if (players[0] instanceof ComputerPlayer)
+            return 0;
+        if (players[1] instanceof ComputerPlayer)
+            return 1;
+        else
+            return -1;
     }
 
-    public static void loss(){
-        Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
-        Group root =(Group)battleScene.getRoot();
-        root.getChildren().clear();
-        setBackground(root,
-                "pics\\battle\\back.png",true,20,20);
-
-        playMusic("resource\\music\\defeat.m4a",false,battleScene);
-
-        addImage(root,"pics\\battle\\general_f4@2x.png",-200,-100,1800,1200);
-        addImage(root,"pics\\battle\\scene_diamonds_background_defeat@2x.png",0,0,
-                (int)StageLauncher.getWidth(),(int)StageLauncher.getHeight());
-        addImage(root,"pics\\battle\\scene_diamonds_background_defeat@2x.png",300,-300,
-                1000,1000);
-        addImage(root,"pics\\battle\\scene_diamonds_middleground_defeat@2x.png",
-                0,0,StageLauncher.getWidth(),StageLauncher.getHeight());
-
-        Text text = addText(root,"DEFEAT",600,100,
-                Color.rgb(225,225,225,0.8),70);
-        addImage(root,"pics\\battle\\highlight_red.png",300,35,800,100);
-        addText(root,"click anywhere to continue",630,130,Color.WHITE,20);
-        Glow glow = new Glow();
-        glow.setLevel(20);
-        text.setEffect(glow);
-        BattleScene.changeSingleInstance(null);
-        battleScene.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                StageLauncher.decorateScene(StateType.MAIN_MENU);
-            }
-        });
-    }
+//    public void startMatch() {
+//        date = new Date();
+//
+//        initGame();
+//        players[0].initPerTurn();
+//        players[1].initPerTurn();
+//
+//        while (true) {
+//            players[whichPlayer].playTurn();
+//            if (gameEnded()) {
+//                endGame();
+//                break;
+//            }
+//            whichPlayer = 1 - whichPlayer;
+//        }
+//    }
 
     private void setWinnerAndLoser(Player winner, Player loser) {
         this.winner = winner;
         this.loser = loser;
+    }
+
+    public static void loss() {
+        Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
+        Group root = (Group) battleScene.getRoot();
+        root.getChildren().clear();
+        setBackground(root,
+                "pics/battle/back.png", true, 20, 20);
+
+        playMusic("resource/music/defeat.m4a", false, battleScene);
+
+        addImage(root, "pics/battle/general_f4@2x.png", -200, -100, 1800, 1200);
+        addImage(root, "pics/battle/scene_diamonds_background_defeat@2x.png", 0, 0,
+                (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight());
+        addImage(root, "pics/battle/scene_diamonds_background_defeat@2x.png", 300, -300,
+                1000, 1000);
+        addImage(root, "pics/battle/scene_diamonds_middleground_defeat@2x.png",
+                0, 0, StageLauncher.getWidth(), StageLauncher.getHeight());
+
+        Text text = addText(root, 100, 600, "DEFEAT",
+                Color.rgb(225, 225, 225, 0.8), 70);
+        addImage(root, "pics/battle/highlight_red.png", 300, 35, 800, 100);
+        addText(root, 130, 630, "click anywhere to continue", Color.WHITE, 20);
+        Glow glow = new Glow();
+        glow.setLevel(20);
+        text.setEffect(glow);
+        BattleScene.changeSingleInstance(null);
+        battleScene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                StageLauncher.decorateScene(StateType.MAIN_MENU);
+            }
+        });
+    }
+
+    public static void win() {
+        Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
+        Group root = (Group) battleScene.getRoot();
+        root.getChildren().clear();
+        setBackground(root,
+                "pics/battle/back.png", true, 20, 20);
+
+        playMusic("resource/music/sfx_victory_match_w_vo.m4a", false, battleScene);
+
+        addImage(root, "pics/battle/general_f1@2x.png", -200, -100, 1800, 1200);
+        addImage(root, "pics/battle/scene_diamonds_background_victory@2x.png", 0, 0,
+                (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight());
+        addImage(root, "pics/battle/scene_diamonds_background_victory@2x.png", 300, -300,
+                1000, 1000);
+        addImage(root, "pics/battle/scene_diamonds_middleground_victory@2x.png",
+                0, 0, StageLauncher.getWidth(), StageLauncher.getHeight());
+
+        Text text = addText(root, 600, 100, "VICTORY",
+                Color.rgb(225, 225, 225, 0.8), 70);
+        addImage(root, "pics/battle/highlight_white.png", 300, -35, 800, 250);
+        addText(root, 630, 130, "click anywhere to continue", Color.WHITE, 20);
+        Glow glow = new Glow();
+        glow.setLevel(20);
+        text.setEffect(glow);
+        BattleScene.changeSingleInstance(null);
+        battleScene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                StageLauncher.decorateScene(StateType.MAIN_MENU);
+            }
+        });
+    }
+
+    BattleScene getBattleScene() {
+        return battleScene;
+    }
+
+    public int getReward() {
+        return reward;
+    }
+
+    public int getMatchNumber() {
+        return matchNumber;
+    }
+
+    public ArrayList<Flag> getFlags() {
+        return flags;
     }
 
     public Player[] getPlayers() {
@@ -458,12 +456,12 @@ public class Match {
         this.winner = winner;
     }
 
-    public void setLoser(Player loser) {
-        this.loser = loser;
-    }
-
     public Player getLoser() {
         return loser;
+    }
+
+    public void setLoser(Player loser) {
+        this.loser = loser;
     }
 
     public LandOfGame getLand() {

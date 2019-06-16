@@ -65,7 +65,7 @@ class SelectGameScene {
                 group.relocate(210 * (column) + 10, 110 * (i % 7) + 10);
                 addImage(group, "pics/battle/select_mode/notification_quest_small@2x.png"
                         , 0, 0, 200, 100);
-                addText(group, 40, 50, decks.get(i).getName(),
+                addText(group, 50, 40, decks.get(i).getName(),
                         Color.rgb(225, 225, 225, 0.5), 20);
 
                 selectGameRoot.getChildren().addAll(group);
@@ -83,7 +83,7 @@ class SelectGameScene {
     }
 
     private static Text showDescForStoryGame(String input, int x) {
-        Text text = addText(selectGameRoot, 600, x - 150, input,
+        Text text = addText(selectGameRoot, x - 150, 600, input,
                 Color.rgb(225, 225, 225, 0.8), 30);
         text.setStroke(Color.rgb(0, 0, 0, 0.5));
 
@@ -228,15 +228,15 @@ class SelectGameScene {
 
         });
 
-        Text multiPlayer = addText(selectGameRoot, 230, 350 - 5, "Multi Player",
+        Text multiPlayer = addText(selectGameRoot, 350 - 5, 230, "Multi Player",
                 Color.rgb(0, 0, 0, 0.6), 30);
         multiPlayer.setStyle("-fx-font-weight: bold");
 
-        Text customGame = addText(selectGameRoot, 230, 650 - 5, "Single Player\nCustom Game",
+        Text customGame = addText(selectGameRoot, 650 - 5, 230, "Single Player\nCustom Game",
                 Color.rgb(0, 0, 0, 0.6), 30);
         customGame.setStyle("-fx-font-weight: bold");
 
-        Text storyGame = addText(selectGameRoot, 230, 950 - 5, "Single Player\nStory  Game"
+        Text storyGame = addText(selectGameRoot, 950 - 5, 230, "Single Player\nStory  Game"
                 , Color.rgb(0, 0, 0, 0.6), 30);
         storyGame.setFont(Font.font("Lato-Light", FontWeight.BOLD, 30));
 
@@ -255,19 +255,19 @@ class SelectGameScene {
         ImageView collectFlagImage = addImage(selectModeRoot,
                 "pics/battle/select_mode/collect_flag.jpg", 300, 200, 250, 400);
 
-        Text collectFlagText = addText(selectModeRoot, 220, 350, "Collect Flags",
+        Text collectFlagText = addText(selectModeRoot, 350, 220, "Collect Flags",
                 Color.rgb(5, 100, 225, 0.6), 30);
         collectFlagText.setFont(Font.font("Lato-bold", FontWeight.BOLD, 30));
 
         ImageView saveFlagImage = addImage(selectModeRoot,
                 "pics/battle/select_mode/save_flag_mode.jpg", 600, 200, 250, 400);
-        Text saveFlagText = addText(selectModeRoot, 220, 650, "Save Flag",
+        Text saveFlagText = addText(selectModeRoot, 650, 220, "Save Flag",
                 Color.rgb(25, 205, 225, 0.6), 30);
         saveFlagText.setFont(Font.font("Lato-bold", FontWeight.BOLD, 30));
 
         ImageView deathImage = addImage(selectModeRoot,
                 "pics/battle/select_mode/Death_mode.jpg", 900, 200, 250, 400);
-        Text deathModeText = addText(selectModeRoot, 220, 950, "Death Mode",
+        Text deathModeText = addText(selectModeRoot, 950, 220, "Death Mode",
                 Color.rgb(25, 205, 225, 0.6), 30);
         deathModeText.setFont(Font.font("Lato-bold", FontWeight.BOLD, 30));
 
@@ -311,7 +311,7 @@ class SelectGameScene {
                 setBackground(root,
                         "pics/battle/select_mode/select_mode_background.jpg",
                         true, 10.0f, 10.0f);
-                Text enterNumbersOfFlag = addText(root, 200, 500, "Enter Numbers Of Flags",
+                Text enterNumbersOfFlag = addText(root, 500, 200, "Enter Numbers Of Flags",
                         Color.rgb(0, 25, 225, 0.8), 40);
                 enterNumbersOfFlag.setFont(Font.font("Luminari", 30));
                 enterNumbersOfFlag.setStrokeWidth(1);
