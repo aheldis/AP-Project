@@ -361,6 +361,18 @@ public class Match {
         loser.addMatchInfo(matchInfo);
         winner.getAccount().changeValueOfDaric(reward);
 
+        if(winner instanceof ComputerPlayer){
+            loss();
+        }
+        else {
+            win();
+        }
+
+//        BattleView battleView = BattleView.getInstance();
+//        battleView.endGameView(this);
+    }
+
+    public static void win(){
         Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
         Group root =(Group)battleScene.getRoot();
         root.getChildren().clear();
@@ -374,6 +386,8 @@ public class Match {
                 (int)StageLauncher.getWidth(),(int)StageLauncher.getHeight());
         addImage(root,"pics\\battle\\scene_diamonds_background_victory@2x.png",300,-300,
                 1000,1000);
+        addImage(root,"pics\\battle\\scene_diamonds_middleground_victory@2x.png",
+                0,0,StageLauncher.getWidth(),StageLauncher.getHeight());
 
         Text text = addText(root,"VICTORY",600,100,
                 Color.rgb(225,225,225,0.8),70);
@@ -389,9 +403,39 @@ public class Match {
                 StageLauncher.decorateScene(StateType.MAIN_MENU);
             }
         });
+    }
 
-//        BattleView battleView = BattleView.getInstance();
-//        battleView.endGameView(this);
+    public static void loss(){
+        Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
+        Group root =(Group)battleScene.getRoot();
+        root.getChildren().clear();
+        setBackground(root,
+                "pics\\battle\\back.png",true,20,20);
+
+        playMusic("resource\\music\\defeat.m4a",false,battleScene);
+
+        addImage(root,"pics\\battle\\general_f4@2x.png",-200,-100,1800,1200);
+        addImage(root,"pics\\battle\\scene_diamonds_background_defeat@2x.png",0,0,
+                (int)StageLauncher.getWidth(),(int)StageLauncher.getHeight());
+        addImage(root,"pics\\battle\\scene_diamonds_background_defeat@2x.png",300,-300,
+                1000,1000);
+        addImage(root,"pics\\battle\\scene_diamonds_middleground_defeat@2x.png",
+                0,0,StageLauncher.getWidth(),StageLauncher.getHeight());
+
+        Text text = addText(root,"DEFEAT",600,100,
+                Color.rgb(225,225,225,0.8),70);
+        addImage(root,"pics\\battle\\highlight_red.png",300,35,800,100);
+        addText(root,"click anywhere to continue",630,130,Color.WHITE,20);
+        Glow glow = new Glow();
+        glow.setLevel(20);
+        text.setEffect(glow);
+        BattleScene.changeSingleInstance(null);
+        battleScene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                StageLauncher.decorateScene(StateType.MAIN_MENU);
+            }
+        });
     }
 
     private void setWinnerAndLoser(Player winner, Player loser) {

@@ -282,6 +282,7 @@ public class GeneralGraphicMethods {
     }
 
     static void setOnMouseEntered(Node node, Scene scene, boolean glowBoolean) {
+        playMusic("resource\\music\\sfx_ui_tab_in.m4a",false,scene);
         Glow glow = new Glow(0);
         node.setEffect(glow);
         node.setOnMouseEntered(event -> {

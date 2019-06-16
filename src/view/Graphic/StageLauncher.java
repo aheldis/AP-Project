@@ -18,6 +18,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.account.Account;
+import model.battle.Match;
 import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
@@ -179,6 +180,8 @@ public class StageLauncher extends Application {
         primaryStage.setScene(battleScene);
 //*/
 
+//        Match.loss();
+//        primaryStage.setScene(battleScene);
         AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);
 
