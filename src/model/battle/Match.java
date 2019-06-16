@@ -343,8 +343,12 @@ public class Match {
         MatchInfo matchInfo = new MatchInfo();
         if (this.winner instanceof OrdinaryPlayer)
             matchInfo.winner = this.winner.getAccount().getUserName();
+        else
+            matchInfo.winner = "Computer";
         if (this.loser instanceof OrdinaryPlayer)
             matchInfo.loser = this.loser.getAccount().getUserName();
+        else
+            matchInfo.winner = "Computer";
         matchInfo.date = date;
 
         winner.addToAccountWins();

@@ -148,6 +148,8 @@ public class NewCardGraphic {
         group = new Group();
         ((Group) scene.getRoot()).getChildren().add(group);
 
+        addRectangle(group, 0, 0, (int)StageLauncher.getWidth(), (int)StageLauncher.getHeight(),
+                0, 00, Color.rgb(255, 255, 255, 0.2));
         Rectangle rectangle = addRectangle(group, 80, 80, (int) StageLauncher.getWidth() - 160, (int) StageLauncher.getHeight() - 160
                 , 50, 50, Color.rgb(0, 0, 0, 0.85));
         rectangle.setStroke(Color.rgb(40, 100, 250,0.5));

@@ -4,9 +4,14 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.Lighting;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -98,7 +103,6 @@ public class BattleHeaderGraphic {
                 GeneralGraphicMethods.addImage(group,
                         "pics/battle_categorized/icon_mana_inactive@2x.png",
                         x + i * 28, y, 25, 25);
-            addNumberToMana(group, numberOfMana, x, y);
         }
     }
 

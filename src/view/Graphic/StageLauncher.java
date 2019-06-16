@@ -27,6 +27,10 @@ public class StageLauncher extends Application {
         StageLauncher.account = account;
     }
 
+    public static Account getAccount() {
+        return account;
+    }
+
     private static Stage primaryStage;
     private static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
     private static double HEIGHT;
