@@ -12,6 +12,11 @@ public class CardCopy {
     public String ActivationTimeOfSpecialPower;
     public int coolDown;
 
+    private String pathOfThePicture;
+    private String pathOfAnimation;
+    private int countOfAnimation = 16;
+
+
     private ChangeCopy change = new ChangeCopy();
     private TargetCopy target = new TargetCopy();
 
@@ -21,4 +26,18 @@ public class CardCopy {
     public void setTarget(TargetCopy target) {
         this.target = target;
     }
+
+    public void setPathOfThePicture(String pathOfThePicture) {
+        this.pathOfThePicture = pathOfThePicture;
+    }
+
+    public void setPathOfAnimation(String pathOfAnimation) {
+        this.pathOfAnimation = pathOfAnimation;
+    }
+
+    public void setCountOfAnimation(int countOfAnimation) {
+        this.countOfAnimation = countOfAnimation;
+    }
+
+
 }
