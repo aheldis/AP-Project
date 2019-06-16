@@ -2,7 +2,6 @@ package view.Graphic;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -110,20 +109,8 @@ public class MainMenuScene {
             setScene(StateType.SELECT_GAME);
         });
         Label collection = newLabelButton("COLLECTION", 320);
-        Label collectionShadow = addShadow(collection);
         AnimationTimer collectionAnimation = graphAnimation(collectionGraph);
-        root.getChildren().remove(collectionShadow);
-        collection.setOnMouseEntered(event -> {
-            root.getChildren().add(collectionShadow);
-            setCursor(mainMenuScene, Cursor.LIGHTEN);
-            collectionAnimation.start();
-        });
-        collectionShadow.setOnMouseExited(event -> {
-            root.getChildren().remove(collectionShadow);
-            setCursor(mainMenuScene, Cursor.AUTO);
-            collectionAnimation.stop();
-            collectionGraph.setOpacity(0.5);
-        });
+        Label collectionShadow = shadowAnimation(collection, collectionAnimation);
         collectionShadow.setOnMouseClicked(event -> {
             CollectionScene.showInCollection(account.getCollection());
             collectionAnimation.stop();
@@ -131,23 +118,33 @@ public class MainMenuScene {
         });
 
         Label matchHistory = newLabelButton("MATCH HISTORY", 390);
-        Label matchHistoryShadow = addShadow(collection);
-        fadeAnimation(matchHistoryShadow);
         AnimationTimer matchHistoryAnimation = graphAnimation(matchHistoryGraph);
-        matchHistory.setOnMouseEntered(event -> {
-            setCursor(mainMenuScene, Cursor.LIGHTEN);
-            matchHistoryAnimation.start();
-        });
-        matchHistory.setOnMouseExited(event -> {
-            setCursor(mainMenuScene, Cursor.AUTO);
-            matchHistoryAnimation.stop();
-            playGraph.setOpacity(0.5);
-        });
-        matchHistory.setOnMouseClicked(event -> {
+        Label matchHistoryShadow = shadowAnimation(matchHistory, matchHistoryAnimation);
+        matchHistoryShadow.setOnMouseClicked(event -> {
             SelectGameScene.selectGame(account);
             matchHistoryAnimation.stop();
             showMatchHistory();
         });
+    }
+
+    private Label shadowAnimation(Label label, AnimationTimer animation) {
+        Label labelShadow = addShadow(label);
+        root.getChildren().remove(labelShadow);
+        label.setOnMouseEntered(event -> {
+            root.getChildren().add(labelShadow);
+            setCursor(mainMenuScene, Cursor.LIGHTEN);
+            animation.start();
+        });
+        labelShadow.setOnMouseExited(event -> {
+            root.getChildren().remove(labelShadow);
+            setCursor(mainMenuScene, Cursor.AUTO);
+            animation.stop();
+            if (label.getText().equals("COLLECTION"))
+                collectionGraph.setOpacity(0.5);
+            else
+                matchHistoryGraph.setOpacity(0.5);
+        });
+        return labelShadow;
     }
 
     private void newImageButton(String path, String name, double x, double y) {
@@ -241,8 +238,10 @@ public class MainMenuScene {
                     graphs.remove(graph);
                     if (graph.equals(playGraph))
                         playGraph = newGraph;
-                    else
+                    else if (graph.equals(collectionGraph))
                         collectionGraph = newGraph;
+                    else
+                        matchHistoryGraph = newGraph;
                     graph = newGraph;
                 }
             }

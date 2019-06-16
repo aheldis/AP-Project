@@ -20,7 +20,6 @@ import model.card.Hero;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
-import view.Graphic.GeneralGraphicMethods;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -49,6 +48,7 @@ public class BattleScene {
     private BattleFooterGraphic battleFooter;
     private Square onMousePressedPosition;
     private Card selectedCard;
+    private ImageView imageOfSelectedCard;
     private Glow glow = new Glow();
 
 
@@ -189,6 +189,7 @@ public class BattleScene {
 
     private void selectCard(Card card, ImageView gifOfCard, Rectangle grid) {
         selectedCard = card;
+        imageOfSelectedCard = gifOfCard;
         grid.setFill(Color.GOLD);
         coloredRectangles.add(grid);
         glow = new Glow(1);
@@ -271,6 +272,10 @@ public class BattleScene {
             imageOfCard.setOnMouseClicked(event -> {
                 if (selectedCard != null && selectedCard.canAttack(card)) {
                     selectedCard.attack(card);
+                    imageOfSelectedCard.setOpacity(0);
+                    addCardToBoard(selectedCard.getPosition().getXCoordinate(),
+                            selectedCard.getPosition().getYCoordinate(), selectedCard,
+                            "ATTACK", null, false, false);
                     backToDefault();
                 }
             });
