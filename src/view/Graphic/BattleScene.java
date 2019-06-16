@@ -83,7 +83,7 @@ public class BattleScene {
         board.getChildren().remove(node);
     }
 
-   /*
+   //*
     Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
 //        PUT = true;
 //        MOVE = false;
@@ -127,7 +127,7 @@ public class BattleScene {
         return null;
     }
     //*/
-
+/*
     Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
 //        PUT = true;
 //        MOVE = false;
@@ -169,7 +169,7 @@ public class BattleScene {
 
         return null;
     }
-
+//*/
 
     private Pair<Integer, Integer> withinRange(Point2D point2D) {
         for (int ii = 0; ii < 5; ii++)
@@ -385,7 +385,7 @@ public class BattleScene {
         perspectiveTransform.setLrx(mapProperties.lrx);
         perspectiveTransform.setLry(mapProperties.lry);
 
-        board.setEffect(perspectiveTransform);
+        //board.setEffect(perspectiveTransform);
 
         /*
         Rectangle rectangle = new Rectangle(currentX - primaryX + mapProperties.cellWidth, currentY - primaryY + mapProperties.cellHeight);
