@@ -37,7 +37,7 @@ public class MainMenuScene {
     private static ArrayList<Node> menuNodes = new ArrayList<>();
     private static ImageView playGraph = null;
     private static ImageView collectionGraph = null;
-    private static ImageView matchHistoryGraph = null;
+//    private static ImageView matchHistoryGraph = null;
     private static HashMap<ImageView, Integer> graphs = new HashMap<>();
     private Account account = null;
 
@@ -69,11 +69,13 @@ public class MainMenuScene {
         collectionGraph.setOpacity(0.5);
         menuNodes.add(collectionGraph);
         graphs.put(collectionGraph, 0);
+        /*
         randomNumber = random.nextInt(16) + 1;
         matchHistoryGraph = addImage(root, "pics/menu/" + randomNumber + ".png", 180, 380, 70, 70);
         matchHistoryGraph.setOpacity(0.5);
         menuNodes.add(matchHistoryGraph);
         graphs.put(matchHistoryGraph, 0);
+        */
         addLabelButtons();
     }
 
@@ -117,6 +119,7 @@ public class MainMenuScene {
             setScene(StateType.COLLECTION);
         });
 
+        /*
         Label matchHistory = newLabelButton("MATCH HISTORY", 390);
         AnimationTimer matchHistoryAnimation = graphAnimation(matchHistoryGraph);
         Label matchHistoryShadow = shadowAnimation(matchHistory, matchHistoryAnimation);
@@ -125,6 +128,7 @@ public class MainMenuScene {
             matchHistoryAnimation.stop();
             showMatchHistory();
         });
+        */
     }
 
     private Label shadowAnimation(Label label, AnimationTimer animation) {
@@ -141,8 +145,8 @@ public class MainMenuScene {
             animation.stop();
             if (label.getText().equals("COLLECTION"))
                 collectionGraph.setOpacity(0.5);
-            else
-                matchHistoryGraph.setOpacity(0.5);
+            //else
+            //    matchHistoryGraph.setOpacity(0.5);
         });
         return labelShadow;
     }
@@ -240,56 +244,14 @@ public class MainMenuScene {
                         playGraph = newGraph;
                     else if (graph.equals(collectionGraph))
                         collectionGraph = newGraph;
-                    else
-                        matchHistoryGraph = newGraph;
+                //    else
+                //        matchHistoryGraph = newGraph;
                     graph = newGraph;
                 }
             }
         };
     }
 
-    public void showMatchHistory() {
-        Group matchHistoryGroup = new Group();
-        root.getChildren().add(matchHistoryGroup);
-        NewCardGraphic.addRectangleStroke(matchHistoryGroup);
-
-
-        Text header = new Text("MATCH HISTORY");
-        header.setFill(Color.rgb(40, 100, 250, 1));
-        header.setStroke(Color.WHITE);
-        header.setStrokeWidth(0.25);
-        header.setFont(Font.font("Chalkduster", 50));
-        header.relocate(490, 100);
-        matchHistoryGroup.getChildren().add(header);
-
-        GridPane gridPane = new GridPane();
-        addNodeToGridPane(gridPane, 0, 0, "Winner", true);
-        addNodeToGridPane(gridPane, 0, 1, "Loser", true);
-        addNodeToGridPane(gridPane, 0, 2, "Date", true);
-
-        ArrayList<MatchInfo> matchHistory = account.getMatchHistory();
-        int index = 1;
-        for (MatchInfo matchInfo : matchHistory) {
-
-            addNodeToGridPane(gridPane, index, 0, matchInfo.winner, false);
-            addNodeToGridPane(gridPane, index, 1, matchInfo.loser, false);
-            addNodeToGridPane(gridPane, index, 2, matchInfo.date.toString(), false);
-            index++;
-        }
-
-        matchHistoryGroup.getChildren().add(gridPane);
-
-        gridPane.setAlignment(Pos.CENTER);
-        gridPane.relocate(300, 180);
-
-
-        ImageView close = addImage(matchHistoryGroup, "pics/menu/button_close@2x.png",
-                1270, 50, 60, 60);
-        close.setOnMouseClicked(event -> {
-            root.getChildren().remove(matchHistoryGroup);
-        });
-
-    }
 
     private void addToNodes(Node node) {
         root.getChildren().add(node);
@@ -309,34 +271,13 @@ public class MainMenuScene {
 
     }
 
-    private void addNodeToGridPane(GridPane gridPane, int row, int column, String textString, boolean headerRow) {
-        StackPane stackPane = new StackPane();
-        Text text;
-        if (headerRow)
-            text = addTextWithShadow(textString, 0, 0, new Group(),
-                    "Chalkduster", 30);
-        else {
 
-            text = new Text(textString);
-            text.setFill(Color.WHITE);
-            text.setFont(Font.font("Herculanum", 25));
-        }
-
-        double rectangleWidth = 220;
-        if (column == 2)
-            rectangleWidth = 370;
-        Rectangle rectangle1 = new Rectangle(rectangleWidth, 50);
-        rectangle1.setFill(Color.WHITE);
-        Rectangle rectangle2 = new Rectangle(rectangleWidth - 2, 48);
-        rectangle2.setFill(Color.gray(0, 0.95));
-        stackPane.setAlignment(Pos.CENTER);
-        stackPane.getChildren().addAll(rectangle1, rectangle2, text);
-        gridPane.add(stackPane, column, row);
-    }
 
     private void buttonAction(String name) {
         switch (name) {
             case " PROFILE":
+                ProfileScene.getSingleInstance().initProfileScene(account);
+                setScene(StateType.PROFILE);
                 break;
             case "    SHOP":
                 ShopScene.makeShopScene(account);

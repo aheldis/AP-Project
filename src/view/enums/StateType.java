@@ -12,6 +12,7 @@ public enum StateType {
     SELECT_MODE,
     SELECT_GAME,
     SINGLE_GAME,
-    END_PROGRAM
+    END_PROGRAM,
+    PROFILE
 
 }

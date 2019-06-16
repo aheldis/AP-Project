@@ -170,6 +170,7 @@ public class StageLauncher extends Application {
         Scene battleScene = makeScene(StateType.BATTLE, Cursor.AUTO);
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
         Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
+        Scene profileScene = makeScene(StateType.PROFILE, Cursor.AUTO);
 
 /*
 

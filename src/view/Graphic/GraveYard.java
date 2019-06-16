@@ -48,7 +48,7 @@ class GraveYard {
         else {
             addImage(group, card.getPathOfAnimation(), 85, 100, 150, 150);
         }
-        Text name = addText(group, card.getName(), 85, 250,
+        Text name = addText(group, 250, 85, card.getName(),
                 Color.rgb(0, 225, 225, 0.7), 30);
         name.setFont(Font.font("Luminari", 30));
         name.setTextAlignment(TextAlignment.CENTER);

@@ -1,29 +1,18 @@
 package view.Graphic;
 
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.effect.Glow;
-import javafx.scene.effect.Lighting;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import model.battle.Player;
-import view.enums.Cursor;
 import view.enums.StateType;
 
 import java.io.File;
 import java.util.Random;
-
-import static view.Graphic.GeneralGraphicMethods.setCursor;
 
 public class BattleHeaderGraphic {
     private Group root;
@@ -81,8 +70,8 @@ public class BattleHeaderGraphic {
         }
         else
             x=x + 9 * 28+8;
-        text= GeneralGraphicMethods.addText(group, numberOfMana + " / 9",
-                x, y + 5, Color.rgb(225, 225, 225), 25);
+        text= GeneralGraphicMethods.addText(group, y + 5, x, numberOfMana + " / 9",
+                Color.rgb(225, 225, 225), 25);
         text.setStroke(Color.rgb(0, 0, 0, 0.5));
         text.setStrokeWidth(1);
         text.setFont(Font.font("Arial", FontWeight.BOLD, 25));
@@ -174,7 +163,7 @@ public class BattleHeaderGraphic {
 
     private void makeLeftHeader(Player player) {
         leftHeader.getChildren().clear();
-        GeneralGraphicMethods.addTextWithShadow(player.getUserName(), 248, 78, leftHeader, "Arial", 27);
+        GeneralGraphicMethods.addTextWithShadow(leftHeader, 248, 78, player.getUserName(), "Arial", 27);
         addMana(245, 100, player.getMana(), leftHeader);
         addHeroSpecialPower(110, 195, leftHeader, 0, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown());
         ;
@@ -184,7 +173,7 @@ public class BattleHeaderGraphic {
 
     private void makeRightHeader(Player player) {
         rightHeader.getChildren().clear();
-        GeneralGraphicMethods.addTextWithShadow(player.getUserName(), 1010, 78, leftHeader, "Arial", 27);
+        GeneralGraphicMethods.addTextWithShadow(leftHeader, 1010, 78, player.getUserName(), "Arial", 27);
         addMana(911, 100, player.getMana(), rightHeader);
         addHeroSpecialPower(1275, 195, rightHeader, 1, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown());
         addPortraitBorder(1165, 25, rightHeader, true, player.getAvatarPath(), false);

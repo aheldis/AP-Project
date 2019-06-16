@@ -7,6 +7,7 @@ import model.battle.Player;
 import view.AccountView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class Account implements Comparable<Account>, Cloneable {
@@ -19,11 +20,25 @@ public class Account implements Comparable<Account>, Cloneable {
     private Deck mainDeck = new Deck();
     private Player player;
     private ArrayList<Deck> decks = new ArrayList<>();
+    private String accountImagePath = null;
+
+    public String getAccountImagePath() {
+        if(accountImagePath == null)
+            setAccountImagePath();
+        System.out.println(accountImagePath);
+        return accountImagePath;
+    }
 
     public Account(String userName, String password) {
         this.userName = userName;
         this.password = password;
         this.player = new OrdinaryPlayer();
+    }
+
+    private void setAccountImagePath(){
+        Random random = new Random();
+        int number = random.nextInt(20) + 1;
+        accountImagePath = "pics/shop/emotes-" + number +".png";
     }
 
     public void setCollection(Collection collection) {

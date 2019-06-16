@@ -58,7 +58,7 @@ public class GeneralGraphicMethods {
         return imageView;
     }
 
-    public static Text addText(Parent root, String input, double x, double y, Paint color, double fontSize) {
+    public static Text addText(Parent root, double x, double y, String input, Paint color, double fontSize) {
         Text text = new Text(input);
         text.relocate(x, y);
         text.setFill(color);
@@ -225,7 +225,7 @@ public class GeneralGraphicMethods {
                         400, height, 50, 50, Color.rgb(0, 0, 0, 0.7));
                 ImageView close = addImage(root,
                         "pics/collection/button_close@2x.png", 800, 200, 50, 50);
-                Text text = addText(root, helps, 470, 250,
+                Text text = addText(root, 250, 470, helps,
                         Color.rgb(225, 225, 225, 0.8), 20);
                 close.setOnMouseClicked(event131 -> root.getChildren().removeAll(text, close, rectangle));
             });
@@ -267,7 +267,7 @@ public class GeneralGraphicMethods {
         primaryStage.show();
     }
 
-    static Text addTextWithShadow(String textString, double x, double y, Parent group, String fontFamily, int size) {
+    static Text addTextWithShadow(Parent group, double x, double y, String textString, String fontFamily, int size) {
         Text text = new Text(textString);
         text.relocate(x, y);
         text.setFont(Font.font(fontFamily, FontWeight.BOLD, size));

@@ -216,7 +216,7 @@ public class BattleScene {
                     0, 0, board, spriteProperties.count,
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
-            playMusic("resource\\music\\attack\\attack-2.m4a",false,battleScene);
+            playMusic("resource/music/attack/attack-2.m4a",false,battleScene);
         } else {
             if (image == null) {
                 String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";

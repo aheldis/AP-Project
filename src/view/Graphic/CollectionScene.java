@@ -98,8 +98,8 @@ class CollectionScene {
             }
 
 
-            Text text = addText(group, name + "\n",
-                    60 + 25, 10, Color.rgb(200, 200, 225, 0.5), 20);
+            Text text = addText(group, 10, 60 + 25, name + "\n",
+                    Color.rgb(200, 200, 225, 0.5), 20);
             text.setOnMouseEntered(event1 -> {
                 text.setUnderline(true);
                 text.setFill(Color.rgb(49, 255, 245, 0.5));
@@ -158,11 +158,11 @@ class CollectionScene {
             showMana(group, 0, 0, ((Card) card).getMp());
 
 
-            addText(group, ((Card) card).getAp() + "", 50 - 10,
-                    200 - 17, Color.WHITE, 20);
+            addText(group, 200 - 17, 50 - 10, ((Card) card).getAp() + "",
+                    Color.WHITE, 20);
 
-            addText(group, ((Card) card).getHp() + "", 180 - 20,
-                    200 - 17, Color.WHITE, 20);
+            addText(group, 200 - 17, 180 - 20, ((Card) card).getHp() + "",
+                    Color.WHITE, 20);
             if (card instanceof Spell) {
                 SpriteAnimationProperties sprite = new SpriteAnimationProperties(
                         ((Spell) card).getName(), FilesType.SPELL, ((Spell) card).getCountOfAnimation());
@@ -171,7 +171,7 @@ class CollectionScene {
                         sprite.rows, ((Spell) card).getMillis(),
                         (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
             } else if (card instanceof Minion) {
-                addImage(group, "pics\\Minion/" + ((Minion) card).getName() + ".gif",
+                addImage(group, "pics/Minion/" + ((Minion) card).getName() + ".gif",
                         64,
                         28, 110, 150);
 
@@ -185,9 +185,8 @@ class CollectionScene {
                 imageView.setOnMouseEntered(event -> {
                     ImageView descView = addImage(group, "pics/other/desc.png", 10,
                             303 - 50, 200, 100);
-                    Text desc = addText(group, ((Card) card).getDescription(),
-                            40,
-                            338 - 50 - 8, Color.WHITE, 15);
+                    Text desc = addText(group, 338 - 50 - 8, 40, ((Card) card).getDescription(),
+                            Color.WHITE, 15);
                     setCursor(scene, Cursor.LIGHTEN);
                     imageView.setOnMouseExited(event1 -> {
                         group.getChildren().removeAll(desc, descView);
@@ -206,7 +205,7 @@ class CollectionScene {
 
     private static void showMana(Group root, int x, int y, int mana) {
         cardsIcon.add(addImage(root, "pics/other/icon_mana@2x.png", x, y, 50, 50));
-        cardsIcon.add(addText(root, mana + "", x + 16, y + 20,
+        cardsIcon.add(addText(root, y + 20, x + 16, mana + "",
                 Color.rgb(22, 22, 225, 0.5), 20));
     }
 
@@ -237,14 +236,14 @@ class CollectionScene {
                             j * (Y_BORDER + CARD_HEIGHT) + 390 - 55, 110, 100);
                     cardsIcon.add(hpView);
 
-                    Text hp = addText(root, card.getHp() + "", (i + 1) * (X_BORDER + CARD_WIDTH) - 10,
-                            j * (Y_BORDER + CARD_HEIGHT) + 430 - 55, Color.WHITE, 20);
+                    Text hp = addText(root, j * (Y_BORDER + CARD_HEIGHT) + 430 - 55, (i + 1) * (X_BORDER + CARD_WIDTH) - 10, card.getHp() + "",
+                            Color.WHITE, 20);
                     cardsIcon.add(hp);
-                    Text ap = addText(root, card.getAp() + "", i * (X_BORDER + CARD_WIDTH) - 15 + 50,
-                            j * (Y_BORDER + CARD_HEIGHT) + 430 - 55, Color.WHITE, 20);
+                    Text ap = addText(root, j * (Y_BORDER + CARD_HEIGHT) + 430 - 55, i * (X_BORDER + CARD_WIDTH) - 15 + 50, card.getAp() + "",
+                            Color.WHITE, 20);
                     cardsIcon.add(ap);
-                    Text desc = addText(root, card.getDescription(), i * (X_BORDER + CARD_WIDTH) + 100,
-                            j * (Y_BORDER + CARD_HEIGHT) + 430 - 60, Color.WHITE, 13);
+                    Text desc = addText(root, j * (Y_BORDER + CARD_HEIGHT) + 430 - 60, i * (X_BORDER + CARD_WIDTH) + 100, card.getDescription(),
+                            Color.WHITE, 13);
                     cardsIcon.add(desc);
 
 
@@ -262,13 +261,11 @@ class CollectionScene {
     }
 
     private static void textForCollection(Card card, int i, int j, ImageView imageView) {
-        cardsIcon.add(addText(root, card.getAp() + "",
-                i * (X_BORDER + CARD_WIDTH) + 90,
-                j * (Y_BORDER + CARD_HEIGHT) + 320 - 60, Color.WHITE, 20));
+        cardsIcon.add(addText(root, j * (Y_BORDER + CARD_HEIGHT) + 320 - 60, i * (X_BORDER + CARD_WIDTH) + 90, card.getAp() + "",
+                Color.WHITE, 20));
 
-        cardsIcon.add(addText(root, card.getHp() + "",
-                i * (X_BORDER + CARD_WIDTH) + 175 + 33,
-                j * (Y_BORDER + CARD_HEIGHT) + 320 - 60, Color.WHITE, 20));
+        cardsIcon.add(addText(root, j * (Y_BORDER + CARD_HEIGHT) + 320 - 60, i * (X_BORDER + CARD_WIDTH) + 175 + 33, card.getHp() + "",
+                Color.WHITE, 20));
 
         try {
             imageView.setOnMouseEntered(event -> {
@@ -276,9 +273,8 @@ class CollectionScene {
                 ImageView descView = addImage(root, "pics/other/desc.png", i * (X_BORDER + CARD_WIDTH) + 70,
                         j * (Y_BORDER + CARD_HEIGHT) + 400 - 65, 200, 100);
                 cardsIcon.add(descView);
-                Text desc = addText(root, card.getDescription(),
-                        i * (X_BORDER + CARD_WIDTH) + 100,
-                        j * (Y_BORDER + CARD_HEIGHT) + 435 - 65, Color.WHITE, 15);
+                Text desc = addText(root, j * (Y_BORDER + CARD_HEIGHT) + 435 - 65, i * (X_BORDER + CARD_WIDTH) + 100, card.getDescription(),
+                        Color.WHITE, 15);
                 cardsIcon.add(desc);
                 imageView.setOnMouseExited(event1 -> root.getChildren().removeAll(desc, descView));
             });
@@ -417,7 +413,7 @@ class CollectionScene {
                 vBox1.setSpacing(5);
                 group.getChildren().addAll(vBox1);
                 for (String id : ids)
-                    addText(vBox1, id, 0, 0, Color.rgb(225, 225, 225), 20);
+                    addText(vBox1, 0, 0, id, Color.rgb(225, 225, 225), 20);
 
                 close.setOnMouseClicked(event1 -> root.getChildren().removeAll(background, group));
             } else {
@@ -455,9 +451,8 @@ class CollectionScene {
             ImageView descView = addImage(group, "pics/other/desc.png", 10,
                     303 - 50, 200, 100);
 
-            Text desc = addText(group, item.getDescription(),
-                    40,
-                    338 - 50 - 8, Color.WHITE, 15);
+            Text desc = addText(group, 338 - 50 - 8, 40, item.getDescription(),
+                    Color.WHITE, 15);
             imageView.setOnMouseExited(event1 -> group.getChildren().removeAll(desc, descView));
         });
 
@@ -637,7 +632,7 @@ class CollectionScene {
                     324, 150);
 
             ImageView addCardToDeck = addImage(root,
-                    "pics\\collection\\plus (2).png", 40, 10, 20, 20);
+                    "pics/collection/plus (2).png", 40, 10, 20, 20);
 
 
             ImageView delete_deck = addImage(root,
@@ -754,7 +749,7 @@ class CollectionScene {
         addImage(group, "pics/collection/deck-select/back-" + i % 6 + ".png",
                 0, 0, 320, 420);
 
-        Text name = addText(group, deck.getName(), 85, 300,
+        Text name = addText(group, 300, 85, deck.getName(),
                 Color.rgb(225, 225, 225, 0.5), 40);
         name.setStroke(Color.rgb(0, 225, 225, 0.1));
         name.setStrokeWidth(1);
@@ -794,16 +789,16 @@ class CollectionScene {
             ImageView exportDeck = addImage(root, "pics/collection/export_deck.png",
                     660, 200, 200, 80);
 
-            Text newDeckText = addText(root, "New Deck", 500 - 50, 235,
+            Text newDeckText = addText(root, 235, 500 - 50, "New Deck",
                     Color.rgb(225, 225, 225, 0.6), 30);
             newDeckText.setStyle("-fx-font-weight: bold");
 
-            Text exportText = addText(root, "Export", 690, 235,
+            Text exportText = addText(root, 235, 690, "Export",
                     Color.rgb(225, 225, 225, 0.6), 30);
             exportText.setStyle("-fx-font-weight: bold");
 
-            Text importText = addText(root, "Import Deck", 890, 235
-                    , Color.rgb(225, 225, 225, 0.6), 30);
+            Text importText = addText(root, 235, 890, "Import Deck",
+                    Color.rgb(225, 225, 225, 0.6), 30);
             importText.setStyle("-fx-font-weight: bold");
 
             ImageView text = addImage(root, "pics/collection/card_silenced@2x.png",

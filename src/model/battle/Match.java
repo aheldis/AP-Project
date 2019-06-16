@@ -17,7 +17,6 @@ import model.item.Flag;
 import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
-import view.BattleView;
 import view.Graphic.BattleScene;
 import view.Graphic.GeneralGraphicMethods;
 import view.Graphic.StageLauncher;
@@ -365,20 +364,20 @@ public class Match {
         Group root =(Group)battleScene.getRoot();
         root.getChildren().clear();
         setBackground(root,
-                "pics\\battle\\back.png",true,20,20);
+                "pics/battle/back.png",true,20,20);
 
-        playMusic("resource\\music\\sfx_victory_match_w_vo.m4a",false,battleScene);
+        playMusic("resource/music/sfx_victory_match_w_vo.m4a",false,battleScene);
 
-        addImage(root,"pics\\battle\\general_f1@2x.png",-200,-100,1800,1200);
-        addImage(root,"pics\\battle\\scene_diamonds_background_victory@2x.png",0,0,
+        addImage(root,"pics/battle/general_f1@2x.png",-200,-100,1800,1200);
+        addImage(root,"pics/battle/scene_diamonds_background_victory@2x.png",0,0,
                 (int)StageLauncher.getWidth(),(int)StageLauncher.getHeight());
-        addImage(root,"pics\\battle\\scene_diamonds_background_victory@2x.png",300,-300,
+        addImage(root,"pics/battle/scene_diamonds_background_victory@2x.png",300,-300,
                 1000,1000);
 
-        Text text = addText(root,"VICTORY",600,100,
+        Text text = addText(root, 100, 600, "VICTORY",
                 Color.rgb(225,225,225,0.8),70);
-        addImage(root,"pics\\battle\\highlight_white.png",300,-35,800,250);
-        addText(root,"click anywhere to continue",630,130,Color.WHITE,20);
+        addImage(root,"pics/battle/highlight_white.png",300,-35,800,250);
+        addText(root, 130, 630, "click anywhere to continue", Color.WHITE,20);
         Glow glow = new Glow();
         glow.setLevel(20);
         text.setEffect(glow);

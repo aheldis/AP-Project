@@ -42,7 +42,7 @@ public class NewCardGraphic {
             hashMaps.add(new HashMap<>());
         }
 
-        Text fieldName = addText(new Group(), input, 20, 0, Color.rgb(250, 250, 250, 0.8), 20);
+        Text fieldName = addText(new Group(), 0, 20, input, Color.rgb(250, 250, 250, 0.8), 20);
         BorderPane.setMargin(fieldName, new Insets(4, 5, 2, 5));
 
         StackPane stackPane = new StackPane();
@@ -73,7 +73,7 @@ public class NewCardGraphic {
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         addImage(vBox, "pics/other/" + name + ".png", x, y, 200, 200);
-        addTextWithShadow(name, x, y, vBox, "Beyond Wonderland", 40);
+        addTextWithShadow(vBox, x, y, name, "Beyond Wonderland", 40);
         group.getChildren().add(vBox);
         vBox.relocate(x, y);
         setOnMouseEntered(vBox, scene, true);
@@ -86,9 +86,9 @@ public class NewCardGraphic {
         MakeNewFile.setHashMaps(hashMaps);
         MakeNewFile.makeNewCard(account, FilesType.getEnum(type));
         if (error.getText() != null && !error.getText().equals("")) {
-            error = addText(vBox, error.getText(), 600, 400, Color.RED, 30);
+            error = addText(vBox, 400, 600, error.getText(), Color.RED, 30);
         } else {
-            error = addText(vBox, "Card successfully created.", 600, 400, Color.WHITE, 30);
+            error = addText(vBox, 400, 600, "Card successfully created.", Color.WHITE, 30);
         }
     }
 
@@ -96,7 +96,7 @@ public class NewCardGraphic {
         vBox.getChildren().clear();
         arrayList.forEach(name -> {
             if (name.contains("__")) {
-                Text text = addTextWithShadow(name.substring(2), 0, 0, vBox, "Arial", 20);
+                Text text = addTextWithShadow(vBox, 0, 0, name.substring(2), "Arial", 20);
                 VBox.setMargin(text, new Insets(2, 5, 10, 5));
             } else {
                 vBox.getChildren().add(makeOneRowOfForm(name, 0, 0, numberOfHashMap));
@@ -148,7 +148,8 @@ public class NewCardGraphic {
         group = new Group();
         ((Group) scene.getRoot()).getChildren().add(group);
 
-        addRectangleStroke(group);
+        addRectangleStroke(group, (int)StageLauncher.getWidth() - 160, (int)StageLauncher.getHeight() - 160,
+                true, Color.rgb(40, 100, 250, 0.5));
 
         ImageView close = addImage(group, "pics/menu/button_close@2x.png",
                 1270, 50, 60, 60);
@@ -184,12 +185,14 @@ public class NewCardGraphic {
         });
     }
 
-    static void addRectangleStroke(Group group) {
+    static void addRectangleStroke(Group group, int width, int height, boolean whiteBackground, Color strokeColor) {
+        if(whiteBackground)
         addRectangle(group, 0, 0, (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight(),
                 0, 00, Color.rgb(255, 255, 255, 0.2));
-        Rectangle rectangle = addRectangle(group, 80, 80, (int) StageLauncher.getWidth() - 160, (int) StageLauncher.getHeight() - 160
+        Rectangle rectangle = addRectangle(group, ((int) StageLauncher.getWidth() - width) / 2, ((int)StageLauncher.getHeight() - height) / 2,
+                width, height
                 , 50, 50, Color.rgb(0, 0, 0, 0.85));
-        rectangle.setStroke(Color.rgb(40, 100, 250, 0.5));
+        rectangle.setStroke(strokeColor);
         rectangle.setStrokeWidth(7);
     }
 
@@ -199,7 +202,7 @@ public class NewCardGraphic {
         enter.relocate(1130, 720);
         root.getChildren().addAll(enter);
         addImage(enter, "pics/menu/quit.png", 0, 0, 200, 80);
-        Text text = addText(enter, "ENTER", 70, 30,
+        Text text = addText(enter, 30, 70, "ENTER",
                 Color.rgb(225, 225, 225, 0.7), 30);
         text.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         text.setStroke(Color.rgb(225, 225, 225, 0.3));
