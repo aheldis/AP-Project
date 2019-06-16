@@ -43,7 +43,7 @@ public abstract class Card {
     /**
      * mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
      */
-    private String description;
+    private String description = "";
     private static final int DEFAULT = -1;
     private String pathOfThePicture;
     private String pathOfAnimation;
@@ -256,15 +256,15 @@ public abstract class Card {
         return !Objects.requireNonNull(landOfGame.passSquareInThisCoordinate(destination)).squareHasMinionOrHero();
     }
 
-    public ArrayList<Coordinate> getCanMoveToCoordinations() {
-        ArrayList<Coordinate> coordinates = new ArrayList<>();
+    public ArrayList<Square> getCanMoveToSquares() {
+        ArrayList<Square> returnSquares = new ArrayList<>();
         Square[][] squares = landOfGame.getSquares();
         for (int i = 0; i < LandOfGame.getNumberOfRows(); i++)
             for (int j = 0; j < LandOfGame.getNumberOfColumns(); j++)
                 if (withinRange(squares[i][j].getCoordinate(), 2)
                         && canMoveToCoordination(squares[i][j].getCoordinate()))
-                    coordinates.add(squares[i][j].getCoordinate());
-        return coordinates;
+                    returnSquares.add(squares[i][j]);
+        return returnSquares;
     }
 
     boolean withinRange(Coordinate coordinate, int range) {
@@ -273,8 +273,8 @@ public abstract class Card {
         return getManhatanDistance(coordinate) <= range;
     }
 
-    public ArrayList<Coordinate> getCanPutInCoordinations() {
-        ArrayList<Coordinate> coordinates = new ArrayList<>();
+    public ArrayList<Square> getCanPutInSquares() {
+        ArrayList<Square> squares = new ArrayList<>();
         for (int i = -2; i <= 2; i++)
             for (int j = -2; j <= 2; j++) {
                 int x = player.getHero().getPosition().getXCoordinate() + i;
@@ -282,9 +282,9 @@ public abstract class Card {
                 if (x < 0 || x >= LandOfGame.getNumberOfRows() || y < 0 || y >= LandOfGame.getNumberOfColumns())
                     continue;
                 if (Math.abs(i) + Math.abs(j) <= 2 && !landOfGame.getSquares()[x][y].squareHasMinionOrHero())
-                    coordinates.add(landOfGame.getSquares()[x][y].getCoordinate());
+                    squares.add(landOfGame.getSquares()[x][y]);
             }
-        return coordinates;
+        return squares;
     }
 
     private boolean checkTarget(Square check, String targetType) {
@@ -431,7 +431,6 @@ public abstract class Card {
     }
 
     public boolean canAttack(Card opponentCard) {
-        System.out.println("can attack: " + canAttack);
 
         return withinRange(opponentCard.position.getCoordinate(), attackRange) && canAttack &&
                 !player.getCardsOnLand().contains(opponentCard);
@@ -799,4 +798,6 @@ public abstract class Card {
     public Target getTarget() {
         return target;
     }
+
+
 }

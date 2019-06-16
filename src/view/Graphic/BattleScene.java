@@ -20,7 +20,6 @@ import model.card.Hero;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
-import view.Graphic.GeneralGraphicMethods;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -49,8 +48,9 @@ public class BattleScene {
     private BattleFooterGraphic battleFooter;
     private Square onMousePressedPosition;
     private Card selectedCard;
+    private ImageView imageOfSelectedCard;
     private Glow glow = new Glow();
-
+    private HashMap<Card, ImageView> cardsHashMap = new HashMap<>();
 
     private BattleScene() {
     }
@@ -75,15 +75,19 @@ public class BattleScene {
         board.getChildren().add(node);
     }
 
-    private Pair<Double, Double> getCellPosition(int row, int column) {
+    public Pair<Double, Double> getCellPosition(int row, int column) {
         return new Pair<>(gameGrid[row][column].getLayoutX(), gameGrid[row][column].getLayoutY());
+    }
+
+    public HashMap<Card, ImageView> getCardsHashMap() {
+        return cardsHashMap;
     }
 
     public void removeNodeFromBoard(Node node) {
         board.getChildren().remove(node);
     }
 
-   //*
+    //*
     Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
 //        PUT = true;
 //        MOVE = false;
@@ -189,13 +193,15 @@ public class BattleScene {
 
     private void selectCard(Card card, ImageView gifOfCard, Rectangle grid) {
         selectedCard = card;
+        imageOfSelectedCard = gifOfCard;
         grid.setFill(Color.GOLD);
         coloredRectangles.add(grid);
         glow = new Glow(1);
         gifOfCard.setEffect(glow);
     }
 
-    public Group addCardToBoard(int row, int column, Card card, String mode, ImageView image, boolean drag, boolean flip) {
+    public Group addCardToBoard(int row, int column, Card card, String mode,
+                                ImageView image, boolean drag, boolean flip) {
         FilesType filesType = FilesType.MINION;
         if (card instanceof Hero)
             filesType = FilesType.HERO;
@@ -210,6 +216,7 @@ public class BattleScene {
                     0, 0, board, spriteProperties.count,
                     spriteProperties.rows, card.getMillis(),
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
+            playMusic("resource\\music\\attack\\attack-2.m4a",false,battleScene);
         } else {
             if (image == null) {
                 String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
@@ -236,6 +243,7 @@ public class BattleScene {
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
         setOnMouseEntered(imageView, card, flip);
+        cardsHashMap.put(card, imageView);
 
         if (drag) {
             DragAndDrop dragAndDrop = new DragAndDrop();
@@ -271,6 +279,10 @@ public class BattleScene {
             imageOfCard.setOnMouseClicked(event -> {
                 if (selectedCard != null && selectedCard.canAttack(card)) {
                     selectedCard.attack(card);
+                    imageOfSelectedCard.setOpacity(0);
+                    addCardToBoard(selectedCard.getPosition().getXCoordinate(),
+                            selectedCard.getPosition().getYCoordinate(), selectedCard,
+                            "ATTACK", null, false, false);
                     backToDefault();
                 }
             });
@@ -498,8 +510,9 @@ public class BattleScene {
     }
 
     void showCanMoveToCoordinations(Card card) {
-        ArrayList<Coordinate> coordinates = card.getCanMoveToCoordinations();
-        for (Coordinate coordinate : coordinates) {
+        ArrayList<Square> squares = card.getCanMoveToSquares();
+        for (Square square : squares) {
+            Coordinate coordinate = square.getCoordinate();
             Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
             grid.setFill(Color.ALICEBLUE);
             coloredRectangles.add(grid);
@@ -507,8 +520,9 @@ public class BattleScene {
     }
 
     void showCanPutInCoordinations(Card card) {
-        ArrayList<Coordinate> coordinates = card.getCanPutInCoordinations();
-        for (Coordinate coordinate : coordinates) {
+        ArrayList<Square> squares = card.getCanPutInSquares();
+        for (Square square : squares) {
+            Coordinate coordinate = square.getCoordinate();
             Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
             grid.setFill(Color.BLUEVIOLET);
             coloredRectangles.add(grid);
@@ -544,7 +558,7 @@ public class BattleScene {
         return battleFooter;
     }
 
-    Scene getBattleScene() {
+    public Scene getBattleScene() {
         return battleScene;
     }
 
@@ -553,11 +567,18 @@ public class BattleScene {
         this.numberOfMap = numberOfMap;
         setMapProperties();
         setMapBackground();
-        GeneralGraphicMethods.playMusic("resource/music/battle_music/" +
+        playMusic("resource/music/battle_music/" +
                 numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(this, root);
         battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
     }
 
+    public Group getBoard() {
+        return board;
+    }
+
+    public Group getRoot() {
+        return root;
+    }
 }

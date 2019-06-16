@@ -1,10 +1,11 @@
 package model.battle;
 
-import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.account.Shop;
@@ -25,6 +26,8 @@ import view.enums.StateType;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.*;
+
+import static view.Graphic.GeneralGraphicMethods.*;
 
 public class Match {
     private Player[] players;
@@ -235,6 +238,7 @@ public class Match {
         } else {
             players[whichPlayer].initPerTurn(whichPlayer);
             players[passComputerPlayer()].playTurnForComputer();
+/*
 
             //your turn notification
             Platform.runLater(new Runnable() {
@@ -260,6 +264,7 @@ public class Match {
 
                 }
             });
+*/
         }
 
         players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
@@ -356,8 +361,37 @@ public class Match {
         loser.addMatchInfo(matchInfo);
         winner.getAccount().changeValueOfDaric(reward);
 
-        BattleView battleView = BattleView.getInstance();
-        battleView.endGameView(this);
+        Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
+        Group root =(Group)battleScene.getRoot();
+        root.getChildren().clear();
+        setBackground(root,
+                "pics\\battle\\back.png",true,20,20);
+
+        playMusic("resource\\music\\sfx_victory_match_w_vo.m4a",false,battleScene);
+
+        addImage(root,"pics\\battle\\general_f1@2x.png",-200,-100,1800,1200);
+        addImage(root,"pics\\battle\\scene_diamonds_background_victory@2x.png",0,0,
+                (int)StageLauncher.getWidth(),(int)StageLauncher.getHeight());
+        addImage(root,"pics\\battle\\scene_diamonds_background_victory@2x.png",300,-300,
+                1000,1000);
+
+        Text text = addText(root,"VICTORY",600,100,
+                Color.rgb(225,225,225,0.8),70);
+        addImage(root,"pics\\battle\\highlight_white.png",300,-35,800,250);
+        addText(root,"click anywhere to continue",630,130,Color.WHITE,20);
+        Glow glow = new Glow();
+        glow.setLevel(20);
+        text.setEffect(glow);
+        BattleScene.changeSingleInstance(null);
+        battleScene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                StageLauncher.decorateScene(StateType.MAIN_MENU);
+            }
+        });
+
+//        BattleView battleView = BattleView.getInstance();
+//        battleView.endGameView(this);
     }
 
     private void setWinnerAndLoser(Player winner, Player loser) {

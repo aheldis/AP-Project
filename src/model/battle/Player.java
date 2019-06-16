@@ -49,7 +49,8 @@ public abstract class Player {
     public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean showError) {
 
         if (opponent.opponent.getMana() < playerCard.getMp()) {
-            ErrorType.HAVE_NOT_ENOUGH_MANA.printMessage();
+            if (showError)
+                ErrorType.HAVE_NOT_ENOUGH_MANA.printMessage();
             return false;
         }
         if (playerCard == null) {
@@ -194,7 +195,7 @@ public abstract class Player {
             card.changeTurnOfCanNotCounterAttack(-1);
             card.changeTurnOfCanNotMove(-1);
             if (card.getTurnOfCanNotAttack() <= 0)
-                card.setCanCounterAttack(true, 1);
+                card.setCanAttack(true, 1);
             if (card.getTurnOfCanNotCounterAttack() <= 0)
                 card.setCanCounterAttack(true, 1);
             if (card.getTurnOfCanNotMove() <= 0)

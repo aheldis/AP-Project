@@ -42,7 +42,7 @@ public class GeneralGraphicMethods {
         return sabasYRatio;
     }
 
-    static ImageView setBackground(Parent root, String path, Boolean blur, double width, double height) {
+    public static ImageView setBackground(Parent root, String path, Boolean blur, double width, double height) {
         ImageView imageView = addImage(root, path, 0, 0, WIDTH / getRatioX(), HEIGHT / getRatioY());
         if (imageView == null)
             return null;
@@ -239,10 +239,8 @@ public class GeneralGraphicMethods {
 
     }
 
-    static void playMusic(String path, boolean constant, Scene firstScene) {
-        //Instantiating Media class
+   public static void playMusic(String path, boolean constant, Scene firstScene) {
         Media media = new Media(new File(path).toURI().toString());
-        //Instantiating MediaPlayer class
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         if (constant) {
             mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));

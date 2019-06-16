@@ -2,9 +2,20 @@ package view.Graphic;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.account.Account;
 import model.card.Card;
@@ -36,15 +47,15 @@ public class StageLauncher extends Application {
     private static double HEIGHT;
     private static double WIDTH;
 
-    static double getWidth() {
+    public static double getWidth() {
         return WIDTH;
     }
 
-    static double getHeight() {
+    public static double getHeight() {
         return HEIGHT;
     }
 
-    static void decorateScene(StateType stateType) {
+    public static void decorateScene(StateType stateType) {
         switch (stateType) {
             case MAIN_MENU:
                 Platform.runLater(() -> {
@@ -77,7 +88,7 @@ public class StageLauncher extends Application {
                     primaryStage.setScene(StageLauncher.getScene(StateType.BATTLE));
                     GeneralGraphicMethods.playMusic("resource/music/battle_music/" +
                             BattleScene.getSingleInstance().getNumberOfMap() +
-                            ".m4a", true,StageLauncher.getScene(StateType.BATTLE));
+                            ".m4a", true, StageLauncher.getScene(StateType.BATTLE));
                     primaryStage.show();
                 });
                 break;
@@ -114,6 +125,7 @@ public class StageLauncher extends Application {
         cards.add(minion);
         minion.setDescription("i am minion");
     }
+
     public static void graveYardTest() {
         ArrayList<Card> cards = new ArrayList<>();
 
@@ -159,19 +171,6 @@ public class StageLauncher extends Application {
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
         Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
 
-        //todo add "D:/project_Duelyst1/pics/minion_background.png" to PATH_OF_THE_PICTURE of Spell and ... to minion
-        //todo add animation to  Spell and minions
-
-/*/
-        zahraTestDeck();
-        getPrimaryStage().setScene(collectionScene);
-//*/
-
-//*/
-
-//        primaryStage.setScene(selectGameScene);
-
-
 /*
 
         BattleScene battleScene1 = BattleScene.getSingleInstance();
@@ -180,37 +179,9 @@ public class StageLauncher extends Application {
         primaryStage.setScene(battleScene);
 //*/
 
-
         AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);
-/*
-        MainMenuScene mainMenuScene1 = MainMenuScene.getInstance();
-        mainMenuScene1.makeMenu(new Account("2","2"));
-        NewCardGraphic.makeCardForm(mainMenuScene, new Account("2", "2"));/*/
-//*/
- //       AccountScene.getInstance().makeBackground();
- //       primaryStage.setScene(accountScene);
 
-
-//       graveYardTest();
-//        primaryStage.setScene(graveyardScene);
-
-
-/*/
-//        zahraTestDeck();
-//        primaryStage.setScene(collectionScene);
-//*/
-
-
-//        zahraTestShop();
-//        primaryStage.setScene(shopScene);
-//        Raining.rain(shopScene);
-//        uncomment init shop
-
-//        collectionScene.setFill(Color.BLACK);
-//        testzahraFooter((Group)collectionScene.getRoot());
-//        primaryStage.setScene(collectionScene);
-//        zahraTestDeck();
         primaryStage.show();
     }
 
