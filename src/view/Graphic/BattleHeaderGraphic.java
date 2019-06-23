@@ -209,7 +209,7 @@ public class BattleHeaderGraphic {
         addMana(245, 100, player.getMana(), leftHeader);
         addHeroSpecialPower(110, 195, leftHeader, 0, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown());
         addPortraitBorder(120, 25, leftHeader, true, player.getAvatarPath(), true);
-        addPortraitBorder(1165, 25, rightHeader, false, COMPUTER_PROFILE, false);
+  //      addPortraitBorder(1165, 25, rightHeader, false, COMPUTER_PROFILE, false);
     }
 
     private void makeRightHeader(Player player) {
@@ -218,7 +218,7 @@ public class BattleHeaderGraphic {
         addMana(911, 100, player.getMana(), rightHeader);
         addHeroSpecialPower(1275, 195, rightHeader, 1, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown());
         addPortraitBorder(1165, 25, rightHeader, true, player.getAvatarPath(), false);
-        addPortraitBorder(120, 25, leftHeader, false, COMPUTER_PROFILE, true);
+   //     addPortraitBorder(120, 25, leftHeader, false, COMPUTER_PROFILE, true);
     }
 
     public void makeHeaderEachTurn(int numberOfPlayer, Player player) {
