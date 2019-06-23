@@ -11,6 +11,7 @@ import model.requirment.Coordinate;
 import view.enums.ErrorType;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Player {
     protected String type;
@@ -38,6 +39,11 @@ public abstract class Player {
 //    public abstract void useSpecialPower(Card card);
 
     public abstract void addMatchInfo(MatchInfo matchInfo);
+
+    public Player(){
+        Random random = new Random();
+        avatarPath = "pics/battle_categorized/profile/"+random.nextInt(17)+".png";
+    }
 
     public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean showError) {
 

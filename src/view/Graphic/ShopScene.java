@@ -256,15 +256,15 @@ class ShopScene {
                 "pics/shop/spirit_orb.png", "Spirit Orbs", 6);
         root.getChildren().add(orbs);
 
-        Rectangle rectangle = new Rectangle(20, 750, 220, 60);
-        rectangle.setFill(Color.rgb(10, 10, 10));
-        rectangle.setArcHeight(100);
-        rectangle.setArcWidth(100);
+        Rectangle rectangle = new Rectangle(20, 750, 180, 40);
+        rectangle.setFill(Color.rgb(10, 10, 10,0.5));
+        rectangle.setArcHeight(50);
+        rectangle.setArcWidth(50);
         root.getChildren().add(rectangle);
 
-        addImage(root, "pics/shop/diamond.png", 25, 750, 50, 50);
-        Text daric = addText(root, 80, 775, "Daric: " + account.getDaric(),
-                Color.rgb(225, 225, 225, 0.5), 20);
+        addImage(root, "pics/shop/icon_gold@2x.png",55, 755, 20, 20);
+        Text daric = addText(root, 80, 760, "Daric: " + account.getDaric(),
+                Color.rgb(225, 225, 225, 0.5), 15);
 
 
         emote.setOnMouseClicked(event -> {
