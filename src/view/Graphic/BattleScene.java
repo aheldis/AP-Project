@@ -1,6 +1,7 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -194,17 +195,20 @@ public class BattleScene {
         imageView.setFitHeight(mapProperties.cellHeight + 20);
         setOnMouseEntered(imageView, card, flip);
         cardsHashMap.put(card, imageView);
-        Group group = new Group();
-        group.relocate(position.getKey() - 8, position.getValue()+30);
-        board.getChildren().addAll(group);
-        imageView.setOnMouseEntered(event -> {
-            addImage(group,"pics/battle_categorized/icon_atk@2x.png",0,0,40,40);
-            addImage(group,"pics/battle_categorized/icon_hp@2x.png",mapProperties.cellWidth-30,0,40,40);
-            addText(group,13,10,card.getAp()+"",Color.WHITE,14);
-            addText(group,mapProperties.cellWidth-11,10,card.getHp()+"",Color.WHITE,14);
 
+        Group group = new Group();
+        group.relocate(position.getKey() - 8, position.getValue() + 30);
+        board.getChildren().addAll(group);
+
+        //todo haniye ino bebar be setOnMouseClick e khodet
+        imageView.setOnMouseClicked(event -> {
+            addImage(group, "pics/battle_categorized/icon_atk@2x.png", 0, 0, 40, 40);
+            addImage(group, "pics/battle_categorized/icon_hp@2x.png", mapProperties.cellWidth - 30, 0, 40, 40);
+            addText(group, 13, 10, card.getAp() + "", Color.WHITE, 14);
+            addText(group, mapProperties.cellWidth - 11, 10, card.getHp() + "", Color.WHITE, 14);
+            imageView.setOnMouseExited(event1 -> board.getChildren().removeAll(group));
         });
-        imageView.setOnMouseExited(event -> board.getChildren().removeAll(group));
+
 
         if (drag) {
             DragAndDrop dragAndDrop = new DragAndDrop();

@@ -34,6 +34,7 @@ public class ProfileScene {
     }
 
     public void initProfileScene(Account account) {
+        playMusic("resource/music/profile.m4a",true,scene);
         this.account = account;
         GeneralGraphicMethods.setBackground(root, "pics/other/profileBackground.jpg", false, StageLauncher.getWidth(), StageLauncher.getHeight());
         addSidebar();

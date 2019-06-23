@@ -40,6 +40,11 @@ public abstract class Player {
 
     public abstract void addMatchInfo(MatchInfo matchInfo);
 
+    public Player(){
+        Random random = new Random();
+        avatarPath = "pics/battle_categorized/profile/"+random.nextInt(17)+".png";
+    }
+
     public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean showError) {
 
         //false:
