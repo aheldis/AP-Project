@@ -1,11 +1,13 @@
 package view.Graphic;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -16,6 +18,9 @@ import model.account.Account;
 import model.account.FilesType;
 import model.card.makeFile.MakeNewFile;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,6 +37,8 @@ public class NewCardGraphic {
     private static int numberOfHashMap;
     private static Account account;
     private static Text error = new Text();
+    private static int spriteNumber = 0;
+    private static int spriteNumberCount = 10;
 
     public static void setError(String text) {
         error.setText(text);
@@ -80,15 +87,80 @@ public class NewCardGraphic {
         return vBox;
     }
 
-    private static void done(VBox vBox, String type) {
+    private static void chooseSprite(VBox vBox, String type) {
         vBox.getChildren().clear();
         group.getChildren().remove(enter);
+
+        String folderPath = "pics/" + FilesType.getEnum(type).getName() + "/defaults/";
+
+        Group images = new Group();
+        group.getChildren().add(images);
+        int x = 200, y = 250;
+        for (int i = 0; i < 4; i++) {
+            if (type.equals("spell")) {
+                y = 300;
+                x += 47;
+            }
+            addPicture(images, type, folderPath, i, x, y);
+
+            x += 250;
+        }
+    }
+
+    private static int getCount(String folderPath, int number) {
+        try {
+            FileReader fileReader = new FileReader(folderPath + "counts.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while (true) {
+                String line = bufferedReader.readLine();
+                if (line == null)
+                    break;
+                int index = (int) line.charAt(0) - (int) '0';
+                if (index == number)
+                    return Integer.parseInt(line.substring(2));
+            }
+            bufferedReader.close();
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    private static void addPicture(Group images, String type, String folderPath, int number, int x, int y) {
+        ImageView imageView = null;
+        if (FilesType.getEnum(type) == FilesType.SPELL) {
+            int count = getCount(folderPath, number);
+            imageView = SpriteMaker.getInstance().makeSpritePic(folderPath + number + ".png",
+                    x, y, images, count,
+                    5, 3000,
+                    48, 48);
+
+
+        } else {
+            imageView = addImage(images, folderPath + number + ".gif", x, y, 250, 250);
+        }
+        setOnMouseEntered(imageView, scene, true);
+        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                spriteNumber = number;
+                spriteNumberCount = getCount(folderPath, number);
+                done(images, type);
+            }
+        });
+    }
+
+    private static void done(Group images, String type) {
+        images.getChildren().clear();
+        group.getChildren().remove(enter);
+        MakeNewFile.setSpriteNumber(spriteNumber, spriteNumberCount);
         MakeNewFile.setHashMaps(hashMaps);
         MakeNewFile.makeNewCard(account, FilesType.getEnum(type));
         if (error.getText() != null && !error.getText().equals("")) {
-            error = addText(vBox, 600, 400, error.getText(), Color.RED, 30);
+            error = addText(group, 120, 130, error.getText(), Color.RED, 30);
         } else {
-            error = addText(vBox, 600, 400, "Card successfully created.", Color.WHITE, 30);
+            error = addText(group, 120, 130, "Card successfully created.", Color.WHITE, 30);
         }
     }
 
@@ -117,12 +189,11 @@ public class NewCardGraphic {
                     numberOfBuffs--;
                     changeVBox(vBox, arrayLists.get(ind), ind, type);
                 } else {
-                    vBox.getChildren().clear();
-                    done(vBox, type);
+                    chooseSprite(vBox, type);
                 }
             } else {
                 if (ind == 1 && arrayLists.get(1) == null || arrayLists.get(1).size() == 0)
-                    done(vBox, type);
+                    chooseSprite(vBox, type);
                 else
                     changeVBox(vBox, arrayLists.get(ind), ind + 1, type);
             }
@@ -148,7 +219,7 @@ public class NewCardGraphic {
         group = new Group();
         ((Group) scene.getRoot()).getChildren().add(group);
 
-        addRectangleStroke(group, (int)StageLauncher.getWidth() - 160, (int)StageLauncher.getHeight() - 160,
+        addRectangleStroke(group, (int) StageLauncher.getWidth() - 160, (int) StageLauncher.getHeight() - 160,
                 true, Color.rgb(40, 100, 250, 0.5));
 
         ImageView close = addImage(group, "pics/menu/button_close@2x.png",
@@ -186,10 +257,10 @@ public class NewCardGraphic {
     }
 
     static void addRectangleStroke(Group group, int width, int height, boolean whiteBackground, Color strokeColor) {
-        if(whiteBackground)
-        addRectangle(group, 0, 0, (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight(),
-                0, 00, Color.rgb(255, 255, 255, 0.2));
-        Rectangle rectangle = addRectangle(group, ((int) StageLauncher.getWidth() - width) / 2, ((int)StageLauncher.getHeight() - height) / 2,
+        if (whiteBackground)
+            addRectangle(group, 0, 0, (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight(),
+                    0, 00, Color.rgb(255, 255, 255, 0.2));
+        Rectangle rectangle = addRectangle(group, ((int) StageLauncher.getWidth() - width) / 2, ((int) StageLauncher.getHeight() - height) / 2,
                 width, height
                 , 50, 50, Color.rgb(0, 0, 0, 0.85));
         rectangle.setStroke(strokeColor);

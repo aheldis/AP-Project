@@ -25,6 +25,14 @@ public class SpriteMaker {
     public ImageView makeSpritePic(String path, double x, double y, Parent root, int count,
                                    int numberOfPicInEachColumn, long millis,
                                    double widthOfEachFrame, double heightOfEachFrame) {
+        System.out.println("path = " + path);
+        System.out.println("x = " + x);
+        System.out.println("y = " + y);
+        System.out.println("count = " + count);
+        System.out.println("numberOfPicInEachColumn = " + numberOfPicInEachColumn);
+        System.out.println("millis = " + millis);
+        System.out.println("widthOfEachFrame = " + widthOfEachFrame);
+        System.out.println("heightOfEachFrame = " + heightOfEachFrame);
         ImageView imageView = null;
         try {
             Image image = new Image(new FileInputStream(path));

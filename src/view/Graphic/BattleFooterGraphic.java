@@ -54,7 +54,7 @@ public class BattleFooterGraphic {
             SpriteAnimationProperties sprite = new SpriteAnimationProperties(
                     card.getName(), FilesType.SPELL, card.getCountOfAnimation());
             gif = SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
-                    45 + dx, 40 + dy, group, sprite.count, sprite.rows, card.getMillis(),
+                    45 + dx, 40 + dy, group, sprite.count, sprite.rows, sprite.millis,
                     (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame);
         } else {
             gif = addImage(group, "pics/Minion/" + card.getName() + ".gif",

@@ -51,7 +51,6 @@ public abstract class Card {
     private int countOfAnimation = 16;
     private int animationRow = 5;
     private int frameSize;
-    private long millis;
     private int heightOfPicture;
 
     public static ArrayList<Hero> getHeroes(ArrayList<Card> cards) {
@@ -507,13 +506,7 @@ public abstract class Card {
         this.counterAttack = counterAttack;
     }
 
-    public long getMillis() {
-        return millis;
-    }
 
-    public void setMillis(long millis) {
-        this.millis = millis;
-    }
 
     public int getFrameSize() {
         return frameSize;

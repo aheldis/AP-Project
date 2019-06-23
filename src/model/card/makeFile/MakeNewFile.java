@@ -7,7 +7,6 @@ import model.account.Account;
 import model.account.FilesType;
 import model.account.Shop;
 import model.card.Buff;
-import model.card.Card;
 import view.Graphic.NewCardGraphic;
 import view.NewCardMessages;
 import view.Request;
@@ -32,24 +31,35 @@ public class MakeNewFile {
 
     private static ArrayList<HashMap<String, TextField>> hashMaps = new ArrayList<>(); //Be tartib: 0: khod card - 1: change - 2: target - 3 be bad buffHa
     private static int numberOfBuffHashmap = 3;
+    private static int spriteNumber = 0;
+    private static int spriteNumberCount = 0;
+
+
+    public static void setSpriteNumber(int spriteNumber, int spriteNumberCount) {
+        MakeNewFile.spriteNumber = spriteNumber;
+        MakeNewFile.spriteNumberCount = spriteNumberCount;
+    }
 
     public static void setHashMaps(ArrayList<HashMap<String, TextField>> hashMaps) {
         MakeNewFile.hashMaps = hashMaps;
     }
 
-    public static void addPicture(FilesType typeOfFile, String name, int count, Object object){
+    public static void addPicture(FilesType typeOfFile, String name, Object object) {
         String pathOfFolder = "pics/" + typeOfFile.getName() + "/";
-        copyFile(pathOfFolder + "DEFAULT_" + typeOfFile.getName().toUpperCase() + ".gif",
-                pathOfFolder + name + ".gif");
-        copyFile(pathOfFolder + "DEFAULT_" + typeOfFile.getName().toUpperCase() + ".png",
+        if (typeOfFile != FilesType.SPELL)
+            copyFile(pathOfFolder + "defaults/" + spriteNumber + ".gif",
+                    pathOfFolder + name + ".gif");
+        copyFile(pathOfFolder + "defaults/" + spriteNumber + ".png",
                 pathOfFolder + name + ".png");
 
 
-        ((CardCopy)object).setCountOfAnimation(count);
-        ((CardCopy)object).setPathOfAnimation(pathOfFolder + name + ".png");
-        ((CardCopy)object).setPathOfThePicture(pathOfFolder + name + ".gif");
+        ((CardCopy) object).setCountOfAnimation(spriteNumberCount);
+        ((CardCopy) object).setPathOfAnimation(pathOfFolder + name + ".png");
+        if (typeOfFile != FilesType.SPELL)
+            ((CardCopy) object).setPathOfThePicture(pathOfFolder + name + ".gif");
 
     }
+
     public static void makeNewCard(Account account, FilesType typeOfFile) {
         try {
             String name = hashMaps.get(0).get("name").getText();
@@ -73,13 +83,13 @@ public class MakeNewFile {
             }
             switch (typeOfFile) {
                 case HERO:
-                    addPicture(FilesType.HERO, name, 47, object);
+                    addPicture(FilesType.HERO, name, object);
                     break;
                 case SPELL:
-                    addPicture(FilesType.SPELL, name, 23, object);
+                    addPicture(FilesType.SPELL, name, object);
                     break;
                 case MINION:
-                    addPicture(FilesType.MINION, name, 87, object);
+                    addPicture(FilesType.MINION, name, object);
                     break;
             }
 

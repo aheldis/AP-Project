@@ -73,7 +73,7 @@ class CollectionScene {
                         name, FilesType.SPELL, ((Spell) card).getCountOfAnimation());
                 cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
                         25, 10, group, sprite.count,
-                        sprite.rows, ((Spell) card).getMillis(),
+                        sprite.rows, sprite.millis,
                         (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
             }
             if (card instanceof Hero) {
@@ -92,7 +92,7 @@ class CollectionScene {
                 cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
                         25, 10,
                         group, sprite.count,
-                        sprite.rows, ((Usable) card).getMillis(),
+                        sprite.rows, sprite.millis,
                         (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
 
             }
@@ -168,7 +168,7 @@ class CollectionScene {
                         ((Spell) card).getName(), FilesType.SPELL, ((Spell) card).getCountOfAnimation());
                 cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
                         94, 58, group, sprite.count,
-                        sprite.rows, ((Spell) card).getMillis(),
+                        sprite.rows, sprite.millis,
                         (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
             } else if (card instanceof Minion) {
                 addImage(group, "pics/Minion/" + ((Minion) card).getName() + ".gif",
@@ -213,7 +213,7 @@ class CollectionScene {
     private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
 
-            ImageView imageView = addImage(hBox, "pics/heroCard/" + card.getName() + ".png",
+            ImageView imageView = addImage(hBox, "pics/Hero/" + card.getName() + ".png",
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
 
             showMana(root, i * (X_BORDER + CARD_WIDTH) + 40,
@@ -319,7 +319,7 @@ class CollectionScene {
                     i * (X_BORDER + CARD_WIDTH) + 140,
                     j * (Y_BORDER + CARD_HEIGHT) + 200 - 55,
                     root, sprite.count,
-                    sprite.rows, card.getMillis(),
+                    sprite.rows, sprite.millis,
                     (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
 
             textForCollection(card, i, j, imageView);
@@ -443,7 +443,7 @@ class CollectionScene {
         cardsIcon.add(SpriteMaker.getInstance().makeSpritePic(sprite.spriteSheetPath,
                 80, 75,
                 group, sprite.count,
-                sprite.rows, item.getMillis(),
+                sprite.rows, sprite.millis,
                 (int) sprite.widthOfEachFrame, (int) sprite.heightOfEachFrame));
 
 

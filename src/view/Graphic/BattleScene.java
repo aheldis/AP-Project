@@ -164,7 +164,7 @@ public class BattleScene {
                     card.getName(), filesType, card.getCountOfAnimation());
             imageView = SpriteMaker.getInstance().makeSpritePic(spriteProperties.spriteSheetPath,
                     0, 0, board, spriteProperties.count,
-                    spriteProperties.rows, card.getMillis(),
+                    spriteProperties.rows, spriteProperties.millis,
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
             playMusic("resource/music/attack/attack-2.m4a", false, battleScene);
         } else {
