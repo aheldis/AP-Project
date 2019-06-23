@@ -96,7 +96,7 @@ public class BattleHeaderGraphic {
                         "pics/battle_categorized/icon_mana_inactive@2x.png",
                         x + i * 28, y, 25, 25);
         }
-        addNumberToMana(group, numberOfMana, x + 9 * 28 + 5, y);
+        addNumberToMana(group, numberOfMana, x, y + 2);
     }
 
     private void addCoolDown(double x, double y, Group group, int turnNotUsedSpecialPower, int coolDown) {

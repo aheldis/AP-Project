@@ -1,7 +1,9 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
+import javafx.print.PageLayout;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -200,6 +202,10 @@ public class BattleScene {
         }
         return board;
     }
+
+    public Rectangle getCell(int row, int column) {
+        return gameGrid[row][column];
+    }
     //*/
 /*
     Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
@@ -245,10 +251,6 @@ public class BattleScene {
     }
 //*/
 
-    public Rectangle getCell(int row, int column) {
-        return gameGrid[row][column];
-    }
-
     private void setOnMouseEntered(ImageView imageOfCard, Card card, boolean enemy) {
         imageOfCard.setOnMouseEntered(event -> {
             if (selectedCard != null && selectedCard.canAttack(card))
@@ -281,32 +283,86 @@ public class BattleScene {
         }
     }
 
-    public void test() {
-        numberOfMap = 7;
+    void showCanMoveToCoordinations(Card card) {
+        ArrayList<Square> squares = card.getCanMoveToSquares();
+        for (Square square : squares) {
+            Coordinate coordinate = square.getCoordinate();
+            Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
+            grid.setFill(Color.ALICEBLUE);
+            coloredRectangles.add(grid);
+        }
+    }
+
+    void showCanPutInCoordinations(Card card) {
+        ArrayList<Square> squares = card.getCanPutInSquares();
+        for (Square square : squares) {
+            Coordinate coordinate = square.getCoordinate();
+            Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
+            grid.setFill(Color.BLUEVIOLET);
+            coloredRectangles.add(grid);
+        }
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    void setOnMousePressedPosition(Card card) {
+        backToDefault();
+        this.onMousePressedPosition = card.getPosition();
+    }
+
+    void backToDefault() {
+        selectedCard = null;
+        removeColorFromRectangles();
+        glow.setLevel(0);
+    }
+
+    void removeColorFromRectangles() {
+        for (Rectangle rectangle : coloredRectangles)
+            rectangle.setFill(Color.BLACK);
+        coloredRectangles.removeAll(coloredRectangles);
+    }
+
+    public HashMap<Card, ImageView> getCardsHashMap() {
+        return cardsHashMap;
+    }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
+    int getNumberOfMap() {
+        return numberOfMap;
+    }
+
+    public BattleHeaderGraphic getBattleHeader() {
+        return battleHeader;
+    }
+
+    public BattleFooterGraphic getBattleFooter() {
+        return battleFooter;
+    }
+
+    public Scene getBattleScene() {
+        return battleScene;
+    }
+
+    void setBattleScene(int numberOfMap) {
+        root.getChildren().clear();
+        this.numberOfMap = numberOfMap;
         setMapProperties();
         setMapBackground();
+        playMusic("resource/music/battle_music/" +
+                numberOfMap + ".m4a", true, battleScene);
         addGrid();
-
-        /*
-        Minion minion = (Minion) Shop.getInstance().getNewCardByName("Siavash");
-        System.out.println(minion.getName());
-        addCardToBoard(2, 3, minion, "ATTACK");
-        */
-/*
-        ArrayList<Card> cards = Shop.getInstance().getCards();
-        int number = 0;
-        for (int i = 0; i < 5; i++)
-            for (int j = 0; j < 9; j++) {
-                while (number < cards.size() && !(cards.get(number) instanceof Hero))
-                    number++;
-                if (number == cards.size())
-                    break;
-                System.out.println("number = " + number);
-                System.out.println(cards.get(number).getName());
-                addCardToBoard(i, j, cards.get(number), "ATTACK");
-                number++;
-            }
-*/
+        battleHeader = new BattleHeaderGraphic(this, root);
+        battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
+        showSpecialPowerUsed("Hero");
     }
 
     private void setMapProperties() {
@@ -469,6 +525,36 @@ public class BattleScene {
 */
     }
 
+    public void test() {
+
+        /*
+        numberOfMap = 7;
+        setMapProperties();
+        setMapBackground();
+        addGrid();
+*/
+        /*
+        Minion minion = (Minion) Shop.getInstance().getNewCardByName("Siavash");
+        System.out.println(minion.getName());
+        addCardToBoard(2, 3, minion, "ATTACK");
+        */
+/*
+        ArrayList<Card> cards = Shop.getInstance().getCards();
+        int number = 0;
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 9; j++) {
+                while (number < cards.size() && !(cards.get(number) instanceof Hero))
+                    number++;
+                if (number == cards.size())
+                    break;
+                System.out.println("number = " + number);
+                System.out.println(cards.get(number).getName());
+                addCardToBoard(i, j, cards.get(number), "ATTACK");
+                number++;
+            }
+*/
+    }
+
     private void moveBackgrounds(ImageView imageView, boolean horizontal, boolean vertical) {
         int randomNumber = (new Random().nextInt(3)) - 1;
         if (randomNumber == 0) randomNumber = 1;
@@ -504,7 +590,7 @@ public class BattleScene {
 
     private void setOnMouseClickedForSpecialPower(Node node, Coordinate coordinate) {
         //todo add for minion and hero :-?
-        /*todo yani inkenegah kone age oon boolean e true bood select nakone o ina
+        /*todo yani inke negah kone age oon boolean e true bood select nakone o ina
           todo for more information contact Sba
          */
         node.setOnMouseClicked(event -> {
@@ -515,93 +601,37 @@ public class BattleScene {
         });
     }
 
+    public void showSpecialPowerUsed(String type) {
+        Group group = new Group();
+        addRectangle(group, 0, 0, 420, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
+        addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
+        root.getChildren().add(group);
+        group.relocate(490, 50);
+        GeneralGraphicMethods.setOnMouseEntered(group, battleScene, true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        root.getChildren().remove(group);
+                    }
+                });
+            }
+        }).start();
+    }
+
     public boolean isHeroSpecialPowerClicked() {
         return heroSpecialPowerClicked;
     }
 
     public void setHeroSpecialPowerClicked(boolean heroSpecialPowerClicked) {
         this.heroSpecialPowerClicked = heroSpecialPowerClicked;
-    }
-
-    void showCanMoveToCoordinations(Card card) {
-        ArrayList<Square> squares = card.getCanMoveToSquares();
-        for (Square square : squares) {
-            Coordinate coordinate = square.getCoordinate();
-            Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
-            grid.setFill(Color.ALICEBLUE);
-            coloredRectangles.add(grid);
-        }
-    }
-
-    void showCanPutInCoordinations(Card card) {
-        ArrayList<Square> squares = card.getCanPutInSquares();
-        for (Square square : squares) {
-            Coordinate coordinate = square.getCoordinate();
-            Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
-            grid.setFill(Color.BLUEVIOLET);
-            coloredRectangles.add(grid);
-        }
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    void setOnMousePressedPosition(Card card) {
-        backToDefault();
-        this.onMousePressedPosition = card.getPosition();
-    }
-
-    void backToDefault() {
-        selectedCard = null;
-        removeColorFromRectangles();
-        glow.setLevel(0);
-    }
-
-    void removeColorFromRectangles() {
-        for (Rectangle rectangle : coloredRectangles)
-            rectangle.setFill(Color.BLACK);
-        coloredRectangles.removeAll(coloredRectangles);
-    }
-
-    public HashMap<Card, ImageView> getCardsHashMap() {
-        return cardsHashMap;
-    }
-
-    public Match getMatch() {
-        return match;
-    }
-
-    public void setMatch(Match match) {
-        this.match = match;
-    }
-
-    int getNumberOfMap() {
-        return numberOfMap;
-    }
-
-    public BattleHeaderGraphic getBattleHeader() {
-        return battleHeader;
-    }
-
-    public BattleFooterGraphic getBattleFooter() {
-        return battleFooter;
-    }
-
-    public Scene getBattleScene() {
-        return battleScene;
-    }
-
-    void setBattleScene(int numberOfMap) {
-        root.getChildren().clear();
-        this.numberOfMap = numberOfMap;
-        setMapProperties();
-        setMapBackground();
-        playMusic("resource/music/battle_music/" +
-                numberOfMap + ".m4a", true, battleScene);
-        addGrid();
-        battleHeader = new BattleHeaderGraphic(this, root);
-        battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
     }
 
     public Group getBoard() {

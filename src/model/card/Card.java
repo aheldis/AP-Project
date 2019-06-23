@@ -8,6 +8,7 @@ import model.item.Flag;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
+import view.Graphic.BattleScene;
 import view.enums.ErrorType;
 import view.enums.RequestSuccessionType;
 
@@ -472,6 +473,7 @@ public abstract class Card {
             if (((Minion) this).getHaveSpecialPower()) {
                 setTarget(cardSquare);
                 change.affect(player, target.getTargets());
+                BattleScene.getSingleInstance().showSpecialPowerUsed("Minion");
                 return;
             }
 
@@ -482,9 +484,10 @@ public abstract class Card {
                 if (((Hero) this).getTurnNotUsedSpecialPower() <= ((Hero) this).getCoolDown()) {
                     setTarget(cardSquare);
                     change.affect(player, target.getTargets());
+                    ((Hero) this).setTurnNotUsedSpecialPower(0);
+                    BattleScene.getSingleInstance().showSpecialPowerUsed("Hero");
                     return;
                 }
-                ((Hero) this).setTurnNotUsedSpecialPower(0);
                 return;
             }
         }
