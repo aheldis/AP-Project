@@ -45,33 +45,9 @@ public class Match {
     private int matchNumber = 0;
 
     Match(Player[] players, String mode, int numberOfFlags, int reward) {
-        new Thread(() -> {
-            System.out.println("hi");
-            try {
-                File file = new File("PausedGames/NumberOfMap");
-                Scanner fileReader = new Scanner(file);
-                FileWriter fileWriter = new FileWriter(file, true);
-                int line = 1;
-                while (fileReader.hasNextLine()) {
-                    fileReader.nextLine();
-                    line++;
-                }
-                if (line != 1)
-                    line--;//we add \n at each writing
+        addToPausedGames();
 
-
-                fileWriter.write(line + "\n");
-                matchNumber = line;
-                fileWriter.close();
-                fileReader.close();
-
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }).start();
         land = new LandOfGame();
-        Hero firstHero = players[0].getMainDeck().getHero();
-        Hero secondHero = players[1].getMainDeck().getHero();
         for (int i = 0; i < 2; i++) {
             ArrayList<Card> cards = players[i].getMainDeck().getCardsOfDeck();
             Hero hero = players[i].getMainDeck().getHero();
@@ -95,9 +71,11 @@ public class Match {
 
         Square[][] square = land.getSquares();
 
+        Hero firstHero = players[0].getMainDeck().getHero();
         square[2][0].setObject(players[0].getMainDeck().getHero());
         firstHero.setPosition(square[2][0]);
 
+        Hero secondHero = players[1].getMainDeck().getHero();
         square[2][8].setObject(players[1].getMainDeck().getHero());
         secondHero.setPosition(square[2][8]);
 
@@ -108,6 +86,33 @@ public class Match {
         //set mana : meqdare avaliye mana baraye player inline behesh 2 dadam
 
         initGame();
+    }
+
+    private void addToPausedGames() {
+        new Thread(() -> {
+            try {
+                File file = new File("PausedGames/NumberOfMap");
+                Scanner fileReader = new Scanner(file);
+                FileWriter fileWriter = new FileWriter(file, true);
+                int line = 1;
+                while (fileReader.hasNextLine()) {
+                    fileReader.nextLine();
+                    line++;
+                }
+                if (line != 1)
+                    line--;//we add \n at each writing
+
+
+                fileWriter.write(line + "\n");
+                matchNumber = line;
+                fileWriter.close();
+                fileReader.close();
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }).start();
+
     }
 
     private void initGame() {

@@ -194,7 +194,6 @@ public class BattleHeaderGraphic {
         GeneralGraphicMethods.addTextWithShadow(leftHeader, 248, 78, player.getUserName(), "Arial", 27);
         addMana(245, 100, player.getMana(), leftHeader);
         addHeroSpecialPower(110, 195, leftHeader, 0, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown());
-        ;
         addPortraitBorder(120, 25, leftHeader, true, player.getAvatarPath(), true);
         addPortraitBorder(1165, 25, rightHeader, false, null, false);
     }

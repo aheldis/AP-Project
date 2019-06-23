@@ -16,11 +16,13 @@ import java.util.Objects;
 import java.util.Random;
 
 public abstract class Card {
+    private static final int DEFAULT = -1;
     protected Change change = new Change();//HAS-A
     protected Target target = new Target();
     protected int mp;
     protected int hp;
     protected int ap;
+    protected int attackRange;
     private int turnOfCanNotMove = 0;
     private int turnOfCanNotAttack = 0;
     private int turnOfCanNotCounterAttack = 0;
@@ -28,7 +30,6 @@ public abstract class Card {
     private CardId cardId;
     private ArrayList<Integer> turnsOfPickingUp = new ArrayList<>();
     private String counterAttack;
-    protected int attackRange;
     private int cost;
     //    private HashMap<Buff, ArrayList<Integer>> buffsOnThisCard = new HashMap<>(); //todo to init perturn as addada kam kone har ki sefr shod disaffect seda kone
     private ArrayList<Buff> buffsOnThisCard = new ArrayList<>();
@@ -44,7 +45,6 @@ public abstract class Card {
      * mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
      */
     private String description = "";
-    private static final int DEFAULT = -1;
     private String pathOfThePicture;
     private String pathOfAnimation;
     private int countOfAnimation = 16;
@@ -53,73 +53,46 @@ public abstract class Card {
     private long millis;
     private int heightOfPicture;
 
-    public void setAnimationRow(int animationRow) {
-        this.animationRow = animationRow;
+    public static ArrayList<Hero> getHeroes(ArrayList<Card> cards) {
+        ArrayList<Hero> heroes = new ArrayList<>();
+        for (Card card : cards)
+            if (card instanceof Hero)
+                heroes.add((Hero) card);
+        return heroes;
     }
 
-    public void setMillis(long millis) {
-        this.millis = millis;
+    public static ArrayList<Minion> getMinions(ArrayList<Card> cards) {
+        ArrayList<Minion> minions = new ArrayList<>();
+        for (Card card : cards) {
+            if (card instanceof Minion)
+                minions.add((Minion) card);
+        }
+        return minions;
     }
 
-    public long getMillis() {
-        return millis;
+    public static Card getCardById(String cardId, ArrayList<Card> cards) {
+        for (Card card : cards) {
+            if (card.getCardId().getCardIdAsString().equals(cardId))
+                return card;
+        }
+        return null;
     }
 
-    public void setFrameSize(int frameSize) {
-        this.frameSize = frameSize;
+    public CardId getCardId() {
+        return cardId;
     }
 
-    public int getFrameSize() {
-        return frameSize;
+    public void setCardId(CardId cardId) {
+        this.cardId = cardId;
     }
 
-    public void setCountOfAnimation(int countOfAnimation) {
-        this.countOfAnimation = countOfAnimation;
-    }
-
-    public int getAnimationRow() {
-        return animationRow;
-    }
-
-    public int getCountOfAnimation() {
-        return countOfAnimation;
-    }
-
-
-    public String getPathOfAnimation() {
-        return pathOfAnimation;
-    }
-
-    public void setPathOfAnimation(String pathOfAnimation) {
-        this.pathOfAnimation = pathOfAnimation;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public void setAp(int ap) {
-        this.ap = ap;
-    }
-
-    public String getPathOfThePicture() {
-        return pathOfThePicture;
-    }
-
-    public void setPathOfThePicture(String pathOfThePicture) {
-        this.pathOfThePicture = pathOfThePicture;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public Change getChange() {
-        return change;
-    }
-
-    public void addBuff(Buff buff) {
-        buffsOnThisCard.add(buff);
+    public static ArrayList<Spell> getSpells(ArrayList<Card> cards) {
+        ArrayList<Spell> spells = new ArrayList<>();
+        for (Card card : cards) {
+            if (card instanceof Spell)
+                spells.add((Spell) card);
+        }
+        return spells;
     }
 
     public void removeBuffs(boolean goodBuff) {
@@ -146,7 +119,6 @@ public abstract class Card {
             }
         }
     }
-
 
     public boolean move(Coordinate newCoordination) {
         Square newPosition = landOfGame.passSquareInThisCoordinate(newCoordination);
@@ -210,18 +182,10 @@ public abstract class Card {
         return true;
     }
 
-    public boolean canInsertToCoordination(Coordinate heroCoordination, Coordinate destination) {
-        int x = destination.getX();
-        int y = destination.getY();
-        if (x < 0 || x >= LandOfGame.getNumberOfRows() || y < 0 || y > LandOfGame.getNumberOfColumns())
+    boolean withinRange(Coordinate coordinate, int range) {
+        if (counterAttack.equals("Ranged") && getNormalDistance(coordinate) == 1)
             return false;
-
-        if (Math.abs(heroCoordination.getX() - x) + Math.abs(heroCoordination.getY() - y) <= 2) {
-            Square square = landOfGame.getSquares()[x][y];
-            return this instanceof Spell || !square.squareHasMinionOrHero();
-        }
-        return false;
-
+        return getManhatanDistance(coordinate) <= range;
     }
 
     private boolean canMoveToCoordination(Coordinate destination) {
@@ -256,6 +220,342 @@ public abstract class Card {
         return !Objects.requireNonNull(landOfGame.passSquareInThisCoordinate(destination)).squareHasMinionOrHero();
     }
 
+    public void addBuff(Buff buff) {
+        buffsOnThisCard.add(buff);
+    }
+
+    public boolean equalCard(String cardId) {
+        return this.cardId.getCardIdAsString().equals(cardId);
+    }
+
+    public int getNormalDistance(Coordinate coordinate) {
+        if (Math.abs(coordinate.getX() - position.getXCoordinate()) >= Math.abs(coordinate.getY() - position.getYCoordinate()))
+            return Math.abs(coordinate.getX() - position.getXCoordinate());
+        return Math.abs(coordinate.getY() - position.getYCoordinate());
+    }
+
+    public int getManhatanDistance(Coordinate coordinate) {
+        return Math.abs(coordinate.getX() - position.getXCoordinate()) +
+                Math.abs(coordinate.getY() - position.getYCoordinate());
+    }
+
+    public boolean canInsertToCoordination(Coordinate heroCoordination, Coordinate destination) {
+        int x = destination.getX();
+        int y = destination.getY();
+        if (x < 0 || x >= LandOfGame.getNumberOfRows() || y < 0 || y > LandOfGame.getNumberOfColumns())
+            return false;
+
+        if (Math.abs(heroCoordination.getX() - x) + Math.abs(heroCoordination.getY() - y) <= 2) {
+            Square square = landOfGame.getSquares()[x][y];
+            return (this instanceof Spell || !square.squareHasMinionOrHero());
+        }
+        return false;
+
+    }
+
+    private boolean checkTarget(Square check, String targetType) {
+        return check != null && target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
+                target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position) &&
+                target.checkDistance(this, check) && (target.checkIsEnemy(player, check) ||
+                target.checkIsAlly(player, check)) && target.checkTheOneWhoDoesTheThing(check.getObject());
+    }
+
+    public boolean attack(Card attackedCard) {
+        //false:
+
+        if (this instanceof Spell) {
+            return false;
+        }
+
+        if (attackedCard == null) {
+            ErrorType.INVALID_CARD_ID.printMessage();
+            return false;
+        }
+
+        if (!canAttack) {
+            ErrorType.CAN_NOT_ATTACK.printMessage();
+            return false;
+        }
+
+
+        if (!withinRange(attackedCard.position.getCoordinate(), attackRange) && player instanceof OrdinaryPlayer) {
+            ErrorType.UNAVAILABLE_OPPONENT.printMessage();
+            return false;
+        }
+
+
+        //true:
+        if (this instanceof Minion) {
+            if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
+                useSpecialPower(position);
+                getChange().affect(player, this.getTargetClass().getTargets());
+            }
+        }
+
+        attackedCard.changeHp(-ap + hpChangeAfterAttack);
+        attackedCard.counterAttack(this);
+        setCanAttack(false, 0);
+
+        if (player.getMainDeck().getItem() != null &&
+                player.getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
+                player.getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
+            player.getMainDeck().getItem().setTarget(player);
+            player.getMainDeck().getItem().getChange().affect(player, player.getMainDeck().getItem().getTarget().getTargets());
+        }
+        return true;
+    }
+
+    public boolean canAttack(Card opponentCard) {
+        return withinRange(opponentCard.position.getCoordinate(), attackRange) && canAttack &&
+                !player.getCardsOnLand().contains(opponentCard);
+    }
+
+    public void changeHp(int number) {
+        hp += number;
+        if (hp <= 0) {
+            player.getGraveYard().addCardToGraveYard(this, position);
+            position = null;
+        }
+    }
+
+    public void counterAttack(Card theOneWhoAttacked) {
+        boolean canCounterAttack = this.canCounterAttack && (
+                (counterAttack.equals("melee") && getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1)
+                        || (counterAttack.equals("ranged") && getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1)
+                        || (counterAttack.equals("hybrid"))
+        );
+
+        if (canCounterAttack)
+            theOneWhoAttacked.changeHp(-ap);
+        if (theOneWhoAttacked instanceof Minion) {
+            if (((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK ||
+                    ((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN ||
+                    ((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_DEFEND) {
+                useSpecialPower(theOneWhoAttacked.getPosition());
+            }
+        }
+    }
+
+    public Card findNearestOne(Target target) {
+        int x = position.getXCoordinate();
+        int y = position.getYCoordinate();
+        int distance = 1;
+        boolean check[] = {false, false, false, false, false, false, false, false};
+        while (true) {
+
+            boolean allChecked = true;
+            for (int i = 0; i < 8; i++)
+                if (!check[i]) {
+                    allChecked = false;
+                    break;
+                }
+
+            if (allChecked) {
+                distance++;
+                if (x + distance >= landOfGame.getNumberOfRows() && x - distance < 0 &&
+                        y + distance >= landOfGame.getNumberOfColumns() && y - distance < 0)
+                    return null;
+                for (int i = 0; i < 8; i++)
+                    check[i] = false;
+            }
+
+            int dx[] = {1, 0, -1, 0, 1, 1, -1, -1};
+            int dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
+            Random random = new Random();
+            int randomNumber = random.nextInt(8);
+
+            if (check[randomNumber])
+                continue;
+
+            check[randomNumber] = true;
+
+            if (x + dx[randomNumber] * distance >= landOfGame.getNumberOfRows() || x + dx[randomNumber] * distance < 0)
+                continue;
+
+            if (y + dy[randomNumber] * distance >= landOfGame.getNumberOfColumns() || y + dy[randomNumber] * distance < 0)
+                continue;
+
+            if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt() == null) {
+                if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasMinionAndPassIt() == null)
+                    continue;
+                if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]], change.getTargetType()))
+                    continue;
+                return landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasMinionAndPassIt();
+            }
+            if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]], change.getTargetType()))
+                continue;
+            return landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt();
+        }
+    }
+
+    public void setCanAttack(boolean bool, int forHowManyTurn) {
+        canAttack = bool;
+        if (!bool) {
+            setTurnOfCanNotAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
+        }
+    }
+
+    public void changeTurnOfCanNotAttack(int number) {
+        turnOfCanNotAttack += number;
+    }
+
+    public void changeTurnOfCanNotCounterAttack(int number) {
+        turnOfCanNotCounterAttack += number;
+    }
+
+    public void changeTurnOfCanNotMove(int number) {
+        turnOfCanNotMove += number;
+    }
+
+    public void setCanMove(boolean canMove, int forHowManyTurn) {
+        this.canMove = canMove;
+        if (!canMove) {
+            setTurnOfCanNotMove(Math.max(getTurnOfCanNotMove(), forHowManyTurn));
+        }
+    }
+
+    public int getTurnOfCanNotMove() {
+        return turnOfCanNotMove;
+    }
+
+    public void setTurnOfCanNotMove(int number) {
+        turnOfCanNotMove = number;
+    }
+
+    public void setCanCounterAttack(boolean bool, int forHowManyTurn) {
+        canCounterAttack = bool;
+        if (!bool) {
+            setTurnOfCanNotCounterAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
+        }
+    }
+
+    public int getTurnOfCanNotAttack() {
+        return turnOfCanNotAttack;
+    }
+
+    public void setTurnOfCanNotAttack(int number) {
+        turnOfCanNotAttack = number;
+    }
+
+    public void setCardIdFromClassCardId() {
+    }
+
+    public void addNewNameOfCardToCard(String cardName) {
+    }
+
+    public void decreaseNumberOfSameCard(String cardName) {
+
+    }
+
+    public void addToTurnsOfPickingUp(int turn) {
+        turnsOfPickingUp.add(turn);
+    }
+
+    public void addToTurnOfpickingUp(int number) {
+        turnsOfPickingUp.add(number);
+    }
+
+    public void changeAp(int number) {
+        ap += number;
+    }
+
+    public void useSpecialPower(Square cardSquare) {
+        System.out.println("Card.useSpecialPower");
+        ErrorType error;
+        if (this instanceof Spell) {
+            error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;
+            error.printMessage();
+            return;
+        }
+
+        if (this instanceof Minion) {
+            if (((Minion) this).getHaveSpecialPower()) {
+                setTarget(cardSquare);
+                change.affect(player, target.getTargets());
+                return;
+            }
+
+        }
+
+        if (this instanceof Hero) {
+            if (((Hero) this).getHaveSpecialPower()) {
+                if (((Hero) this).getTurnNotUsedSpecialPower() <= ((Hero) this).getCoolDown()) {
+                    setTarget(cardSquare);
+                    change.affect(player, target.getTargets());
+                    return;
+                }
+                ((Hero) this).setTurnNotUsedSpecialPower(0);
+                return;
+            }
+        }
+        error = ErrorType.DO_NOT_HAVE_SPECIAL_POWER;
+        error.printMessage();
+    }
+
+    public void setHpChangeAfterAttack(int number) {
+        hpChangeAfterAttack += number;
+    }
+
+    public void setLandOfGame(LandOfGame landOfGame) {
+        this.landOfGame = landOfGame;
+    }
+
+    public void setCounterAttack(String counterAttack) {
+        this.counterAttack = counterAttack;
+    }
+
+    public long getMillis() {
+        return millis;
+    }
+
+    public void setMillis(long millis) {
+        this.millis = millis;
+    }
+
+    public int getFrameSize() {
+        return frameSize;
+    }
+
+    public void setFrameSize(int frameSize) {
+        this.frameSize = frameSize;
+    }
+
+    public int getAnimationRow() {
+        return animationRow;
+    }
+
+    public void setAnimationRow(int animationRow) {
+        this.animationRow = animationRow;
+    }
+
+    public int getCountOfAnimation() {
+        return countOfAnimation;
+    }
+
+    public void setCountOfAnimation(int countOfAnimation) {
+        this.countOfAnimation = countOfAnimation;
+    }
+
+    public String getPathOfAnimation() {
+        return pathOfAnimation;
+    }
+
+    public void setPathOfAnimation(String pathOfAnimation) {
+        this.pathOfAnimation = pathOfAnimation;
+    }
+
+    public String getPathOfThePicture() {
+        return pathOfThePicture;
+    }
+
+    public void setPathOfThePicture(String pathOfThePicture) {
+        this.pathOfThePicture = pathOfThePicture;
+    }
+
+    public Change getChange() {
+        return change;
+    }
+
     public ArrayList<Square> getCanMoveToSquares() {
         ArrayList<Square> returnSquares = new ArrayList<>();
         Square[][] squares = landOfGame.getSquares();
@@ -265,12 +565,6 @@ public abstract class Card {
                         && canMoveToCoordination(squares[i][j].getCoordinate()))
                     returnSquares.add(squares[i][j]);
         return returnSquares;
-    }
-
-    boolean withinRange(Coordinate coordinate, int range) {
-        if (counterAttack.equals("Ranged") && getNormalDistance(coordinate) == 1)
-            return false;
-        return getManhatanDistance(coordinate) <= range;
     }
 
     public ArrayList<Square> getCanPutInSquares() {
@@ -287,11 +581,139 @@ public abstract class Card {
         return squares;
     }
 
-    private boolean checkTarget(Square check, String targetType) {
-        return check != null && target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
-                target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position) &&
-                target.checkDistance(this, check) && (target.checkIsEnemy(player, check) ||
-                target.checkIsAlly(player, check)) && target.checkTheOneWhoDoesTheThing(check.getObject());
+    public Square getPosition() {
+        return position;
+    }
+
+    public void setPosition(Square position) {
+        this.position = position;
+    }
+
+    public ArrayList<Card> getTheCardsInRange() {
+        ArrayList<Card> cardsInRange = new ArrayList<>();
+        for (Card card : player.getOpponent().getCardsOnLand()) {
+            if (withinRange(card.getPosition().getCoordinate(), attackRange))
+                cardsInRange.add(card);
+        }
+        return cardsInRange;
+    }
+
+    public boolean isCanAttack() {
+        return canAttack;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Target getTargetClass() {
+        return target;
+    }
+
+    public boolean isCanMove() {//maybe it have stun buff and can not move
+        return canMove;
+    }
+
+    public int getTurnOfCanNotCounterAttack() {
+        return turnOfCanNotCounterAttack;
+    }
+
+    public void setTurnOfCanNotCounterAttack(int number) {
+        turnOfCanNotCounterAttack = number;
+    }
+
+    public boolean isCanCounterAttack() {
+        return canCounterAttack;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public ArrayList<Buff> getBuffsOnThisCard() {
+        return buffsOnThisCard;
+    }
+
+    public void setBuffsOnThisCard(ArrayList<Buff> buffsOnThisCard) {
+        this.buffsOnThisCard = buffsOnThisCard;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getRange() {
+        return attackRange;
+    }
+
+    public String getDescription() {
+
+
+        return stringMakerForDesc(description);
+    }
+
+    public static String stringMakerForDesc(String string) {
+        StringBuilder outPut = new StringBuilder();
+        String[] strings = string.split(" ");
+        for (int i = 0; i < strings.length; i++) {
+            if (i != 0 && i % 3 == 0) {
+                outPut.append("\n");
+            }
+            outPut.append(" ").append(strings[i]);
+        }
+        return outPut.toString();
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCounterAttackName() {
+        return counterAttack;
+    }
+
+    public Boolean getCanMove() {
+        return canMove;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getAp() {
+        return ap;
+    }
+
+    public void setAp(int ap) {
+        this.ap = ap;
+    }
+
+    public int getMp() {
+        return mp;
+    }
+
+    public void setMp(int mp) {
+        this.mp = mp;
+    }
+
+    public Target getTarget() {
+        return target;
     }
 
     public void setTarget(Square cardSquare) {
@@ -378,425 +800,6 @@ public abstract class Card {
         }
         target.setTargets(targets);
 
-    }
-
-    public int getManhatanDistance(Coordinate coordinate) {
-        return Math.abs(coordinate.getX() - position.getXCoordinate()) +
-                Math.abs(coordinate.getY() - position.getYCoordinate());
-    }
-
-    public int getNormalDistance(Coordinate coordinate) {
-        if (Math.abs(coordinate.getX() - position.getXCoordinate()) >= Math.abs(coordinate.getY() - position.getYCoordinate()))
-            return Math.abs(coordinate.getX() - position.getXCoordinate());
-        return Math.abs(coordinate.getY() - position.getYCoordinate());
-    }
-
-    public void attack(Card attackedCard) {
-        if (this instanceof Spell) {
-            return;
-        }
-
-        if (player instanceof OrdinaryPlayer) {
-            if (attackedCard == null) {
-                ErrorType.INVALID_CARD_ID.printMessage();
-                return;
-            }
-
-            if (!canAttack) {
-                ErrorType.CAN_NOT_ATTACK.printMessage();
-                return;
-            }
-        }
-        if (this instanceof Minion) {
-            if (((Minion) this).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK) {
-                useSpecialPower(position);
-                getChange().affect(player, this.getTargetClass().getTargets());
-            }
-        }
-
-        if (!withinRange(attackedCard.position.getCoordinate(), attackRange) && player instanceof OrdinaryPlayer) {
-            ErrorType.UNAVAILABLE_OPPONENT.printMessage();
-            return;
-        }
-        attackedCard.changeHp(-ap + hpChangeAfterAttack);
-        attackedCard.counterAttack(this);
-        setCanAttack(false, 1);
-
-        if (player.getMainDeck().getItem() != null &&
-                player.getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
-                player.getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
-            player.getMainDeck().getItem().setTarget(player);
-            player.getMainDeck().getItem().getChange().affect(player, player.getMainDeck().getItem().getTarget().getTargets());
-        }
-    }
-
-    public boolean canAttack(Card opponentCard) {
-
-        return withinRange(opponentCard.position.getCoordinate(), attackRange) && canAttack &&
-                !player.getCardsOnLand().contains(opponentCard);
-    }
-
-    public ArrayList<Card> getTheCardsInRange() {
-        ArrayList<Card> cardsInRange = new ArrayList<>();
-        for (Card card : player.getOpponent().getCardsOnLand()) {
-            if (withinRange(card.getPosition().getCoordinate(), attackRange))
-                cardsInRange.add(card);
-        }
-        return cardsInRange;
-    }
-
-    public boolean isCanAttack() {
-        return canAttack;
-    }
-
-    public void changeHp(int number) {
-        hp += number;
-        if (hp <= 0) {
-            player.getGraveYard().addCardToGraveYard(this, position);
-            position = null;
-        }
-    }
-
-    public void counterAttack(Card theOneWhoAttacked) {
-        boolean canCounterAttack = counterAttack.equals("melee") &&
-                getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1;
-        if (!canCounterAttack)
-            canCounterAttack = counterAttack.equals("ranged") &&
-                    getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1;
-        if (!canCounterAttack)
-            canCounterAttack = counterAttack.equals("hybrid");
-        if (this.canCounterAttack && canCounterAttack)
-            theOneWhoAttacked.changeHp(-ap);
-        if (theOneWhoAttacked instanceof Minion) {
-            if (((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_ATTACK ||
-                    ((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_SPAWN ||
-                    ((Minion) theOneWhoAttacked).getActivationTimeOfSpecialPower() == ActivationTimeOfSpecialPower.ON_DEFEND) {
-                useSpecialPower(theOneWhoAttacked.getPosition());
-            }
-        }
-    }
-
-    public Card findNearestOne(Target target) {
-        int x = position.getXCoordinate();
-        int y = position.getYCoordinate();
-        int distance = 1;
-        boolean check[] = {false, false, false, false, false, false, false, false};
-        while (true) {
-
-            boolean allChecked = true;
-            for (int i = 0; i < 8; i++)
-                if (!check[i]) {
-                    allChecked = false;
-                    break;
-                }
-
-            if (allChecked) {
-                distance++;
-                if (x + distance >= landOfGame.getNumberOfRows() && x - distance < 0 &&
-                        y + distance >= landOfGame.getNumberOfColumns() && y - distance < 0)
-                    return null;
-                for (int i = 0; i < 8; i++)
-                    check[i] = false;
-            }
-
-            int dx[] = {1, 0, -1, 0, 1, 1, -1, -1};
-            int dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
-            Random random = new Random();
-            int randomNumber = random.nextInt(8);
-
-            if (check[randomNumber])
-                continue;
-
-            check[randomNumber] = true;
-
-            if (x + dx[randomNumber] * distance >= landOfGame.getNumberOfRows() || x + dx[randomNumber] * distance < 0)
-                continue;
-
-            if (y + dy[randomNumber] * distance >= landOfGame.getNumberOfColumns() || y + dy[randomNumber] * distance < 0)
-                continue;
-
-            if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt() == null) {
-                if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasMinionAndPassIt() == null)
-                    continue;
-                if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]], change.getTargetType()))
-                    continue;
-                return landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasMinionAndPassIt();
-            }
-            if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]], change.getTargetType()))
-                continue;
-            return landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt();
-        }
-    }
-
-    public void setCanAttack(boolean bool, int forHowManyTurn) {
-        canAttack = bool;
-        if (!bool) {
-            setTurnOfCanNotAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
-        }
-    }
-
-    public Square getPosition() {
-        return position;
-    }
-
-    public int getTurnOfCanNotAttack() {
-        return turnOfCanNotAttack;
-    }
-
-    public void setTurnOfCanNotAttack(int number) {
-        turnOfCanNotAttack = number;
-    }
-
-    public void setPosition(Square position) {
-        this.position = position;
-    }
-
-    public void changeTurnOfCanNotAttack(int number) {
-        turnOfCanNotAttack += number;
-    }
-
-    public void changeTurnOfCanNotCounterAttack(int number) {
-        turnOfCanNotCounterAttack += number;
-    }
-
-    public void changeTurnOfCanNotMove(int number) {
-        turnOfCanNotMove += number;
-    }
-
-    public void setCanMove(boolean canMove, int forHowManyTurn) {
-        this.canMove = canMove;
-        if (!canMove) {
-            setTurnOfCanNotMove(Math.max(getTurnOfCanNotMove(), forHowManyTurn));
-        }
-    }
-
-    public int getTurnOfCanNotMove() {
-        return turnOfCanNotMove;
-    }
-
-    public void setTurnOfCanNotMove(int number) {
-        turnOfCanNotMove = number;
-    }
-
-    public void setCanCounterAttack(boolean bool, int forHowManyTurn) {
-        canCounterAttack = bool;
-        if (!bool) {
-            setTurnOfCanNotCounterAttack(Math.max(getTurnOfCanNotAttack(), forHowManyTurn));
-        }
-    }
-
-    public void setCardIdFromClassCardId() {
-    }
-
-    public void addNewNameOfCardToCard(String cardName) {
-    }
-
-    public void decreaseNumberOfSameCard(String cardName) {
-
-    }
-
-    public void addToTurnsOfPickingUp(int turn) {
-        turnsOfPickingUp.add(turn);
-    }
-
-    public void addToTurnOfpickingUp(int number) {
-        turnsOfPickingUp.add(number);
-    }
-
-    public boolean equalCard(String cardId) {
-        return this.cardId.getCardIdAsString().equals(cardId);
-    }
-
-
-    public void changeAp(int number) {
-        ap += number;
-    }
-
-    public void useSpecialPower(Square cardSquare) {
-        System.out.println("Card.useSpecialPower");
-        ErrorType error;
-        if (this instanceof Spell) {
-            error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;
-            error.printMessage();
-            return;
-        }
-
-        if (this instanceof Minion) {
-            if (((Minion) this).getHaveSpecialPower()) {
-                setTarget(cardSquare);
-                change.affect(player, target.getTargets());
-                return;
-            }
-
-        }
-
-        if (this instanceof Hero) {
-            if (((Hero) this).getHaveSpecialPower()) {
-                if (((Hero) this).getTurnNotUsedSpecialPower() <= ((Hero) this).getCoolDown()) {
-                    setTarget(cardSquare);
-                    change.affect(player, target.getTargets());
-                    return;
-                }
-                ((Hero) this).setTurnNotUsedSpecialPower(0);
-                return;
-            }
-        }
-        error = ErrorType.DO_NOT_HAVE_SPECIAL_POWER;
-        error.printMessage();
-    }
-
-    public static ArrayList<Hero> getHeroes(ArrayList<Card> cards) {
-        ArrayList<Hero> heroes = new ArrayList<>();
-        for (Card card : cards)
-            if (card instanceof Hero)
-                heroes.add((Hero) card);
-        return heroes;
-    }
-
-    public static ArrayList<Minion> getMinions(ArrayList<Card> cards) {
-        ArrayList<Minion> minions = new ArrayList<>();
-        for (Card card : cards) {
-            if (card instanceof Minion)
-                minions.add((Minion) card);
-        }
-        return minions;
-    }
-
-
-    public static Card getCardById(String cardId, ArrayList<Card> cards) {
-        for (Card card : cards) {
-            if (card.getCardId().getCardIdAsString().equals(cardId))
-                return card;
-        }
-        return null;
-    }
-
-    public CardId getCardId() {
-        return cardId;
-    }
-
-    public void setCardId(CardId cardId) {
-        this.cardId = cardId;
-    }
-
-    public static ArrayList<Spell> getSpells(ArrayList<Card> cards) {
-        ArrayList<Spell> spells = new ArrayList<>();
-        for (Card card : cards) {
-            if (card instanceof Spell)
-                spells.add((Spell) card);
-        }
-        return spells;
-    }
-
-
-    public void setHpChangeAfterAttack(int number) {
-        hpChangeAfterAttack += number;
-    }
-
-    public void setLandOfGame(LandOfGame landOfGame) {
-        this.landOfGame = landOfGame;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public Target getTargetClass() {
-        return target;
-    }
-
-    public boolean isCanMove() {//maybe it have stun buff and can not move
-        return canMove;
-    }
-
-    public int getTurnOfCanNotCounterAttack() {
-        return turnOfCanNotCounterAttack;
-    }
-
-    public void setTurnOfCanNotCounterAttack(int number) {
-        turnOfCanNotCounterAttack = number;
-    }
-
-    public boolean isCanCounterAttack() {
-        return canCounterAttack;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
-    public ArrayList<Buff> getBuffsOnThisCard() {
-        return buffsOnThisCard;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getRange() {
-        return attackRange;
-    }
-
-    public static String stringMakerForDesc(String string) {
-        StringBuilder outPut = new StringBuilder();
-        String[] strings = string.split(" ");
-        for (int i = 0; i < strings.length; i++) {
-            if (i != 0 && i % 3 == 0) {
-                outPut.append("\n");
-            }
-            outPut.append(" ").append(strings[i]);
-        }
-        return outPut.toString();
-    }
-
-    public String getDescription() {
-
-
-        return stringMakerForDesc(description);
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCounterAttackName() {
-        return counterAttack;
-    }
-
-    public void setCounterAttack(String counterAttack) {
-        this.counterAttack = counterAttack;
-    }
-
-    public Boolean getCanMove() {
-        return canMove;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public int getAp() {
-        return ap;
-    }
-
-    public int getMp() {
-        return mp;
-    }
-
-    public void setMp(int mp) {
-        this.mp = mp;
-    }
-
-    public Target getTarget() {
-        return target;
     }
 
 

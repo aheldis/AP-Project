@@ -249,20 +249,6 @@ public class BattleScene {
         return gameGrid[row][column];
     }
 
-
-    private void setOnMouseClickedForSpecialPower(Node node, Coordinate coordinate){
-        //todo add for minion and hero :-?
-        /*todo yani inkenegah kone age oon boolean e true bood select nakone o ina
-          todo for more information contact Sba
-         */
-        node.setOnMouseClicked(event -> {
-            if (isHeroSpecialPowerClicked()) {
-                match.getPlayers()[0].getHero().useSpecialPower(match.getLand().passSquareInThisCoordinate(coordinate));
-                setHeroSpecialPowerClicked(false);
-            }
-        });
-    }
-
     private void setOnMouseEntered(ImageView imageOfCard, Card card, boolean enemy) {
         imageOfCard.setOnMouseEntered(event -> {
             if (selectedCard != null && selectedCard.canAttack(card))
@@ -283,8 +269,7 @@ public class BattleScene {
         if (enemy) {
             imageOfCard.setOnMouseClicked(event -> {
 
-                if (selectedCard != null && selectedCard.canAttack(card)) {
-                    selectedCard.attack(card);
+                if (selectedCard != null && selectedCard.attack(card)) {
                     imageOfSelectedCard.setOpacity(0);
                     addCardToBoard(selectedCard.getPosition().getXCoordinate(),
                             selectedCard.getPosition().getYCoordinate(), selectedCard,
@@ -514,6 +499,19 @@ public class BattleScene {
                 imageView.setX(primaryX - moveDistance);
             if (horizontal)
                 imageView.setY(primaryY - moveDistance);
+        });
+    }
+
+    private void setOnMouseClickedForSpecialPower(Node node, Coordinate coordinate) {
+        //todo add for minion and hero :-?
+        /*todo yani inkenegah kone age oon boolean e true bood select nakone o ina
+          todo for more information contact Sba
+         */
+        node.setOnMouseClicked(event -> {
+            if (isHeroSpecialPowerClicked()) {
+                match.getPlayers()[0].getHero().useSpecialPower(match.getLand().passSquareInThisCoordinate(coordinate));
+                setHeroSpecialPowerClicked(false);
+            }
         });
     }
 
