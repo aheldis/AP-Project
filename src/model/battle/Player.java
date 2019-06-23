@@ -13,9 +13,9 @@ import view.enums.ErrorType;
 import java.util.ArrayList;
 
 public abstract class Player {
+    protected String type;
     private Deck mainDeck;
     private Hand hand;
-    protected String type;
     private Player opponent;
     private ArrayList<Card> cardsOnLand = new ArrayList<>();
     //private Card flagSaver;
@@ -29,9 +29,7 @@ public abstract class Player {
     private ArrayList<Buff> buffsOnThisPlayer = new ArrayList<>();
     private String avatarPath = "pics/profile/speech_portrait_abyssianalt@2x.png";
 
-    public String getAvatarPath() {
-        return avatarPath;
-    }
+    public abstract void addToAccountWins();
 
     //Collectible item to hand ast :D
 
@@ -39,31 +37,24 @@ public abstract class Player {
 //    public abstract void attack(Card card, Square target);
 //    public abstract void useSpecialPower(Card card);
 
-    private int getNumberOfPlayer() {
-        if (this.equals(match.getPlayers()[0]))
-            return 0;
-        else
-            return 1;
-    }
+    public abstract void addMatchInfo(MatchInfo matchInfo);
 
     public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean showError) {
 
-        if (opponent.opponent.getMana() < playerCard.getMp()) {
+        //false:
+        if (getMana() < playerCard.getMp()) {
             if (showError)
                 ErrorType.HAVE_NOT_ENOUGH_MANA.printMessage();
             return false;
         }
-        if (playerCard == null) {
-            if (showError)
-                ErrorType.INVALID_CARD_ID.printMessage();
-            return false;
-        }
+
         playerCard.setPosition(getHero().getPosition());
         if (!playerCard.canInsertToCoordination(this.getHero().getPosition().getCoordinate(), coordinate)) {
             if (showError)
                 ErrorType.INVALID_TARGET.printMessage();
             return false;
         }
+
         Square square = land.passSquareInThisCoordinate(coordinate);
         if (square == null) {
             if (showError)
@@ -71,18 +62,23 @@ public abstract class Player {
             return false;
         }
 
+
+        //true:
+        mana -= playerCard.getMp();
+        match.getBattleScene().getBattleHeader().makeHeaderEachTurn(getNumberOfPlayer(), this);
+        hand.removeUsedCardsFromHand(playerCard);
+
+        //spell:
         if (playerCard instanceof Spell) {
             playerCard.setTarget(land.passSquareInThisCoordinate(coordinate));
             playerCard.getChange().affect(playerCard.getPlayer(), playerCard.getTarget().getTargets());
             graveYard.addCardToGraveYard(playerCard, land.passSquareInThisCoordinate(coordinate));
-            mana -= playerCard.getMp();
-            hand.removeUsedCardsFromHand(playerCard);
-            return false;
+            return true;
         }
 
         playerCard.setPosition(null);
 
-
+        //if square has Collectible item:
         if (square.getObject() instanceof Collectible &&
                 ((Collectible) square.getObject()).getTarget().checkTheOneWhoCollects(playerCard)) {
             getHand().addToCollectibleItem((Collectible) square.getObject());
@@ -94,6 +90,7 @@ public abstract class Player {
             addBuffToPlayer(buff);
         }
 
+        //flags:
         if (square.getFlags().size() > 0) {
             for (Flag flag : square.getFlags()) {
                 flag.setOwnerCard(playerCard);
@@ -102,55 +99,71 @@ public abstract class Player {
             square.clearFlags();
         }
 
+
+        //item:
+        if (mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
+                mainDeck.getItem().getTarget().checkTheOneWhoDoesTheThing(playerCard)) {
+            mainDeck.getItem().setTarget(this);
+            mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
+        }
+
+        //put card on land:
         if (playerCard instanceof Minion) {
             if (((Minion) playerCard).getActivationTimeOfSpecialPower() ==
                     ActivationTimeOfSpecialPower.ON_SPAWN) {
                 playerCard.useSpecialPower(square);
+                playerCard.setTarget(land.passSquareInThisCoordinate(coordinate));
                 playerCard.getChange().affect(this, playerCard.getTargetClass().getTargets());
             }
         }
 
-        mana -= playerCard.getMp();
-        match.getBattleScene().getBattleHeader().makeHeaderEachTurn(getNumberOfPlayer(), this);
-
-        hand.removeUsedCardsFromHand(playerCard);
         playerCard.setPosition(square);
         getCardsOnLand().add(playerCard);
         Square[][] squares = land.getSquares();
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
         playerCard.setCanMove(false, 0);
 
-        if (mainDeck.getItem() != null && mainDeck.getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_PUT &&
-                mainDeck.getItem().getTarget().checkTheOneWhoDoesTheThing(playerCard)) {
-            mainDeck.getItem().setTarget(this);
-            mainDeck.getItem().getChange().affect(this, mainDeck.getItem().getTarget().getTargets());
-        }
         return true;
     }
 
-    public String getUserName() {
-        if (this instanceof ComputerPlayer) {
-            return "computer";
-        }
-        return account.getUserName();
+    public int getMana() {
+        return mana;
     }
 
-    public void setTurnForSavingFlag(int turnForSavingFlag) {
-        this.turnForSavingFlag = turnForSavingFlag;
+    public Hero getHero() {
+        return mainDeck.getHero();
     }
 
-    public int getTurnForSavingFlag() {
-        return turnForSavingFlag;
+    public Hand getHand() {
+        return hand;
     }
 
-    public ArrayList<Flag> getOwnFlags() {
-        return ownFlags;
+    public void setHand(Hand hand) {
+        this.hand = hand;
     }
 
+    public void addBuffToPlayer(Buff buff) {
+        buffsOnThisPlayer.add(buff);
+    }
 
-    public abstract void addToAccountWins();
+    public void addToOwnFlags(Flag flag) {
+        ownFlags.add(flag);
+    }
 
-    public abstract void addMatchInfo(MatchInfo matchInfo);
+    private int getNumberOfPlayer() {
+        if (this.equals(match.getPlayers()[0]))
+            return 0;
+        else
+            return 1;
+    }
+
+    public ArrayList<Card> getCardsOnLand() {
+        return cardsOnLand;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
 
     public void useCollectibleItemOnLand(Coordinate coordinate, String collectibleItemId) {
         ArrayList<Collectible> collectibleItems = getHand().getCollectibleItems();
@@ -187,9 +200,39 @@ public abstract class Player {
         return card;
     }
 
+
+    private ArrayList<Buff> processBuffsPerTurn(ArrayList<Buff> buffs, Object object) {
+        ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
+        if (buffs != null) {
+            for (Buff buff : buffs) {
+                if (!buff.isContinuous()) {
+                    int forHowManyTurn = buff.getForHowManyTurn();
+                    forHowManyTurn--;
+                    buff.setForHowManyTurn(forHowManyTurn);
+                    if (forHowManyTurn > 0) {
+                        if (object instanceof Card)
+                            buff.affect((Card) object);
+                        else
+                            buff.affect((Player) object);
+
+                    } else {
+                        if (buff.isHaveUnAffect())
+                            buff.unAffect((Card) object);
+                        buffsToBeRemoved.add(buff);
+                    }
+                }
+            }
+            for (Buff buff : buffsToBeRemoved)
+                buffs.remove(buff);
+        }
+        return buffs;
+    }
+
     void initPerTurn(int numberOfPlayer) {
         hand.checkTheHandAndAddToIt();
         match.getBattleScene().getBattleFooter().changeFooterEachTurn();
+        match.getBattleScene().getBattleHeader().makeHeaderEachTurn(numberOfPlayer, this);
+
         for (Card card : cardsOnLand) {
             card.changeTurnOfCanNotAttack(-1);
             card.changeTurnOfCanNotCounterAttack(-1);
@@ -201,24 +244,7 @@ public abstract class Player {
             if (card.getTurnOfCanNotMove() <= 0)
                 card.setCanMove(true, 1);
 
-            ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
-            if (card.getBuffsOnThisCard() != null) {
-                for (Buff buff : card.getBuffsOnThisCard()) {
-                    if (!buff.isContinuous()) {
-                        int forHowManyTurn = buff.getForHowManyTurn();
-                        forHowManyTurn--;
-                        if (forHowManyTurn > 0) {
-                            buff.affect(card);
-                        } else {
-                            if (buff.isHaveUnAffect())
-                                buff.unAffect(card);
-                            buffsToBeRemoved.add(buff);
-                        }
-                    }
-                }
-                for (Buff buff : buffsToBeRemoved)
-                    card.getBuffsOnThisCard().remove(buff);
-            }
+            card.setBuffsOnThisCard(processBuffsPerTurn(card.getBuffsOnThisCard(), card));
 
             if (card instanceof Minion && ((Minion) card).getHaveSpecialPower() &&
                     ((Minion) card).getActivationTimeOfSpecialPower() ==
@@ -227,22 +253,7 @@ public abstract class Player {
         }
 
 
-        ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
-        for (Buff buff : buffsOnThisPlayer) {
-
-            if (!buff.isContinuous()) {
-                int forHowManyTurn = buff.getForHowManyTurn();
-                forHowManyTurn--;
-                if (forHowManyTurn > 0) {
-                    buff.affect(this);
-                } else
-                    buffsToBeRemoved.add(buff);
-            }
-        }
-
-        for (Buff buff : buffsToBeRemoved)
-            buffsOnThisPlayer.remove(buff);
-
+        buffsOnThisPlayer = processBuffsPerTurn(buffsOnThisPlayer, this);
 
         turnsPlayed++;
         if (manaOfThisTurn < 9) {
@@ -261,18 +272,17 @@ public abstract class Player {
             turnForSavingFlag++;
     }
 
-
     public void addToCardsOfLand(Card card) {
         cardsOnLand.add(card);
-    }
-
-    public void addToOwnFlags(Flag flag) {
-        ownFlags.add(flag);
     }
 
     public void addToTurnForSavingFlag() {
         turnForSavingFlag++;
     }
+
+    /*public void setFlagSaver(Card card) {
+        flagSaver = card;
+    }*/
 
     public void setHand() {
         hand = new Hand(mainDeck);
@@ -283,12 +293,35 @@ public abstract class Player {
         cardsOnLand.remove(card);
     }
 
-    /*public void setFlagSaver(Card card) {
-        flagSaver = card;
-    }*/
+    public void playTurnForComputer() {
+        //write nothing here for access to this function in computer
+    }
 
-    public Hero getHero() {
-        return mainDeck.getHero();
+    public void manaChange(int number) {
+        mana += number;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public String getUserName() {
+        if (this instanceof ComputerPlayer) {
+            return "computer";
+        }
+        return account.getUserName();
+    }
+
+    public int getTurnForSavingFlag() {
+        return turnForSavingFlag;
+    }
+
+    public void setTurnForSavingFlag(int turnForSavingFlag) {
+        this.turnForSavingFlag = turnForSavingFlag;
+    }
+
+    public ArrayList<Flag> getOwnFlags() {
+        return ownFlags;
     }
 
     public int getNumberOfFlagsSaved() {
@@ -327,14 +360,6 @@ public abstract class Player {
         this.mainDeck = mainDeck;
     }
 
-    public Hand getHand() {
-        return hand;
-    }
-
-    public void setHand(Hand hand) {
-        this.hand = hand;
-    }
-
     public String getType() {
         return type;
     }
@@ -357,30 +382,6 @@ public abstract class Player {
 
     public void setTurnsPlayed(int turnsPlayed) {
         this.turnsPlayed = turnsPlayed;
-    }
-
-    public int getMana() {
-        return mana;
-    }
-
-    public void setMana(int mana) {
-        this.mana = mana;
-    }
-
-    public ArrayList<Card> getCardsOnLand() {
-        return cardsOnLand;
-    }
-
-    public void playTurnForComputer() {
-        //write nothing here for access to this function in computer
-    }
-
-    public void addBuffToPlayer(Buff buff) {
-        buffsOnThisPlayer.add(buff);
-    }
-
-    public void manaChange(int number) {
-        mana += number;
     }
 
     public int getManaOfThisTurn() {

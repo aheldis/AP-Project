@@ -56,6 +56,10 @@ public class Buff {
         return null;
     }
 
+    public void setForHowManyTurn(int forHowManyTurn) {
+        this.forHowManyTurn = forHowManyTurn;
+    }
+
     public void setApChange(int apChange) {
         this.apChange = apChange;
     }
@@ -100,13 +104,13 @@ public class Buff {
         if (changeInSecondTurn && numberOfTimesBuffAffected == 1)
             card.changeHp(hpChange);
 
-        if (canMove == false)
+        if (!canMove)
             card.setCanMove(false, 1);
-        if (canAttack == false)
+        if (!canAttack)
             card.setCanAttack(false, 1);
-        if (canCounterAttack == false)
+        if (!canCounterAttack)
             card.setCanCounterAttack(false, 1);
-        if (hpChangeAfterAttack == true)
+        if (hpChangeAfterAttack)
             card.setHpChangeAfterAttack(1);
 
 
@@ -123,7 +127,7 @@ public class Buff {
             card.setCanAttack(true, 1);
         if (canCounterAttack == false)
             card.setCanCounterAttack(true, 1);*/
-        if (hpChangeAfterAttack == true)
+        if (hpChangeAfterAttack)
             card.setHpChangeAfterAttack(-1);
     }
 

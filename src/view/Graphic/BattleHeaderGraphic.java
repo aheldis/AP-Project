@@ -96,7 +96,7 @@ public class BattleHeaderGraphic {
                         "pics/battle_categorized/icon_mana_inactive@2x.png",
                         x + i * 28, y, 25, 25);
         }
-        addNumberToMana(group, numberOfMana, x + 9 * 28 + 5, y);
+        addNumberToMana(group, numberOfMana, x, y + 2);
     }
 
     private void addCoolDown(double x, double y, Group group, int turnNotUsedSpecialPower, int coolDown) {
@@ -194,7 +194,6 @@ public class BattleHeaderGraphic {
         GeneralGraphicMethods.addTextWithShadow(leftHeader, 248, 78, player.getUserName(), "Arial", 27);
         addMana(245, 100, player.getMana(), leftHeader);
         addHeroSpecialPower(110, 195, leftHeader, 0, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown());
-        ;
         addPortraitBorder(120, 25, leftHeader, true, player.getAvatarPath(), true);
         addPortraitBorder(1165, 25, rightHeader, false, null, false);
     }
