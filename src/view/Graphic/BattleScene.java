@@ -4,7 +4,6 @@ import com.gilecode.yagson.YaGson;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.print.PageLayout;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -316,6 +315,36 @@ public class BattleScene {
         }
     }
 
+    public void test() {
+
+        /*
+        numberOfMap = 7;
+        setMapProperties();
+        setMapBackground();
+        addGrid();
+*/
+        /*
+        Minion minion = (Minion) Shop.getInstance().getNewCardByName("Siavash");
+        System.out.println(minion.getName());
+        addCardToBoard(2, 3, minion, "ATTACK");
+        */
+/*
+        ArrayList<Card> cards = Shop.getInstance().getCards();
+        int number = 0;
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 9; j++) {
+                while (number < cards.size() && !(cards.get(number) instanceof Hero))
+                    number++;
+                if (number == cards.size())
+                    break;
+                System.out.println("number = " + number);
+                System.out.println(cards.get(number).getName());
+                addCardToBoard(i, j, cards.get(number), "ATTACK");
+                number++;
+            }
+*/
+    }
+
     public void setGame(Game game) {
         this.game = game;
     }
@@ -375,7 +404,6 @@ public class BattleScene {
         addGrid();
         battleHeader = new BattleHeaderGraphic(this, root);
         battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
-        showSpecialPowerUsed("Hero");
     }
 
     private void setMapProperties() {
@@ -538,34 +566,29 @@ public class BattleScene {
 */
     }
 
-    public void test() {
-
-        /*
-        numberOfMap = 7;
-        setMapProperties();
-        setMapBackground();
-        addGrid();
-*/
-        /*
-        Minion minion = (Minion) Shop.getInstance().getNewCardByName("Siavash");
-        System.out.println(minion.getName());
-        addCardToBoard(2, 3, minion, "ATTACK");
-        */
-/*
-        ArrayList<Card> cards = Shop.getInstance().getCards();
-        int number = 0;
-        for (int i = 0; i < 5; i++)
-            for (int j = 0; j < 9; j++) {
-                while (number < cards.size() && !(cards.get(number) instanceof Hero))
-                    number++;
-                if (number == cards.size())
-                    break;
-                System.out.println("number = " + number);
-                System.out.println(cards.get(number).getName());
-                addCardToBoard(i, j, cards.get(number), "ATTACK");
-                number++;
+    public void showSpecialPowerUsed(String type) {
+        Group group = new Group();
+        addRectangle(group, 0, 0, 420, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
+        addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
+        root.getChildren().add(group);
+        group.relocate(490, 50);
+        GeneralGraphicMethods.setOnMouseEntered(group, battleScene, true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        root.getChildren().remove(group);
+                    }
+                });
             }
-*/
+        }).start();
     }
 
     private void moveBackgrounds(ImageView imageView, boolean horizontal, boolean vertical) {
@@ -608,35 +631,10 @@ public class BattleScene {
          */
         node.setOnMouseClicked(event -> {
             if (isHeroSpecialPowerClicked()) {
-                match.getPlayers()[0].getHero().useSpecialPower(match.getLand().passSquareInThisCoordinate(coordinate));
+                match.passPlayerWithTurn().getHero().useSpecialPower(match.getLand().passSquareInThisCoordinate(coordinate));
                 setHeroSpecialPowerClicked(false);
             }
         });
-    }
-
-    public void showSpecialPowerUsed(String type) {
-        Group group = new Group();
-        addRectangle(group, 0, 0, 420, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
-        addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
-        root.getChildren().add(group);
-        group.relocate(490, 50);
-        GeneralGraphicMethods.setOnMouseEntered(group, battleScene, true);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        root.getChildren().remove(group);
-                    }
-                });
-            }
-        }).start();
     }
 
     public boolean isHeroSpecialPowerClicked() {

@@ -11,6 +11,7 @@ import model.requirment.Coordinate;
 import view.enums.ErrorType;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Player {
     protected String type;
@@ -27,7 +28,7 @@ public abstract class Player {
     private int manaOfThisTurn = 2 /*don't change this except in initPerTurn*/, mana = 2;
     private GraveYard graveYard = new GraveYard(this);
     private ArrayList<Buff> buffsOnThisPlayer = new ArrayList<>();
-    private String avatarPath = "pics/profile/speech_portrait_abyssianalt@2x.png";
+    private String avatarPath = null;
 
     public abstract void addToAccountWins();
 
@@ -302,6 +303,11 @@ public abstract class Player {
     }
 
     public String getAvatarPath() {
+        if(avatarPath == null){
+            Random random = new Random();
+            int number = random.nextInt(21);
+            avatarPath = "pics/battle_categorized/generals/general_portrait_" + number + ".png";
+        }
         return avatarPath;
     }
 

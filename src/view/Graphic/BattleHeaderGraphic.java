@@ -39,7 +39,10 @@ public class BattleHeaderGraphic {
 
 
     private void addPortraitBorder(double x, double y, Group group, boolean turnOfThisPlayer, String avatarPath, boolean leftSide) {
+        ImageView imageView = GeneralGraphicMethods.addImage(group, avatarPath, x - 10, y - 10, 130, 130);
+        /*
         if (avatarPath != null) {
+
             ImageView imageView = GeneralGraphicMethods.addImage(group, avatarPath, x + 13, y + 13, 100, 100);
             if (!leftSide) {
                 imageView.setRotationAxis(Rotate.Y_AXIS);
@@ -51,7 +54,7 @@ public class BattleHeaderGraphic {
         } else {
             GeneralGraphicMethods.addImage(group, "pics/battle_categorized/general_portrait_border@2x.png", x, y, 130, 130);
         }
-
+*/
         /*
         ImageView imageView1 = GeneralGraphicMethods.addImage(group, "pics/battle_categorized/general_portrait_border@2x.png", x, y, 130, 130);
         ImageView imageView2 = GeneralGraphicMethods.addImage(group, "pics/battle_categorized/general_portrait_border_highlight@2x.png", x, y, 130, 130);
@@ -195,7 +198,7 @@ public class BattleHeaderGraphic {
         addMana(245, 100, player.getMana(), leftHeader);
         addHeroSpecialPower(110, 195, leftHeader, 0, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown());
         addPortraitBorder(120, 25, leftHeader, true, player.getAvatarPath(), true);
-        addPortraitBorder(1165, 25, rightHeader, false, null, false);
+        //addPortraitBorder(1165, 25, rightHeader, false, null, false);
     }
 
     private void makeRightHeader(Player player) {
@@ -204,7 +207,7 @@ public class BattleHeaderGraphic {
         addMana(911, 100, player.getMana(), rightHeader);
         addHeroSpecialPower(1275, 195, rightHeader, 1, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown());
         addPortraitBorder(1165, 25, rightHeader, true, player.getAvatarPath(), false);
-        addPortraitBorder(120, 25, leftHeader, false, null, true);
+        //addPortraitBorder(120, 25, leftHeader, false, null, true);
     }
 
     public void makeHeaderEachTurn(int numberOfPlayer, Player player) {
