@@ -52,6 +52,7 @@ public abstract class Card {
     private int animationRow = 5;
     private int frameSize;
     private int heightOfPicture;
+    private int millis;
 
     public static ArrayList<Hero> getHeroes(ArrayList<Card> cards) {
         ArrayList<Hero> heroes = new ArrayList<>();
@@ -318,7 +319,8 @@ public abstract class Card {
         }
     }
 
-    public void counterAttack(Card theOneWhoAttacked) {
+
+    public boolean counterAttack(Card theOneWhoAttacked) {
         boolean canCounterAttack = this.canCounterAttack && (
                 (counterAttack.equals("melee") && getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) == 1)
                         || (counterAttack.equals("ranged") && getNormalDistance(theOneWhoAttacked.getPosition().getCoordinate()) != 1)
@@ -334,6 +336,7 @@ public abstract class Card {
                 useSpecialPower(theOneWhoAttacked.getPosition());
             }
         }
+        return canCounterAttack;
     }
 
     public Card findNearestOne(Target target) {
@@ -798,5 +801,7 @@ public abstract class Card {
 
     }
 
-
+    public int getMillis() {
+        return millis;
+    }
 }

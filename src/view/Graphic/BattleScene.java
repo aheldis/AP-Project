@@ -1,6 +1,7 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -164,7 +165,37 @@ public class BattleScene {
                     0, 0, board, spriteProperties.count,
                     spriteProperties.rows, spriteProperties.millis,
                     (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
+            imageView.setOpacity(0);
             playMusic("resource/music/attack/attack-2.m4a", false, battleScene);
+            int wait = 0;
+            if (flip) {
+                imageView.setRotationAxis(Rotate.Y_AXIS);
+                imageView.setRotate(180);
+                getCell(row, column).setFill(Color.RED);
+                wait = selectedCard.getMillis();
+            }
+            int finalWait = wait;
+            new AnimationTimer() {
+                private long lastTime = 0;
+                boolean once = true;
+
+                @Override
+                public void handle(long now) {
+                    if (lastTime == 0) {
+                        lastTime = now;
+                    }
+                    if (once && now > lastTime + (spriteProperties.millis + finalWait) * Math.pow(10, 6)) {
+                        lastTime = now;
+                        board.getChildren().remove(imageView);
+                        image.setOpacity(1);
+                        once = false;
+                    } else if (once && now > lastTime + finalWait * Math.pow(10, 6)) {
+                        image.setOpacity(0);
+                        imageView.setOpacity(1);
+                    }
+
+                }
+            }.start();
         } else {
             if (image == null) {
                 String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
@@ -190,7 +221,7 @@ public class BattleScene {
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
-        setOnMouseEntered(imageView, card, flip);
+        workWithMouse(imageView, card, flip);
         cardsHashMap.put(card, imageView);
 
         if (drag) {
@@ -250,7 +281,7 @@ public class BattleScene {
     }
 //*/
 
-    private void setOnMouseEntered(ImageView imageOfCard, Card card, boolean enemy) {
+    private void workWithMouse(ImageView imageOfCard, Card card, boolean enemy) {
         Group group = new Group();
         group.relocate(imageOfCard.getLayoutX(), imageOfCard.getLayoutY() + 80);
         board.getChildren().addAll(group);
@@ -282,10 +313,13 @@ public class BattleScene {
         imageOfCard.setOnMouseClicked(event -> {
 
             if (selectedCard != null && selectedCard.attack(card)) {
-                imageOfSelectedCard.setOpacity(0);
                 addCardToBoard(selectedCard.getPosition().getXCoordinate(),
                         selectedCard.getPosition().getYCoordinate(), selectedCard,
-                        "ATTACK", null, false, false);
+                        "ATTACK", imageOfSelectedCard, false, false);
+                if (card.counterAttack(selectedCard))
+                    addCardToBoard(card.getPosition().getXCoordinate(),
+                            card.getPosition().getYCoordinate(), card,
+                            "ATTACK", imageOfCard, false, true);
                 setCursor(battleScene, Cursor.AUTO);
                 imageOfCard.setEffect(null);
                 backToDefault();
