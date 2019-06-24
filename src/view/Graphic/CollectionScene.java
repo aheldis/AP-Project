@@ -213,7 +213,7 @@ class CollectionScene {
     private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
 
-            ImageView imageView = addImage(hBox, "pics/Hero/" + card.getName() + ".png",
+            ImageView imageView = addImage(hBox, "pics/heroCard/" + card.getName() + ".png",
                     0, 0, CARD_WIDTH, CARD_HEIGHT);
 
             showMana(root, i * (X_BORDER + CARD_WIDTH) + 40,
