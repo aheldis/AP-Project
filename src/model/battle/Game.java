@@ -71,6 +71,7 @@ public class Game {
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);
     }
 
+    //todo have bug in commented line
     public Match makeNewCustomGame(Account account, String deckName, int mode, int numberOfFlags) {
         Deck secondPlayerDeck = Deck.getDeckForStoryMode(1);
        // Deck secondPlayerDeck = account.getCollection().getDeckByName(deckName);

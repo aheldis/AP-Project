@@ -1,5 +1,6 @@
 package view.Graphic;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -9,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import model.account.FilesType;
 import model.battle.Player;
 import model.card.Card;
@@ -91,7 +94,8 @@ public class BattleFooterGraphic {
         }
 
     }
-    private void addTimer(Scene scene, Group group){
+
+    private void addTimer(Scene scene, Group group) {
 
 //        Polygon polygon = new Polygon();
 //        polygon.setFill(Color.RED);
@@ -100,9 +104,34 @@ public class BattleFooterGraphic {
 //                20.0, 10.0,
 //                10.0, 20.0 );
 //        root.getChildren().addAll(polygon);
-       // addRectangle(group,207,0,635,15,0,0,Color.RED);
-        addImage(group,"pics/battle_categorized/timer_background@2x.png",200,0,650,15);
-        addImage(group,"pics/battle_categorized/unit_stats_instructional_bg@2x.png",207,1,50,13);
+        // addRectangle(group,207,0,635,15,0,0,Color.RED);
+
+        addImage(group, "pics/battle_categorized/timer_background@2x.png", 200, 0, 650, 10);
+        ImageView progress = addImage(group,
+                "pics/battle_categorized/unit_stats_instructional_bg@2x.png",
+                207, 1, 50, 8);
+        Rectangle rectangle= addRectangle(group,207,0
+                ,6,10,0,0,Color.rgb(81,89,102,0.4));
+
+        AnimationTimer animationTimer = new AnimationTimer() {
+            private long lastUpdate = 0;
+
+            @Override
+            public void handle(long now) {
+
+                for (int i = 0; i < 20; i++) {
+                    if (now - lastUpdate >= 120_000_000) {
+                        progress.setX(progress.getX() + 0.5);
+                        lastUpdate = now;
+                        rectangle.setWidth(rectangle.getWidth()+0.5);
+                        if(progress.getX()>=633-50)
+                           this.stop();
+                    }
+                }
+
+            }
+        };
+        animationTimer.start();
     }
 
     private void addButtons(Scene scene, Group group) {
@@ -129,14 +158,14 @@ public class BattleFooterGraphic {
         });
         a.setOnMouseClicked(event -> {
             BattleScene battleScene = BattleScene.getSingleInstance();
-                new Thread(() -> {
-                    try {
-                        String path = "PausedGames/" + battleScene.getMatch().getMatchNumber() + ".json";
-                        GeneralGraphicMethods.saveInFile(path, battleScene);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }).start();
+            new Thread(() -> {
+                try {
+                    String path = "PausedGames/" + battleScene.getMatch().getMatchNumber() + ".json";
+                    GeneralGraphicMethods.saveInFile(path, battleScene);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
         });
 
     }
@@ -147,7 +176,7 @@ public class BattleFooterGraphic {
         root.getChildren().addAll(circlesGroup);
         addNextCard(circlesGroup);
         addCardsOfHand((Group) scene.getRoot(), circlesGroup);
-        addTimer(scene,circlesGroup);
+        addTimer(scene, circlesGroup);
         addButtons(scene, circlesGroup);
     }
 
@@ -156,7 +185,7 @@ public class BattleFooterGraphic {
         addNextCard(circlesGroup);
         addCardsOfHand((Group) scene.getRoot(), circlesGroup);
         addButtons(scene, circlesGroup);
-        addTimer(scene,circlesGroup);
+        addTimer(scene, circlesGroup);
         battleScene.backToDefault();
     }
 
