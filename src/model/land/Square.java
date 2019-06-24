@@ -1,13 +1,16 @@
 package model.land;
 
+import javafx.scene.image.ImageView;
 import model.card.Buff;
 import model.card.Hero;
 import model.card.Minion;
 import model.item.Collectible;
 import model.item.Flag;
 import model.requirment.Coordinate;
+import view.Graphic.BattleScene;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Square {
     private int scaleForEachSquare;
@@ -15,13 +18,20 @@ public class Square {
     private Object object;
     private ArrayList<Flag> flags = new ArrayList<>();
     private ArrayList<Buff> buffs = new ArrayList<>();
+    private ImageView cellEffectImageView = null;
 
     public Square(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
 
+    public void clearBuffs(){
+        buffs = null;
+        BattleScene.getSingleInstance().removeNodeFromBoard(cellEffectImageView);
+    }
     public void addBuffToSquare(Buff buff) {
         buffs.add(buff);
+        if(cellEffectImageView == null)
+            cellEffectImageView = BattleScene.getSingleInstance().addCellEffect(getXCoordinate(), getYCoordinate());
     }
 
     public Minion squareHasMinionAndPassIt() {

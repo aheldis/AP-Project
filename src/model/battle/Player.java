@@ -95,6 +95,7 @@ public abstract class Player {
         for (Buff buff : square.getBuffs()) {
             addBuffToPlayer(buff);
         }
+        square.clearBuffs();
 
         //flags:
         if (square.getFlags().size() > 0) {

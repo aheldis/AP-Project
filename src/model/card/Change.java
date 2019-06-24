@@ -1,7 +1,9 @@
 package model.card;
 
+import javafx.scene.image.ImageView;
 import model.battle.Player;
 import model.land.Square;
+import view.Graphic.BattleScene;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,8 +33,9 @@ public class Change {
         if (targetType.equals("square")) {
             for (Square square : targets) {
                 for (String buffName : buffs.keySet()) {
-                    for(int number: buffs.get(buffName))
+                    for (int number : buffs.get(buffName)) {
                         square.addBuffToSquare(getBuff(buffName, number));
+                    }
                 }
             }
         }
@@ -43,12 +46,37 @@ public class Change {
             }
         }
 
-        if(targetType.equals("player")){
+        if (targetType.equals("player")) {
             for (String buffName : buffs.keySet()) {
                 for (int number : buffs.get(buffName))
                     player.addBuffToPlayer(getBuff(buffName, number));
             }
         }
+    }
+
+    private Buff getBuff(String buffName, int forHowManyTurn) {
+        Buff buff = Buff.getNewBuffByName(buffName, forHowManyTurn);
+        if (buff != null) {
+            if (buffName.equals("Power")) {
+                if (apOrHpForPower.equals("ap"))
+                    buff.setApChange(changeInApOrHpForPower);
+                else
+                    buff.setHpChange(changeInApOrHpForPower);
+            }
+            if (buffName.equals("Weakness")) {
+                if (apOrHpForWeakness.equals("ap"))
+                    buff.setApChange(changeInApOrHpForWeakness);
+                else
+                    buff.setHpChange(changeInApOrHpForWeakness);
+            }
+            if (buffName.equals("Mana")) {
+                buff.setManaChange(changeInManaForMana);
+            }
+            if (buffName.equals("DecreaserHp")) {
+                buff.setHpChange(changeInHpForDecreaserHp);
+            }
+        }
+        return buff;
     }
 
     private void makeChangeInTargetCard(Player player, Card targetCard) {//change e hamle konnande ro roye opponent seda mikonm
@@ -84,31 +112,6 @@ public class Change {
                 }
             }
         }
-    }
-
-    private Buff getBuff(String buffName, int forHowManyTurn) {
-        Buff buff = Buff.getNewBuffByName(buffName, forHowManyTurn);
-        if (buff != null) {
-            if (buffName.equals("Power")) {
-                if (apOrHpForPower.equals("ap"))
-                    buff.setApChange(changeInApOrHpForPower);
-                else
-                    buff.setHpChange(changeInApOrHpForPower);
-            }
-            if (buffName.equals("Weakness")) {
-                if (apOrHpForWeakness.equals("ap"))
-                    buff.setApChange(changeInApOrHpForWeakness);
-                else
-                    buff.setHpChange(changeInApOrHpForWeakness);
-            }
-            if( buffName.equals("Mana")){
-                buff.setManaChange(changeInManaForMana);
-            }
-            if(buffName.equals("DecreaserHp")){
-                buff.setHpChange(changeInHpForDecreaserHp);
-            }
-        }
-        return buff;
     }
 
     public String getTargetType() {

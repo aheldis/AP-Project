@@ -141,16 +141,20 @@ public abstract class Card {
             }
         }
 
+        /*
         ArrayList<Buff> buffsOfSquare = newPosition.getBuffs();
         for (Buff buff : buffsOfSquare) {
             buff.affect(this);
         }
+        square.clearBuffs();
+        */
 
         if (this instanceof Minion) {
             Square square = landOfGame.passSquareInThisCoordinate(newCoordination);
             for (Buff buff : square.getBuffs()) {
                 addBuff(buff);
             }
+            square.clearBuffs();
         }
 
         if (newPosition.getFlags().size() > 0) {

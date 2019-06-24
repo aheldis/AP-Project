@@ -5,11 +5,13 @@ import model.land.Square;
 import java.util.ArrayList;
 
 public class Spell extends Card {
+/*
     private int playerNameByNumber;//{player1 or 2}
     private int numberOfAttack;
     private int turn;
     private ArrayList<Buff> buffs;
     private ArrayList<Integer> turnOfBuffs;
+
     private int apChanges;
     private int turnForApChanges;
     private int hpChanges;
@@ -71,5 +73,5 @@ public class Spell extends Card {
         return turn;
     }
 
-
+*/
 }
