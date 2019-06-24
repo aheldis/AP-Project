@@ -164,7 +164,7 @@ public class Match {
             squares[randomX][randomY].addToFlags(flag);
             ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_categorized/flag.gif", 10, 10);
             flag.setImageView(flagView);
-            BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, flagView);
+            BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, flagView, false);
         }
     }
 
@@ -189,7 +189,7 @@ public class Match {
             squares[randomX][randomY].setObject(collectible);
             ImageView collectibleImage = GeneralGraphicMethods.createImage(
                     "pics/collectibles/" + collectible.getName() + ".png", 20, 20);
-            BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, collectibleImage);
+            BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, collectibleImage, false);
             collectible.setImageView(collectibleImage);
 
         }

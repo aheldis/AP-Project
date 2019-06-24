@@ -69,15 +69,19 @@ public class BattleScene {
         return singleInstance;
     }
 
-    public void addNodeToBoard(int x, int y, Node node) {
+    public void addNodeToBoard(int x, int y, Node node, Boolean samePlace) {
         Pair<Double, Double> position = getCellPosition(x, y);
-        node.relocate(position.getKey(), position.getValue() - 10);
+        if (samePlace)
+            node.relocate(position.getKey(), position.getValue());
+        else
+            node.relocate(position.getKey(), position.getValue() - 10);
         if (node instanceof ImageView) {
             ((ImageView) node).setFitWidth(mapProperties.cellWidth);
             ((ImageView) node).setFitHeight(mapProperties.cellHeight);
         }
         board.getChildren().add(node);
     }
+
 
     public Pair<Double, Double> getCellPosition(int row, int column) {
         return new Pair<>(gameGrid[row][column].getLayoutX(), gameGrid[row][column].getLayoutY());
@@ -219,8 +223,8 @@ public class BattleScene {
         }
         int finalWait = wait;
         new AnimationTimer() {
-            private long lastTime = 0;
             boolean once = true;
+            private long lastTime = 0;
 
             @Override
             public void handle(long now) {
@@ -393,67 +397,6 @@ public class BattleScene {
                 number++;
             }
 */
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    void setOnMousePressedPosition(Card card) {
-        backToDefault();
-        this.onMousePressedPosition = card.getPosition();
-    }
-
-    void backToDefault() {
-        selectedCard = null;
-        removeColorFromRectangles();
-        glow.setLevel(0);
-    }
-
-    private void removeColorFromRectangles() {
-        for (Rectangle rectangle : coloredRectangles)
-            rectangle.setFill(Color.BLACK);
-        coloredRectangles = new ArrayList<>();
-    }
-
-    public HashMap<Card, ImageView> getCardsHashMap() {
-        return cardsHashMap;
-    }
-
-    public Match getMatch() {
-        return match;
-    }
-
-    public void setMatch(Match match) {
-        this.match = match;
-    }
-
-    int getNumberOfMap() {
-        return numberOfMap;
-    }
-
-    public BattleHeaderGraphic getBattleHeader() {
-        return battleHeader;
-    }
-
-    public BattleFooterGraphic getBattleFooter() {
-        return battleFooter;
-    }
-
-    Scene getBattleScene() {
-        return battleScene;
-    }
-
-    void setBattleScene(int numberOfMap) {
-        root.getChildren().clear();
-        this.numberOfMap = numberOfMap;
-        setMapProperties();
-        setMapBackground();
-        playMusic("resource/music/battle_music/" +
-                numberOfMap + ".m4a", true, battleScene);
-        addGrid();
-        battleHeader = new BattleHeaderGraphic(this, root);
-        battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
     }
 
     private void setMapProperties() {
@@ -664,6 +607,84 @@ public class BattleScene {
             if (horizontal)
                 imageView.setY(primaryY - moveDistance);
         });
+    }
+
+    public ImageView addCellEffect(int x, int y) {
+        ImageView imageView = GeneralGraphicMethods.createImage(
+                "pics/battle/1.png", 20, 20);
+        BattleScene.getSingleInstance().addNodeToBoard(x, y, imageView, true);
+        return imageView;
+
+    }
+/*
+    public void addCellEffect2(int x, int y) {
+        ImageView collectibleImage = GeneralGraphicMethods.createImage(
+                "pics/battle/stunned@2x.png", mapProperties.cellWidth, mapProperties.cellHeight);
+        BattleScene.getSingleInstance().addNodeToBoard(x, y, collectibleImage, true);
+
+    }
+    */
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    void setOnMousePressedPosition(Card card) {
+        backToDefault();
+        this.onMousePressedPosition = card.getPosition();
+    }
+
+    void backToDefault() {
+        selectedCard = null;
+        removeColorFromRectangles();
+        glow.setLevel(0);
+    }
+
+    private void removeColorFromRectangles() {
+        for (Rectangle rectangle : coloredRectangles)
+            rectangle.setFill(Color.BLACK);
+        coloredRectangles = new ArrayList<>();
+    }
+
+    public HashMap<Card, ImageView> getCardsHashMap() {
+        return cardsHashMap;
+    }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
+    int getNumberOfMap() {
+        return numberOfMap;
+    }
+
+    public BattleHeaderGraphic getBattleHeader() {
+        return battleHeader;
+    }
+
+    public BattleFooterGraphic getBattleFooter() {
+        return battleFooter;
+    }
+
+    Scene getBattleScene() {
+        return battleScene;
+    }
+
+    void setBattleScene(int numberOfMap) {
+        root.getChildren().clear();
+        this.numberOfMap = numberOfMap;
+        setMapProperties();
+        setMapBackground();
+        playMusic("resource/music/battle_music/" +
+                numberOfMap + ".m4a", true, battleScene);
+        addGrid();
+        battleHeader = new BattleHeaderGraphic(this, root);
+        battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
+
     }
 
     boolean isHeroSpecialPowerClicked() {

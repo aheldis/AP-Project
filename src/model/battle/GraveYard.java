@@ -55,7 +55,7 @@ public class GraveYard {
                 position.addToFlags(flag);
                 flag.setOwnerCard(null);
                 BattleScene.getSingleInstance().addNodeToBoard(card.getPosition().getXCoordinate(),
-                        card.getPosition().getYCoordinate(), flag.getImageView());
+                        card.getPosition().getYCoordinate(), flag.getImageView(), false);
                 flag.getImageView().setOpacity(1);
                 break;
             }
