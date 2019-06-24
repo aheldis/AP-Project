@@ -246,6 +246,8 @@ public class Shop {
     //for making story game
     public Card getNewCardByName(String name) {
         Card card = getCard(name);
+        if(card == null)
+            return null;
         FilesType typeOfFile = null;
         if (card instanceof Hero) {
             typeOfFile = FilesType.HERO;

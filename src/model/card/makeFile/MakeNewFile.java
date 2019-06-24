@@ -7,6 +7,8 @@ import model.account.Account;
 import model.account.FilesType;
 import model.account.Shop;
 import model.card.Buff;
+import model.card.Card;
+import model.card.CardId;
 import view.Graphic.NewCardGraphic;
 import view.NewCardMessages;
 import view.Request;
@@ -93,6 +95,7 @@ public class MakeNewFile {
                     break;
             }
 
+
             toJson(object, path);
 
             switch (typeOfFile) {
@@ -110,9 +113,15 @@ public class MakeNewFile {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Shop.getInstance().makeNewFromFile(path, typeOfFile);
-                    if (account != null)
-                        account.getCollection().addToCards(Shop.getInstance().getNewCardByName(name));
+                    Card card = Shop.getInstance().getNewCardByName(name);
+                    if(card == null) {
+                        Shop.getInstance().makeNewFromFile(path, typeOfFile);
+                        card = Shop.getInstance().getNewCardByName(name);
+                    }
+                    if (account != null) {
+                        new CardId(account, card, account.getCollection().getNumberOfCardId(card));
+                        account.getCollection().addToCards(card);
+                    }
                 }
             }).start();
             return;

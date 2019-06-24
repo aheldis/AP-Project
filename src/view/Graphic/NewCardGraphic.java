@@ -160,7 +160,7 @@ public class NewCardGraphic {
         if (error.getText() != null && !error.getText().equals("")) {
             error = addText(group, 120, 130, error.getText(), Color.RED, 30);
         } else {
-            error = addText(group, 120, 130, "Card successfully created.", Color.WHITE, 30);
+            addText(group, 120, 130, "Card successfully created.", Color.WHITE, 30);
         }
     }
 
