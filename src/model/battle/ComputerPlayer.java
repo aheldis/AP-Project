@@ -13,6 +13,7 @@ import model.account.Account;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
+import model.item.ActivationTimeOfItem;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.Graphic.BattleScene;
@@ -155,23 +156,17 @@ public class ComputerPlayer extends Player {
             }
         }
 
-/*
-        int RANDOM_NUMBER_FOR_ATTACK = 13;
-        if (random.nextInt() % RANDOM_NUMBER_FOR_ATTACK == 0) {
-            ArrayList<Card> cards = getOpponent().getCardsOnLand();
-            if (cards.size() > 1) {
-                int randomIndex = random.nextInt(cards.size() - 1);
-                if (getCardsOnLand().size() > 1)
-                    getCardsOnLand().get(random.nextInt(getCardsOnLand().size() - 1)).attack(cards.get(randomIndex));
-            }
+
+        for (Card card : getCardsOnLand())
+            for (Card opponentCard : getOpponent().getCardsOnLand())
+                card.attack(opponentCard, false);
 
 
-            if (getMainDeck().getItem() != null && getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
-                    getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
-                getMainDeck().getItem().setTarget(this);
-                getMainDeck().getItem().getChange().affect(this, getMainDeck().getItem().getTarget().getTargets());
-            }
-        }*/
+        if (getMainDeck().getItem() != null && getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
+                getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
+            getMainDeck().getItem().setTarget(this);
+            getMainDeck().getItem().getChange().affect(this, getMainDeck().getItem().getTarget().getTargets());
+        }
     }
 
     public void addToAccountWins() {

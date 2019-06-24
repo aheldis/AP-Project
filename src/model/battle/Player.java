@@ -40,9 +40,9 @@ public abstract class Player {
 
     public abstract void addMatchInfo(MatchInfo matchInfo);
 
-    public Player(){
+    public Player() {
         Random random = new Random();
-        avatarPath = "pics/battle_categorized/profile/"+random.nextInt(17)+".png";
+        avatarPath = "pics/battle_categorized/profile/" + random.nextInt(17) + ".png";
     }
 
     public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean showError) {
@@ -308,7 +308,7 @@ public abstract class Player {
     }
 
     public String getAvatarPath() {
-        if(avatarPath == null){
+        if (avatarPath == null) {
             Random random = new Random();
             int number = random.nextInt(21);
             avatarPath = "pics/battle_categorized/generals/general_portrait_" + number + ".png";

@@ -158,45 +158,9 @@ public class BattleScene {
         ImageView imageView;
         Pair<Double, Double> position = getCellPosition(row, column);
 
-        if (mode.equals("ATTACK")) {
-            SpriteAnimationProperties spriteProperties = new SpriteAnimationProperties(
-                    card.getName(), filesType, card.getCountOfAnimation());
-            imageView = SpriteMaker.getInstance().makeSpritePic(spriteProperties.spriteSheetPath,
-                    0, 0, board, spriteProperties.count,
-                    spriteProperties.rows, spriteProperties.millis,
-                    (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
-            imageView.setOpacity(0);
-            playMusic("resource/music/attack/attack-2.m4a", false, battleScene);
-            int wait = 0;
-            if (flip) {
-                imageView.setRotationAxis(Rotate.Y_AXIS);
-                imageView.setRotate(180);
-                getCell(row, column).setFill(Color.RED);
-                wait = selectedCard.getMillis();
-            }
-            int finalWait = wait;
-            new AnimationTimer() {
-                private long lastTime = 0;
-                boolean once = true;
-
-                @Override
-                public void handle(long now) {
-                    if (lastTime == 0) {
-                        lastTime = now;
-                    }
-                    if (once && now > lastTime + (spriteProperties.millis + finalWait) * Math.pow(10, 6)) {
-                        lastTime = now;
-                        board.getChildren().remove(imageView);
-                        image.setOpacity(1);
-                        once = false;
-                    } else if (once && now > lastTime + finalWait * Math.pow(10, 6)) {
-                        image.setOpacity(0);
-                        imageView.setOpacity(1);
-                    }
-
-                }
-            }.start();
-        } else {
+        if (mode.equals("ATTACK"))
+            imageView = attack(row, column, card, image, filesType, flip);
+        else {
             if (image == null) {
                 String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
                 imageView = addImage(board, path, 0, 0, 110, 150);
@@ -217,7 +181,6 @@ public class BattleScene {
             //root.getChildren().add(imageView);
         }
 
-        assert imageView != null;
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
@@ -231,6 +194,47 @@ public class BattleScene {
                     imageView.getLayoutX(), imageView.getLayoutY());
         }
         return board;
+    }
+
+    private ImageView attack(int row, int column, Card card, ImageView image, FilesType filesType, boolean flip) {
+        SpriteAnimationProperties spriteProperties = new SpriteAnimationProperties(
+                card.getName(), filesType, card.getCountOfAnimation());
+        ImageView imageView = SpriteMaker.getInstance().makeSpritePic(spriteProperties.spriteSheetPath,
+                0, 0, board, spriteProperties.count,
+                spriteProperties.rows, spriteProperties.millis,
+                (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
+        imageView.setOpacity(0);
+        playMusic("resource/music/attack/attack-2.m4a", false, battleScene);
+        int wait = 0;
+        if (flip) {
+            imageView.setRotationAxis(Rotate.Y_AXIS);
+            imageView.setRotate(180);
+            getCell(row, column).setFill(Color.RED);
+            wait = selectedCard.getMillis();
+        }
+        int finalWait = wait;
+        new AnimationTimer() {
+            private long lastTime = 0;
+            boolean once = true;
+
+            @Override
+            public void handle(long now) {
+                if (lastTime == 0) {
+                    lastTime = now;
+                }
+                if (once && now > lastTime + (spriteProperties.millis + finalWait) * Math.pow(10, 6)) {
+                    lastTime = now;
+                    board.getChildren().remove(imageView);
+                    image.setOpacity(1);
+                    once = false;
+                } else if (once && now > lastTime + finalWait * Math.pow(10, 6)) {
+                    image.setOpacity(0);
+                    imageView.setOpacity(1);
+                }
+
+            }
+        }.start();
+        return imageView;
     }
 
     public Rectangle getCell(int row, int column) {
@@ -312,7 +316,7 @@ public class BattleScene {
 
         imageOfCard.setOnMouseClicked(event -> {
 
-            if (selectedCard != null && selectedCard.attack(card)) {
+            if (selectedCard != null && selectedCard.attack(card, true)) {
                 addCardToBoard(selectedCard.getPosition().getXCoordinate(),
                         selectedCard.getPosition().getYCoordinate(), selectedCard,
                         "ATTACK", imageOfSelectedCard, false, false);
@@ -404,7 +408,7 @@ public class BattleScene {
     private void removeColorFromRectangles() {
         for (Rectangle rectangle : coloredRectangles)
             rectangle.setFill(Color.BLACK);
-        coloredRectangles.removeAll(coloredRectangles);
+        coloredRectangles = new ArrayList<>();
     }
 
     public HashMap<Card, ImageView> getCardsHashMap() {
@@ -486,8 +490,8 @@ public class BattleScene {
         board = new Group();
         int numberOfColumns = LandOfGame.getNumberOfColumns();
         int numberOfRows = LandOfGame.getNumberOfRows();
-        double primaryX = (mapProperties.ulx + mapProperties.llx) / 2, primaryY = mapProperties.uly;
-        double currentX = primaryX, currentY = primaryY;
+        double primaryX = (mapProperties.ulx + mapProperties.llx) / 2;
+        double currentX = primaryX, currentY = mapProperties.uly;
 
         gameGrid = new Rectangle[numberOfRows][numberOfColumns];
 
@@ -655,10 +659,6 @@ public class BattleScene {
             if (horizontal)
                 imageView.setY(primaryY - moveDistance);
         });
-    }
-
-    private void setOnMouseClickedForSpecialPower(Coordinate coordinate) {
-
     }
 
     boolean isHeroSpecialPowerClicked() {

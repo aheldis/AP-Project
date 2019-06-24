@@ -261,7 +261,7 @@ public abstract class Card {
                 target.checkIsAlly(player, check)) && target.checkTheOneWhoDoesTheThing(check.getObject());
     }
 
-    public boolean attack(Card attackedCard) {
+    public boolean attack(Card attackedCard, boolean showError) {
         //false:
 
         if (this instanceof Spell) {
@@ -269,18 +269,21 @@ public abstract class Card {
         }
 
         if (attackedCard == null) {
-            ErrorType.INVALID_CARD_ID.printMessage();
+            if (showError)
+                ErrorType.INVALID_CARD_ID.printMessage();
             return false;
         }
 
         if (!canAttack) {
-            ErrorType.CAN_NOT_ATTACK.printMessage();
+            if (showError)
+                ErrorType.CAN_NOT_ATTACK.printMessage();
             return false;
         }
 
 
         if (!withinRange(attackedCard.position.getCoordinate(), attackRange) && player instanceof OrdinaryPlayer) {
-            ErrorType.UNAVAILABLE_OPPONENT.printMessage();
+            if (showError)
+                ErrorType.UNAVAILABLE_OPPONENT.printMessage();
             return false;
         }
 
@@ -343,7 +346,7 @@ public abstract class Card {
         int x = position.getXCoordinate();
         int y = position.getYCoordinate();
         int distance = 1;
-        boolean check[] = {false, false, false, false, false, false, false, false};
+        boolean[] check = {false, false, false, false, false, false, false, false};
         while (true) {
 
             boolean allChecked = true;
@@ -355,15 +358,15 @@ public abstract class Card {
 
             if (allChecked) {
                 distance++;
-                if (x + distance >= landOfGame.getNumberOfRows() && x - distance < 0 &&
-                        y + distance >= landOfGame.getNumberOfColumns() && y - distance < 0)
+                if (x + distance >= LandOfGame.getNumberOfRows() && x - distance < 0 &&
+                        y + distance >= LandOfGame.getNumberOfColumns() && y - distance < 0)
                     return null;
                 for (int i = 0; i < 8; i++)
                     check[i] = false;
             }
 
-            int dx[] = {1, 0, -1, 0, 1, 1, -1, -1};
-            int dy[] = {0, 1, 0, -1, -1, 1, 1, -1};
+            int[] dx = {1, 0, -1, 0, 1, 1, -1, -1};
+            int[] dy = {0, 1, 0, -1, -1, 1, 1, -1};
             Random random = new Random();
             int randomNumber = random.nextInt(8);
 
@@ -372,10 +375,10 @@ public abstract class Card {
 
             check[randomNumber] = true;
 
-            if (x + dx[randomNumber] * distance >= landOfGame.getNumberOfRows() || x + dx[randomNumber] * distance < 0)
+            if (x + dx[randomNumber] * distance >= LandOfGame.getNumberOfRows() || x + dx[randomNumber] * distance < 0)
                 continue;
 
-            if (y + dy[randomNumber] * distance >= landOfGame.getNumberOfColumns() || y + dy[randomNumber] * distance < 0)
+            if (y + dy[randomNumber] * distance >= LandOfGame.getNumberOfColumns() || y + dy[randomNumber] * distance < 0)
                 continue;
 
             if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt() == null) {
@@ -508,7 +511,6 @@ public abstract class Card {
     public void setCounterAttack(String counterAttack) {
         this.counterAttack = counterAttack;
     }
-
 
 
     public int getFrameSize() {
@@ -728,8 +730,8 @@ public abstract class Card {
             if (target.isOne() && checkTarget(cardSquare, change.getTargetType())) {
                 targets.add(cardSquare);
             } else if (target.isAll()) {
-                for (int i = 0; i < landOfGame.getNumberOfRows(); i++)
-                    for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
+                for (int i = 0; i < LandOfGame.getNumberOfRows(); i++)
+                    for (int j = 0; j < LandOfGame.getNumberOfColumns(); j++) {
                         Square check = landOfGame.getSquares()[i][j];
                         if (checkTarget(check, change.getTargetType()))
                             targets.add(check);
@@ -737,7 +739,7 @@ public abstract class Card {
 
             } else if (target.isRow()) {
 
-                for (int j = 0; j < landOfGame.getNumberOfColumns(); j++) {
+                for (int j = 0; j < LandOfGame.getNumberOfColumns(); j++) {
                     Square check = landOfGame.getSquares()[cardSquare.getXCoordinate()][j];
                     if (checkTarget(check, change.getTargetType()))
                         targets.add(check);
@@ -745,7 +747,7 @@ public abstract class Card {
 
             } else if (target.isColumn()) {
 
-                for (int i = 0; i < landOfGame.getNumberOfRows(); i++) {
+                for (int i = 0; i < LandOfGame.getNumberOfRows(); i++) {
                     Square check = landOfGame.getSquares()[i][cardSquare.getYCoordinate()];
                     if (checkTarget(check, change.getTargetType()))
                         targets.add(check);
@@ -761,13 +763,13 @@ public abstract class Card {
                     j = position.getYCoordinate() + random.nextInt(2 * target.getDistance() + 1) - 1;
                     if (i == -1) i += 2;
                     if (j == -1) j += 2;
-                    if (i == landOfGame.getNumberOfRows()) i -= 2;
-                    if (j == landOfGame.getNumberOfColumns()) j -= 2;
+                    if (i == LandOfGame.getNumberOfRows()) i -= 2;
+                    if (j == LandOfGame.getNumberOfColumns()) j -= 2;
                     check = landOfGame.getSquares()[i][j];
                 } else {
                     while (!checkTarget(check, change.getTargetType())) {
-                        i = position.getXCoordinate() + random.nextInt(landOfGame.getNumberOfRows());
-                        j = position.getYCoordinate() + random.nextInt(landOfGame.getNumberOfColumns());
+                        i = position.getXCoordinate() + random.nextInt(LandOfGame.getNumberOfRows());
+                        j = position.getYCoordinate() + random.nextInt(LandOfGame.getNumberOfColumns());
                         check = landOfGame.getSquares()[i][j];
                     }
                 }
@@ -779,10 +781,10 @@ public abstract class Card {
                     int distance = 0;
                     while (distance <= target.getDistance()) {
                         for (int i = -distance; i <= distance; i++) {
-                            if (cardSquare.getXCoordinate() + i >= landOfGame.getNumberOfRows() || cardSquare.getXCoordinate() + i < 0)
+                            if (cardSquare.getXCoordinate() + i >= LandOfGame.getNumberOfRows() || cardSquare.getXCoordinate() + i < 0)
                                 continue;
                             for (int j = -distance; j <= distance; j++) {
-                                if (cardSquare.getYCoordinate() + j >= landOfGame.getNumberOfColumns() ||
+                                if (cardSquare.getYCoordinate() + j >= LandOfGame.getNumberOfColumns() ||
                                         cardSquare.getXCoordinate() + j < 0)
                                     continue;
                                 Square check = landOfGame.getSquares()[cardSquare.getXCoordinate() + i][cardSquare.getYCoordinate() + j];

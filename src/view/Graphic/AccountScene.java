@@ -1,8 +1,6 @@
 package view.Graphic;
 
 import javafx.animation.*;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -12,15 +10,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.account.Account;
 import model.account.AllAccount;
-import model.battle.MatchInfo;
 import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
