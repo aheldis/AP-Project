@@ -1,11 +1,14 @@
 package view.Graphic;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import model.account.FilesType;
 import model.battle.Player;
 import model.card.Card;
@@ -88,6 +91,19 @@ public class BattleFooterGraphic {
         }
 
     }
+    private void addTimer(Scene scene, Group group){
+
+//        Polygon polygon = new Polygon();
+//        polygon.setFill(Color.RED);
+//        polygon.getPoints().addAll(
+//                200.0, 670.0,
+//                20.0, 10.0,
+//                10.0, 20.0 );
+//        root.getChildren().addAll(polygon);
+       // addRectangle(group,207,0,635,15,0,0,Color.RED);
+        addImage(group,"pics/battle_categorized/timer_background@2x.png",200,0,650,15);
+        addImage(group,"pics/battle_categorized/unit_stats_instructional_bg@2x.png",207,1,50,13);
+    }
 
     private void addButtons(Scene scene, Group group) {
         Button endTurn = imageButton(scene, group, "pics/battle/end_turn_yellow.png",
@@ -131,6 +147,7 @@ public class BattleFooterGraphic {
         root.getChildren().addAll(circlesGroup);
         addNextCard(circlesGroup);
         addCardsOfHand((Group) scene.getRoot(), circlesGroup);
+        addTimer(scene,circlesGroup);
         addButtons(scene, circlesGroup);
     }
 
@@ -139,6 +156,7 @@ public class BattleFooterGraphic {
         addNextCard(circlesGroup);
         addCardsOfHand((Group) scene.getRoot(), circlesGroup);
         addButtons(scene, circlesGroup);
+        addTimer(scene,circlesGroup);
         battleScene.backToDefault();
     }
 
