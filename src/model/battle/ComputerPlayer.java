@@ -11,6 +11,8 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import model.account.Account;
 import model.card.Card;
+import model.card.Hero;
+import model.card.Minion;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.Graphic.BattleScene;
@@ -121,68 +123,9 @@ public class ComputerPlayer extends Player {
     public void playTurnForComputer() {
         Random random = new Random();
         int x, y;
-        //put card
-        int RANDOM_NUMBER_FOR_PUT_CARD = 2;
-        if (random.nextInt(RANDOM_NUMBER_FOR_PUT_CARD) == 0) {
-            int randomNumberForCards = random.nextInt(4);
-            for (int i = 0; i < randomNumberForCards; i++) {
-               /* x = getMainDeck().getHero().getPosition().getXCoordinate();
-                y = getMainDeck().getHero().getPosition().getYCoordinate();
-                if (random.nextInt(100) % 2 == 0) {//x =x hero
-                    y = movement(x, y, false);
-                    if (y == -1) {
-                        continue;
-                    }
-
-                } else {//y = y hero
-                    x = movement(x, y, true);
-                    if (x == -1)
-                        continue;
-                }
-                coordinate = new Coordinate();
-                coordinate.setY(y);
-                coordinate.setX(x);*/
-                Card card = getHand().chooseARandomCard();
-                ArrayList<Square> squares = card.getCanPutInSquares();
-                randomNumberForCards = random.nextInt(squares.size());
-                if (getMana() >= card.getMp()) {
-                    Coordinate coordinate = squares.get(randomNumberForCards).getCoordinate();
-                    if (putCardOnLand(card, coordinate, getMatch().getLand(), false))
-                        BattleScene.getSingleInstance().addCardToBoard(coordinate.getX(), coordinate.getY(), card,
-                                "Breathing", null, false, true);
-                }
-            }
-        }
-
-        int RANDOM_NUMBER_FOR_MOVE = 5;
+//      move card
         Square firstPosition;
-//        if (random.nextInt(RANDOM_NUMBER_FOR_MOVE) >= 2) {
-            /*if (getCardsOnLand().size() > 1) {
-                int cardMoved = random.nextInt(getCardsOnLand().size());
-                Card card = getCardsOnLand().get(cardMoved);
-                if (random.nextInt() % 2 == 0) {
-                    firstPosition = y;
-                    y = movement(x, y, false);
-                    if (y != -1) {
-                        coordinate.setX(x);
-                        coordinate.setY(y);
-                        if (card.move(coordinate)) {
-                            moveAnimation(x, firstPosition, x, y, card);
-                        }
-                    }
-                } else {
-                    firstPosition = x;
-                    x = movement(x, y, true);
-                    if (x != -1) {
-                        coordinate.setX(x);
-                        coordinate.setY(y);
-                        if (card.move(coordinate)) {
-                            moveAnimation(firstPosition, y, x, y, card);
-                        }
-                    }
-                }
-
-            }*/
+        int RANDOM_NUMBER_FOR_MOVE;
         if (getCardsOnLand().size() > 1) {
             int cardMoved = random.nextInt(getCardsOnLand().size());
             Card card = getCardsOnLand().get(cardMoved);
@@ -190,12 +133,28 @@ public class ComputerPlayer extends Player {
             RANDOM_NUMBER_FOR_MOVE = random.nextInt(squares.size());
             Coordinate coordinate = squares.get(RANDOM_NUMBER_FOR_MOVE).getCoordinate();
             firstPosition = card.getPosition();
-            if (card.move(coordinate))
+            if (card.move(coordinate)) {
                 moveAnimation(firstPosition.getXCoordinate(), firstPosition.getYCoordinate(), card);
+            }
+        }
+//        put card
+        int RANDOM_NUMBER_FOR_PUT_CARD = 2;
+        if (random.nextInt(RANDOM_NUMBER_FOR_PUT_CARD) == 0) {
+            int randomNumberForCards = random.nextInt(4);
+            for (int i = 0; i < randomNumberForCards; i++) {
+                Card card = getHand().chooseARandomCard();
+                ArrayList<Square> squares = card.getCanPutInSquares();
+                randomNumberForCards = random.nextInt(squares.size());
+                if (getMana() >= card.getMp() && (card instanceof Hero || card instanceof Minion)) {
+                    Coordinate coordinate = squares.get(randomNumberForCards).getCoordinate();
+                    if (putCardOnLand(card, coordinate, getMatch().getLand(), false)) {
+                        BattleScene.getSingleInstance().addCardToBoard(coordinate.getX(), coordinate.getY(), card,
+                                "Breathing", null, false, true);
+                    }
+                }
+            }
         }
 
-//        }
-        // }
 /*
         int RANDOM_NUMBER_FOR_ATTACK = 13;
         if (random.nextInt() % RANDOM_NUMBER_FOR_ATTACK == 0) {

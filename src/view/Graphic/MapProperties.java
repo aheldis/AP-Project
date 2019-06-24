@@ -17,7 +17,7 @@ public class MapProperties {
     public double lrx;
     public double lry;
 
-    public void init() {
+    void init() {
         setCellSize();
         double changeXRatio = GeneralGraphicMethods.getRatioX() / GeneralGraphicMethods.getSabasXRatio();
         double changeYRatio = GeneralGraphicMethods.getRatioY() / GeneralGraphicMethods.getSabasYRatio() ;

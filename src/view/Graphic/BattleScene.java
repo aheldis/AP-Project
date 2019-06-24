@@ -1,9 +1,7 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
-import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -11,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
@@ -196,20 +193,6 @@ public class BattleScene {
         setOnMouseEntered(imageView, card, flip);
         cardsHashMap.put(card, imageView);
 
-        Group group = new Group();
-        group.relocate(position.getKey() - 8, position.getValue() + 30);
-        board.getChildren().addAll(group);
-
-        //todo haniye ino bebar be setOnMouseClick e khodet
-        imageView.setOnMouseClicked(event -> {
-            addImage(group, "pics/battle_categorized/icon_atk@2x.png", 0, 0, 40, 40);
-            addImage(group, "pics/battle_categorized/icon_hp@2x.png", mapProperties.cellWidth - 30, 0, 40, 40);
-            addText(group, 13, 10, card.getAp() + "", Color.WHITE, 14);
-            addText(group, mapProperties.cellWidth - 11, 10, card.getHp() + "", Color.WHITE, 14);
-            imageView.setOnMouseExited(event1 -> board.getChildren().removeAll(group));
-        });
-
-
         if (drag) {
             DragAndDrop dragAndDrop = new DragAndDrop();
             dragAndDrop.dragAndDropForGame(imageView, card, null, board, root,
@@ -268,35 +251,55 @@ public class BattleScene {
 //*/
 
     private void setOnMouseEntered(ImageView imageOfCard, Card card, boolean enemy) {
+        Group group = new Group();
+        group.relocate(imageOfCard.getLayoutX(), imageOfCard.getLayoutY() + 80);
+        board.getChildren().addAll(group);
         imageOfCard.setOnMouseEntered(event -> {
-            if (selectedCard != null && selectedCard.canAttack(card))
+            if (selectedCard != null && selectedCard.canAttack(card)) {
                 setCursor(battleScene, Cursor.ATTACK);
-            else
+            } else {
                 setCursor(battleScene, Cursor.LIGHTEN);
-            if (enemy)
+            }
+            if (enemy) {
                 imageOfCard.setEffect(getLighting(Color.RED));
-            else
+            } else {
                 imageOfCard.setEffect(getLighting(Color.WHITE));
+            }
+
+            addImage(group, "pics/battle_categorized/icon_atk@2x.png", 0, 0, 40, 40);
+            addImage(group, "pics/battle_categorized/icon_hp@2x.png", mapProperties.cellWidth - 30, 0, 40, 40);
+            addText(group, 13, 10, card.getAp() + "", Color.WHITE, 14);
+            addText(group, mapProperties.cellWidth - 11, 10, card.getHp() + "", Color.WHITE, 14);
+            group.setOpacity(1);
         });
 
         imageOfCard.setOnMouseExited(event -> {
             setCursor(battleScene, Cursor.AUTO);
             imageOfCard.setEffect(null);
+            group.setOpacity(0);
         });
 
-        if (enemy) {
-            imageOfCard.setOnMouseClicked(event -> {
+        imageOfCard.setOnMouseClicked(event -> {
 
-                if (selectedCard != null && selectedCard.attack(card)) {
-                    imageOfSelectedCard.setOpacity(0);
-                    addCardToBoard(selectedCard.getPosition().getXCoordinate(),
-                            selectedCard.getPosition().getYCoordinate(), selectedCard,
-                            "ATTACK", null, false, false);
-                    backToDefault();
-                }
-
-            });
-        }
+            if (selectedCard != null && selectedCard.attack(card)) {
+                imageOfSelectedCard.setOpacity(0);
+                addCardToBoard(selectedCard.getPosition().getXCoordinate(),
+                        selectedCard.getPosition().getYCoordinate(), selectedCard,
+                        "ATTACK", null, false, false);
+                setCursor(battleScene, Cursor.AUTO);
+                imageOfCard.setEffect(null);
+                backToDefault();
+            } else if (isHeroSpecialPowerClicked()) {
+                //todo add for minion and hero :-?
+                /*todo yani inke negah kone age oon boolean e true bood select nakone o ina
+                todo for more information contact Sba
+                */
+                match.passPlayerWithTurn().getHero().useSpecialPower(card.getPosition());
+                setHeroSpecialPowerClicked(false);
+                backToDefault();
+            }
+            group.setOpacity(0);
+        });
     }
 
     void showCanMoveToCoordinations(Card card) {
@@ -364,7 +367,7 @@ public class BattleScene {
         glow.setLevel(0);
     }
 
-    void removeColorFromRectangles() {
+    private void removeColorFromRectangles() {
         for (Rectangle rectangle : coloredRectangles)
             rectangle.setFill(Color.BLACK);
         coloredRectangles.removeAll(coloredRectangles);
@@ -394,7 +397,7 @@ public class BattleScene {
         return battleFooter;
     }
 
-    public Scene getBattleScene() {
+    Scene getBattleScene() {
         return battleScene;
     }
 
@@ -472,7 +475,7 @@ public class BattleScene {
                 coordinate.setX(i);
                 coordinate.setY(j);
 
-                setOnMouseClickedForSpecialPower(rectangle, coordinate);
+//                setOnMouseClickedForSpecialPower(rectangle, coordinate);
 
                 positionHashMap.put(gameGrid[i][j], match.getLand().getSquares()[i][j]);
                 board.getChildren().add(rectangle);
@@ -577,21 +580,13 @@ public class BattleScene {
         root.getChildren().add(group);
         group.relocate(490, 50);
         GeneralGraphicMethods.setOnMouseEntered(group, battleScene, true);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        root.getChildren().remove(group);
-                    }
-                });
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            Platform.runLater(() -> root.getChildren().remove(group));
         }).start();
     }
 
@@ -628,24 +623,15 @@ public class BattleScene {
         });
     }
 
-    private void setOnMouseClickedForSpecialPower(Node node, Coordinate coordinate) {
-        //todo add for minion and hero :-?
-        /*todo yani inke negah kone age oon boolean e true bood select nakone o ina
-          todo for more information contact Sba
-         */
-        node.setOnMouseClicked(event -> {
-            if (isHeroSpecialPowerClicked()) {
-                match.passPlayerWithTurn().getHero().useSpecialPower(match.getLand().passSquareInThisCoordinate(coordinate));
-                setHeroSpecialPowerClicked(false);
-            }
-        });
+    private void setOnMouseClickedForSpecialPower(Coordinate coordinate) {
+
     }
 
-    public boolean isHeroSpecialPowerClicked() {
+    boolean isHeroSpecialPowerClicked() {
         return heroSpecialPowerClicked;
     }
 
-    public void setHeroSpecialPowerClicked(boolean heroSpecialPowerClicked) {
+    void setHeroSpecialPowerClicked(boolean heroSpecialPowerClicked) {
         this.heroSpecialPowerClicked = heroSpecialPowerClicked;
     }
 
