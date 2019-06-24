@@ -157,6 +157,7 @@ public abstract class Card {
             for (Flag flag : newPosition.getFlags()) {
                 flag.setOwnerCard(this);
                 player.addToOwnFlags(flag);
+                flag.getImageView().setOpacity(0);
             }
             newPosition.clearFlags();
         }
@@ -165,6 +166,7 @@ public abstract class Card {
                 ((Collectible) newPosition.getObject()).getTarget().checkTheOneWhoCollects(this)) {
             player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
+            ((Collectible) newPosition.getObject()).getImageView().setOpacity(0);
         }
 
         position.setObject(null);
@@ -236,7 +238,8 @@ public abstract class Card {
     }
 
     public int getManhatanDistance(Coordinate coordinate) {
-        return Math.abs(coordinate.getX() - position.getXCoordinate()) +
+        return Math.abs(coordinate.getX() -
+                position.getXCoordinate()) +
                 Math.abs(coordinate.getY() - position.getYCoordinate());
     }
 
@@ -281,7 +284,9 @@ public abstract class Card {
         }
 
 
-        if (!withinRange(attackedCard.position.getCoordinate(), attackRange) && player instanceof OrdinaryPlayer) {
+        if (!withinRange(attackedCard
+                .position
+                .getCoordinate(), attackRange) && player instanceof OrdinaryPlayer) {
             if (showError)
                 ErrorType.UNAVAILABLE_OPPONENT.printMessage();
             return false;

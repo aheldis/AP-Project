@@ -124,7 +124,7 @@ public class BattleScene {
                     if (coloredRectangles.contains(grid)) {
                         removeColorFromRectangles();
                         selectedCard = null;
-                        return addCardToBoard(i, j, card, "normal", imageView, false, false);
+                        return addCardToBoard(i, j, card, "normal", imageView, false, false, false);
                     }
                 }
             }
@@ -150,7 +150,7 @@ public class BattleScene {
     }
 
     public Group addCardToBoard(int row, int column, Card card, String mode,
-                                ImageView image, boolean drag, boolean flip) {
+                                ImageView image, boolean drag, boolean flip, boolean beingAttacked) {
         FilesType filesType = FilesType.MINION;
         if (card instanceof Hero)
             filesType = FilesType.HERO;
@@ -158,9 +158,10 @@ public class BattleScene {
         ImageView imageView;
         Pair<Double, Double> position = getCellPosition(row, column);
 
-        if (mode.equals("ATTACK"))
-            imageView = attack(row, column, card, image, filesType, flip);
-        else {
+        if (mode.equals("ATTACK")) {
+            if (!beingAttacked) selectedCard = card;
+            imageView = attack(row, column, card, image, filesType, flip, beingAttacked);
+        } else {
             if (image == null) {
                 String path = "pics/" + filesType.getName() + "/" + card.getName() + ".gif";
                 imageView = addImage(board, path, 0, 0, 110, 150);
@@ -196,7 +197,8 @@ public class BattleScene {
         return board;
     }
 
-    private ImageView attack(int row, int column, Card card, ImageView image, FilesType filesType, boolean flip) {
+    private ImageView attack(int row, int column, Card card, ImageView image,
+                             FilesType filesType, boolean flip, boolean beingAttacked) {
         SpriteAnimationProperties spriteProperties = new SpriteAnimationProperties(
                 card.getName(), filesType, card.getCountOfAnimation());
         ImageView imageView = SpriteMaker.getInstance().makeSpritePic(spriteProperties.spriteSheetPath,
@@ -210,7 +212,10 @@ public class BattleScene {
             imageView.setRotationAxis(Rotate.Y_AXIS);
             imageView.setRotate(180);
             getCell(row, column).setFill(Color.RED);
+        }
+        if (beingAttacked) {
             wait = selectedCard.getMillis();
+            selectedCard = null;
         }
         int finalWait = wait;
         new AnimationTimer() {
@@ -319,11 +324,11 @@ public class BattleScene {
             if (selectedCard != null && selectedCard.attack(card, true)) {
                 addCardToBoard(selectedCard.getPosition().getXCoordinate(),
                         selectedCard.getPosition().getYCoordinate(), selectedCard,
-                        "ATTACK", imageOfSelectedCard, false, false);
+                        "ATTACK", imageOfSelectedCard, false, false, false);
                 if (card.counterAttack(selectedCard))
                     addCardToBoard(card.getPosition().getXCoordinate(),
                             card.getPosition().getYCoordinate(), card,
-                            "ATTACK", imageOfCard, false, true);
+                            "ATTACK", imageOfCard, false, true, true);
                 setCursor(battleScene, Cursor.AUTO);
                 imageOfCard.setEffect(null);
                 backToDefault();

@@ -128,8 +128,10 @@ public class Match {
         this.battleScene = BattleScene.getSingleInstance();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
-        battleScene.addCardToBoard(2, 0, firstHero, "Breathing", null, true, false);
-        battleScene.addCardToBoard(2, 8, secondHero, "Breathing", null, false, true);
+        battleScene.addCardToBoard(2, 0, firstHero, "Breathing",
+                null, true, false, false);
+        battleScene.addCardToBoard(2, 8, secondHero, "Breathing",
+                null, false, true, false);
         if (mode.equals(Game.getModeAsString(3))) {
             setFlagsRandomly(3);
         }

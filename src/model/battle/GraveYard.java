@@ -1,15 +1,15 @@
 package model.battle;
 
-import model.card.Spell;
-import model.item.Flag;
 import model.card.ActivationTimeOfSpecialPower;
 import model.card.Card;
 import model.card.Minion;
+import model.card.Spell;
+import model.item.Flag;
 import model.land.Square;
 import view.AccountView;
 import view.BattleView;
+import view.Graphic.BattleScene;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class GraveYard {
@@ -54,6 +54,9 @@ public class GraveYard {
                 //player.setFlagSaver(null);
                 position.addToFlags(flag);
                 flag.setOwnerCard(null);
+                BattleScene.getSingleInstance().addNodeToBoard(card.getPosition().getXCoordinate(),
+                        card.getPosition().getYCoordinate(), flag.getImageView());
+                flag.getImageView().setOpacity(1);
                 break;
             }
         }

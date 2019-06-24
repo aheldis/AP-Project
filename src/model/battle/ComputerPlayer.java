@@ -111,8 +111,10 @@ public class ComputerPlayer extends Player {
                 }
                 if ((!haveDistanceX || !haveDistanceY || now > lastTime + second) && twice) {
                     sceneRoot.getChildren().remove(imageView);
-                    battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
-                            card, "normal", imageView, false, true);
+                    battleScene.addCardToBoard(card
+                                    .getPosition()
+                                    .getXCoordinate(), card.getPosition().getYCoordinate(),
+                            card, "normal", imageView, false, true, false);
                     battleScene.getCell(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate()).setFill(Color.RED);
                     twice = false;
                 }
@@ -127,7 +129,7 @@ public class ComputerPlayer extends Player {
 //      move card
         Square firstPosition;
         int RANDOM_NUMBER_FOR_MOVE;
-        if (getCardsOnLand().size() > 1) {
+        if (getCardsOnLand().size() >= 1) {
             int cardMoved = random.nextInt(getCardsOnLand().size());
             Card card = getCardsOnLand().get(cardMoved);
             ArrayList<Square> squares = card.getCanMoveToSquares();
@@ -150,7 +152,7 @@ public class ComputerPlayer extends Player {
                     Coordinate coordinate = squares.get(randomNumberForCards).getCoordinate();
                     if (putCardOnLand(card, coordinate, getMatch().getLand(), false)) {
                         BattleScene.getSingleInstance().addCardToBoard(coordinate.getX(), coordinate.getY(), card,
-                                "Breathing", null, false, true);
+                                "Breathing", null, false, true, false);
                     }
                 }
             }
@@ -159,7 +161,16 @@ public class ComputerPlayer extends Player {
 
         for (Card card : getCardsOnLand())
             for (Card opponentCard : getOpponent().getCardsOnLand())
-                card.attack(opponentCard, false);
+                if (card.attack(opponentCard, false)) {
+                    BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
+                            card, "ATTACK", battleScene.getCardsHashMap().get(card), false,
+                            true, false);
+                    battleScene.addCardToBoard(opponentCard.getPosition().getXCoordinate(),
+                            opponentCard.getPosition().getYCoordinate(), opponentCard, "ATTACK",
+                            battleScene.getCardsHashMap().get(opponentCard),
+                            false, false, true);
+                }
 
 
         if (getMainDeck().getItem() != null && getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
