@@ -561,11 +561,11 @@ public abstract class Card {
     public String getPathOfAnimation() {
         if (pathOfAnimation == null) {
             if (this instanceof Hero)
-                pathOfAnimation = "pics/" + "Hero/" + name + "gif";
+                pathOfAnimation = "pics/" + "Hero/" + name + ".gif";
             if (this instanceof Minion)
-                pathOfAnimation = "pics/" + "Minion/" + name + "gif";
+                pathOfAnimation = "pics/" + "Minion/" + name + ".gif";
             if (this instanceof Spell)
-                pathOfAnimation = "pics/" + "Spell/" + name + "gif";
+                pathOfAnimation = "pics/" + "Spell/" + name + ".gif";
         }
         return pathOfAnimation;
     }
