@@ -22,7 +22,7 @@ import java.util.Random;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
-class GraveYard {
+class GraveYardScene {
     private static Scene graveYardScene = StageLauncher.getScene(StateType.GRAVE_YARD);
     private static Group root = (Group) Objects.requireNonNull(graveYardScene).getRoot();
     private static final int column = 4;

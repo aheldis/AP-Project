@@ -42,6 +42,16 @@ public abstract class Card {
     private boolean canAttack = true;
     private boolean canCounterAttack = true;
     private int hpChangeAfterAttack = 0;
+    //  private Group groupInBattle = null;
+/*
+    public void setGroupInBattle(Group groupInBattle) {
+        this.groupInBattle = groupInBattle;
+    }
+
+    public Group getGroupInBattle() {
+        return groupInBattle;
+    }
+*/
     /**
      * mogheE ke be yeki hamle mishe va az hpsh kam mishe bayad ba in jam konin hpSh ro
      */
@@ -327,6 +337,8 @@ public abstract class Card {
         hp += number;
         if (hp <= 0) {
             player.getGraveYard().addCardToGraveYard(this, position);
+            BattleScene.getSingleInstance().removeCard(this);
+            //BattleScene.getSingleInstance().removeNodeFromBoard(groupInBattle);
             position = null;
         }
     }
@@ -547,6 +559,14 @@ public abstract class Card {
     }
 
     public String getPathOfAnimation() {
+        if (pathOfAnimation == null) {
+            if (this instanceof Hero)
+                pathOfAnimation = "pics/" + "Hero/" + name + ".gif";
+            if (this instanceof Minion)
+                pathOfAnimation = "pics/" + "Minion/" + name + ".gif";
+            if (this instanceof Spell)
+                pathOfAnimation = "pics/" + "Spell/" + name + ".gif";
+        }
         return pathOfAnimation;
     }
 
@@ -555,6 +575,14 @@ public abstract class Card {
     }
 
     public String getPathOfThePicture() {
+        if (pathOfAnimation == null) {
+            if (this instanceof Hero)
+                pathOfAnimation = "pics/" + "Hero/" + name + ".png";
+            if (this instanceof Minion)
+                pathOfAnimation = "pics/" + "Minion/" + name + ".png";
+            if (this instanceof Spell)
+                pathOfAnimation = "pics/" + "Spell/" + name + ".png";
+        }
         return pathOfThePicture;
     }
 
