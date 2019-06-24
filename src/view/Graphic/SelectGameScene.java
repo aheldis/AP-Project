@@ -279,12 +279,8 @@ class SelectGameScene {
 
                 game = new Game();
                 if (game.checkPlayerDeck(account, 1)) {
-
-
                     match = game.makeNewCustomGame(account, deckName, 2, 0);
                     startGame(game, match);
-
-
                 }
             }
         });

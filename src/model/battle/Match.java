@@ -45,8 +45,7 @@ public class Match {
     private int matchNumber = 0;
 
     Match(Player[] players, String mode, int numberOfFlags, int reward) {
-        addToPausedGames();
-
+        //addToPausedGames();
         land = new LandOfGame();
         for (int i = 0; i < 2; i++) {
             ArrayList<Card> cards = players[i].getMainDeck().getCardsOfDeck();

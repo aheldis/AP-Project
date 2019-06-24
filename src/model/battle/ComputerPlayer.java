@@ -158,19 +158,20 @@ public class ComputerPlayer extends Player {
             }
         }
 
+//todo have null pointer in battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate()
 
-        for (Card card : getCardsOnLand())
-            for (Card opponentCard : getOpponent().getCardsOnLand())
-                if (card.attack(opponentCard, false)) {
-                    BattleScene battleScene = BattleScene.getSingleInstance();
-                    battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
-                            card, "ATTACK", battleScene.getCardsHashMap().get(card), false,
-                            true, false);
-                    battleScene.addCardToBoard(opponentCard.getPosition().getXCoordinate(),
-                            opponentCard.getPosition().getYCoordinate(), opponentCard, "ATTACK",
-                            battleScene.getCardsHashMap().get(opponentCard),
-                            false, false, true);
-                }
+//        for (Card card : getCardsOnLand())
+//            for (Card opponentCard : getOpponent().getCardsOnLand())
+//                if (card.attack(opponentCard, false)) {
+//                    BattleScene battleScene = BattleScene.getSingleInstance();
+//                    battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
+//                            card, "ATTACK", battleScene.getCardsHashMap().get(card), false,
+//                            true, false);
+//                    battleScene.addCardToBoard(opponentCard.getPosition().getXCoordinate(),
+//                            opponentCard.getPosition().getYCoordinate(), opponentCard, "ATTACK",
+//                            battleScene.getCardsHashMap().get(opponentCard),
+//                            false, false, true);
+//                }
 
 
         if (getMainDeck().getItem() != null && getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&

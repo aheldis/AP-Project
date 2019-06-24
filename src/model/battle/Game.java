@@ -72,7 +72,8 @@ public class Game {
     }
 
     public Match makeNewCustomGame(Account account, String deckName, int mode, int numberOfFlags) {
-        Deck secondPlayerDeck = account.getCollection().getDeckByName(deckName);
+        Deck secondPlayerDeck = Deck.getDeckForStoryMode(1);
+       // Deck secondPlayerDeck = account.getCollection().getDeckByName(deckName);
         if (secondPlayerDeck == null || !secondPlayerDeck.validate()) {
             ErrorType error = ErrorType.SELECTED_INVALID_DECK_FOR_PLAYER2;
             error.printMessage();
@@ -81,7 +82,5 @@ public class Game {
         players[1] = new ComputerPlayer(secondPlayerDeck);
         reward = 1000;
         return new Match(players, getModeAsString(mode), numberOfFlags, reward);
-
     }
-
 }
