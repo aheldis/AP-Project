@@ -25,6 +25,7 @@ import model.requirment.Coordinate;
 import view.enums.Cursor;
 import view.enums.StateType;
 
+import javax.xml.catalog.Catalog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -249,8 +250,8 @@ public class BattleScene {
     public Rectangle getCell(int row, int column) {
         return gameGrid[row][column];
     }
-    //*/
-/*
+
+    /*
     Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
 //        PUT = true;
 //        MOVE = false;
@@ -292,7 +293,7 @@ public class BattleScene {
 
         return null;
     }
-//*/
+*/
 
     private void workWithMouse(ImageView imageOfCard, Card card, boolean enemy) {
         Group group = new Group();
@@ -610,20 +611,14 @@ public class BattleScene {
     }
 
     public ImageView addCellEffect(int x, int y) {
+        //"pics/battle/stunned@2x.png"
         ImageView imageView = GeneralGraphicMethods.createImage(
                 "pics/battle/1.png", 20, 20);
         BattleScene.getSingleInstance().addNodeToBoard(x, y, imageView, true);
         return imageView;
 
     }
-/*
-    public void addCellEffect2(int x, int y) {
-        ImageView collectibleImage = GeneralGraphicMethods.createImage(
-                "pics/battle/stunned@2x.png", mapProperties.cellWidth, mapProperties.cellHeight);
-        BattleScene.getSingleInstance().addNodeToBoard(x, y, collectibleImage, true);
 
-    }
-    */
 
     public void setGame(Game game) {
         this.game = game;
@@ -648,6 +643,11 @@ public class BattleScene {
 
     public HashMap<Card, ImageView> getCardsHashMap() {
         return cardsHashMap;
+    }
+
+    public void removeCard(Card card){
+        ImageView imageView = cardsHashMap.get(card);
+        removeNodeFromBoard(imageView);
     }
 
     public Match getMatch() {

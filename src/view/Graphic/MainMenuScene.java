@@ -86,7 +86,7 @@ public class MainMenuScene {
         x += 100;
         newImageButton("pics/menu/armory@2x.png", "    SHOP", x, y);
         x += 100;
-        newImageButton("pics/menu/settings@2x.png", "SETTINGS", x, y);
+        newImageButton("pics/menu/settings@2x.png", "LOG OUT", x, y);
         x += 100;
         newImageButton("pics/menu/quests@2x.png", "NEW CARD", x, y);
     }
@@ -283,7 +283,7 @@ public class MainMenuScene {
                 ShopScene.makeShopScene(account);
                 setScene(StateType.SHOP);
                 break;
-            case "SETTINGS":
+            case "LOG OUT":
                 root.getChildren().removeAll(menuNodes);
                 AccountScene.getInstance().addWindows();
                 new Thread(new Runnable() {

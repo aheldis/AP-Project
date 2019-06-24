@@ -2,23 +2,11 @@ package view.Graphic;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.account.Account;
-import model.battle.Match;
 import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
@@ -143,7 +131,7 @@ public class StageLauncher extends Application {
         spell.setHp(10);
         for (int i = 0; i < 13; i++)
             cards.add(spell);
-        GraveYard.makeYard(cards);
+        GraveYardScene.makeYard(cards);
     }
 
     @Override

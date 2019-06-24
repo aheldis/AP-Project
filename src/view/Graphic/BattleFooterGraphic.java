@@ -1,14 +1,11 @@
 package view.Graphic;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import model.account.FilesType;
 import model.battle.Player;
 import model.card.Card;
@@ -125,7 +122,7 @@ public class BattleFooterGraphic {
 
         graveYard.setOnMouseClicked(event -> {
             Platform.runLater(() -> StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.GRAVE_YARD)));
-            GraveYard.makeYard(player.getGraveYard().getCards());
+            GraveYardScene.makeYard(player.getGraveYard().getCards());
         });
         a.setOnMouseClicked(event -> {
             BattleScene battleScene = BattleScene.getSingleInstance();
