@@ -89,6 +89,7 @@ public abstract class Player {
                 ((Collectible) square.getObject()).getTarget().checkTheOneWhoCollects(playerCard)) {
             getHand().addToCollectibleItem((Collectible) square.getObject());
             ((Collectible) square.getObject()).setTheOneWhoCollects(playerCard);
+            ((Collectible) square.getObject()).getImageView().setOpacity(0);
         }
 
         //cellEffect:
@@ -102,6 +103,7 @@ public abstract class Player {
             for (Flag flag : square.getFlags()) {
                 flag.setOwnerCard(playerCard);
                 playerCard.getPlayer().addToOwnFlags(flag);
+                flag.getImageView().setOpacity(0);
             }
             square.clearFlags();
         }

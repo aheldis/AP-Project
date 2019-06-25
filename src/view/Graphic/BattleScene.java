@@ -230,19 +230,21 @@ public class BattleScene {
         new AnimationTimer() {
             boolean once = true;
             private long lastTime = 0;
+            boolean twice = true;
 
             @Override
             public void handle(long now) {
                 if (lastTime == 0) {
                     lastTime = now;
                 }
-                if (card.getHp() <= 0 && !once && finalWait == 0 && !beingAttacked &&
+                if (twice && card.getHp() <= 0 && !once && finalWait == 0 && !beingAttacked &&
                         now > lastTime + lastWait * Math.pow(10, 6)) {
                     lastTime = now;
-                    image.setOpacity(0);
-                    removeCard(card);
+                    board.getChildren().remove(image);
+//                    removeCard(card);
                     selectedCard = null;
                     getCell(row, column).setFill(Color.BLACK);
+                    twice = false;
                 }
                 if (once && now > lastTime + (spriteProperties.millis + finalWait) * Math.pow(10, 6)) {
                     lastTime = now;
@@ -250,8 +252,7 @@ public class BattleScene {
                     image.setOpacity(1);
                     if (finalWait != 0 && card.getHp() <= 0) {
                         getCell(row, column).setFill(Color.BLACK);
-                        image.setOpacity(0);
-                        removeCard(card);
+                        board.getChildren().remove(image);
                     }
                     once = false;
                 } else if (once && now > lastTime + finalWait * Math.pow(10, 6)) {
@@ -668,6 +669,7 @@ public class BattleScene {
 
     public void removeCard(Card card) {
         ImageView imageView = cardsHashMap.get(card);
+        imageView.relocate(-1000, -1000);
         removeNodeFromBoard(imageView);
     }
 

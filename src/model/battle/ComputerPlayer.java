@@ -127,10 +127,11 @@ public class ComputerPlayer extends Player {
         Random random = new Random();
 //      attack
         ArrayList<Card> exhaustedCards = new ArrayList<>();
+        outer:
         for (Card card : getCardsOnLand())
             for (Card opponentCard : getOpponent().getCardsOnLand()) {
                 Square opponentPosition = opponentCard.getPosition();
-                if (!exhaustedCards.contains(card) && card.attack(opponentCard, false)) {
+                if (card.attack(opponentCard, false)) {
                     BattleScene battleScene = BattleScene.getSingleInstance();
                     battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
                             card, "ATTACK", battleScene.getCardsHashMap().get(card), false,
@@ -145,6 +146,7 @@ public class ComputerPlayer extends Player {
                         getMainDeck().getItem().setTarget(this);
                         getMainDeck().getItem().getChange().affect(this, getMainDeck().getItem().getTarget().getTargets());
                     }
+                    break outer;
                 }
             }
 

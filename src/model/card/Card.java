@@ -337,7 +337,7 @@ public abstract class Card {
         hp += number;
         if (hp <= 0) {
             player.getGraveYard().addCardToGraveYard(this, position);
-            position = null;
+            player.getCardsOnLand().remove(this);
         }
     }
 

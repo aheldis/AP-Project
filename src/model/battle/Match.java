@@ -1,11 +1,9 @@
 package model.battle;
 
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.account.Shop;
@@ -178,7 +176,7 @@ public class Match {
             Collectible collectible;
             randomX = random.nextInt(4);
             randomY = random.nextInt(8);
-            randomItem = random.nextInt(collectibles.size() - 1);
+            randomItem = random.nextInt(collectibles.size());
             if (squares[randomX][randomY].getObject() != null || squares[randomX][randomY].getFlags().size() != 0) {
                 i--;
                 continue;
@@ -315,7 +313,7 @@ public class Match {
         if (this.loser instanceof OrdinaryPlayer)
             matchInfo.loser = this.loser.getAccount().getUserName();
         else
-            matchInfo.winner = "Computer";
+            matchInfo.loser = "Computer";
         matchInfo.date = date;
 
         winner.addToAccountWins();
@@ -366,6 +364,7 @@ public class Match {
 
     public static void loss() {
         Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
+        assert battleScene != null;
         Group root = (Group) battleScene.getRoot();
         root.getChildren().clear();
         setBackground(root,
@@ -389,12 +388,7 @@ public class Match {
         glow.setLevel(20);
         text.setEffect(glow);
         BattleScene.changeSingleInstance(null);
-        battleScene.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                StageLauncher.decorateScene(StateType.MAIN_MENU);
-            }
-        });
+        battleScene.setOnMouseClicked(event -> StageLauncher.decorateScene(StateType.MAIN_MENU));
     }
 
     public static void win() {
@@ -422,12 +416,7 @@ public class Match {
         glow.setLevel(20);
         text.setEffect(glow);
         BattleScene.changeSingleInstance(null);
-        battleScene.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                StageLauncher.decorateScene(StateType.MAIN_MENU);
-            }
-        });
+        battleScene.setOnMouseClicked(event -> StageLauncher.decorateScene(StateType.MAIN_MENU));
     }
 
     BattleScene getBattleScene() {
