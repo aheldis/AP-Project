@@ -271,7 +271,7 @@ public abstract class Card {
 
     }
 
-    private boolean checkTarget(Square check, String targetType) {
+    public boolean checkTarget(Square check, String targetType) {
         return check != null && target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
                 target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position) &&
                 target.checkDistance(this, check) && (target.checkIsEnemy(player, check) ||

@@ -76,6 +76,13 @@ public abstract class Player {
 
         //spell:
         if (playerCard instanceof Spell) {
+            if (!playerCard.checkTarget(square, playerCard.getChange().getTargetType())) {
+                if (showError) {
+                    ErrorType errorType = ErrorType.INVALID_TARGET;
+                    errorType.printMessage();
+                }
+                return false;
+            }
             playerCard.setTarget(land.passSquareInThisCoordinate(coordinate));
             playerCard.getChange().affect(playerCard.getPlayer(), playerCard.getTarget().getTargets());
             graveYard.addCardToGraveYard(playerCard, land.passSquareInThisCoordinate(coordinate));
