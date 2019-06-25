@@ -54,6 +54,7 @@ public class BattleScene {
     private Glow glow = new Glow();
     private HashMap<Card, ImageView> cardsHashMap = new HashMap<>();
     private boolean heroSpecialPowerClicked = false;
+    private int lastWait;
 
     private BattleScene() {
     }
@@ -218,6 +219,7 @@ public class BattleScene {
         }
         if (beingAttacked) {
             wait = selectedCard.getMillis();
+            lastWait = card.getMillis();
             selectedCard = null;
         }
         int finalWait = wait;
@@ -230,18 +232,22 @@ public class BattleScene {
                 if (lastTime == 0) {
                     lastTime = now;
                 }
-                if (card.getHp() <= 0 && !once && finalWait == 0 &&
-                        now > lastTime + spriteProperties.millis * Math.pow(10, 6)) {
+                if (card.getHp() <= 0 && !once && finalWait == 0 && !beingAttacked &&
+                        now > lastTime + lastWait * Math.pow(10, 6)) {
                     lastTime = now;
-                    removeNodeFromBoard(image);
+                    image.setOpacity(0);
+                    removeCard(card);
+                    selectedCard = null;
+//                    getCell(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate())
                 }
                 if (once && now > lastTime + (spriteProperties.millis + finalWait) * Math.pow(10, 6)) {
                     lastTime = now;
                     board.getChildren().remove(imageView);
-                    if (!(finalWait != 0 && card.getHp() <= 0))
-                        image.setOpacity(1);
-                    else
-                        removeNodeFromBoard(image);
+                    image.setOpacity(1);
+                    if (finalWait != 0 && card.getHp() <= 0) {
+                        image.setOpacity(0);
+                        removeCard(card);
+                    }
                     once = false;
                 } else if (once && now > lastTime + finalWait * Math.pow(10, 6)) {
                     image.setOpacity(0);
