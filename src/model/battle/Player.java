@@ -55,7 +55,7 @@ public abstract class Player {
         }
 
         playerCard.setPosition(getHero().getPosition());
-        if (!playerCard.canInsertToCoordination(this.getHero().getPosition().getCoordinate(), coordinate)) {
+        if (!(playerCard instanceof Spell) && !playerCard.canInsertToCoordination(this.getHero().getPosition().getCoordinate(), coordinate)) {
             if (showError)
                 ErrorType.INVALID_TARGET.printMessage();
             return false;

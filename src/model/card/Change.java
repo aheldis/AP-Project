@@ -34,6 +34,7 @@ public class Change {
                 for (String buffName : buffs.keySet()) {
                     for (int number : buffs.get(buffName)) {
                         square.addBuffToSquare(getBuff(buffName, number));
+                        BattleScene.getSingleInstance().showTarget(square, targetType);
                     }
                 }
             }
@@ -42,16 +43,17 @@ public class Change {
         if (targetType.equals("force")) {
             for (Square square : targets) {
                 makeChangeInTargetCard(player, (Card) square.getObject());
+                BattleScene.getSingleInstance().showTarget(square, targetType);
             }
         }
 
         if (targetType.equals("player")) {
             for (String buffName : buffs.keySet()) {
-                for (int number : buffs.get(buffName))
+                for (int number : buffs.get(buffName)) {
                     player.addBuffToPlayer(getBuff(buffName, number));
+                }
             }
         }
-        BattleScene.getSingleInstance().showTargets(targets);
 
     }
 

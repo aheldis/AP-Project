@@ -83,6 +83,10 @@ public class BattleFooterGraphic {
                 DragAndDrop dragAndDrop = new DragAndDrop();
                 dragAndDrop.dragAndDropForGame(gif, card, player.getHand(), handCardGroup, root,
                         gif.getFitWidth() / 2 - 10, gif.getFitHeight() / 2 + 20, 15, -21);
+            } else {
+                DragAndDrop dragAndDrop = new DragAndDrop();
+                dragAndDrop.dragAndDropForGame(gif, card, player.getHand(), handCardGroup, root,
+                        gif.getFitWidth() / 2 + 20, gif.getFitHeight() / 2 + 20, 45, 40);
             }
             setOnMouseEntered(gif, scene, false);
         }

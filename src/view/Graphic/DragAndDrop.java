@@ -111,7 +111,7 @@ class DragAndDrop {
         });
     }
 
-    void dragAndDropForGame(Node source, Object card, Hand hand, Group sourceRoot, Group sceneRoot,
+    void dragAndDropForGame(Node source, Card card, Hand hand, Group sourceRoot, Group sceneRoot,
                             double dx, double dy, double firstX, double firstY) {
 
         source.setOnMousePressed(event -> {
@@ -129,16 +129,16 @@ class DragAndDrop {
                 this.dy = orgSceneY - this.firstY;
             }
             BattleScene battleScene = BattleScene.getSingleInstance();
-            battleScene.setOnMousePressedPosition((Card) card);
+            battleScene.setOnMousePressedPosition(card);
             if (hand != null && (hand.getGameCards().contains(card)))
-                battleScene.showCanPutInCoordinations((Card) card);
+                battleScene.showCanPutInCoordinations(card);
             else
-                battleScene.showCanMoveToCoordinations((Card) card);
+                battleScene.showCanMoveToCoordinations(card);
             source.relocate(orgSceneX - this.dx, orgSceneY - this.dy);
             sceneRoot.getChildren().add(source);
         });
 
-        setOnMouseDragged(source, hand, (Card) card, true);
+        setOnMouseDragged(source, hand, card, true);
 
 
         source.setOnMouseReleased(event -> {
@@ -146,7 +146,7 @@ class DragAndDrop {
             BattleScene battleScene = BattleScene.getSingleInstance();
             setCursor(battleScene.getBattleScene(), Cursor.AUTO);
             Group group = battleScene.addCardToBoard(event.getSceneX(), event.getSceneY(),
-                    (Card) card, (ImageView) source, hand != null && (hand.getGameCards().contains(card)));
+                    card, (ImageView) source, hand != null && (hand.getGameCards().contains(card)));
             if (group != null) {
                 this.sourceRoot = group;
             } else {

@@ -20,6 +20,7 @@ import model.battle.Game;
 import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
+import model.card.Spell;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -130,6 +131,8 @@ public class BattleScene {
                     if (coloredRectangles.contains(grid)) {
                         removeColorFromRectangles();
                         selectedCard = null;
+                        if (card instanceof Spell)
+                            return board;
                         return addCardToBoard(i, j, card, "normal", imageView, false, false, false);
                     }
                 }
@@ -375,12 +378,16 @@ public class BattleScene {
     }
 
     void showCanPutInCoordinations(Card card) {
-        ArrayList<Square> squares = card.getCanPutInSquares();
-        for (Square square : squares) {
-            Coordinate coordinate = square.getCoordinate();
-            Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
-            grid.setFill(Color.BLUEVIOLET);
-            coloredRectangles.add(grid);
+        if (card instanceof Spell) {
+
+        } else {
+            ArrayList<Square> squares = card.getCanPutInSquares();
+            for (Square square : squares) {
+                Coordinate coordinate = square.getCoordinate();
+                Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
+                grid.setFill(Color.BLUEVIOLET);
+                coloredRectangles.add(grid);
+            }
         }
     }
 
@@ -576,7 +583,7 @@ public class BattleScene {
 
     public void showSpecialPowerUsed(String type) {
         Group group = new Group();
-        addRectangle(group, 0, 0, 420, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
+        addRectangle(group, 0, 0, 435, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
         addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
         root.getChildren().add(group);
         group.relocate(490, 50);
@@ -701,43 +708,43 @@ public class BattleScene {
 
     }
 
-    public void showTargets(ArrayList<Square> targets) {
-        for (Square target : targets) {
-            Rectangle rectangle = getCell(target.getXCoordinate(), target.getYCoordinate());
-            Paint preColor = rectangle.getFill();
+    public void showTarget(Square target, String targetType) {
+        Rectangle rectangle = getCell(target.getXCoordinate(), target.getYCoordinate());
+        Paint preColor = rectangle.getFill();
+        if (targetType.equals("square"))
             rectangle.setFill(Color.GREEN);
-            ImageView imageView = null;
+        ImageView imageView = null;
+        if (targetType.equals("force")) {
             if (target.squareHasHeroAndPassIt() != null) {
                 imageView = cardsHashMap.get(target.squareHasHeroAndPassIt());
                 imageView.setEffect(getLighting(Color.GREEN));
             }
-
             if (target.squareHasMinionAndPassIt() != null) {
                 imageView = cardsHashMap.get(target.squareHasMinionAndPassIt());
                 imageView.setEffect(getLighting(Color.GREEN));
             }
-            ImageView finalImageView = imageView;
-            new AnimationTimer() {
-                double lastTime = 0;
-                double second = Math.pow(10, 9);
+        }
+        ImageView finalImageView = imageView;
+        new AnimationTimer() {
+            double lastTime = 0;
+            double second = Math.pow(10, 9);
 
-                @Override
-                public void handle(long now) {
-                    if (lastTime == 0)
-                        lastTime = now;
-                    if (now > lastTime + second) {
-                        lastTime = now;
-                        if (target.squareHasMinionOrHero())
-                            rectangle.setFill(preColor);
-                        else
-                            rectangle.setFill(Color.BLACK);
-                        if (finalImageView != null) {
-                            finalImageView.setEffect(null);
-                        }
+            @Override
+            public void handle(long now) {
+                if (lastTime == 0)
+                    lastTime = now;
+                if (now > lastTime + second) {
+                    lastTime = now;
+                    if (target.squareHasMinionOrHero())
+                        rectangle.setFill(preColor);
+                    else
+                        rectangle.setFill(Color.BLACK);
+                    if (finalImageView != null) {
+                        finalImageView.setEffect(null);
                     }
                 }
-            }.start();
-        }
+            }
+        }.start();
     }
 
     boolean isHeroSpecialPowerClicked() {

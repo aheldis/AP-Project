@@ -126,11 +126,11 @@ public class ComputerPlayer extends Player {
     public void playTurnForComputer() {
         Random random = new Random();
 //      attack
-        ArrayList<Card> exaustedCards = new ArrayList<>();
+        ArrayList<Card> exhaustedCards = new ArrayList<>();
         for (Card card : getCardsOnLand())
             for (Card opponentCard : getOpponent().getCardsOnLand()) {
                 Square opponentPosition = opponentCard.getPosition();
-                if (!exaustedCards.contains(card) && card.attack(opponentCard, false)) {
+                if (!exhaustedCards.contains(card) && card.attack(opponentCard, false)) {
                     BattleScene battleScene = BattleScene.getSingleInstance();
                     battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
                             card, "ATTACK", battleScene.getCardsHashMap().get(card), false,
@@ -139,7 +139,7 @@ public class ComputerPlayer extends Player {
                             opponentPosition.getYCoordinate(), opponentCard, "ATTACK",
                             battleScene.getCardsHashMap().get(opponentCard),
                             false, false, true);
-                    exaustedCards.add(card);
+                    exhaustedCards.add(card);
                     if (getMainDeck().getItem() != null && getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
                             getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
                         getMainDeck().getItem().setTarget(this);
@@ -154,7 +154,7 @@ public class ComputerPlayer extends Player {
         if (getCardsOnLand().size() >= 1) {
             int cardMoved = random.nextInt(getCardsOnLand().size());
             Card card = getCardsOnLand().get(cardMoved);
-            if (!exaustedCards.contains(card)) {
+            if (!exhaustedCards.contains(card)) {
                 ArrayList<Square> squares = card.getCanMoveToSquares();
                 RANDOM_NUMBER_FOR_MOVE = random.nextInt(squares.size());
                 Coordinate coordinate = squares.get(RANDOM_NUMBER_FOR_MOVE).getCoordinate();
