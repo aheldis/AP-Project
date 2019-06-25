@@ -137,6 +137,8 @@ public class Match {
             setFlagsRandomly(2);
         }
         setCollectiblesRandomly();
+        if (players[0].getMainDeck().getItem() != null)
+            battleScene.showAlert("Usable item: " + players[0].getMainDeck().getItem().getDescription(), null);
     }
 
     public int getNumberOfFlags() {

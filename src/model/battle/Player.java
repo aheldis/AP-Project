@@ -8,6 +8,7 @@ import model.item.Flag;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
+import view.Graphic.BattleScene;
 import view.enums.ErrorType;
 
 import java.util.ArrayList;
@@ -97,6 +98,7 @@ public abstract class Player {
             getHand().addToCollectibleItem((Collectible) square.getObject());
             ((Collectible) square.getObject()).setTheOneWhoCollects(playerCard);
             ((Collectible) square.getObject()).getImageView().setOpacity(0);
+            BattleScene.getSingleInstance().showAlert(((Collectible) square.getObject()).getDescription(), null);
         }
 
         //cellEffect:

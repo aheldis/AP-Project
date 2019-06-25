@@ -181,6 +181,7 @@ public abstract class Card {
             player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
             ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
             ((Collectible) newPosition.getObject()).getImageView().setOpacity(0);
+            BattleScene.getSingleInstance().showAlert(((Collectible) newPosition.getObject()).getDescription(), null);
         }
 
         position.setObject(null);

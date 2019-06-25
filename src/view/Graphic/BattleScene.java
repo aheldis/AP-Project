@@ -367,7 +367,8 @@ public class BattleScene {
                 match.passPlayerWithTurn().getHero().useSpecialPower(card.getPosition());
                 setHeroSpecialPowerClicked(false);
                 backToDefault();
-            }
+            } else
+                showAlert("", card);
             group.setOpacity(0);
         });
     }
@@ -590,7 +591,7 @@ public class BattleScene {
         Group group = new Group();
         addRectangle(group, 0, 0, 435, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
         if (card == null) {
-            if (type.startsWith("Spell"))
+            if (!type.equals("Minion") && !type.equals("Hero"))
                 addTextWithShadow(group, 10, 40, type, "Luminari", 30);
             else
                 addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);

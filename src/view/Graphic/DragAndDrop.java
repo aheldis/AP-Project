@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import model.battle.Deck;
 import model.battle.Hand;
 import model.card.Card;
+import model.card.Spell;
 import model.item.Item;
 import model.item.Usable;
 import view.enums.Cursor;
@@ -141,6 +142,8 @@ public class DragAndDrop {
                 source.relocate(orgSceneX - this.dx, orgSceneY - this.dy);
                 sceneRoot.getChildren().add(source);
                 start = true;
+                if (card instanceof Spell)
+                    battleScene.showAlert("", card);
             }
         });
 
