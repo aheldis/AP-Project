@@ -500,18 +500,19 @@ public abstract class Card {
                 BattleScene.getSingleInstance().showSpecialPowerUsed("Minion");
                 return;
             }
-
         }
 
         if (this instanceof Hero) {
-            if (((Hero) this).getHaveSpecialPower()) {
-                if (((Hero) this).getTurnNotUsedSpecialPower() <= ((Hero) this).getCoolDown()) {
+            if (!this.getDescription().equals("-")) {
+                if (((Hero) this).getTurnNotUsedSpecialPower() >= ((Hero) this).getCoolDown()) {
                     setTarget(cardSquare);
                     change.affect(player, target.getTargets());
                     ((Hero) this).setTurnNotUsedSpecialPower(0);
                     BattleScene.getSingleInstance().showSpecialPowerUsed("Hero");
                     return;
                 }
+                error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;
+                error.printMessage();
                 return;
             }
         }

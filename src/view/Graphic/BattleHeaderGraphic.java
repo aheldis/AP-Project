@@ -160,7 +160,6 @@ public class BattleHeaderGraphic {
             circle.setOnMouseClicked(event -> {
                 if (!battleScene.isHeroSpecialPowerClicked()) {
                     battleScene.setHeroSpecialPowerClicked(true);
-
                     circle.setStrokeWidth(5);
                 } else {
                     battleScene.setHeroSpecialPowerClicked(false);

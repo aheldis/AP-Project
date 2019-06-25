@@ -4,6 +4,7 @@ import model.battle.Player;
 import model.item.Collectible;
 import model.land.LandOfGame;
 import model.land.Square;
+import view.Graphic.BattleScene;
 
 import java.util.ArrayList;
 

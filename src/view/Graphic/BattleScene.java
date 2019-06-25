@@ -11,6 +11,7 @@ import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Pair;
@@ -238,13 +239,14 @@ public class BattleScene {
                     image.setOpacity(0);
                     removeCard(card);
                     selectedCard = null;
-//                    getCell(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate())
+                    getCell(row, column).setFill(Color.BLACK);
                 }
                 if (once && now > lastTime + (spriteProperties.millis + finalWait) * Math.pow(10, 6)) {
                     lastTime = now;
                     board.getChildren().remove(imageView);
                     image.setOpacity(1);
                     if (finalWait != 0 && card.getHp() <= 0) {
+                        getCell(row, column).setFill(Color.BLACK);
                         image.setOpacity(0);
                         removeCard(card);
                     }
@@ -697,6 +699,45 @@ public class BattleScene {
         battleHeader = new BattleHeaderGraphic(this, root);
         battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
 
+    }
+
+    public void showTargets(ArrayList<Square> targets) {
+        for (Square target : targets) {
+            Rectangle rectangle = getCell(target.getXCoordinate(), target.getYCoordinate());
+            Paint preColor = rectangle.getFill();
+            rectangle.setFill(Color.GREEN);
+            ImageView imageView = null;
+            if (target.squareHasHeroAndPassIt() != null) {
+                imageView = cardsHashMap.get(target.squareHasHeroAndPassIt());
+                imageView.setEffect(getLighting(Color.GREEN));
+            }
+
+            if (target.squareHasMinionAndPassIt() != null) {
+                imageView = cardsHashMap.get(target.squareHasMinionAndPassIt());
+                imageView.setEffect(getLighting(Color.GREEN));
+            }
+            ImageView finalImageView = imageView;
+            new AnimationTimer() {
+                double lastTime = 0;
+                double second = Math.pow(10, 9);
+
+                @Override
+                public void handle(long now) {
+                    if (lastTime == 0)
+                        lastTime = now;
+                    if (now > lastTime + second) {
+                        lastTime = now;
+                        if (target.squareHasMinionOrHero())
+                            rectangle.setFill(preColor);
+                        else
+                            rectangle.setFill(Color.BLACK);
+                        if (finalImageView != null) {
+                            finalImageView.setEffect(null);
+                        }
+                    }
+                }
+            }.start();
+        }
     }
 
     boolean isHeroSpecialPowerClicked() {

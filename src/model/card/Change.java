@@ -1,6 +1,5 @@
 package model.card;
 
-import javafx.scene.image.ImageView;
 import model.battle.Player;
 import model.land.Square;
 import view.Graphic.BattleScene;
@@ -52,6 +51,8 @@ public class Change {
                     player.addBuffToPlayer(getBuff(buffName, number));
             }
         }
+        BattleScene.getSingleInstance().showTargets(targets);
+
     }
 
     private Buff getBuff(String buffName, int forHowManyTurn) {
