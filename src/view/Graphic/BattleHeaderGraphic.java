@@ -246,8 +246,8 @@ public class BattleHeaderGraphic {
         String string = numberOfFlag + " / " + totalNumberOfFlag + " flags";
         if (totalNumberOfFlag == 1)
             string = string + " for " + howManyTurn + " turn";
-        Text text = GeneralGraphicMethods.addText(group, x, y + 30, string,
-                Color.rgb(225, 225, 225), 25);
+        Text text = GeneralGraphicMethods.addText(group, x + 30, y + 3, string,
+                Color.rgb(225, 225, 225), 22);
         text.setStroke(Color.rgb(0, 0, 0, 0.5));
         text.setStrokeWidth(1);
     }
