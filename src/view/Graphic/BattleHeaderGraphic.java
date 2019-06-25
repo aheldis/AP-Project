@@ -215,16 +215,19 @@ public class BattleHeaderGraphic {
         addHeroSpecialPower(110, 195, leftHeader, 0, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown(), true);
         addPortraitBorder(120, 25, leftHeader, true, player.getAvatarPath(), true);
         //      addPortraitBorder(1165, 25, rightHeader, false, COMPUTER_PROFILE, false);
+
+        showOwnedFlag(leftHeader, 245, 140, player.getNumberOfFlagsSaved(), player.getMatch().getNumberOfFlags(), player.getTurnForSavingFlag());
     }
 
     private void makeRightHeader(Player player) {
         rightHeader.getChildren().clear();
-        GeneralGraphicMethods.addTextWithShadow(leftHeader, 1010, 78, player.getUserName(), "Arial", 27);
+        GeneralGraphicMethods.addTextWithShadow(rightHeader, 1010, 78, player.getUserName(), "Arial", 27);
         addMana(911, 100, player.getMana(), rightHeader);
         addHeroSpecialPower(1275, 195, rightHeader, 1, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown(), false
         );
         addPortraitBorder(1165, 25, rightHeader, true, player.getAvatarPath(), false);
         //     addPortraitBorder(120, 25, leftHeader, false, COMPUTER_PROFILE, true);
+        showOwnedFlag(rightHeader, 911, 140, player.getNumberOfFlagsSaved(), player.getMatch().getNumberOfFlags(), player.getTurnForSavingFlag());
     }
 
     public void makeHeaderEachTurn(int numberOfPlayer, Player player) {
@@ -233,5 +236,19 @@ public class BattleHeaderGraphic {
         } else {
             makeRightHeader(player);
         }
+    }
+
+    private void showOwnedFlag(Group group, double x, double y, int numberOfFlag, int totalNumberOfFlag, int howManyTurn) {
+        if (totalNumberOfFlag == 0)
+            return;
+
+        GeneralGraphicMethods.addImage(group, "pics/battle_categorized/flag.gif", x, y, 25, 25);
+        String string = numberOfFlag + " / " + totalNumberOfFlag + " flags";
+        if (totalNumberOfFlag == 1)
+            string = string + " for " + howManyTurn + " turn";
+        Text text = GeneralGraphicMethods.addText(group, x, y + 30, string,
+                Color.rgb(225, 225, 225), 25);
+        text.setStroke(Color.rgb(0, 0, 0, 0.5));
+        text.setStrokeWidth(1);
     }
 }

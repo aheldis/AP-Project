@@ -31,7 +31,7 @@ public class Match {
     private Player[] players;
     private String mode;//DeathMode - SaveFlagMode - CollectFlagMode
     private int numberOfFlags;
-    private ArrayList<Flag> flags;
+    private ArrayList<Flag> flags = new ArrayList<>();
     private Player winner;
     private Player loser;
     private int reward;
@@ -137,6 +137,10 @@ public class Match {
             setFlagsRandomly(2);
         }
         setCollectiblesRandomly();
+    }
+
+    public int getNumberOfFlags() {
+        return numberOfFlags;
     }
 
     private void setFlagsRandomly(int mode) {
