@@ -509,6 +509,7 @@ public abstract class Card {
                     change.affect(player, target.getTargets());
                     ((Hero) this).setTurnNotUsedSpecialPower(0);
                     BattleScene.getSingleInstance().showAlert("Hero", null);
+                    BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
                     return;
                 }
                 error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;

@@ -21,6 +21,10 @@ public class BattleHeaderGraphic {
     private Group leftHeader = new Group();
     private BattleScene battleScene;
     private String[] specialPowersPath = new String[2];
+    private Circle circleForSpecialPower = null;
+
+    //TODO Mana ke avas mishe avas kone -> listener
+    //TODO TODO TODO TODO SABAAAAA
 
     BattleHeaderGraphic(BattleScene battleScene, Group root) {
         this.battleScene = battleScene;
@@ -30,9 +34,6 @@ public class BattleHeaderGraphic {
         initHeader();
 
     }
-
-    //TODO Mana ke avas mishe avas kone -> listener
-    //TODO TODO TODO TODO SABAAAAA
 
     private void addPortraitBorder(double x, double y, Group group, boolean turnOfThisPlayer, String avatarPath, boolean leftSide) {
         ImageView imageView = GeneralGraphicMethods.addImage(group, avatarPath, x - 10, y - 10, 130, 130);
@@ -129,7 +130,6 @@ public class BattleHeaderGraphic {
         coolDownGroup.relocate(x, y);
     }
 
-
     private void chooseHeroSpecialPowerPath(int ind) {
         File file = new File("pics/battle_categorized/heroSpecialPower/type1");
         Random random = new Random();
@@ -147,30 +147,40 @@ public class BattleHeaderGraphic {
         imageView.setFitWidth(35);
         imageView.setFitHeight(35);
 
-        Circle circle = new Circle(x + imageView.getFitWidth() / 2,
-                y + imageView.getFitHeight() / 2, imageView.getFitWidth() + 5);
-        circle.setStroke(Color.rgb(0, 204, 255));
-        circle.setStrokeWidth(0);
-        circle.setFill(Color.gray(1, 0.01));
-        group.getChildren().add(circle);
-
-        GeneralGraphicMethods.setOnMouseEntered(circle, StageLauncher.getScene(StateType.BATTLE), true);
-        GeneralGraphicMethods.setOnMouseEntered(imageView, StageLauncher.getScene(StateType.BATTLE), true);
         if (itsTurn) {
-            circle.setOnMouseClicked(event -> {
+            if (circleForSpecialPower == null)
+                circleForSpecialPower = new Circle(x + imageView.getFitWidth() / 2,
+                        y + imageView.getFitHeight() / 2, imageView.getFitWidth() + 5);
+            circleForSpecialPower.setStroke(Color.rgb(0, 204, 255));
+            circleForSpecialPower.setStrokeWidth(0);
+            circleForSpecialPower.setFill(Color.gray(1, 0.01));
+            group.getChildren().add(circleForSpecialPower);
+
+            GeneralGraphicMethods.setOnMouseEntered(circleForSpecialPower, StageLauncher.getScene(StateType.BATTLE), true);
+            GeneralGraphicMethods.setOnMouseEntered(imageView, StageLauncher.getScene(StateType.BATTLE), true);
+
+            circleForSpecialPower.setOnMouseClicked(event -> {
                 if (!DragAndDrop.getWait()) {
                     if (!battleScene.isHeroSpecialPowerClicked()) {
-                        battleScene.setHeroSpecialPowerClicked(true);
-                        circle.setStrokeWidth(5);
+                        activeSpecialPower();
                     } else {
-                        battleScene.setHeroSpecialPowerClicked(false);
-                        circle.setStrokeWidth(0);
+                        deactiveSpecialPower();
                     }
                 }
             });
         }
 
         addCoolDown(x, y + 50, group, turnNotUsedSpecialPower, coolDown);
+    }
+
+    public void activeSpecialPower() {
+        battleScene.setHeroSpecialPowerClicked(true);
+        circleForSpecialPower.setStrokeWidth(5);
+    }
+
+    public void deactiveSpecialPower() {
+        battleScene.setHeroSpecialPowerClicked(false);
+        circleForSpecialPower.setStrokeWidth(0);
     }
 
     private void initHeader() {

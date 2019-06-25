@@ -232,6 +232,7 @@ public class Match {
             players[passComputerPlayer()].playTurnForComputer();
 
             DragAndDrop.setWait(true);
+            BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
             //your turn notification
             Platform.runLater(() -> {
                 Group root = (Group) Objects.requireNonNull(StageLauncher.getScene(StateType.BATTLE)).getRoot();
