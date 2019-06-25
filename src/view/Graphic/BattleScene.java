@@ -367,7 +367,8 @@ public class BattleScene {
                 match.passPlayerWithTurn().getHero().useSpecialPower(card.getPosition());
                 setHeroSpecialPowerClicked(false);
                 backToDefault();
-            }
+            } else
+                showAlert("", card);
             group.setOpacity(0);
         });
     }
