@@ -28,7 +28,7 @@ public class Match {
     private Player[] players;
     private String mode;//DeathMode - SaveFlagMode - CollectFlagMode
     private int numberOfFlags;
-    private ArrayList<Flag> flags;
+    private ArrayList<Flag> flags = new ArrayList<>();
     private Player winner;
     private Player loser;
     private int reward;
@@ -138,6 +138,10 @@ public class Match {
             Usable item = players[0].getMainDeck().getItem();
             battleScene.showAlert(item.getName() + ": " + item.getDescription());
         }
+    }
+
+    public int getNumberOfFlags() {
+        return numberOfFlags;
     }
 
     private void setFlagsRandomly(int mode) {
