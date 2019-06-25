@@ -1,7 +1,10 @@
 package model.battle;
 
+import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -15,9 +18,7 @@ import model.item.Flag;
 import model.item.Item;
 import model.land.LandOfGame;
 import model.land.Square;
-import view.Graphic.BattleScene;
-import view.Graphic.GeneralGraphicMethods;
-import view.Graphic.StageLauncher;
+import view.Graphic.*;
 import view.enums.StateType;
 
 import java.io.File;
@@ -229,33 +230,43 @@ public class Match {
         } else {
             players[whichPlayer].initPerTurn(whichPlayer);
             players[passComputerPlayer()].playTurnForComputer();
-/*
 
+            DragAndDrop.setWait(true);
             //your turn notification
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    Group root = (Group) StageLauncher.getScene(StateType.BATTLE).getRoot();
-                    ImageView image = GeneralGraphicMethods.addImage(root,
-                            "pics/battle/notification_go@2x.png", 300, 400 - 50, 800, 200);
-                    Text text = GeneralGraphicMethods.addText(root, "YOUR TURN", 550, 460
-                            , Color.rgb(225, 225, 225, 0.7), 60);
-                    long currentTime = System.currentTimeMillis();
+            Platform.runLater(() -> {
+                Group root = (Group) Objects.requireNonNull(StageLauncher.getScene(StateType.BATTLE)).getRoot();
+                ImageView image = GeneralGraphicMethods.addImage(root,
+                        "pics/battle/notification_go@2x.png", 300, 400 - 50, 800, 200);
+                Text text = GeneralGraphicMethods.addText(root, 550, 460, "YOUR TURN",
+                        Color.rgb(225, 225, 225, 0.7), 60);
+                root.getChildren().remove(image);
+                root.getChildren().remove(text);
+                BattleFooterGraphic battleFooterGraphic = battleScene.getBattleFooter();
+                battleFooterGraphic.getEndTurnButton().setOpacity(0);
+                Button endTurn = imageButton(battleFooterGraphic.getScene(), battleFooterGraphic.getCirclesGroup(),
+                        "pics/battle/end_turn.png", "END TURN", 1000, 0, 200, 80);
+                long currentTime = System.currentTimeMillis();
 
-                    AnimationTimer animationTimer = new AnimationTimer() {
-                        @Override
-                        public void handle(long now) {
-                            if (System.currentTimeMillis() - currentTime >= 1000) {
-                                root.getChildren().removeAll(text, image);
-                                this.stop();
-                            }
+                AnimationTimer animationTimer = new AnimationTimer() {
+                    @Override
+                    public void handle(long now) {
+                        if (System.currentTimeMillis() - currentTime >= 4000 &&
+                                !root.getChildren().contains(image)) {
+                            root.getChildren().addAll(image, text);
                         }
-                    };
-                    animationTimer.start();
+                        if (System.currentTimeMillis() - currentTime >= 5000) {
+                            root.getChildren().removeAll(image, text);
+                            battleFooterGraphic.getCirclesGroup().getChildren().remove(endTurn);
+                            battleFooterGraphic.getEndTurnButton().setOpacity(1);
+                            DragAndDrop.setWait(false);
+                            this.stop();
+                        }
+                    }
+                };
+                animationTimer.start();
 
-                }
             });
-*/
+
         }
 
         players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer

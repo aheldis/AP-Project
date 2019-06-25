@@ -131,10 +131,10 @@ public class BattleScene {
                     if (coloredRectangles.contains(grid)) {
                         removeColorFromRectangles();
                         selectedCard = null;
-                        if (card instanceof Spell)
-                            return board;
                         return addCardToBoard(i, j, card, "normal", imageView, false, false, false);
                     }
+                    if (card instanceof Spell)
+                        return board;
                 }
             }
         return null;
@@ -156,7 +156,9 @@ public class BattleScene {
         coloredRectangles.add(grid);
         glow = new Glow(1);
         gifOfCard.setEffect(glow);
+        showAlert("", card);
     }
+
 
     public Group addCardToBoard(int row, int column, Card card, String mode,
                                 ImageView image, boolean drag, boolean flip, boolean beingAttacked) {
@@ -241,7 +243,6 @@ public class BattleScene {
                         now > lastTime + lastWait * Math.pow(10, 6)) {
                     lastTime = now;
                     board.getChildren().remove(image);
-//                    removeCard(card);
                     selectedCard = null;
                     getCell(row, column).setFill(Color.BLACK);
                     twice = false;
@@ -262,7 +263,7 @@ public class BattleScene {
 
             }
         }.start();
-        return imageView;
+        return image;
     }
 
     public Rectangle getCell(int row, int column) {
@@ -582,10 +583,13 @@ public class BattleScene {
 */
     }
 
-    public void showSpecialPowerUsed(String type) {
+    public void showAlert(String type, Card card) {
         Group group = new Group();
         addRectangle(group, 0, 0, 435, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
-        addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
+        if (card == null)
+            addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
+        else
+            addTextWithShadow(group, 10, 40, card.getDescription(), "Luminari", 30);
         root.getChildren().add(group);
         group.relocate(490, 50);
         GeneralGraphicMethods.setOnMouseEntered(group, battleScene, true);

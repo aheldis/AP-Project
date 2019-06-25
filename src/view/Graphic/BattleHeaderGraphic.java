@@ -158,14 +158,15 @@ public class BattleHeaderGraphic {
         GeneralGraphicMethods.setOnMouseEntered(imageView, StageLauncher.getScene(StateType.BATTLE), true);
         if (itsTurn) {
             circle.setOnMouseClicked(event -> {
-                if (!battleScene.isHeroSpecialPowerClicked()) {
-                    battleScene.setHeroSpecialPowerClicked(true);
-                    circle.setStrokeWidth(5);
-                } else {
-                    battleScene.setHeroSpecialPowerClicked(false);
-                    circle.setStrokeWidth(0);
+                if (!DragAndDrop.getWait()) {
+                    if (!battleScene.isHeroSpecialPowerClicked()) {
+                        battleScene.setHeroSpecialPowerClicked(true);
+                        circle.setStrokeWidth(5);
+                    } else {
+                        battleScene.setHeroSpecialPowerClicked(false);
+                        circle.setStrokeWidth(0);
+                    }
                 }
-
             });
         }
 

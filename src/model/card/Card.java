@@ -497,7 +497,7 @@ public abstract class Card {
             if (((Minion) this).getHaveSpecialPower()) {
                 setTarget(cardSquare);
                 change.affect(player, target.getTargets());
-                BattleScene.getSingleInstance().showSpecialPowerUsed("Minion");
+                BattleScene.getSingleInstance().showAlert("Minion", null);
                 return;
             }
         }
@@ -508,7 +508,7 @@ public abstract class Card {
                     setTarget(cardSquare);
                     change.affect(player, target.getTargets());
                     ((Hero) this).setTurnNotUsedSpecialPower(0);
-                    BattleScene.getSingleInstance().showSpecialPowerUsed("Hero");
+                    BattleScene.getSingleInstance().showAlert("Hero", null);
                     return;
                 }
                 error = ErrorType.CAN_NOT_USE_SPECIAL_POWER;
