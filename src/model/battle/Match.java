@@ -12,10 +12,7 @@ import javafx.scene.text.Text;
 import model.account.Shop;
 import model.card.Card;
 import model.card.Hero;
-import model.item.Collectible;
-import model.item.CollectibleId;
-import model.item.Flag;
-import model.item.Item;
+import model.item.*;
 import model.land.LandOfGame;
 import model.land.Square;
 import view.Graphic.*;
@@ -137,8 +134,10 @@ public class Match {
             setFlagsRandomly(2);
         }
         setCollectiblesRandomly();
-        if (players[0].getMainDeck().getItem() != null)
-            battleScene.showAlert("Usable item: " + players[0].getMainDeck().getItem().getDescription(), null);
+        if (players[0].getMainDeck().getItem() != null) {
+            Usable item = players[0].getMainDeck().getItem();
+            battleScene.showAlert(item.getName() + ": " + item.getDescription());
+        }
     }
 
     private void setFlagsRandomly(int mode) {

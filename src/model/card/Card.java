@@ -178,10 +178,11 @@ public abstract class Card {
 
         if (newPosition.getObject() instanceof Collectible &&
                 ((Collectible) newPosition.getObject()).getTarget().checkTheOneWhoCollects(this)) {
-            player.getHand().addToCollectibleItem((Collectible) newPosition.getObject());
-            ((Collectible) newPosition.getObject()).setTheOneWhoCollects(this);
-            ((Collectible) newPosition.getObject()).getImageView().setOpacity(0);
-            BattleScene.getSingleInstance().showAlert(((Collectible) newPosition.getObject()).getDescription(), null);
+            Collectible collectible = (Collectible) newPosition.getObject();
+            player.getHand().addToCollectibleItem(collectible);
+            collectible.setTheOneWhoCollects(this);
+            collectible.getImageView().setOpacity(0);
+            BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
         }
 
         position.setObject(null);
@@ -272,8 +273,15 @@ public abstract class Card {
 
     }
 
-    public boolean checkTarget(Square check, String targetType) {
-        return check != null && target.checkIfAttackedCardIsValid(check.getObject(), targetType) &&
+    public boolean checkTarget(Square check) {
+//        if (check == null) return false;
+//        System.out.println(target.checkIfAttackedCardIsValid(check.getObject()));
+//        System.out.println(target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position));
+//        System.out.println(target.checkDistance(this, check) );
+//        System.out.println(target.checkIsEnemy(player, check) );
+//        System.out.println(target.checkIsAlly(player, check));
+//        System.out.println(target.checkTheOneWhoDoesTheThing(check.getObject()));
+        return check != null && target.checkIfAttackedCardIsValid(check.getObject()) &&
                 target.checkNotItSelf(check.getYCoordinate(), check.getXCoordinate(), position) &&
                 target.checkDistance(this, check) && (target.checkIsEnemy(player, check) ||
                 target.checkIsAlly(player, check)) && target.checkTheOneWhoDoesTheThing(check.getObject());
@@ -404,11 +412,11 @@ public abstract class Card {
             if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt() == null) {
                 if (landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasMinionAndPassIt() == null)
                     continue;
-                if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]], change.getTargetType()))
+                if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]]))
                     continue;
                 return landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasMinionAndPassIt();
             }
-            if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]], change.getTargetType()))
+            if (!target.checkIfAttackedCardIsValid(landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]]))
                 continue;
             return landOfGame.getSquares()[x + dx[randomNumber]][y + dy[randomNumber]].squareHasHeroAndPassIt();
         }
@@ -498,7 +506,7 @@ public abstract class Card {
             if (((Minion) this).getHaveSpecialPower()) {
                 setTarget(cardSquare);
                 change.affect(player, target.getTargets());
-                BattleScene.getSingleInstance().showAlert("Minion", null);
+                BattleScene.getSingleInstance().showAlert("Minion");
                 return;
             }
         }
@@ -509,7 +517,7 @@ public abstract class Card {
                     setTarget(cardSquare);
                     change.affect(player, target.getTargets());
                     ((Hero) this).setTurnNotUsedSpecialPower(0);
-                    BattleScene.getSingleInstance().showAlert("Hero", null);
+                    BattleScene.getSingleInstance().showAlert("Hero");
                     BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
                     return;
                 }
@@ -765,13 +773,13 @@ public abstract class Card {
             targets.add(cardSquare);
 
         else if (isCard) {
-            if (target.isOne() && checkTarget(cardSquare, change.getTargetType())) {
+            if (target.isOne() && checkTarget(cardSquare)) {
                 targets.add(cardSquare);
             } else if (target.isAll()) {
                 for (int i = 0; i < LandOfGame.getNumberOfRows(); i++)
                     for (int j = 0; j < LandOfGame.getNumberOfColumns(); j++) {
                         Square check = landOfGame.getSquares()[i][j];
-                        if (checkTarget(check, change.getTargetType()))
+                        if (checkTarget(check))
                             targets.add(check);
                     }
 
@@ -779,7 +787,7 @@ public abstract class Card {
 
                 for (int j = 0; j < LandOfGame.getNumberOfColumns(); j++) {
                     Square check = landOfGame.getSquares()[cardSquare.getXCoordinate()][j];
-                    if (checkTarget(check, change.getTargetType()))
+                    if (checkTarget(check))
                         targets.add(check);
                 }
 
@@ -787,7 +795,7 @@ public abstract class Card {
 
                 for (int i = 0; i < LandOfGame.getNumberOfRows(); i++) {
                     Square check = landOfGame.getSquares()[i][cardSquare.getYCoordinate()];
-                    if (checkTarget(check, change.getTargetType()))
+                    if (checkTarget(check))
                         targets.add(check);
                 }
 
@@ -805,13 +813,13 @@ public abstract class Card {
                     if (j == LandOfGame.getNumberOfColumns()) j -= 2;
                     check = landOfGame.getSquares()[i][j];
                 } else {
-                    while (!checkTarget(check, change.getTargetType())) {
+                    while (!checkTarget(check)) {
                         i = position.getXCoordinate() + random.nextInt(LandOfGame.getNumberOfRows());
                         j = position.getYCoordinate() + random.nextInt(LandOfGame.getNumberOfColumns());
                         check = landOfGame.getSquares()[i][j];
                     }
                 }
-                if (checkTarget(check, change.getTargetType()))
+                if (checkTarget(check))
                     targets.add(check);
 
             } else {
@@ -826,7 +834,7 @@ public abstract class Card {
                                         cardSquare.getXCoordinate() + j < 0)
                                     continue;
                                 Square check = landOfGame.getSquares()[cardSquare.getXCoordinate() + i][cardSquare.getYCoordinate() + j];
-                                if (checkTarget(check, change.getTargetType()))
+                                if (checkTarget(check))
                                     targets.add(check);
                             }
                         }

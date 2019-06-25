@@ -89,13 +89,13 @@ public abstract class Item {
 
                     if (target.isAlly()) {
                         randomNumber = random.nextInt(player.getCardsOnLand().size());
-                        if (target.checkIfAttackedCardIsValid(player.getCardsOnLand().get(randomNumber), change.getTargetType()))
+                        if (target.checkIfAttackedCardIsValid(player.getCardsOnLand().get(randomNumber)))
                             targets.add(player.getCardsOnLand().get(randomNumber).getPosition());
                     }
 
                     if (target.isEnemy()) {
                         randomNumber = random.nextInt(player.getOpponent().getCardsOnLand().size());
-                        if (target.checkIfAttackedCardIsValid(player.getOpponent().getCardsOnLand().get(randomNumber), change.getTargetType()))
+                        if (target.checkIfAttackedCardIsValid(player.getOpponent().getCardsOnLand().get(randomNumber)))
                             targets.add(player.getOpponent().getCardsOnLand().get(randomNumber).getPosition());
                     }
                 }
@@ -107,7 +107,7 @@ public abstract class Item {
 
             if (target.isAll() && target.isAlly())
                 for (Card card : player.getCardsOnLand())
-                    if (target.checkIfAttackedCardIsValid(card, change.getTargetType()))
+                    if (target.checkIfAttackedCardIsValid(card))
                         targets.add(card.getPosition());
 
         }

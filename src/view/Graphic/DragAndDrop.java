@@ -135,15 +135,16 @@ public class DragAndDrop {
                 }
                 BattleScene battleScene = BattleScene.getSingleInstance();
                 battleScene.setOnMousePressedPosition(card);
-                if (hand != null && (hand.getGameCards().contains(card)))
-                    battleScene.showCanPutInCoordinations(card);
-                else
+                if (hand != null && (hand.getGameCards().contains(card))) {
+                    if (!(card instanceof Spell))
+                        battleScene.showCanPutInCoordinations(card);
+                } else
                     battleScene.showCanMoveToCoordinations(card);
                 source.relocate(orgSceneX - this.dx, orgSceneY - this.dy);
                 sceneRoot.getChildren().add(source);
                 start = true;
                 if (card instanceof Spell)
-                    battleScene.showAlert("", card);
+                    battleScene.showAlert(card.getName() + ": " + card.getDescription());
             }
         });
 

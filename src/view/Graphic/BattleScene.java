@@ -134,7 +134,7 @@ public class BattleScene {
                         return addCardToBoard(i, j, card, "normal", imageView, false, false, false);
                     }
                     if (card instanceof Spell) {
-                        showAlert("Spell activated", null);
+                        showAlert("Spell activated");
                         return board;
                     }
                 }
@@ -158,7 +158,7 @@ public class BattleScene {
         coloredRectangles.add(grid);
         glow = new Glow(1);
         gifOfCard.setEffect(glow);
-        showAlert("", card);
+        showAlert(card.getName() + ": " + card.getDescription());
     }
 
 
@@ -368,7 +368,7 @@ public class BattleScene {
                 setHeroSpecialPowerClicked(false);
                 backToDefault();
             } else
-                showAlert("", card);
+                showAlert(card.getName() + ": " + card.getDescription());
             group.setOpacity(0);
         });
     }
@@ -587,16 +587,13 @@ public class BattleScene {
 */
     }
 
-    public void showAlert(String type, Card card) {
+    public void showAlert(String type) {
         Group group = new Group();
         addRectangle(group, 0, 0, 435, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
-        if (card == null) {
-            if (!type.equals("Minion") && !type.equals("Hero"))
-                addTextWithShadow(group, 10, 40, type, "Luminari", 30);
-            else
-                addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
-        } else
-            addTextWithShadow(group, 10, 40, card.getDescription(), "Luminari", 30);
+        if (!type.equals("Minion") && !type.equals("Hero"))
+            addTextWithShadow(group, 10, 40, type, "Luminari", 30);
+        else
+            addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
         root.getChildren().add(group);
         group.relocate(490, 50);
         GeneralGraphicMethods.setOnMouseEntered(group, battleScene, true);

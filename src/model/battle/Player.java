@@ -69,6 +69,15 @@ public abstract class Player {
             return false;
         }
 
+        if (playerCard instanceof Spell && !(playerCard.checkTarget(square) ||
+                playerCard.getChange().getTargetType().equals("square"))) {
+            if (showError) {
+                ErrorType errorType = ErrorType.INVALID_TARGET;
+                errorType.printMessage();
+            }
+            return false;
+        }
+
 
         //true:
         mana -= playerCard.getMp();
@@ -77,13 +86,6 @@ public abstract class Player {
 
         //spell:
         if (playerCard instanceof Spell) {
-            if (!playerCard.checkTarget(square, playerCard.getChange().getTargetType())) {
-                if (showError) {
-                    ErrorType errorType = ErrorType.INVALID_TARGET;
-                    errorType.printMessage();
-                }
-                return false;
-            }
             playerCard.setTarget(land.passSquareInThisCoordinate(coordinate));
             playerCard.getChange().affect(playerCard.getPlayer(), playerCard.getTarget().getTargets());
             graveYard.addCardToGraveYard(playerCard, land.passSquareInThisCoordinate(coordinate));
@@ -95,10 +97,11 @@ public abstract class Player {
         //if square has Collectible item:
         if (square.getObject() instanceof Collectible &&
                 ((Collectible) square.getObject()).getTarget().checkTheOneWhoCollects(playerCard)) {
-            getHand().addToCollectibleItem((Collectible) square.getObject());
-            ((Collectible) square.getObject()).setTheOneWhoCollects(playerCard);
-            ((Collectible) square.getObject()).getImageView().setOpacity(0);
-            BattleScene.getSingleInstance().showAlert(((Collectible) square.getObject()).getDescription(), null);
+            Collectible collectible = (Collectible) square.getObject();
+            getHand().addToCollectibleItem(collectible);
+            collectible.setTheOneWhoCollects(playerCard);
+            collectible.getImageView().setOpacity(0);
+            BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
         }
 
         //cellEffect:
