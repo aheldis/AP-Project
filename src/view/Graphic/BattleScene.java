@@ -133,8 +133,10 @@ public class BattleScene {
                         selectedCard = null;
                         return addCardToBoard(i, j, card, "normal", imageView, false, false, false);
                     }
-                    if (card instanceof Spell)
+                    if (card instanceof Spell) {
+                        showAlert("Spell activated", null);
                         return board;
+                    }
                 }
             }
         return null;
@@ -196,7 +198,8 @@ public class BattleScene {
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
         workWithMouse(imageView, card, flip);
-        cardsHashMap.put(card, imageView);
+        if (!mode.equals("ATTACK"))
+            cardsHashMap.put(card, imageView);
 
         if (drag) {
             DragAndDrop dragAndDrop = new DragAndDrop();
@@ -263,7 +266,7 @@ public class BattleScene {
 
             }
         }.start();
-        return image;
+        return imageView;
     }
 
     public Rectangle getCell(int row, int column) {
@@ -586,9 +589,12 @@ public class BattleScene {
     public void showAlert(String type, Card card) {
         Group group = new Group();
         addRectangle(group, 0, 0, 435, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
-        if (card == null)
-            addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
-        else
+        if (card == null) {
+            if (type.startsWith("Spell"))
+                addTextWithShadow(group, 10, 40, type, "Luminari", 30);
+            else
+                addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
+        } else
             addTextWithShadow(group, 10, 40, card.getDescription(), "Luminari", 30);
         root.getChildren().add(group);
         group.relocate(490, 50);
