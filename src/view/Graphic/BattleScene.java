@@ -25,7 +25,6 @@ import model.requirment.Coordinate;
 import view.enums.Cursor;
 import view.enums.StateType;
 
-import javax.xml.catalog.Catalog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -184,7 +183,6 @@ public class BattleScene {
                 imageView.setScaleY(1.8);
                 board.getChildren().add(image);
             }
-            //root.getChildren().add(imageView);
         }
 
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
@@ -232,10 +230,18 @@ public class BattleScene {
                 if (lastTime == 0) {
                     lastTime = now;
                 }
+                if (card.getHp() <= 0 && !once && finalWait == 0 &&
+                        now > lastTime + spriteProperties.millis * Math.pow(10, 6)) {
+                    lastTime = now;
+                    removeNodeFromBoard(image);
+                }
                 if (once && now > lastTime + (spriteProperties.millis + finalWait) * Math.pow(10, 6)) {
                     lastTime = now;
                     board.getChildren().remove(imageView);
-                    image.setOpacity(1);
+                    if (!(finalWait != 0 && card.getHp() <= 0))
+                        image.setOpacity(1);
+                    else
+                        removeNodeFromBoard(image);
                     once = false;
                 } else if (once && now > lastTime + finalWait * Math.pow(10, 6)) {
                     image.setOpacity(0);
@@ -645,7 +651,7 @@ public class BattleScene {
         return cardsHashMap;
     }
 
-    public void removeCard(Card card){
+    public void removeCard(Card card) {
         ImageView imageView = cardsHashMap.get(card);
         removeNodeFromBoard(imageView);
     }

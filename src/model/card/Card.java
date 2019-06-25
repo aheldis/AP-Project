@@ -315,8 +315,8 @@ public abstract class Card {
             }
         }
 
-        attackedCard.changeHp(-ap + hpChangeAfterAttack);
         attackedCard.counterAttack(this);
+        attackedCard.changeHp(-ap + hpChangeAfterAttack);
         setCanAttack(false, 0);
 
         if (player.getMainDeck().getItem() != null &&
@@ -337,8 +337,6 @@ public abstract class Card {
         hp += number;
         if (hp <= 0) {
             player.getGraveYard().addCardToGraveYard(this, position);
-            BattleScene.getSingleInstance().removeCard(this);
-            //BattleScene.getSingleInstance().removeNodeFromBoard(groupInBattle);
             position = null;
         }
     }

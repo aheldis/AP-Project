@@ -37,7 +37,7 @@ public class MenuController  {
         Request request = new Request(state);// mige signUp ya logIn hast
         request.getNewCommand();
         Card selectedCard = null;
-        Item selectedItem = null;
+        Collectible selectedItem = null;
         while (state != StateType.END_PROGRAM) {
 
 
@@ -625,7 +625,7 @@ public class MenuController  {
 
             } else if (state == StateType.SELECT_ITEM) {
                 Player player = match.passPlayerWithTurn();
-                id = ((Collectible) selectedItem).getCollectibleId().getCollectibleIdAsString();
+                id = selectedItem.getCollectibleId().getCollectibleIdAsString();
                 switch (request.getRequestType()) {
                     case GAME_ITEM_SHOW_INFO:
                         menuView.showItemInfo(player.getHand(), id);
