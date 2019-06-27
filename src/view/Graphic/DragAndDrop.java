@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import model.battle.Deck;
 import model.battle.Hand;
 import model.card.Card;
+import model.card.Spell;
 import model.item.Item;
 import model.item.Usable;
 import view.enums.Cursor;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 import static view.Graphic.GeneralGraphicMethods.setCursor;
 
-class DragAndDrop {
+public class DragAndDrop {
     private double orgSceneX, orgSceneY;
     private double firstX, firstY;
     private double dx, dy;
@@ -24,6 +25,8 @@ class DragAndDrop {
     private Parent target;
     private Node source = null;
     private final int NUMBER_OF_ROWS = 5;
+    private static boolean wait = false;
+    private boolean start = false;
 
     void dragAndDropForCollection(Node source, Parent target, Deck deck, Object card, VBox sourceRoot, Group sceneRoot,
                                   double dx, double dy, ArrayList<VBox> vBoxes) {
@@ -41,6 +44,7 @@ class DragAndDrop {
             sourceRoot.getChildren().remove(source);
             source.relocate(orgSceneX - dx, orgSceneY - dy);
             sceneRoot.getChildren().add(source);
+            start = true;
         });
 
         setOnMouseDragged(source, null, null, false);
@@ -108,68 +112,87 @@ class DragAndDrop {
                     }
                 }
             }
+            start = false;
         });
     }
 
-    void dragAndDropForGame(Node source, Object card, Hand hand, Group sourceRoot, Group sceneRoot,
+    void dragAndDropForGame(Node source, Card card, Hand hand, Group sourceRoot, Group sceneRoot,
                             double dx, double dy, double firstX, double firstY) {
-
         source.setOnMousePressed(event -> {
-            orgSceneX = event.getSceneX();
-            orgSceneY = event.getSceneY();
-            this.dx = dx;
-            this.dy = dy;
-            if (this.sourceRoot == null)
-                this.sourceRoot = sourceRoot;
-            sourceRoot.getChildren().remove(source);
-            this.firstX = source.getLayoutX();
-            this.firstY = source.getLayoutY();
-            if (this.firstX != firstX && this.firstY != firstY) {
-                this.dx = orgSceneX - this.firstX;
-                this.dy = orgSceneY - this.firstY;
+            if (!wait) {
+                orgSceneX = event.getSceneX();
+                orgSceneY = event.getSceneY();
+                this.dx = dx;
+                this.dy = dy;
+                if (this.sourceRoot == null)
+                    this.sourceRoot = sourceRoot;
+                sourceRoot.getChildren().remove(source);
+                this.firstX = source.getLayoutX();
+                this.firstY = source.getLayoutY();
+                if (this.firstX != firstX && this.firstY != firstY) {
+                    this.dx = orgSceneX - this.firstX;
+                    this.dy = orgSceneY - this.firstY;
+                }
+                BattleScene battleScene = BattleScene.getSingleInstance();
+                battleScene.setOnMousePressedPosition(card);
+                if (hand != null && (hand.getGameCards().contains(card))) {
+                    if (!(card instanceof Spell))
+                        battleScene.showCanPutInCoordinations(card);
+                } else
+                    battleScene.showCanMoveToCoordinations(card);
+                source.relocate(orgSceneX - this.dx, orgSceneY - this.dy);
+                sceneRoot.getChildren().add(source);
+                start = true;
+                if (card instanceof Spell)
+                    battleScene.showAlert(card.getName() + ": " + card.getDescription());
             }
-            BattleScene battleScene = BattleScene.getSingleInstance();
-            battleScene.setOnMousePressedPosition((Card) card);
-            if (hand != null && (hand.getGameCards().contains(card)))
-                battleScene.showCanPutInCoordinations((Card) card);
-            else
-                battleScene.showCanMoveToCoordinations((Card) card);
-            source.relocate(orgSceneX - this.dx, orgSceneY - this.dy);
-            sceneRoot.getChildren().add(source);
         });
 
-        setOnMouseDragged(source, hand, (Card) card, true);
+        setOnMouseDragged(source, hand, card, true);
 
 
         source.setOnMouseReleased(event -> {
-            sceneRoot.getChildren().remove(source);
-            BattleScene battleScene = BattleScene.getSingleInstance();
-            setCursor(battleScene.getBattleScene(), Cursor.AUTO);
-            Group group = battleScene.addCardToBoard(event.getSceneX(), event.getSceneY(),
-                    (Card) card, (ImageView) source, hand != null && (hand.getGameCards().contains(card)));
-            if (group != null) {
-                this.sourceRoot = group;
-            } else {
-                source.relocate(this.firstX, this.firstY);
-                ((Group) this.sourceRoot).getChildren().add(source);
+            if (!wait && start) {
+                sceneRoot.getChildren().remove(source);
+                BattleScene battleScene = BattleScene.getSingleInstance();
+                setCursor(battleScene.getBattleScene(), Cursor.AUTO);
+                Group group = battleScene.addCardToBoard(event.getSceneX(), event.getSceneY(),
+                        card, (ImageView) source, hand != null && (hand.getGameCards().contains(card)));
+                if (group != null) {
+                    this.sourceRoot = group;
+                } else {
+                    source.relocate(this.firstX, this.firstY);
+                    ((Group) this.sourceRoot).getChildren().add(source);
+                }
+                start = false;
             }
         });
     }
 
     private void setOnMouseDragged(Node source, Hand hand, Card card, boolean moveCursor) {
         source.setOnMouseDragged(event -> {
-            double offsetX = event.getSceneX() - orgSceneX;
-            double offsetY = event.getSceneY() - orgSceneY;
-            source.relocate(source.getLayoutX() + offsetX, source.getLayoutY() + offsetY);
-            orgSceneX = event.getSceneX();
-            orgSceneY = event.getSceneY();
-            if (moveCursor) {
-                BattleScene battleScene = BattleScene.getSingleInstance();
-                if (hand != null && (hand.getGameCards().contains(card)))
-                    setCursor(battleScene.getBattleScene(), Cursor.CARD);
-                else
-                    setCursor(battleScene.getBattleScene(), Cursor.MOVE);
+            if (start) {
+                double offsetX = event.getSceneX() - orgSceneX;
+                double offsetY = event.getSceneY() - orgSceneY;
+                source.relocate(source.getLayoutX() + offsetX, source.getLayoutY() + offsetY);
+                orgSceneX = event.getSceneX();
+                orgSceneY = event.getSceneY();
+                if (moveCursor) {
+                    BattleScene battleScene = BattleScene.getSingleInstance();
+                    if (hand != null && (hand.getGameCards().contains(card)))
+                        setCursor(battleScene.getBattleScene(), Cursor.CARD);
+                    else
+                        setCursor(battleScene.getBattleScene(), Cursor.MOVE);
+                }
             }
         });
+    }
+
+    public static void setWait(boolean wait) {
+        DragAndDrop.wait = wait;
+    }
+
+    public static boolean getWait() {
+        return wait;
     }
 }

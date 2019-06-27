@@ -27,6 +27,7 @@ public class BattleFooterGraphic {
     private Group circlesGroup = new Group();
     private Scene scene;
     private BattleScene battleScene;
+    private Button endTurnButton;
 
     BattleFooterGraphic(BattleScene battleScene, Group root, Player player, Scene scene) {
         this.battleScene = battleScene;
@@ -87,6 +88,10 @@ public class BattleFooterGraphic {
                 DragAndDrop dragAndDrop = new DragAndDrop();
                 dragAndDrop.dragAndDropForGame(gif, card, player.getHand(), handCardGroup, root,
                         gif.getFitWidth() / 2 - 10, gif.getFitHeight() / 2 + 20, 15, -21);
+            } else {
+                DragAndDrop dragAndDrop = new DragAndDrop();
+                dragAndDrop.dragAndDropForGame(gif, card, player.getHand(), handCardGroup, root,
+                        gif.getFitWidth() / 2 + 20, gif.getFitHeight() / 2 + 20, 45, 40);
             }
             setOnMouseEntered(gif, scene, false);
         }
@@ -135,6 +140,7 @@ public class BattleFooterGraphic {
     private void addButtons(Scene scene, Group group) {
         Button endTurn = imageButton(scene, group, "pics/battle/end_turn_yellow.png",
                 "END TURN", 1000, 0, 200, 80);
+        endTurnButton = endTurn;
         Button graveYard = imageButton(scene, group, "pics/battle/graveYard.png",
                 "GRAVE YARD", 1000 - 80, 75, 150, 70);
         Button cancel = imageButton(scene, group, "pics/battle/help.png",
@@ -187,4 +193,19 @@ public class BattleFooterGraphic {
         battleScene.backToDefault();
     }
 
+    public Scene getScene() {
+        return scene;
+    }
+
+    public Group getRoot() {
+        return root;
+    }
+
+    public Button getEndTurnButton() {
+        return endTurnButton;
+    }
+
+    public Group getCirclesGroup() {
+        return circlesGroup;
+    }
 }

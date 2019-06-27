@@ -125,19 +125,45 @@ public class ComputerPlayer extends Player {
 
     public void playTurnForComputer() {
         Random random = new Random();
-        int x, y;
+//      attack
+        ArrayList<Card> exhaustedCards = new ArrayList<>();
+        outer:
+        for (Card card : getCardsOnLand())
+            for (Card opponentCard : getOpponent().getCardsOnLand()) {
+                Square opponentPosition = opponentCard.getPosition();
+                if (card.attack(opponentCard, false)) {
+                    BattleScene battleScene = BattleScene.getSingleInstance();
+                    battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
+                            card, "ATTACK", battleScene.getCardsHashMap().get(card), false,
+                            true, false);
+                    battleScene.addCardToBoard(opponentPosition.getXCoordinate(),
+                            opponentPosition.getYCoordinate(), opponentCard, "ATTACK",
+                            battleScene.getCardsHashMap().get(opponentCard),
+                            false, false, true);
+                    exhaustedCards.add(card);
+                    if (getMainDeck().getItem() != null && getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
+                            getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
+                        getMainDeck().getItem().setTarget(this);
+                        getMainDeck().getItem().getChange().affect(this, getMainDeck().getItem().getTarget().getTargets());
+                    }
+                    break outer;
+                }
+            }
+
 //      move card
         Square firstPosition;
         int RANDOM_NUMBER_FOR_MOVE;
         if (getCardsOnLand().size() >= 1) {
             int cardMoved = random.nextInt(getCardsOnLand().size());
             Card card = getCardsOnLand().get(cardMoved);
-            ArrayList<Square> squares = card.getCanMoveToSquares();
-            RANDOM_NUMBER_FOR_MOVE = random.nextInt(squares.size());
-            Coordinate coordinate = squares.get(RANDOM_NUMBER_FOR_MOVE).getCoordinate();
-            firstPosition = card.getPosition();
-            if (card.move(coordinate)) {
-                moveAnimation(firstPosition.getXCoordinate(), firstPosition.getYCoordinate(), card);
+            if (!exhaustedCards.contains(card)) {
+                ArrayList<Square> squares = card.getCanMoveToSquares();
+                RANDOM_NUMBER_FOR_MOVE = random.nextInt(squares.size());
+                Coordinate coordinate = squares.get(RANDOM_NUMBER_FOR_MOVE).getCoordinate();
+                firstPosition = card.getPosition();
+                if (card.move(coordinate)) {
+                    moveAnimation(firstPosition.getXCoordinate(), firstPosition.getYCoordinate(), card);
+                }
             }
         }
 //        put card
@@ -158,27 +184,6 @@ public class ComputerPlayer extends Player {
             }
         }
 
-//todo have null pointer in battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate()
-
-//        for (Card card : getCardsOnLand())
-//            for (Card opponentCard : getOpponent().getCardsOnLand())
-//                if (card.attack(opponentCard, false)) {
-//                    BattleScene battleScene = BattleScene.getSingleInstance();
-//                    battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
-//                            card, "ATTACK", battleScene.getCardsHashMap().get(card), false,
-//                            true, false);
-//                    battleScene.addCardToBoard(opponentCard.getPosition().getXCoordinate(),
-//                            opponentCard.getPosition().getYCoordinate(), opponentCard, "ATTACK",
-//                            battleScene.getCardsHashMap().get(opponentCard),
-//                            false, false, true);
-//                }
-
-
-        if (getMainDeck().getItem() != null && getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
-                getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
-            getMainDeck().getItem().setTarget(this);
-            getMainDeck().getItem().getChange().affect(this, getMainDeck().getItem().getTarget().getTargets());
-        }
     }
 
     public void addToAccountWins() {

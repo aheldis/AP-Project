@@ -8,6 +8,7 @@ import model.item.Flag;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
+import view.Graphic.BattleScene;
 import view.enums.ErrorType;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public abstract class Player {
         }
 
         playerCard.setPosition(getHero().getPosition());
-        if (!playerCard.canInsertToCoordination(this.getHero().getPosition().getCoordinate(), coordinate)) {
+        if (!(playerCard instanceof Spell) && !playerCard.canInsertToCoordination(this.getHero().getPosition().getCoordinate(), coordinate)) {
             if (showError)
                 ErrorType.INVALID_TARGET.printMessage();
             return false;
@@ -65,6 +66,15 @@ public abstract class Player {
         if (square == null) {
             if (showError)
                 ErrorType.INVALID_SQUARE.printMessage();
+            return false;
+        }
+
+        if (playerCard instanceof Spell && !(playerCard.checkTarget(square) ||
+                playerCard.getChange().getTargetType().equals("square"))) {
+            if (showError) {
+                ErrorType errorType = ErrorType.INVALID_TARGET;
+                errorType.printMessage();
+            }
             return false;
         }
 
@@ -87,8 +97,11 @@ public abstract class Player {
         //if square has Collectible item:
         if (square.getObject() instanceof Collectible &&
                 ((Collectible) square.getObject()).getTarget().checkTheOneWhoCollects(playerCard)) {
-            getHand().addToCollectibleItem((Collectible) square.getObject());
-            ((Collectible) square.getObject()).setTheOneWhoCollects(playerCard);
+            Collectible collectible = (Collectible) square.getObject();
+            getHand().addToCollectibleItem(collectible);
+            collectible.setTheOneWhoCollects(playerCard);
+            collectible.getImageView().setOpacity(0);
+            BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
         }
 
         //cellEffect:
@@ -102,6 +115,7 @@ public abstract class Player {
             for (Flag flag : square.getFlags()) {
                 flag.setOwnerCard(playerCard);
                 playerCard.getPlayer().addToOwnFlags(flag);
+                flag.getImageView().setOpacity(0);
             }
             square.clearFlags();
         }

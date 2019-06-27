@@ -12,10 +12,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.account.Account;
+import model.account.Collection;
 import model.battle.MatchInfo;
 import view.enums.StateType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -96,6 +98,8 @@ public class ProfileScene {
         addNodeToGridPane(gridPane, 0, 2, "Date", true);
 
         ArrayList<MatchInfo> matchHistory = account.getMatchHistory();
+        Collections.reverse(matchHistory);
+
         int index = 1;
         for (MatchInfo matchInfo : matchHistory) {
 
@@ -103,6 +107,8 @@ public class ProfileScene {
             addNodeToGridPane(gridPane, index, 1, matchInfo.loser, false);
             addNodeToGridPane(gridPane, index, 2, matchInfo.date.toString(), false);
             index++;
+            if(index > 9)
+                break;
         }
 
         matchHistoryGroup.getChildren().add(gridPane);

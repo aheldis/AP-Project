@@ -11,6 +11,7 @@ import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Pair;
@@ -19,13 +20,13 @@ import model.battle.Game;
 import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
+import model.card.Spell;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
 import view.enums.Cursor;
 import view.enums.StateType;
 
-import javax.xml.catalog.Catalog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -55,6 +56,7 @@ public class BattleScene {
     private Glow glow = new Glow();
     private HashMap<Card, ImageView> cardsHashMap = new HashMap<>();
     private boolean heroSpecialPowerClicked = false;
+    private int lastWait;
 
     private BattleScene() {
     }
@@ -131,6 +133,10 @@ public class BattleScene {
                         selectedCard = null;
                         return addCardToBoard(i, j, card, "normal", imageView, false, false, false);
                     }
+                    if (card instanceof Spell) {
+                        showAlert("Spell activated");
+                        return board;
+                    }
                 }
             }
         return null;
@@ -152,7 +158,9 @@ public class BattleScene {
         coloredRectangles.add(grid);
         glow = new Glow(1);
         gifOfCard.setEffect(glow);
+        showAlert(card.getName() + ": " + card.getDescription());
     }
+
 
     public Group addCardToBoard(int row, int column, Card card, String mode,
                                 ImageView image, boolean drag, boolean flip, boolean beingAttacked) {
@@ -184,14 +192,14 @@ public class BattleScene {
                 imageView.setScaleY(1.8);
                 board.getChildren().add(image);
             }
-            //root.getChildren().add(imageView);
         }
 
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
         workWithMouse(imageView, card, flip);
-        cardsHashMap.put(card, imageView);
+        if (!mode.equals("ATTACK"))
+            cardsHashMap.put(card, imageView);
 
         if (drag) {
             DragAndDrop dragAndDrop = new DragAndDrop();
@@ -220,22 +228,36 @@ public class BattleScene {
         }
         if (beingAttacked) {
             wait = selectedCard.getMillis();
+            lastWait = card.getMillis();
             selectedCard = null;
         }
         int finalWait = wait;
         new AnimationTimer() {
             boolean once = true;
             private long lastTime = 0;
+            boolean twice = true;
 
             @Override
             public void handle(long now) {
                 if (lastTime == 0) {
                     lastTime = now;
                 }
+                if (twice && card.getHp() <= 0 && !once && finalWait == 0 && !beingAttacked &&
+                        now > lastTime + lastWait * Math.pow(10, 6)) {
+                    lastTime = now;
+                    board.getChildren().remove(image);
+                    selectedCard = null;
+                    getCell(row, column).setFill(Color.BLACK);
+                    twice = false;
+                }
                 if (once && now > lastTime + (spriteProperties.millis + finalWait) * Math.pow(10, 6)) {
                     lastTime = now;
                     board.getChildren().remove(imageView);
                     image.setOpacity(1);
+                    if (finalWait != 0 && card.getHp() <= 0) {
+                        getCell(row, column).setFill(Color.BLACK);
+                        board.getChildren().remove(image);
+                    }
                     once = false;
                 } else if (once && now > lastTime + finalWait * Math.pow(10, 6)) {
                     image.setOpacity(0);
@@ -345,7 +367,8 @@ public class BattleScene {
                 match.passPlayerWithTurn().getHero().useSpecialPower(card.getPosition());
                 setHeroSpecialPowerClicked(false);
                 backToDefault();
-            }
+            } else
+                showAlert(card.getName() + ": " + card.getDescription());
             group.setOpacity(0);
         });
     }
@@ -361,12 +384,16 @@ public class BattleScene {
     }
 
     void showCanPutInCoordinations(Card card) {
-        ArrayList<Square> squares = card.getCanPutInSquares();
-        for (Square square : squares) {
-            Coordinate coordinate = square.getCoordinate();
-            Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
-            grid.setFill(Color.BLUEVIOLET);
-            coloredRectangles.add(grid);
+        if (card instanceof Spell) {
+
+        } else {
+            ArrayList<Square> squares = card.getCanPutInSquares();
+            for (Square square : squares) {
+                Coordinate coordinate = square.getCoordinate();
+                Rectangle grid = gameGrid[coordinate.getX()][coordinate.getY()];
+                grid.setFill(Color.BLUEVIOLET);
+                coloredRectangles.add(grid);
+            }
         }
     }
 
@@ -560,10 +587,13 @@ public class BattleScene {
 */
     }
 
-    public void showSpecialPowerUsed(String type) {
+    public void showAlert(String type) {
         Group group = new Group();
-        addRectangle(group, 0, 0, 420, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
-        addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
+        addRectangle(group, 0, 0, 435, 100, 20, 20, Color.rgb(100, 100, 200, 0.5));
+        if (!type.equals("Minion") && !type.equals("Hero"))
+            addTextWithShadow(group, 10, 40, type, "Luminari", 30);
+        else
+            addTextWithShadow(group, 10, 40, type + " Special Power Activated", "Luminari", 30);
         root.getChildren().add(group);
         group.relocate(490, 50);
         GeneralGraphicMethods.setOnMouseEntered(group, battleScene, true);
@@ -645,8 +675,9 @@ public class BattleScene {
         return cardsHashMap;
     }
 
-    public void removeCard(Card card){
+    public void removeCard(Card card) {
         ImageView imageView = cardsHashMap.get(card);
+        imageView.relocate(-1000, -1000);
         removeNodeFromBoard(imageView);
     }
 
@@ -685,6 +716,45 @@ public class BattleScene {
         battleHeader = new BattleHeaderGraphic(this, root);
         battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
 
+    }
+
+    public void showTarget(Square target, String targetType) {
+        Rectangle rectangle = getCell(target.getXCoordinate(), target.getYCoordinate());
+        Paint preColor = rectangle.getFill();
+        if (targetType.equals("square"))
+            rectangle.setFill(Color.GREEN);
+        ImageView imageView = null;
+        if (targetType.equals("force")) {
+            if (target.squareHasHeroAndPassIt() != null) {
+                imageView = cardsHashMap.get(target.squareHasHeroAndPassIt());
+                imageView.setEffect(getLighting(Color.GREEN));
+            }
+            if (target.squareHasMinionAndPassIt() != null) {
+                imageView = cardsHashMap.get(target.squareHasMinionAndPassIt());
+                imageView.setEffect(getLighting(Color.GREEN));
+            }
+        }
+        ImageView finalImageView = imageView;
+        new AnimationTimer() {
+            double lastTime = 0;
+            double second = Math.pow(10, 9);
+
+            @Override
+            public void handle(long now) {
+                if (lastTime == 0)
+                    lastTime = now;
+                if (now > lastTime + second) {
+                    lastTime = now;
+                    if (target.squareHasMinionOrHero())
+                        rectangle.setFill(preColor);
+                    else
+                        rectangle.setFill(Color.BLACK);
+                    if (finalImageView != null) {
+                        finalImageView.setEffect(null);
+                    }
+                }
+            }
+        }.start();
     }
 
     boolean isHeroSpecialPowerClicked() {

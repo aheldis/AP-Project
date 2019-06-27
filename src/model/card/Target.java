@@ -39,11 +39,10 @@ public class Target {
         this.land = land;
     }
 
-    public boolean checkIfAttackedCardIsValid(Object attacked, String targetType) {
+    public boolean checkIfAttackedCardIsValid(Object attacked) {
         //check beshe ba sharayet target mikhoone ya na todo kamel nistaa
         if (attacked == null)
             return false;
-
 
         if (attacked instanceof Spell)
             return true;
@@ -54,34 +53,10 @@ public class Target {
         if (!(attacked instanceof Card))
             return false;
 
-
-        String counterAttackName = null;
-
         if (theOneWhoCollects.equals("-") && haveRange && ((Card) attacked).getRange() == 0)
             return false;
 
-        if (notHaveRange && ((Card) attacked).getRange() != 0)
-            return false;
-
-        if (attacked instanceof Minion) {
-            if (!targetType.equals("minion") && !targetType.equals("force")) {
-                return false;
-            }
-            counterAttackName = ((Card) attacked).getCounterAttackName();
-        }
-
-        if (attacked instanceof Hero) {
-            if (!targetType.equals("hero") && !targetType.equals("force")) {
-                return false;
-            }
-            counterAttackName = ((Card) attacked).getCounterAttackName();
-        }
-
-        if (counterAttackName != null) {
-            return counterAttackName.equals(counterAttackType);
-
-        }
-        return false;
+        return !notHaveRange || ((Card) attacked).getRange() == 0;
     }
 
     public boolean checkTheOneWhoDoesTheThing(Object object) {
@@ -101,7 +76,7 @@ public class Target {
         if (object instanceof Collectible)
             object = ((Collectible) object).getTheOneWhoCollects();
         return check.getObject() != null && object instanceof Card &&
-                ((Card) object).getPlayer() == me.getOpponent() && enemy;
+                (((Card) object).getPlayer() == me.getOpponent() || !enemy);
     }
 
     public boolean checkIsAlly(Player me, Square check) {
@@ -110,7 +85,7 @@ public class Target {
             return false;
         if (object instanceof Collectible)
             object = ((Collectible) object).getTheOneWhoCollects();
-        return check.getObject() != null && object instanceof Card && ((Card) object).getPlayer() == me && ally;
+        return check.getObject() != null && object instanceof Card && (((Card) object).getPlayer() == me || !ally);
     }
 
     public boolean checkDistance(Card forWitchCard, Square squareOfTarget) {

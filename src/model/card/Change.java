@@ -1,6 +1,5 @@
 package model.card;
 
-import javafx.scene.image.ImageView;
 import model.battle.Player;
 import model.land.Square;
 import view.Graphic.BattleScene;
@@ -35,6 +34,7 @@ public class Change {
                 for (String buffName : buffs.keySet()) {
                     for (int number : buffs.get(buffName)) {
                         square.addBuffToSquare(getBuff(buffName, number));
+                        BattleScene.getSingleInstance().showTarget(square, targetType);
                     }
                 }
             }
@@ -43,15 +43,18 @@ public class Change {
         if (targetType.equals("force")) {
             for (Square square : targets) {
                 makeChangeInTargetCard(player, (Card) square.getObject());
+                BattleScene.getSingleInstance().showTarget(square, targetType);
             }
         }
 
         if (targetType.equals("player")) {
             for (String buffName : buffs.keySet()) {
-                for (int number : buffs.get(buffName))
+                for (int number : buffs.get(buffName)) {
                     player.addBuffToPlayer(getBuff(buffName, number));
+                }
             }
         }
+
     }
 
     private Buff getBuff(String buffName, int forHowManyTurn) {

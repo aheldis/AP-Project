@@ -309,8 +309,8 @@ public class GeneralGraphicMethods {
         return addImage(root, "pics/other/next.png", 1215, 765, 40, 40);
     }
 
-    static Button imageButton(Scene scene, Group root, String path, String name,
-                              double x, double y, double width, double height) {
+    public static Button imageButton(Scene scene, Group root, String path, String name,
+                                     double x, double y, double width, double height) {
         Button button = new javafx.scene.control.Button(name);
         button.setPrefSize(width, height);
         button.relocate(x, y);

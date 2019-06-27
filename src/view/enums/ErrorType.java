@@ -47,7 +47,6 @@ public enum ErrorType {
     HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT("you do not have some cards of this deck"),
     INVALID_NAME_FOR_IMPORTED_DECK("Invalid name for deck");
 
-
     private String message;
 
     ErrorType(String message) {
