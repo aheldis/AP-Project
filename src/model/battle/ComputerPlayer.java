@@ -78,6 +78,7 @@ public class ComputerPlayer extends Player {
         battleScene.getCell(x1, y1).setFill(Color.BLACK);
         Group sceneRoot = battleScene.getRoot();
         battleScene.getBoard().getChildren().remove(imageView);
+        sceneRoot.getChildren().removeAll(imageView);
         sceneRoot.getChildren().add(imageView);
         KeyFrame keyFrame;
         boolean haveDistanceX = imageView.layoutXProperty().doubleValue() != destination.getKey() - 8;

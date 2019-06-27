@@ -113,26 +113,26 @@ class SelectGameScene {
         setBackground(selectGameRoot,
                 "pics/battle/select_mode/background.jpg", true, 10.0f, 10.0f);
 
-        Button button= imageButton(selectGameScene,selectGameRoot,"pics/battle/select_mode/multi_player.jpg",
-                "hello",100, 100, 100, 100);
+        Button button = imageButton(selectGameScene, selectGameRoot, "pics/battle/select_mode/multi_player.jpg",
+                "hello", 100, 100, 100, 100);
         selectGameRoot.getChildren().remove(button);
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
-                        try {
-                            InputStream input = new FileInputStream("D:/project_Duelyst1/PausedGames/1.json" );
-                            Reader reader = new InputStreamReader(input);
-                            YaGson mapper = new YaGson();
-                            BattleScene battleScene = mapper.fromJson(reader, BattleScene.class);//load the deck
-                            Platform.runLater(() ->
-                                    StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+                try {
+                    InputStream input = new FileInputStream("D:/project_Duelyst1/PausedGames/1.json");
+                    Reader reader = new InputStreamReader(input);
+                    YaGson mapper = new YaGson();
+                    BattleScene battleScene = mapper.fromJson(reader, BattleScene.class);//load the deck
+                    Platform.runLater(() ->
+                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
 
-                            BattleScene.changeSingleInstance(battleScene);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    BattleScene.changeSingleInstance(battleScene);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
         ImageView multiPlayerImage = addImage(selectGameRoot,
@@ -353,13 +353,15 @@ class SelectGameScene {
 
     private static void startGame(Game game, Match match) {
         Random random = new Random();
-        Platform.runLater(() ->{
-                StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
-        BattleScene battleScene = BattleScene.getSingleInstance();
-        battleScene.setGame(game);
-        battleScene.setMatch(match);
-        battleScene.setBattleScene(random.nextInt(12) + 1);
-        match.initGraphic();
+        Platform.setImplicitExit(false);
+        Platform.runLater(() -> {
+            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
+            BattleScene.setNewInstance();
+            BattleScene battleScene = BattleScene.getSingleInstance();
+            battleScene.setGame(game);
+            battleScene.setMatch(match);
+            battleScene.setBattleScene(random.nextInt(12) + 1);
+            match.initGraphic();
         });
     }
 }

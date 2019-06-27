@@ -7,9 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 import model.account.FilesType;
 import model.battle.Player;
 import model.card.Card;
@@ -49,7 +47,7 @@ public class BattleFooterGraphic {
                 0, 0, 170, 160);
         addImage(nextCardGroup, "pics/battle/outer_ring.png",
                 0, 0, 170, 160);
-        Card nextCard = player.getMainDeck().passNextCard();
+        Card nextCard = player.getMainDeck().passNextCard(true);
         addGif(group, nextCardGroup, nextCard, 10, 10);
     }
 
@@ -98,7 +96,7 @@ public class BattleFooterGraphic {
 
     }
 
-    private void addTimer(Scene scene, Group group) {
+    private void addTimer(Group group) {
 
 //        Polygon polygon = new Polygon();
 //        polygon.setFill(Color.RED);
@@ -109,26 +107,30 @@ public class BattleFooterGraphic {
 //        root.getChildren().addAll(polygon);
         // addRectangle(group,207,0,635,15,0,0,Color.RED);
 
-        addImage(group, "pics/battle_categorized/timer_background@2x.png", 200, 0, 650, 10);
+        addImage(group, "pics/battle_categorized/timer_background@2x.png",
+                200, 0, 650, 10);
         ImageView progress = addImage(group,
                 "pics/battle_categorized/unit_stats_instructional_bg@2x.png",
                 207, 1, 50, 8);
-        Rectangle rectangle= addRectangle(group,207,0
-                ,6,10,0,0,Color.rgb(81,89,102,0.4));
+        Rectangle rectangle = addRectangle(group, 207, 0
+                , 6, 10, 0, 0, Color.rgb(81, 89, 102, 0.4));
 
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastUpdate = 0;
+            private double change = 0.5;
 
             @Override
             public void handle(long now) {
 
                 for (int i = 0; i < 20; i++) {
                     if (now - lastUpdate >= 120_000_000) {
-                        progress.setX(progress.getX() + 0.5);
+                        progress.setX(progress.getX() + change);
                         lastUpdate = now;
-                        rectangle.setWidth(rectangle.getWidth()+0.5);
-                        if(progress.getX()>=633-50)
-                           this.stop();
+                        rectangle.setWidth(rectangle.getWidth() + change);
+                        if (progress.getX() >= 633 - 30) {
+                            this.stop();
+                            BattleScene.getSingleInstance().getMatch().changeTurn();
+                        }
                     }
                 }
 
@@ -180,7 +182,7 @@ public class BattleFooterGraphic {
         root.getChildren().addAll(circlesGroup);
         addNextCard(circlesGroup);
         addCardsOfHand((Group) scene.getRoot(), circlesGroup);
-        addTimer(scene, circlesGroup);
+        addTimer(circlesGroup);
         addButtons(scene, circlesGroup);
     }
 
@@ -189,7 +191,7 @@ public class BattleFooterGraphic {
         addNextCard(circlesGroup);
         addCardsOfHand((Group) scene.getRoot(), circlesGroup);
         addButtons(scene, circlesGroup);
-        addTimer(scene, circlesGroup);
+        addTimer(circlesGroup);
         battleScene.backToDefault();
     }
 

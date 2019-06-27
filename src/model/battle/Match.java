@@ -235,6 +235,8 @@ public class Match {
         } else {
             players[whichPlayer].initPerTurn(whichPlayer);
             players[passComputerPlayer()].playTurnForComputer();
+            players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
+
 
             DragAndDrop.setWait(true);
             BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
@@ -275,7 +277,7 @@ public class Match {
 
         }
 
-        players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
+
         if (gameEnded()) {
             endGame();
             controller.MenuController.state = StateType.ACCOUNT_MENU;
@@ -323,10 +325,14 @@ public class Match {
 
     public void endGame() {
         MatchInfo matchInfo = new MatchInfo();
-        if (this.winner instanceof OrdinaryPlayer)
+        if (this.winner instanceof OrdinaryPlayer) {
             matchInfo.winner = this.winner.getAccount().getUserName();
-        else
+            matchInfo.loser ="Computer";
+        }
+        else {
             matchInfo.winner = "Computer";
+            matchInfo.loser = this.winner.getAccount().getUserName();
+        }
         if (this.loser instanceof OrdinaryPlayer)
             matchInfo.loser = this.loser.getAccount().getUserName();
         else
@@ -404,12 +410,14 @@ public class Match {
         Glow glow = new Glow();
         glow.setLevel(20);
         text.setEffect(glow);
+        System.out.println("saba rast mige");
         BattleScene.changeSingleInstance(null);
         battleScene.setOnMouseClicked(event -> StageLauncher.decorateScene(StateType.MAIN_MENU));
     }
 
     public static void win() {
         Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
+        assert battleScene != null;
         Group root = (Group) battleScene.getRoot();
         root.getChildren().clear();
         setBackground(root,
@@ -433,6 +441,7 @@ public class Match {
         glow.setLevel(20);
         text.setEffect(glow);
         BattleScene.changeSingleInstance(null);
+        System.out.println("saba rast mige");
         battleScene.setOnMouseClicked(event -> StageLauncher.decorateScene(StateType.MAIN_MENU));
     }
 

@@ -52,7 +52,7 @@ public class Hand {
     void checkTheHandAndAddToIt() {//call it after each turn
         while (gameCards.size() < 5) {
             deck.increaseIndexOfCards();
-            gameCards.add(deck.passNextCard());
+            gameCards.add(deck.passNextCard(false));
         }
 //            Random random = new Random();
 //            if (random.nextInt() % RAND_NUMBER == 0) {

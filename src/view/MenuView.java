@@ -170,7 +170,7 @@ public class MenuView {
 
     public void showNextCard(Deck deck) {
         System.out.println("Next card :");
-        Card nextCard = deck.passNextCard();
+        Card nextCard = deck.passNextCard(false);
         if (nextCard instanceof Spell) {
             showSpellOrMinion(nextCard, NOT_VALID);
             return;

@@ -705,6 +705,9 @@ public class BattleScene {
         return battleScene;
     }
 
+    static void setNewInstance(){
+        singleInstance = new BattleScene();
+    }
     void setBattleScene(int numberOfMap) {
         root.getChildren().clear();
         this.numberOfMap = numberOfMap;

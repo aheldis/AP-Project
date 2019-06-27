@@ -108,8 +108,11 @@ public class Deck {//if it is normal deck you had initialize it in collection
 //        battleView.showCardId(passNextCard().getCardId().getCardIdAsString());
 //    }
 
-    public Card passNextCard() {
-        return cardsOfDeck.get(indexOfCards);
+    public Card passNextCard(boolean graphic) {
+        if(graphic)
+        return cardsOfDeck.get(indexOfCards-1);
+        else
+            return cardsOfDeck.get(indexOfCards);
     }
 
     void setRandomOrderForDeck() {//faqat shoroye bazi seda kon

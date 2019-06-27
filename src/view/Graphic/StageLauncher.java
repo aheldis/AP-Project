@@ -47,12 +47,14 @@ public class StageLauncher extends Application {
     public static void decorateScene(StateType stateType) {
         switch (stateType) {
             case MAIN_MENU:
-                Platform.runLater(() -> {
-                    primaryStage.setScene(StageLauncher.getScene(StateType.ACCOUNT_MENU));
-                    playMusic("resource/music/main_menu.m4a",
-                            true, StageLauncher.getScene(StateType.ACCOUNT_MENU));
-                    primaryStage.show();
-                });
+//                Platform.setImplicitExit(false);
+//                Platform.runLater(() -> {
+                System.out.println("hiiiiiiiiiiiiiiii");
+                primaryStage.setScene(StageLauncher.getScene(StateType.ACCOUNT_MENU));
+                playMusic("resource/music/main_menu.m4a",
+                        true, StageLauncher.getScene(StateType.ACCOUNT_MENU));
+                primaryStage.show();
+//                });
                 break;
             case SHOP:
                 ShopScene.makeShopScene(account);
