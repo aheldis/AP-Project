@@ -128,7 +128,7 @@ class SelectGameScene {
                     Platform.runLater(() ->
                             StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
 
-                    BattleScene.changeSingleInstance(battleScene);
+                    BattleScene.getSingleInstance().changeSingleInstance(battleScene);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

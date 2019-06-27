@@ -2,10 +2,12 @@ package view.Graphic;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.account.Account;
 import model.card.Card;
 import model.card.Minion;
@@ -47,14 +49,13 @@ public class StageLauncher extends Application {
     public static void decorateScene(StateType stateType) {
         switch (stateType) {
             case MAIN_MENU:
-//                Platform.setImplicitExit(false);
-//                Platform.runLater(() -> {
-                System.out.println("hiiiiiiiiiiiiiiii");
+                Platform.setImplicitExit(false);
+               Platform.runLater(() -> {
                 primaryStage.setScene(StageLauncher.getScene(StateType.ACCOUNT_MENU));
                 playMusic("resource/music/main_menu.m4a",
                         true, StageLauncher.getScene(StateType.ACCOUNT_MENU));
                 primaryStage.show();
-//                });
+                });
                 break;
             case SHOP:
                 ShopScene.makeShopScene(account);
@@ -117,25 +118,6 @@ public class StageLauncher extends Application {
         minion.setDescription("i am minion");
     }
 
-    public static void graveYardTest() {
-        ArrayList<Card> cards = new ArrayList<>();
-
-        minionMaker(cards, "pics/gifMinion/giv.gif");
-        minionMaker(cards, "pics/gifMinion/giv.gif");
-
-        Spell spell = new Spell();
-        spell.setPathOfThePicture("pics/other/minion_background.png");
-        spell.setPathOfAnimation("pics/Spell/fireBall.png");
-        spell.setCountOfAnimation(16);
-        spell.setName("Fireball");
-        spell.setFrameSize(48);
-        spell.setMp(10);
-        spell.setHp(10);
-        for (int i = 0; i < 13; i++)
-            cards.add(spell);
-        GraveYardScene.makeYard(cards);
-    }
-
     @Override
     public void start(Stage primaryStage) {
 
@@ -163,18 +145,15 @@ public class StageLauncher extends Application {
         Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
         Scene profileScene = makeScene(StateType.PROFILE, Cursor.AUTO);
 
-/*
-
-        BattleScene battleScene1 = BattleScene.getSingleInstance();
-        battleScene1.setBattleScene(7); //from 1 to 12
-        battleScene1.test();
-        primaryStage.setScene(battleScene);
-//*/
-
-//        Match.loss();
-//        primaryStage.setScene(battleScene);
         AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                primaryStage.close();
+            }
+        });
 
         primaryStage.show();
     }

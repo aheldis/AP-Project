@@ -155,7 +155,7 @@ public class BattleFooterGraphic {
             BattleScene.getSingleInstance().getMatch().setLoser(player);
             BattleScene.getSingleInstance().getMatch().setWinner(player.getOpponent());
             BattleScene.getSingleInstance().getMatch().endGame();
-            StageLauncher.decorateScene(StateType.MAIN_MENU);
+
         });
 
         graveYard.setOnMouseClicked(event -> {

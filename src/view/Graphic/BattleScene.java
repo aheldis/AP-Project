@@ -61,8 +61,9 @@ public class BattleScene {
     private BattleScene() {
     }
 
-    public static void changeSingleInstance(BattleScene battleScene) {
+    public void changeSingleInstance(BattleScene battleScene) {
         singleInstance = battleScene;
+        //setBattleScene(numberOfMap);
     }
 
     public static BattleScene getSingleInstance() {
@@ -273,6 +274,7 @@ public class BattleScene {
         return gameGrid[row][column];
     }
 
+    {
     /*
     Group addCardToBoard(double x, double y, Card card, ImageView imageView, boolean putOrMove) {
 //        PUT = true;
@@ -316,6 +318,7 @@ public class BattleScene {
         return null;
     }
 */
+    }
 
     private void workWithMouse(ImageView imageOfCard, Card card, boolean enemy) {
         Group group = new Group();

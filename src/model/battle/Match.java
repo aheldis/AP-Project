@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.account.Shop;
@@ -120,6 +121,7 @@ public class Match {
     }
 
     public void initGraphic() {
+       // BattleScene.getSingleInstance().changeSingleInstance(null);
         this.battleScene = BattleScene.getSingleInstance();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
@@ -324,25 +326,31 @@ public class Match {
     }
 
     public void endGame() {
-        MatchInfo matchInfo = new MatchInfo();
-        if (this.winner instanceof OrdinaryPlayer) {
-            matchInfo.winner = this.winner.getAccount().getUserName();
-            matchInfo.loser ="Computer";
-        }
-        else {
-            matchInfo.winner = "Computer";
-            matchInfo.loser = this.winner.getAccount().getUserName();
-        }
-        if (this.loser instanceof OrdinaryPlayer)
-            matchInfo.loser = this.loser.getAccount().getUserName();
-        else
-            matchInfo.loser = "Computer";
-        matchInfo.date = date;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MatchInfo matchInfo = new MatchInfo();
+                if (winner instanceof OrdinaryPlayer) {
+                    matchInfo.winner = winner.getAccount().getUserName();
+                    matchInfo.loser ="Computer";
+                }
+                else {
+                    matchInfo.winner = "Computer";
+                    matchInfo.loser = winner.getAccount().getUserName();
+                }
+                if (loser instanceof OrdinaryPlayer)
+                    matchInfo.loser = loser.getAccount().getUserName();
+                else
+                    matchInfo.loser = "Computer";
+                matchInfo.date = date;
 
-        winner.addToAccountWins();
-        winner.addMatchInfo(matchInfo);
-        loser.addMatchInfo(matchInfo);
-        winner.getAccount().changeValueOfDaric(reward);
+                winner.addToAccountWins();
+                winner.addMatchInfo(matchInfo);
+                loser.addMatchInfo(matchInfo);
+                winner.getAccount().changeValueOfDaric(reward);
+
+            }
+        }).start();
 
         if (winner instanceof ComputerPlayer) {
             loss();
@@ -395,7 +403,7 @@ public class Match {
 
         playMusic("resource/music/defeat.m4a", false, battleScene);
 
-        addImage(root, "pics/battle/general_f4@2x.png", -200, -100, 1800, 1200);
+        ImageView hero=addImage(root, "pics/battle/general_f4@2x.png", -200, -100, 1800, 1200);
         addImage(root, "pics/battle/scene_diamonds_background_defeat@2x.png", 0, 0,
                 (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight());
         addImage(root, "pics/battle/scene_diamonds_background_defeat@2x.png", 300, -300,
@@ -406,13 +414,15 @@ public class Match {
         Text text = addText(root, 100, 600, "DEFEAT",
                 Color.rgb(225, 225, 225, 0.8), 70);
         addImage(root, "pics/battle/highlight_red.png", 300, 35, 800, 100);
-        addText(root, 130, 630, "click anywhere to continue", Color.WHITE, 20);
+        addText(root, 130, 630, "click on hero to continue", Color.WHITE, 20);
         Glow glow = new Glow();
         glow.setLevel(20);
         text.setEffect(glow);
-        System.out.println("saba rast mige");
-        BattleScene.changeSingleInstance(null);
-        battleScene.setOnMouseClicked(event -> StageLauncher.decorateScene(StateType.MAIN_MENU));
+        BattleScene.getSingleInstance().changeSingleInstance(null);
+        hero.setOnMouseClicked(event -> {
+            StageLauncher.decorateScene(StateType.MAIN_MENU);
+            System.out.println("giiiiiiii \n\n\n\n");
+        });
     }
 
     public static void win() {
@@ -425,7 +435,7 @@ public class Match {
 
         playMusic("resource/music/sfx_victory_match_w_vo.m4a", false, battleScene);
 
-        addImage(root, "pics/battle/general_f1@2x.png", -200, -100, 1800, 1200);
+       ImageView hero= addImage(root, "pics/battle/general_f1@2x.png", -200, -100, 1800, 1200);
         addImage(root, "pics/battle/scene_diamonds_background_victory@2x.png", 0, 0,
                 (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight());
         addImage(root, "pics/battle/scene_diamonds_background_victory@2x.png", 300, -300,
@@ -436,13 +446,12 @@ public class Match {
         Text text = addText(root, 600, 100, "VICTORY",
                 Color.rgb(225, 225, 225, 0.8), 70);
         addImage(root, "pics/battle/highlight_white.png", 300, -35, 800, 250);
-        addText(root, 630, 130, "click anywhere to continue", Color.WHITE, 20);
+        addText(root, 630, 130, "click on hero to continue", Color.WHITE, 20);
         Glow glow = new Glow();
         glow.setLevel(20);
         text.setEffect(glow);
-        BattleScene.changeSingleInstance(null);
-        System.out.println("saba rast mige");
-        battleScene.setOnMouseClicked(event -> StageLauncher.decorateScene(StateType.MAIN_MENU));
+        BattleScene.getSingleInstance().changeSingleInstance(null);
+        hero.setOnMouseClicked(event -> StageLauncher.decorateScene(StateType.MAIN_MENU));
     }
 
     BattleScene getBattleScene() {
