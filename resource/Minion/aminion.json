@@ -1,0 +1,31 @@
+{
+"@type": "model.card.Minion",
+  "@val": {
+    "name": "aminion",
+    "cost": 100,
+    "mp": 1,
+    "hp": 10,
+    "ap": 10,
+    "counterAttack": "ranged",
+    "attackRange": 3,
+    "ActivationTimeOfSpecialPower": "2",
+    "coolDown": 0,
+    "pathOfThePicture": "pics/Minion/aminion.gif",
+    "pathOfAnimation": "pics/Minion/aminion.png",
+    "countOfAnimation": 93,
+    "change": {
+      "buffs": {}
+    },
+    "target": {
+      "distance": 0,
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "self": false,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}

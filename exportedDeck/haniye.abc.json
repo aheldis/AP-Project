@@ -1,0 +1,8 @@
+{
+  "@type": "model.battle.Deck",
+  "@val": {
+    "cardsOfDeck": [],
+    "deckName": "abc",
+    "indexOfCards": 0
+  }
+}
