@@ -20,7 +20,7 @@ public class ClientHandlerServer extends Thread{
                 try {
                     transferor =(Transferor) socketClass.getInputStream().readObject();
                     if (transferor != null) {
-                        RequsetEnumController.main(transferor.requestEnum,socketClass);
+                        RequsetEnumController.main(transferor.requestEnum,socketClass,transferor);
                     }
                 }catch (Exception e){
                     e.printStackTrace();

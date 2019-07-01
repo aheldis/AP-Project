@@ -144,6 +144,7 @@ public class StageLauncher extends Application {
         Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
         Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
         Scene profileScene = makeScene(StateType.PROFILE, Cursor.AUTO);
+        Scene chatScene =makeScene(StateType.GLOBAL_CHAT,Cursor.GREEN);
 
         AccountScene.getInstance().makeBackground();
         primaryStage.setScene(accountScene);

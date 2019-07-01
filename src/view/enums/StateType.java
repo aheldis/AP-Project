@@ -13,6 +13,7 @@ public enum StateType {
     SELECT_GAME,
     SINGLE_GAME,
     END_PROGRAM,
-    PROFILE
+    PROFILE,
+    GLOBAL_CHAT
 
 }

@@ -21,12 +21,24 @@ public class Account implements Comparable<Account>, Cloneable {
     private Player player;
     private ArrayList<Deck> decks = new ArrayList<>();
     private String accountImagePath = null;
+    private String profileImagePath = null;
 
     public String getAccountImagePath() {
         if(accountImagePath == null)
             setAccountImagePath();
         System.out.println(accountImagePath);
         return accountImagePath;
+    }
+    public String getProfileImagePath(){
+        if(profileImagePath == null)
+            setProfileImagePath();
+        return profileImagePath;
+    }
+
+    public void setProfileImagePath() {
+        Random random = new Random();
+        int number = random.nextInt(20) + 1;
+        profileImagePath = "pics/shop/profile-" + number +".jpg";
     }
 
     public Account(String userName, String password) {

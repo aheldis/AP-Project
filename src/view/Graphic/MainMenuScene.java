@@ -40,6 +40,7 @@ public class MainMenuScene {
     private static ArrayList<Node> menuNodes = new ArrayList<>();
     private static ImageView playGraph = null;
     private static ImageView collectionGraph = null;
+    private static ImageView chatGraph = null;
 //    private static ImageView matchHistoryGraph = null;
     private static HashMap<ImageView, Integer> graphs = new HashMap<>();
     private Account account = null;
@@ -72,6 +73,11 @@ public class MainMenuScene {
         collectionGraph.setOpacity(0.5);
         menuNodes.add(collectionGraph);
         graphs.put(collectionGraph, 0);
+        randomNumber = random.nextInt(16) + 1;
+        chatGraph = addImage(root, "pics/menu/" + randomNumber + ".png", 180, 400, 70, 70);
+        chatGraph.setOpacity(0.5);
+        menuNodes.add(chatGraph);
+        graphs.put(chatGraph, 0);
         /*
         randomNumber = random.nextInt(16) + 1;
         matchHistoryGraph = addImage(root, "pics/menu/" + randomNumber + ".png", 180, 380, 70, 70);
@@ -123,6 +129,14 @@ public class MainMenuScene {
             setScene(StateType.COLLECTION);
         });
 
+        Label chat = newLabelButton("GLOBAL CHAT", 400);
+        AnimationTimer chatAnimation = graphAnimation(chatGraph);
+        Label chatShadow = shadowAnimation(chat, chatAnimation);
+        chatShadow.setOnMouseClicked(event -> {
+            GlobalChatScene.main(account);
+            chatAnimation.stop();
+            setScene(StateType.GLOBAL_CHAT);
+        });
         /*
         Label matchHistory = newLabelButton("MATCH HISTORY", 390);
         AnimationTimer matchHistoryAnimation = graphAnimation(matchHistoryGraph);
@@ -248,6 +262,8 @@ public class MainMenuScene {
                         playGraph = newGraph;
                     else if (graph.equals(collectionGraph))
                         collectionGraph = newGraph;
+                    else if(graph.equals(chatGraph))
+                        chatGraph= newGraph;
                 //    else
                 //        matchHistoryGraph = newGraph;
                     graph = newGraph;

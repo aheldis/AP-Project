@@ -972,7 +972,6 @@ class CollectionScene {
                     Color.rgb(10, 10, 10, 0.5),
                     CornerRadii.EMPTY, Insets.EMPTY)));
 
-
             makeDynamicDeck(decks, sideVBox, collection);
 
             addDeck(collection, sideVBox);
