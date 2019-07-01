@@ -1,5 +1,6 @@
 package controller;
 
+import model.account.Collection;
 import model.battle.Deck;
 import model.card.Card;
 import model.item.Item;
@@ -13,16 +14,17 @@ import view.enums.ErrorType;
 import java.util.ArrayList;
 
 public class Transferor {
-    private RequestEnum requestEnum;
-    private ArrayList<Card> cards;
-    private ArrayList<Item> items;
-    private String name;
-    private String cardId;
-    private Deck deck;
-    private ArrayList<Deck> decks;
-    private String authToken;
-    private ErrorType errorType=null;
-    private long daric;
+    public RequestEnum requestEnum;
+    public Collection collection;
+    public ArrayList<Card> cards;
+    public ArrayList<Item> items;
+    public String name;
+    public String cardId;
+    public Deck deck;
+    public ArrayList<Deck> decks;
+    public String authToken;
+    public ErrorType errorType = null;
+    public long daric;
 
 
 }

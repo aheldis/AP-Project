@@ -1,6 +1,9 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
+import controller.Controllers.CollectionController;
+import controller.Controllers.CollectionOrder;
+import controller.Transferor;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -53,6 +56,7 @@ class CollectionScene {
     private static ArrayList<Node> cardsIcon = new ArrayList<>();
     private static int numberOfDeck = 0;
     private static ArrayList<Node> groupOfDeck = new ArrayList<>();
+    private static Transferor transferor;
 
 
     private static void deckLittleCardMaker(Parent root, Object card, Group group, Collection collection,
@@ -512,7 +516,10 @@ class CollectionScene {
 //        ImageView deckSceneButton = addImage(root, "pics/other/desc.png", 600, 770, 100, 50);
 //        Text deckScene = addText(root, "Decks", 618, 785, Color.rgb(225, 225, 225,
 //                0.8), 20);
-        deckScene.setOnMouseClicked(event -> Platform.runLater(() -> showDeck(collection.getDecks(), collection)));
+        deckScene.setOnMouseClicked(event -> {
+            transferor= CollectionController.main(CollectionOrder.ENTER_DECK);
+            Platform.runLater(() -> showDeck(transferor.decks, transferor.collection));
+        });
 
         back.setOnMouseClicked(event -> {
             pageNumberCards--;

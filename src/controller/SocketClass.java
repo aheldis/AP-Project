@@ -11,7 +11,7 @@ import java.net.Socket;
 public class SocketClass {
     private Socket socket;
     private ObjectInputStream inputStream;
-    private ObjectOutputStream outputStream;
+    private ObjectOutputStream objectOutputStream;
     private Account account ;
     private String authToken;
 
@@ -19,7 +19,7 @@ public class SocketClass {
         this.socket= socket;
         try {
             inputStream = new ObjectInputStream(socket.getInputStream());
-            outputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -30,11 +30,11 @@ public class SocketClass {
         return socket;
     }
 
-    public InputStream getInputStream() {
+    public ObjectInputStream getInputStream() {
         return inputStream;
     }
 
-    public OutputStream getOutputStream() {
-        return outputStream;
+    public ObjectOutputStream getOutputStream() {
+        return objectOutputStream;
     }
 }

@@ -1,21 +1,18 @@
 package controller;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class Server {
     private ArrayList<SocketClass> socketClasses = new ArrayList<>();
-    private ObjectOutputStream objectOutputStream;
-    private ObjectInputStream objectInputStream;
+    private static int PORT =8000;
 
     public static void main(String[] args){
         SocketClass socketClass;
         try {
 
-            ServerSocket serverSocket = new ServerSocket(8888);
+            ServerSocket serverSocket = new ServerSocket(PORT);
             Socket socket ;
             while (true){
                socket= serverSocket.accept();
