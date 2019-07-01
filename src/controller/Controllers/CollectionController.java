@@ -3,9 +3,7 @@ package controller.Controllers;
 import controller.Client;
 import controller.RequestEnum;
 import controller.Transferor;
-import model.account.Collection;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -46,6 +44,14 @@ public class CollectionController {
                 return transferor;
             case IMPORT_DECK:
                 transferor.requestEnum = RequestEnum.COLLECTION_IMPORT;
+                transfer();
+                return transferor;
+            case NEW_DECK:
+                transferor.requestEnum = RequestEnum.COLLECTION_NEW_DECK;
+                transfer();
+                return transferor;
+            case MAIN_DECK:
+                transferor.requestEnum = RequestEnum.COLLECTION_SELECT_MAIN_DECK;
                 transfer();
                 return transferor;
         }

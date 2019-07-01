@@ -724,6 +724,9 @@ class CollectionScene {
                     root.getChildren().remove(checkMainDeck);
                     makeIConBarForDeck("pics/collection/checkmark-green.png",
                             10, 10);
+                    Transferor transferor =new Transferor();
+                    transferor.deck = deck;
+                    CollectionController.main(CollectionOrder.MAIN_DECK,transferor);
                 }
             });
 
@@ -826,16 +829,11 @@ class CollectionScene {
                     transferor = new Transferor();
                     transferor.name = deckName.getText();
                     transferor = CollectionController.main(CollectionOrder.IMPORT_DECK,transferor);
-                    //todo add to server
-                    InputStream input = new FileInputStream("exportedDeck/"
-                            + collection.getAccount().getUserName() + "." + deckName.getText() + ".json");
-                    Reader reader = new InputStreamReader(input);
-                    YaGson mapper = new YaGson();
-                    Deck deck = mapper.fromJson(reader, Deck.class);//load the deck
-                    if (!collection.getAccount().getCollection().checkTheDeckForImport(deck)) {
-                        ErrorType.HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT.printMessage();
+                    if(transferor.errorType!=null){
+                       transferor.errorType.printMessage();
                     }
-                    {
+                    else{
+                        Deck deck = transferor.deck;
                         if (collection.passTheDeckIfHaveBeenExist(deck.getName()) == null) {
                             collection.getDecks().add(deck);
                             int i = collection.getDecks().size() - 1;
@@ -848,9 +846,8 @@ class CollectionScene {
                                     importDeck, importText, close, text, deckName, exportDeck, exportText);
                         }
                     }
-                } catch (FileNotFoundException e) {
+                } catch (Exception e) {
                     ErrorType.INVALID_NAME_FOR_IMPORTED_DECK.printMessage();
-                    //  e.printStackTrace();
                 } finally {
                     deckName.clear();
                 }
@@ -887,6 +884,9 @@ class CollectionScene {
                             , collection, group);
                     root.getChildren().addAll(rectangle, newDeck, newDeckText,
                             importDeck, importText, close, text, deckName, exportDeck, exportText);
+                    Transferor transferor = new Transferor();
+                    transferor.deck = collection.getDecks().get(i);
+                    CollectionController.main(CollectionOrder.NEW_DECK,transferor);
                 }
 
             });
