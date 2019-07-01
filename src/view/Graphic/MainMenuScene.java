@@ -1,5 +1,8 @@
 package view.Graphic;
 
+import controller.Controllers.CollectionController;
+import controller.Controllers.CollectionOrder;
+import controller.Transferor;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
@@ -114,7 +117,8 @@ public class MainMenuScene {
         AnimationTimer collectionAnimation = graphAnimation(collectionGraph);
         Label collectionShadow = shadowAnimation(collection, collectionAnimation);
         collectionShadow.setOnMouseClicked(event -> {
-            CollectionScene.showInCollection(account.getCollection());
+            Transferor transferor = CollectionController.main(CollectionOrder.ENTER_COLLECTION,new Transferor());
+            CollectionScene.showInCollection(transferor.collection);
             collectionAnimation.stop();
             setScene(StateType.COLLECTION);
         });

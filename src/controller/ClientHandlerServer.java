@@ -4,11 +4,12 @@ package controller;
 import java.io.IOException;
 
 public class ClientHandlerServer extends Thread{
-    private Transferor transferor = new Transferor();
+    private Transferor transferor;
     private SocketClass socketClass;
 
     public ClientHandlerServer(SocketClass socketClass){
         this.socketClass = socketClass;
+        transferor = socketClass.getTransferor();
     }
     public  void run() {
         boolean endOfClient = false;
@@ -19,7 +20,7 @@ public class ClientHandlerServer extends Thread{
                 try {
                     transferor =(Transferor) socketClass.getInputStream().readObject();
                     if (transferor != null) {
-                        RequsetEnumController.main(transferor.requestEnum);
+                        RequsetEnumController.main(transferor.requestEnum,socketClass);
                     }
                 }catch (Exception e){
                     e.printStackTrace();

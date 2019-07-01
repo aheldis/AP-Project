@@ -494,7 +494,7 @@ class CollectionScene {
         vBox.setAlignment(Pos.CENTER);
         root.getChildren().add(vBox);
         vBox.setSpacing(Y_BORDER);
-//todo ooo
+
         HBox goToCollection = new HBox();
         Text text = new Text("hi");
         goToCollection.setPrefHeight(20);
@@ -512,12 +512,10 @@ class CollectionScene {
 
         ImageView back = addBack(root);
         ImageView next = addNext(root);
-        Button deckScene = imageButton(collectionScene, root, "pics/other/desc.png", "Decks", 600, 770, 100, 50);
-//        ImageView deckSceneButton = addImage(root, "pics/other/desc.png", 600, 770, 100, 50);
-//        Text deckScene = addText(root, "Decks", 618, 785, Color.rgb(225, 225, 225,
-//                0.8), 20);
+        Button deckScene = imageButton(collectionScene, root, "pics/other/desc.png",
+                "Decks", 600, 770, 100, 50);
         deckScene.setOnMouseClicked(event -> {
-            transferor= CollectionController.main(CollectionOrder.ENTER_DECK);
+            transferor= CollectionController.main(CollectionOrder.ENTER_DECK,new Transferor());
             Platform.runLater(() -> showDeck(transferor.decks, transferor.collection));
         });
 
@@ -772,10 +770,9 @@ class CollectionScene {
     }
 
     private static void addDeck(Collection collection, VBox sideVBox) {
-        ImageView add_deck = addImage(root, "pics/collection/plate@2x.png",
+        addImage(root, "pics/collection/plate@2x.png",
                 StageLauncher.getWidth() - 130, StageLauncher.getHeight() - 130,
                 100, 100);
-
 
         ImageView plus = addImage(root, "pics/collection/add.png",
                 StageLauncher.getWidth() - 67 - 20, StageLauncher.getHeight() - 87,
@@ -826,6 +823,10 @@ class CollectionScene {
 
             importText.setOnMouseClicked(event12 -> {
                 try {
+                    transferor = new Transferor();
+                    transferor.name = deckName.getText();
+                    transferor = CollectionController.main(CollectionOrder.IMPORT_DECK,transferor);
+                    //todo add to server
                     InputStream input = new FileInputStream("exportedDeck/"
                             + collection.getAccount().getUserName() + "." + deckName.getText() + ".json");
                     Reader reader = new InputStreamReader(input);
@@ -862,9 +863,9 @@ class CollectionScene {
                     ErrorType.HAVE_NOT_DECK.printMessage();
                 } else {
                     try {
-                        String path = "exportedDeck/" + collection.getAccount().getUserName()
-                                + "." + deckName.getText() + ".json";
-                        GeneralGraphicMethods.saveInFile(path, deck);
+                        transferor = new Transferor();
+                        transferor.deck = deck;
+                        transferor = CollectionController.main(CollectionOrder.EXPORT_DECK,transferor);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -12,6 +12,7 @@ public class SocketClass {
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream objectOutputStream;
+    private Transferor transferor =new Transferor();
     private Account account ;
     private String authToken;
 
@@ -36,5 +37,16 @@ public class SocketClass {
 
     public ObjectOutputStream getOutputStream() {
         return objectOutputStream;
+    }
+
+    public Transferor getTransferor() {
+        return transferor;
+    }
+    public void changeTransferor(){
+        transferor = new Transferor();
+    }
+
+    public Account getAccount() {
+        return account;
     }
 }
