@@ -1,11 +1,10 @@
 package view.Graphic;
 
-import controller.Controllers.CollectionController;
-import controller.Controllers.CollectionOrder;
+import controller.Controllers.TransferController;
+import controller.Controllers.OrderEnum;
 import controller.Transferor;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -13,16 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.account.Account;
 import model.account.AllAccount;
-import model.battle.MatchInfo;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -123,7 +117,7 @@ public class MainMenuScene {
         AnimationTimer collectionAnimation = graphAnimation(collectionGraph);
         Label collectionShadow = shadowAnimation(collection, collectionAnimation);
         collectionShadow.setOnMouseClicked(event -> {
-            Transferor transferor = CollectionController.main(CollectionOrder.ENTER_COLLECTION,new Transferor());
+            Transferor transferor = TransferController.main(OrderEnum.ENTER_COLLECTION,new Transferor());
             CollectionScene.showInCollection(transferor.collection);
             collectionAnimation.stop();
             setScene(StateType.COLLECTION);

@@ -1,12 +1,13 @@
 package controller.Controllers;
 
-public enum CollectionOrder{
+public enum OrderEnum {
     ENTER_COLLECTION,
     ENTER_DECK,
     IMPORT_DECK,
     EXPORT_DECK,
     NEW_DECK,
     MAIN_DECK,
-    ADD_CARD
+    ADD_CARD,
+    CHAT
 
 }

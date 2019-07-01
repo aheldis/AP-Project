@@ -91,6 +91,9 @@ public class RequsetEnumController {
             case COLLECTION_SELECT_MAIN_DECK:
                 socketClass.getAccount().getCollection().selectADeckAsMainDeck(transferor.deck.getName());
                 break;
+            case CHAT:
+
+                break;
         }
         socketClass.changeTransferor();
 

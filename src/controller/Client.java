@@ -2,10 +2,7 @@ package controller;
 
 import view.Graphic.StageLauncher;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -27,7 +24,14 @@ public class Client {
     public static void main(String[] args){
         String line;
         try {
-            socket = new Socket(HOST,PORT);
+            try {
+                Scanner fileScanner = new Scanner(new File("src/controller/config"));
+                socket = new Socket(fileScanner.nextLine().split(":")[1], Integer.parseInt(fileScanner.nextLine().split((":"))[1]));
+                fileScanner.close();
+            }catch (Exception e){
+                e.printStackTrace();
+                socket = new Socket(HOST,PORT);
+            }
             inputStream = new ObjectInputStream(socket.getInputStream());
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {

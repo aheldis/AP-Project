@@ -7,19 +7,21 @@ import controller.Transferor;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class CollectionController {
+public class TransferController {
    static Transferor transferor ;
    static ObjectOutputStream objectOutputStream =Client.getObjectOutputStream();
    static ObjectInputStream objectInputStream = Client.getObjectInputStream();
 
-   public static void transfer(){
+   public static void transfer(boolean waitForAnswer){
        try {
            objectOutputStream.writeObject(transferor);
            objectOutputStream.flush();
-           while (true){
-               transferor =(Transferor) objectInputStream.readObject();
-               if(transferor!=null){
-                   break;
+           if(waitForAnswer) {
+               while (true) {
+                   transferor = (Transferor) objectInputStream.readObject();
+                   if (transferor != null) {
+                       break;
+                   }
                }
            }
        } catch (Exception e) {
@@ -27,32 +29,36 @@ public class CollectionController {
        }
    }
 
-    public static Transferor main(CollectionOrder order,Transferor transferor){
-        CollectionController.transferor = transferor;
+    public static Transferor main(OrderEnum order, Transferor transferor){
+        TransferController.transferor = transferor;
         switch (order){
             case ENTER_DECK:
                 transferor.requestEnum= RequestEnum.COLLECTION_DECKS;
-                transfer();
+                transfer(true);
                 return transferor;
             case ENTER_COLLECTION:
                 transferor.requestEnum = RequestEnum.COLLECTION_SHOW;
-                transfer();
+                transfer(true);
                 return transferor;
             case EXPORT_DECK:
                 transferor.requestEnum = RequestEnum.COLLECTION_EXPORT;
-                transfer();
+                transfer(false);
                 return transferor;
             case IMPORT_DECK:
                 transferor.requestEnum = RequestEnum.COLLECTION_IMPORT;
-                transfer();
+                transfer(true);
                 return transferor;
             case NEW_DECK:
                 transferor.requestEnum = RequestEnum.COLLECTION_NEW_DECK;
-                transfer();
+                transfer(false);
                 return transferor;
             case MAIN_DECK:
                 transferor.requestEnum = RequestEnum.COLLECTION_SELECT_MAIN_DECK;
-                transfer();
+                transfer(false);
+                return transferor;
+            case CHAT:
+                transferor.requestEnum = RequestEnum.CHAT;
+                transfer(false);
                 return transferor;
         }
         return transferor;

@@ -1,8 +1,7 @@
 package view.Graphic;
 
-import com.gilecode.yagson.YaGson;
-import controller.Controllers.CollectionController;
-import controller.Controllers.CollectionOrder;
+import controller.Controllers.TransferController;
+import controller.Controllers.OrderEnum;
 import controller.Transferor;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -515,7 +514,7 @@ class CollectionScene {
         Button deckScene = imageButton(collectionScene, root, "pics/other/desc.png",
                 "Decks", 600, 770, 100, 50);
         deckScene.setOnMouseClicked(event -> {
-            transferor= CollectionController.main(CollectionOrder.ENTER_DECK,new Transferor());
+            transferor= TransferController.main(OrderEnum.ENTER_DECK,new Transferor());
             Platform.runLater(() -> showDeck(transferor.decks, transferor.collection));
         });
 
@@ -726,7 +725,7 @@ class CollectionScene {
                             10, 10);
                     Transferor transferor =new Transferor();
                     transferor.deck = deck;
-                    CollectionController.main(CollectionOrder.MAIN_DECK,transferor);
+                    TransferController.main(OrderEnum.MAIN_DECK,transferor);
                 }
             });
 
@@ -828,7 +827,7 @@ class CollectionScene {
                 try {
                     transferor = new Transferor();
                     transferor.name = deckName.getText();
-                    transferor = CollectionController.main(CollectionOrder.IMPORT_DECK,transferor);
+                    transferor = TransferController.main(OrderEnum.IMPORT_DECK,transferor);
                     if(transferor.errorType!=null){
                        transferor.errorType.printMessage();
                     }
@@ -862,7 +861,7 @@ class CollectionScene {
                     try {
                         transferor = new Transferor();
                         transferor.deck = deck;
-                        transferor = CollectionController.main(CollectionOrder.EXPORT_DECK,transferor);
+                        transferor = TransferController.main(OrderEnum.EXPORT_DECK,transferor);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -886,7 +885,7 @@ class CollectionScene {
                             importDeck, importText, close, text, deckName, exportDeck, exportText);
                     Transferor transferor = new Transferor();
                     transferor.deck = collection.getDecks().get(i);
-                    CollectionController.main(CollectionOrder.NEW_DECK,transferor);
+                    TransferController.main(OrderEnum.NEW_DECK,transferor);
                 }
 
             });
