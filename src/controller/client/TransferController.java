@@ -67,7 +67,6 @@ public class TransferController {
                 }
                 return fromServerTransmitter;
             case SHOP_SELL:{
-                //todo gand zadi
                 transmitter.requestEnum = RequestEnum.SHOP_SELL;
                 transfer(true);
                 return fromServerTransmitter;
