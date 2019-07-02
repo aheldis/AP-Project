@@ -1,8 +1,6 @@
 package view.Graphic;
 
-import controller.Controllers.OrderEnum;
-import controller.Controllers.TransferController;
-import controller.Transferor;
+import controller.Transmitter;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -148,7 +146,7 @@ public class GlobalChatScene {
         send.setOnMouseClicked(new EventHandler<MouseEvent>() {
             String message;
             Group groupText;
-            Transferor transferor = new Transferor();
+            Transmitter transmitter = new Transmitter();
 
             @Override
             public void handle(MouseEvent event) {
@@ -175,9 +173,9 @@ public class GlobalChatScene {
                     addText(groupText, 30 + 85, 60, message, Color.WHITE, 20);
                 }
                 chatGroup.getChildren().addAll(groupText);
-//                transferor = new Transferor();
-//                transferor.group = groupText;
-//                TransferController.main(OrderEnum.CHAT, transferor);
+//                transmitter = new Transmitter();
+//                transmitter.group = groupText;
+//                TransferController.main(OrderEnum.CHAT, transmitter);
             }
         });
     }

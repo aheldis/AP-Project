@@ -2,7 +2,7 @@ package view.Graphic;
 
 import controller.Controllers.TransferController;
 import controller.Controllers.OrderEnum;
-import controller.Transferor;
+import controller.Transmitter;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -55,7 +55,7 @@ class CollectionScene {
     private static ArrayList<Node> cardsIcon = new ArrayList<>();
     private static int numberOfDeck = 0;
     private static ArrayList<Node> groupOfDeck = new ArrayList<>();
-    private static Transferor transferor;
+    private static Transmitter transmitter;
 
 
     private static void deckLittleCardMaker(Parent root, Object card, Group group, Collection collection,
@@ -514,8 +514,8 @@ class CollectionScene {
         Button deckScene = imageButton(collectionScene, root, "pics/other/desc.png",
                 "Decks", 600, 770, 100, 50);
         deckScene.setOnMouseClicked(event -> {
-            transferor= TransferController.main(OrderEnum.ENTER_DECK,new Transferor());
-            Platform.runLater(() -> showDeck(transferor.decks, transferor.collection));
+            transmitter = TransferController.main(OrderEnum.ENTER_DECK,new Transmitter());
+            Platform.runLater(() -> showDeck(transmitter.decks, transmitter.collection));
         });
 
         back.setOnMouseClicked(event -> {
@@ -723,9 +723,9 @@ class CollectionScene {
                     root.getChildren().remove(checkMainDeck);
                     makeIConBarForDeck("pics/collection/checkmark-green.png",
                             10, 10);
-                    Transferor transferor =new Transferor();
-                    transferor.deck = deck;
-                    TransferController.main(OrderEnum.MAIN_DECK,transferor);
+                    Transmitter transmitter =new Transmitter();
+                    transmitter.deck = deck;
+                    TransferController.main(OrderEnum.MAIN_DECK, transmitter);
                 }
             });
 
@@ -825,14 +825,14 @@ class CollectionScene {
 
             importText.setOnMouseClicked(event12 -> {
                 try {
-                    transferor = new Transferor();
-                    transferor.name = deckName.getText();
-                    transferor = TransferController.main(OrderEnum.IMPORT_DECK,transferor);
-                    if(transferor.errorType!=null){
-                       transferor.errorType.printMessage();
+                    transmitter = new Transmitter();
+                    transmitter.name = deckName.getText();
+                    transmitter = TransferController.main(OrderEnum.IMPORT_DECK, transmitter);
+                    if(transmitter.errorType!=null){
+                       transmitter.errorType.printMessage();
                     }
                     else{
-                        Deck deck = transferor.deck;
+                        Deck deck = transmitter.deck;
                         if (collection.passTheDeckIfHaveBeenExist(deck.getName()) == null) {
                             collection.getDecks().add(deck);
                             int i = collection.getDecks().size() - 1;
@@ -859,9 +859,9 @@ class CollectionScene {
                     ErrorType.HAVE_NOT_DECK.printMessage();
                 } else {
                     try {
-                        transferor = new Transferor();
-                        transferor.deck = deck;
-                        transferor = TransferController.main(OrderEnum.EXPORT_DECK,transferor);
+                        transmitter = new Transmitter();
+                        transmitter.deck = deck;
+                        transmitter = TransferController.main(OrderEnum.EXPORT_DECK, transmitter);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -883,9 +883,9 @@ class CollectionScene {
                             , collection, group);
                     root.getChildren().addAll(rectangle, newDeck, newDeckText,
                             importDeck, importText, close, text, deckName, exportDeck, exportText);
-                    Transferor transferor = new Transferor();
-                    transferor.deck = collection.getDecks().get(i);
-                    TransferController.main(OrderEnum.NEW_DECK,transferor);
+                    Transmitter transmitter = new Transmitter();
+                    transmitter.deck = collection.getDecks().get(i);
+                    TransferController.main(OrderEnum.NEW_DECK, transmitter);
                 }
 
             });

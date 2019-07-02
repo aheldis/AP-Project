@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="yagson-0.51">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/yagson-master/yagson-0.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../yagson-master/yagson-0.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

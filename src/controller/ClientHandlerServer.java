@@ -3,38 +3,39 @@ package controller;
 
 import java.io.IOException;
 
-public class ClientHandlerServer extends Thread{
-    private Transferor transferor;
+public class ClientHandlerServer extends Thread {
+    private Transmitter transmitter;
     private SocketClass socketClass;
 
-    public ClientHandlerServer(SocketClass socketClass){
+    public ClientHandlerServer(SocketClass socketClass) {
         this.socketClass = socketClass;
-        transferor = socketClass.getTransferor();
+        transmitter = socketClass.getTransmitter();
     }
-    public  void run() {
+
+    public void run() {
         boolean endOfClient = false;
 
-            while (true){
-                //todo if login or signUp add autToken to socketClass
-                //todo if quit make auth token null
+        while (true) {
+            //todo if login or signUp add autToken to socketClass
+            //todo if quit make auth token null
+            try {
+                transmitter = (Transmitter) socketClass.getInputStream().readObject();
+                if (transmitter != null) {
+                    RequsetEnumController.main(transmitter.requestEnum, socketClass, transmitter);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (endOfClient) {
                 try {
-                    transferor =(Transferor) socketClass.getInputStream().readObject();
-                    if (transferor != null) {
-                        RequsetEnumController.main(transferor.requestEnum,socketClass,transferor);
-                    }
-                }catch (Exception e){
+                    socketClass.getSocket().close();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                if(endOfClient) {
-                    try {
-                        socketClass.getSocket().close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
             }
+
+        }
 
     }
 }

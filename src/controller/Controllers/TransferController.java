@@ -2,66 +2,66 @@ package controller.Controllers;
 
 import controller.Client;
 import controller.RequestEnum;
-import controller.Transferor;
+import controller.Transmitter;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class TransferController {
-   static Transferor transferor ;
-   static ObjectOutputStream objectOutputStream =Client.getObjectOutputStream();
-   static ObjectInputStream objectInputStream = Client.getObjectInputStream();
+    static Transmitter transmitter;
+    static ObjectOutputStream objectOutputStream = Client.getObjectOutputStream();
+    static ObjectInputStream objectInputStream = Client.getObjectInputStream();
 
-   public static void transfer(boolean waitForAnswer){
-       try {
-           objectOutputStream.writeObject(transferor);
-           objectOutputStream.flush();
-           if(waitForAnswer) {
-               while (true) {
-                   transferor = (Transferor) objectInputStream.readObject();
-                   if (transferor != null) {
-                       break;
-                   }
-               }
-           }
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-   }
-
-    public static Transferor main(OrderEnum order, Transferor transferor){
-        TransferController.transferor = transferor;
-        switch (order){
+    public static Transmitter main(OrderEnum order, Transmitter transmitter) {
+        TransferController.transmitter = transmitter;
+        switch (order) {
             case ENTER_DECK:
-                transferor.requestEnum= RequestEnum.COLLECTION_DECKS;
+                transmitter.requestEnum = RequestEnum.COLLECTION_DECKS;
                 transfer(true);
-                return transferor;
+                return transmitter;
             case ENTER_COLLECTION:
-                transferor.requestEnum = RequestEnum.COLLECTION_SHOW;
+                transmitter.requestEnum = RequestEnum.COLLECTION_SHOW;
                 transfer(true);
-                return transferor;
+                return transmitter;
             case EXPORT_DECK:
-                transferor.requestEnum = RequestEnum.COLLECTION_EXPORT;
+                transmitter.requestEnum = RequestEnum.COLLECTION_EXPORT;
                 transfer(false);
-                return transferor;
+                return transmitter;
             case IMPORT_DECK:
-                transferor.requestEnum = RequestEnum.COLLECTION_IMPORT;
+                transmitter.requestEnum = RequestEnum.COLLECTION_IMPORT;
                 transfer(true);
-                return transferor;
+                return transmitter;
             case NEW_DECK:
-                transferor.requestEnum = RequestEnum.COLLECTION_NEW_DECK;
+                transmitter.requestEnum = RequestEnum.COLLECTION_NEW_DECK;
                 transfer(false);
-                return transferor;
+                return transmitter;
             case MAIN_DECK:
-                transferor.requestEnum = RequestEnum.COLLECTION_SELECT_MAIN_DECK;
+                transmitter.requestEnum = RequestEnum.COLLECTION_SELECT_MAIN_DECK;
                 transfer(false);
-                return transferor;
+                return transmitter;
             case CHAT:
-                transferor.requestEnum = RequestEnum.CHAT;
+                transmitter.requestEnum = RequestEnum.CHAT;
                 transfer(false);
-                return transferor;
+                return transmitter;
         }
-        return transferor;
+        return transmitter;
 
+    }
+
+    public static void transfer(boolean waitForAnswer) {
+        try {
+            objectOutputStream.writeObject(transmitter);
+            objectOutputStream.flush();
+            if (waitForAnswer) {
+                while (true) {
+                    transmitter = (Transmitter) objectInputStream.readObject();
+                    if (transmitter != null) {
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

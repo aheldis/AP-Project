@@ -14,7 +14,7 @@ import view.enums.ErrorType;
 
 import java.util.ArrayList;
 
-public class Transferor {
+public class Transmitter {
     public RequestEnum requestEnum;
     public Collection collection;
     public ArrayList<Card> cards;
@@ -27,5 +27,4 @@ public class Transferor {
     public ErrorType errorType = null;
     public long daric;
     public Group group;
-
 }

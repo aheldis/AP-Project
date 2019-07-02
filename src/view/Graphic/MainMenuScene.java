@@ -2,7 +2,7 @@ package view.Graphic;
 
 import controller.Controllers.TransferController;
 import controller.Controllers.OrderEnum;
-import controller.Transferor;
+import controller.Transmitter;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.scene.Group;
@@ -117,8 +117,8 @@ public class MainMenuScene {
         AnimationTimer collectionAnimation = graphAnimation(collectionGraph);
         Label collectionShadow = shadowAnimation(collection, collectionAnimation);
         collectionShadow.setOnMouseClicked(event -> {
-            Transferor transferor = TransferController.main(OrderEnum.ENTER_COLLECTION,new Transferor());
-            CollectionScene.showInCollection(transferor.collection);
+            Transmitter transmitter = TransferController.main(OrderEnum.ENTER_COLLECTION,new Transmitter());
+            CollectionScene.showInCollection(transmitter.collection);
             collectionAnimation.stop();
             setScene(StateType.COLLECTION);
         });
