@@ -1,6 +1,6 @@
 package view.Graphic;
 
-import controller.OrderEnum;
+import controller.client.OrderEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.geometry.Insets;
@@ -15,7 +15,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import model.account.Account;
-import model.account.Shop;
 import model.card.Card;
 import model.item.Item;
 import model.item.Usable;

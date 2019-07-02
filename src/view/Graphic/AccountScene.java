@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-import static controller.OrderEnum.LOGIN;
-import static controller.OrderEnum.SIGN_UP;
+import static controller.client.OrderEnum.LOGIN;
+import static controller.client.OrderEnum.SIGN_UP;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 

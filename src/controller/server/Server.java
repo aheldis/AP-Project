@@ -1,6 +1,4 @@
-package controller;
-
-import controller.server.ClientHandlerServer;
+package controller.server;
 
 import java.io.FileWriter;
 import java.io.IOException;

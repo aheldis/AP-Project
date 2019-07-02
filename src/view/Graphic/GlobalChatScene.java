@@ -1,12 +1,9 @@
 package view.Graphic;
 
-import com.google.gson.Gson;
 import controller.Controllers.OrderEnum;
 import controller.Controllers.TransferController;
-import controller.OrderEnum;
+import controller.client.OrderEnum;
 import controller.Transmitter;
-import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import controller.client.TransferController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -25,7 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import model.account.Account;
 import view.enums.StateType;

@@ -1,7 +1,7 @@
 package view.Graphic;
 
 import controller.client.TransferController;
-import controller.OrderEnum;
+import controller.client.OrderEnum;
 import controller.Transmitter;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import model.account.Account;
 import model.account.AllAccount;
 import view.enums.Cursor;
 import view.enums.StateType;

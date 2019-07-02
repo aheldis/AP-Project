@@ -1,16 +1,11 @@
 package controller.server;
 
 import com.gilecode.yagson.YaGson;
-import controller.RequestEnum;
-import controller.SocketClass;
 import controller.Transmitter;
-import com.google.gson.Gson;
 import javafx.scene.Group;
 import model.account.AllAccount;
-import model.account.Collection;
 import model.account.Shop;
 import model.battle.Deck;
-import model.item.Item;
 import model.item.Usable;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
@@ -18,7 +13,6 @@ import view.enums.ErrorType;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class RequestEnumController {
     static ArrayList<Group> groupTexts = new ArrayList<>();

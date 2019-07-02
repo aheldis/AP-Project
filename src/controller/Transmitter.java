@@ -1,5 +1,6 @@
 package controller;
 
+import controller.server.RequestEnum;
 import model.account.Collection;
 import model.battle.Deck;
 import model.card.Card;

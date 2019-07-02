@@ -1,4 +1,4 @@
-package controller;
+package controller.client;
 
 public enum OrderEnum {
     SIGN_UP,

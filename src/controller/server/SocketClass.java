@@ -1,5 +1,6 @@
-package controller;
+package controller.server;
 
+import controller.Transmitter;
 import model.account.Account;
 
 import java.io.ObjectInputStream;

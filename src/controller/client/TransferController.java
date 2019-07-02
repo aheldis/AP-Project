@@ -1,7 +1,6 @@
 package controller.client;
 
-import controller.OrderEnum;
-import controller.RequestEnum;
+import controller.server.RequestEnum;
 import controller.Transmitter;
 
 import java.io.IOException;

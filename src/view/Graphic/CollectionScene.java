@@ -1,6 +1,6 @@
 package view.Graphic;
 
-import controller.OrderEnum;
+import controller.client.OrderEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.application.Platform;
