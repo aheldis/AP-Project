@@ -65,7 +65,7 @@ public class TransferController {
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-                return transmitter;
+                return fromServerTransmitter;
             case SHOP_SELL:{
                 //todo gand zadi
                 transmitter.requestEnum = RequestEnum.SHOP_SELL;
