@@ -1,5 +1,7 @@
 package view.Graphic;
 
+import controller.Controllers.OrderEnum;
+import controller.Controllers.TransferController;
 import controller.Transmitter;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -173,9 +175,9 @@ public class GlobalChatScene {
                     addText(groupText, 30 + 85, 60, message, Color.WHITE, 20);
                 }
                 chatGroup.getChildren().addAll(groupText);
-//                transmitter = new Transmitter();
-//                transmitter.group = groupText;
-//                TransferController.main(OrderEnum.CHAT, transmitter);
+                transmitter = new Transmitter();
+                transmitter.group = groupText;
+                TransferController.main(OrderEnum.CHAT, transmitter);
             }
         });
     }

@@ -49,8 +49,8 @@ public class Client {
 //                RequsetEnumController.main(line);
 //            }
 
-
         }
+      //  }
 
         //todo at the end close everything
     }
