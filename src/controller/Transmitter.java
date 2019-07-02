@@ -14,12 +14,13 @@ import view.enums.ErrorType;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Transmitter implements Serializable {
+public class Transmitter implements Serializable { //todo check
     public RequestEnum requestEnum;
     public Collection collection;
     public ArrayList<Card> cards;
     public ArrayList<Item> items;
     public String name;
+    public String password;
     public String cardId;
     public Deck deck;
     public ArrayList<Deck> decks;
@@ -29,4 +30,7 @@ public class Transmitter implements Serializable {
     public byte[] profile;
     public String message;
     public String path;
+    public Group group;
+    public String string;
+    public Object object;
 }

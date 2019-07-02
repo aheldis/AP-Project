@@ -1,12 +1,13 @@
 package model.account;
 
 import com.gilecode.yagson.YaGson;
+import model.requirment.GeneralLogicMethods;
 import view.AccountView;
-import view.Graphic.GeneralGraphicMethods;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class AllAccount {
     private static AllAccount singleInstance = new AllAccount();
@@ -40,6 +41,10 @@ public class AllAccount {
         }
     }
 
+    public void addToAccounts(Account account) {
+        accounts.add(account);
+    }
+
     public static AllAccount getInstance() {
         if (singleInstance == null) {
             singleInstance = new AllAccount();
@@ -68,8 +73,18 @@ public class AllAccount {
         return singleInstance;
     }
 
-    public ArrayList<Account> getAccountsArrayList() {
-        return accounts;
+    public String getAuthToken(Account account) {
+        String authToken = account.getUserName() + "_" + getRandomString(4);
+        return authToken;
+    }
+
+    private String getRandomString(int length) {
+        StringBuilder string = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            string.append((char) (random.nextInt(26) + 'A'));
+        }
+        return string.toString();
     }
 
     public boolean userNameHaveBeenExist(String userName) {
@@ -117,8 +132,14 @@ public class AllAccount {
         addToAccounts(account);
     }
 
-    public void addToAccounts(Account account) {
-        accounts.add(account);
+
+    public boolean signUp(String userName, String password) {
+        if (userNameHaveBeenExist(userName))
+            return false;
+        createAccount(userName, password);
+        Account account = getAccountByName(userName);
+        saveAccount(account);
+        return true;
     }
 
     public ArrayList<Account> getAccounts() {
@@ -128,9 +149,14 @@ public class AllAccount {
     public void saveAccount(Account account) {
         try {
             String path = "AccountSaver/" + account.getUserName() + ".json";
-            GeneralGraphicMethods.saveInFile(path, account);
+            GeneralLogicMethods.saveInFile(path, account);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<Account> getAccountsArrayList() {
+        return accounts;
+    }
+
 }

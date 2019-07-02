@@ -1,6 +1,8 @@
-package controller.Controllers;
+package controller;
 
 public enum OrderEnum {
+    SIGN_UP,
+    LOGIN,
     ENTER_COLLECTION,
     ENTER_DECK,
     IMPORT_DECK,
@@ -10,6 +12,12 @@ public enum OrderEnum {
     ADD_CARD,
     CHAT,
     ENTER_CHAT,
-    CHECK_NEW_MEESSAGE
+    CHECK_NEW_MESSAGE,
+    SHOP_SELL,
+    SHOP_CARDS,
+    SHOP_BUY,
+    SHOP_HELP,
+    SHOP_SEARCH,
+    SHOP_ITEMS
 
 }

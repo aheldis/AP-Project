@@ -1,11 +1,12 @@
 package controller;
 
-public enum  RequestEnum {
+public enum RequestEnum {
     LOGIN,
     SIGN_UP,
     SHOP_BUY_AND_SELL,
     SHOP_SEARCH,
     SHOP_BUY,
+    SHOP_CARDS,
     SHOP_SELL,
     COLLECTION_SHOW,
     COLLECTION_DECKS,
@@ -16,6 +17,8 @@ public enum  RequestEnum {
     COLLECTION_IMPORT,
     COLLECTION_ADD_CARD_TO_DECK,
     CHAT,
-    ENTER_CHAT
+    ENTER_CHAT,
+    SHOP_HELP,
+    SHOP_ITEMS
 
 }

@@ -1,7 +1,7 @@
 package view.Graphic;
 
-import controller.Controllers.TransferController;
-import controller.Controllers.OrderEnum;
+import controller.client.TransferController;
+import controller.OrderEnum;
 import controller.Transmitter;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
@@ -37,7 +37,6 @@ public class MainMenuScene {
     private static ImageView chatGraph = null;
 //    private static ImageView matchHistoryGraph = null;
     private static HashMap<ImageView, Integer> graphs = new HashMap<>();
-    private Account account = null;
 
     private MainMenuScene() {
     }
@@ -46,8 +45,7 @@ public class MainMenuScene {
         return instance;
     }
 
-    void makeMenu(Account account) {
-        this.account = account;
+    void makeMenu() {
         ImageView brand = addImage(root, "pics/login_pics/brand_duelyst@2x.png",
                 130, 130, 1000 / 4.0, 216 / 4.0);
         menuNodes.add(brand);
@@ -300,12 +298,9 @@ public class MainMenuScene {
             case "LOG OUT":
                 root.getChildren().removeAll(menuNodes);
                 AccountScene.getInstance().addWindows();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        AllAccount.getInstance().saveAccount(account);
-                        account = null;
-                    }
+                new Thread(() -> {
+                    AllAccount.getInstance().saveAccount(account);
+                    account = null;
                 }).start();
                 break;
             case "NEW CARD":

@@ -1,5 +1,9 @@
-package controller;
+package controller.server;
 
+
+import controller.RequestEnumController;
+import controller.SocketClass;
+import controller.Transmitter;
 
 import java.io.IOException;
 
@@ -19,11 +23,11 @@ public class ClientHandlerServer extends Thread {
             //todo if login or signUp add autToken to socketClass
             //todo if quit make auth token null
             try {
-                if(socketClass ==null || socketClass.getInputStream() == null)
+                if (socketClass == null || socketClass.getInputStream() == null)
                     break;
                 transmitter = (Transmitter) socketClass.getInputStream().readObject();
                 if (transmitter != null) {
-                    RequsetEnumController.main(transmitter.requestEnum, socketClass, transmitter);
+                    RequestEnumController.main(transmitter.requestEnum, socketClass, transmitter);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

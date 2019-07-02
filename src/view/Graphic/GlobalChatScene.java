@@ -3,9 +3,11 @@ package view.Graphic;
 import com.google.gson.Gson;
 import controller.Controllers.OrderEnum;
 import controller.Controllers.TransferController;
+import controller.OrderEnum;
 import controller.Transmitter;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import controller.client.TransferController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -28,6 +30,8 @@ import javafx.scene.text.Text;
 import model.account.Account;
 import view.enums.StateType;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -178,7 +182,7 @@ public class GlobalChatScene {
 //    });
 
 
-        send.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        send.setOnMouseClicked(new EventHandler<>() {
             String message;
             Group groupText;
 
