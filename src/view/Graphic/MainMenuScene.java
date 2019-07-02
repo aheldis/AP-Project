@@ -1,7 +1,7 @@
 package view.Graphic;
 
-import controller.Controllers.TransferController;
-import controller.Controllers.OrderEnum;
+import controller.client.TransferController;
+import controller.OrderEnum;
 import controller.Transmitter;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;

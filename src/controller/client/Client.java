@@ -1,4 +1,4 @@
-package controller;
+package controller.client;
 
 import view.Graphic.StageLauncher;
 
@@ -46,7 +46,7 @@ public class Client {
 //
 //            if(inputStream.hasNextLine()) {
 //                line = inputStream.nextLine() ;
-//                RequsetEnumController.main(line);
+//                RequestEnumController.main(line);
 //            }
 
 

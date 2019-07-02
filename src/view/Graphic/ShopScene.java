@@ -83,6 +83,7 @@ class ShopScene {
         root.getChildren().addAll(hbox);
 
         group.setOnMouseClicked(event -> {
+            //todo ~
             Shop.getInstance().sell(account, textArea.getText());
             textArea.clear();
             daric.setText("Daric :" + account.getDaric());
@@ -91,6 +92,7 @@ class ShopScene {
     }
 
     private static void buyCard(HBox hBox, Text daric, Account account, ArrayList<Usable> items) {
+        //todo ~
         ArrayList<Card> cards = Shop.getInstance().getCards();
         VBox vBox = new VBox();//todo remember to delete
         for (int i = 0; i < 10; i++) {
@@ -159,6 +161,7 @@ class ShopScene {
                     group = CollectionScene.makeItemCard(item);
 
                     group.setOnMouseClicked(event -> {
+                        //todo ~
                         Shop.getInstance().buy(account, item.getName());
                         daric.setText("Daric :" + account.getDaric());
                     });
@@ -185,7 +188,8 @@ class ShopScene {
             hBox.getChildren().addAll(group);
             addText(group, 20, 225, card.getName(), Color.WHITE, 20);
             addText(group, 20, 245, card.getCost() + "", Color.WHITE, 20);
-            group.setOnMouseClicked(event -> {//todo set font
+            group.setOnMouseClicked(event -> {
+                //todo ~
                 Shop.getInstance().buy(account, card.getName());
                 daric.setText("Daric :" + account.getDaric());
             });

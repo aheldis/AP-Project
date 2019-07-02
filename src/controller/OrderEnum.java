@@ -1,4 +1,4 @@
-package controller.Controllers;
+package controller;
 
 public enum OrderEnum {
     ENTER_COLLECTION,

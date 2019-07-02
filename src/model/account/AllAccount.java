@@ -1,8 +1,8 @@
 package model.account;
 
 import com.gilecode.yagson.YaGson;
+import model.requirment.GeneralLogicMethods;
 import view.AccountView;
-import view.Graphic.GeneralGraphicMethods;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -128,7 +128,7 @@ public class AllAccount {
     public void saveAccount(Account account) {
         try {
             String path = "AccountSaver/" + account.getUserName() + ".json";
-            GeneralGraphicMethods.saveInFile(path, account);
+            GeneralLogicMethods.saveInFile(path, account);
         } catch (Exception e) {
             e.printStackTrace();
         }

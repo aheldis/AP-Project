@@ -1,6 +1,6 @@
-package controller.Controllers;
+package controller.client;
 
-import controller.Client;
+import controller.OrderEnum;
 import controller.RequestEnum;
 import controller.Transmitter;
 

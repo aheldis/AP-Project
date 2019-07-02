@@ -1,5 +1,8 @@
-package controller;
+package controller.server;
 
+
+import controller.SocketClass;
+import controller.Transmitter;
 
 import java.io.IOException;
 
@@ -21,7 +24,7 @@ public class ClientHandlerServer extends Thread {
             try {
                 transmitter = (Transmitter) socketClass.getInputStream().readObject();
                 if (transmitter != null) {
-                    RequsetEnumController.main(transmitter.requestEnum, socketClass, transmitter);
+                    RequestEnumController.main(transmitter.requestEnum, socketClass, transmitter);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

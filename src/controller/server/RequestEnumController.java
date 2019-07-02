@@ -1,15 +1,18 @@
-package controller;
+package controller.server;
 
 import com.gilecode.yagson.YaGson;
+import controller.RequestEnum;
+import controller.SocketClass;
+import controller.Transmitter;
 import model.battle.Deck;
-import view.Graphic.GeneralGraphicMethods;
+import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RequsetEnumController {
+public class RequestEnumController {
 
     public static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
         Transmitter transmitter;
@@ -47,7 +50,7 @@ public class RequsetEnumController {
                 Deck deck = clientTransmitter.deck;
                 String path = "exportedDeck/" + socketClass.getAccount().getUserName()
                         + "." + deck.getName() + ".json";
-                GeneralGraphicMethods.saveInFile(path, deck);
+                GeneralLogicMethods.saveInFile(path, deck);
                 break;
             case COLLECTION_IMPORT:
                 InputStream input = null;

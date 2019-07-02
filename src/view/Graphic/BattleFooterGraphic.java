@@ -13,6 +13,7 @@ import model.battle.Player;
 import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
+import model.requirment.GeneralLogicMethods;
 import view.enums.StateType;
 
 import java.util.ArrayList;
@@ -167,7 +168,7 @@ public class BattleFooterGraphic {
             new Thread(() -> {
                 try {
                     String path = "PausedGames/" + battleScene.getMatch().getMatchNumber() + ".json";
-                    GeneralGraphicMethods.saveInFile(path, battleScene);
+                    GeneralLogicMethods.saveInFile(path, battleScene);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

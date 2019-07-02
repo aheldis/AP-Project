@@ -344,17 +344,4 @@ public class GeneralGraphicMethods {
         return lighting;
     }
 
-    public static void saveInFile(String path, Object object) {
-        try {
-            File file = new File(path);
-            if (file.exists())
-                file.delete();
-            YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
-            FileWriter fileWriter = new FileWriter(file);
-            altMapper.toJson(object, fileWriter);
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
