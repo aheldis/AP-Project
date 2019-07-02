@@ -1,6 +1,7 @@
 package controller;
 
 import controller.server.RequestEnum;
+import javafx.scene.Group;
 import model.account.Collection;
 import model.battle.Deck;
 import model.card.Card;
@@ -31,7 +32,7 @@ public class Transmitter implements Serializable { //todo check
     public byte[] profile;
     public String message;
     public String path;
-    public Group group;
+    //public Group group;
     public String string;
     public Object object;
 }

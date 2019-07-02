@@ -1,8 +1,7 @@
 package view.Graphic;
 
-import controller.Controllers.OrderEnum;
-import controller.Controllers.TransferController;
 import controller.client.OrderEnum;
+import com.google.gson.Gson;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.event.EventHandler;
@@ -178,7 +177,7 @@ public class GlobalChatScene {
 //    });
 
 
-        send.setOnMouseClicked(new EventHandler<>() {
+        send.setOnMouseClicked(new EventHandler<MouseEvent>() {
             String message;
             Group groupText;
 
@@ -198,7 +197,7 @@ public class GlobalChatScene {
         });
 
        chatScene.setOnMouseClicked(event -> {
-            Transmitter transmitter = TransferController.main(OrderEnum.CHECK_NEW_MEESSAGE, new Transmitter());
+            Transmitter transmitter = TransferController.main(OrderEnum.CHECK_NEW_MESSAGE, new Transmitter());
             Group groupText = new Group();
             groupText.relocate(50, 0);
             String message = transmitter.message;

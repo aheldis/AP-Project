@@ -59,7 +59,7 @@ public class TransferController {
                 try {
                     Object object = objectInputStream.readObject();
                     if (object != null) {
-                        transmitter.group = ((Transmitter) object).group;
+                        transmitter = (Transmitter) object;
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
