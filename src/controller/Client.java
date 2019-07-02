@@ -32,15 +32,14 @@ public class Client {
                 socket = new Socket(fileScanner.nextLine().split(":")[1], Integer.parseInt(fileScanner.nextLine().split((":"))[1]));
                 fileScanner.close();
             } catch (Exception e) {
-                e.printStackTrace();
                 socket = new Socket(HOST, PORT);
+                e.printStackTrace();
             }
-            inputStream = new ObjectInputStream(socket.getInputStream());
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         StageLauncher.main(args);
         while (true) {
 //

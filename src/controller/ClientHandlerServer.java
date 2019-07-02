@@ -19,6 +19,8 @@ public class ClientHandlerServer extends Thread {
             //todo if login or signUp add autToken to socketClass
             //todo if quit make auth token null
             try {
+                if(socketClass ==null || socketClass.getInputStream() == null)
+                    break;
                 transmitter = (Transmitter) socketClass.getInputStream().readObject();
                 if (transmitter != null) {
                     RequsetEnumController.main(transmitter.requestEnum, socketClass, transmitter);

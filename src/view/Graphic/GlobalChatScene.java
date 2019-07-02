@@ -3,6 +3,7 @@ package view.Graphic;
 import controller.Controllers.OrderEnum;
 import controller.Controllers.TransferController;
 import controller.Transmitter;
+import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -93,6 +94,9 @@ public class GlobalChatScene {
     }
 
     public static void main(Account account) {
+        TransferController.main(OrderEnum.ENTER_CHAT, new Transmitter());
+
+
         setBackground(root, "pics/menu/world_map@2x.jpg", false, 0, 0);
 //        addRectangle(root,0,0,(int)StageLauncher.getWidth(),
 //                (int)StageLauncher.getHeight(),0,0,Color.rgb(106,50,200,0.3));
@@ -143,6 +147,15 @@ public class GlobalChatScene {
         root.getChildren().addAll(sc);
         sc.valueProperty().addListener((ov, old_val, new_val) ->
                 chatGroup.setLayoutY(-new_val.doubleValue() * 11));
+//        AnimationTimer animationTimer = new AnimationTimer() {
+//            @Override
+//            public void handle(long now) {
+//                Transmitter transmitter=TransferController.main(OrderEnum.CHEK_NEW_MEESSAGE, new Transmitter());
+//                chatGroup.getChildren().addAll(transmitter.group);
+//
+//            }
+//        };
+//        animationTimer.start();
 
 
         send.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -174,12 +187,14 @@ public class GlobalChatScene {
                     text.setStroke(Color.rgb(200, 100, 100));
                     addText(groupText, 30 + 85, 60, message, Color.WHITE, 20);
                 }
-                chatGroup.getChildren().addAll(groupText);
+               // chatGroup.getChildren().addAll(groupText);
                 transmitter = new Transmitter();
                 transmitter.group = groupText;
                 TransferController.main(OrderEnum.CHAT, transmitter);
             }
         });
+
+        //todo back send exit from chat delete from server + stop animationimer
     }
 
 }

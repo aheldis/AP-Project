@@ -1,9 +1,11 @@
 package controller.Controllers;
 
+import com.sun.org.apache.regexp.internal.RE;
 import controller.Client;
 import controller.RequestEnum;
 import controller.Transmitter;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -39,9 +41,25 @@ public class TransferController {
                 transmitter.requestEnum = RequestEnum.COLLECTION_SELECT_MAIN_DECK;
                 transfer(false);
                 return transmitter;
+            case ENTER_CHAT:
+                transmitter.requestEnum = RequestEnum.ENTER_CHAT;
+                transfer(false);
+                return transmitter;
             case CHAT:
                 transmitter.requestEnum = RequestEnum.CHAT;
                 transfer(false);
+                return transmitter;
+            case CHEK_NEW_MEESSAGE:
+                try {
+                    Object object =  objectInputStream.readObject();
+                    if(object!=null){
+                        transmitter.group=((Transmitter )object).group;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
                 return transmitter;
         }
         return transmitter;

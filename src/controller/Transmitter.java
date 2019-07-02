@@ -12,9 +12,10 @@ import view.enums.ErrorType;
  * in SHOP we should receive daric
  */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Transmitter {
+public class Transmitter implements Serializable {
     public RequestEnum requestEnum;
     public Collection collection;
     public ArrayList<Card> cards;
