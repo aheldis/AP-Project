@@ -1,9 +1,10 @@
-package controller.server;
+package controller;
 
 import com.gilecode.yagson.YaGson;
 import controller.RequestEnum;
 import controller.SocketClass;
 import controller.Transmitter;
+import javafx.scene.Group;
 import model.battle.Deck;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
@@ -13,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RequestEnumController {
+public class RequsetEnumController {
+    static ArrayList<Group> groupTexts = new ArrayList<>();
+    static ArrayList<SocketClass> chatPerson = new ArrayList<>();
 
     public static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
         Transmitter transmitter;
@@ -78,8 +82,15 @@ public class RequestEnumController {
             case COLLECTION_SELECT_MAIN_DECK:
                 socketClass.getAccount().getCollection().selectADeckAsMainDeck(transmitter.deck.getName());
                 break;
+            case ENTER_CHAT:
+                chatPerson.add(socketClass);
+                break;
             case CHAT:
-
+                groupTexts.add(clientTransmitter.group);
+                for(SocketClass person:chatPerson){
+                    person.getTransmitter().group = clientTransmitter.group;
+                    transfer(person);
+                }
                 break;
         }
         socketClass.changeTransmitter();

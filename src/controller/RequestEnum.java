@@ -15,6 +15,7 @@ public enum  RequestEnum {
     COLLECTION_EXPORT,
     COLLECTION_IMPORT,
     COLLECTION_ADD_CARD_TO_DECK,
-    CHAT
+    CHAT,
+    ENTER_CHAT
 
 }

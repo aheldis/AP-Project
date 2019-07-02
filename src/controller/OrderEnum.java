@@ -8,6 +8,8 @@ public enum OrderEnum {
     NEW_DECK,
     MAIN_DECK,
     ADD_CARD,
-    CHAT
+    CHAT,
+    ENTER_CHAT,
+    CHEK_NEW_MEESSAGE
 
 }
