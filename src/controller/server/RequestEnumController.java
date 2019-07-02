@@ -6,14 +6,18 @@ import controller.SocketClass;
 import controller.Transmitter;
 import javafx.scene.Group;
 import model.account.AllAccount;
+import model.account.Collection;
 import model.account.Shop;
 import model.battle.Deck;
+import model.item.Item;
+import model.item.Usable;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class RequestEnumController {
     static ArrayList<Group> groupTexts = new ArrayList<>();
@@ -38,21 +42,40 @@ public class RequestEnumController {
                 break;
             case SHOP_BUY_AND_SELL:
                 break;
-            case SHOP_BUY:
+            case SHOP_BUY: {
+                Shop.getInstance().buy(socketClass.getAccount(), clientTransmitter.name);
+                transmitter.daric = socketClass.getAccount().getDaric();
+                transfer(socketClass);
                 break;
+            }
             case SHOP_SELL: {
                 transmitter.errorType = Shop.getInstance().sell(socketClass.getAccount(), clientTransmitter.name);
                 transmitter.daric = socketClass.getAccount().getDaric();
                 transfer(socketClass);
                 break;
             }
-            case SHOP_CARDS:{
+            case SHOP_CARDS: {
                 transmitter.cards = Shop.getInstance().getCards();
                 transfer(socketClass);
                 break;
             }
-            case SHOP_SEARCH:
+            case SHOP_HELP: {
+                transmitter.string = Shop.getInstance().help();
+                transfer(socketClass);
                 break;
+            }
+            case SHOP_SEARCH: {
+                transmitter.object = Shop.getInstance().search(socketClass.getAccount(), clientTransmitter.name);
+                transfer(socketClass);
+                break;
+            }
+            case SHOP_ITEMS:{
+                ArrayList<Usable> items = Shop.getInstance().getItems();
+                transmitter.items = new ArrayList<>();
+                items.forEach(item -> transmitter.items.add(item));
+                transfer(socketClass);
+                break;
+            }
 
 
             case COLLECTION_SHOW:
@@ -105,7 +128,7 @@ public class RequestEnumController {
                 break;
             case CHAT:
                 groupTexts.add(clientTransmitter.group);
-                for(SocketClass person:chatPerson){
+                for (SocketClass person : chatPerson) {
                     person.getTransmitter().group = clientTransmitter.group;
                     transfer(person);
                 }

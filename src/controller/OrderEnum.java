@@ -14,6 +14,10 @@ public enum OrderEnum {
     ENTER_CHAT,
     CHECK_NEW_MESSAGE,
     SHOP_SELL,
-    SHOP_CARDS
+    SHOP_CARDS,
+    SHOP_BUY,
+    SHOP_HELP,
+    SHOP_SEARCH,
+    SHOP_ITEMS
 
 }

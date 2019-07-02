@@ -67,9 +67,35 @@ public class TransferController {
                 }
                 return transmitter;
             case SHOP_SELL:{
-                transmitter.requestEnum = RequestEnum.SHOP_CARDS;
+                //todo gand zadi
+                transmitter.requestEnum = RequestEnum.SHOP_SELL;
                 transfer(true);
-                return transmitter;
+                return fromServerTransmitter;
+            }
+            case SHOP_BUY:{
+                transmitter.requestEnum = RequestEnum.SHOP_BUY;
+                transfer(true);
+                break;
+            }
+            case SHOP_HELP:{
+                transmitter.requestEnum = RequestEnum.SHOP_HELP;
+                transfer(true);
+                break;
+            }
+            case SHOP_SEARCH:{
+                transmitter.requestEnum = RequestEnum.SHOP_SEARCH;
+                transfer(true);
+                break;
+            }
+            case SHOP_CARDS:{
+                transmitter.requestEnum= RequestEnum.SHOP_CARDS;
+                transfer(true);
+                break;
+            }
+            case SHOP_ITEMS:{
+                transmitter.requestEnum = RequestEnum.SHOP_ITEMS;
+                transfer(true);
+                break;
             }
         }
         return fromServerTransmitter;

@@ -18,6 +18,7 @@ public enum RequestEnum {
     COLLECTION_ADD_CARD_TO_DECK,
     CHAT,
     ENTER_CHAT,
-
+    SHOP_HELP,
+    SHOP_ITEMS
 
 }

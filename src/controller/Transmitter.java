@@ -29,4 +29,6 @@ public class Transmitter implements Serializable { //todo check
     public ErrorType errorType = null;
     public long daric;
     public Group group;
+    public String string;
+    public Object object;
 }
