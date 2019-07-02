@@ -1,6 +1,7 @@
 package controller.server;
 
 
+import controller.RequestEnumController;
 import controller.SocketClass;
 import controller.Transmitter;
 
@@ -22,7 +23,7 @@ public class ClientHandlerServer extends Thread {
             //todo if login or signUp add autToken to socketClass
             //todo if quit make auth token null
             try {
-                if(socketClass ==null || socketClass.getInputStream() == null)
+                if (socketClass == null || socketClass.getInputStream() == null)
                     break;
                 transmitter = (Transmitter) socketClass.getInputStream().readObject();
                 if (transmitter != null) {

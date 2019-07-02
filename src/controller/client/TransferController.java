@@ -9,9 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class TransferController {
-    static Transmitter transmitter;
-    static ObjectOutputStream objectOutputStream = Client.getObjectOutputStream();
-    static ObjectInputStream objectInputStream = Client.getObjectInputStream();
+    private static Transmitter transmitter;
+    private static ObjectOutputStream objectOutputStream = Client.getObjectOutputStream();
+    private static ObjectInputStream objectInputStream = Client.getObjectInputStream();
 
     public static Transmitter main(OrderEnum order, Transmitter transmitter) {
         TransferController.transmitter = transmitter;
@@ -48,15 +48,13 @@ public class TransferController {
                 transmitter.requestEnum = RequestEnum.CHAT;
                 transfer(false);
                 return transmitter;
-            case CHEK_NEW_MEESSAGE:
+            case CHECK_NEW_MASSAGE:
                 try {
                     Object object =  objectInputStream.readObject();
                     if(object!=null){
                         transmitter.group=((Transmitter )object).group;
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
                 return transmitter;
@@ -65,17 +63,14 @@ public class TransferController {
 
     }
 
-    public static void transfer(boolean waitForAnswer) {
+    private static void transfer(boolean waitForAnswer) {
         try {
             objectOutputStream.writeObject(transmitter);
             objectOutputStream.flush();
             if (waitForAnswer) {
-                while (true) {
+                do {
                     transmitter = (Transmitter) objectInputStream.readObject();
-                    if (transmitter != null) {
-                        break;
-                    }
-                }
+                } while (transmitter == null);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,9 +1,6 @@
 package controller;
 
 import com.gilecode.yagson.YaGson;
-import controller.RequestEnum;
-import controller.SocketClass;
-import controller.Transmitter;
 import javafx.scene.Group;
 import model.battle.Deck;
 import model.requirment.GeneralLogicMethods;
@@ -96,7 +93,7 @@ public class RequestEnumController {
 
     }
 
-    public static void transfer(SocketClass socketClass) {
+    private static void transfer(SocketClass socketClass) {
         try {
             socketClass.getOutputStream().writeObject(socketClass.getTransmitter());
             socketClass.getOutputStream().flush();
