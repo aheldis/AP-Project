@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RequestEnumController {
-public class RequsetEnumController {
     static ArrayList<Group> groupTexts = new ArrayList<>();
     static ArrayList<SocketClass> chatPerson = new ArrayList<>();
 
