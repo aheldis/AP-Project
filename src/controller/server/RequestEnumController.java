@@ -6,6 +6,7 @@ import controller.SocketClass;
 import controller.Transmitter;
 import javafx.scene.Group;
 import model.account.AllAccount;
+import model.account.Shop;
 import model.battle.Deck;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
@@ -39,8 +40,17 @@ public class RequestEnumController {
                 break;
             case SHOP_BUY:
                 break;
-            case SHOP_SELL:
+            case SHOP_SELL: {
+                transmitter.errorType = Shop.getInstance().sell(socketClass.getAccount(), clientTransmitter.name);
+                transmitter.daric = socketClass.getAccount().getDaric();
+                transfer(socketClass);
                 break;
+            }
+            case SHOP_CARDS:{
+                transmitter.cards = Shop.getInstance().getCards();
+                transfer(socketClass);
+                break;
+            }
             case SHOP_SEARCH:
                 break;
 

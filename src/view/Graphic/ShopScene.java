@@ -86,20 +86,18 @@ class ShopScene {
         root.getChildren().addAll(hbox);
 
         group.setOnMouseClicked(event -> {
-            //todo ~
             Transmitter transmitter = new Transmitter();
-            transmitter.
-            transmitter = TransferController.main(OrderEnum.SHOP_SELL,)
-            Shop.getInstance().sell(account, textArea.getText());
+            transmitter.name = textArea.getText();
+            transmitter = TransferController.main(OrderEnum.SHOP_SELL, transmitter);
             textArea.clear();
-            daric.setText("Daric :" + account.getDaric());
+            daric.setText("Daric :" + transmitter.daric);
         });
         return hbox;
     }
 
     private static void buyCard(HBox hBox, Text daric, Account account, ArrayList<Usable> items) {
-        //todo ~
-        ArrayList<Card> cards = Shop.getInstance().getCards();
+        Transmitter transmitter = TransferController.main(OrderEnum.SHOP_CARDS, new Transmitter());
+        ArrayList<Card> cards = transmitter.cards;
         VBox vBox = new VBox();//todo remember to delete
         for (int i = 0; i < 10; i++) {
             if (i >= cards.size()) {

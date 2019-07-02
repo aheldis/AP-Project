@@ -13,6 +13,7 @@ public enum OrderEnum {
     CHAT,
     ENTER_CHAT,
     CHECK_NEW_MESSAGE,
-    SHOP_SELL
+    SHOP_SELL,
+    SHOP_CARDS
 
 }

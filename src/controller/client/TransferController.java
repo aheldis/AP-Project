@@ -66,6 +66,11 @@ public class TransferController {
                     e.printStackTrace();
                 }
                 return transmitter;
+            case SHOP_SELL:{
+                transmitter.requestEnum = RequestEnum.SHOP_CARDS;
+                transfer(true);
+                return transmitter;
+            }
         }
         return fromServerTransmitter;
 

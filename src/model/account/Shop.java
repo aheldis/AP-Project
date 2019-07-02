@@ -227,7 +227,7 @@ public class Shop {
         return false;
     }
 
-    public void sell(Account account, String id) {
+    public ErrorType sell(Account account, String id) {
         Collection collection = account.getCollection();
         Card card = collection.passCardByCardId(id);
         Usable item = collection.passUsableItemByUsableItemId(id);
@@ -238,8 +238,9 @@ public class Shop {
             account.changeValueOfDaric(item.getCost());
             collection.removeItem(item);
         } else {
-            ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION.printMessage();
+            return ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION;
         }
+        return null;
     }
 
 

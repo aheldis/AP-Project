@@ -6,6 +6,7 @@ public enum RequestEnum {
     SHOP_BUY_AND_SELL,
     SHOP_SEARCH,
     SHOP_BUY,
+    SHOP_CARDS,
     SHOP_SELL,
     COLLECTION_SHOW,
     COLLECTION_DECKS,
@@ -16,6 +17,7 @@ public enum RequestEnum {
     COLLECTION_IMPORT,
     COLLECTION_ADD_CARD_TO_DECK,
     CHAT,
-    ENTER_CHAT
+    ENTER_CHAT,
+
 
 }
