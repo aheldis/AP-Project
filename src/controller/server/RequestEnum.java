@@ -3,6 +3,7 @@ package controller.server;
 public enum RequestEnum {
     LOGIN,
     SIGN_UP,
+    LOGOUT,
     SHOP_BUY_AND_SELL,
     SHOP_SEARCH,
     SHOP_BUY,

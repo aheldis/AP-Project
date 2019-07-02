@@ -22,6 +22,7 @@ public class Account implements Comparable<Account>, Cloneable {
     private ArrayList<Deck> decks = new ArrayList<>();
     private String accountImagePath = null;
     private String profileImagePath = null;
+    private String authToken;
 
     public String getAccountImagePath() {
         if(accountImagePath == null)
@@ -137,6 +138,12 @@ public class Account implements Comparable<Account>, Cloneable {
             accountView.viewAMatch(match, this);
         }
     }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+
 
 
 //    public void accountSave() {

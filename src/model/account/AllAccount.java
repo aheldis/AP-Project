@@ -73,19 +73,6 @@ public class AllAccount {
         return singleInstance;
     }
 
-    public String getAuthToken(Account account) {
-        String authToken = account.getUserName() + "_" + getRandomString(4);
-        return authToken;
-    }
-
-    private String getRandomString(int length) {
-        StringBuilder string = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < length; i++) {
-            string.append((char) (random.nextInt(26) + 'A'));
-        }
-        return string.toString();
-    }
 
     public boolean userNameHaveBeenExist(String userName) {
         for (Account account : accounts) {
@@ -141,7 +128,19 @@ public class AllAccount {
         saveAccount(account);
         return true;
     }
+    public String getAuthToken(Account account) {
+        String authToken = account.getUserName() + "_" + getRandomString(4);
+        return authToken;
+    }
 
+    private String getRandomString(int length) {
+        StringBuilder string = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            string.append((char) (random.nextInt(26) + 'A'));
+        }
+        return string.toString();
+    }
     public ArrayList<Account> getAccounts() {
         return accounts;
     }

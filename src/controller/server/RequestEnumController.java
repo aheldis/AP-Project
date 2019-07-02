@@ -28,13 +28,23 @@ public class RequestEnumController {
                 boolean canSignUp = allAccount.signUp(clientTransmitter.name, clientTransmitter.password);
                 if (!canSignUp)
                     transmitter.errorType = ErrorType.USER_NAME_ALREADY_EXIST;
+                socketClass.setAccount(allAccount.getAccountByName(clientTransmitter.name));
+                socketClass.getAccount().setAuthToken(AllAccount.getInstance().getAuthToken(socketClass.getAccount()));
                 break;
             case LOGIN:
                 if (!allAccount.userNameHaveBeenExist(clientTransmitter.name))
                     transmitter.errorType = ErrorType.USER_NAME_NOT_FOUND;
                 else if (!allAccount.passwordMatcher(clientTransmitter.name, clientTransmitter.password))
                     transmitter.errorType = ErrorType.PASSWORD_DOES_NOT_MATCH;
+                socketClass.setAccount(allAccount.getAccountByName(clientTransmitter.name));
+                socketClass.getAccount().setAuthToken(AllAccount.getInstance().getAuthToken(socketClass.getAccount()));
                 break;
+            case LOGOUT: {
+                //todo
+                socketClass.getAccount().setAuthToken(null);
+                socketClass.setAccount(null);
+                break;
+            }
             case SHOP_BUY_AND_SELL:
                 break;
             case SHOP_BUY: {

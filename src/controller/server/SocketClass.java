@@ -13,7 +13,6 @@ public class SocketClass {
     private ObjectOutputStream objectOutputStream;
     private Transmitter transmitter = new Transmitter();
     private Account account;
-    private String authToken;
 
     public SocketClass(Socket socket) {
         this.socket = socket;
@@ -49,4 +48,9 @@ public class SocketClass {
     public Account getAccount() {
         return account;
     }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
 }
