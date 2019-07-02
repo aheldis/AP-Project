@@ -1,10 +1,11 @@
-package controller;
+package controller.server;
 
 import com.gilecode.yagson.YaGson;
 import controller.RequestEnum;
 import controller.SocketClass;
 import controller.Transmitter;
 import javafx.scene.Group;
+import model.account.AllAccount;
 import model.battle.Deck;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
@@ -20,11 +21,19 @@ public class RequestEnumController {
     public static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
         Transmitter transmitter;
         transmitter = socketClass.getTransmitter();
+        AllAccount allAccount = AllAccount.getInstance();
         switch (requestEnum) {
 
             case SIGN_UP:
+                boolean canSignUp = allAccount.signUp(clientTransmitter.name, clientTransmitter.password);
+                if (!canSignUp)
+                    transmitter.errorType = ErrorType.USER_NAME_ALREADY_EXIST;
                 break;
             case LOGIN:
+                if (!allAccount.userNameHaveBeenExist(clientTransmitter.name))
+                    transmitter.errorType = ErrorType.USER_NAME_NOT_FOUND;
+                else if (!allAccount.passwordMatcher(clientTransmitter.name, clientTransmitter.password))
+                    transmitter.errorType = ErrorType.PASSWORD_DOES_NOT_MATCH;
                 break;
             case SHOP_BUY_AND_SELL:
                 break;
@@ -96,7 +105,7 @@ public class RequestEnumController {
 
     }
 
-    public static void transfer(SocketClass socketClass) {
+    private static void transfer(SocketClass socketClass) {
         try {
             socketClass.getOutputStream().writeObject(socketClass.getTransmitter());
             socketClass.getOutputStream().flush();

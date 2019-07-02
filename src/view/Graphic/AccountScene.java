@@ -1,5 +1,7 @@
 package view.Graphic;
 
+import controller.Transmitter;
+import controller.client.TransferController;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -13,16 +15,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import model.account.Account;
-import model.account.AllAccount;
 import view.enums.Cursor;
-import view.enums.ErrorType;
 import view.enums.StateType;
 
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
+import static controller.OrderEnum.LOGIN;
+import static controller.OrderEnum.SIGN_UP;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 
@@ -118,36 +119,28 @@ public class AccountScene {
 
 
     private void buttonAction(Button enterButton, String userName, String password) {
-        AllAccount allAccount = AllAccount.getInstance();
         MainMenuScene mainMenuScene = MainMenuScene.getInstance();
-        Account account;
+        Transmitter transmitter = new Transmitter();
+        transmitter.name = userName;
+        transmitter.password = password;
         if (enterButton.getText().equals("SIGN UP")) {
-            if (allAccount.userNameHaveBeenExist(userName)) {
-                ErrorType.USER_NAME_ALREADY_EXIST.printMessage();
+            TransferController.main(SIGN_UP, transmitter);
+            if (transmitter.errorType != null) {
+                transmitter.errorType.printMessage();
                 return;
             }
-
-            allAccount.createAccount(userName, password);
-            account = allAccount.getAccountByName(userName);
-
-            allAccount.saveAccount(account);
-
             root.getChildren().removeAll(windows);
-            mainMenuScene.makeMenu(account);
-        } else if (!allAccount.userNameHaveBeenExist(userName)) {
-            ErrorType.USER_NAME_NOT_FOUND.printMessage();
-            return;
+            mainMenuScene.makeMenu();
         } else {
-            if (!allAccount.passwordMatcher(userName, password)) {
-                ErrorType.PASSWORD_DOES_NOT_MATCH.printMessage();
+            TransferController.main(LOGIN, transmitter);
+            if (transmitter.errorType != null) {
+                transmitter.errorType.printMessage();
                 return;
             }
 
-            account = allAccount.getAccountByName(userName);
             root.getChildren().removeAll(windows);
-            mainMenuScene.makeMenu(account);
+            mainMenuScene.makeMenu();
         }
-        StageLauncher.setAccount(account);
     }
 
 

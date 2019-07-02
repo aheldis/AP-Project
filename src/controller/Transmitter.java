@@ -21,6 +21,7 @@ public class Transmitter implements Serializable { //todo check
     public ArrayList<Card> cards;
     public ArrayList<Item> items;
     public String name;
+    public String password;
     public String cardId;
     public Deck deck;
     public ArrayList<Deck> decks;

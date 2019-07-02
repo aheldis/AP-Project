@@ -31,7 +31,6 @@ public abstract class Item {
     }
 
     public Item() {
-
     }
 
     public int getCost() {
@@ -117,7 +116,7 @@ public abstract class Item {
 
     public Target getTarget() {
         if (target == null)
-            System.out.println("you're uglhy");
+            System.out.println("you're ugly");
         return target;
     }
 

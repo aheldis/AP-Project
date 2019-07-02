@@ -132,6 +132,20 @@ public class AllAccount {
         addToAccounts(account);
     }
 
+
+    public boolean signUp(String userName, String password) {
+        if (userNameHaveBeenExist(userName))
+            return false;
+        createAccount(userName, password);
+        Account account = getAccountByName(userName);
+        saveAccount(account);
+        return true;
+    }
+
+    public ArrayList<Account> getAccounts() {
+        return accounts;
+    }
+
     public void saveAccount(Account account) {
         try {
             String path = "AccountSaver/" + account.getUserName() + ".json";
@@ -145,7 +159,4 @@ public class AllAccount {
         return accounts;
     }
 
-    public ArrayList<Account> getAccounts() {
-        return accounts;
-    }
 }

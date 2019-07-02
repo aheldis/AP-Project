@@ -16,7 +16,7 @@ public class Client {
     private static ObjectInputStream inputStream;
     private static ObjectOutputStream objectOutputStream;
 
-    public static ObjectOutputStream getObjectOutputStream() {
+    static ObjectOutputStream getObjectOutputStream() {
         return objectOutputStream;
     }
     public static ObjectInputStream getObjectInputStream() {

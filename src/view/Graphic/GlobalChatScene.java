@@ -1,9 +1,8 @@
 package view.Graphic;
 
-import controller.Controllers.OrderEnum;
-import controller.Controllers.TransferController;
+import controller.OrderEnum;
 import controller.Transmitter;
-import javafx.animation.AnimationTimer;
+import controller.client.TransferController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -24,7 +23,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import model.account.Account;
 import view.enums.StateType;
-
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -150,7 +148,7 @@ public class GlobalChatScene {
 //        AnimationTimer animationTimer = new AnimationTimer() {
 //            @Override
 //            public void handle(long now) {
-//                Transmitter transmitter=TransferController.main(OrderEnum.CHECK_NEW_MESSAGE, new Transmitter());
+//                Transmitter transmitter=TransferController.main(OrderEnum.CHECK_NEW_MASSAGE, new Transmitter());
 //                chatGroup.getChildren().addAll(transmitter.group);
 //
 //            }
@@ -158,7 +156,7 @@ public class GlobalChatScene {
 //        animationTimer.start();
 
 
-        send.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        send.setOnMouseClicked(new EventHandler<>() {
             String message;
             Group groupText;
             Transmitter transmitter = new Transmitter();
@@ -187,7 +185,7 @@ public class GlobalChatScene {
                     text.setStroke(Color.rgb(200, 100, 100));
                     addText(groupText, 30 + 85, 60, message, Color.WHITE, 20);
                 }
-               // chatGroup.getChildren().addAll(groupText);
+                // chatGroup.getChildren().addAll(groupText);
                 transmitter = new Transmitter();
                 transmitter.group = groupText;
                 TransferController.main(OrderEnum.CHAT, transmitter);
