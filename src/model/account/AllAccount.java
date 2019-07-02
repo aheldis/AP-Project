@@ -121,6 +121,15 @@ public class AllAccount {
         accounts.add(account);
     }
 
+    public boolean signUp(String userName, String password) {
+        if (userNameHaveBeenExist(userName))
+            return false;
+        createAccount(userName, password);
+        Account account = getAccountByName(userName);
+        saveAccount(account);
+        return true;
+    }
+
     public ArrayList<Account> getAccounts() {
         return accounts;
     }

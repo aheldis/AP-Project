@@ -1,3 +1,4 @@
+
 package controller.client;
 
 import controller.OrderEnum;
@@ -9,68 +10,76 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class TransferController {
-    private static Transmitter transmitter;
+    private static Transmitter fromServerTransmitter;
     private static ObjectOutputStream objectOutputStream = Client.getObjectOutputStream();
     private static ObjectInputStream objectInputStream = Client.getObjectInputStream();
 
     public static Transmitter main(OrderEnum order, Transmitter transmitter) {
-        TransferController.transmitter = transmitter;
+        fromServerTransmitter = transmitter;
         switch (order) {
+            case SIGN_UP:
+                transmitter.requestEnum = RequestEnum.SIGN_UP;
+                transfer(true);
+                return fromServerTransmitter;
+            case LOGIN:
+                transmitter.requestEnum = RequestEnum.LOGIN;
+                transfer(true);
+                return fromServerTransmitter;
             case ENTER_DECK:
                 transmitter.requestEnum = RequestEnum.COLLECTION_DECKS;
                 transfer(true);
-                return transmitter;
+                return fromServerTransmitter;
             case ENTER_COLLECTION:
                 transmitter.requestEnum = RequestEnum.COLLECTION_SHOW;
                 transfer(true);
-                return transmitter;
+                return fromServerTransmitter;
             case EXPORT_DECK:
                 transmitter.requestEnum = RequestEnum.COLLECTION_EXPORT;
                 transfer(false);
-                return transmitter;
+                return fromServerTransmitter;
             case IMPORT_DECK:
                 transmitter.requestEnum = RequestEnum.COLLECTION_IMPORT;
                 transfer(true);
-                return transmitter;
+                return fromServerTransmitter;
             case NEW_DECK:
                 transmitter.requestEnum = RequestEnum.COLLECTION_NEW_DECK;
                 transfer(false);
-                return transmitter;
+                return fromServerTransmitter;
             case MAIN_DECK:
                 transmitter.requestEnum = RequestEnum.COLLECTION_SELECT_MAIN_DECK;
                 transfer(false);
-                return transmitter;
+                return fromServerTransmitter;
             case ENTER_CHAT:
                 transmitter.requestEnum = RequestEnum.ENTER_CHAT;
                 transfer(false);
-                return transmitter;
+                return fromServerTransmitter;
             case CHAT:
                 transmitter.requestEnum = RequestEnum.CHAT;
                 transfer(false);
-                return transmitter;
+                return fromServerTransmitter;
             case CHECK_NEW_MASSAGE:
                 try {
-                    Object object =  objectInputStream.readObject();
-                    if(object!=null){
-                        transmitter.group=((Transmitter )object).group;
+                    Object object = objectInputStream.readObject();
+                    if (object != null) {
+                        transmitter.group = ((Transmitter) object).group;
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
                 return transmitter;
         }
-        return transmitter;
+        return fromServerTransmitter;
 
     }
 
     private static void transfer(boolean waitForAnswer) {
         try {
-            objectOutputStream.writeObject(transmitter);
+            objectOutputStream.writeObject(fromServerTransmitter);
             objectOutputStream.flush();
             if (waitForAnswer) {
                 do {
-                    transmitter = (Transmitter) objectInputStream.readObject();
-                } while (transmitter == null);
+                    fromServerTransmitter = (Transmitter) objectInputStream.readObject();
+                } while (fromServerTransmitter == null);
             }
         } catch (Exception e) {
             e.printStackTrace();

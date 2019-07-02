@@ -1,6 +1,8 @@
 package controller;
 
 public enum OrderEnum {
+    SIGN_UP,
+    LOGIN,
     ENTER_COLLECTION,
     ENTER_DECK,
     IMPORT_DECK,
