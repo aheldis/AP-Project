@@ -150,7 +150,7 @@ public class GlobalChatScene {
 //        AnimationTimer animationTimer = new AnimationTimer() {
 //            @Override
 //            public void handle(long now) {
-//                Transmitter transmitter=TransferController.main(OrderEnum.CHEK_NEW_MEESSAGE, new Transmitter());
+//                Transmitter transmitter=TransferController.main(OrderEnum.CHECK_NEW_MESSAGE, new Transmitter());
 //                chatGroup.getChildren().addAll(transmitter.group);
 //
 //            }

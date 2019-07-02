@@ -48,7 +48,7 @@ public class TransferController {
                 transmitter.requestEnum = RequestEnum.CHAT;
                 transfer(false);
                 return transmitter;
-            case CHEK_NEW_MEESSAGE:
+            case CHECK_NEW_MESSAGE:
                 try {
                     Object object =  objectInputStream.readObject();
                     if(object!=null){

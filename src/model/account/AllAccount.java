@@ -7,6 +7,7 @@ import view.AccountView;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class AllAccount {
     private static AllAccount singleInstance = new AllAccount();
@@ -40,6 +41,10 @@ public class AllAccount {
         }
     }
 
+    public void addToAccounts(Account account) {
+        accounts.add(account);
+    }
+
     public static AllAccount getInstance() {
         if (singleInstance == null) {
             singleInstance = new AllAccount();
@@ -68,8 +73,18 @@ public class AllAccount {
         return singleInstance;
     }
 
-    public ArrayList<Account> getAccountsArrayList() {
-        return accounts;
+    public String getAuthToken(Account account) {
+        String authToken = account.getUserName() + "_" + getRandomString(4);
+        return authToken;
+    }
+
+    private String getRandomString(int length) {
+        StringBuilder string = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            string.append((char) (random.nextInt(26) + 'A'));
+        }
+        return string.toString();
     }
 
     public boolean userNameHaveBeenExist(String userName) {
@@ -117,14 +132,6 @@ public class AllAccount {
         addToAccounts(account);
     }
 
-    public void addToAccounts(Account account) {
-        accounts.add(account);
-    }
-
-    public ArrayList<Account> getAccounts() {
-        return accounts;
-    }
-
     public void saveAccount(Account account) {
         try {
             String path = "AccountSaver/" + account.getUserName() + ".json";
@@ -132,5 +139,13 @@ public class AllAccount {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Account> getAccountsArrayList() {
+        return accounts;
+    }
+
+    public ArrayList<Account> getAccounts() {
+        return accounts;
     }
 }

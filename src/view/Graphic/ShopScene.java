@@ -1,5 +1,8 @@
 package view.Graphic;
 
+import controller.OrderEnum;
+import controller.Transmitter;
+import controller.client.TransferController;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -84,6 +87,9 @@ class ShopScene {
 
         group.setOnMouseClicked(event -> {
             //todo ~
+            Transmitter transmitter = new Transmitter();
+            transmitter.
+            transmitter = TransferController.main(OrderEnum.SHOP_SELL,)
             Shop.getInstance().sell(account, textArea.getText());
             textArea.clear();
             daric.setText("Daric :" + account.getDaric());
@@ -322,6 +328,8 @@ class ShopScene {
 
             HBox hBox = sellCard(daric, account);
 
+            //todo ~
+
             buyCard(hBox, daric, account, Shop.getInstance().getItems());
 
 
@@ -356,6 +364,8 @@ class ShopScene {
                 Group group1;
                 String cardName = textArea.getText();
                 textArea.clear();
+                //todo ~
+
                 Object object = Shop.getInstance().search(account, cardName);
                 if (object != null) {
                     if (object instanceof Card) {
@@ -378,6 +388,7 @@ class ShopScene {
             hBoxes.add(hBox);
         });
 
+        //todo ~
         log(root, Shop.getInstance().help(), StateType.MAIN_MENU, 450);
     }
 

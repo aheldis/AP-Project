@@ -10,6 +10,7 @@ public enum OrderEnum {
     ADD_CARD,
     CHAT,
     ENTER_CHAT,
-    CHEK_NEW_MEESSAGE
+    CHECK_NEW_MESSAGE,
+    SHOP_SELL
 
 }

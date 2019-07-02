@@ -142,6 +142,7 @@ public class AccountScene {
                 ErrorType.PASSWORD_DOES_NOT_MATCH.printMessage();
                 return;
             }
+
             account = allAccount.getAccountByName(userName);
             root.getChildren().removeAll(windows);
             mainMenuScene.makeMenu(account);

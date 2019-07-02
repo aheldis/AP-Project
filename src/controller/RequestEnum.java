@@ -1,6 +1,6 @@
 package controller;
 
-public enum  RequestEnum {
+public enum RequestEnum {
     LOGIN,
     SIGN_UP,
     SHOP_BUY_AND_SELL,

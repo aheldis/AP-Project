@@ -1,8 +1,8 @@
 package view.Graphic;
 
-import controller.client.TransferController;
 import controller.OrderEnum;
 import controller.Transmitter;
+import controller.client.TransferController;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -33,7 +33,8 @@ import view.enums.Cursor;
 import view.enums.ErrorType;
 import view.enums.StateType;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -514,7 +515,7 @@ class CollectionScene {
         Button deckScene = imageButton(collectionScene, root, "pics/other/desc.png",
                 "Decks", 600, 770, 100, 50);
         deckScene.setOnMouseClicked(event -> {
-            transmitter = TransferController.main(OrderEnum.ENTER_DECK,new Transmitter());
+            transmitter = TransferController.main(OrderEnum.ENTER_DECK, new Transmitter());
             Platform.runLater(() -> showDeck(transmitter.decks, transmitter.collection));
         });
 
@@ -723,7 +724,7 @@ class CollectionScene {
                     root.getChildren().remove(checkMainDeck);
                     makeIConBarForDeck("pics/collection/checkmark-green.png",
                             10, 10);
-                    Transmitter transmitter =new Transmitter();
+                    Transmitter transmitter = new Transmitter();
                     transmitter.deck = deck;
                     TransferController.main(OrderEnum.MAIN_DECK, transmitter);
                 }
@@ -828,10 +829,9 @@ class CollectionScene {
                     transmitter = new Transmitter();
                     transmitter.name = deckName.getText();
                     transmitter = TransferController.main(OrderEnum.IMPORT_DECK, transmitter);
-                    if(transmitter.errorType!=null){
-                       transmitter.errorType.printMessage();
-                    }
-                    else{
+                    if (transmitter.errorType != null) {
+                        transmitter.errorType.printMessage();
+                    } else {
                         Deck deck = transmitter.deck;
                         if (collection.passTheDeckIfHaveBeenExist(deck.getName()) == null) {
                             collection.getDecks().add(deck);
