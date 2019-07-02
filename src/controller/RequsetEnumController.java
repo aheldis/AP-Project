@@ -1,6 +1,7 @@
 package controller;
 
 import com.gilecode.yagson.YaGson;
+import com.google.gson.Gson;
 import javafx.scene.Group;
 import model.battle.Deck;
 import view.Graphic.GeneralGraphicMethods;
@@ -82,9 +83,12 @@ public class RequsetEnumController {
                 chatPerson.add(socketClass);
                 break;
             case CHAT:
-                groupTexts.add(clientTransmitter.group);
+//                groupTexts.add(group);
                 for(SocketClass person:chatPerson){
-                    person.getTransmitter().group = clientTransmitter.group;
+                    person.getTransmitter().profile = clientTransmitter.profile;
+                    person.getTransmitter().name = clientTransmitter.name;
+                    person.getTransmitter().message = clientTransmitter.message;
+                    person.getTransmitter().path = clientTransmitter.path;
                     transfer(person);
                 }
                 break;

@@ -1,9 +1,11 @@
 package view.Graphic;
 
+import com.google.gson.Gson;
 import controller.Controllers.OrderEnum;
 import controller.Controllers.TransferController;
 import controller.Transmitter;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -21,13 +23,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import model.account.Account;
 import view.enums.StateType;
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -37,7 +41,7 @@ public class GlobalChatScene {
     protected static Insets defaultInset = new Insets(7, 20, 7, 20);
 
 
-    public static ImageView sendEmoji(String name, Group root, int x, int y, Account account) {
+    public static ImageView sendEmoji(String name, Group root, int x, int y, String pathOfPorofile) {
         int size = 180;
         if (!name.matches("\\((\\w+)\\)"))
             return null;
@@ -45,7 +49,7 @@ public class GlobalChatScene {
         Circle circle = new Circle(30);
         circle.relocate(20, 30);
         try {
-            circle.setFill(new ImagePattern(new Image(new FileInputStream(account.getProfileImagePath()))));
+            circle.setFill(new ImagePattern(new Image(new FileInputStream(pathOfPorofile))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -147,21 +151,36 @@ public class GlobalChatScene {
         root.getChildren().addAll(sc);
         sc.valueProperty().addListener((ov, old_val, new_val) ->
                 chatGroup.setLayoutY(-new_val.doubleValue() * 11));
-//        AnimationTimer animationTimer = new AnimationTimer() {
-//            @Override
-//            public void handle(long now) {
-//                Transmitter transmitter=TransferController.main(OrderEnum.CHEK_NEW_MEESSAGE, new Transmitter());
-//                chatGroup.getChildren().addAll(transmitter.group);
+
+
+
+//       new Thread(new Runnable() {
+//           @Override
+//           public void run() {
+//
+//                Transmitter transmitter = TransferController.main(OrderEnum.CHECK_NEW_MEESSAGE, new Transmitter());
+//                Group groupText = new Group();
+//                groupText.relocate(50, 0);
+//                String message = transmitter.message;
+//                try {
+//                    ByteArrayInputStream bis = new ByteArrayInputStream(transmitter.profile);
+//                    BufferedImage bImage = ImageIO.read(bis);
+//                    ImageIO.write(bImage, "jpg", new File("output.jpg"));
+//
+//                    System.out.println("transmitter = " + transmitter.path);
+//                groupText=makeMessage(message,groupText, transmitter.name,"output.jpg");
+//                chatGroup.getChildren().addAll(groupText);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
 //
 //            }
-//        };
-//        animationTimer.start();
+//    });
 
 
         send.setOnMouseClicked(new EventHandler<MouseEvent>() {
             String message;
             Group groupText;
-            Transmitter transmitter = new Transmitter();
 
             @Override
             public void handle(MouseEvent event) {
@@ -169,32 +188,98 @@ public class GlobalChatScene {
                 groupText.relocate(50, 0);
                 message = textField.getText();
                 textField.clear();
-                if (sendEmoji(message, groupText, 50, 50, account) == null) {
 
-                    addRectangle(groupText, 100, 10, Math.max(message.length(), account.getUserName().length()) * 20,
-                            90, 20, 20, Color.rgb(0, 0, 0, 0.5));
+                //groupText = makeMessage(message,groupText,account);
 
-                    Circle circle = new Circle(30);
-                    circle.relocate(20, 30);
-                    try {
-                        circle.setFill(new ImagePattern(new Image(new FileInputStream(account.getProfileImagePath()))));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    groupText.getChildren().addAll(circle);
-                    Text text = addText(groupText, 30 + 85, 30, account.getUserName(), Color.ORANGE, 20);
-                    text.setStrokeWidth(1);
-                    text.setStroke(Color.rgb(200, 100, 100));
-                    addText(groupText, 30 + 85, 60, message, Color.WHITE, 20);
-                }
-               // chatGroup.getChildren().addAll(groupText);
-                transmitter = new Transmitter();
-                transmitter.group = groupText;
-                TransferController.main(OrderEnum.CHAT, transmitter);
+                // chatGroup.getChildren().addAll(groupText);
+
+                sendMessageToServer(message, account.getProfileImagePath(), account.getUserName());
             }
         });
+
+       chatScene.setOnMouseClicked(event -> {
+            Transmitter transmitter = TransferController.main(OrderEnum.CHECK_NEW_MEESSAGE, new Transmitter());
+            Group groupText = new Group();
+            groupText.relocate(50, 0);
+            String message = transmitter.message;
+            try {
+                ByteArrayInputStream bis = new ByteArrayInputStream(transmitter.profile);
+                BufferedImage bImage = ImageIO.read(bis);
+                ImageIO.write(bImage, "jpg", new File("output.jpg"));
+
+                System.out.println("transmitter = " + transmitter.path);
+                groupText=makeMessage(message,groupText, transmitter.name,"output.jpg");
+                chatGroup.getChildren().addAll(groupText);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+       });
+
+//        AnimationTimer animationTimer = new AnimationTimer() {
+//            @Override
+//            public void handle(long now) {
+//                Transmitter transmitter = TransferController.main(OrderEnum.CHECK_NEW_MEESSAGE, new Transmitter());
+//                Group groupText = new Group();
+//                groupText.relocate(50, 0);
+//                String message = transmitter.message;
+//                try {
+//                    ByteArrayInputStream bis = new ByteArrayInputStream(transmitter.profile);
+//                    BufferedImage bImage = ImageIO.read(bis);
+//                    ImageIO.write(bImage, "jpg", new File("output.jpg"));
+//
+//                    System.out.println("transmitter = " + transmitter.path);
+//                    groupText=makeMessage(message,groupText, transmitter.name,"output.jpg");
+//                    chatGroup.getChildren().addAll(groupText);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        animationTimer.start();
 
         //todo back send exit from chat delete from server + stop animationimer
     }
 
+    public static void sendMessageToServer(String message, String pathOfProfile, String name) {
+        Transmitter transmitter = new Transmitter();
+        transmitter.message = message;
+        transmitter.path = pathOfProfile;
+        try {
+            BufferedImage bImage = ImageIO.read(new File(pathOfProfile));
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(bImage, "jpg", bos);
+            transmitter.profile = bos.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        transmitter.name = name;
+        TransferController.main(OrderEnum.CHAT, transmitter);
+
+    }
+
+    public static Group makeMessage(String message, Group groupText, String name,
+                                    String pathOfProfile) {
+
+        if (sendEmoji(message, groupText, 50, 50, pathOfProfile) == null) {
+
+            addRectangle(groupText, 100, 10, Math.max(message.length(), name.length()) * 20,
+                    90, 20, 20, Color.rgb(0, 0, 0, 0.5));
+
+            Circle circle = new Circle(30);
+            circle.relocate(20, 30);
+            try {
+                circle.setFill(new ImagePattern(new Image(new FileInputStream(pathOfProfile))));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            groupText.getChildren().addAll(circle);
+            Text text = addText(groupText, 30 + 85, 30, name, Color.ORANGE, 20);
+            text.setStrokeWidth(1);
+            text.setStroke(Color.rgb(200, 100, 100));
+            addText(groupText, 30 + 85, 60, message, Color.WHITE, 20);
+        }
+
+        return groupText;
+
+    }
 }

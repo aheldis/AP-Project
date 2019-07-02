@@ -49,15 +49,13 @@ public class TransferController {
                 transmitter.requestEnum = RequestEnum.CHAT;
                 transfer(false);
                 return transmitter;
-            case CHEK_NEW_MEESSAGE:
+            case CHECK_NEW_MEESSAGE:
                 try {
-                    Object object =  objectInputStream.readObject();
-                    if(object!=null){
-                        transmitter.group=((Transmitter )object).group;
+                    Object object = objectInputStream.readObject();
+                    if (object != null) {
+                        transmitter = (Transmitter) object;
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return transmitter;

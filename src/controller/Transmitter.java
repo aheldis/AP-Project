@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.scene.Group;
 import model.account.Collection;
 import model.battle.Deck;
 import model.card.Card;
@@ -27,5 +26,7 @@ public class Transmitter implements Serializable {
     public String authToken;
     public ErrorType errorType = null;
     public long daric;
-    public Group group;
+    public byte[] profile;
+    public String message;
+    public String path;
 }
