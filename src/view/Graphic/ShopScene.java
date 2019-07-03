@@ -1,8 +1,8 @@
 package view.Graphic;
 
-import controller.client.OrderEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
+import controller.server.RequestEnum;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -14,7 +14,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import model.account.Account;
 import model.card.Card;
 import model.item.Item;
 import model.item.Usable;
@@ -24,6 +23,7 @@ import view.enums.StateType;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static controller.server.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 class ShopScene {
@@ -33,7 +33,7 @@ class ShopScene {
     private static int pageNumberCards = 0;
     private static ArrayList<Node> deletable = new ArrayList<>();
 
-    static void makeShopScene(Account account) {
+    static void makeShopScene() {
         playMusic("resource/music/shop.m4a", true, shopScene);
 
         setBackground(root, "pics/shop/shop_background.jpg", false, 15, 15);
@@ -135,12 +135,11 @@ class ShopScene {
             root.getChildren().removeAll(deletable);
             hBoxes.clear();
 
-            HBox hBox = sellCard(daric, account);
+            HBox hBox = sellCard(daric);
 
 
-
-            Transmitter transmitter = TransferController.main(OrderEnum.SHOP_ITEMS, new Transmitter());
-            buyCard(hBox, daric, account, transmitter.items);
+            Transmitter transmitter = TransferController.main(SHOP_ITEMS, new Transmitter());
+            buyCard(hBox, daric, transmitter.items);
 
 
         });
@@ -177,7 +176,7 @@ class ShopScene {
 
                 Transmitter transmitter = new Transmitter();
                 transmitter.name = cardName;
-                transmitter = TransferController.main(OrderEnum.SHOP_SEARCH, transmitter);
+                transmitter = TransferController.main(RequestEnum.SHOP_SEARCH, transmitter);
                 Object object = transmitter.object;
                 if (object != null) {
                     if (object instanceof Card) {
@@ -200,7 +199,7 @@ class ShopScene {
             hBoxes.add(hBox);
         });
 
-        Transmitter transmitter = TransferController.main(OrderEnum.SHOP_HELP, new Transmitter());
+        Transmitter transmitter = TransferController.main(SHOP_HELP, new Transmitter());
         log(root, transmitter.string, StateType.MAIN_MENU, 450);
     }
 
@@ -245,7 +244,7 @@ class ShopScene {
         }
     }
 
-    private static HBox sellCard(Text daric, Account account) {
+    private static HBox sellCard(Text daric) {
         HBox hbox = new HBox();
         hbox.setSpacing(4);
         hbox.relocate(540, 17);
@@ -280,22 +279,22 @@ class ShopScene {
         group.setOnMouseClicked(event -> {
             Transmitter transmitter = new Transmitter();
             transmitter.name = textArea.getText();
-            transmitter = TransferController.main(OrderEnum.SHOP_SELL, transmitter);
+            transmitter = TransferController.main(SHOP_SELL, transmitter);
             textArea.clear();
             daric.setText("Daric :" + transmitter.daric);
         });
         return hbox;
     }
 
-    private static void buyCard(HBox hBox, Text daric, Account account, ArrayList<Item> items) {
-        Transmitter transmitter = TransferController.main(OrderEnum.SHOP_CARDS, new Transmitter());
+    private static void buyCard(HBox hBox, Text daric, ArrayList<Item> items) {
+        Transmitter transmitter = TransferController.main(SHOP_CARDS, new Transmitter());
         ArrayList<Card> cards = transmitter.cards;
         VBox vBox = new VBox();//todo remember to delete
         for (int i = 0; i < 10; i++) {
             if (i >= cards.size()) {
                 break;
             }
-            makeHBoxForCards(4, pageNumberCards, cards, daric, account, items);
+            makeHBoxForCards(4, pageNumberCards, cards, daric, items);
         }
 
 
@@ -319,19 +318,19 @@ class ShopScene {
                 pageNumberCards = 0;
             root.getChildren().removeAll(hBoxes);
             root.getChildren().addAll(hBox);
-            makeHBoxForCards(4, pageNumberCards, cards, daric, account, items);
+            makeHBoxForCards(4, pageNumberCards, cards, daric, items);
         });
         next.setOnMouseClicked(event -> {
             pageNumberCards++;
             root.getChildren().removeAll(hBoxes);
             root.getChildren().addAll(hBox);
-            makeHBoxForCards(4, pageNumberCards, cards, daric, account, items);
+            makeHBoxForCards(4, pageNumberCards, cards, daric, items);
         });
 
     }
 
     private static void makeHBoxForCards(int column, int pageNumber, ArrayList<Card> cards,
-                                         Text daric, Account account, ArrayList<Item> items) {
+                                         Text daric, ArrayList<Item> items) {
         HBox hBox = new HBox();
         int startingBound = 2 * column * pageNumber;
         int j = -1;
@@ -391,7 +390,7 @@ class ShopScene {
     private static long buyCard(String name) {
         Transmitter transmitter = new Transmitter();
         transmitter.name = name;
-        transmitter = TransferController.main(OrderEnum.SHOP_BUY, transmitter);
+        transmitter = TransferController.main(RequestEnum.SHOP_BUY, transmitter);
         return transmitter.daric;
     }
 

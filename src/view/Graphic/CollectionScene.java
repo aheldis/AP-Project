@@ -1,6 +1,5 @@
 package view.Graphic;
 
-import controller.client.OrderEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.application.Platform;
@@ -39,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static controller.server.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 
@@ -515,7 +515,7 @@ class CollectionScene {
         Button deckScene = imageButton(collectionScene, root, "pics/other/desc.png",
                 "Decks", 600, 770, 100, 50);
         deckScene.setOnMouseClicked(event -> {
-            transmitter = TransferController.main(OrderEnum.COLLECTION_DECKS, new Transmitter());
+            transmitter = TransferController.main(COLLECTION_DECKS, new Transmitter());
             Platform.runLater(() -> showDeck(transmitter.decks, transmitter.collection));
         });
 
@@ -726,7 +726,7 @@ class CollectionScene {
                             10, 10);
                     Transmitter transmitter = new Transmitter();
                     transmitter.deck = deck;
-                    TransferController.main(OrderEnum.MAIN_DECK, transmitter);
+                    TransferController.main(MAIN_DECK, transmitter);
                 }
             });
 
@@ -828,7 +828,7 @@ class CollectionScene {
                 try {
                     transmitter = new Transmitter();
                     transmitter.name = deckName.getText();
-                    transmitter = TransferController.main(OrderEnum.IMPORT_DECK, transmitter);
+                    transmitter = TransferController.main(IMPORT_DECK, transmitter);
                     if (transmitter.errorType != null) {
                         transmitter.errorType.printMessage();
                     } else {
@@ -861,7 +861,7 @@ class CollectionScene {
                     try {
                         transmitter = new Transmitter();
                         transmitter.deck = deck;
-                        transmitter = TransferController.main(OrderEnum.EXPORT_DECK, transmitter);
+                        transmitter = TransferController.main(EXPORT_DECK, transmitter);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -885,7 +885,7 @@ class CollectionScene {
                             importDeck, importText, close, text, deckName, exportDeck, exportText);
                     Transmitter transmitter = new Transmitter();
                     transmitter.deck = collection.getDecks().get(i);
-                    TransferController.main(OrderEnum.NEW_DECK, transmitter);
+                    TransferController.main(NEW_DECK, transmitter);
                 }
 
             });

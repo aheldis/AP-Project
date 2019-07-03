@@ -1,7 +1,5 @@
 package view.Graphic;
 
-import controller.client.OrderEnum;
-import com.google.gson.Gson;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.event.EventHandler;
@@ -25,13 +23,11 @@ import javafx.scene.text.Text;
 import model.account.Account;
 import view.enums.StateType;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
+import static controller.server.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class GlobalChatScene {
@@ -97,7 +93,7 @@ public class GlobalChatScene {
     }
 
     public static void main(Account account) {
-        TransferController.main(OrderEnum.ENTER_CHAT, new Transmitter());
+        TransferController.main(ENTER_CHAT, new Transmitter());
 
 
         setBackground(root, "pics/menu/world_map@2x.jpg", false, 0, 0);
@@ -197,9 +193,9 @@ public class GlobalChatScene {
         });
 
        chatScene.setOnMouseClicked(event -> {
-            Transmitter transmitter = TransferController.main(OrderEnum.CHECK_NEW_MESSAGE, new Transmitter());
-            Group groupText = new Group();
-            groupText.relocate(50, 0);
+           Transmitter transmitter = TransferController.main(CHECK_NEW_MESSAGE, new Transmitter());
+           Group groupText = new Group();
+           groupText.relocate(50, 0);
             String message = transmitter.message;
             try {
                 ByteArrayInputStream bis = new ByteArrayInputStream(transmitter.profile);
@@ -252,7 +248,7 @@ public class GlobalChatScene {
             e.printStackTrace();
         }
         transmitter.name = name;
-        TransferController.main(OrderEnum.CHAT, transmitter);
+        TransferController.main(CHAT, transmitter);
 
     }
 

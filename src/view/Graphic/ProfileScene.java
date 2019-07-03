@@ -19,15 +19,16 @@ import view.enums.StateType;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class ProfileScene {
     private static ProfileScene singleInstanse = new ProfileScene();
     private Scene scene = StageLauncher.getScene(StateType.PROFILE);
-    private Group root = (Group) scene.getRoot();
+    private Group root = (Group) Objects.requireNonNull(scene).getRoot();
     private Group matchHistoryGroup = new Group();
-    Transmitter transmitter = new Transmitter();
+    private Transmitter transmitter = new Transmitter();
 
     private ProfileScene() {
     }
@@ -36,7 +37,7 @@ public class ProfileScene {
         return singleInstanse;
     }
 
-    public void initProfileScene() {
+    void initProfileScene() {
         playMusic("resource/music/profile.m4a",true,scene);
         GeneralGraphicMethods.setBackground(root, "pics/other/profileBackground.jpg", false, StageLauncher.getWidth(), StageLauncher.getHeight());
         addSidebar();

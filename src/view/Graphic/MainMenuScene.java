@@ -291,7 +291,7 @@ public class MainMenuScene {
                 setScene(StateType.PROFILE);
                 break;
             case "    SHOP":
-                ShopScene.makeShopScene(account);
+                ShopScene.makeShopScene();
                 setScene(StateType.SHOP);
                 break;
             case "LOG OUT":
