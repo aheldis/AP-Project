@@ -14,7 +14,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import model.account.Account;
 import model.account.FilesType;
 import model.card.makeFile.MakeNewFile;
 
@@ -35,7 +34,6 @@ public class NewCardGraphic {
     private static Scene scene;
     private static Group group;
     private static int numberOfHashMap;
-    private static Account account;
     private static Text error = new Text();
     private static int spriteNumber = 0;
     private static int spriteNumberCount = 10;
@@ -156,7 +154,7 @@ public class NewCardGraphic {
         group.getChildren().remove(enter);
         MakeNewFile.setSpriteNumber(spriteNumber, spriteNumberCount);
         MakeNewFile.setHashMaps(hashMaps);
-        MakeNewFile.makeNewCard(account, FilesType.getEnum(type));
+        MakeNewFile.makeNewCard(FilesType.getEnum(type));
         if (error.getText() != null && !error.getText().equals("")) {
             error = addText(group, 120, 130, error.getText(), Color.RED, 30);
         } else {
@@ -209,12 +207,11 @@ public class NewCardGraphic {
         changeVBox(vBox, arrayLists.get(0), 1, type);
     }
 
-    static void makeCardForm(Scene scene, Account account) {
+    static void makeCardForm(Scene scene) {
         firstTimeIndEquals3 = true;
         arrayLists.clear();
         hashMaps.clear();
         numberOfHashMap = 0;
-        NewCardGraphic.account = account;
         NewCardGraphic.scene = scene;
         group = new Group();
         ((Group) scene.getRoot()).getChildren().add(group);

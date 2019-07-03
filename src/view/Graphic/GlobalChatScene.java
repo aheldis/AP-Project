@@ -20,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import model.account.Account;
 import view.enums.StateType;
 
 import javax.imageio.ImageIO;
@@ -92,8 +91,8 @@ public class GlobalChatScene {
         return imageView;
     }
 
-    public static void main(Account account) {
-        TransferController.main(ENTER_CHAT, new Transmitter());
+    public static void main() {
+        Transmitter answer = TransferController.main(ENTER_CHAT, new Transmitter());
 
 
         setBackground(root, "pics/menu/world_map@2x.jpg", false, 0, 0);
@@ -107,8 +106,8 @@ public class GlobalChatScene {
         addRectangle(sideGroup, 0, 0, 400, (int) StageLauncher.getHeight(),
                 0, 0, Color.rgb(0, 0, 0, 0.5));
 
-        addImage(sideGroup, account.getAccountImagePath(), 70, 50, 300, 300);
-        addTextWithShadow(sideGroup, 180, 400, account.getUserName(), "Arial", 40);
+        addImage(sideGroup, answer.path, 70, 50, 300, 300);
+        addTextWithShadow(sideGroup, 180, 400, answer.name, "Arial", 40);
 
         addRectangle(sideGroup, 10, 760, 330, 50, 20,
                 20, Color.rgb(0, 0, 0, 0.65));
@@ -188,7 +187,7 @@ public class GlobalChatScene {
 
                 // chatGroup.getChildren().addAll(groupText);
 
-                sendMessageToServer(message, account.getProfileImagePath(), account.getUserName());
+                sendMessageToServer(message, answer.path, answer.name);
             }
         });
 

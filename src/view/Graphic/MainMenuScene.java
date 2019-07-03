@@ -36,7 +36,6 @@ public class MainMenuScene {
     private static ImageView chatGraph = null;
     //    private static ImageView matchHistoryGraph = null;
     private static HashMap<ImageView, Integer> graphs = new HashMap<>();
-    private Account account = null;
 
     private MainMenuScene() {
     }
@@ -125,7 +124,7 @@ public class MainMenuScene {
         AnimationTimer chatAnimation = graphAnimation(chatGraph);
         Label chatShadow = shadowAnimation(chat, chatAnimation);
         chatShadow.setOnMouseClicked(event -> {
-            GlobalChatScene.main(account);
+            GlobalChatScene.main();
             chatAnimation.stop();
             setScene(StateType.GLOBAL_CHAT);
         });
@@ -301,7 +300,7 @@ public class MainMenuScene {
                 TransferController.main(RequestEnum.LOGOUT, transmitter);
                 break;
             case "NEW CARD":
-                NewCardGraphic.makeCardForm(mainMenuScene, account);
+                NewCardGraphic.makeCardForm(mainMenuScene);
                 break;
         }
     }

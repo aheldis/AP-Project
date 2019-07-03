@@ -37,4 +37,5 @@ public class Transmitter implements Serializable { //todo check
     //public Group group;
     public String string;
     public Object object;
+    public Card card;
 }

@@ -2,13 +2,14 @@ package model.card.makeFile;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import controller.Transmitter;
+import controller.client.TransferController;
+import controller.server.RequestEnum;
 import javafx.scene.control.TextField;
-import model.account.Account;
 import model.account.FilesType;
 import model.account.Shop;
 import model.card.Buff;
 import model.card.Card;
-import model.card.CardId;
 import view.Graphic.NewCardGraphic;
 import view.NewCardMessages;
 import view.Request;
@@ -32,7 +33,7 @@ public class MakeNewFile {
     private static ArrayList<String> buffFieldNames = new ArrayList<>();
 
     private static ArrayList<HashMap<String, TextField>> hashMaps = new ArrayList<>(); //Be tartib: 0: khod card - 1: change - 2: target - 3 be bad buffHa
-    private static int numberOfBuffHashmap = 3;
+    private static int numberOfBuffHashMap = 3;
     private static int spriteNumber = 0;
     private static int spriteNumberCount = 0;
 
@@ -62,7 +63,7 @@ public class MakeNewFile {
 
     }
 
-    public static void makeNewCard(Account account, FilesType typeOfFile) {
+    public static void makeNewCard(FilesType typeOfFile) {
         try {
             String name = hashMaps.get(0).get("name").getText();
             if (name.equals("")) {
@@ -80,6 +81,7 @@ public class MakeNewFile {
             if (typeOfFile == FilesType.SPELL || typeOfFile == FilesType.MINION) {
                 Object change = fillObject("model.card.makeFile.ChangeCopy", null, 1);
                 Object target = fillObject("model.card.makeFile.TargetCopy", null, 2);
+                assert object != null;
                 ((CardCopy) object).setChange((ChangeCopy) change);
                 ((CardCopy) object).setTarget((TargetCopy) target);
             }
@@ -110,28 +112,23 @@ public class MakeNewFile {
                     break;
             }
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Card card = Shop.getInstance().getNewCardByName(name);
-                    if(card == null) {
-                        Shop.getInstance().makeNewFromFile(path, typeOfFile);
-                        card = Shop.getInstance().getNewCardByName(name);
-                    }
-                    if (account != null) {
-                        new CardId(account, card, account.getCollection().getNumberOfCardId(card));
-                        account.getCollection().addToCards(card);
-                    }
+            new Thread(() -> {
+                Card card = Shop.getInstance().getNewCardByName(name);
+                if (card == null) {
+                    Shop.getInstance().makeNewFromFile(path, typeOfFile);
+                    card = Shop.getInstance().getNewCardByName(name);
                 }
+                Transmitter transmitter = new Transmitter();
+                transmitter.card = card;
+                TransferController.main(RequestEnum.NEW_CARDID, transmitter);
             }).start();
-            return;
         } catch (Exception e) {
             NewCardGraphic.setError("Cannot make card!");
 
         }
     }
 
-    public static Object fillObject(String className, FilesType typeOfFile, int hashMapNumber) {
+    private static Object fillObject(String className, FilesType typeOfFile, int hashMapNumber) {
         try {
             Field[] fields = Class.forName(className).getFields();
             Class<?> fileClass = Class.forName(className);
@@ -156,7 +153,7 @@ public class MakeNewFile {
                         int number = Integer.parseInt(hashMaps.get(hashMapNumber).get("number of buffs").getText());
                         for (int i = 0; i < number; i++) {
 
-                            String buffName = hashMaps.get(numberOfBuffHashmap).get("name").getText();
+                            String buffName = hashMaps.get(numberOfBuffHashMap).get("name").getText();
                             String pathOfBuff = Buff.getPathOfFiles() + "/" + buffName + ".json";
 
                             boolean makeNewBuff = true;
@@ -165,8 +162,8 @@ public class MakeNewFile {
 //                                System.out.println("this buff already exist so you can't change properties");
                             }
 
-                            int count = Integer.parseInt(hashMaps.get(numberOfBuffHashmap).get("how many of this buff").getText());
-                            int num = Integer.parseInt(hashMaps.get(numberOfBuffHashmap).get("for how many turn").getText());
+                            int count = Integer.parseInt(hashMaps.get(numberOfBuffHashMap).get("how many of this buff").getText());
+                            int num = Integer.parseInt(hashMaps.get(numberOfBuffHashMap).get("for how many turn").getText());
                             System.out.println("count = " + count);
                             System.out.println("num = " + num);
                             ArrayList<Integer> array = new ArrayList<>();
@@ -174,11 +171,11 @@ public class MakeNewFile {
                                 array.add(num);
                             }
                             if (makeNewBuff) {
-                                Object object1 = fillObject("model.card.makeFile.BuffCopy", FilesType.BUFF, numberOfBuffHashmap);
+                                Object object1 = fillObject("model.card.makeFile.BuffCopy", FilesType.BUFF, numberOfBuffHashMap);
                                 toJson(object1, pathOfBuff);
                                 changeInFile(pathOfBuff, "@type", "model.card.Buff");
                             }
-                            numberOfBuffHashmap++;
+                            numberOfBuffHashMap++;
 
                             hashMap.put(buffName, array);
                         }

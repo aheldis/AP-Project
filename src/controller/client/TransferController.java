@@ -28,6 +28,7 @@ public class TransferController {
             case SHOP_CARDS:
             case SHOP_ITEMS:
             case SHOP_DARIC:
+            case PROFILE:
                 transfer(true);
                 return fromServerTransmitter;
             case LOGOUT:
@@ -36,6 +37,7 @@ public class TransferController {
             case MAIN_DECK:
             case ENTER_CHAT:
             case CHAT:
+            case NEW_CARDID:
                 transfer(false);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:

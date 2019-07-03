@@ -3,9 +3,12 @@ package controller.server;
 import com.gilecode.yagson.YaGson;
 import controller.Transmitter;
 import javafx.scene.Group;
+import model.account.Account;
 import model.account.AllAccount;
 import model.account.Shop;
 import model.battle.Deck;
+import model.card.Card;
+import model.card.CardId;
 import model.item.Usable;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
@@ -22,6 +25,7 @@ public class RequestEnumController {
         Transmitter transmitter;
         transmitter = socketClass.getTransmitter();
         AllAccount allAccount = AllAccount.getInstance();
+        Account account = socketClass.getAccount();
         switch (requestEnum) {
 
             case SIGN_UP:
@@ -131,12 +135,23 @@ public class RequestEnumController {
 
                 break;
             case COLLECTION_ADD_CARD_TO_DECK:
+                //todo
                 break;
             case COLLECTION_SELECT_MAIN_DECK:
                 socketClass.getAccount().getCollection().selectADeckAsMainDeck(transmitter.deck.getName());
                 break;
             case ENTER_CHAT:
                 chatPerson.add(socketClass);
+                account = socketClass.getAccount();
+                transmitter.name = account.getUserName();
+                transmitter.path = account.getAccountImagePath();
+                transfer(socketClass);
+                break;
+            case NEW_CARDID:
+                account = socketClass.getAccount();
+                Card card = transmitter.card;
+                new CardId(account, card, account.getCollection().getNumberOfCardId(card));
+                account.getCollection().addToCards(card);
                 break;
             case CHAT:
 //                groupTexts.add(group);

@@ -30,4 +30,5 @@ public enum RequestEnum {
     MAIN_DECK,
     ADD_CARD,
     CHECK_NEW_MESSAGE,
+    NEW_CARDID
 }
