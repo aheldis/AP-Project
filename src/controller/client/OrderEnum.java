@@ -5,7 +5,7 @@ public enum OrderEnum {
     LOGIN,
     LOGOUT,
     ENTER_COLLECTION,
-    ENTER_DECK,
+    COLLECTION_DECKS,
     IMPORT_DECK,
     EXPORT_DECK,
     NEW_DECK,

@@ -1,5 +1,8 @@
 package view.Graphic;
 
+import controller.Transmitter;
+import controller.client.TransferController;
+import controller.server.RequestEnum;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -11,8 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import model.account.Account;
-import model.account.Collection;
 import model.battle.MatchInfo;
 import view.enums.StateType;
 
@@ -26,7 +27,7 @@ public class ProfileScene {
     private Scene scene = StageLauncher.getScene(StateType.PROFILE);
     private Group root = (Group) scene.getRoot();
     private Group matchHistoryGroup = new Group();
-    private Account account;
+    Transmitter transmitter = new Transmitter();
 
     private ProfileScene() {
     }
@@ -35,9 +36,8 @@ public class ProfileScene {
         return singleInstanse;
     }
 
-    public void initProfileScene(Account account) {
+    public void initProfileScene() {
         playMusic("resource/music/profile.m4a",true,scene);
-        this.account = account;
         GeneralGraphicMethods.setBackground(root, "pics/other/profileBackground.jpg", false, StageLauncher.getWidth(), StageLauncher.getHeight());
         addSidebar();
         log(root, "", StateType.MAIN_MENU, 200);
@@ -49,8 +49,9 @@ public class ProfileScene {
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
 
-        addImage(vBox, account.getAccountImagePath(), 50, 50, 200, 200);
-        addTextWithShadow(vBox, 50, 280, account.getUserName(), "Luminari", 30);
+        transmitter = TransferController.main(RequestEnum.PROFILE, transmitter);
+        addImage(vBox, transmitter.path, 50, 50, 200, 200);
+        addTextWithShadow(vBox, 50, 280, transmitter.name, "Luminari", 30);
 
         Group matchHistoryButtonGroup = new Group();
         Text matchHistoryButton1 = addText(matchHistoryButtonGroup, 53, 350, "Match History", Color.WHITE, 25);
@@ -97,7 +98,8 @@ public class ProfileScene {
         addNodeToGridPane(gridPane, 0, 1, "Loser", true);
         addNodeToGridPane(gridPane, 0, 2, "Date", true);
 
-        ArrayList<MatchInfo> matchHistory = account.getMatchHistory();
+
+        ArrayList<MatchInfo> matchHistory = transmitter.matchInfos;
         Collections.reverse(matchHistory);
 
         int index = 1;

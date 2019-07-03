@@ -515,7 +515,7 @@ class CollectionScene {
         Button deckScene = imageButton(collectionScene, root, "pics/other/desc.png",
                 "Decks", 600, 770, 100, 50);
         deckScene.setOnMouseClicked(event -> {
-            transmitter = TransferController.main(OrderEnum.ENTER_DECK, new Transmitter());
+            transmitter = TransferController.main(OrderEnum.COLLECTION_DECKS, new Transmitter());
             Platform.runLater(() -> showDeck(transmitter.decks, transmitter.collection));
         });
 

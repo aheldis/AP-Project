@@ -30,6 +30,7 @@ public class RequestEnumController {
                     transmitter.errorType = ErrorType.USER_NAME_ALREADY_EXIST;
                 socketClass.setAccount(allAccount.getAccountByName(clientTransmitter.name));
                 socketClass.getAccount().setAuthToken(AllAccount.getInstance().getAuthToken(socketClass.getAccount()));
+                transfer(socketClass);
                 break;
             case LOGIN:
                 if (!allAccount.userNameHaveBeenExist(clientTransmitter.name))
@@ -38,11 +39,18 @@ public class RequestEnumController {
                     transmitter.errorType = ErrorType.PASSWORD_DOES_NOT_MATCH;
                 socketClass.setAccount(allAccount.getAccountByName(clientTransmitter.name));
                 socketClass.getAccount().setAuthToken(AllAccount.getInstance().getAuthToken(socketClass.getAccount()));
+                transfer(socketClass);
                 break;
             case LOGOUT:
                 AllAccount.getInstance().saveAccount(socketClass.getAccount());
                 socketClass.getAccount().setAuthToken(null);
                 socketClass.setAccount(null);
+                break;
+            case PROFILE:
+                transmitter.path = socketClass.getAccount().getAccountImagePath();
+                transmitter.name = socketClass.getAccount().getUserName();
+                transmitter.matchInfos = socketClass.getAccount().getMatchHistory();
+                transfer(socketClass);
                 break;
             case SHOP_BUY_AND_SELL:
                 break;
@@ -126,7 +134,7 @@ public class RequestEnumController {
                 break;
             case CHAT:
 //                groupTexts.add(group);
-                for(SocketClass person:chatPerson){
+                for (SocketClass person : chatPerson) {
                     person.getTransmitter().profile = clientTransmitter.profile;
                     person.getTransmitter().name = clientTransmitter.name;
                     person.getTransmitter().message = clientTransmitter.message;

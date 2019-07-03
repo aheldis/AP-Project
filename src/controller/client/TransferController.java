@@ -12,51 +12,29 @@ public class TransferController {
     private static ObjectOutputStream objectOutputStream = Client.getObjectOutputStream();
     private static ObjectInputStream objectInputStream = Client.getObjectInputStream();
 
-    public static Transmitter main(OrderEnum order, Transmitter transmitter) {
+    public static Transmitter main(RequestEnum requestEnum, Transmitter transmitter) {
         fromServerTransmitter = transmitter;
-        switch (order) {
+        transmitter.requestEnum = requestEnum;
+        switch (requestEnum) {
             case SIGN_UP:
-                transmitter.requestEnum = RequestEnum.SIGN_UP;
-                transfer(true);
-                return fromServerTransmitter;
             case LOGIN:
-                transmitter.requestEnum = RequestEnum.LOGIN;
+            case COLLECTION_DECKS:
+            case ENTER_COLLECTION:
+            case IMPORT_DECK:
+            case SHOP_SELL:
+            case SHOP_BUY:
+            case SHOP_HELP:
+            case SHOP_SEARCH:
+            case SHOP_CARDS:
+            case SHOP_ITEMS:
                 transfer(true);
                 return fromServerTransmitter;
             case LOGOUT:
-                transmitter.requestEnum = RequestEnum.LOGOUT;
-                transfer(false);
-                return fromServerTransmitter;
-            case ENTER_DECK:
-                transmitter.requestEnum = RequestEnum.COLLECTION_DECKS;
-                transfer(true);
-                return fromServerTransmitter;
-            case ENTER_COLLECTION:
-                transmitter.requestEnum = RequestEnum.COLLECTION_SHOW;
-                transfer(true);
-                return fromServerTransmitter;
             case EXPORT_DECK:
-                transmitter.requestEnum = RequestEnum.COLLECTION_EXPORT;
-                transfer(false);
-                return fromServerTransmitter;
-            case IMPORT_DECK:
-                transmitter.requestEnum = RequestEnum.COLLECTION_IMPORT;
-                transfer(true);
-                return fromServerTransmitter;
             case NEW_DECK:
-                transmitter.requestEnum = RequestEnum.COLLECTION_NEW_DECK;
-                transfer(false);
-                return fromServerTransmitter;
             case MAIN_DECK:
-                transmitter.requestEnum = RequestEnum.COLLECTION_SELECT_MAIN_DECK;
-                transfer(false);
-                return fromServerTransmitter;
             case ENTER_CHAT:
-                transmitter.requestEnum = RequestEnum.ENTER_CHAT;
-                transfer(false);
-                return fromServerTransmitter;
             case CHAT:
-                transmitter.requestEnum = RequestEnum.CHAT;
                 transfer(false);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
@@ -69,36 +47,6 @@ public class TransferController {
                     e.printStackTrace();
                 }
                 return fromServerTransmitter;
-            case SHOP_SELL:{
-                transmitter.requestEnum = RequestEnum.SHOP_SELL;
-                transfer(true);
-                return fromServerTransmitter;
-            }
-            case SHOP_BUY:{
-                transmitter.requestEnum = RequestEnum.SHOP_BUY;
-                transfer(true);
-                break;
-            }
-            case SHOP_HELP:{
-                transmitter.requestEnum = RequestEnum.SHOP_HELP;
-                transfer(true);
-                break;
-            }
-            case SHOP_SEARCH:{
-                transmitter.requestEnum = RequestEnum.SHOP_SEARCH;
-                transfer(true);
-                break;
-            }
-            case SHOP_CARDS:{
-                transmitter.requestEnum= RequestEnum.SHOP_CARDS;
-                transfer(true);
-                break;
-            }
-            case SHOP_ITEMS:{
-                transmitter.requestEnum = RequestEnum.SHOP_ITEMS;
-                transfer(true);
-                break;
-            }
         }
         return fromServerTransmitter;
 

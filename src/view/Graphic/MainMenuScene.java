@@ -1,7 +1,6 @@
 package view.Graphic;
 
 import controller.Transmitter;
-import controller.client.OrderEnum;
 import controller.client.TransferController;
 import controller.server.RequestEnum;
 import javafx.animation.AnimationTimer;
@@ -116,7 +115,7 @@ public class MainMenuScene {
         AnimationTimer collectionAnimation = graphAnimation(collectionGraph);
         Label collectionShadow = shadowAnimation(collection, collectionAnimation);
         collectionShadow.setOnMouseClicked(event -> {
-            Transmitter transmitter = TransferController.main(OrderEnum.ENTER_COLLECTION, new Transmitter());
+            Transmitter transmitter = TransferController.main(RequestEnum.ENTER_COLLECTION, new Transmitter());
             CollectionScene.showInCollection(transmitter.collection);
             collectionAnimation.stop();
             setScene(StateType.COLLECTION);
@@ -288,7 +287,7 @@ public class MainMenuScene {
     private void buttonAction(String name) {
         switch (name) {
             case " PROFILE":
-                ProfileScene.getSingleInstance().initProfileScene(account);
+                ProfileScene.getSingleInstance().initProfileScene();
                 setScene(StateType.PROFILE);
                 break;
             case "    SHOP":
@@ -299,8 +298,7 @@ public class MainMenuScene {
                 root.getChildren().removeAll(menuNodes);
                 AccountScene.getInstance().addWindows();
                 Transmitter transmitter = new Transmitter();
-                transmitter.requestEnum = RequestEnum.LOGOUT;
-                TransferController.main(OrderEnum.LOGOUT, transmitter);
+                TransferController.main(RequestEnum.LOGOUT, transmitter);
                 break;
             case "NEW CARD":
                 NewCardGraphic.makeCardForm(mainMenuScene, account);

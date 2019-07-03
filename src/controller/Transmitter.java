@@ -1,20 +1,21 @@
 package controller;
 
 import controller.server.RequestEnum;
-import javafx.scene.Group;
 import model.account.Collection;
 import model.battle.Deck;
+import model.battle.MatchInfo;
 import model.card.Card;
 import model.item.Item;
 import view.enums.ErrorType;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * do Not new anything in this class
  * when client receive this class we should check errorType
  * in SHOP we should receive daric
  */
-
-import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Transmitter implements Serializable { //todo check
     public RequestEnum requestEnum;
@@ -26,6 +27,7 @@ public class Transmitter implements Serializable { //todo check
     public String cardId;
     public Deck deck;
     public ArrayList<Deck> decks;
+    public ArrayList<MatchInfo> matchInfos;
     public String authToken;
     public ErrorType errorType = null;
     public long daric;

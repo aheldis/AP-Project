@@ -2,6 +2,7 @@ package view.Graphic;
 
 import controller.Transmitter;
 import controller.client.TransferController;
+import controller.server.RequestEnum;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -22,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-import static controller.client.OrderEnum.LOGIN;
-import static controller.client.OrderEnum.SIGN_UP;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 
@@ -124,17 +123,17 @@ public class AccountScene {
         transmitter.name = userName;
         transmitter.password = password;
         if (enterButton.getText().equals("SIGN UP")) {
-            TransferController.main(SIGN_UP, transmitter);
-            if (transmitter.errorType != null) {
-                transmitter.errorType.printMessage();
+            Transmitter answer = TransferController.main(RequestEnum.SIGN_UP, transmitter);
+            if (answer.errorType != null) {
+                answer.errorType.printMessage();
                 return;
             }
             root.getChildren().removeAll(windows);
             mainMenuScene.makeMenu();
         } else {
-            TransferController.main(LOGIN, transmitter);
-            if (transmitter.errorType != null) {
-                transmitter.errorType.printMessage();
+            Transmitter answer = TransferController.main(RequestEnum.LOGIN, transmitter);
+            if (answer.errorType != null) {
+                answer.errorType.printMessage();
                 return;
             }
 

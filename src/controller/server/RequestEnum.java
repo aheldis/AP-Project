@@ -4,6 +4,7 @@ public enum RequestEnum {
     LOGIN,
     SIGN_UP,
     LOGOUT,
+    PROFILE,
     SHOP_BUY_AND_SELL,
     SHOP_SEARCH,
     SHOP_BUY,
@@ -20,6 +21,12 @@ public enum RequestEnum {
     CHAT,
     ENTER_CHAT,
     SHOP_HELP,
-    SHOP_ITEMS
-
+    SHOP_ITEMS,
+    ENTER_COLLECTION,
+    IMPORT_DECK,
+    EXPORT_DECK,
+    NEW_DECK,
+    MAIN_DECK,
+    ADD_CARD,
+    CHECK_NEW_MESSAGE,
 }
