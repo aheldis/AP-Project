@@ -27,6 +27,7 @@ public class TransferController {
             case SHOP_SEARCH:
             case SHOP_CARDS:
             case SHOP_ITEMS:
+            case SHOP_DARIC:
                 transfer(true);
                 return fromServerTransmitter;
             case LOGOUT:

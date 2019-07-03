@@ -10,6 +10,7 @@ public enum RequestEnum {
     SHOP_BUY,
     SHOP_CARDS,
     SHOP_SELL,
+    SHOP_DARIC,
     COLLECTION_SHOW,
     COLLECTION_DECKS,
     COLLECTION_NEW_DECK,

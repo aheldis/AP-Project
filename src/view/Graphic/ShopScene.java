@@ -81,8 +81,9 @@ class ShopScene {
         rectangle.setArcWidth(50);
         root.getChildren().add(rectangle);
 
+        long daricNumber = TransferController.main(SHOP_DARIC, new Transmitter()).daric;
         addImage(root, "pics/shop/icon_gold@2x.png", 55, 755, 20, 20);
-        Text daric = addText(root, 80, 760, "Daric: " + account.getDaric(),
+        Text daric = addText(root, 80, 760, "Daric: " + daricNumber,
                 Color.rgb(225, 225, 225, 0.5), 15);
 
 
@@ -187,8 +188,8 @@ class ShopScene {
                         hBox1.getChildren().addAll(group1);
                         hBoxes.add(hBox1);
                         root.getChildren().addAll(hBox1);
-                        addText(group1, 50, 230, account.getUserName() + "_" + cardName + "_" +
-                                        account.getCollection().getNumberOfCardId((Card) object),
+                        addText(group1, 50, 230, transmitter.name + "_" + cardName + "_" +
+                                        transmitter.collection.getNumberOfCardId((Card) object),
                                 Color.WHITE, 20);
                     }
                 }

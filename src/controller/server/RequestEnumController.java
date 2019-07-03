@@ -74,12 +74,18 @@ public class RequestEnumController {
                 break;
             case SHOP_SEARCH:
                 transmitter.object = Shop.getInstance().search(socketClass.getAccount(), clientTransmitter.name);
+                transmitter.name = socketClass.getAccount().getUserName();
+                transmitter.collection = socketClass.getAccount().getCollection();
                 transfer(socketClass);
                 break;
             case SHOP_ITEMS:
                 ArrayList<Usable> items = Shop.getInstance().getItems();
                 transmitter.items = new ArrayList<>();
                 items.forEach(item -> transmitter.items.add(item));
+                transfer(socketClass);
+                break;
+            case SHOP_DARIC:
+                transmitter.daric = socketClass.getAccount().getDaric();
                 transfer(socketClass);
                 break;
 
