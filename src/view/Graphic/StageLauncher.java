@@ -138,20 +138,6 @@ public class StageLauncher extends Application {
             e.printStackTrace();
         }
 
-        final String baseAddress = "http://127.0.0.1:8080/";
-        final String path = "get_all_keys";
-        HttpResponse<String> response = null;
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put("name", "DB_name");
-        parameters.put("key", "key for adding to a DB or deleting from it");
-        parameters.put("value", "your content to save");
-        try {
-            response = Unirest.post(baseAddress + path).fields(parameters).asString();
-        } catch (UnirestException e) {
-            e.printStackTrace();    //do something
-             }
-
-
             Scene accountScene = makeScene(StateType.ACCOUNT_MENU, Cursor.AUTO);
             Scene mainMenuScene = makeScene(StateType.MAIN_MENU, Cursor.AUTO);
             Scene collectionScene = makeScene(StateType.COLLECTION, Cursor.AUTO);

@@ -1,16 +1,25 @@
 package controller.server;
 
+import controller.DBClass;
+import kong.unirest.HttpResponse;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Server {
     private static ArrayList<SocketClass> socketClasses = new ArrayList<>();
     private static int PORT = 8000;
 
     public static void main(String[] args) {
+//        HashMap<String,Object> hashMap = new HashMap<>();
+//        hashMap.put("name","myDB");
+//        HttpResponse<String> response =DBClass.main(hashMap,"init_DB");
+//        System.out.println(response);
+
         SocketClass socketClass;
         try {
             FileWriter fileWriter = new FileWriter("src/controller/config");

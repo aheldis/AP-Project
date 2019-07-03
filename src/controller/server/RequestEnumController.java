@@ -163,6 +163,9 @@ public class RequestEnumController {
                     transfer(person);
                 }
                 break;
+            case EXIT_FROM_CHAT:
+                chatPerson.remove(socketClass);
+                break;
         }
         socketClass.changeTransmitter();
 

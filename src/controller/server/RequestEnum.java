@@ -30,5 +30,6 @@ public enum RequestEnum {
     MAIN_DECK,
     ADD_CARD,
     CHECK_NEW_MESSAGE,
-    NEW_CARDID
+    NEW_CARDID,
+    EXIT_FROM_CHAT
 }

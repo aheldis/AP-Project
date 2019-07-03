@@ -2,6 +2,7 @@ package view.Graphic;
 
 import controller.Transmitter;
 import controller.client.TransferController;
+import controller.server.RequestEnum;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -20,6 +21,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import model.account.Account;
 import view.enums.StateType;
 
 import javax.imageio.ImageIO;
@@ -146,32 +149,6 @@ public class GlobalChatScene {
         sc.valueProperty().addListener((ov, old_val, new_val) ->
                 chatGroup.setLayoutY(-new_val.doubleValue() * 11));
 
-
-
-//       new Thread(new Runnable() {
-//           @Override
-//           public void run() {
-//
-//                Transmitter transmitter = TransferController.main(OrderEnum.CHECK_NEW_MEESSAGE, new Transmitter());
-//                Group groupText = new Group();
-//                groupText.relocate(50, 0);
-//                String message = transmitter.message;
-//                try {
-//                    ByteArrayInputStream bis = new ByteArrayInputStream(transmitter.profile);
-//                    BufferedImage bImage = ImageIO.read(bis);
-//                    ImageIO.write(bImage, "jpg", new File("output.jpg"));
-//
-//                    System.out.println("transmitter = " + transmitter.path);
-//                groupText=makeMessage(message,groupText, transmitter.name,"output.jpg");
-//                chatGroup.getChildren().addAll(groupText);
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//    });
-
-
         send.setOnMouseClicked(new EventHandler<MouseEvent>() {
             String message;
             Group groupText;
@@ -199,39 +176,23 @@ public class GlobalChatScene {
             try {
                 ByteArrayInputStream bis = new ByteArrayInputStream(transmitter.profile);
                 BufferedImage bImage = ImageIO.read(bis);
-                ImageIO.write(bImage, "jpg", new File("output.jpg"));
+                ImageIO.write(bImage, "jpg", new File(account.getUserName()+"output.jpg"));
+                //todo use this because we have one saving for all clients
 
                 System.out.println("transmitter = " + transmitter.path);
-                groupText=makeMessage(message,groupText, transmitter.name,"output.jpg");
+                groupText=makeMessage(message,groupText, transmitter.name,account.getUserName()+"output.jpg");
                 chatGroup.getChildren().addAll(groupText);
             }catch (Exception e){
                 e.printStackTrace();
             }
        });
+       ImageView imageView = addImage(root,"pics/menu/button_back_corner@2x.png",0,0,70,70);
+       imageView.setOnMouseClicked(event -> {
+           TransferController.main(RequestEnum.EXIT_FROM_CHAT, new Transmitter());
+           StageLauncher.decorateScene(StateType.MAIN_MENU);
+       });
 
-//        AnimationTimer animationTimer = new AnimationTimer() {
-//            @Override
-//            public void handle(long now) {
-//                Transmitter transmitter = TransferController.main(OrderEnum.CHECK_NEW_MEESSAGE, new Transmitter());
-//                Group groupText = new Group();
-//                groupText.relocate(50, 0);
-//                String message = transmitter.message;
-//                try {
-//                    ByteArrayInputStream bis = new ByteArrayInputStream(transmitter.profile);
-//                    BufferedImage bImage = ImageIO.read(bis);
-//                    ImageIO.write(bImage, "jpg", new File("output.jpg"));
-//
-//                    System.out.println("transmitter = " + transmitter.path);
-//                    groupText=makeMessage(message,groupText, transmitter.name,"output.jpg");
-//                    chatGroup.getChildren().addAll(groupText);
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//        animationTimer.start();
-
-        //todo back send exit from chat delete from server + stop animationimer
+        //todo back send exit from chat delete from server
     }
 
     public static void sendMessageToServer(String message, String pathOfProfile, String name) {

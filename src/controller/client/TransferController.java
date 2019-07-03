@@ -21,7 +21,6 @@ public class TransferController {
             case COLLECTION_DECKS:
             case ENTER_COLLECTION:
             case IMPORT_DECK:
-            case SHOP_SELL:
             case SHOP_BUY:
             case SHOP_HELP:
             case SHOP_SEARCH:
@@ -50,22 +49,32 @@ public class TransferController {
                     e.printStackTrace();
                 }
                 return fromServerTransmitter;
+            case EXIT_FROM_CHAT:
+                transmitter.requestEnum = RequestEnum.EXIT_FROM_CHAT;
+                transfer(false);
+                return fromServerTransmitter;
+            case SHOP_SELL: {
+                transmitter.requestEnum = RequestEnum.SHOP_SELL;
+                transfer(true);
+                return fromServerTransmitter;
+            }
         }
+
         return fromServerTransmitter;
 
     }
 
-    private static void transfer(boolean waitForAnswer) {
-        try {
-            objectOutputStream.writeObject(fromServerTransmitter);
-            objectOutputStream.flush();
-            if (waitForAnswer) {
-                do {
-                    fromServerTransmitter = (Transmitter) objectInputStream.readObject();
-                } while (fromServerTransmitter == null);
+        private static void transfer ( boolean waitForAnswer){
+            try {
+                objectOutputStream.writeObject(fromServerTransmitter);
+                objectOutputStream.flush();
+                if (waitForAnswer) {
+                    do {
+                        fromServerTransmitter = (Transmitter) objectInputStream.readObject();
+                    } while (fromServerTransmitter == null);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
-}
