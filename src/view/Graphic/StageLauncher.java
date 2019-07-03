@@ -61,7 +61,7 @@ public class StageLauncher extends Application {
                 });
                 break;
             case SHOP:
-                ShopScene.makeShopScene(account);
+                ShopScene.makeShopScene();
                 setScene(StateType.SHOP);
                 break;
             case COLLECTION:
@@ -166,12 +166,7 @@ public class StageLauncher extends Application {
             AccountScene.getInstance().makeBackground();
             primaryStage.setScene(accountScene);
 
-            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    primaryStage.close();
-                }
-            });
+        primaryStage.setOnCloseRequest(event -> primaryStage.close());
 
             primaryStage.show();
         }
