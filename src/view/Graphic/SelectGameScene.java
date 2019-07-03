@@ -2,7 +2,6 @@ package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -12,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -38,7 +36,6 @@ class SelectGameScene {
     private static Group selectGameRoot = (Group) Objects.requireNonNull(selectGameScene).getRoot();
     private static Scene selectModeScene = StageLauncher.getScene(StateType.SELECT_MODE);
     private static Group selectModeRoot = (Group) Objects.requireNonNull(selectModeScene).getRoot();
-    private static Account account;
     private static int numberOfDeck;
     private static ArrayList<Node> groupOfDeck = new ArrayList<>();
     private static Match match;
@@ -104,8 +101,7 @@ class SelectGameScene {
         return imageView;
     }
 
-    static void selectGame(Account account) {
-        SelectGameScene.account = account;
+    static void selectGame() {
         if (!stopper) {
             playMusic("resource/music/select_mode.m4a", true, selectGameScene);
             stopper = false;
@@ -116,22 +112,19 @@ class SelectGameScene {
         Button button = imageButton(selectGameScene, selectGameRoot, "pics/battle/select_mode/multi_player.jpg",
                 "hello", 100, 100, 100, 100);
         selectGameRoot.getChildren().remove(button);
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+        button.setOnMouseClicked(event -> {
 
-                try {
-                    InputStream input = new FileInputStream("D:/project_Duelyst1/PausedGames/1.json");
-                    Reader reader = new InputStreamReader(input);
-                    YaGson mapper = new YaGson();
-                    BattleScene battleScene = mapper.fromJson(reader, BattleScene.class);//load the deck
-                    Platform.runLater(() ->
-                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
+            try {
+                InputStream input = new FileInputStream("D:/project_Duelyst1/PausedGames/1.json");
+                Reader reader = new InputStreamReader(input);
+                YaGson mapper = new YaGson();
+                BattleScene battleScene = mapper.fromJson(reader, BattleScene.class);//load the deck
+                Platform.runLater(() ->
+                        StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE)));
 
-                    BattleScene.getSingleInstance().changeSingleInstance(battleScene);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                BattleScene.getSingleInstance().changeSingleInstance(battleScene);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         });
 

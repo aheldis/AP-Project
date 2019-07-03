@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import model.account.Account;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -34,7 +33,6 @@ public class MainMenuScene {
     private static ImageView playGraph = null;
     private static ImageView collectionGraph = null;
     private static ImageView chatGraph = null;
-    //    private static ImageView matchHistoryGraph = null;
     private static HashMap<ImageView, Integer> graphs = new HashMap<>();
 
     private MainMenuScene() {
@@ -106,7 +104,7 @@ public class MainMenuScene {
             playGraph.setOpacity(0.5);
         });
         play.setOnMouseClicked(event -> {
-            SelectGameScene.selectGame(account);
+            SelectGameScene.selectGame();
             playAnimation.stop();
             setScene(StateType.SELECT_GAME);
         });
