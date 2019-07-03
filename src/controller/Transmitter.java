@@ -3,6 +3,8 @@ package controller;
 import controller.server.RequestEnum;
 import model.account.Collection;
 import model.battle.Deck;
+import model.battle.Game;
+import model.battle.Match;
 import model.battle.MatchInfo;
 import model.card.Card;
 import model.item.Item;
@@ -38,4 +40,8 @@ public class Transmitter implements Serializable { //todo check
     public String string;
     public Object object;
     public Card card;
+    public boolean aBoolean;
+    public Game game;
+    public Match match;
+    public int level;
 }

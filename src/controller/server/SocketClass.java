@@ -2,6 +2,8 @@ package controller.server;
 
 import controller.Transmitter;
 import model.account.Account;
+import model.battle.Game;
+import model.battle.Match;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,6 +15,8 @@ public class SocketClass {
     private ObjectOutputStream objectOutputStream;
     private Transmitter transmitter = new Transmitter();
     private Account account;
+    private Game game;
+    private Match match;
 
     public SocketClass(Socket socket) {
         this.socket = socket;
@@ -53,4 +57,12 @@ public class SocketClass {
         this.account = account;
     }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public Match setMatch(Match match) {
+        this.match = match;
+        return match;
+    }
 }

@@ -7,6 +7,7 @@ import model.account.Account;
 import model.account.AllAccount;
 import model.account.Shop;
 import model.battle.Deck;
+import model.battle.Game;
 import model.card.Card;
 import model.card.CardId;
 import model.item.Usable;
@@ -147,7 +148,7 @@ public class RequestEnumController {
                 transmitter.path = account.getAccountImagePath();
                 transfer(socketClass);
                 break;
-            case NEW_CARDID:
+            case NEW_CARD_ID:
                 account = socketClass.getAccount();
                 Card card = transmitter.card;
                 new CardId(account, card, account.getCollection().getNumberOfCardId(card));
@@ -163,6 +164,22 @@ public class RequestEnumController {
                     transfer(person);
                 }
                 break;
+            case DECKS:
+                transmitter.decks = account.getDecks();
+                transfer(socketClass);
+                break;
+            case START_STORY_GAME:
+                Game game = new Game();
+                socketClass.setGame(game);
+                if (game.checkPlayerDeck(account, 1)) {
+                    transmitter.match = socketClass.setMatch(game.makeNewStoryGame(clientTransmitter.level));
+                    transmitter.game = game;
+                    transmitter.aBoolean = true;
+                }
+                transmitter.aBoolean = false;
+                transfer(socketClass);
+                break;
+
         }
         socketClass.changeTransmitter();
 

@@ -120,7 +120,7 @@ public class MakeNewFile {
                 }
                 Transmitter transmitter = new Transmitter();
                 transmitter.card = card;
-                TransferController.main(RequestEnum.NEW_CARDID, transmitter);
+                TransferController.main(RequestEnum.NEW_CARD_ID, transmitter);
             }).start();
         } catch (Exception e) {
             NewCardGraphic.setError("Cannot make card!");

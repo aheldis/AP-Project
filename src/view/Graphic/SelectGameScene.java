@@ -1,6 +1,9 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
+import controller.Transmitter;
+import controller.client.TransferController;
+import controller.server.RequestEnum;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -18,7 +21,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import model.account.Account;
 import model.battle.Deck;
 import model.battle.Game;
 import model.battle.Match;
@@ -51,7 +53,8 @@ class SelectGameScene {
     private static void makeDeck() {
         Group group;
         int column = -1;
-        ArrayList<Deck> decks = account.getDecks();
+        Transmitter transmitter = TransferController.main(RequestEnum.DECKS, new Transmitter());
+        ArrayList<Deck> decks = transmitter.decks;
         for (int i = 0; i < decks.size(); i++) {
             Deck deck = decks.get(i);
             if (i % 7 == 0) {
@@ -185,35 +188,29 @@ class SelectGameScene {
             showDescForStoryGame("Collect Flags", 410);
             showDescForStoryGame("Death Mode", 1120);
 
-            Random random = new Random();
-
             diveSepid.setOnMouseClicked(event12 -> {//story game-1
-                game = new Game();
-                if (game.checkPlayerDeck(account, 1)) {
-
-                    match = game.makeNewStoryGame(1);
-                    startGame(game, match);
-                }
+                Transmitter transmitter = new Transmitter();
+                transmitter.level = 1;
+                transmitter = TransferController.main(RequestEnum.START_STORY_GAME, transmitter);
+                if (transmitter.aBoolean)
+                    startGame(transmitter.game, transmitter.match);
                 //game started
             });
             zahhak.setOnMouseClicked(event1 -> {//story game -2
-                game = new Game();
-                if (game.checkPlayerDeck(account, 1)) {
-
-
-                    match = game.makeNewStoryGame(2);
-                    startGame(game, match);
-                }
+                Transmitter transmitter = new Transmitter();
+                transmitter.level = 2;
+                transmitter = TransferController.main(RequestEnum.START_STORY_GAME, transmitter);
+                if (transmitter.aBoolean)
+                    startGame(transmitter.game, transmitter.match);
                 //game started
             });
 
             arash.setOnMouseClicked(event13 -> {//story game -3
-                game = new Game();
-                if (game.checkPlayerDeck(account, 1)) {
-
-                    match = game.makeNewStoryGame(3);
-                    startGame(game, match);
-                }
+                Transmitter transmitter = new Transmitter();
+                transmitter.level = 3;
+                transmitter = TransferController.main(RequestEnum.START_STORY_GAME, transmitter);
+                if (transmitter.aBoolean)
+                    startGame(transmitter.game, transmitter.match);
             });
             //getNumberOfFlagPage(arash, selectGameRoot, selectGameScene);
 

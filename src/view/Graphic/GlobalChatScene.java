@@ -25,17 +25,18 @@ import view.enums.StateType;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Objects;
 
 import static controller.server.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class GlobalChatScene {
     private static Scene chatScene = StageLauncher.getScene(StateType.GLOBAL_CHAT);
-    private static Group root = (Group) chatScene.getRoot();
+    private static Group root = (Group) Objects.requireNonNull(chatScene).getRoot();
     protected static Insets defaultInset = new Insets(7, 20, 7, 20);
 
 
-    public static ImageView sendEmoji(String name, Group root, int x, int y, String pathOfPorofile) {
+    private static ImageView sendEmoji(String name, Group root, int x, int y, String pathOfPorofile) {
         int size = 180;
         if (!name.matches("\\((\\w+)\\)"))
             return null;
@@ -234,7 +235,7 @@ public class GlobalChatScene {
         //todo back send exit from chat delete from server + stop animationimer
     }
 
-    public static void sendMessageToServer(String message, String pathOfProfile, String name) {
+    private static void sendMessageToServer(String message, String pathOfProfile, String name) {
         Transmitter transmitter = new Transmitter();
         transmitter.message = message;
         transmitter.path = pathOfProfile;
@@ -251,8 +252,8 @@ public class GlobalChatScene {
 
     }
 
-    public static Group makeMessage(String message, Group groupText, String name,
-                                    String pathOfProfile) {
+    private static Group makeMessage(String message, Group groupText, String name,
+                                     String pathOfProfile) {
 
         if (sendEmoji(message, groupText, 50, 50, pathOfProfile) == null) {
 
