@@ -180,6 +180,9 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
 
+            case EXIT_FROM_CHAT:
+                chatPerson.remove(socketClass);
+                break;
         }
         socketClass.changeTransmitter();
 
