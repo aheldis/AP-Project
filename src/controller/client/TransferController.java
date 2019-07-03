@@ -23,6 +23,10 @@ public class TransferController {
                 transmitter.requestEnum = RequestEnum.LOGIN;
                 transfer(true);
                 return fromServerTransmitter;
+            case LOGOUT:
+                transmitter.requestEnum = RequestEnum.LOGOUT;
+                transfer(false);
+                return fromServerTransmitter;
             case ENTER_DECK:
                 transmitter.requestEnum = RequestEnum.COLLECTION_DECKS;
                 transfer(true);

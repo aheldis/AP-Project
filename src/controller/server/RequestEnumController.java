@@ -39,48 +39,41 @@ public class RequestEnumController {
                 socketClass.setAccount(allAccount.getAccountByName(clientTransmitter.name));
                 socketClass.getAccount().setAuthToken(AllAccount.getInstance().getAuthToken(socketClass.getAccount()));
                 break;
-            case LOGOUT: {
-                //todo
+            case LOGOUT:
+                AllAccount.getInstance().saveAccount(socketClass.getAccount());
                 socketClass.getAccount().setAuthToken(null);
                 socketClass.setAccount(null);
                 break;
-            }
             case SHOP_BUY_AND_SELL:
                 break;
-            case SHOP_BUY: {
+            case SHOP_BUY:
                 Shop.getInstance().buy(socketClass.getAccount(), clientTransmitter.name);
                 transmitter.daric = socketClass.getAccount().getDaric();
                 transfer(socketClass);
                 break;
-            }
-            case SHOP_SELL: {
+            case SHOP_SELL:
                 transmitter.errorType = Shop.getInstance().sell(socketClass.getAccount(), clientTransmitter.name);
                 transmitter.daric = socketClass.getAccount().getDaric();
                 transfer(socketClass);
                 break;
-            }
-            case SHOP_CARDS: {
+            case SHOP_CARDS:
                 transmitter.cards = Shop.getInstance().getCards();
                 transfer(socketClass);
                 break;
-            }
-            case SHOP_HELP: {
+            case SHOP_HELP:
                 transmitter.string = Shop.getInstance().help();
                 transfer(socketClass);
                 break;
-            }
-            case SHOP_SEARCH: {
+            case SHOP_SEARCH:
                 transmitter.object = Shop.getInstance().search(socketClass.getAccount(), clientTransmitter.name);
                 transfer(socketClass);
                 break;
-            }
-            case SHOP_ITEMS:{
+            case SHOP_ITEMS:
                 ArrayList<Usable> items = Shop.getInstance().getItems();
                 transmitter.items = new ArrayList<>();
                 items.forEach(item -> transmitter.items.add(item));
                 transfer(socketClass);
                 break;
-            }
 
 
             case COLLECTION_SHOW:

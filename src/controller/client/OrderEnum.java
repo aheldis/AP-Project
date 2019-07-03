@@ -3,6 +3,7 @@ package controller.client;
 public enum OrderEnum {
     SIGN_UP,
     LOGIN,
+    LOGOUT,
     ENTER_COLLECTION,
     ENTER_DECK,
     IMPORT_DECK,

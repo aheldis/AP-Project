@@ -1,8 +1,9 @@
 package view.Graphic;
 
-import controller.client.TransferController;
-import controller.client.OrderEnum;
 import controller.Transmitter;
+import controller.client.OrderEnum;
+import controller.client.TransferController;
+import controller.server.RequestEnum;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.scene.Group;
@@ -15,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import model.account.AllAccount;
+import model.account.Account;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -34,8 +35,9 @@ public class MainMenuScene {
     private static ImageView playGraph = null;
     private static ImageView collectionGraph = null;
     private static ImageView chatGraph = null;
-//    private static ImageView matchHistoryGraph = null;
+    //    private static ImageView matchHistoryGraph = null;
     private static HashMap<ImageView, Integer> graphs = new HashMap<>();
+    private Account account = null;
 
     private MainMenuScene() {
     }
@@ -114,7 +116,7 @@ public class MainMenuScene {
         AnimationTimer collectionAnimation = graphAnimation(collectionGraph);
         Label collectionShadow = shadowAnimation(collection, collectionAnimation);
         collectionShadow.setOnMouseClicked(event -> {
-            Transmitter transmitter = TransferController.main(OrderEnum.ENTER_COLLECTION,new Transmitter());
+            Transmitter transmitter = TransferController.main(OrderEnum.ENTER_COLLECTION, new Transmitter());
             CollectionScene.showInCollection(transmitter.collection);
             collectionAnimation.stop();
             setScene(StateType.COLLECTION);
@@ -253,10 +255,10 @@ public class MainMenuScene {
                         playGraph = newGraph;
                     else if (graph.equals(collectionGraph))
                         collectionGraph = newGraph;
-                    else if(graph.equals(chatGraph))
-                        chatGraph= newGraph;
-                //    else
-                //        matchHistoryGraph = newGraph;
+                    else if (graph.equals(chatGraph))
+                        chatGraph = newGraph;
+                    //    else
+                    //        matchHistoryGraph = newGraph;
                     graph = newGraph;
                 }
             }
@@ -283,7 +285,6 @@ public class MainMenuScene {
     }
 
 
-
     private void buttonAction(String name) {
         switch (name) {
             case " PROFILE":
@@ -297,10 +298,9 @@ public class MainMenuScene {
             case "LOG OUT":
                 root.getChildren().removeAll(menuNodes);
                 AccountScene.getInstance().addWindows();
-                new Thread(() -> {
-                    AllAccount.getInstance().saveAccount(account);
-                    account = null;
-                }).start();
+                Transmitter transmitter = new Transmitter();
+                transmitter.requestEnum = RequestEnum.LOGOUT;
+                TransferController.main(OrderEnum.LOGOUT, transmitter);
                 break;
             case "NEW CARD":
                 NewCardGraphic.makeCardForm(mainMenuScene, account);
