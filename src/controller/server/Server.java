@@ -1,7 +1,6 @@
 package controller.server;
 
 import controller.DBClass;
-import kong.unirest.HttpResponse;
 
 import java.io.FileWriter;
 import java.io.IOException;

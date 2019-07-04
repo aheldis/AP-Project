@@ -1,6 +1,6 @@
 <component name="libraryTable">
-  <library name="com.konghq:unirest-java:2.3.08" type="repository">
-    <properties maven-id="com.konghq:unirest-java:2.3.08" />
+  <library name="Com.konghq:unirest-java:2.3.08" type="repository">
+    <properties maven-id="Com.konghq:unirest-java:2.3.08" />
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/konghq/unirest-java/2.3.08/unirest-java-2.3.08.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.5.9/httpclient-4.5.9.jar!/" />
@@ -12,16 +12,7 @@
       <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore-nio/4.4.10/httpcore-nio-4.4.10.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/json/json/20180813/json-20180813.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/konghq/unirest-java/2.3.08/unirest-java-2.3.08-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.5.9/httpclient-4.5.9-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.11/httpcore-4.4.11-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.2/commons-logging-1.2-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.11/commons-codec-1.11-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpmime/4.5.9/httpmime-4.5.9-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore-nio/4.4.10/httpcore-nio-4.4.10-javadoc.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/json/json/20180813/json-20180813-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES />
   </library>
 </component>

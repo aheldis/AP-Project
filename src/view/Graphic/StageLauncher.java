@@ -8,9 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
+
 import model.account.Account;
 import model.card.Card;
 import model.card.Minion;
@@ -26,15 +24,6 @@ import java.util.HashMap;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class StageLauncher extends Application {
-    private static Account account;
-
-    public static void setAccount(Account account) {
-        StageLauncher.account = account;
-    }
-
-    public static Account getAccount() {
-        return account;
-    }
 
     private static Stage primaryStage;
     private static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
@@ -76,7 +65,7 @@ public class StageLauncher extends Application {
                     primaryStage.setScene(StageLauncher.getScene(StateType.SELECT_GAME));
                     primaryStage.show();
                 });
-                SelectGameScene.selectGame(account);
+                SelectGameScene.selectGame();
                 break;
             case BATTLE:
                 Platform.runLater(() -> {
