@@ -35,13 +35,13 @@ public class TransferController {
             case PROFILE:
             case DECKS:
             case START_STORY_GAME:
+            case ENTER_CHAT:
                 transfer(true);
                 return fromServerTransmitter;
             case LOGOUT:
             case EXPORT_DECK:
             case NEW_DECK:
             case MAIN_DECK:
-            case ENTER_CHAT:
             case CHAT:
             case NEW_CARD_ID:
                 transfer(false);

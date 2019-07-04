@@ -1,8 +1,8 @@
 package view.Graphic;
 
+import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.RequestEnum;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -32,70 +32,14 @@ import static controller.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class GlobalChatScene {
+    protected static Insets defaultInset = new Insets(7, 20, 7, 20);
     private static Scene chatScene = StageLauncher.getScene(StateType.GLOBAL_CHAT);
     private static Group root = (Group) Objects.requireNonNull(chatScene).getRoot();
-    protected static Insets defaultInset = new Insets(7, 20, 7, 20);
-
-
-    private static ImageView sendEmoji(String name, Group root, int x, int y, String pathOfPorofile) {
-        int size = 180;
-        if (!name.matches("\\((\\w+)\\)"))
-            return null;
-
-        Circle circle = new Circle(30);
-        circle.relocate(20, 30);
-        try {
-            circle.setFill(new ImagePattern(new Image(new FileInputStream(pathOfPorofile))));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        root.getChildren().addAll(circle);
-
-        name = name.substring(1, name.length() - 1);
-        ImageView imageView = null;
-        switch (name) {
-            case "bow":
-                imageView = addImage(root, "pics/emoji/bow.png", x, y, size, size);
-                break;
-            case "happy":
-                imageView = addImage(root, "pics/emoji/happy.png", x, y, size, size);
-                break;
-            case "sad":
-                imageView = addImage(root, "pics/emoji/sad.png", x, y, size, size);
-                break;
-            case "dead":
-                imageView = addImage(root, "pics/emoji/dead.png", x, y, size, size);
-                break;
-            case "confused":
-                imageView = addImage(root, "pics/emoji/confused.png", x, y, size, size);
-                break;
-            case "kiss":
-                imageView = addImage(root, "pics/emoji/kiss.png", x, y, size, size);
-                break;
-            case "sleep":
-                imageView = addImage(root, "pics/emoji/sleep.png", x, y, size, size);
-                break;
-            case "frustrated":
-                imageView = addImage(root, "pics/emoji/frustrated.png", x, y, size, size);
-                break;
-            case "sunglasses":
-                imageView = addImage(root, "pics/emoji/sunglasses.png", x, y, size, size);
-                break;
-            case "surprised":
-                imageView = addImage(root, "pics/emoji/surprised.png", x, y, size, size);
-                break;
-            case "taunt":
-                imageView = addImage(root, "pics/emoji/taunt.png", x, y, size, size);
-                break;
-
-
-        }
-        return imageView;
-    }
+    private static String userName;
 
     public static void main() {
         Transmitter answer = TransferController.main(ENTER_CHAT, new Transmitter());
-
+        userName = answer.name;
 
         setBackground(root, "pics/menu/world_map@2x.jpg", false, 0, 0);
 //        addRectangle(root,0,0,(int)StageLauncher.getWidth(),
@@ -167,29 +111,29 @@ public class GlobalChatScene {
             }
         });
 
-       chatScene.setOnMouseClicked(event -> {
-           Transmitter transmitter = TransferController.main(CHECK_NEW_MESSAGE, new Transmitter());
-           Group groupText = new Group();
-           groupText.relocate(50, 0);
+        chatScene.setOnMouseClicked(event -> {
+            Transmitter transmitter = TransferController.main(CHECK_NEW_MESSAGE, new Transmitter());
+            Group groupText = new Group();
+            groupText.relocate(50, 0);
             String message = transmitter.message;
             try {
                 ByteArrayInputStream bis = new ByteArrayInputStream(transmitter.profile);
                 BufferedImage bImage = ImageIO.read(bis);
-                ImageIO.write(bImage, "jpg", new File(account.getUserName()+"output.jpg"));
+                ImageIO.write(bImage, "jpg", new File(userName + "output.jpg"));
                 //todo use this because we have one saving for all clients
 
                 System.out.println("transmitter = " + transmitter.path);
-                groupText=makeMessage(message,groupText, transmitter.name,account.getUserName()+"output.jpg");
+                groupText = makeMessage(message, groupText, transmitter.name, userName + "output.jpg");
                 chatGroup.getChildren().addAll(groupText);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-       });
-       ImageView imageView = addImage(root,"pics/menu/button_back_corner@2x.png",0,0,70,70);
-       imageView.setOnMouseClicked(event -> {
-           TransferController.main(RequestEnum.EXIT_FROM_CHAT, new Transmitter());
-           StageLauncher.decorateScene(StateType.MAIN_MENU);
-       });
+        });
+        ImageView imageView = addImage(root, "pics/menu/button_back_corner@2x.png", 0, 0, 70, 70);
+        imageView.setOnMouseClicked(event -> {
+            TransferController.main(RequestEnum.EXIT_FROM_CHAT, new Transmitter());
+            StageLauncher.decorateScene(StateType.MAIN_MENU);
+        });
 
         //todo back send exit from chat delete from server
     }
@@ -235,5 +179,61 @@ public class GlobalChatScene {
 
         return groupText;
 
+    }
+
+    private static ImageView sendEmoji(String name, Group root, int x, int y, String pathOfPorofile) {
+        int size = 180;
+        if (!name.matches("\\((\\w+)\\)"))
+            return null;
+
+        Circle circle = new Circle(30);
+        circle.relocate(20, 30);
+        try {
+            circle.setFill(new ImagePattern(new Image(new FileInputStream(pathOfPorofile))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        root.getChildren().addAll(circle);
+
+        name = name.substring(1, name.length() - 1);
+        ImageView imageView = null;
+        switch (name) {
+            case "bow":
+                imageView = addImage(root, "pics/emoji/bow.png", x, y, size, size);
+                break;
+            case "happy":
+                imageView = addImage(root, "pics/emoji/happy.png", x, y, size, size);
+                break;
+            case "sad":
+                imageView = addImage(root, "pics/emoji/sad.png", x, y, size, size);
+                break;
+            case "dead":
+                imageView = addImage(root, "pics/emoji/dead.png", x, y, size, size);
+                break;
+            case "confused":
+                imageView = addImage(root, "pics/emoji/confused.png", x, y, size, size);
+                break;
+            case "kiss":
+                imageView = addImage(root, "pics/emoji/kiss.png", x, y, size, size);
+                break;
+            case "sleep":
+                imageView = addImage(root, "pics/emoji/sleep.png", x, y, size, size);
+                break;
+            case "frustrated":
+                imageView = addImage(root, "pics/emoji/frustrated.png", x, y, size, size);
+                break;
+            case "sunglasses":
+                imageView = addImage(root, "pics/emoji/sunglasses.png", x, y, size, size);
+                break;
+            case "surprised":
+                imageView = addImage(root, "pics/emoji/surprised.png", x, y, size, size);
+                break;
+            case "taunt":
+                imageView = addImage(root, "pics/emoji/taunt.png", x, y, size, size);
+                break;
+
+
+        }
+        return imageView;
     }
 }
