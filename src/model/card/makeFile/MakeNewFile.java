@@ -4,7 +4,7 @@ import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.server.RequestEnum;
+import controller.RequestEnum;
 import javafx.scene.control.TextField;
 import model.account.FilesType;
 import model.account.Shop;

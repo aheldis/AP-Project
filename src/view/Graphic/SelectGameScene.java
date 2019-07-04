@@ -3,7 +3,7 @@ package view.Graphic;
 import com.gilecode.yagson.YaGson;
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.server.RequestEnum;
+import controller.RequestEnum;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Group;

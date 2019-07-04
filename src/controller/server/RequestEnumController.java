@@ -1,6 +1,7 @@
 package controller.server;
 
 import com.gilecode.yagson.YaGson;
+import controller.RequestEnum;
 import controller.Transmitter;
 import javafx.scene.Group;
 import model.account.Account;
@@ -10,6 +11,7 @@ import model.battle.Deck;
 import model.battle.Game;
 import model.card.Card;
 import model.card.CardId;
+import model.item.Item;
 import model.item.Usable;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
@@ -140,6 +142,26 @@ public class RequestEnumController {
                 break;
             case COLLECTION_SELECT_MAIN_DECK:
                 socketClass.getAccount().getCollection().selectADeckAsMainDeck(transmitter.deck.getName());
+                break;
+            case COLLECTION_CARDS:
+                transmitter.cards = account.getCollection().getAllCards();
+                transfer(socketClass);
+                break;
+            case COLLECTION_ITEMS:
+                transmitter.items = new ArrayList<>(Arrays.asList(account.getCollection().getItems()));
+                transfer(socketClass);
+                break;
+            case COLLECTION_HELP:
+                transmitter.string = account.getCollection().helpOfCollection();
+                transfer(socketClass);
+                break;
+            case COLLECTION_SEARCH_ITEM:
+                transmitter.ids = account.getCollection().searchItemName(clientTransmitter.name);
+                transfer(socketClass);
+                break;
+            case COLLECTION_SEARCH_CARD:
+                transmitter.ids = account.getCollection().searchCardName(clientTransmitter.name);
+                transfer(socketClass);
                 break;
             case ENTER_CHAT:
                 chatPerson.add(socketClass);

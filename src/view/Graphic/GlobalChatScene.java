@@ -2,7 +2,7 @@ package view.Graphic;
 
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.server.RequestEnum;
+import controller.RequestEnum;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -21,8 +21,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import model.account.Account;
 import view.enums.StateType;
 
 import javax.imageio.ImageIO;
@@ -30,7 +28,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Objects;
 
-import static controller.server.RequestEnum.*;
+import static controller.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class GlobalChatScene {

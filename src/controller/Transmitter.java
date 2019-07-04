@@ -1,6 +1,5 @@
 package controller;
 
-import controller.server.RequestEnum;
 import model.account.Collection;
 import model.battle.Deck;
 import model.battle.Game;
@@ -24,6 +23,7 @@ public class Transmitter implements Serializable { //todo check
     public Collection collection;
     public ArrayList<Card> cards;
     public ArrayList<Item> items;
+    public ArrayList<String> ids;
     public String name;
     public String password;
     public String cardId;
@@ -37,7 +37,7 @@ public class Transmitter implements Serializable { //todo check
     public String message;
     public String path;
     //public Group group;
-    public String string;
+    public String string; //help & otherThings
     public Object object;
     public Card card;
     public boolean aBoolean;

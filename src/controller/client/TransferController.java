@@ -1,6 +1,6 @@
 package controller.client;
 
-import controller.server.RequestEnum;
+import controller.RequestEnum;
 import controller.Transmitter;
 
 import java.io.IOException;
@@ -19,6 +19,11 @@ public class TransferController {
             case SIGN_UP:
             case LOGIN:
             case COLLECTION_DECKS:
+            case COLLECTION_CARDS:
+            case COLLECTION_ITEMS:
+            case COLLECTION_HELP:
+            case COLLECTION_SEARCH_CARD:
+            case COLLECTION_SEARCH_ITEM:
             case ENTER_COLLECTION:
             case IMPORT_DECK:
             case SHOP_BUY:
@@ -52,11 +57,9 @@ public class TransferController {
                 }
                 return fromServerTransmitter;
             case EXIT_FROM_CHAT:
-                transmitter.requestEnum = RequestEnum.EXIT_FROM_CHAT;
                 transfer(false);
                 return fromServerTransmitter;
             case SHOP_SELL: {
-                transmitter.requestEnum = RequestEnum.SHOP_SELL;
                 transfer(true);
                 return fromServerTransmitter;
             }

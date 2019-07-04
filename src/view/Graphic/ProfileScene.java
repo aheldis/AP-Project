@@ -2,7 +2,7 @@ package view.Graphic;
 
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.server.RequestEnum;
+import controller.RequestEnum;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;

@@ -2,7 +2,7 @@ package view.Graphic;
 
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.server.RequestEnum;
+import controller.RequestEnum;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Node;

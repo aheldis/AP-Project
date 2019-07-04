@@ -2,7 +2,7 @@ package view.Graphic;
 
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.server.RequestEnum;
+import controller.RequestEnum;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -23,7 +23,7 @@ import view.enums.StateType;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static controller.server.RequestEnum.*;
+import static controller.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 class ShopScene {

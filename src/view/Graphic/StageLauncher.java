@@ -54,7 +54,7 @@ public class StageLauncher extends Application {
                 setScene(StateType.SHOP);
                 break;
             case COLLECTION:
-                CollectionScene.showInCollection(account.getCollection());
+                CollectionScene.showInCollection();
                 setScene(StateType.COLLECTION);
                 break;
             case SELECT_GAME:

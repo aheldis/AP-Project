@@ -1,4 +1,4 @@
-package controller.server;
+package controller;
 
 public enum RequestEnum {
     LOGIN,
@@ -19,6 +19,11 @@ public enum RequestEnum {
     COLLECTION_EXPORT,
     COLLECTION_IMPORT,
     COLLECTION_ADD_CARD_TO_DECK,
+    COLLECTION_CARDS,
+    COLLECTION_ITEMS,
+    COLLECTION_HELP,
+    COLLECTION_SEARCH_CARD,
+    COLLECTION_SEARCH_ITEM,
     CHAT,
     ENTER_CHAT,
     SHOP_HELP,

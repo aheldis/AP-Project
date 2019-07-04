@@ -2,6 +2,7 @@ package view.Graphic;
 
 import controller.Transmitter;
 import controller.client.TransferController;
+import controller.RequestEnum;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static controller.server.RequestEnum.*;
+import static controller.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 
@@ -377,7 +378,7 @@ class CollectionScene {
         hBox.setSpacing(X_BORDER);
     }
 
-    private static void searchBar(HBox hBox, VBox vBox, Collection collection) {
+    private static void searchBar(HBox hBox, VBox vBox) {
         Group groupText = new Group();
         groupText.relocate(300, 20);
 
@@ -400,8 +401,13 @@ class CollectionScene {
 
         group1.setOnMouseClicked(event -> {
             ArrayList<String> ids = new ArrayList<>();
-            ids.addAll(collection.searchCardName(textArea.getText()));
-            ids.addAll(collection.searchItemName(textArea.getText()));
+
+            transmitter.name = textArea.getText();
+            transmitter = TransferController.main(RequestEnum.COLLECTION_SEARCH_CARD, transmitter);
+            ids.addAll(transmitter.ids);
+            transmitter = TransferController.main(RequestEnum.COLLECTION_SEARCH_ITEM, transmitter);
+            ids.addAll(transmitter.ids);
+
             textArea.clear();
             if (ids.size() != 0) {
                 Group group = new Group();
@@ -481,9 +487,11 @@ class CollectionScene {
         }
     }
 
-    static void showInCollection(Collection collection) {
-        ArrayList<Card> cards = collection.getAllCards();
-        Usable[] items = collection.getItems();
+    static void showInCollection() {
+        transmitter = TransferController.main(RequestEnum.COLLECTION_CARDS, new Transmitter());
+        ArrayList<Card> cards = transmitter.cards;
+        transmitter = TransferController.main(RequestEnum.COLLECTION_ITEMS, new Transmitter());
+        Usable[] items = (Usable[])transmitter.items.toArray();
         root.getChildren().clear();
 
         playMusic("resource/music/collection.m4a", true, collectionScene);
@@ -507,8 +515,7 @@ class CollectionScene {
         hBox.setSpacing(1);
         hBox.setPrefWidth(StageLauncher.getWidth());
 
-
-        searchBar(hBox, vBox, collection);
+        searchBar(hBox, vBox);
 
         ImageView back = addBack(root);
         ImageView next = addNext(root);
@@ -547,8 +554,8 @@ class CollectionScene {
             instanceOf(cards, hBox, j, i);
         }
 
-
-        log(root, collection.helpOfCollection(), StateType.MAIN_MENU, 600);
+        transmitter = TransferController.main(RequestEnum.COLLECTION_HELP, new Transmitter());
+        log(root, transmitter.string /*help*/, StateType.MAIN_MENU, 600);
 
     }
 
