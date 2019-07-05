@@ -129,7 +129,7 @@ public class GlobalChatScene {
         //todo back send exit from chat delete from server
     }
 
-    static void createScrollBar(VBox chatGroup, ScrollBar sc, int i, Group root) {
+    static void createScrollBar(VBox group, ScrollBar sc, int i, Group root) {
         sc.setBackground(new Background(
                 new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
                         CornerRadii.EMPTY, Insets.EMPTY)));
@@ -139,7 +139,7 @@ public class GlobalChatScene {
         sc.setOrientation(Orientation.VERTICAL);
         root.getChildren().addAll(sc);
         sc.valueProperty().addListener((ov, old_val, new_val) ->
-                chatGroup.setLayoutY(-new_val.doubleValue() * 11));
+                group.setLayoutY(-new_val.doubleValue() * 11));
     }
 
     private static void sendMessageToServer(String message, String pathOfProfile, String name) {
