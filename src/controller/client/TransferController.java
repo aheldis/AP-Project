@@ -49,9 +49,9 @@ public class TransferController {
             case EXIT_FROM_CHAT:
             case END_OF_CLIENT:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
-
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
+                /*
                // try {
                     Thread one=new Thread(new Runnable() {
                         @Override
@@ -76,6 +76,7 @@ public class TransferController {
 //                } catch (IOException | ClassNotFoundException e) {
 //                    e.printStackTrace();
 //                }
+*/
                 return fromServerTransmitter;
         }
 
@@ -84,7 +85,6 @@ public class TransferController {
     }
 
     static void fromServerTransmitter(Transmitter transmitter) {
-        System.out.println("transmitter.requestEnum = " + transmitter.requestEnum);
         switch (transmitter.requestEnum){
             case CHECK_NEW_MESSAGE:
         }
