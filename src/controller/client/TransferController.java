@@ -11,6 +11,7 @@ public class TransferController {
     private static Transmitter fromServerTransmitter;
     private static ObjectOutputStream objectOutputStream = Client.getObjectOutputStream();
     private static ObjectInputStream objectInputStream = Client.getObjectInputStream();
+    private static Transmitter object;
 
     public static Transmitter main(RequestEnum requestEnum, Transmitter transmitter) {
         fromServerTransmitter = transmitter;
@@ -50,14 +51,30 @@ public class TransferController {
                 transfer(false);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
+               // try {
+                    Thread one=new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                object =(Transmitter) objectInputStream.readObject();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    one.start();
                 try {
-                    Object object = objectInputStream.readObject();
-                    if (object != null) {
-                        transmitter = (Transmitter) object;
-                    }
-                } catch (IOException | ClassNotFoundException e) {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                if (object != null) {
+                        fromServerTransmitter = (Transmitter) object;
+                    }
+                one.stop();
+//                } catch (IOException | ClassNotFoundException e) {
+//                    e.printStackTrace();
+//                }
                 return fromServerTransmitter;
         }
 

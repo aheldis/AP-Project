@@ -32,7 +32,6 @@ import static controller.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class GlobalChatScene {
-    protected static Insets defaultInset = new Insets(7, 20, 7, 20);
     private static Scene chatScene = StageLauncher.getScene(StateType.GLOBAL_CHAT);
     private static Group root = (Group) Objects.requireNonNull(chatScene).getRoot();
     private static String userName;
@@ -83,8 +82,8 @@ public class GlobalChatScene {
         sc.relocate(1250, 20);
         createVBox(chatGroup, sc, 2, root);
 
-        send.setOnMouseClicked(new EventHandler<>() {
-            String message;
+        send.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                String message;
             Group groupText;
 
             @Override
@@ -120,6 +119,7 @@ public class GlobalChatScene {
                 e.printStackTrace();
             }
         });
+
         ImageView imageView = addImage(root, "pics/menu/button_back_corner@2x.png", 0, 0, 70, 70);
         imageView.setOnMouseClicked(event -> {
             TransferController.main(RequestEnum.EXIT_FROM_CHAT, new Transmitter());

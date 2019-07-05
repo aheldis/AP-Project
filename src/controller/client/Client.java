@@ -40,15 +40,6 @@ public class Client {
             e.printStackTrace();
         }
         StageLauncher.main(args);
-        while (true) {
-//
-//            if(inputStream.hasNextLine()) {
-//                line = inputStream.nextLine() ;
-//                RequestEnumController.main(line);
-//            }
-
-        }
-      //  }
 
         //todo at the end close everything
     }
