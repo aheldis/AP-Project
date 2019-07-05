@@ -2,12 +2,14 @@ package controller.server;
 
 
 import controller.Transmitter;
+import sun.security.krb5.internal.PAForUserEnc;
 
 import java.io.IOException;
 
 public class ClientHandlerServer extends Thread {
     private Transmitter transmitter;
     private SocketClass socketClass;
+    public boolean endOfClient = false;
 
     public ClientHandlerServer(SocketClass socketClass) {
         this.socketClass = socketClass;
@@ -15,7 +17,7 @@ public class ClientHandlerServer extends Thread {
     }
 
     public void run() {
-        boolean endOfClient = false;
+
 
         while (true) {
             //todo if login or signUp add autToken to socketClass

@@ -60,6 +60,7 @@ public class AccountScene {
         windows.add(quit);
         quit.setOnMouseClicked(event ->{
             StageLauncher.getPrimaryStage().close();
+            TransferController.main(RequestEnum.END_OF_CLIENT, new Transmitter());
         });
     }
 

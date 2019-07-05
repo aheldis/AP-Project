@@ -48,6 +48,7 @@ public class TransferController {
             case NEW_CARD_ID:
             case ENTER_COLLECTION:
             case EXIT_FROM_CHAT:
+            case END_OF_CLIENT:
                 transfer(false);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:

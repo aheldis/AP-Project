@@ -1,5 +1,7 @@
 package controller.server;
 
+import controller.client.Client;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -28,11 +30,14 @@ public class Server {
 
             ServerSocket serverSocket = new ServerSocket(PORT);
             Socket socket;
+            ClientHandlerServer clientHandlerServer;
             while (true) {
                 socket = serverSocket.accept();
                 socketClass = new SocketClass(socket);
                 socketClasses.add(socketClass);
-                new ClientHandlerServer(socketClass).start();
+                clientHandlerServer = new ClientHandlerServer(socketClass);
+                socketClass.setClientHandlerServer(clientHandlerServer);
+                clientHandlerServer.start();
             }
 
         } catch (Exception e) {

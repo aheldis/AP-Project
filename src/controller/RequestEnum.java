@@ -40,5 +40,6 @@ public enum RequestEnum {
     NEW_CARD_ID,
     DECKS,
     START_STORY_GAME,
-    START_CUSTOM_GAME
+    START_CUSTOM_GAME,
+    END_OF_CLIENT
 }
