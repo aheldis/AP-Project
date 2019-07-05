@@ -187,11 +187,8 @@ public class ComputerPlayer extends Player {
 
     }
 
-    public void addToAccountWins() {
-        //nothing
-    }
 
-    public void addMatchInfo(MatchInfo matchInfo) {
+    public void endGame(MatchInfo matchInfo, int reward) {
         //nothing
     }
 

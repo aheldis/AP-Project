@@ -31,7 +31,6 @@ public abstract class Player {
     private ArrayList<Buff> buffsOnThisPlayer = new ArrayList<>();
     private String avatarPath = null;
 
-    public abstract void addToAccountWins();
 
     //Collectible item to hand ast :D
 
@@ -39,7 +38,7 @@ public abstract class Player {
 //    public abstract void attack(Card card, Square target);
 //    public abstract void useSpecialPower(Card card);
 
-    public abstract void addMatchInfo(MatchInfo matchInfo);
+    public abstract void endGame(MatchInfo matchInfo, int reward);
 
     public Player() {
         Random random = new Random();

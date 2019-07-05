@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.account.Shop;
@@ -43,8 +42,11 @@ public class Match {
 
     Match(Player[] players, String mode, int numberOfFlags, int reward) {
         //addToPausedGames();
+
         land = new LandOfGame();
         for (int i = 0; i < 2; i++) {
+            if (players[i] instanceof OrdinaryPlayer)
+                players[i].getAccount().setCurrentlyPlaying(true);
             ArrayList<Card> cards = players[i].getMainDeck().getCardsOfDeck();
             Hero hero = players[i].getMainDeck().getHero();
             players[i].setMatch(this);
@@ -84,6 +86,11 @@ public class Match {
         initGame();
     }
 
+    private void initGame() {
+        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
+        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
+    }
+
     private void addToPausedGames() {
         new Thread(() -> {
             try {
@@ -111,17 +118,12 @@ public class Match {
 
     }
 
-    private void initGame() {
-        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
-        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
-    }
-
     public void addToGameFlags(Flag flag) {
         this.flags.add(flag);
     }
 
     public void initGraphic() {
-       // BattleScene.getSingleInstance().changeSingleInstance(null);
+        // BattleScene.getSingleInstance().changeSingleInstance(null);
         this.battleScene = BattleScene.getSingleInstance();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
@@ -140,10 +142,6 @@ public class Match {
             Usable item = players[0].getMainDeck().getItem();
             battleScene.showAlert(item.getName() + ": " + item.getDescription());
         }
-    }
-
-    public int getNumberOfFlags() {
-        return numberOfFlags;
     }
 
     private void setFlagsRandomly(int mode) {
@@ -330,24 +328,19 @@ public class Match {
             @Override
             public void run() {
                 MatchInfo matchInfo = new MatchInfo();
-                if (winner instanceof OrdinaryPlayer) {
+                if (winner instanceof OrdinaryPlayer)
                     matchInfo.winner = winner.getAccount().getUserName();
-                    matchInfo.loser ="Computer";
-                }
-                else {
+                else
                     matchInfo.winner = "Computer";
-                    matchInfo.loser = winner.getAccount().getUserName();
-                }
+
                 if (loser instanceof OrdinaryPlayer)
                     matchInfo.loser = loser.getAccount().getUserName();
                 else
                     matchInfo.loser = "Computer";
                 matchInfo.date = date;
 
-                winner.addToAccountWins();
-                winner.addMatchInfo(matchInfo);
-                loser.addMatchInfo(matchInfo);
-                winner.getAccount().changeValueOfDaric(reward);
+                winner.endGame(matchInfo, reward);
+                loser.endGame(matchInfo, 0);
 
             }
         }).start();
@@ -371,6 +364,11 @@ public class Match {
             return -1;
     }
 
+    private void setWinnerAndLoser(Player winner, Player loser) {
+        this.winner = winner;
+        this.loser = loser;
+    }
+
 //    public void startMatch() {
 //        date = new Date();
 //
@@ -388,11 +386,6 @@ public class Match {
 //        }
 //    }
 
-    private void setWinnerAndLoser(Player winner, Player loser) {
-        this.winner = winner;
-        this.loser = loser;
-    }
-
     public static void loss() {
         Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
         assert battleScene != null;
@@ -403,7 +396,7 @@ public class Match {
 
         playMusic("resource/music/defeat.m4a", false, battleScene);
 
-        ImageView hero=addImage(root, "pics/battle/general_f4@2x.png", -200, -100, 1800, 1200);
+        ImageView hero = addImage(root, "pics/battle/general_f4@2x.png", -200, -100, 1800, 1200);
         addImage(root, "pics/battle/scene_diamonds_background_defeat@2x.png", 0, 0,
                 (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight());
         addImage(root, "pics/battle/scene_diamonds_background_defeat@2x.png", 300, -300,
@@ -435,7 +428,7 @@ public class Match {
 
         playMusic("resource/music/sfx_victory_match_w_vo.m4a", false, battleScene);
 
-       ImageView hero= addImage(root, "pics/battle/general_f1@2x.png", -200, -100, 1800, 1200);
+        ImageView hero = addImage(root, "pics/battle/general_f1@2x.png", -200, -100, 1800, 1200);
         addImage(root, "pics/battle/scene_diamonds_background_victory@2x.png", 0, 0,
                 (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight());
         addImage(root, "pics/battle/scene_diamonds_background_victory@2x.png", 300, -300,
@@ -452,6 +445,10 @@ public class Match {
         text.setEffect(glow);
         BattleScene.getSingleInstance().changeSingleInstance(null);
         hero.setOnMouseClicked(event -> StageLauncher.decorateScene(StateType.MAIN_MENU));
+    }
+
+    public int getNumberOfFlags() {
+        return numberOfFlags;
     }
 
     BattleScene getBattleScene() {

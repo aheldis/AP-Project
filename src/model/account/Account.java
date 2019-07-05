@@ -23,6 +23,15 @@ public class Account implements Comparable<Account>, Cloneable {
     private String accountImagePath = null;
     private String profileImagePath = null;
     private String authToken;
+    private boolean currentlyPlaying = false;
+
+    public void setCurrentlyPlaying(boolean currentlyPlaying) {
+        this.currentlyPlaying = currentlyPlaying;
+    }
+
+    public boolean isCurrentlyPlaying() {
+        return currentlyPlaying;
+    }
 
     public String getAccountImagePath() {
         if(accountImagePath == null)

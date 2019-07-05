@@ -16,12 +16,13 @@ public class OrdinaryPlayer extends Player {
         setHand();
     }
 
-    public void addToAccountWins() {
-        getAccount().addToWins();
-    }
 
-    public void addMatchInfo(MatchInfo matchInfo) {
+    public void endGame(MatchInfo matchInfo, int reward) {
+        getAccount().changeValueOfDaric(reward);
         getAccount().addMatchInfo(matchInfo);
+        getAccount().setCurrentlyPlaying(false);
+        getAccount().addToWins();
+
     }
 
 
