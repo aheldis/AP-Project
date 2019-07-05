@@ -2,7 +2,6 @@ package controller.server;
 
 
 import controller.Transmitter;
-import sun.security.krb5.internal.PAForUserEnc;
 
 import java.io.IOException;
 
@@ -18,10 +17,7 @@ public class ClientHandlerServer extends Thread {
 
     public void run() {
 
-
         while (true) {
-            //todo if login or signUp add autToken to socketClass
-            //todo if quit make auth token null
             try {
                 if (socketClass == null || socketClass.getInputStream() == null)
                     break;
@@ -29,8 +25,9 @@ public class ClientHandlerServer extends Thread {
                 if (transmitter != null) {
                     RequestEnumController.main(transmitter.requestEnum, socketClass, transmitter);
                 }
+                Thread.sleep(10);
             } catch (Exception e) {
-                e.printStackTrace();
+                break;
             }
 
             if (endOfClient) {

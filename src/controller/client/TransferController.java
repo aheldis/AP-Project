@@ -9,9 +9,8 @@ import java.io.ObjectOutputStream;
 
 public class TransferController {
     private static Transmitter fromServerTransmitter;
-    private static ObjectOutputStream objectOutputStream = Client.getObjectOutputStream();
-    private static ObjectInputStream objectInputStream = Client.getObjectInputStream();
     private static Transmitter object;
+    private static ClientIOhandler clientIOhandler = Client.getClientIOhandler();
 
     public static Transmitter main(RequestEnum requestEnum, Transmitter transmitter) {
         fromServerTransmitter = transmitter;
@@ -38,7 +37,7 @@ public class TransferController {
             case ENTER_CHAT:
             case START_CUSTOM_GAME:
             case SHOP_SELL:
-                transfer(true);
+               fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
             case LOGOUT:
             case EXPORT_DECK:
@@ -49,9 +48,10 @@ public class TransferController {
             case ENTER_COLLECTION:
             case EXIT_FROM_CHAT:
             case END_OF_CLIENT:
-                transfer(false);
+                fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
+                /*
                // try {
                     Thread one=new Thread(new Runnable() {
                         @Override
@@ -76,6 +76,7 @@ public class TransferController {
 //                } catch (IOException | ClassNotFoundException e) {
 //                    e.printStackTrace();
 //                }
+*/
                 return fromServerTransmitter;
         }
 
@@ -83,17 +84,10 @@ public class TransferController {
 
     }
 
-        private static void transfer ( boolean waitForAnswer){
-            try {
-                objectOutputStream.writeObject(fromServerTransmitter);
-                objectOutputStream.flush();
-                if (waitForAnswer) {
-                    do {
-                        fromServerTransmitter = (Transmitter) objectInputStream.readObject();
-                    } while (fromServerTransmitter == null);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    static void fromServerTransmitter(Transmitter transmitter) {
+        switch (transmitter.requestEnum){
+            case CHECK_NEW_MESSAGE:
         }
     }
+
+}

@@ -19,31 +19,19 @@ public class MapProperties {
 
     void init() {
         setCellSize();
-        double changeXRatio = GeneralGraphicMethods.getRatioX() / GeneralGraphicMethods.getSabasXRatio();
-        double changeYRatio = GeneralGraphicMethods.getRatioY() / GeneralGraphicMethods.getSabasYRatio() ;
         try {
             Field[] fields = MapProperties.class.getFields();
             for(Field field: fields){
                 double value = (Double)field.get(this);
                 if(field.getName().contains("x") || field.getName().contains("Width"))
-                    field.set(this, value * changeXRatio);
+                    field.set(this, value);
                 else
-                    field.set(this, value * changeYRatio);
+                    field.set(this, value);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        cellWidth *= changeXRatio;
-        cellHeight *= changeYRatio;
-        ulx *= changeXRatio;
-        uly *= changeYRatio;
-        urx *= changeXRatio;
-        ury *= changeYRatio;
-        llx *= changeXRatio;
-        lly *= changeYRatio;
-        lrx *= changeXRatio;
-        lry *= changeYRatio;
     }
 
     private void setCellSize() {

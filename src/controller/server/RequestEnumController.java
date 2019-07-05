@@ -24,8 +24,8 @@ public class RequestEnumController {
     static ArrayList<SocketClass> chatPerson = new ArrayList<>();
 
     public static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
-        Transmitter transmitter;
-        transmitter = socketClass.getTransmitter();
+        Transmitter transmitter = socketClass.getTransmitter();
+        transmitter.transmitterId = clientTransmitter.transmitterId;
         AllAccount allAccount = AllAccount.getInstance();
         Account account = socketClass.getAccount();
         switch (requestEnum) {
