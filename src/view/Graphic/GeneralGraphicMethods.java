@@ -67,7 +67,7 @@ public class GeneralGraphicMethods {
         return text;
     }
 
-    static Rectangle addRectangleForCollection(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
+   public static Rectangle addRectangleForCollection(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
         Rectangle rectangle = new javafx.scene.shape.Rectangle(width, height);
         rectangle.setFill(color);
         rectangle.setArcWidth(arcW);
@@ -137,7 +137,7 @@ public class GeneralGraphicMethods {
         }
     }
 
-    static javafx.scene.shape.Rectangle addRectangle(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
+   public static javafx.scene.shape.Rectangle addRectangle(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
         javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle(width, height);
         rectangle.relocate(x, y);
         rectangle.setFill(color);
@@ -267,7 +267,7 @@ public class GeneralGraphicMethods {
         primaryStage.show();
     }
 
-    static Text addTextWithShadow(Parent group, double x, double y, String textString, String fontFamily, int size) {
+    public static Text addTextWithShadow(Parent group, double x, double y, String textString, String fontFamily, int size) {
         Text text = new Text(textString);
         text.relocate(x, y);
         text.setFont(Font.font(fontFamily, FontWeight.BOLD, size));
