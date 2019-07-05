@@ -46,7 +46,7 @@ public class Hand {
 //            return;
 //        }
         this.gameCards = new ArrayList<>(deck.getCardsOfDeck().subList(0, 5));
-        deck.setIndexOfCards(5);
+        deck.setIndexOfCards();
     }
 
     void checkTheHandAndAddToIt() {//call it after each turn

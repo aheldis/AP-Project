@@ -239,6 +239,8 @@ class ShopScene {
                     return;
                 imageIcon = addImage(hBox,
                         "pics/shop/" + iconName + "-" + j + typeOfFile, 0, 0, width, height);
+                imageIcon.setOnMouseEntered(event -> GeneralGraphicMethods.setCursor(shopScene, Cursor.LIGHTEN));
+                imageIcon.setOnMouseExited(event -> GeneralGraphicMethods.setCursor(shopScene, Cursor.AUTO));
             }
         }
     }
@@ -293,7 +295,7 @@ class ShopScene {
             if (i >= cards.size()) {
                 break;
             }
-            makeHBoxForCards(4, pageNumberCards, cards, daric, items);
+            makeHBoxForCards(pageNumberCards, cards, daric, items);
         }
 
 
@@ -317,46 +319,45 @@ class ShopScene {
                 pageNumberCards = 0;
             root.getChildren().removeAll(hBoxes);
             root.getChildren().addAll(hBox);
-            makeHBoxForCards(4, pageNumberCards, cards, daric, items);
+            makeHBoxForCards(pageNumberCards, cards, daric, items);
         });
         next.setOnMouseClicked(event -> {
             pageNumberCards++;
             root.getChildren().removeAll(hBoxes);
             root.getChildren().addAll(hBox);
-            makeHBoxForCards(4, pageNumberCards, cards, daric, items);
+            makeHBoxForCards(pageNumberCards, cards, daric, items);
         });
 
     }
 
-    private static void makeHBoxForCards(int column, int pageNumber, ArrayList<Card> cards,
+    private static void makeHBoxForCards(int pageNumber, ArrayList<Card> cards,
                                          Text daric, ArrayList<Item> items) {
         HBox hBox = new HBox();
+        final int column = 4;
         int startingBound = 2 * column * pageNumber;
         int j = -1;
         Group group;
         outer:
         for (int i = startingBound; i < startingBound + 2 * column; i++) {
+            if (i % column == 0 && ((i >= cards.size() && i < startingBound + 2 * column) || i < cards.size())) {
+                j++;
+                hBox = new HBox();
+                hBox.relocate(350, 100 + (j) * 335);
+                root.getChildren().addAll(hBox);
+                hBoxes.add(hBox);
+                hBox.setSpacing(10);
+            }
             if (i >= cards.size()) {
                 int indexOfItem = i - cards.size();
                 for (int k = indexOfItem; k < startingBound + 2 * column; k++) {
                     if (i >= startingBound + 2 * column)
                         break outer;
-                    if (i % column == 0) {
-                        j++;
-                        hBox = new HBox();
-                        hBox.relocate(350, 100 + (j) * 335);
-                        root.getChildren().addAll(hBox);
-                        hBoxes.add(hBox);
-                        hBox.setSpacing(10);
-                    }
                     if (k >= items.size())
                         break outer;
                     Usable item = (Usable)items.get(k);
                     group = CollectionScene.makeItemCard(item);
 
-                    group.setOnMouseClicked(event -> {
-                        daric.setText("Daric: " + buyCard(item.getName()));
-                    });
+                    group.setOnMouseClicked(event -> daric.setText("Daric: " + buyCard(item.getName())));
 
                     addText(group, 20, 225, items.get(k).getName() + "\n" + items.get(k).getCost()
                             , Color.WHITE, 20);
@@ -368,21 +369,11 @@ class ShopScene {
                 break;
             }
             Card card = cards.get(i);
-            if (i % column == 0) {
-                j++;
-                hBox = new HBox();
-                hBox.relocate(350, 100 + (j) * 335);
-                root.getChildren().addAll(hBox);
-                hBoxes.add(hBox);
-                hBox.setSpacing(10);
-            }
             group = CollectionScene.makeCardGroup(0, 0, cards.get(i), shopScene);
             hBox.getChildren().addAll(group);
             addText(group, 20, 225, card.getName(), Color.WHITE, 20);
             addText(group, 20, 245, card.getCost() + "", Color.WHITE, 20);
-            group.setOnMouseClicked(event -> {
-                daric.setText("Daric: " + buyCard(card.getName()));
-            });
+            group.setOnMouseClicked(event -> daric.setText("Daric: " + buyCard(card.getName())));
         }
     }
 

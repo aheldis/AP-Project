@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import java.util.Observable;
 
 public class ObservableClass extends Observable {
-    ImageView imageView ;
+    private ImageView imageView;
 
     public ImageView getImageView() {
         return imageView;

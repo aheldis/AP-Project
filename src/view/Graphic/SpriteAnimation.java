@@ -17,7 +17,7 @@ public class SpriteAnimation extends Transition {
 
     private int lastIndex;
 
-    public SpriteAnimation(
+    SpriteAnimation(
             ImageView imageView,
             Duration duration,
             int count, int columns,

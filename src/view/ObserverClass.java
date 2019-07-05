@@ -5,7 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class ObserverClass implements Observer {
-    ImageView ap,hp,card;
+    private ImageView ap, hp, card;
 
     public void addToObserver(ImageView hp,ImageView ap,ImageView card){
         this.hp=hp;

@@ -212,8 +212,7 @@ public abstract class Player implements Serializable {
         if (card != null) {
             return card;
         }
-        ArrayList<Card> cards = new ArrayList<>();
-        cards.addAll(cardsOnLand);
+        ArrayList<Card> cards = new ArrayList<>(cardsOnLand);
         for (Card outPutCard : cards) {
             if (outPutCard.equalCard(cardId) && outPutCard.getPlayer().equals(this))
                 card = outPutCard;
@@ -237,7 +236,7 @@ public abstract class Player implements Serializable {
                             buff.affect((Player) object);
 
                     } else {
-                        if (buff.isHaveUnAffect())
+                        if (buff.isHaveUnAffect() && object instanceof Card)
                             buff.unAffect((Card) object);
                         buffsToBeRemoved.add(buff);
                     }
@@ -293,7 +292,7 @@ public abstract class Player implements Serializable {
             turnForSavingFlag++;
     }
 
-    public void addToCardsOfLand(Card card) {
+    void addToCardsOfLand(Card card) {
         cardsOnLand.add(card);
     }
 
@@ -305,7 +304,7 @@ public abstract class Player implements Serializable {
         flagSaver = card;
     }*/
 
-    public void setHand() {
+    void setHand() {
         hand = new Hand(mainDeck);
         hand.setCards();
     }
@@ -342,7 +341,7 @@ public abstract class Player implements Serializable {
         return turnForSavingFlag;
     }
 
-    public void setTurnForSavingFlag(int turnForSavingFlag) {
+    void setTurnForSavingFlag(int turnForSavingFlag) {
         this.turnForSavingFlag = turnForSavingFlag;
     }
 
@@ -382,7 +381,7 @@ public abstract class Player implements Serializable {
         return mainDeck;
     }
 
-    public void setMainDeck(Deck mainDeck) {
+    void setMainDeck(Deck mainDeck) {
         this.mainDeck = mainDeck;
     }
 

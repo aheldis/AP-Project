@@ -103,7 +103,7 @@ public class DragAndDrop {
                     if (card instanceof Item &&
                             deck.getItem().getUsableId().getUsableIdAsString().
                                     equals(((Usable) card).getUsableId().getUsableIdAsString()))
-                        deck.removeItemOfDeck((Usable) (card));
+                        deck.removeItemOfDeck();
                     else if (card instanceof Card &&
                             deck.cardHaveBeenExistInThisDeck(((Card) card).getCardId().getCardIdAsString()) != null)
                         deck.removeFromCardsOfDeck((Card) card);

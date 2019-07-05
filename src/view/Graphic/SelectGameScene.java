@@ -82,12 +82,11 @@ class SelectGameScene {
 
     }
 
-    private static Text showDescForStoryGame(String input, int x) {
+    private static void showDescForStoryGame(String input, int x) {
         Text text = addText(selectGameRoot, x - 150, 600, input,
                 Color.rgb(225, 225, 225, 0.8), 30);
         text.setStroke(Color.rgb(0, 0, 0, 0.5));
 
-        return text;
     }
 
     private static ImageView makeHeroPic(String path, int x, int y) {
@@ -260,16 +259,10 @@ class SelectGameScene {
                 Color.rgb(25, 205, 225, 0.6), 30);
         deathModeText.setFont(Font.font("Lato-bold", FontWeight.BOLD, 30));
 
-        Random random = new Random();
-
         getNumberOfFlagPage(collectFlagImage, selectModeRoot, selectModeScene);
-        saveFlagImage.setOnMouseClicked(event -> {
-            startCustomGame(2, 1);
-        });
+        saveFlagImage.setOnMouseClicked(event -> startCustomGame(2, 1));
 
-        deathImage.setOnMouseClicked(event -> {
-            startCustomGame(1, 0);
-        });
+        deathImage.setOnMouseClicked(event -> startCustomGame(1, 0));
 
         log(selectModeRoot, "select mode\nback", StateType.SELECT_GAME, 200);
 
@@ -302,7 +295,7 @@ class SelectGameScene {
                 enterNumbersOfFlag.setStroke(Color.rgb(0, 0, 0, 0.2));
 
 
-                ImageView text = addImage(root, "pics/collection/card_silenced@2x.png",
+                addImage(root, "pics/collection/card_silenced@2x.png",
                         600 - 5 - 20, 240, 200, 100);
 
                 TextField number = new TextField();

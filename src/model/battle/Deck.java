@@ -24,8 +24,8 @@ public class Deck implements Serializable {//if it is normal deck you had initia
     private Hero hero = null;
     private int indexOfCards = 0;
 
-    void setIndexOfCards(int indexOfCards) {
-        this.indexOfCards = indexOfCards;
+    void setIndexOfCards() {
+        this.indexOfCards = 5;
     }
 
     public Hero getHero() {
@@ -95,9 +95,8 @@ public class Deck implements Serializable {//if it is normal deck you had initia
         this.item = item;
     }
 
-    public void removeItemOfDeck(Item item) {
+    public void removeItemOfDeck() {
         this.item = null;
-
     }
 
     public void removeHeroFromDeck() {

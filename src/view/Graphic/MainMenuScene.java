@@ -279,7 +279,7 @@ public class MainMenuScene {
                 TransferController.main(RequestEnum.LOGOUT, transmitter);
                 break;
             case "NEW CARD":
-                NewCardGraphic.makeCardForm(mainMenuScene);
+                NewCardGraphic.makeCardForm();
                 break;
         }
     }

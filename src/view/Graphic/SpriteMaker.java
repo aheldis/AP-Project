@@ -22,9 +22,9 @@ public class SpriteMaker {
     private SpriteMaker() {
     }
 
-    public ImageView makeSpritePic(String path, double x, double y, Parent root, int count,
-                                   int numberOfPicInEachColumn, long millis,
-                                   double widthOfEachFrame, double heightOfEachFrame) {
+    ImageView makeSpritePic(String path, double x, double y, Parent root, int count,
+                            int numberOfPicInEachColumn, long millis,
+                            double widthOfEachFrame, double heightOfEachFrame) {
         System.out.println("path = " + path);
         System.out.println("x = " + x);
         System.out.println("y = " + y);
@@ -64,7 +64,7 @@ public class SpriteMaker {
                 ((StackPane) root).getChildren().add(imageView);
             }
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return imageView;

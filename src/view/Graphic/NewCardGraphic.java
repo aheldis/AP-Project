@@ -1,13 +1,11 @@
 package view.Graphic;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -16,12 +14,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.account.FilesType;
 import model.card.makeFile.MakeNewFile;
+import view.enums.StateType;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -89,7 +89,7 @@ public class NewCardGraphic {
         vBox.getChildren().clear();
         group.getChildren().remove(enter);
 
-        String folderPath = "pics/" + FilesType.getEnum(type).getName() + "/defaults/";
+        String folderPath = "pics/" + Objects.requireNonNull(FilesType.getEnum(type)).getName() + "/defaults/";
 
         Group images = new Group();
         group.getChildren().add(images);
@@ -126,7 +126,7 @@ public class NewCardGraphic {
     }
 
     private static void addPicture(Group images, String type, String folderPath, int number, int x, int y) {
-        ImageView imageView = null;
+        ImageView imageView;
         if (FilesType.getEnum(type) == FilesType.SPELL) {
             int count = getCount(folderPath, number);
             imageView = SpriteMaker.getInstance().makeSpritePic(folderPath + number + ".png",
@@ -139,13 +139,10 @@ public class NewCardGraphic {
             imageView = addImage(images, folderPath + number + ".gif", x, y, 250, 250);
         }
         setOnMouseEntered(imageView, scene, true);
-        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                spriteNumber = number;
-                spriteNumberCount = getCount(folderPath, number);
-                done(images, type);
-            }
+        imageView.setOnMouseClicked(event -> {
+            spriteNumber = number;
+            spriteNumberCount = getCount(folderPath, number);
+            done(images, type);
         });
     }
 
@@ -207,13 +204,15 @@ public class NewCardGraphic {
         changeVBox(vBox, arrayLists.get(0), 1, type);
     }
 
-    static void makeCardForm(Scene scene) {
+    static void makeCardForm() {
         firstTimeIndEquals3 = true;
         arrayLists.clear();
         hashMaps.clear();
         numberOfHashMap = 0;
+        Scene scene = StageLauncher.getScene(StateType.ACCOUNT_MENU);
         NewCardGraphic.scene = scene;
         group = new Group();
+        assert scene != null;
         ((Group) scene.getRoot()).getChildren().add(group);
 
         addRectangleStroke(group, (int) StageLauncher.getWidth() - 160, (int) StageLauncher.getHeight() - 160,
@@ -256,7 +255,7 @@ public class NewCardGraphic {
     static void addRectangleStroke(Group group, int width, int height, boolean whiteBackground, Color strokeColor) {
         if (whiteBackground)
             addRectangle(group, 0, 0, (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight(),
-                    0, 00, Color.rgb(255, 255, 255, 0.2));
+                    0, 0, Color.rgb(255, 255, 255, 0.2));
         Rectangle rectangle = addRectangle(group, ((int) StageLauncher.getWidth() - width) / 2, ((int) StageLauncher.getHeight() - height) / 2,
                 width, height
                 , 50, 50, Color.rgb(0, 0, 0, 0.85));

@@ -7,16 +7,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class SpriteAnimationProperties {
-    public int rows;
-    public int columns;
+    int rows;
+    private int columns;
     public int count;
     public long millis;
-    public double widthOfEachFrame;
-    public double heightOfEachFrame;
-    public String gifPath = null;
-    public String spriteSheetPath = null;
+    double widthOfEachFrame;
+    double heightOfEachFrame;
+    private String gifPath = null;
+    String spriteSheetPath = null;
 
-    public SpriteAnimationProperties(String name, FilesType filesType, int count) {
+    SpriteAnimationProperties(String name, FilesType filesType, int count) {
         if (filesType.equals(FilesType.MINION) || filesType.equals(FilesType.HERO)) {
             gifPath = "pics/" + filesType.getName() + "/" + name + ".gif";
             spriteSheetPath = "pics/" + filesType.getName() + "/" + name + ".png";

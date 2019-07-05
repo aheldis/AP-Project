@@ -13,10 +13,10 @@ import model.battle.Player;
 import view.enums.StateType;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.Random;
 
 public class BattleHeaderGraphic {
-    private Group root;
     private Group rightHeader = new Group();
     private Group leftHeader = new Group();
     private BattleScene battleScene;
@@ -28,7 +28,6 @@ public class BattleHeaderGraphic {
 
     BattleHeaderGraphic(BattleScene battleScene, Group root) {
         this.battleScene = battleScene;
-        this.root = root;
         root.getChildren().addAll(rightHeader, leftHeader);
 
         initHeader();
@@ -135,8 +134,8 @@ public class BattleHeaderGraphic {
         Random random = new Random();
         if (file.listFiles() == null)
             return;
-        int index = random.nextInt(file.listFiles().length);
-        specialPowersPath[ind] = file.listFiles()[index].getPath();
+        int index = random.nextInt(Objects.requireNonNull(file.listFiles()).length);
+        specialPowersPath[ind] = Objects.requireNonNull(file.listFiles())[index].getPath();
     }
 
     private void addHeroSpecialPower(double x, double y, Group group, int ind, int turnNotUsedSpecialPower, int coolDown, boolean itsTurn) {
@@ -173,7 +172,7 @@ public class BattleHeaderGraphic {
         addCoolDown(x, y + 50, group, turnNotUsedSpecialPower, coolDown);
     }
 
-    public void activeSpecialPower() {
+    private void activeSpecialPower() {
         battleScene.setHeroSpecialPowerClicked(true);
         circleForSpecialPower.setStrokeWidth(5);
     }

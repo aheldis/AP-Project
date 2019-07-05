@@ -81,18 +81,9 @@ public class GlobalChatScene {
 
         ScrollBar sc = new ScrollBar();
         sc.relocate(1250, 20);
-        sc.setBackground(new Background(
-                new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
-                        CornerRadii.EMPTY, Insets.EMPTY)));
-        sc.setPrefHeight(StageLauncher.getHeight() - 170);
-        sc.setVisibleAmount(2);
-        sc.setMin(0);
-        sc.setOrientation(Orientation.VERTICAL);
-        root.getChildren().addAll(sc);
-        sc.valueProperty().addListener((ov, old_val, new_val) ->
-                chatGroup.setLayoutY(-new_val.doubleValue() * 11));
+        createVBox(chatGroup, sc, 2, root);
 
-        send.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        send.setOnMouseClicked(new EventHandler<>() {
             String message;
             Group groupText;
 
@@ -123,7 +114,7 @@ public class GlobalChatScene {
                 //todo use this because we have one saving for all clients
 
                 System.out.println("transmitter = " + transmitter.path);
-                groupText = makeMessage(message, groupText, transmitter.name, userName + "output.jpg");
+                makeMessage(message, groupText, transmitter.name, userName + "output.jpg");
                 chatGroup.getChildren().addAll(groupText);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -136,6 +127,19 @@ public class GlobalChatScene {
         });
 
         //todo back send exit from chat delete from server
+    }
+
+    static void createVBox(VBox chatGroup, ScrollBar sc, int i, Group root) {
+        sc.setBackground(new Background(
+                new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
+                        CornerRadii.EMPTY, Insets.EMPTY)));
+        sc.setPrefHeight(StageLauncher.getHeight() - 170);
+        sc.setVisibleAmount(i);
+        sc.setMin(0);
+        sc.setOrientation(Orientation.VERTICAL);
+        root.getChildren().addAll(sc);
+        sc.valueProperty().addListener((ov, old_val, new_val) ->
+                chatGroup.setLayoutY(-new_val.doubleValue() * 11));
     }
 
     private static void sendMessageToServer(String message, String pathOfProfile, String name) {
@@ -155,48 +159,45 @@ public class GlobalChatScene {
 
     }
 
-    private static Group makeMessage(String message, Group groupText, String name,
-                                     String pathOfProfile) {
+    private static void makeMessage(String message, Group groupText, String name,
+                                    String pathOfProfile) {
 
-        if (sendEmoji(message, groupText, 50, 50, pathOfProfile) == null) {
+        if (sendEmoji(message, groupText, pathOfProfile) == null) {
 
             addRectangle(groupText, 100, 10, Math.max(message.length(), name.length()) * 20,
                     90, 20, 20, Color.rgb(0, 0, 0, 0.5));
 
-            Circle circle = new Circle(30);
-            circle.relocate(20, 30);
-            try {
-                circle.setFill(new ImagePattern(new Image(new FileInputStream(pathOfProfile))));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            groupText.getChildren().addAll(circle);
+            createCircle(groupText, pathOfProfile);
             Text text = addText(groupText, 30 + 85, 30, name, Color.ORANGE, 20);
             text.setStrokeWidth(1);
             text.setStroke(Color.rgb(200, 100, 100));
             addText(groupText, 30 + 85, 60, message, Color.WHITE, 20);
         }
 
-        return groupText;
-
     }
 
-    private static ImageView sendEmoji(String name, Group root, int x, int y, String pathOfPorofile) {
+    private static void createCircle(Group groupText, String pathOfProfile) {
+        Circle circle = new Circle(30);
+        circle.relocate(20, 30);
+        try {
+            circle.setFill(new ImagePattern(new Image(new FileInputStream(pathOfProfile))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        groupText.getChildren().addAll(circle);
+    }
+
+    private static ImageView sendEmoji(String name, Group root, String pathOfPorofile) {
         int size = 180;
         if (!name.matches("\\((\\w+)\\)"))
             return null;
 
-        Circle circle = new Circle(30);
-        circle.relocate(20, 30);
-        try {
-            circle.setFill(new ImagePattern(new Image(new FileInputStream(pathOfPorofile))));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        root.getChildren().addAll(circle);
+        createCircle(root, pathOfPorofile);
 
         name = name.substring(1, name.length() - 1);
         ImageView imageView = null;
+        final int x = 50;
+        final int y = 50;
         switch (name) {
             case "bow":
                 imageView = addImage(root, "pics/emoji/bow.png", x, y, size, size);

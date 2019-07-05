@@ -961,19 +961,8 @@ class CollectionScene {
             VBox sideVBox = new VBox();//vobxe baqale safhe
             ScrollBar sc = new ScrollBar();
             sc.relocate(300, 135);
-            sc.setBackground(new Background(
-                    new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
-                            CornerRadii.EMPTY, Insets.EMPTY)));
-            sc.setPrefHeight(StageLauncher.getHeight() - 170);
-            sc.setVisibleAmount(5);
-            sc.setMin(0);
-            sc.setOrientation(Orientation.VERTICAL);
-            //set other properties
-            //add childrens to Vbox and properties
+            GlobalChatScene.createVBox(sideVBox, sc, 5, root);
             root.getChildren().addAll(sideVBox);
-            root.getChildren().addAll(sc);
-            sc.valueProperty().addListener((ov, old_val, new_val) ->
-                    sideVBox.setLayoutY(-new_val.doubleValue() * 11));
 
 
             sideVBox.relocate(0, 0);

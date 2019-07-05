@@ -310,7 +310,7 @@ public class Collection implements Cloneable, Serializable {
             error.printMessage();
             return;
         }
-        deck.removeItemOfDeck(item);
+        deck.removeItemOfDeck();
     }
 
     private Usable passItemIfHaveBeenExistInThisDeck(Deck deck, String UsableItem) {
@@ -412,7 +412,7 @@ public class Collection implements Cloneable, Serializable {
         }
 
         for(Deck deck: decks){
-            deck.removeItemOfDeck(item);
+            deck.removeItemOfDeck();
         }
     }
 

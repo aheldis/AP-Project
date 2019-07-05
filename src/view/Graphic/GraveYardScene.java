@@ -86,7 +86,6 @@ class GraveYardScene {
         VBox pageVbox = new VBox();
         pageVbox.setSpacing(10);
         root.getChildren().addAll(pageVbox);
-        HBox rowHBox = new HBox();
 
 
         pageMaker(cards, pageVbox);
