@@ -80,7 +80,7 @@ public class GlobalChatScene {
 
         ScrollBar sc = new ScrollBar();
         sc.relocate(1250, 20);
-        createVBox(chatGroup, sc, 2, root);
+        createScrollBar(chatGroup, sc, 2, root);
 
         send.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 String message;
@@ -129,7 +129,7 @@ public class GlobalChatScene {
         //todo back send exit from chat delete from server
     }
 
-    static void createVBox(VBox chatGroup, ScrollBar sc, int i, Group root) {
+    static void createScrollBar(VBox chatGroup, ScrollBar sc, int i, Group root) {
         sc.setBackground(new Background(
                 new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
                         CornerRadii.EMPTY, Insets.EMPTY)));

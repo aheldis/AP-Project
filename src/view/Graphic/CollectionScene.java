@@ -957,8 +957,8 @@ class CollectionScene {
             VBox sideVBox = new VBox();//vobxe baqale safhe
             ScrollBar sc = new ScrollBar();
             sc.relocate(300, 135);
-            GlobalChatScene.createVBox(sideVBox, sc, 5, root);
             root.getChildren().addAll(sideVBox);
+            GlobalChatScene.createScrollBar(sideVBox, sc, 5, root);
 
 
             sideVBox.relocate(0, 0);
