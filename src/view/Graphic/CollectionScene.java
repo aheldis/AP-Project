@@ -492,6 +492,10 @@ class CollectionScene {
         ArrayList<Item> items = transmitter.items;
         root.getChildren().clear();
 
+        for(int i=0;i< cards.size();i++){
+            System.out.println(cards.get(i).getName()+"  "+cards.get(i).getCardId());
+        }
+
         playMusic("resource/music/collection.m4a", true, collectionScene);
 
         setBackground(root, "pics/other/collectionBackground.jpg", true, 20, 20);

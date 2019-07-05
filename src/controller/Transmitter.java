@@ -37,7 +37,6 @@ public class Transmitter implements Serializable { //todo check
     public byte[] profile;
     public String message;
     public String path;
-    //public Group group;
     public String string; //help & otherThings
     public Object object;
     public Card card;

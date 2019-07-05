@@ -6,11 +6,12 @@ import controller.Transmitter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class TransferController {
     private static Transmitter fromServerTransmitter;
-    private static Transmitter object;
     private static ClientIOhandler clientIOhandler = Client.getClientIOhandler();
+    private static ArrayList<Transmitter> messages = new ArrayList<>();
 
     public static Transmitter main(RequestEnum requestEnum, Transmitter transmitter) {
         fromServerTransmitter = transmitter;
@@ -37,7 +38,7 @@ public class TransferController {
             case ENTER_CHAT:
             case START_CUSTOM_GAME:
             case SHOP_SELL:
-               fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
+                fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
             case LOGOUT:
             case EXPORT_DECK:
@@ -51,7 +52,12 @@ public class TransferController {
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
-                /*
+                if (messages.size() != 0) {
+                    fromServerTransmitter = messages.get(0);
+                    messages.remove(0);
+                }
+                return fromServerTransmitter;
+               /*
                // try {
                     Thread one=new Thread(new Runnable() {
                         @Override
@@ -76,17 +82,18 @@ public class TransferController {
 //                } catch (IOException | ClassNotFoundException e) {
 //                    e.printStackTrace();
 //                }
-*/
-                return fromServerTransmitter;
+                return fromServerTransmitter;*/
         }
-
         return fromServerTransmitter;
 
     }
 
+
     static void fromServerTransmitter(Transmitter transmitter) {
-        switch (transmitter.requestEnum){
+        switch (transmitter.requestEnum) {
             case CHECK_NEW_MESSAGE:
+                messages.add(transmitter);
+                break;
         }
     }
 

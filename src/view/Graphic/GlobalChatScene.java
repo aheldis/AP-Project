@@ -107,6 +107,8 @@ public class GlobalChatScene {
             groupText.relocate(50, 0);
             String message = transmitter.message;
             try {
+                System.out.println(transmitter);
+                System.out.println(transmitter.profile);
                 ByteArrayInputStream bis = new ByteArrayInputStream(transmitter.profile);
                 BufferedImage bImage = ImageIO.read(bis);
                 ImageIO.write(bImage, "jpg", new File(userName + "output.jpg"));
