@@ -5,7 +5,6 @@ import controller.client.TransferController;
 import controller.RequestEnum;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -394,18 +393,16 @@ class CollectionScene {
         addRectangleForCollection(group1, 0, 20, 50, 40, 60, 60
                 , Color.rgb(0, 0, 0, 0.7));
 
-        ImageView magnifier = addImage(group1,
-                "pics/collection/magnifier_icon.png", 16, 13, 20, 20);
+        addImage(group1, "pics/collection/magnifier_icon.png", 16, 13, 20, 20);
         hBox.getChildren().addAll(group1);
 
         vBox.getChildren().add(hBox);
 
         group1.setOnMouseClicked(event -> {
-            ArrayList<String> ids = new ArrayList<>();
 
             transmitter.name = textArea.getText();
             transmitter = TransferController.main(RequestEnum.COLLECTION_SEARCH_CARD, transmitter);
-            ids.addAll(transmitter.ids);
+            ArrayList<String> ids = new ArrayList<>(transmitter.ids);
             transmitter = TransferController.main(RequestEnum.COLLECTION_SEARCH_ITEM, transmitter);
             ids.addAll(transmitter.ids);
 
@@ -910,7 +907,7 @@ class CollectionScene {
         });
     }
 
-    private static Group makeDynamicDeck(ArrayList<Deck> decks, VBox sideBar, Collection collection) {
+    private static void makeDynamicDeck(ArrayList<Deck> decks, VBox sideBar, Collection collection) {
         Group group = new Group();
         group.relocate(650, 130);
         root.getChildren().addAll(group);
@@ -951,10 +948,9 @@ class CollectionScene {
         });
 
 
-        return group;
     }
 
-    static void showDeck(ArrayList<Deck> decks, Collection collection) {
+    private static void showDeck(ArrayList<Deck> decks, Collection collection) {
         root.getChildren().clear();
         setBackground(root, "pics/collection/background@2x.jpg", true, 20, 20);
         try {
