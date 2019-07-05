@@ -3,15 +3,10 @@ package controller.client;
 import controller.RequestEnum;
 import controller.Transmitter;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 public class TransferController {
     private static Transmitter fromServerTransmitter;
-    private static ObjectOutputStream objectOutputStream = Client.getObjectOutputStream();
-    private static ObjectInputStream objectInputStream = Client.getObjectInputStream();
     private static Transmitter object;
+    private static ClientIOhandler clientIOhandler = Client.getClientIOhandler();
 
     public static Transmitter main(RequestEnum requestEnum, Transmitter transmitter) {
         fromServerTransmitter = transmitter;
@@ -38,7 +33,7 @@ public class TransferController {
             case ENTER_CHAT:
             case START_CUSTOM_GAME:
             case SHOP_SELL:
-                transfer(true);
+               fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
             case LOGOUT:
             case EXPORT_DECK:
@@ -48,51 +43,45 @@ public class TransferController {
             case NEW_CARD_ID:
             case ENTER_COLLECTION:
             case EXIT_FROM_CHAT:
-                transfer(false);
+                fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
-               // try {
-                    Thread one=new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                object =(Transmitter) objectInputStream.readObject();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                /*
+                // try {
+                Thread one = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            object = (Transmitter) objectInputStream.readObject();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    });
-                    one.start();
+                    }
+                });
+                one.start();
                 try {
                     Thread.sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 if (object != null) {
-                        fromServerTransmitter = (Transmitter) object;
-                    }
+                    fromServerTransmitter = (Transmitter) object;
+                }
                 one.stop();
 //                } catch (IOException | ClassNotFoundException e) {
 //                    e.printStackTrace();
 //                }
                 return fromServerTransmitter;
+                */
         }
-
         return fromServerTransmitter;
-
     }
 
-        private static void transfer ( boolean waitForAnswer){
-            try {
-                objectOutputStream.writeObject(fromServerTransmitter);
-                objectOutputStream.flush();
-                if (waitForAnswer) {
-                    do {
-                        fromServerTransmitter = (Transmitter) objectInputStream.readObject();
-                    } while (fromServerTransmitter == null);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    static void fromServerTransmitter(Transmitter transmitter) {
+        System.out.println("transmitter.requestEnum = " + transmitter.requestEnum);
+        switch (transmitter.requestEnum){
+            case CHECK_NEW_MESSAGE:
         }
     }
+
+}

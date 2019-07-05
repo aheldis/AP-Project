@@ -19,6 +19,7 @@ import java.util.ArrayList;
  */
 
 public class Transmitter implements Serializable { //todo check
+    public int transmitterId = 0;
     public RequestEnum requestEnum;
     public Collection collection;
     public ArrayList<Card> cards;

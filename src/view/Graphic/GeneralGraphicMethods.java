@@ -28,19 +28,7 @@ import java.io.*;
 public class GeneralGraphicMethods {
     private static double HEIGHT = StageLauncher.getHeight();
     private static double WIDTH = StageLauncher.getWidth();
-    private static double sabasXRatio = 1;//0.7563451776649747;
-    private static double sabasYRatio = 1;//0.8592592592592593;
-    private static double zahrasXRatio = 1;//0.7868020304568528;
-    private static double zahrasYRatio = 1;//0.9351851851851852;
     static boolean stopper = false;
-
-    static double getSabasXRatio() {
-        return sabasXRatio;
-    }
-
-    static double getSabasYRatio() {
-        return sabasYRatio;
-    }
 
     public static ImageView setBackground(Parent root, String path, Boolean blur, double width, double height) {
         ImageView imageView = addImage(root, path, 0, 0, WIDTH / getRatioX(), HEIGHT / getRatioY());
@@ -166,22 +154,6 @@ public class GeneralGraphicMethods {
                     Font.loadFont(file1.getPath(), 50);
             }
         }
-    }
-
-    static double changeXWithSabasRatio(double x) {
-        return x / sabasXRatio * getRatioX();
-    }
-
-    static double changeYWithSabasRatio(double y) {
-        return y / sabasYRatio * getRatioY();
-    }
-
-    static double changeXWithZahrasRatio(double x) {
-        return x / zahrasXRatio * getRatioX();
-    }
-
-    static double changeYWithZahrasRatio(double y) {
-        return y / zahrasYRatio * getRatioY();
     }
 
     static void makeCircleRotation(ImageView imageView, int centerX, int centerY) {

@@ -25,11 +25,11 @@ public class Server {
             e.printStackTrace();
         }
         try {
-
             ServerSocket serverSocket = new ServerSocket(PORT);
-            Socket socket;
             while (true) {
-                socket = serverSocket.accept();
+                System.out.println("Waiting for client...");
+                Socket socket = serverSocket.accept();
+                System.out.println("Client connected");
                 socketClass = new SocketClass(socket);
                 socketClasses.add(socketClass);
                 new ClientHandlerServer(socketClass).start();

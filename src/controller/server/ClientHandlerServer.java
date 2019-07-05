@@ -3,8 +3,6 @@ package controller.server;
 
 import controller.Transmitter;
 
-import java.io.IOException;
-
 public class ClientHandlerServer extends Thread {
     private Transmitter transmitter;
     private SocketClass socketClass;
@@ -15,11 +13,8 @@ public class ClientHandlerServer extends Thread {
     }
 
     public void run() {
-        boolean endOfClient = false;
 
         while (true) {
-            //todo if login or signUp add autToken to socketClass
-            //todo if quit make auth token null
             try {
                 if (socketClass == null || socketClass.getInputStream() == null)
                     break;
@@ -27,19 +22,10 @@ public class ClientHandlerServer extends Thread {
                 if (transmitter != null) {
                     RequestEnumController.main(transmitter.requestEnum, socketClass, transmitter);
                 }
+                Thread.sleep(10);
             } catch (Exception e) {
-                e.printStackTrace();
+                break;
             }
-
-            if (endOfClient) {
-                try {
-                    socketClass.getSocket().close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
         }
-
     }
 }

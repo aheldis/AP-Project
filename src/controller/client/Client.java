@@ -1,5 +1,7 @@
 package controller.client;
 
+import controller.Transmitter;
+import javafx.application.Platform;
 import view.Graphic.StageLauncher;
 
 import java.io.File;
@@ -13,34 +15,51 @@ public class Client {
     private static final String HOST = "127.0.0.1";
     private static final int PORT = 8000;
     private static Socket socket;
-    private static ObjectInputStream inputStream;
-    private static ObjectOutputStream objectOutputStream;
-
-    static ObjectOutputStream getObjectOutputStream() {
-        return objectOutputStream;
-    }
-    public static ObjectInputStream getObjectInputStream() {
-        return inputStream;
-    }
-
+    private static ClientIOhandler clientIOhandler;
+    static boolean alive = true;
     public static void main(String[] args) {
-        String line;
         try {
+            String host;
+            int port;
             try {
                 Scanner fileScanner = new Scanner(new File("src/controller/config"));
-                socket = new Socket(fileScanner.nextLine().split(":")[1], Integer.parseInt(fileScanner.nextLine().split((":"))[1]));
+                host = fileScanner.nextLine().split(":")[1];
+                port = Integer.parseInt(fileScanner.nextLine().split((":"))[1]);
                 fileScanner.close();
             } catch (Exception e) {
-                socket = new Socket(HOST, PORT);
+                host = HOST;
+                port = PORT;
                 e.printStackTrace();
             }
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            inputStream = new ObjectInputStream(socket.getInputStream());
+            socket = new Socket(host, port);
+            System.out.println("Connected to server");
+
+            clientIOhandler = new ClientIOhandler();
+            clientIOhandler.setObjectOutputStream(new ObjectOutputStream(socket.getOutputStream()));
+            clientIOhandler.setObjectInputStream(new ObjectInputStream(socket.getInputStream()));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        clientIOhandler.start();
+
         StageLauncher.main(args);
 
         //todo at the end close everything
+
+        alive = false;
+
+        try {
+            socket.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public static ClientIOhandler getClientIOhandler() {
+        return clientIOhandler;
     }
 }
+

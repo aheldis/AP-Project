@@ -42,7 +42,7 @@ public class MakeAndShowClass {
 //                StackPane stackPane = new StackPane(root);
 //                scene.setRoot(stackPane);
 //                stackPane.setPadding(Insets.EMPTY);Ge
-                GeneralGraphicMethods.playMusic("resource/music/error.m4a",false,scene);
+                GeneralGraphicMethods.playMusic("resource/music/error.m4a", false, scene);
                 Rectangle rectangle = new Rectangle(
                         stage.getWidth(),
                         stage.getHeight(),
@@ -60,18 +60,14 @@ public class MakeAndShowClass {
 //
 //                root.setEffect(boxblur);
 
-                double ratioX = GeneralGraphicMethods.getRatioX();
-                double ratioY = GeneralGraphicMethods.getRatioY();
-                double sbasRatioX = GeneralGraphicMethods.getSabasXRatio();
-                double sbasRatioY = GeneralGraphicMethods.getSabasYRatio();
                 javafx.scene.image.Image image = new Image(new FileInputStream("pics/other/error_box.png"));
                 ImageView imageView = new ImageView(image);
-                imageView.setFitWidth(350 / sbasRatioX * ratioX);
-                imageView.setFitHeight(200 / sbasRatioY * ratioY);
-                imageView.relocate((600 / sbasRatioX - 40) * ratioX, 300 / sbasRatioY * ratioY);
+                imageView.setFitWidth(350);
+                imageView.setFitHeight(200);
+                imageView.relocate((600), 300);
 
                 Text text = new Text(errorMessage);
-                text.relocate(620 / sbasRatioX * ratioX-45, 380 / sbasRatioY * ratioY);
+                text.relocate(620, 380);
                 text.setFont(Font.font(20));
                 text.setFill(Color.rgb(173, 225, 218, 0.5));
                 root.getChildren().addAll(rectangle, imageView, text);
