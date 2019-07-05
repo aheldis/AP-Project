@@ -1,0 +1,30 @@
+{
+  "@type": "model.card.Hero",
+  "@val": {
+    "name": "farzaneh",
+    "cost": 100,
+    "mp": 5,
+    "hp": 5,
+    "ap": 5,
+    "counterAttack": "ranged",
+    "attackRange": 2,
+    "coolDown": 4,
+    "pathOfThePicture": "pics/Hero/farzaneh.gif",
+    "pathOfAnimation": "pics/Hero/farzaneh.png",
+    "countOfAnimation": 64,
+    "change": {
+      "buffs": {}
+    },
+    "target": {
+      "distance": 0,
+      "one": false,
+      "row": false,
+      "column": false,
+      "all": false,
+      "random": false,
+      "self": false,
+      "enemy": false,
+      "ally": false
+    }
+  }
+}
