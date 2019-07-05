@@ -1,10 +1,11 @@
 package controller.server;
 
-import controller.client.Client;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -12,8 +13,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import view.Graphic.GeneralGraphicMethods;
+import view.Graphic.StageLauncher;
 
-import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -90,15 +91,46 @@ public class Server extends Application {
         return group;
     }
 
-    private static Scene makeClientsScene() {
+
+    private static VBox makeScene (Scene firstScene, Stage primaryStage){
         Group root = new Group();
+        setBackground(root, "pics/other/chapter10_preview@2x.jpg", false, 0, 0);
         Scene scene = new Scene(root, 600, 800);
+        primaryStage.setScene(scene);
         VBox vBox = new VBox();
         root.getChildren().addAll(vBox);
+        ImageView back =addImage(vBox,"pics/menu/button_back_corner@2x.png", 0, 0, 50, 50);
+
+
+        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        primaryStage.setScene(firstScene);
+                    }
+                });
+            }
+
+        });
+
+        return vBox;
+    }
+
+
+    private static void makeClientsScene(Scene firstScene, Stage primaryStage) {
+        VBox vBox=makeScene(firstScene,primaryStage);
         for (int i = 0; i < ServerThread.socketClasses.size(); i++) {
             addClient(vBox, ServerThread.socketClasses.get(i));
         }
-        return scene;
+
+
+    }
+
+    private static void makeShopScene(Scene firstScene, Stage primaryStage){
+        VBox vBox=makeScene(firstScene,primaryStage);
+
     }
 
     @Override
@@ -115,13 +147,13 @@ public class Server extends Application {
         clients.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                primaryStage.setScene(makeClientsScene());
+                makeClientsScene(scene,primaryStage);
             }
         });
         shop.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                makeShopScene(scene,primaryStage);
             }
         });
 
