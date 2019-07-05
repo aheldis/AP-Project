@@ -3,6 +3,10 @@ package controller.client;
 import controller.RequestEnum;
 import controller.Transmitter;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class TransferController {
     private static Transmitter fromServerTransmitter;
     private static Transmitter object;
@@ -43,38 +47,40 @@ public class TransferController {
             case NEW_CARD_ID:
             case ENTER_COLLECTION:
             case EXIT_FROM_CHAT:
+            case END_OF_CLIENT:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
+
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
-                /*
-                // try {
-                Thread one = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            object = (Transmitter) objectInputStream.readObject();
-                        } catch (Exception e) {
-                            e.printStackTrace();
+               // try {
+                    Thread one=new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                object =(Transmitter) objectInputStream.readObject();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                });
-                one.start();
+                    });
+                    one.start();
                 try {
                     Thread.sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 if (object != null) {
-                    fromServerTransmitter = (Transmitter) object;
-                }
+                        fromServerTransmitter = (Transmitter) object;
+                    }
                 one.stop();
 //                } catch (IOException | ClassNotFoundException e) {
 //                    e.printStackTrace();
 //                }
                 return fromServerTransmitter;
-                */
         }
+
         return fromServerTransmitter;
+
     }
 
     static void fromServerTransmitter(Transmitter transmitter) {

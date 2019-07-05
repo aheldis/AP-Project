@@ -30,6 +30,9 @@ public class RequestEnumController {
         Account account = socketClass.getAccount();
         switch (requestEnum) {
 
+            case END_OF_CLIENT:
+                socketClass.getClientHandlerServer().stop();
+                break;
             case SIGN_UP:
                 boolean canSignUp = allAccount.signUp(clientTransmitter.name, clientTransmitter.password);
                 if (!canSignUp)

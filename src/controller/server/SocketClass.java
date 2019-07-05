@@ -17,6 +17,15 @@ public class SocketClass {
     private Account account;
     private Game game;
     private Match match;
+    private ClientHandlerServer clientHandlerServer;
+
+    public ClientHandlerServer getClientHandlerServer() {
+        return clientHandlerServer;
+    }
+
+    public void setClientHandlerServer(ClientHandlerServer clientHandlerServer) {
+        this.clientHandlerServer = clientHandlerServer;
+    }
 
     public SocketClass(Socket socket) {
         this.socket = socket;

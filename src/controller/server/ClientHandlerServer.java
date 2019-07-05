@@ -3,9 +3,12 @@ package controller.server;
 
 import controller.Transmitter;
 
+import java.io.IOException;
+
 public class ClientHandlerServer extends Thread {
     private Transmitter transmitter;
     private SocketClass socketClass;
+    public boolean endOfClient = false;
 
     public ClientHandlerServer(SocketClass socketClass) {
         this.socketClass = socketClass;
@@ -26,6 +29,16 @@ public class ClientHandlerServer extends Thread {
             } catch (Exception e) {
                 break;
             }
+
+            if (endOfClient) {
+                try {
+                    socketClass.getSocket().close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
+
     }
 }
