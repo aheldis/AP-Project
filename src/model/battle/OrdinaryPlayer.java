@@ -9,7 +9,7 @@ public class OrdinaryPlayer extends Player implements Serializable {
     public OrdinaryPlayer(){
     }
 
-    public OrdinaryPlayer(Account account, Deck deck, int mana) {
+    OrdinaryPlayer(Account account, Deck deck, int mana) {
         this.setAccount(account);
         this.setMainDeck(deck);
         this.setType("OrdinaryPlayer");
