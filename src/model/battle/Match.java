@@ -77,11 +77,7 @@ public class Match {
         square[2][8].setObject(players[1].getMainDeck().getHero());
         secondHero.setPosition(square[2][8]);
 
-//        players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
-//        players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
-
         date = new Date();
-        //set mana : meqdare avaliye mana baraye player inline behesh 2 dadam
 
         initGame();
     }
@@ -122,6 +118,11 @@ public class Match {
         this.flags.add(flag);
     }
 
+    /**
+     *
+     Graphic:
+     *
+     **/
     public void initGraphic() {
         // BattleScene.getSingleInstance().changeSingleInstance(null);
         this.battleScene = BattleScene.getSingleInstance();
@@ -156,16 +157,19 @@ public class Match {
             randomX = random.nextInt(LandOfGame.getNumberOfRows());
             randomY = random.nextInt(LandOfGame.getNumberOfColumns());
             while (squares[randomX][randomY].getObject() != null
-                    && squares[randomX][randomY].getFlags().size() != 0) {
+                    || squares[randomX][randomY].getFlags().size() != 0) {
 
                 randomX = random.nextInt(LandOfGame.getNumberOfRows());
                 randomY = random.nextInt(LandOfGame.getNumberOfColumns());
             }
-            //todo aval bazi momkene chandta flag ro add kone to ye khoone. okeye; vali age nemikhaim to
-            // oon while balaee e ino ezafe kon: || squares[randomX][randomY].getFlags().size() != 0
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
             squares[randomX][randomY].addToFlags(flag);
+            /**
+             *
+             Graphic:
+             *
+             **/
             ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_categorized/flag.gif", 10, 10);
             flag.setImageView(flagView);
             BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, flagView, false);
@@ -191,6 +195,11 @@ public class Match {
             Shop.getInstance().removeCollectible(collectible);
             this.collectibles.add(collectible);
             squares[randomX][randomY].setObject(collectible);
+            /**
+             *
+             Graphic:
+             *
+             **/
             ImageView collectibleImage = GeneralGraphicMethods.createImage(
                     "pics/collectibles/" + collectible.getName() + ".png", 20, 20);
             BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, collectibleImage, false);
@@ -238,6 +247,11 @@ public class Match {
             players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
 
 
+            /**
+             *
+             Graphic:
+             *
+             **/
             DragAndDrop.setWait(true);
             BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
             //your turn notification
@@ -369,56 +383,34 @@ public class Match {
         this.loser = loser;
     }
 
-//    public void startMatch() {
-//        date = new Date();
-//
-//        initGame();
-//        players[0].initPerTurn();
-//        players[1].initPerTurn();
-//
-//        while (true) {
-//            players[whichPlayer].playTurn();
-//            if (gameEnded()) {
-//                endGame();
-//                break;
-//            }
-//            whichPlayer = 1 - whichPlayer;
-//        }
-//    }
 
     public static void loss() {
-        Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
-        assert battleScene != null;
-        Group root = (Group) battleScene.getRoot();
-        root.getChildren().clear();
-        setBackground(root,
-                "pics/battle/back.png", true, 20, 20);
-
-        playMusic("resource/music/defeat.m4a", false, battleScene);
-
-        ImageView hero = addImage(root, "pics/battle/general_f4@2x.png", -200, -100, 1800, 1200);
-        addImage(root, "pics/battle/scene_diamonds_background_defeat@2x.png", 0, 0,
-                (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight());
-        addImage(root, "pics/battle/scene_diamonds_background_defeat@2x.png", 300, -300,
-                1000, 1000);
-        addImage(root, "pics/battle/scene_diamonds_middleground_defeat@2x.png",
-                0, 0, StageLauncher.getWidth(), StageLauncher.getHeight());
-
-        Text text = addText(root, 100, 600, "DEFEAT",
-                Color.rgb(225, 225, 225, 0.8), 70);
-        addImage(root, "pics/battle/highlight_red.png", 300, 35, 800, 100);
-        addText(root, 130, 630, "click on hero to continue", Color.WHITE, 20);
-        Glow glow = new Glow();
-        glow.setLevel(20);
-        text.setEffect(glow);
-        BattleScene.getSingleInstance().changeSingleInstance(null);
-        hero.setOnMouseClicked(event -> {
-            StageLauncher.decorateScene(StateType.MAIN_MENU);
-            System.out.println("giiiiiiii \n\n\n\n");
-        });
+        setWinAndLossBackGround("resource/music/defeat.m4a",
+                "pics/battle/general_f4@2x.png",
+                "pics/battle/scene_diamonds_background_defeat@2x.png",
+                "pics/battle/scene_diamonds_middleground_defeat@2x.png",
+                "pics/battle/highlight_red.png",
+                "DEFEAT");
     }
 
     public static void win() {
+        setWinAndLossBackGround("resource/music/sfx_victory_match_w_vo.m4a",
+                "pics/battle/general_f1@2x.png",
+                "pics/battle/scene_diamonds_background_victory@2x.png",
+                "pics/battle/scene_diamonds_middleground_victory@2x.png",
+                "pics/battle/highlight_white.png",
+                "VICTORY");
+    }
+
+
+
+    /**
+     *
+     Graphic:
+     *
+     **/
+    public static void setWinAndLossBackGround(String musicPath, String generalPath, String backGgoundPath,
+                                               String middlegroundPath, String highlightPath, String label) {
         Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
         assert battleScene != null;
         Group root = (Group) battleScene.getRoot();
@@ -426,19 +418,19 @@ public class Match {
         setBackground(root,
                 "pics/battle/back.png", true, 20, 20);
 
-        playMusic("resource/music/sfx_victory_match_w_vo.m4a", false, battleScene);
+        playMusic(musicPath, false, battleScene);
 
-        ImageView hero = addImage(root, "pics/battle/general_f1@2x.png", -200, -100, 1800, 1200);
-        addImage(root, "pics/battle/scene_diamonds_background_victory@2x.png", 0, 0,
+        ImageView hero = addImage(root, generalPath, -200, -100, 1800, 1200);
+        addImage(root, backGgoundPath, 0, 0,
                 (int) StageLauncher.getWidth(), (int) StageLauncher.getHeight());
-        addImage(root, "pics/battle/scene_diamonds_background_victory@2x.png", 300, -300,
+        addImage(root, backGgoundPath, 300, -300,
                 1000, 1000);
-        addImage(root, "pics/battle/scene_diamonds_middleground_victory@2x.png",
+        addImage(root, middlegroundPath,
                 0, 0, StageLauncher.getWidth(), StageLauncher.getHeight());
 
-        Text text = addText(root, 600, 100, "VICTORY",
+        Text text = addText(root, 600, 100, label,
                 Color.rgb(225, 225, 225, 0.8), 70);
-        addImage(root, "pics/battle/highlight_white.png", 300, -35, 800, 250);
+        addImage(root, highlightPath, 300, -35, 800, 250);
         addText(root, 630, 130, "click on hero to continue", Color.WHITE, 20);
         Glow glow = new Glow();
         glow.setLevel(20);
