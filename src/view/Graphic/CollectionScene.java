@@ -580,8 +580,8 @@ class CollectionScene {
      * BackgroundSize.DEFAULT)));
      */
 
-    private static ImageView makeIConBarForDeck(String path, int x, int y) {
-        ImageView deck = null;
+    private static void makeIConBarForDeck(String path, int x, int y) {
+        ImageView deck;
         try {
             deck = new ImageView(new Image(new FileInputStream(path)));
             deck.relocate(x, y);
@@ -591,7 +591,6 @@ class CollectionScene {
             deletable.add(deck);
         } catch (Exception ignored) {
         }
-        return deck;
     }
 
     private static ArrayList<VBox> dragAndDropCard(Collection collection, int pageNumber, VBox target, Deck deck) {
@@ -959,10 +958,10 @@ class CollectionScene {
         setBackground(root, "pics/collection/background@2x.jpg", true, 20, 20);
         try {
             VBox sideVBox = new VBox();//vobxe baqale safhe
-            ScrollBar sc = new ScrollBar();
-            sc.relocate(300, 135);
-            GlobalChatScene.createVBox(sideVBox, sc, 5, root);
+            ScrollBar scrollBar = new ScrollBar();
+            scrollBar.relocate(300, 135);
             root.getChildren().addAll(sideVBox);
+            GlobalChatScene.createScrollBar(sideVBox, scrollBar, 5, root);
 
 
             sideVBox.relocate(0, 0);

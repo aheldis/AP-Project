@@ -94,7 +94,7 @@ public class RequestEnumController {
             case SHOP_ITEMS:
                 ArrayList<Usable> items = Shop.getInstance().getItems();
                 transmitter.items = new ArrayList<>();
-                items.forEach(item -> transmitter.items.add(item));
+                transmitter.items.addAll(items);
                 transfer(socketClass);
                 break;
             case SHOP_DARIC:
@@ -123,7 +123,7 @@ public class RequestEnumController {
                 GeneralLogicMethods.saveInFile(path, deck);
                 break;
             case COLLECTION_IMPORT:
-                InputStream input = null;
+                InputStream input;
                 try {
                     input = new FileInputStream("exportedDeck/"
                             + socketClass.getAccount().getUserName() + "." + clientTransmitter.deck.getName() + ".json");
