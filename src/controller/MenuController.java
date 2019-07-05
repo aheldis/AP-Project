@@ -199,7 +199,9 @@ public class MenuController  {
                         break;
                     case MENU_ENTER_BATTLE:
                         game = new Game();
-                        if (!game.checkPlayerDeck(account, 1)) {
+                        ErrorType error;
+                        if ((error = game.checkPlayerDeck(account, 1)) !=  null) {
+                            error.printMessage();
                             state = StateType.ACCOUNT_MENU;
                             break;
                         }
@@ -414,7 +416,9 @@ public class MenuController  {
                         menuView.printer("Enter your passWord");
                         request.getNewLine();
                         if (secondPlayerAccount.checkPassword(request.getCommand())) {
-                            if (!game.checkPlayerDeck(secondPlayerAccount, 2)) {
+                            ErrorType error;
+                            if ((error = game.checkPlayerDeck(account, 2)) !=  null) {
+                                error.printMessage();
                                 state = StateType.ACCOUNT_MENU;
                                 break;
                             }

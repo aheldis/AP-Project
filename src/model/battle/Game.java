@@ -14,7 +14,7 @@ public class Game {
         return players;
     }
 
-    public boolean checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
+    public ErrorType checkPlayerDeck(Account account, int playerNumber /* 1 or 2 */) {
 
         Deck deck = account.getMainDeck();
         if (deck == null || !deck.validate()) {
@@ -23,12 +23,11 @@ public class Game {
                 error = ErrorType.SELECTED_INVALID_DECK;
             else
                 error = ErrorType.SELECTED_INVALID_DECK_FOR_PLAYER2;
-            error.printMessage();
-            return false;
+            return error;
         }
 
         players[playerNumber - 1] = new OrdinaryPlayer(account, account.getMainDeck(), playerNumber);
-        return true;
+        return null;
     }
 
     public Match makeNewMultiGame(int mode, int numberOfFlags, int reward) {

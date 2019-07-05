@@ -36,6 +36,7 @@ public class TransferController {
             case DECKS:
             case START_STORY_GAME:
             case ENTER_CHAT:
+            case START_CUSTOM_GAME:
                 transfer(true);
                 return fromServerTransmitter;
             case LOGOUT:

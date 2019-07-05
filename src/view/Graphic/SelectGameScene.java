@@ -1,9 +1,9 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
+import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.RequestEnum;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -159,7 +159,7 @@ class SelectGameScene {
             //TODO TODO TODO TODO
             //TODO TODO TODO TODO
             //TODO TODO TODO TODO
-            
+
             //playMusic("resource/music/choose_button.m4a",false,selectGameScene);
             changeScene();
             selectMode();
@@ -195,28 +195,16 @@ class SelectGameScene {
             showDescForStoryGame("Death Mode", 1120);
 
             diveSepid.setOnMouseClicked(event12 -> {//story game-1
-                Transmitter transmitter = new Transmitter();
-                transmitter.level = 1;
-                transmitter = TransferController.main(RequestEnum.START_STORY_GAME, transmitter);
-                if (transmitter.aBoolean)
-                    startGame(transmitter.game, transmitter.match);
+                startStoryGame(1);
                 //game started
             });
             zahhak.setOnMouseClicked(event1 -> {//story game -2
-                Transmitter transmitter = new Transmitter();
-                transmitter.level = 2;
-                transmitter = TransferController.main(RequestEnum.START_STORY_GAME, transmitter);
-                if (transmitter.aBoolean)
-                    startGame(transmitter.game, transmitter.match);
+                startStoryGame(2);
                 //game started
             });
 
             arash.setOnMouseClicked(event13 -> {//story game -3
-                Transmitter transmitter = new Transmitter();
-                transmitter.level = 3;
-                transmitter = TransferController.main(RequestEnum.START_STORY_GAME, transmitter);
-                if (transmitter.aBoolean)
-                    startGame(transmitter.game, transmitter.match);
+                startStoryGame(3);
             });
             //getNumberOfFlagPage(arash, selectGameRoot, selectGameScene);
 
@@ -238,6 +226,17 @@ class SelectGameScene {
 
         log(selectGameRoot, "select modes\nback", StateType.MAIN_MENU, 200);
 
+    }
+
+    private static void startStoryGame(int level) {
+        Transmitter transmitter = new Transmitter();
+        transmitter.level = level;
+        transmitter.playerNumber = 1;
+        transmitter = TransferController.main(RequestEnum.START_STORY_GAME, transmitter);
+        if (transmitter.errorType == null)
+            startGame(transmitter.game, transmitter.match);
+        else
+            transmitter.errorType.printMessage();
     }
 
     private static void selectMode() {
@@ -271,29 +270,28 @@ class SelectGameScene {
 
         getNumberOfFlagPage(collectFlagImage, selectModeRoot, selectModeScene);
         saveFlagImage.setOnMouseClicked(event -> {
-            if (mode.equals("custom")) {
-
-                game = new Game();
-                if (game.checkPlayerDeck(account, 1)) {
-                    match = game.makeNewCustomGame(account, deckName, 2, 0);
-                    startGame(game, match);
-                }
-            }
+            startCustomGame(2, 1);
         });
 
         deathImage.setOnMouseClicked(event -> {
-            if (mode.equals("custom")) {
-                game = new Game();
-                if (game.checkPlayerDeck(account, 1)) {
-
-                    match = game.makeNewCustomGame(account, deckName, 1, 0);
-                    startGame(game, match);
-                }
-            }
+            startCustomGame(1, 0);
         });
 
         log(selectModeRoot, "select mode\nback", StateType.SELECT_GAME, 200);
 
+    }
+
+    private static void startCustomGame(int mode, int numberOfFlag){
+        Transmitter transmitter = new Transmitter();
+        transmitter.playerNumber = 1;
+        transmitter.name = deckName;
+        transmitter.mode = mode;
+        transmitter.numberOfFlag = numberOfFlag;
+        transmitter = TransferController.main(RequestEnum.START_CUSTOM_GAME, transmitter);
+        if (transmitter.errorType == null)
+            startGame(game, match);
+        else
+            transmitter.errorType.printMessage();
     }
 
     private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene) {
@@ -325,16 +323,7 @@ class SelectGameScene {
                 root.getChildren().add(number);
                 scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
                     if (key.getCode() == KeyCode.ENTER) {
-                        game = new Game();
-                        if (game.checkPlayerDeck(account, 1)) {
-                            if (number.getText().matches("\\d+")) {
-
-
-                                match = game.makeNewCustomGame(account, deckName,
-                                        3, Integer.parseInt(number.getText()));
-                                startGame(game, match);
-                            }
-                        }
+                        startCustomGame(3, Integer.parseInt(number.getText()));
                     }
                 });
 

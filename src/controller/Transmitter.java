@@ -44,4 +44,7 @@ public class Transmitter implements Serializable { //todo check
     public Game game;
     public Match match;
     public int level;
+    public int playerNumber;
+    public int mode;
+    public int numberOfFlag;
 }

@@ -11,7 +11,6 @@ import model.battle.Deck;
 import model.battle.Game;
 import model.card.Card;
 import model.card.CardId;
-import model.item.Item;
 import model.item.Usable;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
@@ -190,21 +189,33 @@ public class RequestEnumController {
                 transmitter.decks = account.getDecks();
                 transfer(socketClass);
                 break;
-            case START_STORY_GAME:
+            case START_STORY_GAME: {
                 Game game = new Game();
                 socketClass.setGame(game);
-                if (game.checkPlayerDeck(account, 1)) {
+                ErrorType errorType = game.checkPlayerDeck(account, clientTransmitter.playerNumber);
+                if (errorType == null) {
                     transmitter.match = socketClass.setMatch(game.makeNewStoryGame(clientTransmitter.level));
                     transmitter.game = game;
-                    transmitter.aBoolean = true;
                 }
-                transmitter.aBoolean = false;
                 transfer(socketClass);
                 break;
-
+            }
             case EXIT_FROM_CHAT:
                 chatPerson.remove(socketClass);
                 break;
+            case START_CUSTOM_GAME: { /*Custom Game*/
+                Game game = new Game();
+                socketClass.setGame(game);
+                ErrorType errorType = game.checkPlayerDeck(account, clientTransmitter.playerNumber);
+                if (errorType == null) {
+                    transmitter.match = socketClass.setMatch(
+                            game.makeNewCustomGame(account, clientTransmitter.name,
+                                    clientTransmitter.mode, clientTransmitter.numberOfFlag));
+                    transmitter.game = game;
+                }
+                transfer(socketClass);
+                break;
+            }
         }
         socketClass.changeTransmitter();
 
