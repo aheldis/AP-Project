@@ -2,7 +2,9 @@ package model.battle;
 
 import model.account.Account;
 
-public class OrdinaryPlayer extends Player {
+import java.io.Serializable;
+
+public class OrdinaryPlayer extends Player implements Serializable {
 
     public OrdinaryPlayer(){
     }

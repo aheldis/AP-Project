@@ -6,10 +6,12 @@ import model.battle.Deck;
 import model.battle.MatchInfo;
 import model.card.*;
 import view.enums.ErrorType;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class AccountView {
+public class AccountView implements Serializable {
 
     private static AccountView singleInstance = null;
     private static final int NOT_VALID = -1;

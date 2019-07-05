@@ -10,9 +10,10 @@ import view.AccountView;
 import view.BattleView;
 import view.Graphic.BattleScene;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GraveYard {
+public class GraveYard implements Serializable {
 
     private ArrayList<Card> cards = new ArrayList<>();
     private Player player;

@@ -616,7 +616,12 @@ class CollectionScene {
                 break;
             }
             vBox = getVBox(NUMBER_IN_EACH_ROW, SPACING, vBoxes, vBox, i);
-            if (deck.cardHaveBeenExistInThisDeck(cards.get(i).getCardId().getCardIdAsString()) == null) {
+            if (deck.
+                    cardHaveBeenExistInThisDeck(
+                            cards.
+                                    get(i).
+                                    getCardId().
+                                    getCardIdAsString()) == null) {
                 Group group = new Group();
                 deckLittleCardMaker(vBox, cards.get(i), group, collection, deck, target);
                 DragAndDrop dragAndDrop = new DragAndDrop();

@@ -6,11 +6,12 @@ import model.battle.OrdinaryPlayer;
 import model.battle.Player;
 import view.AccountView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
 
-public class Account implements Comparable<Account>, Cloneable {
+public class Account implements Comparable<Account>, Cloneable, Serializable {
     private String userName;
     private String password;
     private int daric = 150000;

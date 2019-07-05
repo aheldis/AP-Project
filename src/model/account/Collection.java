@@ -1,20 +1,20 @@
 package model.account;
 
-import model.item.Item;
-import model.item.Usable;
 import model.battle.Deck;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
+import model.item.Item;
+import model.item.Usable;
 import view.AccountView;
 import view.enums.ErrorType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Spliterator;
 
-public class Collection  implements Cloneable{
+public class Collection implements Cloneable, Serializable {
 
     private ArrayList<Spell> spells = new ArrayList<>();
     private ArrayList<Hero> heroes = new ArrayList<>();

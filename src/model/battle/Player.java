@@ -11,10 +11,11 @@ import model.requirment.Coordinate;
 import view.Graphic.BattleScene;
 import view.enums.ErrorType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class Player {
+public abstract class Player implements Serializable {
     protected String type;
     private Deck mainDeck;
     private Hand hand;
