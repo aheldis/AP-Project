@@ -58,7 +58,9 @@ public class AccountScene {
         Button quit = imageButton(accountScene, root, "pics/menu/quit.png", "QUIT",
                 width - 250, height - 100, 174, 54);
         windows.add(quit);
-        quit.setOnMouseClicked(event -> StageLauncher.getPrimaryStage().close());
+        quit.setOnMouseClicked(event ->{
+            StageLauncher.getPrimaryStage().close();
+        });
     }
 
     void addWindows() {
