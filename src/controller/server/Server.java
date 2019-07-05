@@ -2,18 +2,12 @@ package controller.server;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import view.Graphic.GeneralGraphicMethods;
-import view.Graphic.StageLauncher;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,7 +20,7 @@ import static view.Graphic.GeneralGraphicMethods.*;
 
 class ServerThread extends Thread {
     private SocketClass socketClass;
-    public static ArrayList<SocketClass> socketClasses = new ArrayList<>();
+    static ArrayList<SocketClass> socketClasses = new ArrayList<>();
     private static int PORT = 8000;
 
     public void run() {
@@ -92,35 +86,24 @@ public class Server extends Application {
     }
 
 
-    private static VBox makeScene (Scene firstScene, Stage primaryStage){
+    private static VBox makeScene(Scene firstScene, Stage primaryStage) {
         Group root = new Group();
         setBackground(root, "pics/other/chapter10_preview@2x.jpg", false, 0, 0);
         Scene scene = new Scene(root, 600, 800);
         primaryStage.setScene(scene);
         VBox vBox = new VBox();
         root.getChildren().addAll(vBox);
-        ImageView back =addImage(vBox,"pics/menu/button_back_corner@2x.png", 0, 0, 50, 50);
+        ImageView back = addImage(vBox, "pics/menu/button_back_corner@2x.png", 0, 0, 50, 50);
 
 
-        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        primaryStage.setScene(firstScene);
-                    }
-                });
-            }
-
-        });
+        back.setOnMouseClicked(event -> Platform.runLater(() -> primaryStage.setScene(firstScene)));
 
         return vBox;
     }
 
 
     private static void makeClientsScene(Scene firstScene, Stage primaryStage) {
-        VBox vBox=makeScene(firstScene,primaryStage);
+        VBox vBox = makeScene(firstScene, primaryStage);
         for (int i = 0; i < ServerThread.socketClasses.size(); i++) {
             addClient(vBox, ServerThread.socketClasses.get(i));
         }
@@ -128,13 +111,13 @@ public class Server extends Application {
 
     }
 
-    private static void makeShopScene(Scene firstScene, Stage primaryStage){
-        VBox vBox=makeScene(firstScene,primaryStage);
+    private static void makeShopScene(Scene firstScene, Stage primaryStage) {
+        VBox vBox = makeScene(firstScene, primaryStage);
 
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         Group root = new Group();
         Scene scene = new Scene(root, 600, 800);
 
@@ -144,26 +127,11 @@ public class Server extends Application {
         Group shop = addButton(70, 200, "pics/other/button_secondary_glow@2x.png", "Shop");
         root.getChildren().addAll(clients, shop);
 
-        clients.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                makeClientsScene(scene,primaryStage);
-            }
-        });
-        shop.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                makeShopScene(scene,primaryStage);
-            }
-        });
+        clients.setOnMouseClicked(event -> makeClientsScene(scene, primaryStage));
+        shop.setOnMouseClicked(event -> makeShopScene(scene, primaryStage));
 
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                serverThread.stop();
-            }
-        });
+        primaryStage.setOnCloseRequest(event -> serverThread.stop());
         primaryStage.setScene(scene);
         primaryStage.show();
 
