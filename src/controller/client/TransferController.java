@@ -24,7 +24,6 @@ public class TransferController {
             case COLLECTION_HELP:
             case COLLECTION_SEARCH_CARD:
             case COLLECTION_SEARCH_ITEM:
-            case ENTER_COLLECTION:
             case IMPORT_DECK:
             case SHOP_BUY:
             case SHOP_HELP:
@@ -37,6 +36,7 @@ public class TransferController {
             case START_STORY_GAME:
             case ENTER_CHAT:
             case START_CUSTOM_GAME:
+            case SHOP_SELL:
                 transfer(true);
                 return fromServerTransmitter;
             case LOGOUT:
@@ -45,6 +45,8 @@ public class TransferController {
             case MAIN_DECK:
             case CHAT:
             case NEW_CARD_ID:
+            case ENTER_COLLECTION:
+            case EXIT_FROM_CHAT:
                 transfer(false);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
@@ -57,13 +59,6 @@ public class TransferController {
                     e.printStackTrace();
                 }
                 return fromServerTransmitter;
-            case EXIT_FROM_CHAT:
-                transfer(false);
-                return fromServerTransmitter;
-            case SHOP_SELL: {
-                transfer(true);
-                return fromServerTransmitter;
-            }
         }
 
         return fromServerTransmitter;

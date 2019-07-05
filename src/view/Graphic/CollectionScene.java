@@ -28,6 +28,7 @@ import model.card.Card;
 import model.card.Hero;
 import model.card.Minion;
 import model.card.Spell;
+import model.item.Item;
 import model.item.Usable;
 import view.enums.Cursor;
 import view.enums.ErrorType;
@@ -472,17 +473,17 @@ class CollectionScene {
         return group;
     }
 
-    private static void addItemCard(Usable[] items, VBox vBox) {
+    private static void addItemCard(ArrayList<Item> items, VBox vBox) {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
         hBox.setSpacing(1);
         vBox.getChildren().addAll(hBox);
         cardsIcon.add(hBox);
         Group group;
-        for (Usable item : items) {
+        for (Item item : items) {
             if (item == null)
                 continue;
-            group = makeItemCard(item);
+            group = makeItemCard((Usable) item);
             hBox.getChildren().addAll(group);
         }
     }
@@ -491,7 +492,7 @@ class CollectionScene {
         transmitter = TransferController.main(RequestEnum.COLLECTION_CARDS, new Transmitter());
         ArrayList<Card> cards = transmitter.cards;
         transmitter = TransferController.main(RequestEnum.COLLECTION_ITEMS, new Transmitter());
-        Usable[] items = (Usable[])transmitter.items.toArray();
+        ArrayList<Item> items = transmitter.items;
         root.getChildren().clear();
 
         playMusic("resource/music/collection.m4a", true, collectionScene);
@@ -559,7 +560,7 @@ class CollectionScene {
 
     }
 
-    private static void nextPage(ArrayList<Card> cards, Usable[] items, VBox vBox) {
+    private static void nextPage(ArrayList<Card> cards, ArrayList<Item> items, VBox vBox) {
         vBox.getChildren().removeAll(cardsIcon);
         root.getChildren().removeAll(cardsIcon);
         cardsIcon.clear();
