@@ -6,10 +6,11 @@ import model.card.Change;
 import model.card.Target;
 import model.land.Square;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class Item {
+public abstract class Item implements Serializable {
     private String name;
     private String type; //usable Collectible
     private String description;

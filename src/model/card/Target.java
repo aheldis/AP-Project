@@ -5,9 +5,10 @@ import model.item.Collectible;
 import model.land.LandOfGame;
 import model.land.Square;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Target {
+public class Target implements Serializable {
     private Player player;
     private LandOfGame land;
     private ArrayList<Square> targets = new ArrayList<>();

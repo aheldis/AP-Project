@@ -141,8 +141,6 @@ class ShopScene {
 
             Transmitter transmitter = TransferController.main(SHOP_ITEMS, new Transmitter());
             buyCard(hBox, daric, transmitter.items);
-
-
         });
 
         search.setOnMouseClicked(event -> {

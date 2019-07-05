@@ -1,13 +1,10 @@
 package controller.server;
 
-import controller.DBClass;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Server {
     private static ArrayList<SocketClass> socketClasses = new ArrayList<>();

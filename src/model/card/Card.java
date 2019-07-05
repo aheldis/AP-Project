@@ -12,11 +12,12 @@ import view.Graphic.BattleScene;
 import view.enums.ErrorType;
 import view.enums.RequestSuccessionType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-public abstract class Card {
+public abstract class Card implements Serializable {
     private static final int DEFAULT = -1;
     protected Change change = new Change();//HAS-A
     protected Target target = new Target();

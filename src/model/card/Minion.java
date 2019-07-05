@@ -2,7 +2,9 @@ package model.card;
 
 import model.land.Square;
 
-public class Minion extends Card {
+import java.io.Serializable;
+
+public class Minion extends Card implements Serializable {
     private String specialPowerInfo;
     private int numberOfBeingAttacked;
     private int numberOfAttack;

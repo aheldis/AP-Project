@@ -4,8 +4,10 @@ import javafx.scene.image.ImageView;
 import model.card.Card;
 import model.land.Square;
 
+import java.io.Serializable;
 
-public class Collectible extends model.item.Item {
+
+public class Collectible extends Item implements Serializable {
     private model.item.CollectibleId collectibleId;
     private Square square;
     private Card theOneWhoCollects;

@@ -1,10 +1,8 @@
 package model.card;
 
-import model.land.Square;
+import java.io.Serializable;
 
-import java.util.ArrayList;
-
-public class Spell extends Card {
+public class Spell extends Card implements Serializable {
 /*
     private int playerNameByNumber;//{player1 or 2}
     private int numberOfAttack;

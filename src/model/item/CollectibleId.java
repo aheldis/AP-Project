@@ -1,6 +1,8 @@
 package model.item;
 
-public class CollectibleId {
+import java.io.Serializable;
+
+public class CollectibleId implements Serializable {
     private String CollectibleId;
     private int number;
     private Collectible collectible;

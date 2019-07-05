@@ -1,6 +1,8 @@
 package model.item;
 
-public class Usable extends Item {
+import java.io.Serializable;
+
+public class Usable extends Item implements Serializable {
     private UsableId usableId;
     private int countOfAnimation ;
 

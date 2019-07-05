@@ -67,13 +67,6 @@ public class MainMenuScene {
         chatGraph.setOpacity(0.5);
         menuNodes.add(chatGraph);
         graphs.put(chatGraph, 0);
-        /*
-        randomNumber = random.nextInt(16) + 1;
-        matchHistoryGraph = addImage(root, "pics/menu/" + randomNumber + ".png", 180, 380, 70, 70);
-        matchHistoryGraph.setOpacity(0.5);
-        menuNodes.add(matchHistoryGraph);
-        graphs.put(matchHistoryGraph, 0);
-        */
         addLabelButtons();
     }
 
@@ -126,16 +119,6 @@ public class MainMenuScene {
             chatAnimation.stop();
             setScene(StateType.GLOBAL_CHAT);
         });
-        /*
-        Label matchHistory = newLabelButton("MATCH HISTORY", 390);
-        AnimationTimer matchHistoryAnimation = graphAnimation(matchHistoryGraph);
-        Label matchHistoryShadow = shadowAnimation(matchHistory, matchHistoryAnimation);
-        matchHistoryShadow.setOnMouseClicked(event -> {
-            SelectGameScene.selectGame(account);
-            matchHistoryAnimation.stop();
-            showMatchHistory();
-        });
-        */
     }
 
     private Label shadowAnimation(Label label, AnimationTimer animation) {
@@ -152,8 +135,8 @@ public class MainMenuScene {
             animation.stop();
             if (label.getText().equals("COLLECTION"))
                 collectionGraph.setOpacity(0.5);
-            //else
-            //    matchHistoryGraph.setOpacity(0.5);
+            if (label.getText().equals("GLOBAL CHAT"))
+                chatGraph.setOpacity(0.5);
         });
         return labelShadow;
     }
@@ -253,8 +236,6 @@ public class MainMenuScene {
                         collectionGraph = newGraph;
                     else if (graph.equals(chatGraph))
                         chatGraph = newGraph;
-                    //    else
-                    //        matchHistoryGraph = newGraph;
                     graph = newGraph;
                 }
             }

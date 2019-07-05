@@ -2,17 +2,12 @@ package view.Graphic;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
-import model.account.Account;
 import model.card.Card;
 import model.card.Minion;
-import model.card.Spell;
 import view.enums.Cursor;
 import view.enums.StateType;
 

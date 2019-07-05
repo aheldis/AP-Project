@@ -2,7 +2,9 @@ package model.item;
 
 import model.account.Account;
 
-public class UsableId {
+import java.io.Serializable;
+
+public class UsableId implements Serializable {
     private String usableId;
     private int number;
     private Usable usable;

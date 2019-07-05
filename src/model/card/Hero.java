@@ -1,8 +1,9 @@
 package model.card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Hero extends Card {
+public class Hero extends Card implements Serializable {
     private String specialPowerInfo;
     private ArrayList<Buff> buffs = new ArrayList<Buff>();
     private Spell spell;

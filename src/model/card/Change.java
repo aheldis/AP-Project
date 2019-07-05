@@ -4,10 +4,11 @@ import model.battle.Player;
 import model.land.Square;
 import view.Graphic.BattleScene;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Change {
+public class Change implements Serializable {
     private String targetType;
     private boolean opponentCanMove = true; //Disarm buff
     private boolean opponentCanAttack = true;

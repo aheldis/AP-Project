@@ -2,7 +2,9 @@ package model.card;
 
 import model.account.Account;
 
-public class CardId {
+import java.io.Serializable;
+
+public class CardId implements Serializable {
     private String cardId;
     private Account account = null;
     private Card card;

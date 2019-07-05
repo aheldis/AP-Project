@@ -4,8 +4,10 @@ import javafx.scene.image.ImageView;
 import model.card.Card;
 import model.land.Square;
 
+import java.io.Serializable;
 
-public class Flag extends Item {
+
+public class Flag extends Item implements Serializable {
     private Square square;
     private Card OwnerCard;
     private ImageView imageView;

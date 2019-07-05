@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 //todo for sba 2 nobat baraye json
 
-public class Buff {
+public class Buff implements Serializable {
     private static ArrayList<Buff> buffs = new ArrayList<>();
     private static String pathOfFiles = Shop.getPathOfFiles() + "Buff";
     private String name;
