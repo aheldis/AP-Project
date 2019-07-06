@@ -49,6 +49,7 @@ public class TransferController {
             case ENTER_COLLECTION:
             case EXIT_FROM_CHAT:
             case END_OF_CLIENT:
+            case COLLECTION_DELETE_DECK:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
