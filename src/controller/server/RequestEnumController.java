@@ -93,6 +93,10 @@ public class RequestEnumController {
                 transmitter.object = Shop.getInstance().search(socketClass.getAccount(), clientTransmitter.name);
                 transmitter.name = socketClass.getAccount().getUserName();
                 transmitter.collection = socketClass.getAccount().getCollection();
+                if(transmitter.object == null)
+                {
+                    transmitter.errorType = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
+                }
                 transfer(socketClass);
                 break;
             case SHOP_ITEMS:
@@ -188,7 +192,7 @@ public class RequestEnumController {
                 new CardId(account, card, account.getCollection().getNumberOfCardId(card));
                 account.getCollection().addToCards(card);
                 break;
-            case CHAT:
+            case SEND_MESSAGE:
 //                groupTexts.add(group);
                 for (SocketClass person : chatPerson) {
                     person.changeTransmitter();

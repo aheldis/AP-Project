@@ -2,6 +2,7 @@ package controller.client;
 
 import controller.RequestEnum;
 import controller.Transmitter;
+import view.Graphic.GlobalChatScene;
 
 import java.util.ArrayList;
 
@@ -43,7 +44,7 @@ public class TransferController {
             case EXPORT_DECK:
             case NEW_DECK:
             case MAIN_DECK:
-            case CHAT:
+            case SEND_MESSAGE:
             case NEW_CARD_ID:
             case ENTER_COLLECTION:
             case EXIT_FROM_CHAT:
@@ -89,10 +90,11 @@ public class TransferController {
 
 
     static void fromServerTransmitter(Transmitter transmitter) {
-        System.out.println("!!! fromserver");
         switch (transmitter.requestEnum) {
             case NEW_MESSAGE:
-                messages.add(transmitter);
+                System.out.println("new message");
+                //messages.add(transmitter);
+                GlobalChatScene.getNewMessage(transmitter);
                 break;
         }
     }

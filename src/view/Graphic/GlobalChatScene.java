@@ -3,6 +3,7 @@ package view.Graphic;
 import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -28,15 +29,19 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Objects;
 
-import static controller.RequestEnum.*;
+import static controller.RequestEnum.ENTER_CHAT;
+import static controller.RequestEnum.SEND_MESSAGE;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class GlobalChatScene {
     private static Scene chatScene = StageLauncher.getScene(StateType.GLOBAL_CHAT);
     private static Group root = (Group) Objects.requireNonNull(chatScene).getRoot();
     private static String userName;
+    private static VBox chatGroup = new VBox();
+    private static boolean inChat = false;
 
     public static void main() {
+        inChat = true;
         Transmitter answer = TransferController.main(ENTER_CHAT, new Transmitter());
         userName = answer.name;
 
@@ -67,9 +72,7 @@ public class GlobalChatScene {
         sideGroup.getChildren().addAll(textField);
         ImageView send = addImage(sideGroup, "pics/menu/send.png", 345, 760, 50, 50);
 
-        VBox chatGroup = new VBox();
-        chatGroup.setSpacing(15);
-
+        chatGroup.setSpacing(2);
 
         chatGroup.setBackground(new Background(new BackgroundFill(
                 Color.rgb(5, 5, 5, 0.8),
@@ -101,6 +104,7 @@ public class GlobalChatScene {
             }
         });
 
+        /*
         chatScene.setOnMouseClicked(event -> {
             Transmitter transmitter = TransferController.main(CHECK_NEW_MESSAGE, new Transmitter());
             Group groupText = new Group();
@@ -121,9 +125,11 @@ public class GlobalChatScene {
                 e.printStackTrace();
             }
         });
+        */
 
         ImageView imageView = addImage(root, "pics/menu/button_back_corner@2x.png", 0, 0, 70, 70);
         imageView.setOnMouseClicked(event -> {
+            inChat = false;
             TransferController.main(RequestEnum.EXIT_FROM_CHAT, new Transmitter());
             StageLauncher.decorateScene(StateType.MAIN_MENU);
         });
@@ -157,8 +163,39 @@ public class GlobalChatScene {
             e.printStackTrace();
         }
         transmitter.name = name;
-        TransferController.main(CHAT, transmitter);
+        TransferController.main(SEND_MESSAGE, transmitter);
 
+    }
+
+    public static void getNewMessage(Transmitter transmitter) {
+        if (inChat) {
+            Platform.setImplicitExit(false);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+
+                    Group groupText = new Group();
+                    groupText.relocate(50, 0);
+                    String message = transmitter.message;
+                    try {
+                        System.out.println(transmitter);
+                        System.out.println(transmitter.profile);
+                        ByteArrayInputStream bis = new ByteArrayInputStream(transmitter.profile);
+                        BufferedImage bImage = ImageIO.read(bis);
+                        ImageIO.write(bImage, "jpg", new File(userName + "output.jpg"));
+                        //todo use this because we have one saving for all clients
+
+                        System.out.println("transmitter = " + transmitter.path);
+                        makeMessage(message, groupText, transmitter.name, userName + "output.jpg");
+                        chatGroup.getChildren().addAll(groupText);
+                        VBox.setMargin(groupText, new Insets(5, 10, 5, 10));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        }
     }
 
     private static void makeMessage(String message, Group groupText, String name,
@@ -167,26 +204,15 @@ public class GlobalChatScene {
         if (sendEmoji(message, groupText, pathOfProfile) == null) {
 
             addRectangle(groupText, 100, 10, Math.max(message.length(), name.length()) * 20,
-                    90, 20, 20, Color.rgb(0, 0, 0, 0.5));
+                    80, 20, 20, Color.rgb(0, 0, 0, 0.5));
 
             createCircle(groupText, pathOfProfile);
-            Text text = addText(groupText, 30 + 85, 30, name, Color.ORANGE, 20);
+            Text text = addText(groupText, 30 + 85, 27, name, Color.ORANGE, 20);
             text.setStrokeWidth(1);
             text.setStroke(Color.rgb(200, 100, 100));
-            addText(groupText, 30 + 85, 60, message, Color.WHITE, 20);
+            addText(groupText, 30 + 85, 57, message, Color.WHITE, 20);
         }
 
-    }
-
-    private static void createCircle(Group groupText, String pathOfProfile) {
-        Circle circle = new Circle(30);
-        circle.relocate(20, 30);
-        try {
-            circle.setFill(new ImagePattern(new Image(new FileInputStream(pathOfProfile))));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        groupText.getChildren().addAll(circle);
     }
 
     private static ImageView sendEmoji(String name, Group root, String pathOfPorofile) {
@@ -238,5 +264,16 @@ public class GlobalChatScene {
 
         }
         return imageView;
+    }
+
+    private static void createCircle(Group groupText, String pathOfProfile) {
+        Circle circle = new Circle(30);
+        circle.relocate(20, 30);
+        try {
+            circle.setFill(new ImagePattern(new Image(new FileInputStream(pathOfProfile))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        groupText.getChildren().addAll(circle);
     }
 }

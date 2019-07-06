@@ -25,8 +25,7 @@ public class ClientIOhandler extends Thread {
             try {
 
                 String line = in.nextLine();
-                System.out.println("ClientIOhandler.run");
-                System.out.println("from server: " + line);
+                System.out.println("read from server");
                 YaGson mapper = new YaGson();
                 Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
                 if(transmitter.errorType != null)
@@ -43,7 +42,6 @@ public class ClientIOhandler extends Thread {
                         TransferController.fromServerTransmitter(transmitter);
                 }).start();
 
-                Thread.sleep(10);
             } catch (Exception e) {
                 e.printStackTrace();
             }

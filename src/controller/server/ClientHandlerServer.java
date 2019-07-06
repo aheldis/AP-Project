@@ -18,27 +18,22 @@ public class ClientHandlerServer extends Thread {
 
     public void run() {
 
-        while (true) {
+        while (socketClass.getIn().hasNextLine()) {
             try {
                 if (socketClass == null || socketClass.getIn() == null)
                     break;
 
-               /* if (!socketClass.getIn().hasNextLine()) {
-                    System.out.println("no next line");
-                    continue;
-                }*/
                 System.out.println("waiting for line");
-                String line = socketClass.getIn().readLine();
-                System.out.println("get line");
+                String line = socketClass.getIn().nextLine();
+                System.out.println("got line");
                 YaGson mapper = new YaGson();
                 Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
-                System.out.println("ClientHandlerServer.run");
+
                 //transmitter = (Transmitter) socketClass.getInputStream().readObject();
 
                 if (transmitter != null) {
                     RequestEnumController.main(transmitter.requestEnum, socketClass, transmitter);
                 }
-                Thread.sleep(10);
             } catch (Exception e) {
                 e.printStackTrace();
                 break;
@@ -54,7 +49,6 @@ public class ClientHandlerServer extends Thread {
             }
 
         }
-        System.out.println("???????®");
 
     }
 
