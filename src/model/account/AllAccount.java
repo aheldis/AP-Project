@@ -99,12 +99,13 @@ public class AllAccount {
         return null;
     }
 
-    public void showLeaderBoard() {
-        AccountView accountView = AccountView.getInstance();
+    public ArrayList<Account> showLeaderBoard() {
+        //AccountView accountView = AccountView.getInstance();
         Collections.sort(accounts);
-        for (int i = 0; i < accounts.size(); i++) {
-            accountView.viewAccount(i + 1, accounts.get(i).getUserName(), accounts.get(i).getWins());
-        }
+        return accounts;
+//        for (int i = 0; i < accounts.size(); i++) {
+//            accountView.viewAccount(i + 1, accounts.get(i).getUserName(), accounts.get(i).getWins());
+//        }
     }
 
     public void createAccount(String userName, String password) {
