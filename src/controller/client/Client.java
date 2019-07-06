@@ -1,10 +1,10 @@
 package controller.client;
 
-import controller.Transmitter;
-import javafx.application.Platform;
 import view.Graphic.StageLauncher;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -32,8 +32,8 @@ public class Client {
             System.out.println("Connected to server");
 
             clientIOhandler = new ClientIOhandler();
-            clientIOhandler.setObjectOutputStream(new ObjectOutputStream(socket.getOutputStream()));
-            clientIOhandler.setObjectInputStream(new ObjectInputStream(socket.getInputStream()));
+//            clientIOhandler.setObjectOutputStream(new ObjectOutputStream(socket.getOutputStream()));
+//            clientIOhandler.setObjectInputStream(new ObjectInputStream(socket.getInputStream()));
             clientIOhandler.setIn(new Scanner(socket.getInputStream()));
             clientIOhandler.setOut(new PrintWriter(socket.getOutputStream(), true));
 
@@ -57,7 +57,7 @@ public class Client {
 
     }
 
-    public static ClientIOhandler getClientIOhandler() {
+    static ClientIOhandler getClientIOHandler() {
         return clientIOhandler;
     }
 }

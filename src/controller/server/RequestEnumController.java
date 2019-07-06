@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 public class RequestEnumController {
     static ArrayList<Group> groupTexts = new ArrayList<>();
-    static ArrayList<SocketClass> chatPerson = new ArrayList<>();
+    private static ArrayList<SocketClass> chatPerson = new ArrayList<>();
 
     public static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
         Transmitter transmitter = socketClass.getTransmitter();
@@ -112,6 +112,8 @@ public class RequestEnumController {
             case COLLECTION_DECKS:
                 transmitter.decks = socketClass.getAccount().getDecks();
                 transmitter.collection = socketClass.getAccount().getCollection();
+                for (Card card : transmitter.collection.getAllCards())
+                    System.out.println(card.getName() + " " + card.getCardId());
                 transfer(socketClass);
                 break;
             case COLLECTION_NEW_DECK:

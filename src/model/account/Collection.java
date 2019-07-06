@@ -36,27 +36,24 @@ public class Collection implements Cloneable, Serializable {
         this.decks = decks;
     }
 
-    public Collection(Account account) {
+    Collection(Account account) {
         this.account = account;
     }
 
-    public Object clone() throws CloneNotSupportedException
-    {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-    public boolean checkTheDeckForImport(Deck deck){
+
+    public boolean checkTheDeckForImport(Deck deck) {
         ArrayList<Card> cards = deck.getCardsOfDeck();
         cards.add(deck.getHero());
-        for(int i=0;i<cards.size();i++){
-            if(passCardByCardId(cards.get(i).getCardId().getCardIdAsString())==null){
+        for (Card card : cards) {
+            if (passCardByCardId(card.getCardId().getCardIdAsString()) == null) {
                 return false;//does not have Spell or minion
             }
         }
         //if does not have item
-        if(passUsableItemByUsableItemId(deck.getItem().getUsableId().getUsableIdAsString())==null)
-            return false;
-
-        return true;//have all cards
+        return passUsableItemByUsableItemId(deck.getItem().getUsableId().getUsableIdAsString()) != null;//have all cards
     }
 
 
@@ -81,12 +78,12 @@ public class Collection implements Cloneable, Serializable {
         accountView.cardsAndItemsView(spells, minions, heroes, new ArrayList<>(Arrays.asList(items)));
     }
 
-    public void addToCards(Card card){
-        if(card instanceof Hero)
+    public void addToCards(Card card) {
+        if (card instanceof Hero)
             addToHeros((Hero) card);
-        if(card instanceof Minion)
+        if (card instanceof Minion)
             addToMinions((Minion) card);
-        if(card instanceof Spell)
+        if (card instanceof Spell)
             addToSpells((Spell) card);
     }
 
@@ -114,9 +111,9 @@ public class Collection implements Cloneable, Serializable {
     public void selectADeckAsMainDeck(String deckName) {
 
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
-        if(errorForDeck(deck)) {
+        if (errorForDeck(deck)) {
             if (!deck.validate()) {
-                ErrorType error=ErrorType.SELECTED_INVALID_DECK;
+                ErrorType error = ErrorType.SELECTED_INVALID_DECK;
                 error.printMessage();
             }
             account.setMainDeck(deck);
@@ -222,7 +219,7 @@ public class Collection implements Cloneable, Serializable {
         cards.addAll(heroes);
         cards.addAll(minions);
         cards.addAll(spells);
-        for (int i=0;i< cards.size();i++) {
+        for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i).equalCard(cardId)) {
                 return cards.get(i);
             }
@@ -232,17 +229,15 @@ public class Collection implements Cloneable, Serializable {
 
     public Usable passUsableItemByUsableItemId(String usableItemId) {
         for (Usable item : items) {
-            if(item == null)
+            if (item == null)
                 continue;
-            if (item.getUsableId().getUsableIdAsString().equals(usableItemId)) {
+            if (item.getUsableId().getUsableIdAsString().equals(usableItemId))
                 return item;
-            }
         }
         return null;
     }
 
     public void addCardToThisDeck(Card card, String deckName) {
-        ErrorType error;
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (!errorForDeck(deck))
             return;
@@ -262,19 +257,15 @@ public class Collection implements Cloneable, Serializable {
     }
 
     public void addItemToThisDeck(Usable item, String deckName) {
-        ErrorType error;
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (!errorForDeck(deck))
             return;
-
         deck.addItemToDeck(item);
-
-
     }
 
     public void removeCardFromDeck(Card card, String deckName) {
         ErrorType error;
-        if(card == null)
+        if (card == null)
             return;
         String cardId = card.getCardId().getCardIdAsString();
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
@@ -327,7 +318,7 @@ public class Collection implements Cloneable, Serializable {
         ErrorType error;
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck != null) {
-            if(!deck.validate()){
+            if (!deck.validate()) {
                 ErrorType.SELECTED_INVALID_DECK.printMessage();
             }
             return deck.validate();
@@ -337,7 +328,7 @@ public class Collection implements Cloneable, Serializable {
         return false;
     }
 
-    public void showAlldecks() {//if it has main deck we should show it first
+    public void showAllDecks() {//if it has main deck we should show it first
         Deck deck = account.getMainDeck();
         if (deck != null) {//change the place of main deck to the end and print from last index
             decks.remove(deck);
@@ -372,24 +363,24 @@ public class Collection implements Cloneable, Serializable {
         return accountView.helpViewForCollection();
     }
 
-    public void removeCard(Card card) {
-        if(card instanceof Hero) {
+    void removeCard(Card card) {
+        if (card instanceof Hero) {
             for (Hero hero : heroes) {
-                if ( hero.equals(card)) {
+                if (hero.equals(card)) {
                     heroes.remove(hero);
                     return;
                 }
             }
         }
-        if(card instanceof Minion) {
+        if (card instanceof Minion) {
             for (Minion minion : minions) {
-                if ( minion.equals(card)) {
+                if (minion.equals(card)) {
                     minions.remove(minion);
                     return;
                 }
             }
         }
-        if(card instanceof Spell) {
+        if (card instanceof Spell) {
             for (Spell spell : spells) {
                 if (spell.equals(card)) {
                     spells.remove(spell);
@@ -398,12 +389,12 @@ public class Collection implements Cloneable, Serializable {
             }
         }
 
-        for(Deck deck: decks){
+        for (Deck deck : decks) {
             deck.removeFromCardsOfDeck(card);
         }
     }
 
-    public void removeItem(Usable item) {
+    void removeItem(Usable item) {
         for (int i = 0; i < 3; i++) {
             if (item.equals(items[i])) {
                 items[i] = null;
@@ -411,7 +402,7 @@ public class Collection implements Cloneable, Serializable {
             }
         }
 
-        for(Deck deck: decks){
+        for (Deck deck : decks) {
             deck.removeItemOfDeck();
         }
     }
@@ -435,7 +426,7 @@ public class Collection implements Cloneable, Serializable {
         return cards;
     }
 
-    public int getNumberOfItemId(Item item) {
+    int getNumberOfItemId(Item item) {
         int number = 1;
         for (Item item1 : items) {
             if (item1 != null && item != null && item1.getName().equals(item.getName())) {
@@ -453,7 +444,4 @@ public class Collection implements Cloneable, Serializable {
         return null;
     }
 
-    public void save() {
-
-    }
 }

@@ -25,8 +25,8 @@ public class CardId implements Serializable {
         setCardId();
     }
 
-    public void setCardId() {//{number will add to  cardId}
-        if(account == null)
+    private void setCardId() {//{number will add to  cardId}
+        if (account == null)
             this.cardId = "computer_" + card.getName() + "_" + number;
         else
             this.cardId = account.getUserName() + "_" + card.getName() + "_" + number;

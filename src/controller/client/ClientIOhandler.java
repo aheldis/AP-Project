@@ -4,9 +4,7 @@ import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import controller.Transmitter;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -16,6 +14,8 @@ public class ClientIOhandler extends Thread {
     private ObjectOutputStream objectOutputStream;
     private Scanner in;
     private PrintWriter out;
+    private OutputStreamWriter outputStreamWriter;
+    private InputStreamReader inputStreamReader;
     private HashMap<Integer, Transmitter> transmitters = new HashMap<>();
     //private ArrayList<Transmitter> transmitters = new ArrayList<>();
     private int countOfId = 1;
@@ -31,17 +31,14 @@ public class ClientIOhandler extends Thread {
                 System.out.println("from server: " + line);
                 //Transmitter transmitter = (Transmitter) objectInputStream.readObject();
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (transmitter.transmitterId != 0) {
-                            transmitters.put(transmitter.transmitterId, transmitter);
-                            synchronized (lock) {
-                                lock.notifyAll();
-                            }
-                        } else
-                            TransferController.fromServerTransmitter(transmitter);
-                    }
+                new Thread(() -> {
+                    if (transmitter.transmitterId != 0) {
+                        transmitters.put(transmitter.transmitterId, transmitter);
+                        synchronized (lock) {
+                            lock.notifyAll();
+                        }
+                    } else
+                        TransferController.fromServerTransmitter(transmitter);
                 }).start();
 
                 Thread.sleep(10);
@@ -112,16 +109,18 @@ public class ClientIOhandler extends Thread {
         return objectInputStream;
     }
 
-    public void setObjectInputStream(ObjectInputStream objectInputStream) {
+    void setObjectInputStream(ObjectInputStream objectInputStream) {
         this.objectInputStream = objectInputStream;
+        this.inputStreamReader = new InputStreamReader(objectInputStream);
     }
 
     public ObjectOutputStream getObjectOutputStream() {
         return objectOutputStream;
     }
 
-    public void setObjectOutputStream(ObjectOutputStream objectOutputStream) {
+    void setObjectOutputStream(ObjectOutputStream objectOutputStream) {
         this.objectOutputStream = objectOutputStream;
+        this.outputStreamWriter = new OutputStreamWriter(objectOutputStream);
     }
 }
 

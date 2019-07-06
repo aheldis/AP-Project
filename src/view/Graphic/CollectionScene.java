@@ -1,9 +1,8 @@
 package view.Graphic;
 
+import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.RequestEnum;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -341,7 +340,7 @@ class CollectionScene {
     }
 
     private static void hBoxCardMaker(VBox vBox, int pageNumber, int NUMBER_IN_EACH_ROW,
-                                      ArrayList<Card> cards, int spacing) {
+                                      ArrayList<Card> cards) {
         HBox hBox = new HBox();
         int startingBound = 2 * NUMBER_IN_EACH_ROW * pageNumber;
         int j = -1;
@@ -382,7 +381,7 @@ class CollectionScene {
         Group groupText = new Group();
         groupText.relocate(300, 20);
 
-        addRectangleForCollection(groupText, 0, 25, 400, 40, 50, 50
+        addRectangleForCollection(groupText, 400, 40, 50, 50
                 , Color.rgb(0, 0, 0, 0.7));
 
         TextField textArea = new TextField();
@@ -390,7 +389,7 @@ class CollectionScene {
         textArea.positionCaret(1);
         textArea.setStyle("-fx-text-fill: #0000ff; -fx-font-size: 15px; -fx-font-weight: bold;");
         Group group1 = textArea(hBox, groupText, textArea);
-        addRectangleForCollection(group1, 0, 20, 50, 40, 60, 60
+        addRectangleForCollection(group1, 50, 40, 60, 60
                 , Color.rgb(0, 0, 0, 0.7));
 
         addImage(group1, "pics/collection/magnifier_icon.png", 16, 13, 20, 20);
@@ -415,7 +414,7 @@ class CollectionScene {
                         true, 20, 20);
                 root.getChildren().addAll(group);
 
-                addRectangleForCollection(group, 0, 0, 400, 400
+                addRectangleForCollection(group, 400, 400
                         , 50, 50, Color.rgb(0, 0, 0, 0.9));
                 ImageView close = addImage(group,
                         "pics/collection/button_close@2x.png", 350, 0, 50, 50);
@@ -525,7 +524,7 @@ class CollectionScene {
                 "Decks", 600, 770, 100, 50);
         deckScene.setOnMouseClicked(event -> {
             transmitter = TransferController.main(COLLECTION_DECKS, new Transmitter());
-            Platform.runLater(() -> showDeck(transmitter.decks, transmitter.collection));
+            showDeck(transmitter.decks, transmitter.collection);
         });
 
         back.setOnMouseClicked(event -> {
@@ -568,7 +567,7 @@ class CollectionScene {
         if (pageNumberCards == Math.ceil(cards.size() / 10.0)) {
             addItemCard(items, vBox);
         }
-        hBoxCardMaker(vBox, pageNumberCards, 5, cards, 10);
+        hBoxCardMaker(vBox, pageNumberCards, 5, cards);
     }
 
     /**
@@ -616,7 +615,9 @@ class CollectionScene {
                 break;
             }
             vBox = getVBox(NUMBER_IN_EACH_ROW, SPACING, vBoxes, vBox, i);
-            if (deck.
+            System.out.println(cards.get(i).getName());
+            System.out.println(cards.get(i).getCardId());
+            /*if (deck.
                     cardHaveBeenExistInThisDeck(
                             cards.
                                     get(i).
@@ -626,7 +627,7 @@ class CollectionScene {
                 deckLittleCardMaker(vBox, cards.get(i), group, collection, deck, target);
                 DragAndDrop dragAndDrop = new DragAndDrop();
                 dragAndDrop.dragAndDropForCollection(group, target, deck, cards.get(i), vBox, root, 150, 35, vBoxes);
-            }
+            }*/
         }
         return vBoxes;
     }

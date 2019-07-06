@@ -11,7 +11,7 @@ public class TargetCopy {
     public boolean enemy = false;
     public boolean ally = false;
 
-    public TargetCopy() {
+    TargetCopy() {
 
     }
 }

@@ -29,17 +29,19 @@ public class ClientHandlerServer extends Thread {
                     continue;
                 }*/
                 System.out.println("waiting for line");
-                String line = socketClass.getIn().nextLine();
-                System.out.println("get line");
-                YaGson mapper = new YaGson();
-                Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
-                System.out.println("ClientHandlerServer.run");
-                //transmitter = (Transmitter) socketClass.getInputStream().readObject();
+                if (socketClass.getIn().hasNext()) {
+                    String line = socketClass.getIn().nextLine();
+                    System.out.println("get line");
+                    YaGson mapper = new YaGson();
+                    Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
+                    System.out.println("ClientHandlerServer.run");
+                    //transmitter = (Transmitter) socketClass.getInputStream().readObject();
 
-                if (transmitter != null) {
-                    RequestEnumController.main(transmitter.requestEnum, socketClass, transmitter);
+                    if (transmitter != null) {
+                        RequestEnumController.main(transmitter.requestEnum, socketClass, transmitter);
+                    }
+                    Thread.sleep(10);
                 }
-                Thread.sleep(10);
             } catch (Exception e) {
                 e.printStackTrace();
                 break;

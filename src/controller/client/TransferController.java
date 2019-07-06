@@ -3,14 +3,11 @@ package controller.client;
 import controller.RequestEnum;
 import controller.Transmitter;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class TransferController {
     private static Transmitter fromServerTransmitter;
-    private static ClientIOhandler clientIOhandler = Client.getClientIOhandler();
+    private static ClientIOhandler clientIOhandler = Client.getClientIOHandler();
     private static ArrayList<Transmitter> messages = new ArrayList<>();
 
     public static Transmitter main(RequestEnum requestEnum, Transmitter transmitter) {

@@ -234,7 +234,7 @@ public class MenuController  {
                         collection.showCardsAndItems();
                         break;
                     case COLLECTION_SHOW_ALL_DECKS:
-                        collection.showAlldecks();
+                        collection.showAllDecks();
                         break;
                     case COLLECTION_SHOW_DECK:
                         deckName = request.getDeckName();

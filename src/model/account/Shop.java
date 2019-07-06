@@ -199,6 +199,7 @@ public class Shop {
                 collection.addToMinions((Minion) card);
                 typeOfFile = FilesType.MINION;
             }
+            assert typeOfFile != null;
             makeNewFromFile(pathOfFiles + typeOfFile + "/" + card.getName() + ".json", typeOfFile);
             cards.remove(card);
             return;
@@ -213,6 +214,7 @@ public class Shop {
             makeNewFromFile(pathOfFiles + "/" + FilesType.USABLE.getName() + "/" + item.getName() + ".json", FilesType.ITEM);
             return;
         }
+//        System.out.println("null");
         ErrorType error = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
         accountView.printError(error);
     }

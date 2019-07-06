@@ -1,7 +1,5 @@
 package view.Graphic;
 
-import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import javafx.animation.AnimationTimer;
 import javafx.scene.*;
 import javafx.scene.control.Button;
@@ -55,13 +53,12 @@ public class GeneralGraphicMethods {
         return text;
     }
 
-   public static Rectangle addRectangleForCollection(Parent root, int x, int y, int width, int height, int arcW, int arcH, Paint color) {
+    static void addRectangleForCollection(Parent root, int width, int height, int arcW, int arcH, Paint color) {
         Rectangle rectangle = new javafx.scene.shape.Rectangle(width, height);
         rectangle.setFill(color);
         rectangle.setArcWidth(arcW);
         rectangle.setArcHeight(arcH);
         nodeAdder(rectangle, root);
-        return rectangle;
     }
 
     private static void nodeAdder(Node node, Parent root) {

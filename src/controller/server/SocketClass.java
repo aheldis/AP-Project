@@ -32,8 +32,8 @@ public class SocketClass {
     public SocketClass(Socket socket) {
         this.socket = socket;
         try {
-            inputStream = new ObjectInputStream(socket.getInputStream());
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+//            inputStream = new ObjectInputStream(socket.getInputStream());
+//            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);
         } catch (Exception e) {

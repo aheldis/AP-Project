@@ -47,7 +47,7 @@ public class MakeNewFile {
         MakeNewFile.hashMaps = hashMaps;
     }
 
-    public static void addPicture(FilesType typeOfFile, String name, Object object) {
+    private static void addPicture(FilesType typeOfFile, String name, Object object) {
         String pathOfFolder = "pics/" + typeOfFile.getName() + "/";
         if (typeOfFile != FilesType.SPELL)
             copyFile(pathOfFolder + "defaults/" + spriteNumber + ".gif",
@@ -142,44 +142,49 @@ public class MakeNewFile {
 
                 try {
                     AnnotatedType annotatedType = field.getAnnotatedType();
-                    if (annotatedType.getType().getTypeName().equals("int")) {
-                        field.set(object, Integer.parseInt(hashMaps.get(hashMapNumber).get(fieldName).getText()));
-                    } else if (annotatedType.getType().getTypeName().equals("boolean")) {
-                        field.set(object, Boolean.parseBoolean(hashMaps.get(hashMapNumber).get(fieldName).getText()));
-                    } else if (annotatedType.getType().getTypeName().equals("java.lang.String")) {
-                        field.set(object, hashMaps.get(hashMapNumber).get(fieldName).getText());
-                    } else if (annotatedType.getType().getTypeName().equals("java.util.HashMap<java.lang.String, java.util.ArrayList<java.lang.Integer>>")) {
-                        HashMap<String, ArrayList<Integer>> hashMap = new HashMap<>();
-                        int number = Integer.parseInt(hashMaps.get(hashMapNumber).get("number of buffs").getText());
-                        for (int i = 0; i < number; i++) {
+                    switch (annotatedType.getType().getTypeName()) {
+                        case "int":
+                            field.set(object, Integer.parseInt(hashMaps.get(hashMapNumber).get(fieldName).getText()));
+                            break;
+                        case "boolean":
+                            field.set(object, Boolean.parseBoolean(hashMaps.get(hashMapNumber).get(fieldName).getText()));
+                            break;
+                        case "java.lang.String":
+                            field.set(object, hashMaps.get(hashMapNumber).get(fieldName).getText());
+                            break;
+                        case "java.util.HashMap<java.lang.String, java.util.ArrayList<java.lang.Integer>>":
+                            HashMap<String, ArrayList<Integer>> hashMap = new HashMap<>();
+                            int number = Integer.parseInt(hashMaps.get(hashMapNumber).get("number of buffs").getText());
+                            for (int i = 0; i < number; i++) {
 
-                            String buffName = hashMaps.get(numberOfBuffHashMap).get("name").getText();
-                            String pathOfBuff = Buff.getPathOfFiles() + "/" + buffName + ".json";
+                                String buffName = hashMaps.get(numberOfBuffHashMap).get("name").getText();
+                                String pathOfBuff = Buff.getPathOfFiles() + "/" + buffName + ".json";
 
-                            boolean makeNewBuff = true;
-                            if (new File(pathOfBuff).exists()) {
-                                makeNewBuff = false;
+                                boolean makeNewBuff = true;
+                                if (new File(pathOfBuff).exists()) {
+                                    makeNewBuff = false;
 //                                System.out.println("this buff already exist so you can't change properties");
-                            }
+                                }
 
-                            int count = Integer.parseInt(hashMaps.get(numberOfBuffHashMap).get("how many of this buff").getText());
-                            int num = Integer.parseInt(hashMaps.get(numberOfBuffHashMap).get("for how many turn").getText());
-                            System.out.println("count = " + count);
-                            System.out.println("num = " + num);
-                            ArrayList<Integer> array = new ArrayList<>();
-                            for (int j = 0; j < count; j++) {
-                                array.add(num);
-                            }
-                            if (makeNewBuff) {
-                                Object object1 = fillObject("model.card.makeFile.BuffCopy", FilesType.BUFF, numberOfBuffHashMap);
-                                toJson(object1, pathOfBuff);
-                                changeInFile(pathOfBuff, "@type", "model.card.Buff");
-                            }
-                            numberOfBuffHashMap++;
+                                int count = Integer.parseInt(hashMaps.get(numberOfBuffHashMap).get("how many of this buff").getText());
+                                int num = Integer.parseInt(hashMaps.get(numberOfBuffHashMap).get("for how many turn").getText());
+                                System.out.println("count = " + count);
+                                System.out.println("num = " + num);
+                                ArrayList<Integer> array = new ArrayList<>();
+                                for (int j = 0; j < count; j++) {
+                                    array.add(num);
+                                }
+                                if (makeNewBuff) {
+                                    Object object1 = fillObject("model.card.makeFile.BuffCopy", FilesType.BUFF, numberOfBuffHashMap);
+                                    toJson(object1, pathOfBuff);
+                                    changeInFile(pathOfBuff, "@type", "model.card.Buff");
+                                }
+                                numberOfBuffHashMap++;
 
-                            hashMap.put(buffName, array);
-                        }
-                        field.set(object, hashMap);
+                                hashMap.put(buffName, array);
+                            }
+                            field.set(object, hashMap);
+                            break;
                     }
 
                 } catch (Exception e) {
@@ -195,7 +200,7 @@ public class MakeNewFile {
         return null;
     }
 
-    public static void toJson(Object object, String path) {
+    private static void toJson(Object object, String path) {
         try {
             YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
             FileWriter fileWriter = new FileWriter(path);
@@ -206,7 +211,7 @@ public class MakeNewFile {
         }
     }
 
-    public static void changeInFile(String path, String fieldName, String content) {
+    private static void changeInFile(String path, String fieldName, String content) {
         ArrayList<String> lines = new ArrayList<>();
         try {
             FileReader fileReader = new FileReader(path);
@@ -236,8 +241,6 @@ public class MakeNewFile {
             });
             bufferedWriter.close();
             fileWriter.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -256,7 +259,7 @@ public class MakeNewFile {
         return fieldNames;
     }
 
-    public static void fillFieldNames(FilesType typeOfFile) {
+    private static void fillFieldNames(FilesType typeOfFile) {
         fieldNames.clear();
         fieldAnnotatedTyped.clear();
 
@@ -272,7 +275,7 @@ public class MakeNewFile {
         }
     }
 
-    public static void fillFieldNamesOfObject(ArrayList<String> fieldNames, String className, FilesType typeOfFile) {
+    private static void fillFieldNamesOfObject(ArrayList<String> fieldNames, String className, FilesType typeOfFile) {
         try {
             Field[] fields = Class.forName(className).getFields();
 
@@ -302,9 +305,7 @@ public class MakeNewFile {
             return true;
         if (fieldName.equals("ActivationTimeOfSpecialPower") && typeOfFile != FilesType.MINION)
             return true;
-        if (!fieldName.equals("cost") && !fieldName.equals("name") && typeOfFile == FilesType.SPELL)
-            return true;
-        return false;
+        return !fieldName.equals("cost") && !fieldName.equals("name") && typeOfFile == FilesType.SPELL;
     }
 
     public static ArrayList<String> getChangeFieldNames() {
