@@ -7,7 +7,6 @@ import model.battle.Match;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class SocketClass {
     private Socket socket;
@@ -19,7 +18,7 @@ public class SocketClass {
     private Match match;
     private ClientHandlerServer clientHandlerServer;
     private PrintWriter out;
-    private Scanner in;
+    private BufferedReader in;
 
     public ClientHandlerServer getClientHandlerServer() {
         return clientHandlerServer;
@@ -34,8 +33,8 @@ public class SocketClass {
         try {
 //            inputStream = new ObjectInputStream(socket.getInputStream());
 //            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            in = new Scanner(socket.getInputStream());
-            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,7 +82,7 @@ public class SocketClass {
         return out;
     }
 
-    public Scanner getIn() {
+    public BufferedReader getIn() {
         return in;
     }
 }

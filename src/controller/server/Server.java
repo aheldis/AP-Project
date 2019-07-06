@@ -77,7 +77,7 @@ public class Server extends Application {
 
     }
 
-    public static Group addButton(int x, int y, String path, String input) {
+    private static Group addButton(int x, int y, String path, String input) {
         Group group = new Group();
         group.relocate(x, y);
         addImage(group, path, 0, 0, 200, 100);

@@ -54,7 +54,8 @@ public class ClientIOhandler extends Thread {
         try {
             try {
                 YaGson altMapper = new YaGsonBuilder().create();
-                altMapper.toJson(clientTransmitter, out);
+                String json = altMapper.toJson(clientTransmitter);
+                out.println(json);
                 out.flush();
                 /*
                 YaGson altMapper = new YaGsonBuilder().create();

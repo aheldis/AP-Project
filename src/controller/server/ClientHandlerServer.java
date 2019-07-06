@@ -8,40 +8,37 @@ import java.io.IOException;
 
 public class ClientHandlerServer extends Thread {
     public boolean endOfClient = false;
-  //  private Transmitter transmitter;
+    //  private Transmitter transmitter;
     private SocketClass socketClass;
 
     public ClientHandlerServer(SocketClass socketClass) {
         this.socketClass = socketClass;
-      //  transmitter = socketClass.getTransmitter();
+        //  transmitter = socketClass.getTransmitter();
     }
 
     public void run() {
 
         while (true) {
             try {
-                if (socketClass == null || socketClass.getInputStream() == null) {
+                if (socketClass == null || socketClass.getIn() == null)
                     break;
-                }
 
                /* if (!socketClass.getIn().hasNextLine()) {
                     System.out.println("no next line");
                     continue;
                 }*/
                 System.out.println("waiting for line");
-                if (socketClass.getIn().hasNext()) {
-                    String line = socketClass.getIn().nextLine();
-                    System.out.println("get line");
-                    YaGson mapper = new YaGson();
-                    Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
-                    System.out.println("ClientHandlerServer.run");
-                    //transmitter = (Transmitter) socketClass.getInputStream().readObject();
+                String line = socketClass.getIn().readLine();
+                System.out.println("get line");
+                YaGson mapper = new YaGson();
+                Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
+                System.out.println("ClientHandlerServer.run");
+                //transmitter = (Transmitter) socketClass.getInputStream().readObject();
 
-                    if (transmitter != null) {
-                        RequestEnumController.main(transmitter.requestEnum, socketClass, transmitter);
-                    }
-                    Thread.sleep(10);
+                if (transmitter != null) {
+                    RequestEnumController.main(transmitter.requestEnum, socketClass, transmitter);
                 }
+                Thread.sleep(10);
             } catch (Exception e) {
                 e.printStackTrace();
                 break;

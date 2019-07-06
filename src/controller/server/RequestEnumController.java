@@ -233,9 +233,9 @@ public class RequestEnumController {
 
     private static void transfer(SocketClass socketClass) {
         try {
-
             YaGson altMapper = new YaGsonBuilder().create();
-            altMapper.toJson(socketClass.getTransmitter(), socketClass.getOut());
+            String json = altMapper.toJson(socketClass.getTransmitter());
+            socketClass.getOut().println(json);
             socketClass.getOut().flush();
             /*
             YaGson altMapper = new YaGsonBuilder().create();
