@@ -7,11 +7,13 @@ import controller.Transmitter;
 import javafx.scene.Group;
 import model.account.Account;
 import model.account.AllAccount;
+import model.account.FilesType;
 import model.account.Shop;
 import model.battle.Deck;
 import model.battle.Game;
 import model.card.Card;
 import model.card.CardId;
+import model.card.makeFile.MakeNewFile;
 import model.item.Usable;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
@@ -208,6 +210,7 @@ public class RequestEnumController {
                 Game game = new Game();
                 socketClass.setGame(game);
                 ErrorType errorType = game.checkPlayerDeck(account, clientTransmitter.playerNumber);
+                transmitter.errorType = errorType;
                 if (errorType == null) {
                     transmitter.match = socketClass.setMatch(game.makeNewStoryGame(clientTransmitter.level));
                     transmitter.game = game;
@@ -222,6 +225,7 @@ public class RequestEnumController {
                 Game game = new Game();
                 socketClass.setGame(game);
                 ErrorType errorType = game.checkPlayerDeck(account, clientTransmitter.playerNumber);
+                transmitter.errorType = errorType;
                 if (errorType == null) {
                     transmitter.match = socketClass.setMatch(
                             game.makeNewCustomGame(account, clientTransmitter.name,
@@ -230,6 +234,22 @@ public class RequestEnumController {
                 }
                 transfer(socketClass);
                 break;
+            }
+            case MAKE_NEW_CARD: {
+                MakeNewFile makeNewFile = new MakeNewFile();
+                makeNewFile.setSpriteNumber(clientTransmitter.spriteNumber, clientTransmitter.spriteNumberCount);
+                makeNewFile.setHashMaps(clientTransmitter.hashMapsWithStrings);
+                socketClass.getTransmitter().errorType = makeNewFile.makeNewCard(FilesType.getEnum(clientTransmitter.type));
+                transfer(socketClass);
+                break;
+            }
+            case NEW_CARD_ARRAYLISTS:{
+                MakeNewFile makeNewFile = new MakeNewFile();
+                transmitter.fieldNames = makeNewFile.getFieldNames(FilesType.getEnum(clientTransmitter.type));
+                transmitter.changeFieldNames = makeNewFile.getChangeFieldNames();
+                transmitter.targetFieldNames = makeNewFile.getTargetFieldNames();
+                transmitter.buffFieldNames = makeNewFile.getBuffFieldNames();
+                transfer(socketClass);
             }
         }
         socketClass.changeTransmitter();
@@ -242,12 +262,7 @@ public class RequestEnumController {
             String json = altMapper.toJson(socketClass.getTransmitter());
             socketClass.getOut().println(json);
             socketClass.getOut().flush();
-            /*
-            YaGson altMapper = new YaGsonBuilder().create();
-            String json = altMapper.toJson(socketClass.getTransmitter());
-            socketClass.getOut().print(json);
-            socketClass.getOut().flush();
-            */
+
             System.out.println("RequestEnumController.transfer");
             //System.out.println("to client " + json);
 

@@ -46,7 +46,11 @@ public enum ErrorType {
     CAN_NOT_ATTACK("Can not attack"),
     HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT("you do not have some cards of this deck"),
     INVALID_NAME_FOR_IMPORTED_DECK("Invalid name for deck"),
-    NO_REMAINING_CARD("cards sold out");
+    NO_REMAINING_CARD("cards sold out"),
+
+    CAN_NOT_MAKE_CARD("Cannot make card!"),
+    CARD_WITH_THIS_NAME_EXIST("Card with this name already exist!"),
+    ;
 
     private String message;
 
