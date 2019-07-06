@@ -126,19 +126,19 @@ public class StageLauncher extends Application {
             e.printStackTrace();
         }
 
-            Scene accountScene = makeScene(StateType.ACCOUNT_MENU, Cursor.AUTO);
-            Scene mainMenuScene = makeScene(StateType.MAIN_MENU, Cursor.AUTO);
-            Scene collectionScene = makeScene(StateType.COLLECTION, Cursor.AUTO);
-            Scene selectModeScene = makeScene(StateType.SELECT_MODE, Cursor.GREEN);
-            Scene selectGameScene = makeScene(StateType.SELECT_GAME, Cursor.GREEN);
-            Scene battleScene = makeScene(StateType.BATTLE, Cursor.AUTO);
-            Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
-            Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
-            Scene profileScene = makeScene(StateType.PROFILE, Cursor.AUTO);
-            Scene chatScene = makeScene(StateType.GLOBAL_CHAT, Cursor.GREEN);
+        Scene accountScene = makeScene(StateType.ACCOUNT_MENU, Cursor.AUTO);
+        Scene mainMenuScene = makeScene(StateType.MAIN_MENU, Cursor.AUTO);
+        Scene collectionScene = makeScene(StateType.COLLECTION, Cursor.AUTO);
+        Scene selectModeScene = makeScene(StateType.SELECT_MODE, Cursor.GREEN);
+        Scene selectGameScene = makeScene(StateType.SELECT_GAME, Cursor.GREEN);
+        Scene battleScene = makeScene(StateType.BATTLE, Cursor.AUTO);
+        Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
+        Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
+        Scene profileScene = makeScene(StateType.PROFILE, Cursor.AUTO);
+        Scene chatScene = makeScene(StateType.GLOBAL_CHAT, Cursor.GREEN);
 
-            AccountScene.getInstance().makeBackground();
-            primaryStage.setScene(accountScene);
+        AccountScene.getInstance().makeBackground();
+        primaryStage.setScene(accountScene);
 
         primaryStage.setOnCloseRequest(event -> {
             System.out.println("hi");
@@ -146,10 +146,11 @@ public class StageLauncher extends Application {
             primaryStage.close();
         });
 
-            primaryStage.show();
-        }
 
-        public static void main (String[]args){
-            launch(args);
-        }
+        primaryStage.show();
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
