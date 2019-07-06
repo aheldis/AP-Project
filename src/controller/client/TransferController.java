@@ -42,6 +42,7 @@ public class TransferController {
             case NEW_DECK:
             case MAIN_DECK:
             case CHAT:
+                transmitter.transmitterId = 0;
             case NEW_CARD_ID:
             case ENTER_COLLECTION:
             case EXIT_FROM_CHAT:
