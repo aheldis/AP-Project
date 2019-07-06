@@ -1,5 +1,7 @@
 package view.Graphic;
 
+import controller.Transmitter;
+import controller.client.TransferController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -16,6 +18,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static controller.RequestEnum.CHECK_NEW_MESSAGE;
+import static controller.RequestEnum.LOGOUT;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class StageLauncher extends Application {
@@ -136,7 +140,11 @@ public class StageLauncher extends Application {
             AccountScene.getInstance().makeBackground();
             primaryStage.setScene(accountScene);
 
-        primaryStage.setOnCloseRequest(event -> primaryStage.close());
+        primaryStage.setOnCloseRequest(event -> {
+            System.out.println("hi");
+             TransferController.main(LOGOUT, new Transmitter());
+            primaryStage.close();
+        });
 
             primaryStage.show();
         }

@@ -64,7 +64,7 @@ public class Server extends Application {
 
 
         try {
-            FileWriter fileWriter = new FileWriter("src/controller/config");
+            FileWriter fileWriter = new FileWriter("src/controller/configServer");
             fileWriter.write("ip:" + "127.0.0.1" + "\n" + "port:" + PORT);
             fileWriter.close();
         } catch (IOException e) {
