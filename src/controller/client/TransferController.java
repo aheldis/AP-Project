@@ -87,8 +87,9 @@ public class TransferController {
 
 
     static void fromServerTransmitter(Transmitter transmitter) {
+        System.out.println("!!! fromserver");
         switch (transmitter.requestEnum) {
-            case CHECK_NEW_MESSAGE:
+            case NEW_MESSAGE:
                 messages.add(transmitter);
                 break;
         }

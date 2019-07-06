@@ -188,10 +188,14 @@ public class RequestEnumController {
             case CHAT:
 //                groupTexts.add(group);
                 for (SocketClass person : chatPerson) {
-                    person.getTransmitter().profile = clientTransmitter.profile;
-                    person.getTransmitter().name = clientTransmitter.name;
-                    person.getTransmitter().message = clientTransmitter.message;
-                    person.getTransmitter().path = clientTransmitter.path;
+                    person.changeTransmitter();
+                    Transmitter personTransmitter = person.getTransmitter();
+                    personTransmitter.transmitterId = 0;
+                    personTransmitter.requestEnum = RequestEnum.NEW_MESSAGE;
+                    personTransmitter.profile = clientTransmitter.profile;
+                    personTransmitter.name = clientTransmitter.name;
+                    personTransmitter.message = clientTransmitter.message;
+                    personTransmitter.path = clientTransmitter.path;
                     transfer(person);
                 }
                 break;

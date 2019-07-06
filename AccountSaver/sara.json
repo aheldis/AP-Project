@@ -37,9 +37,10 @@
           "player": "@root.player"
         },
         "buffsOnThisPlayer": [],
-        "avatarPath": "pics/battle_categorized/profile/0.png"
+        "avatarPath": "pics/battle_categorized/profile/1.png"
       }
     },
-    "decks": []
+    "decks": [],
+    "currentlyPlaying": false
   }
 }

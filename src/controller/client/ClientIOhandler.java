@@ -25,10 +25,11 @@ public class ClientIOhandler extends Thread {
             try {
 
                 String line = in.nextLine();
-                YaGson mapper = new YaGson();
-                Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
                 System.out.println("ClientIOhandler.run");
                 System.out.println("from server: " + line);
+                YaGson mapper = new YaGson();
+                Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
+
                 //Transmitter transmitter = (Transmitter) objectInputStream.readObject();
 
                 new Thread(() -> {
