@@ -66,6 +66,7 @@ public class RequestEnumController {
                 transmitter.path = socketClass.getAccount().getAccountImagePath();
                 transmitter.name = socketClass.getAccount().getUserName();
                 transmitter.matchInfos = socketClass.getAccount().getMatchHistory();
+                transmitter.accounts = AllAccount.getInstance().showLeaderBoard();
                 transfer(socketClass);
                 break;
             case SHOP_BUY_AND_SELL:

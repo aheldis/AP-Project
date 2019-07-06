@@ -4,16 +4,23 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.account.Shop;
+import model.card.Card;
+import view.Graphic.GlobalChatScene;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -88,8 +95,9 @@ public class Server extends Application {
 
     private static VBox makeScene(Scene firstScene, Stage primaryStage) {
         Group root = new Group();
+        ScrollPane scrollPane = new ScrollPane(root);
         setBackground(root, "pics/other/chapter10_preview@2x.jpg", false, 0, 0);
-        Scene scene = new Scene(root, 600, 800);
+        Scene scene = new Scene(scrollPane, 600, 800);
         primaryStage.setScene(scene);
         VBox vBox = new VBox();
         root.getChildren().addAll(vBox);
@@ -111,9 +119,23 @@ public class Server extends Application {
 
     }
 
+    private static void addShopCard(VBox vBox, String name,String number) {
+        Group group = new Group();
+        vBox.getChildren().addAll(group);
+        addRectangle(group, 50, 0, 500, 50, 10, 10, Color.GRAY);
+        addText(group, 50, 10, name + ":" + number, Color.BLACK, 30);
+
+    }
+
     private static void makeShopScene(Scene firstScene, Stage primaryStage) {
         VBox vBox = makeScene(firstScene, primaryStage);
-
+        ScrollBar scrollBar = new ScrollBar();
+        scrollBar.relocate(300, 135);
+        HashMap<String,Integer> hm = Shop.getInstance().getRemainingCards();
+        Object[] keys = hm.keySet().toArray();
+        for (int i = 0;  i < hm.size() ;i++){
+                addShopCard(vBox,keys[i].toString(),hm.get(keys[i].toString()).toString());
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package controller;
 
+import model.account.Account;
 import model.account.Collection;
 import model.battle.Deck;
 import model.battle.Game;
@@ -37,6 +38,7 @@ public class Transmitter implements Serializable { //todo check
     public Deck deck;
     public ArrayList<Deck> decks;
     public ArrayList<MatchInfo> matchInfos;
+    public ArrayList<Account> accounts;
     public String authToken;
     public ErrorType errorType = null;
     public long daric;

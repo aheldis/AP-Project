@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.account.Account;
 import model.battle.MatchInfo;
 import view.enums.StateType;
 
@@ -28,6 +29,7 @@ public class ProfileScene {
     private Scene scene = StageLauncher.getScene(StateType.PROFILE);
     private Group root = (Group) Objects.requireNonNull(scene).getRoot();
     private Group matchHistoryGroup = new Group();
+    private Group leaderBoardGroup = new Group();
     private Transmitter transmitter = new Transmitter();
 
     private ProfileScene() {
@@ -44,6 +46,32 @@ public class ProfileScene {
         log(root, "", StateType.MAIN_MENU, 200);
     }
 
+
+    private void addTextToScene(VBox vBox,int x,int y,String input){
+        Group matchHistoryButtonGroup = new Group();
+        Text matchHistoryButton1 = addText(matchHistoryButtonGroup, x,y, input, Color.WHITE, 25);
+        Text matchHistoryButton2 = addText(new Group(), x,y, input, Color.WHITE, 25);
+        setOnMouseEntered(matchHistoryButton1, scene, true);
+        setOnMouseEntered(matchHistoryButton2, scene, true);
+        matchHistoryButton1.setOnMouseClicked(event -> {
+            if(input.equals("Match History"))
+                showMatchHistory();
+            if(input.equals("Leader Board"))
+               showLeaderBoard();
+            matchHistoryButtonGroup.getChildren().remove(matchHistoryButton1);
+            matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton2);
+        });
+        matchHistoryButton2.setOnMouseClicked(event -> {
+            if(input.equals("Match History"))
+                hideMatchHistory();
+            if(input.equals("Leader Board"))
+                hideLeaderBoard();
+            matchHistoryButtonGroup.getChildren().remove(matchHistoryButton2);
+            matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton1);
+        });
+        vBox.getChildren().add(matchHistoryButtonGroup);
+    }
+
     private void addSidebar() {
         addRectangle(root, 0, 0, 300, (int) StageLauncher.getHeight(), 0, 0, Color.gray(0, 0.7));
 
@@ -54,23 +82,25 @@ public class ProfileScene {
         addImage(vBox, transmitter.path, 50, 50, 200, 200);
         addTextWithShadow(vBox, 50, 280, transmitter.name, "Luminari", 30);
 
-        Group matchHistoryButtonGroup = new Group();
-        Text matchHistoryButton1 = addText(matchHistoryButtonGroup, 53, 350, "Match History", Color.WHITE, 25);
-        Text matchHistoryButton2 = addText(new Group(), 53, 350, "Match History", Color.WHITE, 25);
-        setOnMouseEntered(matchHistoryButton1, scene, true);
-        setOnMouseEntered(matchHistoryButton2, scene, true);
-        matchHistoryButton1.setOnMouseClicked(event -> {
-            showMatchHistory();
-            matchHistoryButtonGroup.getChildren().remove(matchHistoryButton1);
-            matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton2);
-        });
-        matchHistoryButton2.setOnMouseClicked(event -> {
-            hideMatchHistory();
-            matchHistoryButtonGroup.getChildren().remove(matchHistoryButton2);
-            matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton1);
-        });
+        addTextToScene(vBox,53,350,"Match History");
+        addTextToScene(vBox,53,400,"Leader Board");
+//        Group matchHistoryButtonGroup = new Group();
+//        Text matchHistoryButton1 = addText(matchHistoryButtonGroup, 53, 350, "Match History", Color.WHITE, 25);
+//        Text matchHistoryButton2 = addText(new Group(), 53, 350, "Match History", Color.WHITE, 25);
+//        setOnMouseEntered(matchHistoryButton1, scene, true);
+//        setOnMouseEntered(matchHistoryButton2, scene, true);
+//        matchHistoryButton1.setOnMouseClicked(event -> {
+//            showMatchHistory();
+//            matchHistoryButtonGroup.getChildren().remove(matchHistoryButton1);
+//            matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton2);
+//        });
+//        matchHistoryButton2.setOnMouseClicked(event -> {
+//            hideMatchHistory();
+//            matchHistoryButtonGroup.getChildren().remove(matchHistoryButton2);
+//            matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton1);
+//        });
 
-        vBox.getChildren().add(matchHistoryButtonGroup);
+//        vBox.getChildren().add(matchHistoryButtonGroup);
 
         vBox.getChildren().forEach(node -> VBox.setMargin(node, new Insets(5, 5, 10, 5)));
         vBox.relocate(45, 50);
@@ -120,6 +150,56 @@ public class ProfileScene {
         gridPane.relocate(300, 180);
 
         matchHistoryGroup.relocate(350, 60);
+    }
+
+    private void showLeaderBoard(){
+        leaderBoardGroup = new Group();
+        root.getChildren().add(leaderBoardGroup);
+
+        NewCardGraphic.addRectangleStroke(leaderBoardGroup, 925, (int) StageLauncher.getHeight() - 160, false,
+                Color.rgb(51, 51, 255, 0.9));
+
+        Text header = new Text("LEADER BOARD");
+        header.setFill(Color.rgb(153, 0, 51));
+        header.setStroke(Color.WHITE);
+        header.setStrokeWidth(0.25);
+        header.setFont(Font.font("Chalkduster", 50));
+        header.relocate(490, 100);
+        leaderBoardGroup.getChildren().add(header);
+
+        GridPane gridPane = new GridPane();
+        addNodeToGridPane(gridPane, 0, 0, "Number", true);
+        addNodeToGridPane(gridPane, 0, 1, "Username", true);
+        addNodeToGridPane(gridPane, 0, 2, "Wins", true);
+
+        ArrayList<Account> accounts = transmitter.accounts;
+
+        int index = 1;
+        for (Account account : accounts) {
+
+            addNodeToGridPane(gridPane, index, 0,index+"", false);
+            addNodeToGridPane(gridPane, index, 1,account.getUserName() , false);
+            addNodeToGridPane(gridPane, index, 2, account.getWins()+"", false);
+            index++;
+            if(index > 9)
+                break;
+        }
+
+        leaderBoardGroup.getChildren().add(gridPane);
+
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.relocate(300, 180);
+
+        leaderBoardGroup.relocate(350, 60);
+
+
+
+
+    }
+
+    private void hideLeaderBoard(){
+        root.getChildren().remove(leaderBoardGroup);
+
     }
 
     private void addNodeToGridPane(GridPane gridPane, int row, int column, String textString, boolean headerRow) {
