@@ -5,9 +5,9 @@ import model.account.Account;
 import model.battle.Game;
 import model.battle.Match;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class SocketClass {
     private Socket socket;
@@ -18,6 +18,8 @@ public class SocketClass {
     private Game game;
     private Match match;
     private ClientHandlerServer clientHandlerServer;
+    private PrintWriter out;
+    private Scanner in;
 
     public ClientHandlerServer getClientHandlerServer() {
         return clientHandlerServer;
@@ -32,6 +34,8 @@ public class SocketClass {
         try {
             inputStream = new ObjectInputStream(socket.getInputStream());
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            in = new Scanner(socket.getInputStream());
+            out = new PrintWriter(socket.getOutputStream(), true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,5 +77,13 @@ public class SocketClass {
     public Match setMatch(Match match) {
         this.match = match;
         return match;
+    }
+
+    public PrintWriter getOut() {
+        return out;
+    }
+
+    public Scanner getIn() {
+        return in;
     }
 }

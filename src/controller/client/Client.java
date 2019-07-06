@@ -4,10 +4,7 @@ import controller.Transmitter;
 import javafx.application.Platform;
 import view.Graphic.StageLauncher;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -37,6 +34,8 @@ public class Client {
             clientIOhandler = new ClientIOhandler();
             clientIOhandler.setObjectOutputStream(new ObjectOutputStream(socket.getOutputStream()));
             clientIOhandler.setObjectInputStream(new ObjectInputStream(socket.getInputStream()));
+            clientIOhandler.setIn(new Scanner(socket.getInputStream()));
+            clientIOhandler.setOut(new PrintWriter(socket.getOutputStream(), true));
 
         } catch (IOException e) {
             e.printStackTrace();

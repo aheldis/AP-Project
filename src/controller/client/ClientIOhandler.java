@@ -1,23 +1,35 @@
 package controller.client;
 
+import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import controller.Transmitter;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class ClientIOhandler extends Thread {
+    final private Object lock = new Object();
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
+    private Scanner in;
+    private PrintWriter out;
     private HashMap<Integer, Transmitter> transmitters = new HashMap<>();
     //private ArrayList<Transmitter> transmitters = new ArrayList<>();
     private int countOfId = 1;
-    final private Object lock = new Object();
 
     public void run() {
-        while (Client.alive) {
+        while (Client.alive && in.hasNextLine()) {
             try {
-                Transmitter transmitter = (Transmitter) objectInputStream.readObject();
+
+                String line = in.nextLine();
+                YaGson mapper = new YaGson();
+                Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
+                System.out.println("ClientIOhandler.run");
+                System.out.println("from server: " + line);
+                //Transmitter transmitter = (Transmitter) objectInputStream.readObject();
 
                 new Thread(new Runnable() {
                     @Override
@@ -39,13 +51,30 @@ public class ClientIOhandler extends Thread {
         }
     }
 
-
     Transmitter transfer(boolean waitForAnswer, Transmitter clientTransmitter) {
         clientTransmitter.transmitterId = countOfId++;
         Transmitter fromServerTransmitter = null;
         try {
+            try {
+                YaGson altMapper = new YaGsonBuilder().create();
+                altMapper.toJson(clientTransmitter, out);
+                out.flush();
+                /*
+                YaGson altMapper = new YaGsonBuilder().create();
+                String json = altMapper.toJson(clientTransmitter);
+                out.print(json);
+                out.flush();
+                */
+                System.out.println("ClientIOhandler.transfer");
+                //System.out.println("to server " + json);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            /*
             objectOutputStream.writeObject(clientTransmitter);
             objectOutputStream.flush();
+            */
             if (waitForAnswer) {
                 fromServerTransmitter = getTransmitterFromServer(clientTransmitter.transmitterId);
             }
@@ -69,6 +98,14 @@ public class ClientIOhandler extends Thread {
         Transmitter transmitter = transmitters.get(transmitterId);
         transmitters.remove(transmitterId);
         return transmitter;
+    }
+
+    public void setIn(Scanner in) {
+        this.in = in;
+    }
+
+    public void setOut(PrintWriter out) {
+        this.out = out;
     }
 
     public ObjectInputStream getObjectInputStream() {

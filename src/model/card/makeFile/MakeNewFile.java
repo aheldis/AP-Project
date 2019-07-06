@@ -197,7 +197,6 @@ public class MakeNewFile {
 
     public static void toJson(Object object, String path) {
         try {
-            //todo esm jsona classa kharabe
             YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
             FileWriter fileWriter = new FileWriter(path);
             altMapper.toJson(object, fileWriter);

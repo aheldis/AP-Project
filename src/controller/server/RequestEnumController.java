@@ -1,6 +1,7 @@
 package controller.server;
 
 import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import controller.RequestEnum;
 import controller.Transmitter;
 import javafx.scene.Group;
@@ -230,9 +231,24 @@ public class RequestEnumController {
 
     private static void transfer(SocketClass socketClass) {
         try {
+
+            YaGson altMapper = new YaGsonBuilder().create();
+            altMapper.toJson(socketClass.getTransmitter(), socketClass.getOut());
+            socketClass.getOut().flush();
+            /*
+            YaGson altMapper = new YaGsonBuilder().create();
+            String json = altMapper.toJson(socketClass.getTransmitter());
+            socketClass.getOut().print(json);
+            socketClass.getOut().flush();
+            */
+            System.out.println("RequestEnumController.transfer");
+            //System.out.println("to client " + json);
+
+            /*
             socketClass.getOutputStream().writeObject(socketClass.getTransmitter());
             socketClass.getOutputStream().flush();
-        } catch (IOException e) {
+            */
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
