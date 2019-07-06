@@ -14,6 +14,14 @@ public class AllAccount {
     private ArrayList<Account> accounts = new ArrayList<>();
 
 
+    public  boolean isOnline(Account myAccount){
+        for(Account account : accounts){
+            if(account.equals(myAccount) && myAccount.getAuthToken()!=null)
+                return true;
+        }
+        return false;
+    }
+
     private AllAccount() {
         try {
             FileReader fileReader = new FileReader("AccountSaver/AccountUser.txt");

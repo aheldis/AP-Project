@@ -26,6 +26,10 @@ public class Account implements Comparable<Account>, Cloneable, Serializable {
     private String authToken;
     private boolean currentlyPlaying = false;
 
+    public String getAuthToken() {
+        return authToken;
+    }
+
     public void setCurrentlyPlaying(boolean currentlyPlaying) {
         this.currentlyPlaying = currentlyPlaying;
     }

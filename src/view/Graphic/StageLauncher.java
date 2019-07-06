@@ -1,5 +1,7 @@
 package view.Graphic;
 
+import controller.Transmitter;
+import controller.client.TransferController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -16,6 +18,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static controller.RequestEnum.CHECK_NEW_MESSAGE;
+import static controller.RequestEnum.LOGOUT;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class StageLauncher extends Application {
@@ -122,26 +126,31 @@ public class StageLauncher extends Application {
             e.printStackTrace();
         }
 
-            Scene accountScene = makeScene(StateType.ACCOUNT_MENU, Cursor.AUTO);
-            Scene mainMenuScene = makeScene(StateType.MAIN_MENU, Cursor.AUTO);
-            Scene collectionScene = makeScene(StateType.COLLECTION, Cursor.AUTO);
-            Scene selectModeScene = makeScene(StateType.SELECT_MODE, Cursor.GREEN);
-            Scene selectGameScene = makeScene(StateType.SELECT_GAME, Cursor.GREEN);
-            Scene battleScene = makeScene(StateType.BATTLE, Cursor.AUTO);
-            Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
-            Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
-            Scene profileScene = makeScene(StateType.PROFILE, Cursor.AUTO);
-            Scene chatScene = makeScene(StateType.GLOBAL_CHAT, Cursor.GREEN);
+        Scene accountScene = makeScene(StateType.ACCOUNT_MENU, Cursor.AUTO);
+        Scene mainMenuScene = makeScene(StateType.MAIN_MENU, Cursor.AUTO);
+        Scene collectionScene = makeScene(StateType.COLLECTION, Cursor.AUTO);
+        Scene selectModeScene = makeScene(StateType.SELECT_MODE, Cursor.GREEN);
+        Scene selectGameScene = makeScene(StateType.SELECT_GAME, Cursor.GREEN);
+        Scene battleScene = makeScene(StateType.BATTLE, Cursor.AUTO);
+        Scene shopScene = makeScene(StateType.SHOP, Cursor.AUTO);
+        Scene graveyardScene = makeScene(StateType.GRAVE_YARD, Cursor.RED);
+        Scene profileScene = makeScene(StateType.PROFILE, Cursor.AUTO);
+        Scene chatScene = makeScene(StateType.GLOBAL_CHAT, Cursor.GREEN);
 
-            AccountScene.getInstance().makeBackground();
-            primaryStage.setScene(accountScene);
+        AccountScene.getInstance().makeBackground();
+        primaryStage.setScene(accountScene);
 
-        primaryStage.setOnCloseRequest(event -> primaryStage.close());
+        primaryStage.setOnCloseRequest(event -> {
+            System.out.println("hi");
+             TransferController.main(LOGOUT, new Transmitter());
+            primaryStage.close();
+        });
 
-            primaryStage.show();
-        }
 
-        public static void main (String[]args){
-            launch(args);
-        }
+        primaryStage.show();
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}

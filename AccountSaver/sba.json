@@ -1,8 +1,8 @@
 {
   "@type": "model.account.Account",
   "@val": {
-    "userName": "fereshte",
-    "password": "123",
+    "userName": "sba",
+    "password": "h",
     "daric": 150000,
     "wins": 0,
     "matchHistory": [],
@@ -37,11 +37,10 @@
           "player": "@root.player"
         },
         "buffsOnThisPlayer": [],
-        "avatarPath": "pics/battle_categorized/profile/13.png"
+        "avatarPath": "pics/battle_categorized/profile/16.png"
       }
     },
     "decks": [],
-    "authToken": "fereshte_GRTT",
     "currentlyPlaying": false
   }
 }

@@ -615,9 +615,7 @@ class CollectionScene {
                 break;
             }
             vBox = getVBox(NUMBER_IN_EACH_ROW, SPACING, vBoxes, vBox, i);
-            System.out.println(cards.get(i).getName());
-            System.out.println(cards.get(i).getCardId());
-            /*if (deck.
+            if (deck.
                     cardHaveBeenExistInThisDeck(
                             cards.
                                     get(i).
@@ -627,7 +625,7 @@ class CollectionScene {
                 deckLittleCardMaker(vBox, cards.get(i), group, collection, deck, target);
                 DragAndDrop dragAndDrop = new DragAndDrop();
                 dragAndDrop.dragAndDropForCollection(group, target, deck, cards.get(i), vBox, root, 150, 35, vBoxes);
-            }*/
+            }
         }
         return vBoxes;
     }

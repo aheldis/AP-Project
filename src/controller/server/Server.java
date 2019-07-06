@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.account.Account;
+import model.account.AllAccount;
 import model.account.Shop;
 import model.card.Card;
 import view.Graphic.GlobalChatScene;
@@ -62,7 +64,7 @@ public class Server extends Application {
 
 
         try {
-            FileWriter fileWriter = new FileWriter("src/controller/config");
+            FileWriter fileWriter = new FileWriter("src/controller/configServer");
             fileWriter.write("ip:" + "127.0.0.1" + "\n" + "port:" + PORT);
             fileWriter.close();
         } catch (IOException e) {
@@ -75,12 +77,14 @@ public class Server extends Application {
 
     }
 
-    private static void addClient(VBox vBox, SocketClass socketClass) {
+    private static void addClient(VBox vBox, Account account) {
         Group group = new Group();
         vBox.getChildren().addAll(group);
-        addRectangle(group, 50, 0, 500, 50, 10, 10, Color.GRAY);
-        if (socketClass.getAccount() != null)
-            addText(group, 50, 10, socketClass.getAccount().getUserName(), Color.BLACK, 30);
+        if (account != null) {
+            addRectangle(group, 50, 0, 500, 50, 10, 10, Color.GRAY);
+            addText(group, 50, 10, account.getUserName()
+                    + "   Online:"+ AllAccount.getInstance().isOnline(account), Color.BLACK, 30);
+        }
 
     }
 
@@ -112,8 +116,8 @@ public class Server extends Application {
 
     private static void makeClientsScene(Scene firstScene, Stage primaryStage) {
         VBox vBox = makeScene(firstScene, primaryStage);
-        for (int i = 0; i < ServerThread.socketClasses.size(); i++) {
-            addClient(vBox, ServerThread.socketClasses.get(i));
+        for (int i = 0; i < AllAccount.getInstance().getAccounts().size(); i++) {
+            addClient(vBox, AllAccount.getInstance().getAccounts().get(i));
         }
 
 

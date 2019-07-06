@@ -19,7 +19,7 @@ public class Client {
             String host;
             int port;
             try {
-                Scanner fileScanner = new Scanner(new File("src/controller/config"));
+                Scanner fileScanner = new Scanner(new File("src/controller/configServer"));
                 host = fileScanner.nextLine().split(":")[1];
                 port = Integer.parseInt(fileScanner.nextLine().split((":"))[1]);
                 fileScanner.close();
