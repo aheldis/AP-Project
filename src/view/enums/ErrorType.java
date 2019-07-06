@@ -45,7 +45,8 @@ public enum ErrorType {
     CAN_NOT_COMBO_ATTACK("Can con combo attack"),
     CAN_NOT_ATTACK("Can not attack"),
     HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT("you do not have some cards of this deck"),
-    INVALID_NAME_FOR_IMPORTED_DECK("Invalid name for deck");
+    INVALID_NAME_FOR_IMPORTED_DECK("Invalid name for deck"),
+    NO_REMAINING_CARD("cards sold out");
 
     private String message;
 

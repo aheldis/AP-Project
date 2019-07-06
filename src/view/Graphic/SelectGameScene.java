@@ -228,8 +228,6 @@ class SelectGameScene {
         transmitter = TransferController.main(RequestEnum.START_STORY_GAME, transmitter);
         if (transmitter.errorType == null)
             startGame(transmitter.game, transmitter.match);
-        else
-            transmitter.errorType.printMessage();
     }
 
     private static void selectMode() {
@@ -277,8 +275,6 @@ class SelectGameScene {
         transmitter = TransferController.main(RequestEnum.START_CUSTOM_GAME, transmitter);
         if (transmitter.errorType == null)
             startGame(game, match);
-        else
-            transmitter.errorType.printMessage();
     }
 
     private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene) {

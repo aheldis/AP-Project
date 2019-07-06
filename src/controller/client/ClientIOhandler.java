@@ -17,7 +17,7 @@ public class ClientIOhandler extends Thread {
     private OutputStreamWriter outputStreamWriter;
     private InputStreamReader inputStreamReader;
     private HashMap<Integer, Transmitter> transmitters = new HashMap<>();
-    //private ArrayList<Transmitter> transmitters = new ArrayList<>();
+
     private int countOfId = 1;
 
     public void run() {
@@ -29,7 +29,8 @@ public class ClientIOhandler extends Thread {
                 System.out.println("from server: " + line);
                 YaGson mapper = new YaGson();
                 Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
-
+                if(transmitter.errorType != null)
+                    transmitter.errorType.printMessage();
                 //Transmitter transmitter = (Transmitter) objectInputStream.readObject();
 
                 new Thread(() -> {
@@ -58,14 +59,6 @@ public class ClientIOhandler extends Thread {
                 String json = altMapper.toJson(clientTransmitter);
                 out.println(json);
                 out.flush();
-                /*
-                YaGson altMapper = new YaGsonBuilder().create();
-                String json = altMapper.toJson(clientTransmitter);
-                out.print(json);
-                out.flush();
-                */
-                System.out.println("ClientIOhandler.transfer");
-                //System.out.println("to server " + json);
             } catch (Exception e) {
                 e.printStackTrace();
             }

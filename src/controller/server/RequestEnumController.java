@@ -69,7 +69,7 @@ public class RequestEnumController {
             case SHOP_BUY_AND_SELL:
                 break;
             case SHOP_BUY:
-                Shop.getInstance().buy(socketClass.getAccount(), clientTransmitter.name);
+                transmitter.errorType = Shop.getInstance().buy(socketClass.getAccount(), clientTransmitter.name);
                 transmitter.daric = socketClass.getAccount().getDaric();
                 transfer(socketClass);
                 break;

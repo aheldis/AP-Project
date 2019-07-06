@@ -843,9 +843,7 @@ class CollectionScene {
                     transmitter = new Transmitter();
                     transmitter.name = deckName.getText();
                     transmitter = TransferController.main(IMPORT_DECK, transmitter);
-                    if (transmitter.errorType != null) {
-                        transmitter.errorType.printMessage();
-                    } else {
+                    if (transmitter.errorType == null) {
                         Deck deck = transmitter.deck;
                         if (collection.passTheDeckIfHaveBeenExist(deck.getName()) == null) {
                             collection.getDecks().add(deck);
