@@ -1,5 +1,8 @@
 package view.Graphic;
 
+import controller.RequestEnum;
+import controller.Transmitter;
+import controller.client.TransferController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -13,7 +16,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.account.FilesType;
-import model.card.makeFile.MakeNewFile;
 import view.enums.StateType;
 
 import java.io.BufferedReader;
@@ -29,7 +31,8 @@ public class NewCardGraphic {
     private static ArrayList<ArrayList<String>> arrayLists = new ArrayList<>();
     private static int numberOfBuffs;
     private static boolean firstTimeIndEquals3 = true;
-    private static ArrayList<HashMap<String, TextField>> hashMaps = new ArrayList<>(); //Be tartib: 0: khod card - 1: change - 2: target - 3 be bad buffHa
+    private static ArrayList<HashMap<String, TextField>> hashMapsWithTextField = new ArrayList<>(); //Be tartib: 0: khod card - 1: change - 2: target - 3 be bad buffHa
+    private static ArrayList<HashMap<String, String>> hashMapsWithStrings = new ArrayList<>(); //Be tartib: 0: khod card - 1: change - 2: target - 3 be bad buffHa
     private static StackPane enter;
     private static Scene scene;
     private static Group group;
@@ -43,8 +46,8 @@ public class NewCardGraphic {
     }
 
     private static BorderPane makeOneRowOfForm(String input, int x, int y, int numberOfHashMap) {
-        if (hashMaps.size() == numberOfHashMap) {
-            hashMaps.add(new HashMap<>());
+        if (hashMapsWithTextField.size() == numberOfHashMap) {
+            hashMapsWithTextField.add(new HashMap<>());
         }
 
         Text fieldName = addText(new Group(), 20, 0, input, Color.rgb(250, 250, 250, 0.8), 20);
@@ -69,7 +72,7 @@ public class NewCardGraphic {
         borderPane.setLeft(fieldName);
         BorderPane.setAlignment(textField, Pos.CENTER);
 
-        hashMaps.get(numberOfHashMap).put(input, textField);
+        hashMapsWithTextField.get(numberOfHashMap).put(input, textField);
         group.getChildren().add(borderPane);
         return borderPane;
     }
@@ -146,15 +149,31 @@ public class NewCardGraphic {
         });
     }
 
+    private static void fillHashMapsWithString() {
+        for (HashMap<String, TextField> hashMap : hashMapsWithTextField) {
+            HashMap<String, String> newHashMap = new HashMap<>();
+            for (String name : hashMap.keySet()) {
+                newHashMap.put(name, hashMap.get(name).getText());
+            }
+            hashMapsWithStrings.add(newHashMap);
+        }
+    }
+
     private static void done(Group images, String type) {
         images.getChildren().clear();
         group.getChildren().remove(enter);
-        MakeNewFile.setSpriteNumber(spriteNumber, spriteNumberCount);
-        MakeNewFile.setHashMaps(hashMaps);
-        MakeNewFile.makeNewCard(FilesType.getEnum(type));
-        if (error.getText() != null && !error.getText().equals("")) {
-            error = addText(group, 120, 130, error.getText(), Color.RED, 30);
-        } else {
+        fillHashMapsWithString();
+        Transmitter transmitter = new Transmitter();
+        transmitter.spriteNumber = spriteNumber;
+        transmitter.spriteNumberCount = spriteNumberCount;
+        transmitter.hashMapsWithStrings = hashMapsWithStrings;
+        transmitter.type = type;
+        transmitter = TransferController.main(RequestEnum.MAKE_NEW_CARD, transmitter);
+
+//        if (error.getText() != null && !error.getText().equals("")) {
+//            error = addText(group, 120, 130, error.getText(), Color.RED, 30);
+//        } else {
+        if (transmitter.errorType == null) {
             addText(group, 120, 130, "Card successfully created.", Color.WHITE, 30);
         }
     }
@@ -174,7 +193,7 @@ public class NewCardGraphic {
             if (ind == 3) {
                 if (firstTimeIndEquals3) {
                     try {
-                        numberOfBuffs = Integer.parseInt(hashMaps.get(1).get("number of buffs").getText());
+                        numberOfBuffs = Integer.parseInt(hashMapsWithTextField.get(1).get("number of buffs").getText());
                     } catch (Exception e) {
                         numberOfBuffs = 0;
                     }
@@ -196,18 +215,21 @@ public class NewCardGraphic {
     }
 
     private static void setVBox(VBox vBox, String type) {
+        Transmitter transmitter = new Transmitter();
+        transmitter.type = type;
+        transmitter = TransferController.main(RequestEnum.NEW_CARD_ARRAYLISTS, transmitter);
         arrayLists.clear();
-        arrayLists.add(MakeNewFile.getFieldNames(FilesType.getEnum(type)));
-        arrayLists.add(MakeNewFile.getChangeFieldNames());
-        arrayLists.add(MakeNewFile.getTargetFieldNames());
-        arrayLists.add(MakeNewFile.getBuffFieldNames());
+        arrayLists.add(transmitter.fieldNames);
+        arrayLists.add(transmitter.changeFieldNames);
+        arrayLists.add(transmitter.targetFieldNames);
+        arrayLists.add(transmitter.buffFieldNames);
         changeVBox(vBox, arrayLists.get(0), 1, type);
     }
 
     static void makeCardForm() {
         firstTimeIndEquals3 = true;
         arrayLists.clear();
-        hashMaps.clear();
+        hashMapsWithTextField.clear();
         numberOfHashMap = 0;
         Scene scene = StageLauncher.getScene(StateType.ACCOUNT_MENU);
         NewCardGraphic.scene = scene;

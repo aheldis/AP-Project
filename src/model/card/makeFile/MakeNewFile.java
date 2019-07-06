@@ -2,17 +2,16 @@ package model.card.makeFile;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.RequestEnum;
-import javafx.scene.control.TextField;
 import model.account.FilesType;
 import model.account.Shop;
 import model.card.Buff;
 import model.card.Card;
-import view.Graphic.NewCardGraphic;
 import view.NewCardMessages;
 import view.Request;
+import view.enums.ErrorType;
 import view.enums.StateType;
 
 import java.io.*;
@@ -24,30 +23,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MakeNewFile {
-    private static NewCardMessages newCardMessages = NewCardMessages.getInstance();
-    private static Request request = new Request(StateType.ACCOUNT_MENU);
-    private static ArrayList<String> fieldNames = new ArrayList<>();
-    private static ArrayList<String> changeFieldNames = new ArrayList<>();
-    private static ArrayList<String> targetFieldNames = new ArrayList<>();
-    private static ArrayList<String> fieldAnnotatedTyped = new ArrayList<>();
-    private static ArrayList<String> buffFieldNames = new ArrayList<>();
-
-    private static ArrayList<HashMap<String, TextField>> hashMaps = new ArrayList<>(); //Be tartib: 0: khod card - 1: change - 2: target - 3 be bad buffHa
-    private static int numberOfBuffHashMap = 3;
-    private static int spriteNumber = 0;
-    private static int spriteNumberCount = 0;
+    private NewCardMessages newCardMessages = NewCardMessages.getInstance();
+    private ArrayList<String> fieldNames = new ArrayList<>();
+    private ArrayList<String> changeFieldNames = new ArrayList<>();
+    private ArrayList<String> targetFieldNames = new ArrayList<>();
+    private ArrayList<String> fieldAnnotatedTyped = new ArrayList<>();
+    private ArrayList<String> buffFieldNames = new ArrayList<>();
+    private ArrayList<HashMap<String, String>> hashMaps = new ArrayList<>(); //Be tartib: 0: khod card - 1: change - 2: target - 3 be bad buffHa
+    private int numberOfBuffHashMap = 3;
+    private int spriteNumber = 0;
+    private int spriteNumberCount = 0;
 
 
-    public static void setSpriteNumber(int spriteNumber, int spriteNumberCount) {
-        MakeNewFile.spriteNumber = spriteNumber;
-        MakeNewFile.spriteNumberCount = spriteNumberCount;
+    public void setSpriteNumber(int spriteNumber, int spriteNumberCount) {
+        this.spriteNumber = spriteNumber;
+        this.spriteNumberCount = spriteNumberCount;
     }
 
-    public static void setHashMaps(ArrayList<HashMap<String, TextField>> hashMaps) {
-        MakeNewFile.hashMaps = hashMaps;
-    }
-
-    private static void addPicture(FilesType typeOfFile, String name, Object object) {
+    private void addPicture(FilesType typeOfFile, String name, Object object) {
         String pathOfFolder = "pics/" + typeOfFile.getName() + "/";
         if (typeOfFile != FilesType.SPELL)
             copyFile(pathOfFolder + "defaults/" + spriteNumber + ".gif",
@@ -63,18 +56,18 @@ public class MakeNewFile {
 
     }
 
-    public static void makeNewCard(FilesType typeOfFile) {
+    public ErrorType makeNewCard(FilesType typeOfFile) {
         try {
-            String name = hashMaps.get(0).get("name").getText();
+            String name = hashMaps.get(0).get("name");
             if (name.equals("")) {
-                NewCardGraphic.setError("Cannot make card!");
-                return;
+                //NewCardGraphic.setError("Cannot make card!");
+                return ErrorType.CAN_NOT_MAKE_CARD;
             }
             String path = Shop.getPathOfFiles() + typeOfFile.getName() + "/" + name + ".json";
             File file = new File(path);
             if (file.exists()) {
-                NewCardGraphic.setError("Card with this name already exist!");
-                return;
+                //NewCardGraphic.setError("Card with this name already exist!");
+                return ErrorType.CARD_WITH_THIS_NAME_EXIST;
             }
 
             Object object = fillObject("model.card.makeFile.CardCopy", typeOfFile, 0);
@@ -123,12 +116,13 @@ public class MakeNewFile {
                 TransferController.main(RequestEnum.NEW_CARD_ID, transmitter);
             }).start();
         } catch (Exception e) {
-            NewCardGraphic.setError("Cannot make card!");
-
+            //NewCardGraphic.setError("Cannot make card!");
+            return ErrorType.CAN_NOT_MAKE_CARD;
         }
+        return null;
     }
 
-    private static Object fillObject(String className, FilesType typeOfFile, int hashMapNumber) {
+    private Object fillObject(String className, FilesType typeOfFile, int hashMapNumber) {
         try {
             Field[] fields = Class.forName(className).getFields();
             Class<?> fileClass = Class.forName(className);
@@ -144,20 +138,20 @@ public class MakeNewFile {
                     AnnotatedType annotatedType = field.getAnnotatedType();
                     switch (annotatedType.getType().getTypeName()) {
                         case "int":
-                            field.set(object, Integer.parseInt(hashMaps.get(hashMapNumber).get(fieldName).getText()));
+                            field.set(object, Integer.parseInt(hashMaps.get(hashMapNumber).get(fieldName)));
                             break;
                         case "boolean":
-                            field.set(object, Boolean.parseBoolean(hashMaps.get(hashMapNumber).get(fieldName).getText()));
+                            field.set(object, Boolean.parseBoolean(hashMaps.get(hashMapNumber).get(fieldName)));
                             break;
                         case "java.lang.String":
-                            field.set(object, hashMaps.get(hashMapNumber).get(fieldName).getText());
+                            field.set(object, hashMaps.get(hashMapNumber).get(fieldName));
                             break;
                         case "java.util.HashMap<java.lang.String, java.util.ArrayList<java.lang.Integer>>":
                             HashMap<String, ArrayList<Integer>> hashMap = new HashMap<>();
-                            int number = Integer.parseInt(hashMaps.get(hashMapNumber).get("number of buffs").getText());
+                            int number = Integer.parseInt(hashMaps.get(hashMapNumber).get("number of buffs"));
                             for (int i = 0; i < number; i++) {
 
-                                String buffName = hashMaps.get(numberOfBuffHashMap).get("name").getText();
+                                String buffName = hashMaps.get(numberOfBuffHashMap).get("name");
                                 String pathOfBuff = Buff.getPathOfFiles() + "/" + buffName + ".json";
 
                                 boolean makeNewBuff = true;
@@ -166,8 +160,8 @@ public class MakeNewFile {
 //                                System.out.println("this buff already exist so you can't change properties");
                                 }
 
-                                int count = Integer.parseInt(hashMaps.get(numberOfBuffHashMap).get("how many of this buff").getText());
-                                int num = Integer.parseInt(hashMaps.get(numberOfBuffHashMap).get("for how many turn").getText());
+                                int count = Integer.parseInt(hashMaps.get(numberOfBuffHashMap).get("how many of this buff"));
+                                int num = Integer.parseInt(hashMaps.get(numberOfBuffHashMap).get("for how many turn"));
                                 System.out.println("count = " + count);
                                 System.out.println("num = " + num);
                                 ArrayList<Integer> array = new ArrayList<>();
@@ -200,7 +194,7 @@ public class MakeNewFile {
         return null;
     }
 
-    private static void toJson(Object object, String path) {
+    private void toJson(Object object, String path) {
         try {
             YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
             FileWriter fileWriter = new FileWriter(path);
@@ -211,7 +205,7 @@ public class MakeNewFile {
         }
     }
 
-    private static void changeInFile(String path, String fieldName, String content) {
+    private void changeInFile(String path, String fieldName, String content) {
         ArrayList<String> lines = new ArrayList<>();
         try {
             FileReader fileReader = new FileReader(path);
@@ -246,11 +240,7 @@ public class MakeNewFile {
         }
     }
 
-    public static ArrayList<String> getBuffFieldNames() {
-        return buffFieldNames;
-    }
-
-    public static ArrayList<String> getFieldNames(FilesType typeOfFile) {
+    public ArrayList<String> getFieldNames(FilesType typeOfFile) {
         fieldNames.clear();
         changeFieldNames.clear();
         targetFieldNames.clear();
@@ -259,7 +249,7 @@ public class MakeNewFile {
         return fieldNames;
     }
 
-    private static void fillFieldNames(FilesType typeOfFile) {
+    private void fillFieldNames(FilesType typeOfFile) {
         fieldNames.clear();
         fieldAnnotatedTyped.clear();
 
@@ -275,7 +265,7 @@ public class MakeNewFile {
         }
     }
 
-    private static void fillFieldNamesOfObject(ArrayList<String> fieldNames, String className, FilesType typeOfFile) {
+    private void fillFieldNamesOfObject(ArrayList<String> fieldNames, String className, FilesType typeOfFile) {
         try {
             Field[] fields = Class.forName(className).getFields();
 
@@ -300,7 +290,7 @@ public class MakeNewFile {
         }
     }
 
-    private static boolean ignoreField(String fieldName, FilesType typeOfFile) {
+    private boolean ignoreField(String fieldName, FilesType typeOfFile) {
         if (fieldName.equals("coolDown") && typeOfFile != FilesType.HERO)
             return true;
         if (fieldName.equals("ActivationTimeOfSpecialPower") && typeOfFile != FilesType.MINION)
@@ -308,19 +298,7 @@ public class MakeNewFile {
         return !fieldName.equals("cost") && !fieldName.equals("name") && typeOfFile == FilesType.SPELL;
     }
 
-    public static ArrayList<String> getChangeFieldNames() {
-        return changeFieldNames;
-    }
-
-    public static ArrayList<String> getTargetFieldNames() {
-        return targetFieldNames;
-    }
-
-    public static ArrayList<String> getFieldAnnotatedTyped() {
-        return fieldAnnotatedTyped;
-    }
-
-    private static void copyFile(String sourcePath, String destinationPath) {
+    private void copyFile(String sourcePath, String destinationPath) {
         try {
             File sourceFile = new File(sourcePath);
             File destinationFile = new File(destinationPath);
@@ -328,6 +306,26 @@ public class MakeNewFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setHashMaps(ArrayList<HashMap<String, String>> hashMaps) {
+        this.hashMaps = hashMaps;
+    }
+
+    public ArrayList<String> getBuffFieldNames() {
+        return buffFieldNames;
+    }
+
+    public ArrayList<String> getChangeFieldNames() {
+        return changeFieldNames;
+    }
+
+    public ArrayList<String> getTargetFieldNames() {
+        return targetFieldNames;
+    }
+
+    public ArrayList<String> getFieldAnnotatedTyped() {
+        return fieldAnnotatedTyped;
     }
 
 }

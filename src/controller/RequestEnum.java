@@ -42,5 +42,8 @@ public enum RequestEnum {
     START_STORY_GAME,
     START_CUSTOM_GAME,
     END_OF_CLIENT,
-    NEW_MESSAGE
+    NEW_MESSAGE,
+    MAKE_NEW_CARD,
+    NEW_CARD_ARRAYLISTS
+
 }

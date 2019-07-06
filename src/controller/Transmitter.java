@@ -11,6 +11,7 @@ import view.enums.ErrorType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * do Not new anything in this class
@@ -19,6 +20,11 @@ import java.util.ArrayList;
  */
 
 public class Transmitter implements Serializable { //todo check
+    public ArrayList<HashMap<String, String>> hashMapsWithStrings = new ArrayList<>(); //Be tartib: 0: khod card - 1: change - 2: target - 3 be bad buffHa
+    public ArrayList<String> changeFieldNames = new ArrayList<>();
+    public ArrayList<String> targetFieldNames = new ArrayList<>();
+    public ArrayList<String> fieldNames = new ArrayList<>();
+    public ArrayList<String> buffFieldNames = new ArrayList<>();
     public int transmitterId = 0;
     public RequestEnum requestEnum;
     public Collection collection;
@@ -47,4 +53,7 @@ public class Transmitter implements Serializable { //todo check
     public int playerNumber;
     public int mode;
     public int numberOfFlag;
+    public int spriteNumber;
+    public int spriteNumberCount;
+    public String type;
 }

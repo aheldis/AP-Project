@@ -35,6 +35,8 @@ public class TransferController {
             case ENTER_CHAT:
             case START_CUSTOM_GAME:
             case SHOP_SELL:
+            case MAKE_NEW_CARD:
+            case NEW_CARD_ARRAYLISTS:
                 fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
             case LOGOUT:

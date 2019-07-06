@@ -95,7 +95,7 @@ public class Shop {
             }
             if (type.equals(FilesType.COLLECTIBLE)) {
                 Collectible item = mapper.fromJson(reader, model.item.Collectible.class);
-                name = addCollectible(item);
+                name = null;
             }
             if (type.equals(FilesType.USABLE)) {
                 Usable item = mapper.fromJson(reader, model.item.Usable.class);
