@@ -38,6 +38,7 @@ public class Account implements Comparable<Account>, Cloneable, Serializable {
         return currentlyPlaying;
     }
 
+
     public String getAccountImagePath() {
         if(accountImagePath == null)
             setAccountImagePath();

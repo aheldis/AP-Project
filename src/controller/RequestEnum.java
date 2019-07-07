@@ -37,6 +37,8 @@ public enum RequestEnum {
     START_MATCH,
     PLAY_REQUEST,
     ACCEPT_PLAY,
-    DECLINE_PLAY
+    DECLINE_PLAY,
+    BATTLE
+
 
 }

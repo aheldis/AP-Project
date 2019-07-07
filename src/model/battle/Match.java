@@ -342,6 +342,8 @@ public class Match {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                players[0].getAccount().setCurrentlyPlaying(false);
+                players[1].getAccount().setCurrentlyPlaying(false);
                 MatchInfo matchInfo = new MatchInfo();
                 if (winner instanceof OrdinaryPlayer)
                     matchInfo.winner = winner.getAccount().getUserName();
@@ -356,6 +358,8 @@ public class Match {
 
                 winner.endGame(matchInfo, reward);
                 loser.endGame(matchInfo, 0);
+
+
 
             }
         }).start();

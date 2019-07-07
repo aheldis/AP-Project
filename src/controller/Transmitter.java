@@ -58,4 +58,5 @@ public class Transmitter implements Serializable { //todo check
     public int spriteNumber;
     public int spriteNumberCount;
     public String type;
+    public  BattleMessage battleMessage;
 }

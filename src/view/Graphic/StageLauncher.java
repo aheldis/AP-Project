@@ -118,9 +118,9 @@ public class StageLauncher extends Application {
                     addImage(group,"pics/battle/notification_challenge@2x.png",0,0,200,70);
                     addText(group,50,30,message, Color.WHITE,30);
                     ImageView accept = addImage(group,
-                            "pics/battle/collection_card_rarity_mythron@2x.png",20,200,50,50);
+                            "pics/battle/collection_card_rarity_mythron@2x.png",20,70,50,50);
                     ImageView decline = addImage(group,
-                            "pics/battle/collection_card_rarity_legendary@2x.png",20,200,50,50);
+                            "pics/battle/collection_card_rarity_legendary@2x.png",20,70,50,50);
                     accept.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {

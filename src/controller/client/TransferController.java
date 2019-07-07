@@ -112,6 +112,9 @@ public class TransferController {
             case DECLINE_PLAY:
                 SelectGameScene.decline();
                 break;
+            case BATTLE:
+                //todo make battle Scene
+                break;
         }
     }
 

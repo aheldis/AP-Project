@@ -320,7 +320,6 @@ public class SelectGameScene {
             Transmitter transmitter = new Transmitter();
             transmitter.name = name;
             TransferController.main(RequestEnum.START_MATCH, transmitter);
-
         });
         return group;
     }

@@ -302,7 +302,20 @@ public class RequestEnumController {
                 transfer(waiter);
                 break;
             case ACCEPT_PLAY:
-                //todo start message and change scene
+                SocketClass waiter1 =waiterHashMap.get(socketClass);
+                waiter1.changeTransmitter();
+                socketClass.changeTransmitter();
+                Transmitter waiterTransmitter1 = waiter1.getTransmitter();
+                socketClass.getTransmitter().transmitterId =0;
+                waiterTransmitter1.transmitterId = 0;
+                socketClass.getTransmitter().requestEnum = RequestEnum.BATTLE;
+                waiterTransmitter1.requestEnum = RequestEnum.BATTLE;
+                waiterTransmitter1.battleMessage.socketClasses = new SocketClass[]{socketClass,waiter1};
+                socketClass.getTransmitter().battleMessage.socketClasses =new SocketClass[]{socketClass,waiter1};
+                //todo save them in client
+                /**
+                 * goes to transferController func:fromServer...
+                 */
                 break;
         }
         socketClass.changeTransmitter();
