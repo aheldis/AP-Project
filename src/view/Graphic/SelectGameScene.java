@@ -332,17 +332,12 @@ public class SelectGameScene {
             });
         });
         group.setOnMouseClicked(event -> {
-            new Thread(() -> {
-                Transmitter transmitter = new Transmitter();
-                transmitter.name = name;
-                transmitter.mode = mode;
-                transmitter.numberOfFlag = numberOfFlags;
-                transmitter.reward = reward;
-                Transmitter reply = TransferController.main(RequestEnum.START_MATCH, transmitter);
-                if (reply.requestEnum != RequestEnum.CANCEL_START_MATCH)
-                    Platform.runLater(() -> startGame(reply.game, reply.match));
-                //todo correct startGame for multiPlayer
-            }).start();
+            Transmitter transmitter = new Transmitter();
+            transmitter.name = name;
+            transmitter.mode = mode;
+            transmitter.numberOfFlag = numberOfFlags;
+            transmitter.reward = reward;
+            TransferController.main(RequestEnum.START_MATCH, transmitter);
         });
         return group;
     }
@@ -434,7 +429,7 @@ public class SelectGameScene {
     }
 
 
-    private static void startGame(Game game, Match match) {
+    public static void startGame(Game game, Match match) {
         Random random = new Random();
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {

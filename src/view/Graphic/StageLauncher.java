@@ -1,28 +1,18 @@
 package view.Graphic;
 
-import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import view.enums.Cursor;
 import view.enums.StateType;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -121,19 +111,13 @@ public class StageLauncher extends Application {
                             "pics/battle/collection_card_rarity_mythron@2x.png",20,70,50,50);
                     ImageView decline = addImage(group,
                             "pics/battle/collection_card_rarity_legendary@2x.png",20,70,50,50);
-                    accept.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(group);
-                            TransferController.main(ACCEPT_PLAY, new Transmitter());
-                        }
+                    accept.setOnMouseClicked(event -> {
+                        ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(group);
+                        TransferController.main(ACCEPT_PLAY, new Transmitter());
                     });
-                    decline.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(group);
-                            TransferController.main(DECLINE_PLAY, new Transmitter());
-                        }
+                    decline.setOnMouseClicked(event -> {
+                        ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(group);
+                        TransferController.main(DECLINE_PLAY, new Transmitter());
                     });
                     ((Group) primaryStage.getScene().getRoot()).getChildren().addAll(group);
                 } catch (Exception e) {

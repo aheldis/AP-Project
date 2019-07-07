@@ -268,7 +268,7 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
             }
-            case NEW_CARD_ARRAYLISTS: {
+            case NEW_CARD_ARRAY_LISTS: {
                 MakeNewFile makeNewFile = new MakeNewFile();
                 transmitter.fieldNames = makeNewFile.getFieldNames(FilesType.getEnum(clientTransmitter.type));
                 transmitter.changeFieldNames = makeNewFile.getChangeFieldNames();

@@ -38,6 +38,7 @@ public class TransferController {
             case ACCEPT_PLAY:
             case DECLINE_PLAY:
             case CANCEL_START_MATCH:
+            case START_MATCH:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case IMPORT_DECK:
@@ -54,11 +55,10 @@ public class TransferController {
             case START_CUSTOM_GAME:
             case SHOP_SELL:
             case MAKE_NEW_CARD:
-            case NEW_CARD_ARRAYLISTS:
+            case NEW_CARD_ARRAY_LISTS:
             case MAIN_DECK:
             case GET_COLLECTION:
             case ALL_ACCOUNT:
-            case START_MATCH:
                 fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
@@ -114,8 +114,11 @@ public class TransferController {
                 SelectGameScene.decline();
                 break;
             case BATTLE:
+                SelectGameScene.startGame(transmitter.game, transmitter.match);
                 //todo make battle Scene
                 break;
+            case CANCEL_START_MATCH:
+                //todo
         }
     }
 
