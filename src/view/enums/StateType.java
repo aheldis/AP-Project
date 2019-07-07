@@ -15,6 +15,6 @@ public enum StateType {
     END_PROGRAM,
     PROFILE,
     GLOBAL_CHAT,
-    MULTIPLAYER
+
 
 }

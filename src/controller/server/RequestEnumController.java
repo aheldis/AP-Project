@@ -116,6 +116,7 @@ public class RequestEnumController {
                 transmitter.collection = account.getCollection();
                 transfer(socketClass);
                 break;
+                /*
             case COLLECTION_SHOW:
                 transmitter.cards = account.getCollection().getAllCards();
                 transmitter.items = new ArrayList<>(Arrays.asList(account.getCollection().getItems()));
@@ -133,6 +134,8 @@ public class RequestEnumController {
                 break;
             case COLLECTION_DELETE_DECK:
                 transmitter.errorType = account.getCollection().deleteDeck(clientTransmitter.name);
+                break;
+                */
             case EXPORT_DECK:
                 Deck deck = clientTransmitter.deck;
                 String path = "exportedDeck/" + account.getUserName()
@@ -160,6 +163,7 @@ public class RequestEnumController {
                 }
 
                 break;
+                /*
             case COLLECTION_ADD_CARD_TO_DECK:
                 //todo
                 break;
@@ -167,6 +171,7 @@ public class RequestEnumController {
                 transmitter.errorType =
                         account.getCollection().selectADeckAsMainDeck(transmitter.deck.getName());
                 break;
+                */
             case COLLECTION_UPDATE:
                 account.setCollection(clientTransmitter.collection);
                 break;
@@ -176,6 +181,7 @@ public class RequestEnumController {
                     transmitter.errorType = ErrorType.DONT_HAVE_MAIN_DECK;
                 transfer(socketClass);
                 break;
+                /*
             case COLLECTION_CARDS:
                 transmitter.cards = account.getCollection().getAllCards();
                 transfer(socketClass);
@@ -196,18 +202,12 @@ public class RequestEnumController {
                 transmitter.ids = account.getCollection().searchCardName(clientTransmitter.name);
                 transfer(socketClass);
                 break;
+                */
             case ENTER_CHAT:
                 chatPerson.add(socketClass);
-                account = account;
                 transmitter.name = account.getUserName();
                 transmitter.path = account.getAccountImagePath();
                 transfer(socketClass);
-                break;
-            case NEW_CARD_ID:
-                account = account;
-                Card card = transmitter.card;
-                new CardId(account, card, account.getCollection().getNumberOfCardId(card));
-                account.getCollection().addToCards(card);
                 break;
             case SEND_MESSAGE:
 //                groupTexts.add(group);
@@ -264,7 +264,7 @@ public class RequestEnumController {
                 MakeNewFile makeNewFile = new MakeNewFile();
                 makeNewFile.setSpriteNumber(clientTransmitter.spriteNumber, clientTransmitter.spriteNumberCount);
                 makeNewFile.setHashMaps(clientTransmitter.hashMapsWithStrings);
-                socketClass.getTransmitter().errorType = makeNewFile.makeNewCard(FilesType.getEnum(clientTransmitter.type));
+                socketClass.getTransmitter().errorType = makeNewFile.makeNewCard(FilesType.getEnum(clientTransmitter.type), account);
                 transfer(socketClass);
                 break;
             }

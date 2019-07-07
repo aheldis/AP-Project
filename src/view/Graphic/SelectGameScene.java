@@ -5,7 +5,6 @@ import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -15,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -301,14 +299,14 @@ class SelectGameScene {
             startGame(game, match);
     }
 
-    private static Group makeOpponent(String name){
+    private static Group makeOpponent(String name) {
         Group group = new Group();
-        addImage(group,"pics/battle/diamond_main_menu_container@2x.png",15,0,200,50);
-        ImageView imageView=addImage(group,"pics/battle/collection_card_rarity_common@2x.png",
-                0,0,50,50);
-        addText(group,40,20,name,Color.WHITE,20);
-        ImageView glow = addImage(group,"pics/battle/collection_card_rarity_rare@2x.png",
-                0,0,50,50);
+        addImage(group, "pics/battle/diamond_main_menu_container@2x.png", 15, 0, 200, 50);
+        ImageView imageView = addImage(group, "pics/battle/collection_card_rarity_common@2x.png",
+                0, 0, 50, 50);
+        addText(group, 40, 20, name, Color.WHITE, 20);
+        ImageView glow = addImage(group, "pics/battle/collection_card_rarity_rare@2x.png",
+                0, 0, 50, 50);
         group.getChildren().removeAll(glow);
         group.setOnMouseEntered(event -> {
             group.getChildren().removeAll(imageView);
@@ -326,10 +324,10 @@ class SelectGameScene {
         return group;
     }
 
-    private static boolean valid(ArrayList<Account> accounts,int i){
-        if(accounts.get(i).getAuthToken() ==null || accounts.get(i).getMainDeck()==null)
+    private static boolean valid(ArrayList<Account> accounts, int i) {
+        if (accounts.get(i).getAuthToken() == null || accounts.get(i).getMainDeck() == null)
             return false;
-        if(accounts.get(i).getMainDeck().validate() && !accounts.get(i).isCurrentlyPlaying())
+        if (accounts.get(i).getMainDeck().validate() && !accounts.get(i).isCurrentlyPlaying())
             return true;
         return false;
     }
@@ -344,12 +342,12 @@ class SelectGameScene {
 
             VBox vBox = new VBox();
             vBox.setSpacing(10);
-            vBox.relocate(100,150);
+            vBox.relocate(100, 150);
             root.getChildren().addAll(vBox);
-            transmitter= TransferController.main(RequestEnum.ALL_ACCOUNT, new Transmitter());
-            ArrayList<Account> accounts =transmitter.accounts;
-            for(int i=0;i<accounts.size();i++){
-                if(valid(accounts,i))
+            transmitter = TransferController.main(RequestEnum.ALL_ACCOUNT, new Transmitter());
+            ArrayList<Account> accounts = transmitter.accounts;
+            for (int i = 0; i < accounts.size(); i++) {
+                if (valid(accounts, i))
                     vBox.getChildren().add(makeOpponent(accounts.get(i).getUserName()));
             }
 
