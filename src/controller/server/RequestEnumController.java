@@ -273,7 +273,7 @@ public class RequestEnumController {
             }
             case START_MATCH:
                 String opponent = clientTransmitter.name;
-                //todo
+                //todoK
                 break;
         }
         socketClass.changeTransmitter();
