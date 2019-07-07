@@ -18,8 +18,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static controller.RequestEnum.CHECK_NEW_MESSAGE;
-import static controller.RequestEnum.LOGOUT;
+import static controller.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class StageLauncher extends Application {
@@ -53,7 +52,8 @@ public class StageLauncher extends Application {
                 setScene(StateType.SHOP);
                 break;
             case COLLECTION:
-                CollectionScene.showInCollection();
+                Transmitter transmitter = TransferController.main(GET_COLLECTION, new Transmitter());
+                CollectionScene.showInCollection(transmitter.collection);
                 setScene(StateType.COLLECTION);
                 break;
             case SELECT_GAME:

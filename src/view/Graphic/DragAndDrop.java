@@ -63,6 +63,7 @@ public class DragAndDrop {
                             deck.addItemToDeck((Usable) card);
                             returnToFirstPosition = false;
                         }
+                        CollectionScene.updateCollectionInServer();
                     }
                     if (!returnToFirstPosition) {
                         ((VBox) this.target).getChildren().add(source);
@@ -110,6 +111,7 @@ public class DragAndDrop {
                     else if (deck.getHero() == card) {
                         deck.setHero(null);
                     }
+                    CollectionScene.updateCollectionInServer();
                 }
             }
             start = false;

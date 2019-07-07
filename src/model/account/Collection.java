@@ -113,7 +113,9 @@ public class Collection implements Cloneable, Serializable {
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (errorForDeck(deck)) {
             if (!deck.validate()) {
-                return ErrorType.SELECTED_INVALID_DECK;
+                ErrorType error = ErrorType.SELECTED_INVALID_DECK;
+                error.printMessage();
+                return error;
 
             }
             account.setMainDeck(deck);
@@ -159,7 +161,9 @@ public class Collection implements Cloneable, Serializable {
 
     public ErrorType createDeck(String deckName) {
         if (passTheDeckIfHaveBeenExist(deckName) != null) {
-            return ErrorType.DECK_HAVE_BEEN_EXIST;
+            ErrorType error = ErrorType.DECK_HAVE_BEEN_EXIST;
+            error.printMessage();
+            return error;
 
         }
         Deck deck = new Deck();
@@ -173,7 +177,9 @@ public class Collection implements Cloneable, Serializable {
         if (deck != null)
             decks.remove(deck);
         else {
-            return ErrorType.HAVE_NOT_DECK;
+            ErrorType error = ErrorType.HAVE_NOT_DECK;
+            error.printMessage();
+            return error;
         }
         return null;
     }

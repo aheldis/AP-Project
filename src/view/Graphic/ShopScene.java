@@ -186,8 +186,7 @@ class ShopScene {
                         hBox1.getChildren().addAll(group1);
                         hBoxes.add(hBox1);
                         root.getChildren().addAll(hBox1);
-                        addText(group1, 50, 230, transmitter.name + "_" + cardName + "_" +
-                                        transmitter.collection.getNumberOfCardId((Card) object),
+                        addText(group1, 50, 230, transmitter.cardId,
                                 Color.WHITE, 20);
                     }
                 }
