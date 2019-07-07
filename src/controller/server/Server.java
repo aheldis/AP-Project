@@ -1,5 +1,6 @@
 package controller.server;
 
+import controller.DBClass;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -10,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import kong.unirest.HttpResponse;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Shop;
@@ -57,10 +59,10 @@ public class Server extends Application {
     private static int PORT = 8000;
 
     public static void main(String[] args) {
-//        HashMap<String,Object> hashMap = new HashMap<>();
-//        hashMap.put("name","myDB");
-//        HttpResponse<String> response =DBClass.main(hashMap,"init_DB");
-//        System.out.println(response);
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("name","myDB");
+        HttpResponse<String> response = DBClass.main(hashMap,"init_DB");
+        System.out.println(response);
 
 
         try {
