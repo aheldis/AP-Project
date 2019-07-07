@@ -101,6 +101,9 @@ public class TransferController {
                 //messages.add(transmitter);
                 GlobalChatScene.getNewMessage(transmitter);
                 break;
+            case PLAY_REQUEST:
+
+                break;
         }
     }
 

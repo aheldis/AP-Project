@@ -329,7 +329,7 @@ class SelectGameScene {
     private static boolean valid(ArrayList<Account> accounts,int i){
         if(accounts.get(i).getAuthToken() ==null || accounts.get(i).getMainDeck()==null)
             return false;
-        if(accounts.get(i).getMainDeck().validate())
+        if(accounts.get(i).getMainDeck().validate() && !accounts.get(i).isCurrentlyPlaying())
             return true;
         return false;
     }

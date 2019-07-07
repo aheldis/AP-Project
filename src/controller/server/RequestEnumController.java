@@ -279,8 +279,15 @@ public class RequestEnumController {
             }
             case START_MATCH:
                 String opponent = clientTransmitter.name;
-
-                //todoK
+                SocketClass opponentSocketClass = Server.getSocketClasssByName(opponent);
+                if(opponentSocketClass !=null) {
+                    opponentSocketClass.changeTransmitter();
+                    Transmitter personTransmitter = opponentSocketClass.getTransmitter();
+                    personTransmitter.transmitterId = 0;
+                    personTransmitter.requestEnum = RequestEnum.PLAY_REQUEST;
+                    opponentSocketClass.getTransmitter().message = "Play?";
+                    transfer(opponentSocketClass);
+                }
                 break;
         }
         socketClass.changeTransmitter();

@@ -54,9 +54,22 @@ class ServerThread extends Thread {
     }
 }
 
+
 public class Server extends Application {
     static ServerThread serverThread;
     private static int PORT = 8000;
+
+    public static ArrayList<SocketClass> getSockets(){
+        return ServerThread.socketClasses;
+    }
+
+    public static SocketClass getSocketClasssByName(String name){
+        for(SocketClass socketClass : ServerThread.socketClasses){
+            if(socketClass.getAccount().getUserName().equals(name))
+                return socketClass;
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
 //        HashMap<String,Object> hashMap = new HashMap<>();

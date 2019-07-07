@@ -49,6 +49,7 @@ public enum RequestEnum {
     NEW_CARD_ARRAYLISTS,
     COLLECTION_DELETE_DECK,
     ALL_ACCOUNT,
-    START_MATCH
+    START_MATCH,
+    PLAY_REQUEST
 
 }
