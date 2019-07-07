@@ -338,9 +338,9 @@ public class SelectGameScene {
                 transmitter.mode = mode;
                 transmitter.numberOfFlag = numberOfFlags;
                 transmitter.reward = reward;
-                transmitter = TransferController.main(RequestEnum.START_MATCH, transmitter);
-                if (transmitter.requestEnum != RequestEnum.CANCEL_START_MATCH)
-                    startGame(transmitter.game, transmitter.match);
+                Transmitter reply = TransferController.main(RequestEnum.START_MATCH, transmitter);
+                if (reply.requestEnum != RequestEnum.CANCEL_START_MATCH)
+                    Platform.runLater(() -> startGame(reply.game, reply.match));
                 //todo correct startGame for multiPlayer
             }).start();
         });
