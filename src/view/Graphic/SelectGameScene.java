@@ -114,8 +114,8 @@ class SelectGameScene {
         Button button = imageButton(selectGameScene, selectGameRoot, "pics/battle/select_mode/multi_player.jpg",
                 "hello", 100, 100, 100, 100);
         selectGameRoot.getChildren().remove(button);
+        //todo what is this?
         button.setOnMouseClicked(event -> {
-
             try {
                 InputStream input = new FileInputStream("D:/project_Duelyst1/PausedGames/1.json");
                 Reader reader = new InputStreamReader(input);
@@ -154,6 +154,7 @@ class SelectGameScene {
 
         multiPlayerImage.setOnMouseClicked(event -> {
             //playMusic("resource/music/choose_button.m4a",false,selectGameScene);
+            mode = "multiplayer";
             changeScene();
             selectMode();
         });
@@ -164,6 +165,7 @@ class SelectGameScene {
             setBackground(selectGameRoot,
                     "pics/battle/select_mode/background.jpg", true, 10.0f, 10.0f);
 
+            mode = "custom";
             makeDeck();
             log(selectGameRoot, "select modes\nback", StateType.SELECT_GAME, 200);
 
@@ -232,6 +234,8 @@ class SelectGameScene {
 
     private static void selectMode() {
 
+        System.out.println("SelectGameScene.selectMode");
+
         playMusic("resource/music/shop.m4a", true, selectModeScene);
 
         setBackground(selectModeRoot,
@@ -258,15 +262,31 @@ class SelectGameScene {
         deathModeText.setFont(Font.font("Lato-bold", FontWeight.BOLD, 30));
 
         getNumberOfFlagPage(collectFlagImage, selectModeRoot, selectModeScene);
-        saveFlagImage.setOnMouseClicked(event -> startCustomGame(2, 1));
 
-        deathImage.setOnMouseClicked(event -> startCustomGame(1, 0));
+        saveFlagImage.setOnMouseClicked(event -> {
+            if (mode.equals("custom"))
+                startCustomGame(2, 1);
+            else {
+                //multiplayer
+                multiPlayerPage(selectModeRoot, selectModeScene);
+            }
+
+        });
+
+        deathImage.setOnMouseClicked(event -> {
+            if (mode.equals("custom"))
+                startCustomGame(1, 0);
+            else {
+                //multiplayer
+                multiPlayerPage(selectModeRoot, selectModeScene);
+            }
+        });
 
         log(selectModeRoot, "select mode\nback", StateType.SELECT_GAME, 200);
 
     }
 
-    private static void startCustomGame(int mode, int numberOfFlag){
+    private static void startCustomGame(int mode, int numberOfFlag) {
         Transmitter transmitter = new Transmitter();
         transmitter.playerNumber = 1;
         transmitter.name = deckName;
@@ -277,44 +297,73 @@ class SelectGameScene {
             startGame(game, match);
     }
 
-    private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene) {
-        try {
-            imageView.setOnMouseClicked(event -> {
+    private static void multiPlayerPage(Group root, Scene scene) {
+        Transmitter transmitter = TransferController.main(RequestEnum.MAIN_DECK, new Transmitter());
+        System.out.println("SelectGameScene.multiPlayerPage");
+        if (transmitter.errorType == null) {
+            root.getChildren().clear();
+            setBackground(root, "pics/battle_categorized/multiplayer_backGround.jpg", true, 10.0f, 10.0f);
+            addTextWithShadow(root, 100, 100, "Waiting for player...", "Andale Mono", 40);
+
+            //todo -> bere be server request bede
+
+            Button cancel = imageButton(scene, root, "pics/battle/help.png",
+                    "CANCEL", 1000 + 90, 75, 150, 70);
+            cancel.setOnMouseClicked(event -> {
                 root.getChildren().clear();
-                setBackground(root,
-                        "pics/battle/select_mode/select_mode_background.jpg",
-                        true, 10.0f, 10.0f);
-                Text enterNumbersOfFlag = addText(root, 500, 200, "Enter Numbers Of Flags",
-                        Color.rgb(0, 25, 225, 0.8), 40);
-                enterNumbersOfFlag.setFont(Font.font("Luminari", 30));
-                enterNumbersOfFlag.setStrokeWidth(1);
-                enterNumbersOfFlag.setStroke(Color.rgb(0, 0, 0, 0.2));
+                StageLauncher.decorateScene(StateType.SELECT_GAME);
+                //todo -> be server bege rafte biroon
+            });
+        }
+    }
+
+    private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene) {
+
+        try {
+
+            imageView.setOnMouseClicked(event -> {
+                if (mode.equals("custom")) {
+
+                    root.getChildren().clear();
+                    setBackground(root,
+                            "pics/battle/select_mode/select_mode_background.jpg",
+                            true, 10.0f, 10.0f);
+                    Text enterNumbersOfFlag = addText(root, 500, 200, "Enter Numbers Of Flags",
+                            Color.rgb(0, 25, 225, 0.8), 40);
+                    enterNumbersOfFlag.setFont(Font.font("Luminari", 30));
+                    enterNumbersOfFlag.setStrokeWidth(1);
+                    enterNumbersOfFlag.setStroke(Color.rgb(0, 0, 0, 0.2));
 
 
-                addImage(root, "pics/collection/card_silenced@2x.png",
-                        600 - 5 - 20, 240, 200, 100);
+                    addImage(root, "pics/collection/card_silenced@2x.png",
+                            600 - 5 - 20, 240, 200, 100);
 
-                TextField number = new TextField();
-                number.setPrefHeight(50);
-                number.relocate(605, 255);
-                number.positionCaret(1);
-                number.setStyle("-fx-text-fill: #80ffff; -fx-font-size: 25px; -fx-font-weight: bold;");
-                number.setFont(Font.font("Luminari", 30));
-                number.setBackground(new Background(
-                        new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
-                                CornerRadii.EMPTY, Insets.EMPTY)));
-                root.getChildren().add(number);
-                scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-                    if (key.getCode() == KeyCode.ENTER) {
-                        startCustomGame(3, Integer.parseInt(number.getText()));
-                    }
-                });
+                    TextField number = new TextField();
+                    number.setPrefHeight(50);
+                    number.relocate(605, 255);
+                    number.positionCaret(1);
+                    number.setStyle("-fx-text-fill: #80ffff; -fx-font-size: 25px; -fx-font-weight: bold;");
+                    number.setFont(Font.font("Luminari", 30));
+                    number.setBackground(new Background(
+                            new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
+                                    CornerRadii.EMPTY, Insets.EMPTY)));
+                    root.getChildren().add(number);
+                    scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+                        if (key.getCode() == KeyCode.ENTER) {
+                            startCustomGame(3, Integer.parseInt(number.getText()));
+                        }
+                    });
+                } else {
+                    //multiplayer
+                    multiPlayerPage(selectModeRoot, selectModeScene);
+                }
 
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
-        log(selectGameRoot, "select modes\nback", StateType.SELECT_GAME, 200);
+
+        log(selectGameRoot, "choose flag numbers\nback", StateType.SELECT_GAME, 200);
 
     }
 

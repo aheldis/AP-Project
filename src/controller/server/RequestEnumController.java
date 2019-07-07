@@ -28,11 +28,11 @@ public class RequestEnumController {
 
     public static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
         Transmitter transmitter = socketClass.getTransmitter();
+        transmitter.requestEnum = clientTransmitter.requestEnum;
         transmitter.transmitterId = clientTransmitter.transmitterId;
         AllAccount allAccount = AllAccount.getInstance();
         Account account = socketClass.getAccount();
         switch (requestEnum) {
-
             case END_OF_CLIENT:
                 socketClass.getClientHandlerServer().stop();
                 break;
@@ -53,6 +53,7 @@ public class RequestEnumController {
                     transmitter.errorType = ErrorType.PASSWORD_DOES_NOT_MATCH;
                 else {
                     socketClass.setAccount(allAccount.getAccountByName(clientTransmitter.name));
+                    account = socketClass.getAccount();
                     account.setAuthToken(AllAccount.getInstance().getAuthToken(account));
                 }
                 transfer(socketClass);
@@ -161,6 +162,13 @@ public class RequestEnumController {
             case COLLECTION_SELECT_MAIN_DECK:
                 transmitter.errorType =
                         account.getCollection().selectADeckAsMainDeck(transmitter.deck.getName());
+                break;
+            case MAIN_DECK:
+                transmitter.deck = account.getMainDeck();
+                System.out.println("get main deck");
+                if(transmitter.deck == null || !transmitter.deck.validate())
+                    transmitter.errorType = ErrorType.DONT_HAVE_MAIN_DECK;
+                transfer(socketClass);
                 break;
             case COLLECTION_CARDS:
                 transmitter.cards = account.getCollection().getAllCards();

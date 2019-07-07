@@ -23,9 +23,6 @@ public class BattleHeaderGraphic {
     private String[] specialPowersPath = new String[2];
     private Circle circleForSpecialPower = null;
 
-    //TODO Mana ke avas mishe avas kone -> listener
-    //TODO TODO TODO TODO SABAAAAA
-
     BattleHeaderGraphic(BattleScene battleScene, Group root) {
         this.battleScene = battleScene;
         root.getChildren().addAll(rightHeader, leftHeader);

@@ -28,6 +28,9 @@ public class ClientIOhandler extends Thread {
                 System.out.println("read from server");
                 YaGson mapper = new YaGson();
                 Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
+                System.out.println(transmitter.errorType);
+                System.out.println(transmitter.requestEnum);
+                System.out.println(transmitter.transmitterId);
                 if(transmitter.errorType != null)
                     transmitter.errorType.printMessage();
                 //Transmitter transmitter = (Transmitter) objectInputStream.readObject();

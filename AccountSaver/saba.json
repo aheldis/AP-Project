@@ -3,7 +3,7 @@
   "@val": {
     "userName": "saba",
     "password": "456",
-    "daric": 21650,
+    "daric": 13650,
     "wins": 0,
     "matchHistory": [],
     "collection": {
@@ -1060,6 +1060,79 @@
           "frameSize": 0,
           "heightOfPicture": 0,
           "millis": 10000
+        },
+        {
+          "buffs": [],
+          "mpRequiredForSpell": 0,
+          "coolDown": 0,
+          "turnNotUsedSpecialPower": 0,
+          "numberOfAttacks": 0,
+          "numberOfBeingAttacked": 0,
+          "haveSpecialPower": false,
+          "change": {
+            "targetType": "force",
+            "opponentCanMove": true,
+            "opponentCanAttack": true,
+            "opponentCanCounterAttack": true,
+            "turnOfCanNotMoveForOpponent": 0,
+            "turnOfCanNotAttackForOpponent": 0,
+            "turnOfCanNotCounterAttackForOpponent": 0,
+            "hpChange": 0,
+            "apChange": 0,
+            "buffs": {},
+            "unaffectBuffs": false,
+            "changeInApOrHpForWeakness": 0,
+            "changeInApOrHpForPower": 0,
+            "changeInManaForMana": 0,
+            "changeInHpForDecreaserHp": 0
+          },
+          "target": {
+            "targets": [],
+            "counterAttackType": "hybrid",
+            "cardType": "hero",
+            "one": true,
+            "row": false,
+            "column": false,
+            "all": false,
+            "random": false,
+            "distance": -1,
+            "self": false,
+            "enemy": false,
+            "ally": false,
+            "haveRange": false,
+            "notHaveRange": false,
+            "theOneWhoCollects": "-",
+            "theOneWhoDoesTheThing": "-"
+          },
+          "mp": 0,
+          "hp": 55,
+          "ap": 7,
+          "attackRange": 4,
+          "turnOfCanNotMove": 0,
+          "turnOfCanNotAttack": 0,
+          "turnOfCanNotCounterAttack": 0,
+          "name": "Rostam",
+          "cardId": {
+            "cardId": "saba_Rostam_3",
+            "account": "@root",
+            "card": "@root.collection.heroes.13",
+            "number": 3
+          },
+          "turnsOfPickingUp": [],
+          "counterAttack": "hybrid",
+          "cost": 8000,
+          "buffsOnThisCard": [],
+          "CardNumber": 10,
+          "canMove": true,
+          "canAttack": true,
+          "canCounterAttack": true,
+          "hpChangeAfterAttack": 0,
+          "description": "-",
+          "countOfAnimation": 82,
+          "animationRow": 5,
+          "frameSize": 0,
+          "heightOfPicture": 0,
+          "millis": 8000
         }
       ],
       "minions": [
@@ -2382,7 +2455,7 @@
     },
     "decks": [],
     "accountImagePath": "pics/shop/emotes-3.png",
-    "authToken": "saba_PUMU",
+    "authToken": "saba_MZGJ",
     "currentlyPlaying": false
   }
 }

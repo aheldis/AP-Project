@@ -14,6 +14,7 @@ public enum StateType {
     SINGLE_GAME,
     END_PROGRAM,
     PROFILE,
-    GLOBAL_CHAT
+    GLOBAL_CHAT,
+    MULTIPLAYER
 
 }
