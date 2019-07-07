@@ -119,9 +119,7 @@ public class Match {
     }
 
     /**
-     *
-     Graphic:
-     *
+     * Graphic:
      **/
     public void initGraphic() {
         // BattleScene.getSingleInstance().changeSingleInstance(null);
@@ -186,24 +184,27 @@ public class Match {
             Collectible collectible;
             randomX = random.nextInt(4);
             randomY = random.nextInt(8);
-            randomItem = random.nextInt(collectibles.size());
-            if (squares[randomX][randomY].getObject() != null || squares[randomX][randomY].getFlags().size() != 0) {
-                i--;
-                continue;
+            if (collectibles.size() != 0) {
+                randomItem = random.nextInt(collectibles.size());
+                if (squares[randomX][randomY].getObject() != null || squares[randomX][randomY].getFlags().size() != 0) {
+                    i--;
+                    continue;
+                }
+                collectible = (Collectible) collectibles.get(randomItem);
+                Shop.getInstance().removeCollectible(collectible);
+                this.collectibles.add(collectible);
+                squares[randomX][randomY].setObject(collectible);
+
+                /**
+                 *
+                 Graphic:
+                 *
+                 **/
+                ImageView collectibleImage = GeneralGraphicMethods.createImage(
+                        "pics/collectibles/" + collectible.getName() + ".png", 20, 20);
+                BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, collectibleImage, false);
+                collectible.setImageView(collectibleImage);
             }
-            collectible = (Collectible) collectibles.get(randomItem);
-            Shop.getInstance().removeCollectible(collectible);
-            this.collectibles.add(collectible);
-            squares[randomX][randomY].setObject(collectible);
-            /**
-             *
-             Graphic:
-             *
-             **/
-            ImageView collectibleImage = GeneralGraphicMethods.createImage(
-                    "pics/collectibles/" + collectible.getName() + ".png", 20, 20);
-            BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, collectibleImage, false);
-            collectible.setImageView(collectibleImage);
 
         }
 
@@ -403,11 +404,8 @@ public class Match {
     }
 
 
-
     /**
-     *
-     Graphic:
-     *
+     * Graphic:
      **/
     public static void setWinAndLossBackGround(String musicPath, String generalPath, String backGgoundPath,
                                                String middlegroundPath, String highlightPath, String label) {

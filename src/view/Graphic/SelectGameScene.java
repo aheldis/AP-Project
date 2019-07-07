@@ -5,6 +5,7 @@ import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -14,13 +15,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import model.account.Account;
 import model.battle.Deck;
 import model.battle.Game;
 import model.battle.Match;
@@ -297,6 +301,19 @@ class SelectGameScene {
             startGame(game, match);
     }
 
+    private static Group makeOpponent(String name){
+        Group group = new Group();
+        addImage(group,"pics/battle/diamond_main_menu_container@2x.png",15,0,200,50);
+        addImage(group,"pics/battle/collection_card_rarity_common@2x.png",0,0,50,50);
+        addText(group,40,20,name,Color.WHITE,20);
+        group.setOnMouseClicked(event -> {
+            Transmitter transmitter = new Transmitter();
+            transmitter.name = name;
+            transmitter = TransferController.main(RequestEnum.START_MATCH, transmitter);
+        });
+        return group;
+    }
+
     private static void multiPlayerPage(Group root, Scene scene) {
         Transmitter transmitter = TransferController.main(RequestEnum.MAIN_DECK, new Transmitter());
         System.out.println("SelectGameScene.multiPlayerPage");
@@ -304,6 +321,16 @@ class SelectGameScene {
             root.getChildren().clear();
             setBackground(root, "pics/battle_categorized/multiplayer_backGround.jpg", true, 10.0f, 10.0f);
             addTextWithShadow(root, 100, 100, "Waiting for player...", "Andale Mono", 40);
+
+            VBox vBox = new VBox();
+            vBox.relocate(100,150);
+            root.getChildren().addAll(vBox);
+            transmitter= TransferController.main(RequestEnum.ALL_ACCOUNT, new Transmitter());
+            ArrayList<Account> accounts =transmitter.accounts;
+            for(int i=0;i<accounts.size();i++){
+                if(accounts.get(i).getAuthToken()!=null && accounts.get(i).getMainDeck()!=null)
+                    vBox.getChildren().add(makeOpponent(accounts.get(i).getUserName()));
+            }
 
             //todo -> bere be server request bede
 

@@ -236,6 +236,10 @@ public class RequestEnumController {
             case EXIT_FROM_CHAT:
                 chatPerson.remove(socketClass);
                 break;
+            case ALL_ACCOUNT:
+                transmitter.accounts = AllAccount.getInstance().getAccounts();
+                transfer(socketClass);
+                break;
             case START_CUSTOM_GAME: { /*Custom Game*/
                 Game game = new Game();
                 socketClass.setGame(game);
@@ -265,7 +269,12 @@ public class RequestEnumController {
                 transmitter.targetFieldNames = makeNewFile.getTargetFieldNames();
                 transmitter.buffFieldNames = makeNewFile.getBuffFieldNames();
                 transfer(socketClass);
+                break;
             }
+            case START_MATCH:
+                String opponent = clientTransmitter.name;
+                //todo
+                break;
         }
         socketClass.changeTransmitter();
 
