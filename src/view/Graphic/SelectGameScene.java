@@ -304,14 +304,34 @@ class SelectGameScene {
     private static Group makeOpponent(String name){
         Group group = new Group();
         addImage(group,"pics/battle/diamond_main_menu_container@2x.png",15,0,200,50);
-        addImage(group,"pics/battle/collection_card_rarity_common@2x.png",0,0,50,50);
+        ImageView imageView=addImage(group,"pics/battle/collection_card_rarity_common@2x.png",
+                0,0,50,50);
         addText(group,40,20,name,Color.WHITE,20);
+        ImageView glow = addImage(group,"pics/battle/collection_card_rarity_rare@2x.png",
+                0,0,50,50);
+        group.getChildren().removeAll(glow);
+        group.setOnMouseEntered(event -> {
+            group.getChildren().removeAll(imageView);
+            group.getChildren().addAll(glow);
+            group.setOnMouseExited(event1 -> {
+                group.getChildren().removeAll(glow);
+                group.getChildren().addAll(imageView);
+            });
+        });
         group.setOnMouseClicked(event -> {
             Transmitter transmitter = new Transmitter();
             transmitter.name = name;
             transmitter = TransferController.main(RequestEnum.START_MATCH, transmitter);
         });
         return group;
+    }
+
+    private static boolean valid(ArrayList<Account> accounts,int i){
+        if(accounts.get(i).getAuthToken() ==null || accounts.get(i).getMainDeck()==null)
+            return false;
+        if(accounts.get(i).getMainDeck().validate())
+            return true;
+        return false;
     }
 
     private static void multiPlayerPage(Group root, Scene scene) {
@@ -323,12 +343,13 @@ class SelectGameScene {
             addTextWithShadow(root, 100, 100, "Waiting for player...", "Andale Mono", 40);
 
             VBox vBox = new VBox();
+            vBox.setSpacing(10);
             vBox.relocate(100,150);
             root.getChildren().addAll(vBox);
             transmitter= TransferController.main(RequestEnum.ALL_ACCOUNT, new Transmitter());
             ArrayList<Account> accounts =transmitter.accounts;
             for(int i=0;i<accounts.size();i++){
-                if(accounts.get(i).getAuthToken()!=null && accounts.get(i).getMainDeck()!=null)
+                if(valid(accounts,i))
                     vBox.getChildren().add(makeOpponent(accounts.get(i).getUserName()));
             }
 
