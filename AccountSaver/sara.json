@@ -41,6 +41,8 @@
       }
     },
     "decks": [],
+    "accountImagePath": "pics/shop/emotes-18.png",
+    "authToken": "sara_FALR",
     "currentlyPlaying": false
   }
 }
