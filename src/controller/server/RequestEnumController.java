@@ -11,8 +11,8 @@ import model.account.FilesType;
 import model.account.Shop;
 import model.battle.Deck;
 import model.battle.Game;
+import model.battle.Match;
 import model.card.Card;
-import model.card.CardId;
 import model.card.makeFile.MakeNewFile;
 import model.item.Usable;
 import model.requirment.GeneralLogicMethods;
@@ -20,13 +20,12 @@ import view.enums.ErrorType;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class RequestEnumController {
     static ArrayList<Group> groupTexts = new ArrayList<>();
     private static ArrayList<SocketClass> chatPerson = new ArrayList<>();
-    private static HashMap<SocketClass/*opponent*/,SocketClass/*waiter*/> waiterHashMap = new HashMap<>();
+    private static HashMap<SocketClass/*opponent*/, SocketClass/*waiter*/> waiterHashMap = new HashMap<>();
 
     public static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
         Transmitter transmitter = socketClass.getTransmitter();
@@ -95,8 +94,7 @@ public class RequestEnumController {
             case SHOP_SEARCH:
                 transmitter.object = Shop.getInstance().search(account, clientTransmitter.name);
                 transmitter.name = account.getUserName();
-                if(transmitter.object == null)
-                {
+                if (transmitter.object == null) {
                     transmitter.errorType = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
                 }
                 transmitter.cardId = transmitter.name + "_" + clientTransmitter.name + "_" +
@@ -179,7 +177,7 @@ public class RequestEnumController {
                 break;
             case MAIN_DECK:
                 transmitter.deck = account.getMainDeck();
-                if(transmitter.deck == null || !transmitter.deck.validate())
+                if (transmitter.deck == null || !transmitter.deck.validate())
                     transmitter.errorType = ErrorType.DONT_HAVE_MAIN_DECK;
                 transfer(socketClass);
                 break;
@@ -270,7 +268,7 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
             }
-            case NEW_CARD_ARRAYLISTS:{
+            case NEW_CARD_ARRAYLISTS: {
                 MakeNewFile makeNewFile = new MakeNewFile();
                 transmitter.fieldNames = makeNewFile.getFieldNames(FilesType.getEnum(clientTransmitter.type));
                 transmitter.changeFieldNames = makeNewFile.getChangeFieldNames();
@@ -281,9 +279,12 @@ public class RequestEnumController {
             }
             case START_MATCH:
                 String opponent = clientTransmitter.name;
+                socketClass.setMode(clientTransmitter.mode);
+                socketClass.setNumberOfFlag(clientTransmitter.numberOfFlag);
+                socketClass.setReward(clientTransmitter.reward);
                 SocketClass opponentSocketClass = Server.getSocketClasssByName(opponent);
-                if(opponentSocketClass !=null) {
-                    waiterHashMap.put(opponentSocketClass,socketClass);
+                if (opponentSocketClass != null) {
+                    waiterHashMap.put(opponentSocketClass, socketClass);
                     opponentSocketClass.changeTransmitter();
                     Transmitter personTransmitter = opponentSocketClass.getTransmitter();
                     personTransmitter.transmitterId = 0;
@@ -292,34 +293,50 @@ public class RequestEnumController {
                     transfer(opponentSocketClass);
                 }
                 break;
-            case DECLINE_PLAY:
-                SocketClass waiter =waiterHashMap.get(socketClass);
+            case DECLINE_PLAY: {
+                SocketClass waiter = waiterHashMap.get(socketClass);
                 waiter.changeTransmitter();
                 Transmitter waiterTransmitter = waiter.getTransmitter();
                 waiterTransmitter.message = "decline";
                 waiterTransmitter.requestEnum = RequestEnum.DECLINE_PLAY;
-                waiterTransmitter.transmitterId =0;
+                waiterTransmitter.transmitterId = 0;
                 transfer(waiter);
                 break;
-            case ACCEPT_PLAY:
-                SocketClass waiter1 =waiterHashMap.get(socketClass);
-                waiter1.changeTransmitter();
+            }
+            case ACCEPT_PLAY: {
+                SocketClass waiter = waiterHashMap.get(socketClass);
+                waiter.changeTransmitter();
                 socketClass.changeTransmitter();
-                Transmitter waiterTransmitter1 = waiter1.getTransmitter();
-                socketClass.getTransmitter().transmitterId =0;
-                waiterTransmitter1.transmitterId = 0;
-                socketClass.getTransmitter().requestEnum = RequestEnum.BATTLE;
-                waiterTransmitter1.requestEnum = RequestEnum.BATTLE;
-                waiterTransmitter1.battleMessage.socketClasses = new SocketClass[]{socketClass,waiter1};
-                socketClass.getTransmitter().battleMessage.socketClasses =new SocketClass[]{socketClass,waiter1};
+                Game game = new Game();
+                socketClass.setGame(game);
+                Match match = socketClass.setMatch(
+                        game.makeNewMultiGame(waiter.getMode(), waiter.getNumberOfFlag(), waiter.getReward()));
+                sendAcceptPlayForBoth(socketClass, waiter, match, game);
+                sendAcceptPlayForBoth(waiter, socketClass, match, game);
+
                 //todo save them in client
                 /**
                  * goes to transferController func:fromServer...
                  */
                 break;
+            }
+            case CANCEL_START_MATCH:
+                transmitter.requestEnum = RequestEnum.CANCEL_START_MATCH;
+                transfer(socketClass);
+                break;
         }
         socketClass.changeTransmitter();
 
+    }
+
+    private static void sendAcceptPlayForBoth(SocketClass socketClass, SocketClass waiter, Match match, Game game) {
+        Transmitter transmitter = socketClass.getTransmitter();
+        transmitter.transmitterId = 0;
+        transmitter.requestEnum = RequestEnum.BATTLE;
+        transmitter.battleMessage.socketClasses = new SocketClass[]{socketClass, waiter};
+        transmitter.match = match;
+        transmitter.game = game;
+        transfer(socketClass);
     }
 
     private static void transfer(SocketClass socketClass) {

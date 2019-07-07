@@ -35,6 +35,7 @@ public enum RequestEnum {
     NEW_CARD_ARRAYLISTS,
     ALL_ACCOUNT,
     START_MATCH,
+    CANCEL_START_MATCH,
     PLAY_REQUEST,
     ACCEPT_PLAY,
     DECLINE_PLAY,

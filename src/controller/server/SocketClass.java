@@ -20,6 +20,9 @@ public class SocketClass {
     private ClientHandlerServer clientHandlerServer;
     private PrintWriter out;
     private Scanner in;
+    private int mode;
+    private int numberOfFlag;
+    private int reward;
 
     public ClientHandlerServer getClientHandlerServer() {
         return clientHandlerServer;
@@ -86,5 +89,29 @@ public class SocketClass {
 
     public Scanner getIn() {
         return in;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
+    public void setNumberOfFlag(int numberOfFlag) {
+        this.numberOfFlag = numberOfFlag;
+    }
+
+    public void setReward(int reward) {
+        this.reward = reward;
+    }
+
+    public int getMode() {
+        return mode;
+    }
+
+    public int getNumberOfFlag() {
+        return numberOfFlag;
+    }
+
+    public int getReward() {
+        return reward;
     }
 }
