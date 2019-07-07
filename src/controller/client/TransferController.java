@@ -40,6 +40,7 @@ public class TransferController {
             case NEW_CARD_ARRAYLISTS:
             case MAIN_DECK:
             case GET_COLLECTION:
+            case ALL_ACCOUNT:
                 fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
             case LOGOUT:
@@ -52,6 +53,7 @@ public class TransferController {
             case EXIT_FROM_CHAT:
             case END_OF_CLIENT:
             case COLLECTION_DELETE_DECK:
+            case START_MATCH:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:

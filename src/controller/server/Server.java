@@ -59,10 +59,10 @@ public class Server extends Application {
     private static int PORT = 8000;
 
     public static void main(String[] args) {
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("name","myDB");
-        HttpResponse<String> response = DBClass.main(hashMap,"init_DB");
-        System.out.println(response);
+//        HashMap<String,Object> hashMap = new HashMap<>();
+//        hashMap.put("name","myDB");
+//        HttpResponse<String> response = DBClass.main(hashMap,"init_DB");
+//        System.out.println(response);
 
 
         try {
