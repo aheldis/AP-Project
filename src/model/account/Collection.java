@@ -108,16 +108,17 @@ public class Collection implements Cloneable, Serializable {
         }
     }
 
-    public void selectADeckAsMainDeck(String deckName) {
+    public ErrorType selectADeckAsMainDeck(String deckName) {
 
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (errorForDeck(deck)) {
             if (!deck.validate()) {
-                ErrorType error = ErrorType.SELECTED_INVALID_DECK;
-                error.printMessage();
+                return ErrorType.SELECTED_INVALID_DECK;
+
             }
             account.setMainDeck(deck);
         }
+        return null;
     }
 
     public Deck passTheDeckIfHaveBeenExist(String deckName) {
@@ -156,28 +157,25 @@ public class Collection implements Cloneable, Serializable {
 
     }
 
-    public boolean createDeck(String deckName) {
+    public ErrorType createDeck(String deckName) {
         if (passTheDeckIfHaveBeenExist(deckName) != null) {
-            ErrorType error = ErrorType.DECK_HAVE_BEEN_EXIST;
-            error.printMessage();
-            return false;
+            return ErrorType.DECK_HAVE_BEEN_EXIST;
+
         }
         Deck deck = new Deck();
         deck.setName(deckName);
         decks.add(deck);
-        return true;
-
+        return null;
     }
 
-    public void deleteDeck(String deckName) {
+    public ErrorType deleteDeck(String deckName) {
         Deck deck = passTheDeckIfHaveBeenExist(deckName);
         if (deck != null)
             decks.remove(deck);
         else {
-            ErrorType error = ErrorType.HAVE_NOT_DECK;
-            error.printMessage();
-
+            return ErrorType.HAVE_NOT_DECK;
         }
+        return null;
     }
 
     private int numberOfCardsExceptHeroesForThisDeck(String deckName) {
@@ -250,7 +248,7 @@ public class Collection implements Cloneable, Serializable {
         ErrorType error;
         if (deck == null) {
             error = ErrorType.HAVE_NOT_DECK;
-            error.printMessage();
+            //error.printMessage();
             return false;
         }
         return true;

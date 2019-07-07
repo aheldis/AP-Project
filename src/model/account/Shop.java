@@ -129,7 +129,7 @@ public class Shop {
 
     public Object search(Account account, String name) {
         if (cardExist(name) == null && !itemExist(name)) {
-            ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP.printMessage();
+            //ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP.printMessage();
             return null;
         }
         if (cardExist(name) != null) {

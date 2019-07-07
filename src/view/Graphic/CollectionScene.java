@@ -745,7 +745,10 @@ class CollectionScene {
             delete_deck.setOnMouseClicked(event14 -> {
                 System.out.println("hi");
                 try {
-                    collection.deleteDeck(deck.getName());
+                    Transmitter transmitter = new Transmitter();
+                    transmitter.name = deck.getName();
+                    TransferController.main(RequestEnum.COLLECTION_DELETE_DECK, transmitter);
+
                     root.getChildren().removeAll(group,
                             checkMainDeck, delete_deck, addCardToDeck);
                     root.getChildren().removeAll(groupOfDeck);
@@ -880,7 +883,10 @@ class CollectionScene {
             });
 
             newDeckText.setOnMouseClicked(event1 -> {
-                if (collection.createDeck(deckName.getText())) {
+                Transmitter transmitter = new Transmitter();
+                transmitter.name = deckName.getText();
+                transmitter = TransferController.main(COLLECTION_NEW_DECK, transmitter);
+                if (transmitter.errorType == null) {
                     int i = collection.getDecks().size() - 1;
                     deckName.clear();
                     root.getChildren().removeAll(newDeck, newDeckText,
@@ -893,9 +899,6 @@ class CollectionScene {
                             , collection, group);
                     root.getChildren().addAll(rectangle, newDeck, newDeckText,
                             importDeck, importText, close, text, deckName, exportDeck, exportText);
-                    Transmitter transmitter = new Transmitter();
-                    transmitter.collection = collection;
-                    TransferController.main(NEW_DECK, transmitter);
                 }
 
             });

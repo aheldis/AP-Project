@@ -42,7 +42,7 @@ public class RequestEnumController {
                     transmitter.errorType = ErrorType.USER_NAME_ALREADY_EXIST;
                 else {
                     socketClass.setAccount(allAccount.getAccountByName(clientTransmitter.name));
-                    socketClass.getAccount().setAuthToken(AllAccount.getInstance().getAuthToken(socketClass.getAccount()));
+                    account.setAuthToken(AllAccount.getInstance().getAuthToken(account));
                 }
                 transfer(socketClass);
                 break;
@@ -53,32 +53,32 @@ public class RequestEnumController {
                     transmitter.errorType = ErrorType.PASSWORD_DOES_NOT_MATCH;
                 else {
                     socketClass.setAccount(allAccount.getAccountByName(clientTransmitter.name));
-                    socketClass.getAccount().setAuthToken(AllAccount.getInstance().getAuthToken(socketClass.getAccount()));
+                    account.setAuthToken(AllAccount.getInstance().getAuthToken(account));
                 }
                 transfer(socketClass);
                 break;
             case LOGOUT:
-                AllAccount.getInstance().saveAccount(socketClass.getAccount());
-                socketClass.getAccount().setAuthToken(null);
+                AllAccount.getInstance().saveAccount(account);
+                account.setAuthToken(null);
                 socketClass.setAccount(null);
                 break;
             case PROFILE:
-                transmitter.path = socketClass.getAccount().getAccountImagePath();
-                transmitter.name = socketClass.getAccount().getUserName();
-                transmitter.matchInfos = socketClass.getAccount().getMatchHistory();
+                transmitter.path = account.getAccountImagePath();
+                transmitter.name = account.getUserName();
+                transmitter.matchInfos = account.getMatchHistory();
                 transmitter.accounts = AllAccount.getInstance().showLeaderBoard();
                 transfer(socketClass);
                 break;
             case SHOP_BUY_AND_SELL:
                 break;
             case SHOP_BUY:
-                transmitter.errorType = Shop.getInstance().buy(socketClass.getAccount(), clientTransmitter.name);
-                transmitter.daric = socketClass.getAccount().getDaric();
+                transmitter.errorType = Shop.getInstance().buy(account, clientTransmitter.name);
+                transmitter.daric = account.getDaric();
                 transfer(socketClass);
                 break;
             case SHOP_SELL:
-                transmitter.errorType = Shop.getInstance().sell(socketClass.getAccount(), clientTransmitter.name);
-                transmitter.daric = socketClass.getAccount().getDaric();
+                transmitter.errorType = Shop.getInstance().sell(account, clientTransmitter.name);
+                transmitter.daric = account.getDaric();
                 transfer(socketClass);
                 break;
             case SHOP_CARDS:
@@ -90,9 +90,13 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
             case SHOP_SEARCH:
-                transmitter.object = Shop.getInstance().search(socketClass.getAccount(), clientTransmitter.name);
-                transmitter.name = socketClass.getAccount().getUserName();
-                transmitter.collection = socketClass.getAccount().getCollection();
+                transmitter.object = Shop.getInstance().search(account, clientTransmitter.name);
+                transmitter.name = account.getUserName();
+                transmitter.collection = account.getCollection();
+                if(transmitter.object == null)
+                {
+                    transmitter.errorType = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
+                }
                 transfer(socketClass);
                 break;
             case SHOP_ITEMS:
@@ -102,29 +106,31 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
             case SHOP_DARIC:
-                transmitter.daric = socketClass.getAccount().getDaric();
+                transmitter.daric = account.getDaric();
                 transfer(socketClass);
                 break;
 
 
             case COLLECTION_SHOW:
-                transmitter.cards = socketClass.getAccount().getCollection().getAllCards();
-                transmitter.items = new ArrayList<>(Arrays.asList(socketClass.getAccount().getCollection().getItems()));
+                transmitter.cards = account.getCollection().getAllCards();
+                transmitter.items = new ArrayList<>(Arrays.asList(account.getCollection().getItems()));
                 transfer(socketClass);
                 break;
             case COLLECTION_DECKS:
-                transmitter.decks = socketClass.getAccount().getDecks();
-                transmitter.collection = socketClass.getAccount().getCollection();
+                transmitter.decks = account.getDecks();
+                transmitter.collection = account.getCollection();
                 for (Card card : transmitter.collection.getAllCards())
                     System.out.println(card.getName() + " " + card.getCardId());
                 transfer(socketClass);
                 break;
             case COLLECTION_NEW_DECK:
-                socketClass.getAccount().setCollection(clientTransmitter.collection);
+                transmitter.errorType = account.getCollection().createDeck(clientTransmitter.name);
                 break;
+            case COLLECTION_DELETE_DECK:
+                transmitter.errorType = account.getCollection().deleteDeck(clientTransmitter.name);
             case COLLECTION_EXPORT:
                 Deck deck = clientTransmitter.deck;
-                String path = "exportedDeck/" + socketClass.getAccount().getUserName()
+                String path = "exportedDeck/" + account.getUserName()
                         + "." + deck.getName() + ".json";
                 GeneralLogicMethods.saveInFile(path, deck);
                 break;
@@ -132,12 +138,12 @@ public class RequestEnumController {
                 InputStream input;
                 try {
                     input = new FileInputStream("exportedDeck/"
-                            + socketClass.getAccount().getUserName() + "." + clientTransmitter.deck.getName() + ".json");
+                            + account.getUserName() + "." + clientTransmitter.deck.getName() + ".json");
                     Reader reader = new InputStreamReader(input);
                     YaGson mapper = new YaGson();
                     Deck deckImported = mapper.fromJson(reader, Deck.class);//load the deck
                     transmitter.deck = deckImported;
-                    if (!socketClass.getAccount().getCollection().checkTheDeckForImport(deckImported)) {
+                    if (!account.getCollection().checkTheDeckForImport(deckImported)) {
                         transmitter.errorType =
                                 ErrorType.HAVE_NOT_CARDS_IN_COLLECTION_FOR_IMPORT;
 
@@ -153,7 +159,8 @@ public class RequestEnumController {
                 //todo
                 break;
             case COLLECTION_SELECT_MAIN_DECK:
-                socketClass.getAccount().getCollection().selectADeckAsMainDeck(transmitter.deck.getName());
+                transmitter.errorType =
+                        account.getCollection().selectADeckAsMainDeck(transmitter.deck.getName());
                 break;
             case COLLECTION_CARDS:
                 transmitter.cards = account.getCollection().getAllCards();
@@ -177,18 +184,18 @@ public class RequestEnumController {
                 break;
             case ENTER_CHAT:
                 chatPerson.add(socketClass);
-                account = socketClass.getAccount();
+                account = account;
                 transmitter.name = account.getUserName();
                 transmitter.path = account.getAccountImagePath();
                 transfer(socketClass);
                 break;
             case NEW_CARD_ID:
-                account = socketClass.getAccount();
+                account = account;
                 Card card = transmitter.card;
                 new CardId(account, card, account.getCollection().getNumberOfCardId(card));
                 account.getCollection().addToCards(card);
                 break;
-            case CHAT:
+            case SEND_MESSAGE:
 //                groupTexts.add(group);
                 for (SocketClass person : chatPerson) {
                     person.changeTransmitter();
