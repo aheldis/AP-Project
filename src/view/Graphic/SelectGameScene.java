@@ -35,7 +35,7 @@ import java.util.Random;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
-class SelectGameScene {
+public class SelectGameScene {
     private static Scene selectGameScene = StageLauncher.getScene(StateType.SELECT_GAME);
     private static Group selectGameRoot = (Group) Objects.requireNonNull(selectGameScene).getRoot();
     private static Scene selectModeScene = StageLauncher.getScene(StateType.SELECT_MODE);
@@ -319,9 +319,17 @@ class SelectGameScene {
         group.setOnMouseClicked(event -> {
             Transmitter transmitter = new Transmitter();
             transmitter.name = name;
-            transmitter = TransferController.main(RequestEnum.START_MATCH, transmitter);
+            TransferController.main(RequestEnum.START_MATCH, transmitter);
+
         });
         return group;
+    }
+
+    public static void decline(){
+        Platform.setImplicitExit(false);
+        Platform.runLater(() -> {
+            StageLauncher.decorateScene(StateType.MAIN_MENU);
+        });
     }
 
     private static boolean valid(ArrayList<Account> accounts, int i) {

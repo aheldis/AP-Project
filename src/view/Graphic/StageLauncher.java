@@ -1,21 +1,30 @@
 package view.Graphic;
 
+import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.card.Card;
-import model.card.Minion;
 import view.enums.Cursor;
 import view.enums.StateType;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static controller.RequestEnum.*;
@@ -98,16 +107,42 @@ public class StageLauncher extends Application {
         //return makeScene(stateType);
     }
 
+    public static void getNewRequest(Transmitter transmitter) {
+            Platform.setImplicitExit(false);
+            Platform.runLater(() -> {
 
-    private static void minionMaker(ArrayList<Card> cards, String path) {
-        Minion minion = new Minion();
-        minion.setPathOfThePicture("pics/other/minion_background.png");
-        minion.setPathOfAnimation(path);
-        minion.setHp(10);
-        minion.setAp(10);
-        cards.add(minion);
-        minion.setDescription("i am minion");
+                Group group = new Group();
+                group.relocate(WIDTH/2-100, getHeight()/2-100);
+                String message = transmitter.message;
+                try {
+                    addImage(group,"pics/battle/notification_challenge@2x.png",0,0,200,70);
+                    addText(group,50,30,message, Color.WHITE,30);
+                    ImageView accept = addImage(group,
+                            "pics/battle/collection_card_rarity_mythron@2x.png",20,200,50,50);
+                    ImageView decline = addImage(group,
+                            "pics/battle/collection_card_rarity_legendary@2x.png",20,200,50,50);
+                    accept.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(group);
+                            TransferController.main(ACCEPT_PLAY, new Transmitter());
+                        }
+                    });
+                    decline.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(group);
+                            TransferController.main(DECLINE_PLAY, new Transmitter());
+                        }
+                    });
+                    ((Group) primaryStage.getScene().getRoot()).getChildren().addAll(group);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            });
     }
+
 
     @Override
     public void start(Stage primaryStage) {

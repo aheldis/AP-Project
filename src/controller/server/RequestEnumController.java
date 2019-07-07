@@ -21,10 +21,12 @@ import view.enums.ErrorType;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class RequestEnumController {
     static ArrayList<Group> groupTexts = new ArrayList<>();
     private static ArrayList<SocketClass> chatPerson = new ArrayList<>();
+    private static HashMap<SocketClass/*opponent*/,SocketClass/*waiter*/> waiterHashMap = new HashMap<>();
 
     public static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
         Transmitter transmitter = socketClass.getTransmitter();
@@ -281,6 +283,7 @@ public class RequestEnumController {
                 String opponent = clientTransmitter.name;
                 SocketClass opponentSocketClass = Server.getSocketClasssByName(opponent);
                 if(opponentSocketClass !=null) {
+                    waiterHashMap.put(opponentSocketClass,socketClass);
                     opponentSocketClass.changeTransmitter();
                     Transmitter personTransmitter = opponentSocketClass.getTransmitter();
                     personTransmitter.transmitterId = 0;
@@ -288,6 +291,18 @@ public class RequestEnumController {
                     opponentSocketClass.getTransmitter().message = "Play?";
                     transfer(opponentSocketClass);
                 }
+                break;
+            case DECLINE_PLAY:
+                SocketClass waiter =waiterHashMap.get(socketClass);
+                waiter.changeTransmitter();
+                Transmitter waiterTransmitter = waiter.getTransmitter();
+                waiterTransmitter.message = "decline";
+                waiterTransmitter.requestEnum = RequestEnum.DECLINE_PLAY;
+                waiterTransmitter.transmitterId =0;
+                transfer(waiter);
+                break;
+            case ACCEPT_PLAY:
+                //todo start message and change scene
                 break;
         }
         socketClass.changeTransmitter();

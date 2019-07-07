@@ -3,6 +3,8 @@ package controller.client;
 import controller.RequestEnum;
 import controller.Transmitter;
 import view.Graphic.GlobalChatScene;
+import view.Graphic.SelectGameScene;
+import view.Graphic.StageLauncher;
 
 import java.util.ArrayList;
 
@@ -54,6 +56,8 @@ public class TransferController {
             case EXIT_FROM_CHAT:
             case END_OF_CLIENT:
             case START_MATCH:
+            case ACCEPT_PLAY:
+            case DECLINE_PLAY:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
@@ -102,7 +106,11 @@ public class TransferController {
                 GlobalChatScene.getNewMessage(transmitter);
                 break;
             case PLAY_REQUEST:
-
+                System.out.println("play request - transfer controller");
+                StageLauncher.getNewRequest(transmitter);
+                break;
+            case DECLINE_PLAY:
+                SelectGameScene.decline();
                 break;
         }
     }
