@@ -1,18 +1,20 @@
 package view.Graphic;
 
+import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.RequestEnum;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.card.Card;
 import model.item.Item;
@@ -137,7 +139,6 @@ class ShopScene {
             hBoxes.clear();
 
             HBox hBox = sellCard(daric);
-
 
             Transmitter transmitter = TransferController.main(SHOP_ITEMS, new Transmitter());
             buyCard(hBox, daric, transmitter.items);
@@ -272,6 +273,17 @@ class ShopScene {
 
         addImage(group, "pics/shop/tag.png", 0, 17, 50, 90 - 30);
 
+        Button bidButton = new Button();
+        bidButton.setPrefSize(100, 50);
+        bidButton.setText("BID");
+        bidButton.setTextFill(Color.WHITE);
+        bidButton.setFont(Font.font("Luminari", 30));
+        bidButton.setBackground(new Background(new BackgroundFill(
+                Color.rgb(80, 100, 250, 0.7),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        bidButton.relocate(1000, 100);
+        hbox.getChildren().add(bidButton);
+        //todo bid
 
         hBoxes.add(hbox);
         root.getChildren().addAll(hbox);
@@ -353,7 +365,7 @@ class ShopScene {
                         break outer;
                     if (k >= items.size())
                         break outer;
-                    Usable item = (Usable)items.get(k);
+                    Usable item = (Usable) items.get(k);
                     group = CollectionScene.makeItemCard(item);
 
                     group.setOnMouseClicked(event -> daric.setText("Daric: " + buyCard(item.getName())));
@@ -384,4 +396,36 @@ class ShopScene {
     }
 
 
+    private static void bid() {
+        root.getChildren().clear();
+        setBackground(root, "pics/shop/shop_background.jpg", false, 15, 15);
+
+        VBox vBox = new VBox();
+        vBox.relocate(100, 100);
+        root.getChildren().add(vBox);
+
+        TextField newBidTextField = new TextField();
+        newBidTextField.setPrefHeight(80);
+        newBidTextField.setPrefWidth(300);
+        newBidTextField.positionCaret(1);
+        newBidTextField.setPromptText("Card ID");
+
+        Button newBidButton = new Button();
+        newBidButton.setText("New Bid");
+        newBidButton.setBackground(new Background(new BackgroundFill(Color.gray(1, 0.5),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        newBidButton.setTextFill(Color.BLACK);
+        newBidButton.setPrefSize(120, 60);
+        newBidButton.setOnMouseClicked(event -> {
+            //todo
+        });
+
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(newBidTextField, newBidButton);
+        hBox.getChildren().forEach(node -> HBox.setMargin(node, new Insets(5, 5, 5, 5)));
+
+        vBox.getChildren().add(hBox);
+
+        log(root, "", StateType.SHOP, 450);
+    }
 }

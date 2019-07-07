@@ -80,3 +80,4 @@ AssassinationDagger:5
 KingWisdom:5
 SoulEater:5
 FeatherOfSimurgh:5
+AreaDispel:5
