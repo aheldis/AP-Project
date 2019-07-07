@@ -105,8 +105,8 @@ public class MainMenuScene {
         AnimationTimer collectionAnimation = graphAnimation(collectionGraph);
         Label collectionShadow = shadowAnimation(collection, collectionAnimation);
         collectionShadow.setOnMouseClicked(event -> {
-            TransferController.main(RequestEnum.ENTER_COLLECTION, new Transmitter());
-            CollectionScene.showInCollection();
+            Transmitter transmitter = TransferController.main(RequestEnum.GET_COLLECTION, new Transmitter());
+            CollectionScene.showInCollection(transmitter.collection);
             collectionAnimation.stop();
             setScene(StateType.COLLECTION);
         });

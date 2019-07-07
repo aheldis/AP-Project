@@ -35,6 +35,7 @@ import view.enums.StateType;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,7 +58,7 @@ class CollectionScene {
     private static int numberOfDeck = 0;
     private static ArrayList<Node> groupOfDeck = new ArrayList<>();
     private static Transmitter transmitter;
-
+    private static Collection collection = null;
 
     private static void deckLittleCardMaker(Parent root, Object card, Group group, Collection collection,
                                             Deck deck, VBox sideVBox) {
@@ -145,6 +146,7 @@ class CollectionScene {
                         break;
                     }
                 }
+                updateCollectionInServer();
             });
 
         } catch (Exception ignored) {
@@ -206,13 +208,11 @@ class CollectionScene {
         return group;
     }
 
-
     private static void showMana(Group root, int x, int y, int mana) {
         cardsIcon.add(addImage(root, "pics/other/icon_mana@2x.png", x, y, 50, 50));
         cardsIcon.add(addText(root, x + 16, y + 20, mana + "",
                 Color.rgb(22, 22, 225, 0.5), 20));
     }
-
 
     private static void showEachHero(Card card, HBox hBox, int i, int j) {
         try {
@@ -377,7 +377,7 @@ class CollectionScene {
         hBox.setSpacing(X_BORDER);
     }
 
-    private static void searchBar(HBox hBox, VBox vBox) {
+    private static void searchBar(HBox hBox, VBox vBox, Collection collection) {
         Group groupText = new Group();
         groupText.relocate(300, 20);
 
@@ -398,14 +398,17 @@ class CollectionScene {
         vBox.getChildren().add(hBox);
 
         group1.setOnMouseClicked(event -> {
-
+/*
             transmitter.name = textArea.getText();
             transmitter = TransferController.main(RequestEnum.COLLECTION_SEARCH_CARD, transmitter);
-            ArrayList<String> ids = new ArrayList<>(transmitter.ids);
             transmitter = TransferController.main(RequestEnum.COLLECTION_SEARCH_ITEM, transmitter);
-            ids.addAll(transmitter.ids);
+*/
+
+            ArrayList<String> ids = new ArrayList<>(collection.searchCardName(textArea.getText()));
+            ids.addAll(collection.searchItemName(textArea.getText()));
 
             textArea.clear();
+
             if (ids.size() != 0) {
                 Group group = new Group();
                 group.relocate(440, 150);
@@ -484,15 +487,22 @@ class CollectionScene {
         }
     }
 
-    static void showInCollection() {
+    //set collection scene:
+    static void showInCollection(Collection collection) {
+        CollectionScene.collection = collection;
+        /*
         transmitter = TransferController.main(RequestEnum.COLLECTION_CARDS, new Transmitter());
         ArrayList<Card> cards = transmitter.cards;
         transmitter = TransferController.main(RequestEnum.COLLECTION_ITEMS, new Transmitter());
         ArrayList<Item> items = transmitter.items;
+        */
+        ArrayList<Card> cards = collection.getAllCards();
+        ArrayList<Item> items = new ArrayList<>(Arrays.asList(collection.getItems()));
+
         root.getChildren().clear();
 
-        for(int i=0;i< cards.size();i++){
-            System.out.println(cards.get(i).getName()+"  "+cards.get(i).getCardId());
+        for (int i = 0; i < cards.size(); i++) {
+            System.out.println(cards.get(i).getName() + "  " + cards.get(i).getCardId());
         }
 
         playMusic("resource/music/collection.m4a", true, collectionScene);
@@ -516,15 +526,15 @@ class CollectionScene {
         hBox.setSpacing(1);
         hBox.setPrefWidth(StageLauncher.getWidth());
 
-        searchBar(hBox, vBox);
+        searchBar(hBox, vBox, collection);
 
         ImageView back = addBack(root);
         ImageView next = addNext(root);
         Button deckScene = imageButton(collectionScene, root, "pics/other/desc.png",
                 "Decks", 600, 770, 100, 50);
         deckScene.setOnMouseClicked(event -> {
-            transmitter = TransferController.main(COLLECTION_DECKS, new Transmitter());
-            showDeck(transmitter.decks, transmitter.collection);
+            //transmitter = TransferController.main(COLLECTION_DECKS, new Transmitter());
+            showDeck(collection.getDecks(), collection);
         });
 
         back.setOnMouseClicked(event -> {
@@ -555,8 +565,8 @@ class CollectionScene {
             instanceOf(cards, hBox, j, i);
         }
 
-        transmitter = TransferController.main(RequestEnum.COLLECTION_HELP, new Transmitter());
-        log(root, transmitter.string /*help*/, StateType.MAIN_MENU, 600);
+        //transmitter = TransferController.main(RequestEnum.COLLECTION_HELP, new Transmitter());
+        log(root, collection.helpOfCollection(), StateType.MAIN_MENU, 600);
 
     }
 
@@ -670,7 +680,6 @@ class CollectionScene {
 
             addCardToDeck.setOnMouseClicked(event15 -> {
                 pageNumberCards = 0;
-                System.out.println("hi");
                 Rectangle rectangle = new Rectangle(350, 50, 800, 750);
                 rectangle.setFill(Color.rgb(0, 0, 0, 0.7));
                 rectangle.setArcHeight(50);
@@ -730,25 +739,19 @@ class CollectionScene {
             });
 
             checkMainDeck.setOnMouseClicked(event13 -> {
-                System.out.println("why");
                 if (collection.validateDeck(deck.getName())) {
                     collection.selectADeckAsMainDeck(deck.getName());
                     root.getChildren().remove(checkMainDeck);
                     makeIConBarForDeck("pics/collection/checkmark-green.png",
                             10, 10);
-                    Transmitter transmitter = new Transmitter();
-                    transmitter.deck = deck;
-                    TransferController.main(MAIN_DECK, transmitter);
+                    updateCollectionInServer();
                 }
             });
 
             delete_deck.setOnMouseClicked(event14 -> {
-                System.out.println("hi");
                 try {
-                    Transmitter transmitter = new Transmitter();
-                    transmitter.name = deck.getName();
-                    TransferController.main(RequestEnum.COLLECTION_DELETE_DECK, transmitter);
-
+                    collection.deleteDeck(deck.getName());
+                    updateCollectionInServer();
                     root.getChildren().removeAll(group,
                             checkMainDeck, delete_deck, addCardToDeck);
                     root.getChildren().removeAll(groupOfDeck);
@@ -765,7 +768,12 @@ class CollectionScene {
 
         });
 
+    }
 
+    public static void updateCollectionInServer() {
+        Transmitter transmitter = new Transmitter();
+        transmitter.collection = collection;
+        TransferController.main(COLLECTION_UPDATE, transmitter);
     }
 
     private static Group makeDeckMainCard(Deck deck, int i, VBox vBox, Collection collection) {
@@ -858,6 +866,7 @@ class CollectionScene {
                                     importDeck, importText, close, text, deckName, exportDeck, exportText);
                         }
                     }
+                    updateCollectionInServer();
                 } catch (Exception e) {
                     ErrorType.INVALID_NAME_FOR_IMPORTED_DECK.printMessage();
                 } finally {
@@ -883,10 +892,12 @@ class CollectionScene {
             });
 
             newDeckText.setOnMouseClicked(event1 -> {
+/*
                 Transmitter transmitter = new Transmitter();
                 transmitter.name = deckName.getText();
                 transmitter = TransferController.main(COLLECTION_NEW_DECK, transmitter);
-                if (transmitter.errorType == null) {
+                */
+                if (collection.createDeck(deckName.getText()) == null) {
                     int i = collection.getDecks().size() - 1;
                     deckName.clear();
                     root.getChildren().removeAll(newDeck, newDeckText,
@@ -899,6 +910,7 @@ class CollectionScene {
                             , collection, group);
                     root.getChildren().addAll(rectangle, newDeck, newDeckText,
                             importDeck, importText, close, text, deckName, exportDeck, exportText);
+                    updateCollectionInServer();
                 }
 
             });
@@ -981,6 +993,4 @@ class CollectionScene {
         log(root, collection.helpOfCollection(), StateType.MAIN_MENU, 600);
 
     }
-
-
 }

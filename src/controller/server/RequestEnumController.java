@@ -93,11 +93,12 @@ public class RequestEnumController {
             case SHOP_SEARCH:
                 transmitter.object = Shop.getInstance().search(account, clientTransmitter.name);
                 transmitter.name = account.getUserName();
-                transmitter.collection = account.getCollection();
                 if(transmitter.object == null)
                 {
                     transmitter.errorType = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
                 }
+                transmitter.cardId = transmitter.name + "_" + clientTransmitter.name + "_" +
+                        account.getCollection().getNumberOfCardId((Card) transmitter.object);
                 transfer(socketClass);
                 break;
             case SHOP_ITEMS:
@@ -111,7 +112,10 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
 
-
+            case GET_COLLECTION:
+                transmitter.collection = account.getCollection();
+                transfer(socketClass);
+                break;
             case COLLECTION_SHOW:
                 transmitter.cards = account.getCollection().getAllCards();
                 transmitter.items = new ArrayList<>(Arrays.asList(account.getCollection().getItems()));
@@ -124,18 +128,18 @@ public class RequestEnumController {
                     System.out.println(card.getName() + " " + card.getCardId());
                 transfer(socketClass);
                 break;
-            case COLLECTION_NEW_DECK:
+            case NEW_DECK:
                 transmitter.errorType = account.getCollection().createDeck(clientTransmitter.name);
                 break;
             case COLLECTION_DELETE_DECK:
                 transmitter.errorType = account.getCollection().deleteDeck(clientTransmitter.name);
-            case COLLECTION_EXPORT:
+            case EXPORT_DECK:
                 Deck deck = clientTransmitter.deck;
                 String path = "exportedDeck/" + account.getUserName()
                         + "." + deck.getName() + ".json";
                 GeneralLogicMethods.saveInFile(path, deck);
                 break;
-            case COLLECTION_IMPORT:
+            case IMPORT_DECK:
                 InputStream input;
                 try {
                     input = new FileInputStream("exportedDeck/"
@@ -163,9 +167,11 @@ public class RequestEnumController {
                 transmitter.errorType =
                         account.getCollection().selectADeckAsMainDeck(transmitter.deck.getName());
                 break;
+            case COLLECTION_UPDATE:
+                account.setCollection(clientTransmitter.collection);
+                break;
             case MAIN_DECK:
                 transmitter.deck = account.getMainDeck();
-                System.out.println("get main deck");
                 if(transmitter.deck == null || !transmitter.deck.validate())
                     transmitter.errorType = ErrorType.DONT_HAVE_MAIN_DECK;
                 transfer(socketClass);

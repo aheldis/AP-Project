@@ -39,9 +39,11 @@ public class TransferController {
             case MAKE_NEW_CARD:
             case NEW_CARD_ARRAYLISTS:
             case MAIN_DECK:
+            case GET_COLLECTION:
                 fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
             case LOGOUT:
+            case COLLECTION_UPDATE:
             case EXPORT_DECK:
             case NEW_DECK:
             case SEND_MESSAGE:
