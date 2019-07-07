@@ -2,17 +2,15 @@ package model.card.makeFile;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
-import controller.RequestEnum;
-import controller.Transmitter;
-import controller.client.TransferController;
+import model.account.Account;
 import model.account.FilesType;
 import model.account.Shop;
 import model.card.Buff;
 import model.card.Card;
+import model.card.CardId;
+import model.requirment.GeneralLogicMethods;
 import view.NewCardMessages;
-import view.Request;
 import view.enums.ErrorType;
-import view.enums.StateType;
 
 import java.io.*;
 import java.lang.reflect.AnnotatedType;
@@ -56,7 +54,7 @@ public class MakeNewFile {
 
     }
 
-    public ErrorType makeNewCard(FilesType typeOfFile) {
+    public ErrorType makeNewCard(FilesType typeOfFile, Account account) {
         try {
             String name = hashMaps.get(0).get("name");
             if (name.equals("")) {
@@ -106,14 +104,10 @@ public class MakeNewFile {
             }
 
             new Thread(() -> {
+                Shop.getInstance().makeNewFromFile(path, typeOfFile);
                 Card card = Shop.getInstance().getNewCardByName(name);
-                if (card == null) {
-                    Shop.getInstance().makeNewFromFile(path, typeOfFile);
-                    card = Shop.getInstance().getNewCardByName(name);
-                }
-                Transmitter transmitter = new Transmitter();
-                transmitter.card = card;
-                TransferController.main(RequestEnum.NEW_CARD_ID, transmitter);
+                new CardId(account, card, account.getCollection().getNumberOfCardId(card));
+                account.getCollection().addToCards(card);
             }).start();
         } catch (Exception e) {
             //NewCardGraphic.setError("Cannot make card!");
@@ -223,18 +217,7 @@ public class MakeNewFile {
 
             File file = new File(path);
             file.delete();
-            FileWriter fileWriter = new FileWriter(path);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            lines.forEach(line -> {
-                try {
-                    bufferedWriter.write(line);
-                    bufferedWriter.newLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-            bufferedWriter.close();
-            fileWriter.close();
+            GeneralLogicMethods.writeLines(lines, path);
         } catch (IOException e) {
             e.printStackTrace();
         }

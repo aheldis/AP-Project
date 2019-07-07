@@ -3679,7 +3679,7 @@
                                 "reward": 500,
                                 "land": "@root.collection.heroes.0.landOfGame",
                                 "whichPlayer": 0,
-                                "date": "Jul 7, 2019 6:46:28 PM",
+                                "date": "Jul 7, 2019, 6:46:28 PM",
                                 "BOUND_FOR_COLLECTIBLES": 6,
                                 "collectibles": [],
                                 "matchNumber": 0
@@ -4291,7 +4291,7 @@
     },
     "decks": [],
     "accountImagePath": "pics/shop/emotes-18.png",
-    "authToken": "fereshte_HBHL",
+    "authToken": "fereshte_FWCK",
     "currentlyPlaying": true
   }
 }

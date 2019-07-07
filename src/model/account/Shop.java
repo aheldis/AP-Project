@@ -6,6 +6,7 @@ import model.item.Collectible;
 import model.item.Item;
 import model.item.Usable;
 import model.item.UsableId;
+import model.requirment.GeneralLogicMethods;
 import view.AccountView;
 import view.enums.ErrorType;
 
@@ -31,36 +32,6 @@ public class Shop {
         }
         return singleInstance;
     }
-
-    public HashMap<String, Integer> getRemainingCards() {
-        return remainingCards;
-    }
-
-    public int getNumberOfRemaingCard(String name){
-        if(!remainingCards.containsKey(name))
-            return 0;
-        return remainingCards.get(name);
-    }
-
-
-    //    public ArrayList<Card> passDeckForComputer(){
-//        Collections.shuffle(cards);
-//        ArrayList<Card> computerCards = new ArrayList<>();
-//        FilesType typeOfFile = null;
-//        for(int i=0 ; i<19 ; i++){
-//            if(cards.get(i) instanceof Minion)
-//                typeOfFile = FilesType.MINION;
-//            if(cards.get(i) instanceof Spell)
-//                typeOfFile = FilesType.HERO;
-//            if(!( cards.get(i) instanceof Hero)){
-//                new CardId(account, cards.get(i), account.getCollection().getNumberOfCardId(cards.get(i)));
-//                makeNewFromFile(pathOfFiles + typeOfFile+ "/" + card.getName()+".json", typeOfFile);
-//                computerCards.add(cards.get(i));
-//                cards.remove(computerCards.get(i));
-//            }
-//        }
-//        return computerCards;
-//    }
 
     private void init() {
         for (FilesType typeOfFile : FilesType.values()) {
@@ -102,20 +73,35 @@ public class Shop {
                 name = addUsable(item);
             }
             if (name != null)
-                remainingCards.put(name, INITIAL_NUMBER_OF_CARDS);
+                addRemainingCard(name);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
+
+    //    public ArrayList<Card> passDeckForComputer(){
+//        Collections.shuffle(cards);
+//        ArrayList<Card> computerCards = new ArrayList<>();
+//        FilesType typeOfFile = null;
+//        for(int i=0 ; i<19 ; i++){
+//            if(cards.get(i) instanceof Minion)
+//                typeOfFile = FilesType.MINION;
+//            if(cards.get(i) instanceof Spell)
+//                typeOfFile = FilesType.HERO;
+//            if(!( cards.get(i) instanceof Hero)){
+//                new CardId(account, cards.get(i), account.getCollection().getNumberOfCardId(cards.get(i)));
+//                makeNewFromFile(pathOfFiles + typeOfFile+ "/" + card.getName()+".json", typeOfFile);
+//                computerCards.add(cards.get(i));
+//                cards.remove(computerCards.get(i));
+//            }
+//        }
+//        return computerCards;
+//    }
+
     private String addCard(Card card) {
         cards.add(card);
         return card.getName();
-    }
-
-    private String addCollectible(Collectible item) {
-        collectibles.add(item);
-        return item.getName();
     }
 
     private String addUsable(Usable item) {
@@ -123,8 +109,85 @@ public class Shop {
         return item.getName();
     }
 
+    private void addRemainingCard(String name) {
+        int remainingCard = readRemainingCard(name);
+        if (remainingCard == -1) {
+            remainingCards.put(name, INITIAL_NUMBER_OF_CARDS);
+            saveRemainingCard(name, INITIAL_NUMBER_OF_CARDS);
+        } else
+            remainingCards.put(name, remainingCard);
+    }
+
+    private int readRemainingCard(String name) {
+        try {
+            FileReader fileReader = new FileReader("resource/remainingCards.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while (true) {
+                String line = bufferedReader.readLine();
+                if (line == null)
+                    break;
+                String[] split = line.trim().split(":");
+                if (split[0].equals(name)) {
+                    bufferedReader.close();
+                    fileReader.close();
+                    return Integer.parseInt(split[1]);
+                }
+            }
+            bufferedReader.close();
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    private void saveRemainingCard(String name, int number) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean find = false;
+                ArrayList<String> lines = new ArrayList<>();
+                try {
+                    FileReader fileReader = new FileReader("resource/remainingCards.txt");
+                    BufferedReader bufferedReader = new BufferedReader(fileReader);
+                    while (true) {
+                        String line = bufferedReader.readLine();
+                        if (line == null)
+                            break;
+                        if (line.contains(name)) {
+                            find = true;
+                            line = name + ":" + number;
+                        }
+                        lines.add(line);
+                    }
+                    bufferedReader.close();
+                    fileReader.close();
+                    File file = new File("resource/remainingCards.txt");
+                    file.delete();
+                    if(!find)
+                        lines.add(name + ":" + number);
+                    GeneralLogicMethods.writeLines(lines, "resource/remainingCards.txt");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
     public static String getPathOfFiles() {
         return pathOfFiles;
+    }
+
+    public int getNumberOfRemaingCard(String name) {
+        if (!remainingCards.containsKey(name))
+            return 0;
+        return remainingCards.get(name);
+    }
+
+    private String addCollectible(Collectible item) {
+        collectibles.add(item);
+        return item.getName();
     }
 
     public Object search(Account account, String name) {
@@ -222,6 +285,7 @@ public class Shop {
             makeNewFromFile(pathOfFiles + typeOfFile + "/" + card.getName() + ".json", typeOfFile);
             cards.remove(card);
             remainingCards.put(name, numberOfRemainingCards - 1);
+            saveRemainingCard(name, numberOfRemainingCards - 1);
             return null;
         }
 
@@ -235,6 +299,7 @@ public class Shop {
             items.remove(item);
             makeNewFromFile(pathOfFiles + "/" + FilesType.USABLE.getName() + "/" + item.getName() + ".json", FilesType.ITEM);
             remainingCards.put(name, numberOfRemainingCards - 1);
+            saveRemainingCard(name, numberOfRemainingCards - 1);
             return null;
         }
         return ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
@@ -259,11 +324,13 @@ public class Shop {
             collection.removeCard(card);
             int numberOfRemainingCards = remainingCards.get(card.getName());
             remainingCards.put(card.getName(), numberOfRemainingCards + 1);
+            saveRemainingCard(card.getName(), numberOfRemainingCards + 1);
         } else if (item != null) {
             account.changeValueOfDaric(item.getCost());
             collection.removeItem(item);
             int numberOfRemainingCards = remainingCards.get(item.getName());
             remainingCards.put(item.getName(), numberOfRemainingCards + 1);
+            saveRemainingCard(item.getName(), numberOfRemainingCards + 1);
         } else {
             return ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION;
         }
@@ -283,8 +350,7 @@ public class Shop {
         } else if (card instanceof Minion) {
             typeOfFile = FilesType.MINION;
         }
-        if (card != null)
-            makeNewFromFile(pathOfFiles + typeOfFile.getName() + "/" + card.getName() + ".json", typeOfFile);
+        makeNewFromFile(pathOfFiles + typeOfFile.getName() + "/" + card.getName() + ".json", typeOfFile);
         cards.remove(card);
         return card;
     }
@@ -310,6 +376,10 @@ public class Shop {
 
     public String help() {
         return accountView.viewHelpOfShop();
+    }
+
+    public HashMap<String, Integer> getRemainingCards() {
+        return remainingCards;
     }
 
     public ArrayList<Card> getCards() {

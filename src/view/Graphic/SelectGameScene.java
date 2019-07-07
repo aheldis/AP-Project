@@ -5,7 +5,6 @@ import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -15,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -301,11 +299,11 @@ class SelectGameScene {
             startGame(game, match);
     }
 
-    private static Group makeOpponent(String name){
+    private static Group makeOpponent(String name) {
         Group group = new Group();
-        addImage(group,"pics/battle/diamond_main_menu_container@2x.png",15,0,200,50);
-        addImage(group,"pics/battle/collection_card_rarity_common@2x.png",0,0,50,50);
-        addText(group,40,20,name,Color.WHITE,20);
+        addImage(group, "pics/battle/diamond_main_menu_container@2x.png", 15, 0, 200, 50);
+        addImage(group, "pics/battle/collection_card_rarity_common@2x.png", 0, 0, 50, 50);
+        addText(group, 40, 20, name, Color.WHITE, 20);
         group.setOnMouseClicked(event -> {
             Transmitter transmitter = new Transmitter();
             transmitter.name = name;
@@ -323,12 +321,12 @@ class SelectGameScene {
             addTextWithShadow(root, 100, 100, "Waiting for player...", "Andale Mono", 40);
 
             VBox vBox = new VBox();
-            vBox.relocate(100,150);
+            vBox.relocate(100, 150);
             root.getChildren().addAll(vBox);
-            transmitter= TransferController.main(RequestEnum.ALL_ACCOUNT, new Transmitter());
-            ArrayList<Account> accounts =transmitter.accounts;
-            for(int i=0;i<accounts.size();i++){
-                if(accounts.get(i).getAuthToken()!=null && accounts.get(i).getMainDeck()!=null)
+            transmitter = TransferController.main(RequestEnum.ALL_ACCOUNT, new Transmitter());
+            ArrayList<Account> accounts = transmitter.accounts;
+            for (int i = 0; i < accounts.size(); i++) {
+                if (accounts.get(i).getAuthToken() != null && accounts.get(i).getMainDeck() != null)
                     vBox.getChildren().add(makeOpponent(accounts.get(i).getUserName()));
             }
 

@@ -17,12 +17,14 @@ public class TransferController {
         switch (requestEnum) {
             case SIGN_UP:
             case LOGIN:
+                /*
             case COLLECTION_DECKS:
             case COLLECTION_CARDS:
             case COLLECTION_ITEMS:
             case COLLECTION_HELP:
             case COLLECTION_SEARCH_CARD:
             case COLLECTION_SEARCH_ITEM:
+            */
             case IMPORT_DECK:
             case SHOP_BUY:
             case SHOP_HELP:
@@ -46,13 +48,11 @@ public class TransferController {
             case LOGOUT:
             case COLLECTION_UPDATE:
             case EXPORT_DECK:
-            case NEW_DECK:
             case SEND_MESSAGE:
             case NEW_CARD_ID:
             case ENTER_COLLECTION:
             case EXIT_FROM_CHAT:
             case END_OF_CLIENT:
-            case COLLECTION_DELETE_DECK:
             case START_MATCH:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
