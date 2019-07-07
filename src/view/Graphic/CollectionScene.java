@@ -894,7 +894,7 @@ class CollectionScene {
                     root.getChildren().addAll(rectangle, newDeck, newDeckText,
                             importDeck, importText, close, text, deckName, exportDeck, exportText);
                     Transmitter transmitter = new Transmitter();
-                    transmitter.deck = collection.getDecks().get(i);
+                    transmitter.collection = collection;
                     TransferController.main(NEW_DECK, transmitter);
                 }
 

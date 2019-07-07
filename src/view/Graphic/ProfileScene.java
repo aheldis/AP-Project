@@ -25,7 +25,7 @@ import java.util.Objects;
 import static view.Graphic.GeneralGraphicMethods.*;
 
 public class ProfileScene {
-    private static ProfileScene singleInstanse = new ProfileScene();
+    private static ProfileScene singleInstance = new ProfileScene();
     private Scene scene = StageLauncher.getScene(StateType.PROFILE);
     private Group root = (Group) Objects.requireNonNull(scene).getRoot();
     private Group matchHistoryGroup = new Group();
@@ -36,7 +36,7 @@ public class ProfileScene {
     }
 
     public static ProfileScene getSingleInstance() {
-        return singleInstanse;
+        return singleInstance;
     }
 
     void initProfileScene() {
@@ -45,7 +45,6 @@ public class ProfileScene {
         addSidebar();
         log(root, "", StateType.MAIN_MENU, 200);
     }
-
 
     private void addTextToScene(VBox vBox,int x,int y,String input){
         Group matchHistoryButtonGroup = new Group();

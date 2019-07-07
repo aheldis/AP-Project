@@ -120,7 +120,7 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
             case COLLECTION_NEW_DECK:
-                socketClass.getAccount().getCollection().createDeck(clientTransmitter.deck.getName());
+                socketClass.getAccount().setCollection(clientTransmitter.collection);
                 break;
             case COLLECTION_EXPORT:
                 Deck deck = clientTransmitter.deck;
