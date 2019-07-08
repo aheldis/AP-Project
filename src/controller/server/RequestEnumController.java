@@ -5,15 +5,14 @@ import com.gilecode.yagson.YaGsonBuilder;
 import controller.BattleMessage;
 import controller.RequestEnum;
 import controller.Transmitter;
-import javafx.scene.Group;
 import model.account.*;
 import model.battle.Deck;
 import model.battle.Game;
 import model.battle.Match;
 import model.card.Card;
 import model.card.makeFile.MakeNewFile;
-import model.item.Item;
 import model.item.Collectible;
+import model.item.Item;
 import model.item.Usable;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
@@ -256,6 +255,7 @@ public class RequestEnumController {
                 break;
             case ALL_ACCOUNT:
                 transmitter.accounts = AllAccount.getInstance().getAccounts();
+                transmitter.name = socketClass.getAccount().getUserName();
                 transfer(socketClass);
                 break;
             case START_CUSTOM_GAME: { /*Custom Game*/
@@ -340,9 +340,6 @@ public class RequestEnumController {
                 sendAcceptPlayForBoth(socketClass, waiter, match, game, numberOfMap, false);
 
                 //todo save them in client
-                /**
-                 * goes to transferController func:fromServer...
-                 */
                 break;
             }
             case CANCEL_START_MATCH:
@@ -409,19 +406,18 @@ public class RequestEnumController {
     }
 
     private static void transfer(SocketClass socketClass) {
-        System.out.println();
-        System.out.println("RequestEnumController.transfer");
+//        System.out.println();
+//        System.out.println("RequestEnumController.transfer");
         Transmitter transmitter = socketClass.getTransmitter();
-        System.out.println("transmitter = " + transmitter);
-        System.out.println("transmitter.requestEnum = " + transmitter.requestEnum);
-        System.out.println("transmitter.transmitterId = " + transmitter.transmitterId);
+//        System.out.println("transmitter = " + transmitter);
+//        System.out.println("transmitter.requestEnum = " + transmitter.requestEnum);
+//        System.out.println("transmitter.transmitterId = " + transmitter.transmitterId);
         try {
             YaGson altMapper = new YaGsonBuilder().create();
             String json = altMapper.toJson(socketClass.getTransmitter());
             socketClass.getOut().println(json);
             socketClass.getOut().flush();
-
-            System.out.println("RequestEnumController.transfer");
+//            System.out.println("RequestEnumController.transfer");
         } catch (Exception e) {
             e.printStackTrace();
         }

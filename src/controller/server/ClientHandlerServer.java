@@ -23,14 +23,9 @@ public class ClientHandlerServer extends Thread {
                 if (socketClass == null || socketClass.getIn() == null)
                     break;
 
-                System.out.println("waiting for line");
                 String line = socketClass.getIn().nextLine();
-                System.out.println("got line");
                 YaGson mapper = new YaGson();
                 Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
-
-                //transmitter = (Transmitter) socketClass.getInputStream().readObject();
-
                 if (transmitter != null) {
                     RequestEnumController.main(transmitter.requestEnum, socketClass, transmitter);
                 }

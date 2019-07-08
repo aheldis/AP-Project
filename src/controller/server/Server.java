@@ -13,11 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.account.Account;
 import model.account.AllAccount;
-import model.account.Collection;
 import model.account.Shop;
-import model.card.Hero;
-import model.item.Collectible;
-import model.item.CollectibleId;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -99,7 +95,7 @@ public class Server extends Application {
             Group group = new Group();
             vBox.getChildren().addAll(group);
             if (account != null) {
-                addRectangle(group, 50, 0, 500, 50, 10, 10, Color.GRAY);
+                addRectangle(group, 50, 0, 500, 50, 10, 10, Color.grayRgb(50, 0.5));
                 addText(group, 50, 10, account.getUserName()
                         + "   Online:" + AllAccount.getInstance().isOnline(account), Color.BLACK, 30);
             }
@@ -143,7 +139,7 @@ public class Server extends Application {
         private static void addShopCard (VBox vBox, String name, String number){
             Group group = new Group();
             vBox.getChildren().addAll(group);
-            addRectangle(group, 50, 0, 500, 50, 10, 10, Color.GRAY);
+            addRectangle(group, 50, 0, 500, 50, 10, 10, Color.grayRgb(50, 0.5));
             addText(group, 50, 10, name + ":" + number, Color.BLACK, 30);
 
         }

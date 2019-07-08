@@ -18,14 +18,6 @@ public class TransferController {
         fromServerTransmitter = transmitter;
         transmitter.requestEnum = requestEnum;
         switch (requestEnum) {
-                /*
-            case COLLECTION_DECKS:
-            case COLLECTION_CARDS:
-            case COLLECTION_ITEMS:
-            case COLLECTION_HELP:
-            case COLLECTION_SEARCH_CARD:
-            case COLLECTION_SEARCH_ITEM:
-            */
             case LOGOUT:
             case COLLECTION_UPDATE:
             case EXPORT_DECK:
@@ -108,7 +100,6 @@ public class TransferController {
         switch (transmitter.requestEnum) {
             case NEW_MESSAGE:
                 System.out.println("new message");
-                //messages.add(transmitter);
                 GlobalChatScene.getNewMessage(transmitter);
                 break;
             case PLAY_REQUEST:

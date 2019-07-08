@@ -347,8 +347,9 @@ public class SelectGameScene {
         Platform.runLater(() -> StageLauncher.decorateScene(StateType.MAIN_MENU));
     }
 
-    private static boolean valid(ArrayList<Account> accounts, int i) {
-        if (accounts.get(i).getAuthToken() == null || accounts.get(i).getMainDeck() == null)
+    private static boolean valid(ArrayList<Account> accounts, int i, String name) {
+        if (accounts.get(i).getAuthToken() == null || accounts.get(i).getMainDeck() == null
+                || accounts.get(i).getUserName().equals(name))
             return false;
         return accounts.get(i).getMainDeck().validate() && !accounts.get(i).isCurrentlyPlaying();
     }
@@ -368,7 +369,7 @@ public class SelectGameScene {
             transmitter = TransferController.main(RequestEnum.ALL_ACCOUNT, new Transmitter());
             ArrayList<Account> accounts = transmitter.accounts;
             for (int i = 0; i < accounts.size(); i++) {
-                if (valid(accounts, i))
+                if (valid(accounts, i, transmitter.name))
                     vBox.getChildren().add(makeOpponent(accounts.get(i).getUserName(), mode, numberOfFlags, reward));
             }
 
