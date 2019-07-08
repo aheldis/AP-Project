@@ -1,6 +1,5 @@
 package controller.server;
 
-import controller.DBClass;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -11,12 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import kong.unirest.HttpResponse;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Shop;
-import model.card.Card;
-import view.Graphic.GlobalChatScene;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,7 +20,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -63,7 +58,7 @@ public class Server extends Application {
         return ServerThread.socketClasses;
     }
 
-    public static SocketClass getSocketClasssByName(String name){
+    public static SocketClass getSocketClassByName(String name) {
         for(SocketClass socketClass : ServerThread.socketClasses){
             if(socketClass.getAccount().getUserName().equals(name))
                 return socketClass;

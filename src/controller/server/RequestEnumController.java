@@ -2,6 +2,7 @@ package controller.server;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import controller.BattleMessage;
 import controller.RequestEnum;
 import controller.Transmitter;
 import javafx.scene.Group;
@@ -282,7 +283,7 @@ public class RequestEnumController {
                 socketClass.setMode(clientTransmitter.mode);
                 socketClass.setNumberOfFlag(clientTransmitter.numberOfFlag);
                 socketClass.setReward(clientTransmitter.reward);
-                SocketClass opponentSocketClass = Server.getSocketClasssByName(opponent);
+                SocketClass opponentSocketClass = Server.getSocketClassByName(opponent);
                 if (opponentSocketClass != null) {
                     waiterHashMap.put(opponentSocketClass, socketClass);
                     opponentSocketClass.changeTransmitter();
@@ -308,6 +309,8 @@ public class RequestEnumController {
                 waiter.changeTransmitter();
                 socketClass.changeTransmitter();
                 Game game = new Game();
+                game.checkPlayerDeck(waiter.getAccount(), 1);
+                game.checkPlayerDeck(socketClass.getAccount(), 2);
                 socketClass.setGame(game);
                 Match match = socketClass.setMatch(
                         game.makeNewMultiGame(waiter.getMode(), waiter.getNumberOfFlag(), waiter.getReward()));
@@ -333,6 +336,7 @@ public class RequestEnumController {
         Transmitter transmitter = socketClass.getTransmitter();
         transmitter.transmitterId = 0;
         transmitter.requestEnum = RequestEnum.BATTLE;
+        transmitter.battleMessage = new BattleMessage();
         transmitter.battleMessage.socketClasses = new SocketClass[]{socketClass, waiter};
         transmitter.match = match;
         transmitter.game = game;
