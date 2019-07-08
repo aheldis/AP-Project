@@ -217,7 +217,7 @@ public class NewCardGraphic {
     private static void setVBox(VBox vBox, String type) {
         Transmitter transmitter = new Transmitter();
         transmitter.type = type;
-        transmitter = TransferController.main(RequestEnum.NEW_CARD_ARRAYLISTS, transmitter);
+        transmitter = TransferController.main(RequestEnum.NEW_CARD_ARRAY_LISTS, transmitter);
         arrayLists.clear();
         arrayLists.add(transmitter.fieldNames);
         arrayLists.add(transmitter.changeFieldNames);

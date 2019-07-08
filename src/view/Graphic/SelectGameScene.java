@@ -263,14 +263,19 @@ public class SelectGameScene {
                 Color.rgb(25, 205, 225, 0.6), 30);
         deathModeText.setFont(Font.font("Lato-bold", FontWeight.BOLD, 30));
 
-        getNumberOfFlagPage(collectFlagImage, selectModeRoot, selectModeScene);
+        TextField reward = new TextField();
+        reward.setPrefHeight(50);
+        reward.relocate(605, 100);
+        textFieldProperties(reward, selectModeRoot);
+
+        getNumberOfFlagPage(collectFlagImage, selectModeRoot, selectModeScene, reward);
 
         saveFlagImage.setOnMouseClicked(event -> {
             if (mode.equals("custom"))
                 startCustomGame(2, 1);
             else {
                 //multiplayer
-                multiPlayerPage(selectModeRoot, selectModeScene);
+                multiPlayerPage(selectModeRoot, selectModeScene, 2, 1, Integer.parseInt(reward.getText()));
             }
 
         });
@@ -280,12 +285,22 @@ public class SelectGameScene {
                 startCustomGame(1, 0);
             else {
                 //multiplayer
-                multiPlayerPage(selectModeRoot, selectModeScene);
+                multiPlayerPage(selectModeRoot, selectModeScene, 1, 0, Integer.parseInt(reward.getText()));
             }
         });
 
         log(selectModeRoot, "select mode\nback", StateType.SELECT_GAME, 200);
 
+    }
+
+    private static void textFieldProperties(TextField textField, Group root) {
+        textField.positionCaret(1);
+        textField.setStyle("-fx-text-fill: #80ffff; -fx-font-size: 25px; -fx-font-weight: bold;");
+        textField.setFont(Font.font("Luminari", 30));
+        textField.setBackground(new Background(
+                new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
+                        CornerRadii.EMPTY, Insets.EMPTY)));
+        root.getChildren().add(textField);
     }
 
     private static void startCustomGame(int mode, int numberOfFlag) {
@@ -299,7 +314,7 @@ public class SelectGameScene {
             startGame(game, match);
     }
 
-    private static Group makeOpponent(String name) {
+    private static Group makeOpponent(String name, int mode, int numberOfFlags, int reward) {
         Group group = new Group();
         addImage(group, "pics/battle/diamond_main_menu_container@2x.png", 15, 0, 200, 50);
         ImageView imageView = addImage(group, "pics/battle/collection_card_rarity_common@2x.png",
@@ -319,27 +334,26 @@ public class SelectGameScene {
         group.setOnMouseClicked(event -> {
             Transmitter transmitter = new Transmitter();
             transmitter.name = name;
+            transmitter.mode = mode;
+            transmitter.numberOfFlag = numberOfFlags;
+            transmitter.reward = reward;
             TransferController.main(RequestEnum.START_MATCH, transmitter);
         });
         return group;
     }
 
-    public static void decline(){
+    public static void decline() {
         Platform.setImplicitExit(false);
-        Platform.runLater(() -> {
-            StageLauncher.decorateScene(StateType.MAIN_MENU);
-        });
+        Platform.runLater(() -> StageLauncher.decorateScene(StateType.MAIN_MENU));
     }
 
     private static boolean valid(ArrayList<Account> accounts, int i) {
         if (accounts.get(i).getAuthToken() == null || accounts.get(i).getMainDeck() == null)
             return false;
-        if (accounts.get(i).getMainDeck().validate() && !accounts.get(i).isCurrentlyPlaying())
-            return true;
-        return false;
+        return accounts.get(i).getMainDeck().validate() && !accounts.get(i).isCurrentlyPlaying();
     }
 
-    private static void multiPlayerPage(Group root, Scene scene) {
+    private static void multiPlayerPage(Group root, Scene scene, int mode, int numberOfFlags, int reward) {
         Transmitter transmitter = TransferController.main(RequestEnum.MAIN_DECK, new Transmitter());
         System.out.println("SelectGameScene.multiPlayerPage");
         if (transmitter.errorType == null) {
@@ -355,7 +369,7 @@ public class SelectGameScene {
             ArrayList<Account> accounts = transmitter.accounts;
             for (int i = 0; i < accounts.size(); i++) {
                 if (valid(accounts, i))
-                    vBox.getChildren().add(makeOpponent(accounts.get(i).getUserName()));
+                    vBox.getChildren().add(makeOpponent(accounts.get(i).getUserName(), mode, numberOfFlags, reward));
             }
 
             //todo -> bere be server request bede
@@ -365,50 +379,44 @@ public class SelectGameScene {
             cancel.setOnMouseClicked(event -> {
                 root.getChildren().clear();
                 StageLauncher.decorateScene(StateType.SELECT_GAME);
-                //todo -> be server bege rafte biroon
+                TransferController.main(RequestEnum.CANCEL_START_MATCH, new Transmitter());
             });
         }
     }
 
-    private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene) {
+    private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene, TextField reward) {
 
         try {
 
             imageView.setOnMouseClicked(event -> {
+
+                root.getChildren().clear();
+                setBackground(root,
+                        "pics/battle/select_mode/select_mode_background.jpg",
+                        true, 10.0f, 10.0f);
+                Text enterNumbersOfFlag = addText(root, 500, 200, "Enter Numbers Of Flags",
+                        Color.rgb(0, 25, 225, 0.8), 40);
+                enterNumbersOfFlag.setFont(Font.font("Luminari", 30));
+                enterNumbersOfFlag.setStrokeWidth(1);
+                enterNumbersOfFlag.setStroke(Color.rgb(0, 0, 0, 0.2));
+
+
+                addImage(root, "pics/collection/card_silenced@2x.png",
+                        600 - 5 - 20, 240, 200, 100);
+
+                TextField number = new TextField();
+                number.setPrefHeight(50);
+                number.relocate(605, 255);
+                textFieldProperties(number, root);
+
                 if (mode.equals("custom")) {
-
-                    root.getChildren().clear();
-                    setBackground(root,
-                            "pics/battle/select_mode/select_mode_background.jpg",
-                            true, 10.0f, 10.0f);
-                    Text enterNumbersOfFlag = addText(root, 500, 200, "Enter Numbers Of Flags",
-                            Color.rgb(0, 25, 225, 0.8), 40);
-                    enterNumbersOfFlag.setFont(Font.font("Luminari", 30));
-                    enterNumbersOfFlag.setStrokeWidth(1);
-                    enterNumbersOfFlag.setStroke(Color.rgb(0, 0, 0, 0.2));
-
-
-                    addImage(root, "pics/collection/card_silenced@2x.png",
-                            600 - 5 - 20, 240, 200, 100);
-
-                    TextField number = new TextField();
-                    number.setPrefHeight(50);
-                    number.relocate(605, 255);
-                    number.positionCaret(1);
-                    number.setStyle("-fx-text-fill: #80ffff; -fx-font-size: 25px; -fx-font-weight: bold;");
-                    number.setFont(Font.font("Luminari", 30));
-                    number.setBackground(new Background(
-                            new BackgroundFill(Color.rgb(225, 225, 225, 0.0001),
-                                    CornerRadii.EMPTY, Insets.EMPTY)));
-                    root.getChildren().add(number);
                     scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-                        if (key.getCode() == KeyCode.ENTER) {
+                        if (key.getCode() == KeyCode.ENTER)
                             startCustomGame(3, Integer.parseInt(number.getText()));
-                        }
                     });
                 } else {
                     //multiplayer
-                    multiPlayerPage(selectModeRoot, selectModeScene);
+                    multiPlayerPage(selectModeRoot, selectModeScene, 3, Integer.parseInt(number.getText()), Integer.parseInt(reward.getText()));
                 }
 
             });
@@ -421,7 +429,7 @@ public class SelectGameScene {
     }
 
 
-    private static void startGame(Game game, Match match) {
+    public static void startGame(Game game, Match match) {
         Random random = new Random();
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {
