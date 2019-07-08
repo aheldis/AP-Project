@@ -1,6 +1,5 @@
 package view.Graphic;
 
-import controller.BattleMessage;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -9,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import model.account.FilesType;
 import model.battle.Player;
 import model.card.Card;
@@ -85,6 +85,10 @@ public class BattleFooterGraphic {
             makeCircleRotation(backgroundCircle, 70, 70);
             ImageView gif = addGif(group, handCardGroup, card, 0, 0);
             if (card instanceof Minion) {
+                if (!BattleScene.getSingleInstance().isImPlayer0()) {
+                    gif.setRotationAxis(Rotate.Y_AXIS);
+                    gif.setRotate(180);
+                }
                 DragAndDrop dragAndDrop = new DragAndDrop();
                 dragAndDrop.dragAndDropForGame(gif, card, player.getHand(), handCardGroup, root,
                         gif.getFitWidth() / 2 - 10, gif.getFitHeight() / 2 + 20, 15, -21);

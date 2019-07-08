@@ -4,7 +4,7 @@ public enum BattleEnum {
     INSERT,
     MOVE,
     ATTACK,
-    SPECIAL_POWER
-
+    SPECIAL_POWER,
+    START_GAME
 
 }

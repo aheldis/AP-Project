@@ -2,10 +2,9 @@ package controller.client;
 
 import controller.RequestEnum;
 import controller.Transmitter;
-import view.Graphic.GlobalChatScene;
-import view.Graphic.SelectGameScene;
-import view.Graphic.ShopScene;
-import view.Graphic.StageLauncher;
+import model.card.Card;
+import model.land.Square;
+import view.Graphic.*;
 
 import java.util.ArrayList;
 
@@ -31,6 +30,7 @@ public class TransferController {
             case CANCEL_START_MATCH:
             case START_MATCH:
             case GET_BIDS:
+            case BATTLE:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case SIGN_UP:
@@ -110,16 +110,33 @@ public class TransferController {
                 SelectGameScene.decline();
                 break;
             case BATTLE:
-                SelectGameScene.startGame(transmitter.game, transmitter.match,
-                        transmitter.numberOfMap, transmitter.battleMessage.imPlayer0);
+                battleHandler(transmitter);
                 //todo make battle Scene
                 break;
             case CANCEL_START_MATCH:
-                //todo
+                StageLauncher.deleteRequestGroup();
+                break;
             case ADD_A_BID:
                 System.out.println("ADD A BID in fromServerblah");
                 ShopScene.addABidRow(transmitter.card, transmitter.cost, transmitter.time);
                 break;
+        }
+    }
+
+    private static void battleHandler(Transmitter transmitter) {
+        switch (transmitter.battleMessage.battleEnum) {
+            case START_GAME:
+                SelectGameScene.startGame(transmitter.game, transmitter.match,
+                        transmitter.numberOfMap, transmitter.battleMessage.imPlayer0);
+                break;
+            case INSERT:
+                Card card = transmitter.battleMessage.card;
+                Square position = card.getPosition();
+                BattleScene battleScene = BattleScene.getSingleInstance();
+                battleScene.addCardToBoard(position.getXCoordinate(), position.getYCoordinate(), card,
+                        "Breathing", null, false, !battleScene.isImPlayer0(), false);
+                break;
+
         }
     }
 

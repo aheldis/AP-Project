@@ -2,6 +2,7 @@ package controller.server;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import controller.BattleEnum;
 import controller.BattleMessage;
 import controller.RequestEnum;
 import controller.Transmitter;
@@ -300,6 +301,7 @@ public class RequestEnumController {
                 socketClass.setNumberOfFlag(clientTransmitter.numberOfFlag);
                 socketClass.setReward(clientTransmitter.reward);
                 SocketClass opponentSocketClass = Server.getSocketClassByName(opponent);
+                socketClass.opponent = opponentSocketClass;
                 if (opponentSocketClass != null) {
                     waiterHashMap.put(opponentSocketClass, socketClass);
                     opponentSocketClass.changeTransmitter();
@@ -331,10 +333,10 @@ public class RequestEnumController {
                 Match match = socketClass.setMatch(
                         game.makeNewMultiGame(waiter.getMode(), waiter.getNumberOfFlag(), waiter.getReward()));
                 if (clientTransmitter.level == 3)
-                    transmitter.match.setFlagsRandomly(3);
+                    match.setFlagsRandomly(3);
                 if (clientTransmitter.level == 2)
-                    transmitter.match.setFlagsRandomly(2);
-                transmitter.match.setCollectiblesRandomly();
+                    match.setFlagsRandomly(2);
+                match.setCollectiblesRandomly();
                 int numberOfMap = new Random().nextInt(12) + 1;
                 sendAcceptPlayForBoth(waiter, socketClass, match, game, numberOfMap, true);
                 sendAcceptPlayForBoth(socketClass, waiter, match, game, numberOfMap, false);
@@ -344,7 +346,12 @@ public class RequestEnumController {
             }
             case CANCEL_START_MATCH:
                 transmitter.requestEnum = RequestEnum.CANCEL_START_MATCH;
-                transfer(socketClass);
+                socketClass.opponent.setTransmitter(transmitter);
+                transfer(socketClass.opponent);
+                break;
+            case BATTLE:
+                socketClass.socketClasses[1].setTransmitter(clientTransmitter);
+                transfer(socketClass.socketClasses[1]);
                 break;
             case NEW_BID: {
                 transmitter.errorType = Bid.newBid(account, clientTransmitter.cardId, 100);
@@ -360,6 +367,7 @@ public class RequestEnumController {
             case BID_NEW_COST: {
                 Bid bid = Bid.getBidByCard(clientTransmitter.card);
                 int newCost = clientTransmitter.cost;
+                assert bid != null;
                 if (newCost > bid.getCard().getCost())
                     transmitter.errorType = ErrorType.INVALID_COST;
                 else if (newCost < bid.getCost())
@@ -398,6 +406,7 @@ public class RequestEnumController {
         transmitter.requestEnum = RequestEnum.BATTLE;
         transmitter.battleMessage = new BattleMessage();
         transmitter.battleMessage.imPlayer0 = imPlayer0;
+        transmitter.battleMessage.battleEnum = BattleEnum.START_GAME;
         socketClass.socketClasses = new SocketClass[]{socketClass, waiter};
         transmitter.match = match;
         transmitter.game = game;
@@ -408,7 +417,7 @@ public class RequestEnumController {
     private static void transfer(SocketClass socketClass) {
 //        System.out.println();
 //        System.out.println("RequestEnumController.transfer");
-        Transmitter transmitter = socketClass.getTransmitter();
+//        Transmitter transmitter = socketClass.getTransmitter();
 //        System.out.println("transmitter = " + transmitter);
 //        System.out.println("transmitter.requestEnum = " + transmitter.requestEnum);
 //        System.out.println("transmitter.transmitterId = " + transmitter.transmitterId);

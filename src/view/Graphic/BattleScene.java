@@ -1,6 +1,11 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
+import controller.BattleEnum;
+import controller.BattleMessage;
+import controller.RequestEnum;
+import controller.Transmitter;
+import controller.client.TransferController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
@@ -60,6 +65,7 @@ public class BattleScene {
     private int lastWait;
     private boolean fastForward;
     private final int fastTimeDivisor = 10;
+    private boolean imPlayer0;
 
 
     public int getFastTimeDivisor() {
@@ -131,6 +137,11 @@ public class BattleScene {
                         boolean canPut = match.getPlayers()[0].putCardOnLand(card,
                                 position.getCoordinate(), match.getLand(), true);
                         if (!canPut) {
+                            Transmitter transmitter = new Transmitter();
+                            transmitter.battleMessage = new BattleMessage();
+                            transmitter.battleMessage.card = card;
+                            transmitter.battleMessage.battleEnum = BattleEnum.INSERT;
+                            TransferController.main(RequestEnum.BATTLE, transmitter);
                             removeColorFromRectangles();
                             return null;
                         }
@@ -338,16 +349,14 @@ public class BattleScene {
         group.relocate(imageOfCard.getLayoutX(), imageOfCard.getLayoutY() + 80);
         board.getChildren().addAll(group);
         imageOfCard.setOnMouseEntered(event -> {
-            if (selectedCard != null && selectedCard.canAttack(card)) {
+            if (selectedCard != null && selectedCard.canAttack(card))
                 setCursor(battleScene, Cursor.ATTACK);
-            } else {
+            else
                 setCursor(battleScene, Cursor.LIGHTEN);
-            }
-            if (!drag) {
+            if (!drag)
                 imageOfCard.setEffect(getLighting(Color.RED));
-            } else {
+            else
                 imageOfCard.setEffect(getLighting(Color.WHITE));
-            }
 
             addImage(group, "pics/battle_categorized/icon_atk@2x.png", 0, 0, 40, 40);
             addImage(group, "pics/battle_categorized/icon_hp@2x.png", mapProperties.cellWidth - 30, 0, 40, 40);
@@ -799,5 +808,13 @@ public class BattleScene {
 
     public Group getRoot() {
         return root;
+    }
+
+    public void setImPlayer0(boolean imPlayer0) {
+        this.imPlayer0 = imPlayer0;
+    }
+
+    public boolean isImPlayer0() {
+        return imPlayer0;
     }
 }

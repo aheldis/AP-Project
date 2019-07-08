@@ -26,6 +26,7 @@ public class StageLauncher extends Application {
     private static HashMap<StateType, Scene> sceneHashMap = new HashMap<>();
     private static double HEIGHT;
     private static double WIDTH;
+    private static Group requestGroup;
 
     public static double getWidth() {
         return WIDTH;
@@ -123,8 +124,12 @@ public class StageLauncher extends Application {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
+            requestGroup = group;
         });
+    }
+
+    public static void deleteRequestGroup() {
+        ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(requestGroup);
     }
 
 

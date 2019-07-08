@@ -24,6 +24,7 @@ public class SocketClass {
     private int numberOfFlag;
     private int reward;
     public SocketClass[] socketClasses;
+    public SocketClass opponent;
 
     public ClientHandlerServer getClientHandlerServer() {
         return clientHandlerServer;
@@ -114,5 +115,9 @@ public class SocketClass {
 
     public int getReward() {
         return reward;
+    }
+
+    public void setTransmitter(Transmitter clientTransmitter) {
+        transmitter = clientTransmitter;
     }
 }
