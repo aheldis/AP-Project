@@ -2,6 +2,7 @@ package controller.client;
 
 import controller.RequestEnum;
 import controller.Transmitter;
+import javafx.application.Platform;
 import model.card.Card;
 import model.land.Square;
 import view.Graphic.*;
@@ -111,7 +112,6 @@ public class TransferController {
                 break;
             case BATTLE:
                 battleHandler(transmitter);
-                //todo make battle Scene
                 break;
             case CANCEL_START_MATCH:
                 StageLauncher.deleteRequestGroup();
@@ -133,8 +133,9 @@ public class TransferController {
                 Card card = transmitter.battleMessage.card;
                 Square position = card.getPosition();
                 BattleScene battleScene = BattleScene.getSingleInstance();
-                battleScene.addCardToBoard(position.getXCoordinate(), position.getYCoordinate(), card,
-                        "Breathing", null, false, !battleScene.isImPlayer0(), false);
+                Platform.runLater(() ->
+                        battleScene.addCardToBoard(position.getXCoordinate(), position.getYCoordinate(), card,
+                                "Breathing", null, false, !battleScene.isImPlayer0(), false));
                 break;
 
         }

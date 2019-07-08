@@ -129,7 +129,7 @@ public class StageLauncher extends Application {
     }
 
     public static void deleteRequestGroup() {
-        ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(requestGroup);
+        Platform.runLater(() -> ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(requestGroup));
     }
 
 
