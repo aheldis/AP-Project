@@ -3,7 +3,7 @@
   "@val": {
     "userName": "sara",
     "password": "123",
-    "daric": 150000,
+    "daric": 142400,
     "wins": 0,
     "matchHistory": [],
     "collection": {
@@ -42,7 +42,7 @@
     },
     "decks": [],
     "accountImagePath": "pics/shop/emotes-18.png",
-    "authToken": "sara_FALR",
+    "authToken": "sara_ERTT",
     "currentlyPlaying": false
   }
 }

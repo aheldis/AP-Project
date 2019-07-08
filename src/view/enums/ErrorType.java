@@ -50,6 +50,10 @@ public enum ErrorType {
 
     CAN_NOT_MAKE_CARD("Cannot make card!"),
     CARD_WITH_THIS_NAME_EXIST("Card with this name already exist!"),
+
+    NOT_NUMBER("Enter a number!"),
+    INVALID_COST("Your suggestion cost is more than real cost"),
+    INVALID_COST2("You must enter a higher cost")
     ;
 
     private String message;

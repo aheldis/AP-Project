@@ -164,7 +164,7 @@ public class Shop {
                     fileReader.close();
                     File file = new File("resource/remainingCards.txt");
                     file.delete();
-                    if(!find)
+                    if (!find)
                         lines.add(name + ":" + number);
                     GeneralLogicMethods.writeLines(lines, "resource/remainingCards.txt");
                 } catch (IOException e) {
@@ -320,21 +320,29 @@ public class Shop {
         Card card = collection.passCardByCardId(id);
         Usable item = collection.passUsableItemByUsableItemId(id);
         if (card != null) {
-            account.changeValueOfDaric(card.getCost());
-            collection.removeCard(card);
-            int numberOfRemainingCards = remainingCards.get(card.getName());
-            remainingCards.put(card.getName(), numberOfRemainingCards + 1);
-            saveRemainingCard(card.getName(), numberOfRemainingCards + 1);
+            sellCard(account, card, card.getCost(), true);
         } else if (item != null) {
-            account.changeValueOfDaric(item.getCost());
-            collection.removeItem(item);
-            int numberOfRemainingCards = remainingCards.get(item.getName());
-            remainingCards.put(item.getName(), numberOfRemainingCards + 1);
-            saveRemainingCard(item.getName(), numberOfRemainingCards + 1);
+            sellItem(account, item, item.getCost(), true);
         } else {
             return ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION;
         }
         return null;
+    }
+
+    public void sellCard(Account account, Card card, int cost, boolean changeInRemainingCard) {
+        account.changeValueOfDaric(cost);
+        account.getCollection().removeCard(card);
+        int numberOfRemainingCards = remainingCards.get(card.getName());
+        remainingCards.put(card.getName(), numberOfRemainingCards + 1);
+        saveRemainingCard(card.getName(), numberOfRemainingCards + 1);
+    }
+
+    public void sellItem(Account account, Usable item, int cost, boolean changeInRemainingCard) {
+        account.changeValueOfDaric(cost);
+        account.getCollection().removeItem(item);
+        int numberOfRemainingCards = remainingCards.get(item.getName());
+        remainingCards.put(item.getName(), numberOfRemainingCards + 1);
+        saveRemainingCard(item.getName(), numberOfRemainingCards + 1);
     }
 
     //for making story game
@@ -393,4 +401,6 @@ public class Shop {
     public ArrayList<Item> getCollectibles() {
         return collectibles;
     }
+
+
 }

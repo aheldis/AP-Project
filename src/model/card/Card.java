@@ -707,8 +707,6 @@ public abstract class Card implements Serializable {
     }
 
     public String getDescription() {
-
-
         return stringMakerForDesc(description);
     }
 

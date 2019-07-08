@@ -5,30 +5,26 @@ import com.gilecode.yagson.YaGsonBuilder;
 import controller.RequestEnum;
 import controller.Transmitter;
 import javafx.scene.Group;
-import model.account.Account;
-import model.account.AllAccount;
-import model.account.FilesType;
-import model.account.Shop;
+import model.account.*;
 import model.battle.Deck;
 import model.battle.Game;
 import model.card.Card;
-import model.card.CardId;
 import model.card.makeFile.MakeNewFile;
+import model.item.Item;
 import model.item.Usable;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class RequestEnumController {
     static ArrayList<Group> groupTexts = new ArrayList<>();
     private static ArrayList<SocketClass> chatPerson = new ArrayList<>();
-    private static HashMap<SocketClass/*opponent*/,SocketClass/*waiter*/> waiterHashMap = new HashMap<>();
+    private static HashMap<SocketClass/*opponent*/, SocketClass/*waiter*/> waiterHashMap = new HashMap<>();
 
-    public static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
+    public synchronized static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
         Transmitter transmitter = socketClass.getTransmitter();
         transmitter.requestEnum = clientTransmitter.requestEnum;
         transmitter.transmitterId = clientTransmitter.transmitterId;
@@ -95,12 +91,16 @@ public class RequestEnumController {
             case SHOP_SEARCH:
                 transmitter.object = Shop.getInstance().search(account, clientTransmitter.name);
                 transmitter.name = account.getUserName();
-                if(transmitter.object == null)
-                {
+                if (transmitter.object == null) {
                     transmitter.errorType = ErrorType.NO_SUCH_CARD_OR_ITEM_IN_SHOP;
+                } else {
+                    if (transmitter.object instanceof Card)
+                        transmitter.cardId = transmitter.name + "_" + clientTransmitter.name + "_" +
+                                account.getCollection().getNumberOfCardId((Card) transmitter.object);
+                    else
+                        transmitter.cardId = transmitter.name + "_" + clientTransmitter.name + "_" +
+                                account.getCollection().getNumberOfItemId((Item) transmitter.object);
                 }
-                transmitter.cardId = transmitter.name + "_" + clientTransmitter.name + "_" +
-                        account.getCollection().getNumberOfCardId((Card) transmitter.object);
                 transfer(socketClass);
                 break;
             case SHOP_ITEMS:
@@ -179,7 +179,7 @@ public class RequestEnumController {
                 break;
             case MAIN_DECK:
                 transmitter.deck = account.getMainDeck();
-                if(transmitter.deck == null || !transmitter.deck.validate())
+                if (transmitter.deck == null || !transmitter.deck.validate())
                     transmitter.errorType = ErrorType.DONT_HAVE_MAIN_DECK;
                 transfer(socketClass);
                 break;
@@ -270,7 +270,7 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
             }
-            case NEW_CARD_ARRAYLISTS:{
+            case NEW_CARD_ARRAYLISTS: {
                 MakeNewFile makeNewFile = new MakeNewFile();
                 transmitter.fieldNames = makeNewFile.getFieldNames(FilesType.getEnum(clientTransmitter.type));
                 transmitter.changeFieldNames = makeNewFile.getChangeFieldNames();
@@ -282,8 +282,8 @@ public class RequestEnumController {
             case START_MATCH:
                 String opponent = clientTransmitter.name;
                 SocketClass opponentSocketClass = Server.getSocketClasssByName(opponent);
-                if(opponentSocketClass !=null) {
-                    waiterHashMap.put(opponentSocketClass,socketClass);
+                if (opponentSocketClass != null) {
+                    waiterHashMap.put(opponentSocketClass, socketClass);
                     opponentSocketClass.changeTransmitter();
                     Transmitter personTransmitter = opponentSocketClass.getTransmitter();
                     personTransmitter.transmitterId = 0;
@@ -293,23 +293,69 @@ public class RequestEnumController {
                 }
                 break;
             case DECLINE_PLAY:
-                SocketClass waiter =waiterHashMap.get(socketClass);
+                SocketClass waiter = waiterHashMap.get(socketClass);
                 waiter.changeTransmitter();
                 Transmitter waiterTransmitter = waiter.getTransmitter();
                 waiterTransmitter.message = "decline";
                 waiterTransmitter.requestEnum = RequestEnum.DECLINE_PLAY;
-                waiterTransmitter.transmitterId =0;
+                waiterTransmitter.transmitterId = 0;
                 transfer(waiter);
                 break;
             case ACCEPT_PLAY:
                 //todo start message and change scene
                 break;
+            case NEW_BID: {
+                transmitter.errorType = Bid.newBid(account, clientTransmitter.cardId, 100);
+                transfer(socketClass);
+                break;
+            }
+            case GET_BIDS: {
+                for (Bid bid : Bid.getBids()) {
+                    bid.sendBid();
+                }
+                break;
+            }
+            case BID_NEW_COST: {
+                Bid bid = Bid.getBidByCard(clientTransmitter.card);
+                int newCost = clientTransmitter.cost;
+                if (newCost > bid.getCard().getCost())
+                    transmitter.errorType = ErrorType.INVALID_COST;
+                else if (newCost < bid.getCost())
+                    transmitter.errorType = ErrorType.INVALID_COST2;
+                else if(newCost > account.getDaric()){
+                    transmitter.errorType = ErrorType.NOT_ENOUGH_MONEY;
+                }
+                else {
+                    bid.setCost(newCost);
+                    bid.setBuyerAccount(account);
+                    bid.sendBid();
+                }
+                transfer(socketClass);
+                break;
+            }
+            case ADD_A_BID: {
+                transmitter = socketClass.getTransmitter();
+                transmitter.requestEnum = RequestEnum.ADD_A_BID;
+                transmitter.transmitterId = 0;
+                transmitter.card = clientTransmitter.card;
+                transmitter.cost = clientTransmitter.cost;
+                transmitter.time = clientTransmitter.time;
+                transmitter.string = transmitter.card.getDescription();
+                transfer(socketClass);
+                break;
+            }
         }
         socketClass.changeTransmitter();
 
     }
 
     private static void transfer(SocketClass socketClass) {
+        System.out.println();
+        System.out.println("RequestEnumController.transfer");
+        Transmitter transmitter = socketClass.getTransmitter();
+        System.out.println("transmitter = " + transmitter);
+        System.out.println("transmitter.requestEnum = " + transmitter.requestEnum);
+        System.out.println("transmitter.transmitterId = " + transmitter.transmitterId);
         try {
             YaGson altMapper = new YaGsonBuilder().create();
             String json = altMapper.toJson(socketClass.getTransmitter());

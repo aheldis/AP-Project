@@ -1,7 +1,7 @@
-Rostam:5
+Rostam:3
 Esfandiar:5
 Kaveh:5
-Rakhsh:5
+Rakhsh:4
 Afsaneh:5
 Zahhak:5
 Arash:5

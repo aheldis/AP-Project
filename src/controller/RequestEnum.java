@@ -37,6 +37,10 @@ public enum RequestEnum {
     START_MATCH,
     PLAY_REQUEST,
     ACCEPT_PLAY,
-    DECLINE_PLAY
+    DECLINE_PLAY,
+    NEW_BID,
+    GET_BIDS,
+    BID_NEW_COST,
+    ADD_A_BID
 
 }

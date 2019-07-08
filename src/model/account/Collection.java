@@ -430,7 +430,7 @@ public class Collection implements Cloneable, Serializable {
         return cards;
     }
 
-    int getNumberOfItemId(Item item) {
+    public int getNumberOfItemId(Item item) {
         int number = 1;
         for (Item item1 : items) {
             if (item1 != null && item != null && item1.getName().equals(item.getName())) {

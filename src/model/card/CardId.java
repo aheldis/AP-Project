@@ -32,6 +32,10 @@ public class CardId implements Serializable {
             this.cardId = account.getUserName() + "_" + card.getName() + "_" + number;
     }
 
+    public Card getCard() {
+        return card;
+    }
+
     public String getCardIdAsString() {
         return cardId;
     }

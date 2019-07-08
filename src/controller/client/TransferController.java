@@ -4,6 +4,7 @@ import controller.RequestEnum;
 import controller.Transmitter;
 import view.Graphic.GlobalChatScene;
 import view.Graphic.SelectGameScene;
+import view.Graphic.ShopScene;
 import view.Graphic.StageLauncher;
 
 import java.util.ArrayList;
@@ -45,8 +46,11 @@ public class TransferController {
             case MAIN_DECK:
             case GET_COLLECTION:
             case ALL_ACCOUNT:
+            case NEW_BID:
+            case BID_NEW_COST:
                 fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
+            case GET_BIDS:
             case LOGOUT:
             case COLLECTION_UPDATE:
             case EXPORT_DECK:
@@ -99,6 +103,7 @@ public class TransferController {
 
 
     static void fromServerTransmitter(Transmitter transmitter) {
+        System.out.println(transmitter);
         switch (transmitter.requestEnum) {
             case NEW_MESSAGE:
                 System.out.println("new message");
@@ -111,6 +116,10 @@ public class TransferController {
                 break;
             case DECLINE_PLAY:
                 SelectGameScene.decline();
+                break;
+            case ADD_A_BID:
+                System.out.println("ADD A BID in fromServerblah");
+                ShopScene.addABidRow(transmitter.card, transmitter.cost, transmitter.time);
                 break;
         }
     }

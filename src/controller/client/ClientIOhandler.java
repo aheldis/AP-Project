@@ -41,7 +41,7 @@ public class ClientIOhandler extends Thread {
                         synchronized (lock) {
                             lock.notifyAll();
                         }
-                    } else
+                    } else if(transmitter.requestEnum != null)
                         TransferController.fromServerTransmitter(transmitter);
                 }).start();
 
@@ -51,7 +51,7 @@ public class ClientIOhandler extends Thread {
         }
     }
 
-    Transmitter transfer(boolean waitForAnswer, Transmitter clientTransmitter) {
+    synchronized Transmitter transfer(boolean waitForAnswer, Transmitter clientTransmitter) {
         clientTransmitter.transmitterId = countOfId++;
         Transmitter fromServerTransmitter = null;
         try {
@@ -81,6 +81,7 @@ public class ClientIOhandler extends Thread {
         while (!transmitters.containsKey(transmitterId)) {
             synchronized (lock) {
                 try {
+
                     lock.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

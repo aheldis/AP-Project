@@ -26,19 +26,21 @@ public class Transmitter implements Serializable { //todo check
     public ArrayList<String> targetFieldNames = new ArrayList<>();
     public ArrayList<String> fieldNames = new ArrayList<>();
     public ArrayList<String> buffFieldNames = new ArrayList<>();
+    public ArrayList<Long> times = new ArrayList<>();
+    public ArrayList<Integer> costs = new ArrayList<>();
     public int transmitterId = 0;
     public RequestEnum requestEnum;
     public Collection collection;
-    public ArrayList<Card> cards;
-    public ArrayList<Item> items;
+    public ArrayList<Card> cards = new ArrayList<>();
+    public ArrayList<Item> items = new ArrayList<>();
     public ArrayList<String> ids;
     public String name;
     public String password;
     public String cardId;
     public Deck deck;
-    public ArrayList<Deck> decks;
-    public ArrayList<MatchInfo> matchInfos;
-    public ArrayList<Account> accounts;
+    public ArrayList<Deck> decks = new ArrayList<>();
+    public ArrayList<MatchInfo> matchInfos = new ArrayList<>();
+    public ArrayList<Account> accounts = new ArrayList<>();
     public String authToken;
     public ErrorType errorType = null;
     public long daric;
@@ -57,5 +59,7 @@ public class Transmitter implements Serializable { //todo check
     public int numberOfFlag;
     public int spriteNumber;
     public int spriteNumberCount;
+    public int cost;
     public String type;
+    public long time;
 }

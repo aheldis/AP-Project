@@ -3,7 +3,9 @@ package view.Graphic;
 import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -20,22 +22,135 @@ import model.card.Card;
 import model.item.Item;
 import model.item.Usable;
 import view.enums.Cursor;
+import view.enums.ErrorType;
 import view.enums.StateType;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Objects;
 
 import static controller.RequestEnum.*;
 import static view.Graphic.GeneralGraphicMethods.*;
 
-class ShopScene {
+public class ShopScene {
     private static Scene shopScene = StageLauncher.getScene(StateType.SHOP);
     private static Group root = (Group) Objects.requireNonNull(shopScene).getRoot();
     private static ArrayList<HBox> hBoxes = new ArrayList<>();
     private static int pageNumberCards = 0;
     private static ArrayList<Node> deletable = new ArrayList<>();
+    private static VBox bidVBox;
+    private static HashMap<String, HBox> bidHboxes = new HashMap<>();
+    private static Boolean inBidPage = false;
+
+    public static void addABidRow(Card card, int cost, long startTime) {
+        if (ShopScene.isInBidPage()) {
+            System.out.println("ShopScene.addABidRow");
+            if (bidHboxes.containsKey(card.getCardId().getCardIdAsString()))
+                removeABid(card.getCardId().getCardIdAsString());
+            Platform.setImplicitExit(false);
+            Platform.runLater(() ->{
+                    System.out.println("ShopScene.addABidRow.run");
+
+                    HBox hBox = new HBox();
+                    bidHboxes.put(card.getCardId().getCardIdAsString(), hBox);
+                    hBox.setSpacing(15);
+                    //Text name = new Text(cardId.getCard().getName());
+
+                    StackPane nameStackPane = getTextStackPane("Name: " + card.getName(), 300, 50);
+                    nameStackPane.setOnMouseEntered(event -> {
+                        ImageView descView = addImage(root, "pics/other/desc.png", 1100,
+                                50, 250, 120);
+                        Text desc = addText(root, 1140, 85, card.getDescription(),
+                                Color.WHITE, 15);
+
+                        nameStackPane.setOnMouseExited(event1 -> {
+                            root.getChildren().removeAll(desc, descView);
+                        });
+
+                    });
+                    StackPane costStackPane = getTextStackPane("Current cost: " + cost, 300, 50);
+
+                    TextField yourCost = new TextField();
+                    yourCost.setPrefHeight(50);
+                    yourCost.setPrefWidth(200);
+                    yourCost.positionCaret(1);
+                    yourCost.setPromptText("Your cost");
+                    yourCost.setStyle("-fx-text-fill: rgba(250,250,250, 0.7); -fx-font-size: 20px; " +
+                            "-fx-background-color: rgba(0, 0, 0, 0.5);");
+
+                    Button bidButton = new Button();
+                    bidButton.setText("Bid");
+                    bidButton.setPrefSize(120, 50);
+                    bidButton.setStyle("-fx-background-radius: 10; -fx-text-fill: #000000; -fx-font-size: 25px;" +
+                            "-fx-background-color: rgba(250, 250, 250, 0.5);");
+                    setOnMouseEntered(bidButton, shopScene, true);
+                    bidButton.setOnMouseClicked(event -> {
+                        try {
+                            Transmitter transmitter = new Transmitter();
+                            transmitter.card = card;
+                            transmitter.cost = Integer.parseInt(yourCost.getText());
+                            TransferController.main(BID_NEW_COST, transmitter);
+                        } catch (NumberFormatException e) {
+                            ErrorType.NOT_NUMBER.printMessage();
+                        }
+                    });
+
+                    hBox.getChildren().addAll(nameStackPane, costStackPane, yourCost, bidButton);
+                    bidVBox.getChildren().add(hBox);
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            long elapsedTime = 0L;
+                            while (elapsedTime < 3 * 60 * 1000) {
+                                elapsedTime = (new Date()).getTime() - startTime;
+                            }
+                            removeABid(card.getCardId().getCardIdAsString());
+                        }
+
+                    }).start();
+
+                });
+
+        }
+    }
+
+    public static Boolean isInBidPage() {
+        return inBidPage;
+    }
+
+    private static void removeABid(String cardID) {
+        System.out.println("ShopScene.removeABid");
+        Platform.setImplicitExit(false);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                HBox hBox = bidHboxes.get(cardID);
+                bidVBox.getChildren().remove(hBox);
+                bidHboxes.remove(cardID);
+            }
+        });
+    }
+
+    private static StackPane getTextStackPane(String textString, double width, double height) {
+        StackPane stackPane = new StackPane();
+        stackPane.setAlignment(Pos.CENTER);
+        Rectangle rectangle = new Rectangle(width, height);
+        rectangle.setArcHeight(10);
+        rectangle.setArcWidth(10);
+        rectangle.setFill(Color.gray(0, 0.8));
+
+        Text text = new Text(textString);
+        text.setFill(Color.WHITE);
+        text.setFont(Font.font(25));
+
+        stackPane.getChildren().addAll(rectangle, text);
+        return stackPane;
+    }
 
     static void makeShopScene() {
+        inBidPage = false;
         playMusic("resource/music/shop.m4a", true, shopScene);
 
         setBackground(root, "pics/shop/shop_background.jpg", false, 15, 15);
@@ -273,17 +388,20 @@ class ShopScene {
 
         addImage(group, "pics/shop/tag.png", 0, 17, 50, 90 - 30);
 
+
         Button bidButton = new Button();
-        bidButton.setPrefSize(100, 50);
+        bidButton.setPrefSize(100, 45);
         bidButton.setText("BID");
         bidButton.setTextFill(Color.WHITE);
         bidButton.setFont(Font.font("Luminari", 30));
-        bidButton.setBackground(new Background(new BackgroundFill(
-                Color.rgb(80, 100, 250, 0.7),
-                CornerRadii.EMPTY, Insets.EMPTY)));
-        bidButton.relocate(1000, 100);
+        bidButton.setStyle("-fx-background-radius: 30; -fx-background-color: rgba(0,0,0,0.9);");
+        setOnMouseEntered(bidButton, shopScene, true);
+        HBox.setMargin(bidButton, new Insets(0, 0, 0, 20));
+
+        bidButton.setOnMouseClicked(event -> bid());
+
         hbox.getChildren().add(bidButton);
-        //todo bid
+
 
         hBoxes.add(hbox);
         root.getChildren().addAll(hbox);
@@ -341,6 +459,55 @@ class ShopScene {
 
     }
 
+    private static void bid() {
+        inBidPage = true;
+        root.getChildren().clear();
+        setBackground(root, "pics/shop/shop_background.jpg", false, 15, 15);
+
+        bidVBox = new VBox();
+        bidVBox.relocate(100, 50);
+        bidVBox.setSpacing(5);
+        root.getChildren().add(bidVBox);
+
+        StackPane textStackPane = getTextStackPane("Enter Card ID: ", 300, 50);
+
+        TextField newBidTextField = new TextField();
+        newBidTextField.setPrefHeight(50);
+        newBidTextField.setPrefWidth(300);
+        newBidTextField.positionCaret(1);
+        newBidTextField.setStyle("-fx-text-fill: rgba(250,250,250, 0.7); -fx-font-size: 20px; " +
+                "-fx-background-color: rgba(0, 0, 0, 0.5);");
+        newBidTextField.setPromptText("Card ID");
+
+        Button newBidButton = new Button();
+        newBidButton.setText("New Bid");
+        newBidButton.setPrefSize(200, 50);
+        newBidButton.setStyle("-fx-background-radius: 10; -fx-text-fill: #000000; -fx-font-size: 25px;" +
+                " -fx-background-color: rgba(250, 250, 250, 0.5);");
+        newBidButton.setOnMouseClicked(event -> {
+            Transmitter transmitter = new Transmitter();
+            transmitter.cardId = newBidTextField.getText();
+            TransferController.main(NEW_BID, transmitter);
+        });
+        setOnMouseEntered(newBidButton, shopScene, true);
+
+        HBox hBox = new HBox();
+        hBox.setSpacing(20);
+        hBox.getChildren().addAll(textStackPane, newBidTextField, newBidButton);
+        hBox.getChildren().forEach(node -> HBox.setMargin(node, new Insets(5, 5, 5, 5)));
+
+        bidVBox.getChildren().add(hBox);
+
+        TransferController.main(GET_BIDS, new Transmitter());
+        System.out.println("got bids");
+        /*for (int i = 0; i < transmitter.cards.size(); i++) {
+            addABidRow(transmitter.cards.get(i), transmitter.costs.get(i), transmitter.times.get(i));
+        }*/
+
+        log(root, "", StateType.SHOP, 450);
+
+    }
+
     private static void makeHBoxForCards(int pageNumber, ArrayList<Card> cards,
                                          Text daric, ArrayList<Item> items) {
         HBox hBox = new HBox();
@@ -393,39 +560,5 @@ class ShopScene {
         transmitter.name = name;
         transmitter = TransferController.main(RequestEnum.SHOP_BUY, transmitter);
         return transmitter.daric;
-    }
-
-
-    private static void bid() {
-        root.getChildren().clear();
-        setBackground(root, "pics/shop/shop_background.jpg", false, 15, 15);
-
-        VBox vBox = new VBox();
-        vBox.relocate(100, 100);
-        root.getChildren().add(vBox);
-
-        TextField newBidTextField = new TextField();
-        newBidTextField.setPrefHeight(80);
-        newBidTextField.setPrefWidth(300);
-        newBidTextField.positionCaret(1);
-        newBidTextField.setPromptText("Card ID");
-
-        Button newBidButton = new Button();
-        newBidButton.setText("New Bid");
-        newBidButton.setBackground(new Background(new BackgroundFill(Color.gray(1, 0.5),
-                CornerRadii.EMPTY, Insets.EMPTY)));
-        newBidButton.setTextFill(Color.BLACK);
-        newBidButton.setPrefSize(120, 60);
-        newBidButton.setOnMouseClicked(event -> {
-            //todo
-        });
-
-        HBox hBox = new HBox();
-        hBox.getChildren().addAll(newBidTextField, newBidButton);
-        hBox.getChildren().forEach(node -> HBox.setMargin(node, new Insets(5, 5, 5, 5)));
-
-        vBox.getChildren().add(hBox);
-
-        log(root, "", StateType.SHOP, 450);
     }
 }
