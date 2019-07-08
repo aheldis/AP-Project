@@ -2,12 +2,14 @@ package controller.server;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import controller.BattleMessage;
 import controller.RequestEnum;
 import controller.Transmitter;
 import javafx.scene.Group;
 import model.account.*;
 import model.battle.Deck;
 import model.battle.Game;
+import model.battle.Match;
 import model.card.Card;
 import model.card.makeFile.MakeNewFile;
 import model.item.Item;
@@ -18,9 +20,9 @@ import view.enums.ErrorType;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class RequestEnumController {
-    static ArrayList<Group> groupTexts = new ArrayList<>();
     private static ArrayList<SocketClass> chatPerson = new ArrayList<>();
     private static HashMap<SocketClass/*opponent*/, SocketClass/*waiter*/> waiterHashMap = new HashMap<>();
 
@@ -236,6 +238,11 @@ public class RequestEnumController {
                 transmitter.errorType = errorType;
                 if (errorType == null) {
                     transmitter.match = socketClass.setMatch(game.makeNewStoryGame(clientTransmitter.level));
+                    if (clientTransmitter.level == 3)
+                        transmitter.match.setFlagsRandomly(3);
+                    if (clientTransmitter.level == 2)
+                        transmitter.match.setFlagsRandomly(2);
+                    transmitter.match.setCollectiblesRandomly();
                     transmitter.game = game;
                 }
                 transfer(socketClass);
@@ -257,6 +264,11 @@ public class RequestEnumController {
                     transmitter.match = socketClass.setMatch(
                             game.makeNewCustomGame(account, clientTransmitter.name,
                                     clientTransmitter.mode, clientTransmitter.numberOfFlag));
+                    if (clientTransmitter.level == 3)
+                        transmitter.match.setFlagsRandomly(3);
+                    if (clientTransmitter.level == 2)
+                        transmitter.match.setFlagsRandomly(2);
+                    transmitter.match.setCollectiblesRandomly();
                     transmitter.game = game;
                 }
                 transfer(socketClass);
@@ -270,7 +282,7 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
             }
-            case NEW_CARD_ARRAYLISTS: {
+            case NEW_CARD_ARRAY_LISTS: {
                 MakeNewFile makeNewFile = new MakeNewFile();
                 transmitter.fieldNames = makeNewFile.getFieldNames(FilesType.getEnum(clientTransmitter.type));
                 transmitter.changeFieldNames = makeNewFile.getChangeFieldNames();
@@ -281,7 +293,10 @@ public class RequestEnumController {
             }
             case START_MATCH:
                 String opponent = clientTransmitter.name;
-                SocketClass opponentSocketClass = Server.getSocketClasssByName(opponent);
+                socketClass.setMode(clientTransmitter.mode);
+                socketClass.setNumberOfFlag(clientTransmitter.numberOfFlag);
+                socketClass.setReward(clientTransmitter.reward);
+                SocketClass opponentSocketClass = Server.getSocketClassByName(opponent);
                 if (opponentSocketClass != null) {
                     waiterHashMap.put(opponentSocketClass, socketClass);
                     opponentSocketClass.changeTransmitter();
@@ -292,7 +307,7 @@ public class RequestEnumController {
                     transfer(opponentSocketClass);
                 }
                 break;
-            case DECLINE_PLAY:
+            case DECLINE_PLAY: {
                 SocketClass waiter = waiterHashMap.get(socketClass);
                 waiter.changeTransmitter();
                 Transmitter waiterTransmitter = waiter.getTransmitter();
@@ -301,8 +316,35 @@ public class RequestEnumController {
                 waiterTransmitter.transmitterId = 0;
                 transfer(waiter);
                 break;
-            case ACCEPT_PLAY:
-                //todo start message and change scene
+            }
+            case ACCEPT_PLAY: {
+                SocketClass waiter = waiterHashMap.get(socketClass);
+                waiter.changeTransmitter();
+                socketClass.changeTransmitter();
+                Game game = new Game();
+                game.checkPlayerDeck(waiter.getAccount(), 1);
+                game.checkPlayerDeck(socketClass.getAccount(), 2);
+                socketClass.setGame(game);
+                Match match = socketClass.setMatch(
+                        game.makeNewMultiGame(waiter.getMode(), waiter.getNumberOfFlag(), waiter.getReward()));
+                if (clientTransmitter.level == 3)
+                    transmitter.match.setFlagsRandomly(3);
+                if (clientTransmitter.level == 2)
+                    transmitter.match.setFlagsRandomly(2);
+                transmitter.match.setCollectiblesRandomly();
+                int numberOfMap = new Random().nextInt(12) + 1;
+                sendAcceptPlayForBoth(waiter, socketClass, match, game, numberOfMap, true);
+                sendAcceptPlayForBoth(socketClass, waiter, match, game, numberOfMap, false);
+
+                //todo save them in client
+                /**
+                 * goes to transferController func:fromServer...
+                 */
+                break;
+            }
+            case CANCEL_START_MATCH:
+                transmitter.requestEnum = RequestEnum.CANCEL_START_MATCH;
+                transfer(socketClass);
                 break;
             case NEW_BID: {
                 transmitter.errorType = Bid.newBid(account, clientTransmitter.cardId, 100);
@@ -349,6 +391,20 @@ public class RequestEnumController {
 
     }
 
+    private static void sendAcceptPlayForBoth(SocketClass socketClass, SocketClass waiter,
+                                              Match match, Game game, int numberOfMap, boolean imPlayer0) {
+        Transmitter transmitter = socketClass.getTransmitter();
+        transmitter.transmitterId = 0;
+        transmitter.requestEnum = RequestEnum.BATTLE;
+        transmitter.battleMessage = new BattleMessage();
+        transmitter.battleMessage.imPlayer0 = imPlayer0;
+        socketClass.socketClasses = new SocketClass[]{socketClass, waiter};
+        transmitter.match = match;
+        transmitter.game = game;
+        transmitter.numberOfMap = numberOfMap;
+        transfer(socketClass);
+    }
+
     private static void transfer(SocketClass socketClass) {
         System.out.println();
         System.out.println("RequestEnumController.transfer");
@@ -363,12 +419,6 @@ public class RequestEnumController {
             socketClass.getOut().flush();
 
             System.out.println("RequestEnumController.transfer");
-            //System.out.println("to client " + json);
-
-            /*
-            socketClass.getOutputStream().writeObject(socketClass.getTransmitter());
-            socketClass.getOutputStream().flush();
-            */
         } catch (Exception e) {
             e.printStackTrace();
         }

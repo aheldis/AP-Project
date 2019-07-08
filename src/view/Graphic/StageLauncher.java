@@ -1,28 +1,18 @@
 package view.Graphic;
 
-import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import view.enums.Cursor;
 import view.enums.StateType;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -108,39 +98,33 @@ public class StageLauncher extends Application {
     }
 
     public static void getNewRequest(Transmitter transmitter) {
-            Platform.setImplicitExit(false);
-            Platform.runLater(() -> {
+        Platform.setImplicitExit(false);
+        Platform.runLater(() -> {
 
-                Group group = new Group();
-                group.relocate(WIDTH/2-100, getHeight()/2-100);
-                String message = transmitter.message;
-                try {
-                    addImage(group,"pics/battle/notification_challenge@2x.png",0,0,200,70);
-                    addText(group,50,30,message, Color.WHITE,30);
-                    ImageView accept = addImage(group,
-                            "pics/battle/collection_card_rarity_mythron@2x.png",20,200,50,50);
-                    ImageView decline = addImage(group,
-                            "pics/battle/collection_card_rarity_legendary@2x.png",20,200,50,50);
-                    accept.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(group);
-                            TransferController.main(ACCEPT_PLAY, new Transmitter());
-                        }
-                    });
-                    decline.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(group);
-                            TransferController.main(DECLINE_PLAY, new Transmitter());
-                        }
-                    });
-                    ((Group) primaryStage.getScene().getRoot()).getChildren().addAll(group);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            Group group = new Group();
+            group.relocate(WIDTH / 2 - 100, getHeight() / 2 - 100);
+            String message = transmitter.message;
+            try {
+                addImage(group, "pics/battle/notification_challenge@2x.png", 0, 0, 200, 70);
+                addText(group, 50, 30, message, Color.WHITE, 30);
+                ImageView accept = addImage(group,
+                        "pics/battle/collection_card_rarity_mythron@2x.png", 125, 70, 50, 50);
+                ImageView decline = addImage(group,
+                        "pics/battle/collection_card_rarity_legendary@2x.png", 25, 70, 50, 50);
+                accept.setOnMouseClicked(event -> {
+                    ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(group);
+                    TransferController.main(ACCEPT_PLAY, new Transmitter());
+                });
+                decline.setOnMouseClicked(event -> {
+                    ((Group) primaryStage.getScene().getRoot()).getChildren().removeAll(group);
+                    TransferController.main(DECLINE_PLAY, new Transmitter());
+                });
+                ((Group) primaryStage.getScene().getRoot()).getChildren().addAll(group);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            });
+        });
     }
 
 
@@ -178,7 +162,7 @@ public class StageLauncher extends Application {
 
         primaryStage.setOnCloseRequest(event -> {
             System.out.println("hi");
-             TransferController.main(LOGOUT, new Transmitter());
+            TransferController.main(LOGOUT, new Transmitter());
             primaryStage.close();
         });
 

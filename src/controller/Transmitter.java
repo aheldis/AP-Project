@@ -57,9 +57,12 @@ public class Transmitter implements Serializable { //todo check
     public int playerNumber;
     public int mode;
     public int numberOfFlag;
+    public int reward;
     public int spriteNumber;
     public int spriteNumberCount;
     public int cost;
     public String type;
+    public BattleMessage battleMessage;
+    public int numberOfMap;
     public long time;
 }

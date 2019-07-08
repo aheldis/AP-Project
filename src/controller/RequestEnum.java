@@ -32,9 +32,10 @@ public enum RequestEnum {
     END_OF_CLIENT,
     NEW_MESSAGE,
     MAKE_NEW_CARD,
-    NEW_CARD_ARRAYLISTS,
+    NEW_CARD_ARRAY_LISTS,
     ALL_ACCOUNT,
     START_MATCH,
+    CANCEL_START_MATCH,
     PLAY_REQUEST,
     ACCEPT_PLAY,
     DECLINE_PLAY,
@@ -42,5 +43,8 @@ public enum RequestEnum {
     GET_BIDS,
     BID_NEW_COST,
     ADD_A_BID
+    DECLINE_PLAY,
+    BATTLE
+
 
 }

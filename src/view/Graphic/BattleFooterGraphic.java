@@ -1,5 +1,6 @@
 package view.Graphic;
 
+import controller.BattleMessage;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -119,12 +120,13 @@ public class BattleFooterGraphic {
         AnimationTimer animationTimer = new AnimationTimer() {
             private long lastUpdate = 0;
             private double change = 0.5;
-
+            BattleScene battleScene = BattleScene.getSingleInstance();
+            private long time = battleScene.getFastForward()? 120_000_0:120_000_000;
             @Override
             public void handle(long now) {
 
                 for (int i = 0; i < 20; i++) {
-                    if (now - lastUpdate >= 120_000_000) {
+                    if (now - lastUpdate >= time) {
                         progress.setX(progress.getX() + change);
                         lastUpdate = now;
                         rectangle.setWidth(rectangle.getWidth() + change);
