@@ -337,7 +337,7 @@ public class RequestEnumController {
         transmitter.transmitterId = 0;
         transmitter.requestEnum = RequestEnum.BATTLE;
         transmitter.battleMessage = new BattleMessage();
-        transmitter.battleMessage.socketClasses = new SocketClass[]{socketClass, waiter};
+        socketClass.socketClasses = new SocketClass[]{socketClass, waiter};
         transmitter.match = match;
         transmitter.game = game;
         transfer(socketClass);

@@ -23,6 +23,7 @@ public class SocketClass {
     private int mode;
     private int numberOfFlag;
     private int reward;
+    public SocketClass[] socketClasses;
 
     public ClientHandlerServer getClientHandlerServer() {
         return clientHandlerServer;

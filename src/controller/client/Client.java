@@ -32,8 +32,6 @@ public class Client {
             System.out.println("Connected to server");
 
             clientIOhandler = new ClientIOhandler();
-//            clientIOhandler.setObjectOutputStream(new ObjectOutputStream(socket.getOutputStream()));
-//            clientIOhandler.setObjectInputStream(new ObjectInputStream(socket.getInputStream()));
             clientIOhandler.setIn(new Scanner(socket.getInputStream()));
             clientIOhandler.setOut(new PrintWriter(socket.getOutputStream(), true));
 
