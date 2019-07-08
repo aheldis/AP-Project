@@ -188,15 +188,16 @@ public class Match {
                 }
                 collectible = (Collectible) collectibles.get(randomItem);
                 Shop.getInstance().removeCollectible(collectible);
-                this.collectibles.add(collectible);
                 squares[randomX][randomY].setObject(collectible);
                 collectible.setSquare(squares[randomX][randomY]);
+                this.collectibles.add(collectible);
+                System.out.println(collectible.getCollectibleId().getCollectibleIdAsString());
             }
         }
 
         HashMap<String, Integer> collectibleNames = new HashMap<>();
         for (Item collectible : collectibles) {
-            if (!collectibleNames.containsKey(collectible))
+            if (!collectibleNames.containsKey(collectible.getName()))
                 collectibleNames.put(collectible.getName(), 0);
             int number = collectibleNames.get(collectible.getName()) + 1;
             collectibleNames.remove(collectible.getName());
