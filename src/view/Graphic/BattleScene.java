@@ -184,8 +184,9 @@ public class BattleScene {
                 if (flip) {
                     imageView.setRotationAxis(Rotate.Y_AXIS);
                     imageView.setRotate(180);
-                    getCell(row, column).setFill(Color.RED);
                 }
+                if (!drag)
+                    getCell(row, column).setFill(Color.RED);
             } else {
                 imageView = image;
                 imageView.relocate(0, 0);
@@ -198,7 +199,7 @@ public class BattleScene {
         imageView.relocate(position.getKey() - 8, position.getValue() - 48);
         imageView.setFitWidth(mapProperties.cellWidth + 10);
         imageView.setFitHeight(mapProperties.cellHeight + 20);
-        workWithMouse(imageView, card, flip);
+        workWithMouse(imageView, card, drag);
         if (!mode.equals("ATTACK"))
             cardsHashMap.put(card, imageView);
 
@@ -320,7 +321,7 @@ public class BattleScene {
 */
     }
 
-    private void workWithMouse(ImageView imageOfCard, Card card, boolean enemy) {
+    private void workWithMouse(ImageView imageOfCard, Card card, boolean drag) {
         Group group = new Group();
         group.relocate(imageOfCard.getLayoutX(), imageOfCard.getLayoutY() + 80);
         board.getChildren().addAll(group);
@@ -330,7 +331,7 @@ public class BattleScene {
             } else {
                 setCursor(battleScene, Cursor.LIGHTEN);
             }
-            if (enemy) {
+            if (!drag) {
                 imageOfCard.setEffect(getLighting(Color.RED));
             } else {
                 imageOfCard.setEffect(getLighting(Color.WHITE));
@@ -708,9 +709,10 @@ public class BattleScene {
         return battleScene;
     }
 
-    static void setNewInstance(){
+    static void setNewInstance() {
         singleInstance = new BattleScene();
     }
+
     void setBattleScene(int numberOfMap) {
         root.getChildren().clear();
         this.numberOfMap = numberOfMap;

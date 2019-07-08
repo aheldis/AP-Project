@@ -126,17 +126,11 @@ public class Match {
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
         battleScene.addCardToBoard(2, 0, firstHero, "Breathing",
-                null, true, false, false);
+                null, imPlayer0, false, false);
         battleScene.addCardToBoard(2, 8, secondHero, "Breathing",
-                null, false, true, false);
-        if (imPlayer0 && mode.equals(Game.getModeAsString(3)))
-            setFlagsRandomly(3);
-        if (imPlayer0 && mode.equals(Game.getModeAsString(2)))
-            setFlagsRandomly(2);
-        if (imPlayer0)
-            setCollectiblesRandomly();
-        setFlagsGraphic(flags);
-        setCollectiblesGraphic(collectibles);
+                null, !imPlayer0, true, false);
+        setFlagsGraphic();
+        setCollectiblesGraphic();
         if (imPlayer0 && players[0].getMainDeck().getItem() != null) {
             Usable item = players[0].getMainDeck().getItem();
             battleScene.showAlert(item.getName() + ": " + item.getDescription());
@@ -147,7 +141,7 @@ public class Match {
     }
 
 
-    private void setFlagsRandomly(int mode) {
+    public void setFlagsRandomly(int mode) {
         if (mode == 2)
             numberOfFlags = 1;
         flags = new ArrayList<>();
@@ -170,7 +164,7 @@ public class Match {
         }
     }
 
-    private void setFlagsGraphic(ArrayList<Flag> flags) {
+    private void setFlagsGraphic() {
         for (Flag flag : flags) {
             ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_categorized/flag.gif", 10, 10);
             flag.setImageView(flagView);
@@ -179,7 +173,7 @@ public class Match {
         }
     }
 
-    private void setCollectiblesRandomly() {
+    public void setCollectiblesRandomly() {
         Random random = new Random();
         int numberOfCollectiblesOnLand = random.nextInt(BOUND_FOR_COLLECTIBLES);
         int randomX, randomY, randomItem;
@@ -215,7 +209,7 @@ public class Match {
     }
 
 
-    private void setCollectiblesGraphic(ArrayList<Collectible> collectibles) {
+    private void setCollectiblesGraphic() {
         for (Collectible collectible : collectibles) {
             ImageView collectibleImage = GeneralGraphicMethods.createImage(
                     "pics/collectibles/" + collectible.getName() + ".png", 20, 20);
