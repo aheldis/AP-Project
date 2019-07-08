@@ -13,6 +13,7 @@ import model.battle.Match;
 import model.card.Card;
 import model.card.makeFile.MakeNewFile;
 import model.item.Item;
+import model.item.Collectible;
 import model.item.Usable;
 import model.requirment.GeneralLogicMethods;
 import view.enums.ErrorType;
@@ -243,6 +244,8 @@ public class RequestEnumController {
                     if (clientTransmitter.level == 2)
                         transmitter.match.setFlagsRandomly(2);
                     transmitter.match.setCollectiblesRandomly();
+                    for (Collectible collectible : transmitter.match.getCollectibles())
+                        System.out.println(collectible.getCollectibleId().getCollectibleIdAsString());
                     transmitter.game = game;
                 }
                 transfer(socketClass);

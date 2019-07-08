@@ -65,7 +65,6 @@ public class TransferController {
             case BID_NEW_COST:
                 fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
-
             case CHECK_NEW_MESSAGE:
                 if (messages.size() != 0) {
                     fromServerTransmitter = messages.get(0);
