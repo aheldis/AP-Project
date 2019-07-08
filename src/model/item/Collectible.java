@@ -25,7 +25,7 @@ public class Collectible extends Item implements Serializable {
         return collectibleId;
     }
 
-    public void setCollectibleId(model.item.CollectibleId collectibleId) {
+    void setCollectibleId(model.item.CollectibleId collectibleId) {
         this.collectibleId = collectibleId;
     }
 

@@ -3,7 +3,6 @@ package view.Graphic;
 import com.gilecode.yagson.YaGson;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -12,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -67,7 +65,8 @@ public class BattleScene {
     public int getFastTimeDivisor() {
         return fastTimeDivisor;
     }
-    public  boolean getFastForward(){
+
+    boolean getFastForward() {
         return fastForward;
     }
 
@@ -231,7 +230,7 @@ public class BattleScene {
                 card.getName(), filesType, card.getCountOfAnimation());
         ImageView imageView = SpriteMaker.getInstance().makeSpritePic(spriteProperties.spriteSheetPath,
                 0, 0, board, spriteProperties.count,
-                spriteProperties.rows, fastForward? spriteProperties.millis/fastTimeDivisor:spriteProperties.millis,
+                spriteProperties.rows, fastForward ? spriteProperties.millis / fastTimeDivisor : spriteProperties.millis,
                 (int) spriteProperties.widthOfEachFrame, (int) spriteProperties.heightOfEachFrame);
         imageView.setOpacity(0);
         playMusic("resource/music/attack/attack-2.m4a", false, battleScene);
@@ -242,8 +241,8 @@ public class BattleScene {
             getCell(row, column).setFill(Color.RED);
         }
         if (beingAttacked) {
-            wait = fastForward? selectedCard.getMillis()/fastTimeDivisor:selectedCard.getMillis();
-            lastWait =  fastForward? card.getMillis()/fastTimeDivisor:card.getMillis();
+            wait = fastForward ? selectedCard.getMillis() / fastTimeDivisor : selectedCard.getMillis();
+            lastWait = fastForward ? card.getMillis() / fastTimeDivisor : card.getMillis();
             selectedCard = null;
         }
         int finalWait = wait;
@@ -265,7 +264,7 @@ public class BattleScene {
                     getCell(row, column).setFill(Color.BLACK);
                     twice = false;
                 }
-                if (once && now > lastTime + (fastForward?spriteProperties.millis/fastTimeDivisor:spriteProperties.millis + finalWait) * Math.pow(10, 6)) {
+                if (once && now > lastTime + (fastForward ? spriteProperties.millis / fastTimeDivisor : spriteProperties.millis + finalWait) * Math.pow(10, 6)) {
                     lastTime = now;
                     board.getChildren().remove(imageView);
                     image.setOpacity(1);
@@ -740,13 +739,11 @@ public class BattleScene {
 
     }
 
-    private void makeFastForwardButton(){
-        Button button = imageButton(battleScene,root,
-                "pics/battle/button_icon_middle@2x.png","Fast",
-                StageLauncher.getWidth()/2,10,70,50);
-        button.setOnMouseClicked(event -> {
-            fastForward = !fastForward;
-        });
+    private void makeFastForwardButton() {
+        Button button = imageButton(battleScene, root,
+                "pics/battle/button_icon_middle@2x.png", "Fast",
+                StageLauncher.getWidth() / 2, 10, 70, 50);
+        button.setOnMouseClicked(event -> fastForward = !fastForward);
     }
 
     public void showTarget(Square target, String targetType) {

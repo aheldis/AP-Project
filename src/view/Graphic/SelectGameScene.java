@@ -438,11 +438,11 @@ public class SelectGameScene {
             BattleScene battleScene = BattleScene.getSingleInstance();
             battleScene.setGame(game);
             battleScene.setMatch(match);
-            match.initGraphic(imPlayer0);
             if (numberOfMap != 0)
                 battleScene.setBattleScene(numberOfMap);
             else
                 battleScene.setBattleScene(random.nextInt(12) + 1);
+            match.initGraphic(imPlayer0);
         });
     }
 }

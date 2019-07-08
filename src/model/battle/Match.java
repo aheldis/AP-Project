@@ -118,9 +118,6 @@ public class Match {
         this.flags.add(flag);
     }
 
-    /**
-     * Graphic:
-     **/
     public void initGraphic(boolean imPlayer0) {
         this.battleScene = BattleScene.getSingleInstance();
         Hero firstHero = players[0].getMainDeck().getHero();
@@ -486,4 +483,8 @@ public class Match {
         return land;
     }
 
+
+    public ArrayList<Collectible> getCollectibles() {
+        return collectibles;
+    }
 }

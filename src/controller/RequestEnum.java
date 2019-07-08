@@ -42,8 +42,7 @@ public enum RequestEnum {
     NEW_BID,
     GET_BIDS,
     BID_NEW_COST,
-    ADD_A_BID
-    DECLINE_PLAY,
+    ADD_A_BID,
     BATTLE
 
 

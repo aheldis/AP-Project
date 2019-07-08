@@ -38,6 +38,7 @@ public class TransferController {
             case DECLINE_PLAY:
             case CANCEL_START_MATCH:
             case START_MATCH:
+            case GET_BIDS:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case SIGN_UP:
@@ -63,20 +64,6 @@ public class TransferController {
             case NEW_BID:
             case BID_NEW_COST:
                 fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
-                return fromServerTransmitter;
-            case GET_BIDS:
-            case LOGOUT:
-            case COLLECTION_UPDATE:
-            case EXPORT_DECK:
-            case SEND_MESSAGE:
-            case NEW_CARD_ID:
-            case ENTER_COLLECTION:
-            case EXIT_FROM_CHAT:
-            case END_OF_CLIENT:
-            case START_MATCH:
-            case ACCEPT_PLAY:
-            case DECLINE_PLAY:
-                fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
                 if (messages.size() != 0) {
