@@ -10,9 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Shop;
@@ -23,8 +20,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -74,26 +69,6 @@ public class Server extends Application {
     }
 
     public static void main(String[] args) {
-
-//        HashMap<String, Object> parameters = new HashMap<>();
-//        parameters.put("name","myBD");
-//        try {
-//             Unirest.post(baseAddress + "init_DB").fields(parameters);
-//        } catch (UnirestException e) {
-//            e.printStackTrace();
-//        }
-//
-//        HttpResponse<String> response = null;
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put("name", "myDB");
-//        hashMap.put("key", "socketClasses");
-//        hashMap.put("value", ServerThread.socketClasses);
-//        try {
-//            response=Unirest.post(baseAddress + "put").fields(parameters).asString();
-//        } catch (UnirestException e) {
-//            e.printStackTrace();    //do something
-//        }
-//        System.out.println(response);
 
             try {
                 FileWriter fileWriter = new FileWriter("src/controller/configServer");

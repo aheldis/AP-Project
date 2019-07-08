@@ -1,8 +1,11 @@
 package view.Graphic;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -10,11 +13,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.battle.Player;
+import model.card.Card;
+import model.land.LandOfGame;
+import model.land.Square;
 import view.enums.StateType;
 
 import java.io.File;
 import java.util.Objects;
 import java.util.Random;
+
+import static view.Graphic.GeneralGraphicMethods.*;
 
 public class BattleHeaderGraphic {
     private Group rightHeader = new Group();
@@ -31,8 +39,45 @@ public class BattleHeaderGraphic {
 
     }
 
-    private void addPortraitBorder(double x, double y, Group group, boolean turnOfThisPlayer, String avatarPath, boolean leftSide) {
-        ImageView imageView = GeneralGraphicMethods.addImage(group, avatarPath, x - 10, y - 10, 130, 130);
+    private void addPortraitBorder(double x , double y, Group group, boolean turnOfThisPlayer, String avatarPath, boolean leftSide,Player player) {
+        ImageView imageView = addImage(group, avatarPath, x - 10, y - 10, 130, 130);
+
+        LandOfGame landOfGame = player.getMatch().getLand();
+        Square[][] squares = landOfGame.getSquares();
+
+
+
+
+        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+           Group cheat = new Group();
+           @Override
+           public void handle(MouseEvent event) {
+               cheat.relocate(event.getX(),event.getY());
+              addImage(cheat,"pics/battle/frame_quest_challenge@2x.png",0,0,200,300);
+               VBox vBox = new VBox();
+               vBox.relocate(0,0);
+               cheat.getChildren().addAll(vBox);
+
+               for (Card card : player.getHand().getGameCards()) {
+                   if (player.getMana() >= card.getMp())
+                       addText(vBox,0,0,"cardId: " + card.getCardId().getCardIdAsString(),Color.WHITE,15);
+               }
+               for (int i = -2; i <= 2; i++)
+                   for (int j = -2; j <= 2; j++) {
+                       int x1 = player.getHero().getPosition().getXCoordinate() + i;
+                       int y1 = player.getHero().getPosition().getYCoordinate() + j;
+                       if (x1 < 0 || x1 >= LandOfGame.getNumberOfRows() || y1 < 0 || y1 >= LandOfGame.getNumberOfColumns())
+                           continue;
+                       if (Math.abs(i) + Math.abs(j) <= 2 && !squares[x1][y1].squareHasMinionOrHero())
+                           addText(vBox,0,0,"(" + x1 + "," + y1 + ")",Color.WHITE,15);
+                   }
+               group.getChildren().addAll(cheat);
+
+           imageView.setOnMouseExited(event1 -> group.getChildren().removeAll(cheat));
+           }
+
+       });
+
         /*
         ImageView imageView =new ImageView();
         if (avatarPath != null) {
@@ -77,7 +122,7 @@ public class BattleHeaderGraphic {
             x -= 60;
         } else
             x = x + 9 * 28 + 8;
-        text = GeneralGraphicMethods.addText(group, x, y + 5, numberOfMana + " / 9",
+        text = addText(group, x, y + 5, numberOfMana + " / 9",
                 Color.rgb(225, 225, 225), 25);
         text.setStroke(Color.rgb(0, 0, 0, 0.5));
         text.setStrokeWidth(1);
@@ -93,10 +138,10 @@ public class BattleHeaderGraphic {
     private void addMana(double x, double y, int numberOfMana, Group group) {
         for (int i = 0; i < 9; i++) {
             if (i < numberOfMana)
-                GeneralGraphicMethods.addImage(group,
+                addImage(group,
                         "pics/other/icon_mana@2x.png", x + i * 28, y, 25, 25);
             else
-                GeneralGraphicMethods.addImage(group,
+                addImage(group,
                         "pics/battle_categorized/icon_mana_inactive@2x.png",
                         x + i * 28, y, 25, 25);
         }
@@ -111,7 +156,7 @@ public class BattleHeaderGraphic {
             Color color = Color.rgb(200, 200, 200, 0.8);
             if (i < turnNotUsedSpecialPower)
                 color = Color.rgb(0, 200, 200, 0.8);
-            Rectangle rectangle = GeneralGraphicMethods.addRectangle(coolDownGroup, currentX, currentY, 10,
+            Rectangle rectangle = addRectangle(coolDownGroup, currentX, currentY, 10,
                     10, 3, 3, color);
             rectangle.setStroke(Color.BLACK);
             rectangle.setStrokeWidth(1.5);
@@ -152,8 +197,8 @@ public class BattleHeaderGraphic {
             circleForSpecialPower.setFill(Color.gray(1, 0.01));
             group.getChildren().add(circleForSpecialPower);
 
-            GeneralGraphicMethods.setOnMouseEntered(circleForSpecialPower, StageLauncher.getScene(StateType.BATTLE), true);
-            GeneralGraphicMethods.setOnMouseEntered(imageView, StageLauncher.getScene(StateType.BATTLE), true);
+            setOnMouseEntered(circleForSpecialPower, StageLauncher.getScene(StateType.BATTLE), true);
+            setOnMouseEntered(imageView, StageLauncher.getScene(StateType.BATTLE), true);
 
             circleForSpecialPower.setOnMouseClicked(event -> {
                 if (!DragAndDrop.getWait()) {
@@ -206,10 +251,10 @@ public class BattleHeaderGraphic {
 
     private void makeLeftHeader(Player player) {
         leftHeader.getChildren().clear();
-        GeneralGraphicMethods.addTextWithShadow(leftHeader, 248, 78, player.getUserName(), "Arial", 27);
+        addTextWithShadow(leftHeader, 248, 78, player.getUserName(), "Arial", 27);
         addMana(245, 100, player.getMana(), leftHeader);
         addHeroSpecialPower(110, 195, leftHeader, 0, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown(), true);
-        addPortraitBorder(120, 25, leftHeader, true, player.getAvatarPath(), true);
+        addPortraitBorder(120, 25, leftHeader, true, player.getAvatarPath(), true,player);
         //      addPortraitBorder(1165, 25, rightHeader, false, COMPUTER_PROFILE, false);
 
         showOwnedFlag(leftHeader, 245, 140, player.getNumberOfFlagsSaved(), player.getMatch().getNumberOfFlags(), player.getTurnForSavingFlag());
@@ -217,11 +262,11 @@ public class BattleHeaderGraphic {
 
     private void makeRightHeader(Player player) {
         rightHeader.getChildren().clear();
-        GeneralGraphicMethods.addTextWithShadow(rightHeader, 1010, 78, player.getUserName(), "Arial", 27);
+        addTextWithShadow(rightHeader, 1010, 78, player.getUserName(), "Arial", 27);
         addMana(911, 100, player.getMana(), rightHeader);
         addHeroSpecialPower(1275, 195, rightHeader, 1, player.getHero().getTurnNotUsedSpecialPower(), player.getHero().getCoolDown(), false
         );
-        addPortraitBorder(1165, 25, rightHeader, true, player.getAvatarPath(), false);
+        addPortraitBorder(1165, 25, rightHeader, true, player.getAvatarPath(), false,player);
         //     addPortraitBorder(120, 25, leftHeader, false, COMPUTER_PROFILE, true);
         showOwnedFlag(rightHeader, 911, 140, player.getNumberOfFlagsSaved(), player.getMatch().getNumberOfFlags(), player.getTurnForSavingFlag());
     }
@@ -238,11 +283,11 @@ public class BattleHeaderGraphic {
         if (totalNumberOfFlag == 0)
             return;
 
-        GeneralGraphicMethods.addImage(group, "pics/battle_categorized/flag.gif", x, y, 25, 25);
+        addImage(group, "pics/battle_categorized/flag.gif", x, y, 25, 25);
         String string = numberOfFlag + " / " + totalNumberOfFlag + " flags";
         if (totalNumberOfFlag == 1)
             string = string + " for " + howManyTurn + " turn";
-        Text text = GeneralGraphicMethods.addText(group, x + 30, y + 3, string,
+        Text text = addText(group, x + 30, y + 3, string,
                 Color.rgb(225, 225, 225), 22);
         text.setStroke(Color.rgb(0, 0, 0, 0.5));
         text.setStrokeWidth(1);
