@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class RequestEnumController {
-    static ArrayList<Group> groupTexts = new ArrayList<>();
     private static ArrayList<SocketClass> chatPerson = new ArrayList<>();
     private static HashMap<SocketClass/*opponent*/, SocketClass/*waiter*/> waiterHashMap = new HashMap<>();
 

@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class DBClass {
     private static DBClass ourInstance = new DBClass();
-    private static final String baseAddress = "http://127.0.0.1:8000/";
+    private static final String baseAddress = "http://127.0.0.1:8080/";
 
     public static DBClass getInstance() {
         return ourInstance;
