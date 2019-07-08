@@ -22,6 +22,7 @@ import view.enums.ErrorType;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class RequestEnumController {
     static ArrayList<Group> groupTexts = new ArrayList<>();
@@ -314,8 +315,9 @@ public class RequestEnumController {
                 socketClass.setGame(game);
                 Match match = socketClass.setMatch(
                         game.makeNewMultiGame(waiter.getMode(), waiter.getNumberOfFlag(), waiter.getReward()));
-                sendAcceptPlayForBoth(socketClass, waiter, match, game);
-                sendAcceptPlayForBoth(waiter, socketClass, match, game);
+                int numberOfMap = new Random().nextInt(12) + 1;
+                sendAcceptPlayForBoth(waiter, socketClass, match, game, numberOfMap, true);
+                sendAcceptPlayForBoth(socketClass, waiter, match, game, numberOfMap, false);
 
                 //todo save them in client
                 /**
@@ -332,14 +334,17 @@ public class RequestEnumController {
 
     }
 
-    private static void sendAcceptPlayForBoth(SocketClass socketClass, SocketClass waiter, Match match, Game game) {
+    private static void sendAcceptPlayForBoth(SocketClass socketClass, SocketClass waiter,
+                                              Match match, Game game, int numberOfMap, boolean imPlayer0) {
         Transmitter transmitter = socketClass.getTransmitter();
         transmitter.transmitterId = 0;
         transmitter.requestEnum = RequestEnum.BATTLE;
         transmitter.battleMessage = new BattleMessage();
+        transmitter.battleMessage.imPlayer0 = imPlayer0;
         socketClass.socketClasses = new SocketClass[]{socketClass, waiter};
         transmitter.match = match;
         transmitter.game = game;
+        transmitter.numberOfMap = numberOfMap;
         transfer(socketClass);
     }
 
@@ -351,12 +356,6 @@ public class RequestEnumController {
             socketClass.getOut().flush();
 
             System.out.println("RequestEnumController.transfer");
-            //System.out.println("to client " + json);
-
-            /*
-            socketClass.getOutputStream().writeObject(socketClass.getTransmitter());
-            socketClass.getOutputStream().flush();
-            */
         } catch (Exception e) {
             e.printStackTrace();
         }

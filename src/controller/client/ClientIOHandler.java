@@ -8,17 +8,16 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class ClientIOhandler extends Thread {
+public class ClientIOHandler extends Thread {
     final private Object lock = new Object();
-    private ObjectInputStream objectInputStream;
-    private ObjectOutputStream objectOutputStream;
     private Scanner in;
     private PrintWriter out;
-    private OutputStreamWriter outputStreamWriter;
-    private InputStreamReader inputStreamReader;
     private HashMap<Integer, Transmitter> transmitters = new HashMap<>();
 
     private int countOfId = 1;
+
+    ClientIOHandler() {
+    }
 
     public void run() {
         while (Client.alive && in.hasNextLine()) {
@@ -33,8 +32,6 @@ public class ClientIOhandler extends Thread {
                 System.out.println(transmitter.transmitterId);
                 if(transmitter.errorType != null)
                     transmitter.errorType.printMessage();
-                //Transmitter transmitter = (Transmitter) objectInputStream.readObject();
-
                 new Thread(() -> {
                     if (transmitter.transmitterId != 0) {
                         transmitters.put(transmitter.transmitterId, transmitter);
@@ -63,11 +60,6 @@ public class ClientIOhandler extends Thread {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            /*
-            objectOutputStream.writeObject(clientTransmitter);
-            objectOutputStream.flush();
-            */
             if (waitForAnswer) {
                 fromServerTransmitter = getTransmitterFromServer(clientTransmitter.transmitterId);
             }
@@ -101,22 +93,5 @@ public class ClientIOhandler extends Thread {
         this.out = out;
     }
 
-    public ObjectInputStream getObjectInputStream() {
-        return objectInputStream;
-    }
-
-    void setObjectInputStream(ObjectInputStream objectInputStream) {
-        this.objectInputStream = objectInputStream;
-        this.inputStreamReader = new InputStreamReader(objectInputStream);
-    }
-
-    public ObjectOutputStream getObjectOutputStream() {
-        return objectOutputStream;
-    }
-
-    void setObjectOutputStream(ObjectOutputStream objectOutputStream) {
-        this.objectOutputStream = objectOutputStream;
-        this.outputStreamWriter = new OutputStreamWriter(objectOutputStream);
-    }
 }
 

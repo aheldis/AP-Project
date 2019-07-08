@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class TransferController {
     private static Transmitter fromServerTransmitter;
-    private static ClientIOhandler clientIOhandler = Client.getClientIOHandler();
+    private static ClientIOHandler clientIOhandler = Client.getClientIOHandler();
     private static ArrayList<Transmitter> messages = new ArrayList<>();
 
     public static Transmitter main(RequestEnum requestEnum, Transmitter transmitter) {
@@ -114,7 +114,8 @@ public class TransferController {
                 SelectGameScene.decline();
                 break;
             case BATTLE:
-                SelectGameScene.startGame(transmitter.game, transmitter.match);
+                SelectGameScene.startGame(transmitter.game, transmitter.match,
+                        transmitter.numberOfMap, transmitter.battleMessage.imPlayer0);
                 //todo make battle Scene
                 break;
             case CANCEL_START_MATCH:

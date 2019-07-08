@@ -12,7 +12,7 @@ public class Client {
     private static final String HOST = "127.0.0.1";
     private static final int PORT = 8000;
     private static Socket socket;
-    private static ClientIOhandler clientIOhandler;
+    private static ClientIOHandler clientIOhandler;
     static boolean alive = true;
     public static void main(String[] args) {
         try {
@@ -31,7 +31,7 @@ public class Client {
             socket = new Socket(host, port);
             System.out.println("Connected to server");
 
-            clientIOhandler = new ClientIOhandler();
+            clientIOhandler = new ClientIOHandler();
             clientIOhandler.setIn(new Scanner(socket.getInputStream()));
             clientIOhandler.setOut(new PrintWriter(socket.getOutputStream(), true));
 
@@ -55,7 +55,7 @@ public class Client {
 
     }
 
-    static ClientIOhandler getClientIOHandler() {
+    static ClientIOHandler getClientIOHandler() {
         return clientIOhandler;
     }
 }

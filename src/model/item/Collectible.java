@@ -29,11 +29,11 @@ public class Collectible extends Item implements Serializable {
         this.collectibleId = collectibleId;
     }
 
-    Square getSquare() {
+    public Square getSquare() {
         return square;
     }
 
-    void setSquare(Square square) {
+    public void setSquare(Square square) {
         this.square = square;
     }
 

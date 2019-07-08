@@ -8,5 +8,6 @@ public class BattleMessage {
        public BattleEnum battleEnum;
        public int desColumn;
        public int desRow;
+       public boolean imPlayer0;
        public Card card;
 }

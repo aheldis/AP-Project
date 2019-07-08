@@ -121,8 +121,7 @@ public class Match {
     /**
      * Graphic:
      **/
-    public void initGraphic() {
-        // BattleScene.getSingleInstance().changeSingleInstance(null);
+    public void initGraphic(boolean imPlayer0) {
         this.battleScene = BattleScene.getSingleInstance();
         Hero firstHero = players[0].getMainDeck().getHero();
         Hero secondHero = players[1].getMainDeck().getHero();
@@ -130,18 +129,23 @@ public class Match {
                 null, true, false, false);
         battleScene.addCardToBoard(2, 8, secondHero, "Breathing",
                 null, false, true, false);
-        if (mode.equals(Game.getModeAsString(3))) {
+        if (imPlayer0 && mode.equals(Game.getModeAsString(3)))
             setFlagsRandomly(3);
-        }
-        if (mode.equals(Game.getModeAsString(2))) {
+        if (imPlayer0 && mode.equals(Game.getModeAsString(2)))
             setFlagsRandomly(2);
-        }
-        setCollectiblesRandomly();
-        if (players[0].getMainDeck().getItem() != null) {
+        if (imPlayer0)
+            setCollectiblesRandomly();
+        setFlagsGraphic(flags);
+        setCollectiblesGraphic(collectibles);
+        if (imPlayer0 && players[0].getMainDeck().getItem() != null) {
             Usable item = players[0].getMainDeck().getItem();
+            battleScene.showAlert(item.getName() + ": " + item.getDescription());
+        } else if (!imPlayer0 && players[1].getMainDeck().getItem() != null) {
+            Usable item = players[1].getMainDeck().getItem();
             battleScene.showAlert(item.getName() + ": " + item.getDescription());
         }
     }
+
 
     private void setFlagsRandomly(int mode) {
         if (mode == 2)
@@ -163,14 +167,15 @@ public class Match {
             flag = new Flag(squares[randomX][randomY]);
             flags.add(flag);
             squares[randomX][randomY].addToFlags(flag);
-            /**
-             *
-             Graphic:
-             *
-             **/
+        }
+    }
+
+    private void setFlagsGraphic(ArrayList<Flag> flags) {
+        for (Flag flag : flags) {
             ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_categorized/flag.gif", 10, 10);
             flag.setImageView(flagView);
-            BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, flagView, false);
+            BattleScene.getSingleInstance().addNodeToBoard(flag.getSquare().getXCoordinate(),
+                    flag.getSquare().getYCoordinate(), flagView, false);
         }
     }
 
@@ -194,18 +199,8 @@ public class Match {
                 Shop.getInstance().removeCollectible(collectible);
                 this.collectibles.add(collectible);
                 squares[randomX][randomY].setObject(collectible);
-
-                /**
-                 *
-                 Graphic:
-                 *
-                 **/
-                ImageView collectibleImage = GeneralGraphicMethods.createImage(
-                        "pics/collectibles/" + collectible.getName() + ".png", 20, 20);
-                BattleScene.getSingleInstance().addNodeToBoard(randomX, randomY, collectibleImage, false);
-                collectible.setImageView(collectibleImage);
+                collectible.setSquare(squares[randomX][randomY]);
             }
-
         }
 
         HashMap<String, Integer> collectibleNames = new HashMap<>();
@@ -218,6 +213,18 @@ public class Match {
             new CollectibleId((Collectible) collectible, number);
         }
     }
+
+
+    private void setCollectiblesGraphic(ArrayList<Collectible> collectibles) {
+        for (Collectible collectible : collectibles) {
+            ImageView collectibleImage = GeneralGraphicMethods.createImage(
+                    "pics/collectibles/" + collectible.getName() + ".png", 20, 20);
+            BattleScene.getSingleInstance().addNodeToBoard(collectible.getSquare().getXCoordinate(),
+                    collectible.getSquare().getYCoordinate(), collectibleImage, false);
+            collectible.setImageView(collectibleImage);
+        }
+    }
+
 
     public Player passPlayerWithTurn() {
         if (whichPlayer == 0)
@@ -339,29 +346,25 @@ public class Match {
     }
 
     public void endGame() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                players[0].getAccount().setCurrentlyPlaying(false);
-                players[1].getAccount().setCurrentlyPlaying(false);
-                MatchInfo matchInfo = new MatchInfo();
-                if (winner instanceof OrdinaryPlayer)
-                    matchInfo.winner = winner.getAccount().getUserName();
-                else
-                    matchInfo.winner = "Computer";
+        new Thread(() -> {
+            players[0].getAccount().setCurrentlyPlaying(false);
+            players[1].getAccount().setCurrentlyPlaying(false);
+            MatchInfo matchInfo = new MatchInfo();
+            if (winner instanceof OrdinaryPlayer)
+                matchInfo.winner = winner.getAccount().getUserName();
+            else
+                matchInfo.winner = "Computer";
 
-                if (loser instanceof OrdinaryPlayer)
-                    matchInfo.loser = loser.getAccount().getUserName();
-                else
-                    matchInfo.loser = "Computer";
-                matchInfo.date = date;
+            if (loser instanceof OrdinaryPlayer)
+                matchInfo.loser = loser.getAccount().getUserName();
+            else
+                matchInfo.loser = "Computer";
+            matchInfo.date = date;
 
-                winner.endGame(matchInfo, reward);
-                loser.endGame(matchInfo, 0);
+            winner.endGame(matchInfo, reward);
+            loser.endGame(matchInfo, 0);
 
 
-
-            }
         }).start();
 
         if (winner instanceof ComputerPlayer) {
@@ -389,7 +392,7 @@ public class Match {
     }
 
 
-    public static void loss() {
+    private static void loss() {
         setWinAndLossBackGround("resource/music/defeat.m4a",
                 "pics/battle/general_f4@2x.png",
                 "pics/battle/scene_diamonds_background_defeat@2x.png",
@@ -398,7 +401,7 @@ public class Match {
                 "DEFEAT");
     }
 
-    public static void win() {
+    private static void win() {
         setWinAndLossBackGround("resource/music/sfx_victory_match_w_vo.m4a",
                 "pics/battle/general_f1@2x.png",
                 "pics/battle/scene_diamonds_background_victory@2x.png",
@@ -411,8 +414,8 @@ public class Match {
     /**
      * Graphic:
      **/
-    public static void setWinAndLossBackGround(String musicPath, String generalPath, String backGgoundPath,
-                                               String middlegroundPath, String highlightPath, String label) {
+    private static void setWinAndLossBackGround(String musicPath, String generalPath, String backGgoundPath,
+                                                String middlegroundPath, String highlightPath, String label) {
         Scene battleScene = StageLauncher.getScene(StateType.BATTLE);
         assert battleScene != null;
         Group root = (Group) battleScene.getRoot();
