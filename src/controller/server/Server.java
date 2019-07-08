@@ -32,7 +32,7 @@ import static view.Graphic.GeneralGraphicMethods.*;
 class ServerThread extends Thread {
     private SocketClass socketClass;
     static ArrayList<SocketClass> socketClasses = new ArrayList<>();
-    private static int PORT = 8000;
+    private static int PORT = 8080;
 
     public void run() {
         try {
@@ -117,7 +117,6 @@ public class Server extends Application {
                 addText(group, 50, 10, account.getUserName()
                         + "   Online:" + AllAccount.getInstance().isOnline(account), Color.BLACK, 30);
             }
-
         }
 
         private static Group addButton ( int x, int y, String path, String input){

@@ -78,7 +78,6 @@ public class BattleView {
     }
 
     public void gameHelp(Player player) {
-
         System.out.println("You can move these cards:");
         for (Card card : player.getCardsOnLand()) {
             if (card.getCanMove())

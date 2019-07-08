@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Client {
     private static final String HOST = "127.0.0.1";
-    private static final int PORT = 8000;
+    private static final int PORT = 8080;
     private static Socket socket;
     private static ClientIOHandler clientIOhandler;
     static boolean alive = true;
@@ -19,7 +19,7 @@ public class Client {
             String host;
             int port;
             try {
-                Scanner fileScanner = new Scanner(new File("src/controller/configServer"));
+                Scanner fileScanner = new Scanner(new File("src/controller/configClient"));
                 host = fileScanner.nextLine().split(":")[1];
                 port = Integer.parseInt(fileScanner.nextLine().split((":"))[1]);
                 fileScanner.close();
@@ -28,6 +28,8 @@ public class Client {
                 port = PORT;
                 e.printStackTrace();
             }
+            System.out.println(port);
+            System.out.println(host);
             socket = new Socket(host, port);
             System.out.println("Connected to server");
 
