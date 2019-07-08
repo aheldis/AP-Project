@@ -1,13 +1,17 @@
 package controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
 import controller.server.Server;
+import controller.server.SocketClass;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DBClass {
@@ -55,6 +59,25 @@ public class DBClass {
         putSocketClass();
     }
 
+    public static ArrayList<SocketClass> getSocketClass(){
+        HttpResponse<JsonNode> response= null;
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("name", "myDB");
+        hashMap.put("key", "socketClasses");
+        ArrayList<SocketClass> socketClasses;
+        try {
+
+            response  = Unirest.post(baseAddress + "get").fields(hashMap).asJson();
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json= objectMapper.writeValueAsString(response);
+            Gson gson = new Gson();
+            socketClasses = gson.fromJson(json,ArrayList.class);
+        } catch (UnirestException | JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void putCustomCard(Gson gson,String customName){
         putObject(gson,customName);
     }
@@ -82,8 +105,9 @@ public class DBClass {
         hashMap.put("key", key);
         try {
 
-            response  = Unirest.post(baseAddress + "put").fields(hashMap).asJson();
+            response  = Unirest.post(baseAddress + "get").fields(hashMap).asJson();
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
             return objectMapper.writeValueAsString(response);
         } catch (UnirestException | JsonProcessingException e) {
             e.printStackTrace();

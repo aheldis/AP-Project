@@ -1,5 +1,6 @@
 package controller.server;
 
+import controller.DBClass;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -12,7 +13,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.account.Account;
 import model.account.AllAccount;
+import model.account.Collection;
 import model.account.Shop;
+import model.card.Hero;
+import model.item.Collectible;
+import model.item.CollectibleId;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -60,7 +65,7 @@ public class Server extends Application {
         return ServerThread.socketClasses;
     }
 
-    public static SocketClass getSocketClassByName(String name) {
+    static SocketClass getSocketClassByName(String name) {
         for(SocketClass socketClass : ServerThread.socketClasses){
             if(socketClass.getAccount().getUserName().equals(name))
                 return socketClass;
@@ -70,7 +75,13 @@ public class Server extends Application {
 
     public static void main(String[] args) {
 
-            try {
+        DBClass.makeDB();
+//        DBClass.putSocketClass();
+//        System.out.println(DBClass.getSocketClass());
+       // DBClass.putObject(new Collectible(),"hero");
+       // System.out.println(DBClass.getObject("hero"));
+
+        try {
                 FileWriter fileWriter = new FileWriter("src/controller/configServer");
                 fileWriter.write("ip:" + "127.0.0.1" + "\n" + "port:" + PORT);
                 fileWriter.close();
