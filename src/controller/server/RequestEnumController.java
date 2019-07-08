@@ -235,6 +235,11 @@ public class RequestEnumController {
                 transmitter.errorType = errorType;
                 if (errorType == null) {
                     transmitter.match = socketClass.setMatch(game.makeNewStoryGame(clientTransmitter.level));
+                    if (clientTransmitter.level == 3)
+                        transmitter.match.setFlagsRandomly(3);
+                    if (clientTransmitter.level == 2)
+                        transmitter.match.setFlagsRandomly(2);
+                    transmitter.match.setCollectiblesRandomly();
                     transmitter.game = game;
                 }
                 transfer(socketClass);
@@ -256,6 +261,11 @@ public class RequestEnumController {
                     transmitter.match = socketClass.setMatch(
                             game.makeNewCustomGame(account, clientTransmitter.name,
                                     clientTransmitter.mode, clientTransmitter.numberOfFlag));
+                    if (clientTransmitter.level == 3)
+                        transmitter.match.setFlagsRandomly(3);
+                    if (clientTransmitter.level == 2)
+                        transmitter.match.setFlagsRandomly(2);
+                    transmitter.match.setCollectiblesRandomly();
                     transmitter.game = game;
                 }
                 transfer(socketClass);
@@ -314,6 +324,11 @@ public class RequestEnumController {
                 socketClass.setGame(game);
                 Match match = socketClass.setMatch(
                         game.makeNewMultiGame(waiter.getMode(), waiter.getNumberOfFlag(), waiter.getReward()));
+                if (clientTransmitter.level == 3)
+                    transmitter.match.setFlagsRandomly(3);
+                if (clientTransmitter.level == 2)
+                    transmitter.match.setFlagsRandomly(2);
+                transmitter.match.setCollectiblesRandomly();
                 int numberOfMap = new Random().nextInt(12) + 1;
                 sendAcceptPlayForBoth(waiter, socketClass, match, game, numberOfMap, true);
                 sendAcceptPlayForBoth(socketClass, waiter, match, game, numberOfMap, false);
