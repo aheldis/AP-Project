@@ -268,7 +268,7 @@ public class SelectGameScene {
         reward.relocate(605, 100);
         textFieldProperties(reward, selectModeRoot);
 
-        getNumberOfFlagPage(collectFlagImage, selectModeRoot, selectModeScene, Integer.parseInt(reward.getText()));
+        getNumberOfFlagPage(collectFlagImage, selectModeRoot, selectModeScene, reward);
 
         saveFlagImage.setOnMouseClicked(event -> {
             if (mode.equals("custom"))
@@ -384,7 +384,7 @@ public class SelectGameScene {
         }
     }
 
-    private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene, int reward) {
+    private static void getNumberOfFlagPage(ImageView imageView, Group root, Scene scene, TextField reward) {
 
         try {
 
@@ -416,7 +416,7 @@ public class SelectGameScene {
                     });
                 } else {
                     //multiplayer
-                    multiPlayerPage(selectModeRoot, selectModeScene, 3, Integer.parseInt(number.getText()), reward);
+                    multiPlayerPage(selectModeRoot, selectModeScene, 3, Integer.parseInt(number.getText()), Integer.parseInt(reward.getText()));
                 }
 
             });
