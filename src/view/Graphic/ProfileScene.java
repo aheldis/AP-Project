@@ -1,5 +1,6 @@
 package view.Graphic;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gilecode.yagson.YaGson;
 import controller.Transmitter;
 import controller.client.TransferController;
@@ -79,30 +80,6 @@ public class ProfileScene {
         });
         vBox.getChildren().add(matchHistoryButtonGroup);
     }
-
-    private void goToGame(){
-        try {
-            String matchPath = "PausedGames/" + name + "_match.json";
-            YaGson yaGson = new YaGson();
-            Match match = yaGson.fromJson(new FileReader(matchPath), Match.class);
-            String gamePath =  "PausedGames/" + name + "_game.json";
-            Game game = yaGson.fromJson(new FileReader(gamePath), Game.class );
-            Platform.setImplicitExit(false);
-            Platform.runLater(() -> {
-                StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
-                BattleScene.setNewInstance();
-                BattleScene battleScene = BattleScene.getSingleInstance();
-                battleScene.setGame(game);
-                battleScene.setMatch(match);
-
-                battleScene.setBattleScene(match.numberOfMap);
-                battleScene.setImPlayer0(true);
-                match.initGraphic(true);
-            });
-        }catch (Exception e){
-            System.out.println("have not paused");
-        }
-    }
     private void addSidebar() {
         addRectangle(root, 0, 0, 300, (int) StageLauncher.getHeight(), 0, 0, Color.gray(0, 0.7));
 
@@ -139,7 +116,6 @@ public class ProfileScene {
         vBox.relocate(45, 50);
         root.getChildren().addAll(vBox);
     }
-
     private void showMatchHistory() {
         System.out.println("ProfileScene.showMatchHistory");
         matchHistoryGroup = new Group();
@@ -183,6 +159,35 @@ public class ProfileScene {
         gridPane.relocate(300, 180);
 
         matchHistoryGroup.relocate(350, 60);
+    }
+
+    @JsonIgnoreProperties("battleScene")
+    private void goToGame(){
+        new Thread(()->{
+            try {
+                String matchPath = "PausedGames/" + name + "_match.json";
+
+                YaGson yaGson = new YaGson();
+                Match match = yaGson.fromJson(new FileReader(matchPath), Match.class);
+//              String gamePath =  "PausedGames/" + name + "_game.json";
+//              Game game = yaGson.fromJson(new FileReader(gamePath), Game.class );
+                Platform.setImplicitExit(false);
+                Platform.runLater(() -> {
+                    StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
+                    BattleScene.setNewInstance();
+                    BattleScene battleScene = BattleScene.getSingleInstance();
+                    //battleScene.setGame(game);
+                    battleScene.setMatch(match);
+
+                    battleScene.setBattleScene(match.numberOfMap);
+                    battleScene.setImPlayer0(true);
+                    match.initGraphic(true);
+                });
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("have not paused");
+            }
+        }).start();
     }
 
     private void showLeaderBoard(){

@@ -84,6 +84,11 @@ public class Match {
         initGame();
     }
 
+
+    public void setBattleScene(BattleScene battleScene) {
+        this.battleScene = battleScene;
+    }
+
     private void initGame() {
         players[0].addToCardsOfLand(players[0].getMainDeck().getHero());
         players[1].addToCardsOfLand(players[1].getMainDeck().getHero());

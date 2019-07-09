@@ -57,7 +57,7 @@ public class BattleScene {
     private ArrayList<Rectangle> coloredRectangles = new ArrayList<>();
     private MapProperties mapProperties;
     private Match match;
-    private Game game;
+    //private Game game;
     private BattleHeaderGraphic battleHeader;
     private BattleFooterGraphic battleFooter;
     private Square onMousePressedPosition;
@@ -679,9 +679,9 @@ public class BattleScene {
     }
 
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
+    //public void setGame(Game game) {
+//        this.game = game;
+//    }
 
     void setOnMousePressedPosition(Card card) {
         backToDefault();
@@ -747,7 +747,7 @@ public class BattleScene {
                 numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(this, root);
-        battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
+        battleFooter = new BattleFooterGraphic(this, root, match.getPlayers()[0], battleScene);
         makeFastForwardButton();
         makePause();
 
@@ -761,12 +761,13 @@ public class BattleScene {
             @Override
             public void handle(MouseEvent event) {
                 new Thread(() -> {
+                    match.setBattleScene(null);
             GeneralLogicMethods.saveInFile("PausedGames/"+match.getPlayers()[0].getUserName()+"_match.json",match);
                 }).start();
-           new Thread(()-> {
-               System.out.println("hello");
-               GeneralLogicMethods.saveInFile("PausedGames/" + match.getPlayers()[0].getUserName() + "_game.json", game);
-           }).start();// GeneralLogicMethods.saveInFile("PausedGames/"+match.getPlayers()[0].getUserName()+"_number.json",new Integer(numberOfMap));
+//           new Thread(()-> {
+//               System.out.println("hello");
+//               GeneralLogicMethods.saveInFile("PausedGames/" + match.getPlayers()[0].getUserName() + "_game.json", game);
+//           }).start();// GeneralLogicMethods.saveInFile("PausedGames/"+match.getPlayers()[0].getUserName()+"_number.json",new Integer(numberOfMap));
 
                 match.getPlayers()[0].getAccount().setCurrentlyPlaying(false);
                 match.getPlayers()[1].getAccount().setCurrentlyPlaying(false);
