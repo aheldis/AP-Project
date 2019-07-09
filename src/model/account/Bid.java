@@ -73,6 +73,9 @@ public class Bid {
         if (card == null) {
             return ErrorType.NO_SUCH_CARD_OR_ITEM_IN_COLLECTION;
         }
+        if(getBidByCard(card) != null){
+            return ErrorType.ALREADY_BID;
+        }
 
         new Bid(account, card, cost);
         return null;

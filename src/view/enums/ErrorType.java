@@ -53,7 +53,8 @@ public enum ErrorType {
 
     NOT_NUMBER("Enter a number!"),
     INVALID_COST("Your suggestion cost is more than real cost"),
-    INVALID_COST2("You must enter a higher cost")
+    INVALID_COST2("You must enter a higher cost"),
+    ALREADY_BID("You already bid this card")
     ;
 
     private String message;
