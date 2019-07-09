@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -20,6 +21,8 @@ import view.Graphic.*;
 import view.enums.StateType;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.*;
 
@@ -123,6 +126,37 @@ public class Match {
 
     public void addToGameFlags(Flag flag) {
         this.flags.add(flag);
+    }
+
+    public  void addCard(){
+        Square[][] squares = land.getSquares();
+        for (int i=0;i<5;i++){
+            for(int j=0;j<9;j++){
+                if(squares[i][j].getObject() instanceof Card){
+                    try {
+                        BattleScene.getSingleInstance().addCardToBoard(i,j,(Card) squares[i][j].getObject(),
+                                "Breathing",new ImageView(new Image(new
+                                        FileInputStream(((Card) squares[i][j].getObject()).getPathOfAnimation()))),true,true,true);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    public void initPause(boolean imPlayer0){
+        this.battleScene = BattleScene.getSingleInstance();
+        addCard();
+        setFlagsGraphic();
+        setCollectiblesGraphic();
+        if (imPlayer0 && players[0].getMainDeck().getItem() != null) {
+            Usable item = players[0].getMainDeck().getItem();
+            battleScene.showAlert(item.getName() + ": " + item.getDescription());
+        } else if (!imPlayer0 && players[1].getMainDeck().getItem() != null) {
+            Usable item = players[1].getMainDeck().getItem();
+            battleScene.showAlert(item.getName() + ": " + item.getDescription());
+        }
     }
 
     public void initGraphic(boolean imPlayer0) {

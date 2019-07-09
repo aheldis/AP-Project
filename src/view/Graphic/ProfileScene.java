@@ -180,7 +180,7 @@ public class ProfileScene {
 
                     battleScene.setBattleScene(match.numberOfMap);
                     battleScene.setImPlayer0(true);
-                    match.initGraphic(true);
+                    match.initPause(true);
                 });
             }catch (Exception e){
                 e.printStackTrace();
