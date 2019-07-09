@@ -1,6 +1,6 @@
 package view.Graphic;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import com.gilecode.yagson.YaGson;
 import controller.Transmitter;
 import controller.client.TransferController;
@@ -161,7 +161,6 @@ public class ProfileScene {
         matchHistoryGroup.relocate(350, 60);
     }
 
-    @JsonIgnoreProperties("battleScene")
     private void goToGame(){
         new Thread(()->{
             try {

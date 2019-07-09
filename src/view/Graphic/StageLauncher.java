@@ -1,5 +1,6 @@
 package view.Graphic;
 
+import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.application.Application;
@@ -177,5 +178,6 @@ public class StageLauncher extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        primaryStage.setOnCloseRequest(event -> TransferController.main(LOGOUT, new Transmitter()));
     }
 }

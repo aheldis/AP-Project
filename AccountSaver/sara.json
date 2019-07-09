@@ -42,7 +42,7 @@
     },
     "decks": [],
     "accountImagePath": "pics/shop/emotes-18.png",
-    "authToken": "sara_ERTT",
+    "authToken": null,
     "currentlyPlaying": false
   }
 }

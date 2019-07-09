@@ -62,6 +62,7 @@ public class RequestEnumController {
             case LOGOUT:
                 AllAccount.getInstance().saveAccount(account);
                 account.setAuthToken(null);
+                account.setCurrentlyPlaying(false);
                 socketClass.setAccount(null);
                 break;
             case PROFILE:
@@ -346,8 +347,10 @@ public class RequestEnumController {
             }
             case CANCEL_START_MATCH:
                 transmitter.requestEnum = RequestEnum.CANCEL_START_MATCH;
-                socketClass.opponent.setTransmitter(transmitter);
-                transfer(socketClass.opponent);
+                if (socketClass.opponent != null) {
+                    socketClass.opponent.setTransmitter(transmitter);
+                    transfer(socketClass.opponent);
+                }
                 break;
             case BATTLE:
                 socketClass.socketClasses[1].setTransmitter(clientTransmitter);
@@ -372,10 +375,9 @@ public class RequestEnumController {
                     transmitter.errorType = ErrorType.INVALID_COST;
                 else if (newCost < bid.getCost())
                     transmitter.errorType = ErrorType.INVALID_COST2;
-                else if(newCost > account.getDaric()){
+                else if (newCost > account.getDaric()) {
                     transmitter.errorType = ErrorType.NOT_ENOUGH_MONEY;
-                }
-                else {
+                } else {
                     bid.setCost(newCost);
                     bid.setBuyerAccount(account);
                     bid.sendBid();
@@ -399,21 +401,6 @@ public class RequestEnumController {
 
     }
 
-    private static void sendAcceptPlayForBoth(SocketClass socketClass, SocketClass waiter,
-                                              Match match, Game game, int numberOfMap, boolean imPlayer0) {
-        Transmitter transmitter = socketClass.getTransmitter();
-        transmitter.transmitterId = 0;
-        transmitter.requestEnum = RequestEnum.BATTLE;
-        transmitter.battleMessage = new BattleMessage();
-        transmitter.battleMessage.imPlayer0 = imPlayer0;
-        transmitter.battleMessage.battleEnum = BattleEnum.START_GAME;
-        socketClass.socketClasses = new SocketClass[]{socketClass, waiter};
-        transmitter.match = match;
-        transmitter.game = game;
-        transmitter.numberOfMap = numberOfMap;
-        transfer(socketClass);
-    }
-
     private static void transfer(SocketClass socketClass) {
 //        System.out.println();
 //        System.out.println("RequestEnumController.transfer");
@@ -431,5 +418,20 @@ public class RequestEnumController {
             e.printStackTrace();
         }
 
+    }
+
+    private static void sendAcceptPlayForBoth(SocketClass socketClass, SocketClass waiter,
+                                              Match match, Game game, int numberOfMap, boolean imPlayer0) {
+        Transmitter transmitter = socketClass.getTransmitter();
+        transmitter.transmitterId = 0;
+        transmitter.requestEnum = RequestEnum.BATTLE;
+        transmitter.battleMessage = new BattleMessage();
+        transmitter.battleMessage.imPlayer0 = imPlayer0;
+        transmitter.battleMessage.battleEnum = BattleEnum.START_GAME;
+        socketClass.socketClasses = new SocketClass[]{socketClass, waiter};
+        transmitter.match = match;
+        transmitter.game = game;
+        transmitter.numberOfMap = numberOfMap;
+        transfer(socketClass);
     }
 }

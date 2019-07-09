@@ -711,7 +711,7 @@
       }
     },
     "decks": [],
-    "authToken": "shiva_XMWF",
+    "authToken": null,
     "currentlyPlaying": false
   }
 }
