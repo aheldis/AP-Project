@@ -2,7 +2,7 @@ Rostam:5
 Esfandiar:4
 Kaveh:5
 Rakhsh:5
-Afsaneh:4
+Afsaneh:3
 Zahhak:5
 Arash:5
 SevenHeadsDragon:4

@@ -69,6 +69,7 @@ public class DBClass {
 
             response  = Unirest.post(baseAddress + "get").fields(hashMap).asJson();
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
             String json= objectMapper.writeValueAsString(response);
             Gson gson = new Gson();
             socketClasses = gson.fromJson(json,ArrayList.class);

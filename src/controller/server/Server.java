@@ -8,12 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Shop;
+import model.item.Collectible;
+import view.Recorder;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -71,11 +74,11 @@ public class Server extends Application {
 
     public static void main(String[] args) {
 
-        DBClass.makeDB();
+//        DBClass.makeDB();
 //        DBClass.putSocketClass();
 //        System.out.println(DBClass.getSocketClass());
-       // DBClass.putObject(new Collectible(),"hero");
-       // System.out.println(DBClass.getObject("hero"));
+//        DBClass.putObject(new Collectible(),"hero");
+//        System.out.println(DBClass.getObject("hero"));
 
         try {
                 FileWriter fileWriter = new FileWriter("src/controller/configServer");
@@ -161,6 +164,21 @@ public class Server extends Application {
             Scene scene = new Scene(root, 600, 800);
 
             setBackground(root, "pics/other/chapter10_preview@2x.jpg", false, 0, 0);
+
+//            Recorder recorder = new Recorder(scene,new Pane(),1,true);
+//            recorder.startRecorder();
+//            if(System.currentTimeMillis()/100000000>100000000){
+//                Pane pane = new Pane();
+//                root.getChildren().addAll(pane);
+//                recorder.starPlayer(pane, Recorder.PlaybackSettings.PLAY_ONCE);
+//            }
+
+//                recorder.stopRecorder();
+//
+//            Pane pane = new Pane();
+//            root.getChildren().addAll(pane);
+//            if(System.currentTimeMillis()/100000000>100000000)
+//                recorder.starPlayer(pane, Recorder.PlaybackSettings.CONTINUOUS_REPLAY);
 
             Group clients = addButton(70, 100, "pics/other/button_secondary_glow@2x.png", "Clients");
             Group shop = addButton(70, 200, "pics/other/button_secondary_glow@2x.png", "Shop");
