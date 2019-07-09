@@ -53,7 +53,7 @@ public class BattleHeaderGraphic {
            @Override
            public void handle(MouseEvent event) {
                cheat.relocate(event.getX(),event.getY());
-              addImage(cheat,"pics/battle/frame_quest_challenge@2x.png",0,0,200,300);
+              addImage(cheat,"pics/battle/frame_quest_challenge@2x.png",0,0,300,250);
                VBox vBox = new VBox();
                vBox.relocate(0,0);
                cheat.getChildren().addAll(vBox);
@@ -62,15 +62,15 @@ public class BattleHeaderGraphic {
                    if (player.getMana() >= card.getMp())
                        addText(vBox,0,0,"cardId: " + card.getCardId().getCardIdAsString(),Color.WHITE,15);
                }
-               for (int i = -2; i <= 2; i++)
-                   for (int j = -2; j <= 2; j++) {
-                       int x1 = player.getHero().getPosition().getXCoordinate() + i;
-                       int y1 = player.getHero().getPosition().getYCoordinate() + j;
-                       if (x1 < 0 || x1 >= LandOfGame.getNumberOfRows() || y1 < 0 || y1 >= LandOfGame.getNumberOfColumns())
-                           continue;
-                       if (Math.abs(i) + Math.abs(j) <= 2 && !squares[x1][y1].squareHasMinionOrHero())
-                           addText(vBox,0,0,"(" + x1 + "," + y1 + ")",Color.WHITE,15);
-                   }
+//               for (int i = -2; i <= 2; i++)
+//                   for (int j = -2; j <= 2; j++) {
+//                       int x1 = player.getHero().getPosition().getXCoordinate() + i;
+//                       int y1 = player.getHero().getPosition().getYCoordinate() + j;
+//                       if (x1 < 0 || x1 >= LandOfGame.getNumberOfRows() || y1 < 0 || y1 >= LandOfGame.getNumberOfColumns())
+//                           continue;
+//                       if (Math.abs(i) + Math.abs(j) <= 2 && !squares[x1][y1].squareHasMinionOrHero())
+//                           addText(vBox,0,0,"(" + x1 + "," + y1 + ")",Color.WHITE,15);
+//                   }
                group.getChildren().addAll(cheat);
 
            imageView.setOnMouseExited(event1 -> group.getChildren().removeAll(cheat));

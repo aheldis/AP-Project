@@ -1,13 +1,15 @@
 package controller.server;
 
-import controller.DBClass;
+//import controller.DBClass;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -164,8 +166,8 @@ public class Server extends Application {
             Scene scene = new Scene(root, 600, 800);
 
             setBackground(root, "pics/other/chapter10_preview@2x.jpg", false, 0, 0);
-
-//            Recorder recorder = new Recorder(scene,new Pane(),1,true);
+//            Pane vBox = new VBox();
+//            Recorder recorder = new Recorder(scene,vBox,1,true);
 //            recorder.startRecorder();
 //            if(System.currentTimeMillis()/100000000>100000000){
 //                Pane pane = new Pane();
@@ -187,8 +189,32 @@ public class Server extends Application {
             clients.setOnMouseClicked(event -> makeClientsScene(scene, primaryStage));
             shop.setOnMouseClicked(event -> makeShopScene(scene, primaryStage));
 
+//            Group group =addButton(70, 300, "pics/other/button_secondary_glow@2x.png", "Clients");
+//            group.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent event) {
+//                    recorder.stopRecorder();
+//                }
+//            });
+//            Group group1 =addButton(70, 400, "pics/other/button_secondary_glow@2x.png", "Clients");
+//
+//            root.getChildren().addAll(group,group1);
+//            group1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent event) {
+//                    Scene scene1 = new Scene(vBox, 600, 800);
+//                    primaryStage.setScene(scene1);
+//
+//                    root.getChildren().addAll(vBox);
+//                    recorder.starPlayer(vBox, Recorder.PlaybackSettings.PLAY_ONCE);
+//                }
+//            });
 
-            primaryStage.setOnCloseRequest(event -> serverThread.stop());
+            primaryStage.setOnCloseRequest(event -> {
+                serverThread.stop();
+
+            }
+            );
             primaryStage.setScene(scene);
             primaryStage.show();
 

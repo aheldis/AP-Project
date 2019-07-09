@@ -1,8 +1,10 @@
 package view.Graphic;
 
+import com.gilecode.yagson.YaGson;
 import controller.Transmitter;
 import controller.client.TransferController;
 import controller.RequestEnum;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -15,12 +17,17 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.account.Account;
+import model.battle.Game;
+import model.battle.Match;
 import model.battle.MatchInfo;
 import view.enums.StateType;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Random;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -31,7 +38,7 @@ public class ProfileScene {
     private Group matchHistoryGroup = new Group();
     private Group leaderBoardGroup = new Group();
     private Transmitter transmitter = new Transmitter();
-
+   private String name;
     private ProfileScene() {
     }
 
@@ -57,6 +64,8 @@ public class ProfileScene {
                 showMatchHistory();
             if(input.equals("Leader Board"))
                showLeaderBoard();
+            if(input.equals("Paused game"))
+                goToGame();
             matchHistoryButtonGroup.getChildren().remove(matchHistoryButton1);
             matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton2);
         });
@@ -71,6 +80,29 @@ public class ProfileScene {
         vBox.getChildren().add(matchHistoryButtonGroup);
     }
 
+    private void goToGame(){
+        try {
+            String matchPath = "PausedGames/" + name + "_match.json";
+            YaGson yaGson = new YaGson();
+            Match match = yaGson.fromJson(new FileReader(matchPath), Match.class);
+            String gamePath =  "PausedGames/" + name + "_game.json";
+            Game game = yaGson.fromJson(new FileReader(gamePath), Game.class );
+            Platform.setImplicitExit(false);
+            Platform.runLater(() -> {
+                StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
+                BattleScene.setNewInstance();
+                BattleScene battleScene = BattleScene.getSingleInstance();
+                battleScene.setGame(game);
+                battleScene.setMatch(match);
+
+                battleScene.setBattleScene(match.numberOfMap);
+                battleScene.setImPlayer0(true);
+                match.initGraphic(true);
+            });
+        }catch (Exception e){
+            System.out.println("have not paused");
+        }
+    }
     private void addSidebar() {
         addRectangle(root, 0, 0, 300, (int) StageLauncher.getHeight(), 0, 0, Color.gray(0, 0.7));
 
@@ -79,10 +111,12 @@ public class ProfileScene {
 
         transmitter = TransferController.main(RequestEnum.PROFILE, transmitter);
         addImage(vBox, transmitter.path, 50, 50, 200, 200);
+        name = transmitter.name;
         addTextWithShadow(vBox, 50, 280, transmitter.name, "Luminari", 30);
 
         addTextToScene(vBox,53,350,"Match History");
         addTextToScene(vBox,53,400,"Leader Board");
+        addTextToScene(vBox,53,450,"Paused game");
 //        Group matchHistoryButtonGroup = new Group();
 //        Text matchHistoryButton1 = addText(matchHistoryButtonGroup, 53, 350, "Match History", Color.WHITE, 25);
 //        Text matchHistoryButton2 = addText(new Group(), 53, 350, "Match History", Color.WHITE, 25);

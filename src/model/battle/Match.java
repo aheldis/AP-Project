@@ -1,5 +1,6 @@
 package model.battle;
 
+import com.google.gson.Gson;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -39,6 +40,7 @@ public class Match {
     private ArrayList<Collectible> collectibles = new ArrayList<>();
     private BattleScene battleScene;
     private int matchNumber = 0;
+    public int numberOfMap;
 
     Match(Player[] players, String mode, int numberOfFlags, int reward) {
         //addToPausedGames();
@@ -339,9 +341,11 @@ public class Match {
 
     public void endGame() {
         new Thread(() -> {
-            players[0].getAccount().setCurrentlyPlaying(false);
-            players[1].getAccount().setCurrentlyPlaying(false);
+
             MatchInfo matchInfo = new MatchInfo();
+            for(int i=0;i<2;i++){
+                players[i].getAccount().setCurrentlyPlaying(false);
+            }
             if (winner instanceof OrdinaryPlayer)
                 matchInfo.winner = winner.getAccount().getUserName();
             else
@@ -355,6 +359,7 @@ public class Match {
 
             winner.endGame(matchInfo, reward);
             loser.endGame(matchInfo, 0);
+
 
 
         }).start();

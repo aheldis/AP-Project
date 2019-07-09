@@ -241,17 +241,17 @@ public class Recorder {
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(frameCap),
 
-                new EventHandler<ActionEvent>() {
+                e -> {
+            try {
 
-                    @Override
-                    public void handle(ActionEvent e) {
+                if (allowPlayback) {
+                    System.out.println("here");
+                    playbackVideo();
 
-                        if (allowPlayback) {
-
-                            playbackVideo();
-
-                        }
-                    }
+                }
+            }catch (Exception a){
+                a.printStackTrace();
+            }
                 });
 
         videoPlayer.getKeyFrames().add(keyFrame);

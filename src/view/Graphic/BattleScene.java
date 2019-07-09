@@ -1,6 +1,7 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
+import com.google.gson.Gson;
 import controller.BattleEnum;
 import controller.BattleMessage;
 import controller.RequestEnum;
@@ -8,6 +9,7 @@ import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -16,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -30,6 +33,7 @@ import model.card.Spell;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
+import model.requirment.GeneralLogicMethods;
 import view.enums.Cursor;
 import view.enums.StateType;
 
@@ -745,7 +749,30 @@ public class BattleScene {
         battleHeader = new BattleHeaderGraphic(this, root);
         battleFooter = new BattleFooterGraphic(this, root, game.getPlayers()[0], battleScene);
         makeFastForwardButton();
+        makePause();
 
+    }
+
+    private void makePause(){
+        Button button = imageButton(battleScene, root,
+                "pics/battle/button_icon_middle@2x.png", "Pause",
+                StageLauncher.getWidth() / 2-160, 10, 150, 50);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                new Thread(() -> {
+            GeneralLogicMethods.saveInFile("PausedGames/"+match.getPlayers()[0].getUserName()+"_match.json",match);
+                }).start();
+           new Thread(()-> {
+               System.out.println("hello");
+               GeneralLogicMethods.saveInFile("PausedGames/" + match.getPlayers()[0].getUserName() + "_game.json", game);
+           }).start();// GeneralLogicMethods.saveInFile("PausedGames/"+match.getPlayers()[0].getUserName()+"_number.json",new Integer(numberOfMap));
+
+                match.getPlayers()[0].getAccount().setCurrentlyPlaying(false);
+                match.getPlayers()[1].getAccount().setCurrentlyPlaying(false);
+                StageLauncher.decorateScene(StateType.MAIN_MENU);
+                    }
+        });
     }
 
     private void makeFastForwardButton() {

@@ -445,6 +445,7 @@ public class SelectGameScene {
                 battleScene.setBattleScene(random.nextInt(12) + 1);
             battleScene.setImPlayer0(imPlayer0);
             match.initGraphic(imPlayer0);
+            match.numberOfMap = numberOfMap;
         });
     }
 }

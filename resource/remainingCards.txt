@@ -4,7 +4,7 @@ Kaveh:5
 Rakhsh:5
 Afsaneh:3
 Zahhak:5
-Arash:5
+Arash:4
 SevenHeadsDragon:4
 Simurgh:5
 farzaneh:5
@@ -22,7 +22,7 @@ StonnerGiant:5
 Wolf:5
 SpyFromTooran:5
 ArcherFromFars:5
-Genii:5
+Genii:4
 Leopard:5
 Sorcerer:5
 PrinceFromTooran:5
