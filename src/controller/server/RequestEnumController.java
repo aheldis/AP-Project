@@ -384,12 +384,12 @@ public class RequestEnumController {
             case INSERT:
                 card = Card.getCardById(clientTransmitter.name, player.getHand().getGameCards());
                 assert card != null;
-                transmitter.errorType = player.putCardOnLand(card, clientTransmitter.desPosition, match.getLand());
+                transmitter.errorType = player.putCardOnLand(card, clientTransmitter.desPosition, match.getLand(), true);
                 break;
             case MOVE:
                 card = Card.getCardById(clientTransmitter.name, player.getCardsOnLand());
                 assert card != null;
-                transmitter.errorType = card.move(clientTransmitter.desPosition);
+                transmitter.errorType = card.move(clientTransmitter.desPosition, true);
                 break;
         }
         transfer(socketClass);

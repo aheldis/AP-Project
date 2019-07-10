@@ -46,7 +46,7 @@ public abstract class Player implements Serializable {
         avatarPath = "pics/battle_categorized/profile/" + random.nextInt(17) + ".png";
     }
 
-    public ErrorType putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
+    public ErrorType putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean server) {
 
         //false:
         if (getMana() < playerCard.getMp()) {
@@ -72,7 +72,8 @@ public abstract class Player implements Serializable {
 
         //true:
         mana -= playerCard.getMp();
-        match.getBattleScene().getBattleHeader().makeHeaderEachTurn(getNumberOfPlayer(), this);
+        if (!server)
+            match.getBattleScene().getBattleHeader().makeHeaderEachTurn(getNumberOfPlayer(), this);
         hand.removeUsedCardsFromHand(playerCard);
 
         //spell:
@@ -91,8 +92,10 @@ public abstract class Player implements Serializable {
             Collectible collectible = (Collectible) square.getObject();
             getHand().addToCollectibleItem(collectible);
             collectible.setTheOneWhoCollects(playerCard);
-            BattleScene.getSingleInstance().getCollectibleView(collectible).setOpacity(0);
-            BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
+            if (!server) {
+                BattleScene.getSingleInstance().getCollectibleView(collectible).setOpacity(0);
+                BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
+            }
         }
 
         //cellEffect:
@@ -106,7 +109,8 @@ public abstract class Player implements Serializable {
             for (Flag flag : square.getFlags()) {
                 flag.setOwnerCard(playerCard);
                 playerCard.getPlayer().addToOwnFlags(flag);
-                BattleScene.getSingleInstance().getFlagView(flag).setOpacity(0);
+                if (!server)
+                    BattleScene.getSingleInstance().getFlagView(flag).setOpacity(0);
             }
             square.clearFlags();
         }

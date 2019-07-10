@@ -132,7 +132,7 @@ public abstract class Card implements Serializable {
         }
     }
 
-    public ErrorType move(Coordinate newCoordination) {
+    public ErrorType move(Coordinate newCoordination, boolean server) {
         Square newPosition = landOfGame.passSquareInThisCoordinate(newCoordination);
 
         if (player instanceof OrdinaryPlayer) {
@@ -166,7 +166,8 @@ public abstract class Card implements Serializable {
             for (Flag flag : newPosition.getFlags()) {
                 flag.setOwnerCard(this);
                 player.addToOwnFlags(flag);
-                BattleScene.getSingleInstance().getFlagView(flag).setOpacity(0);
+                if (!server)
+                    BattleScene.getSingleInstance().getFlagView(flag).setOpacity(0);
             }
             newPosition.clearFlags();
         }
@@ -176,8 +177,10 @@ public abstract class Card implements Serializable {
             Collectible collectible = (Collectible) newPosition.getObject();
             player.getHand().addToCollectibleItem(collectible);
             collectible.setTheOneWhoCollects(this);
-            BattleScene.getSingleInstance().getCollectibleView(collectible).setOpacity(0);
-            BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
+            if (!server) {
+                BattleScene.getSingleInstance().getCollectibleView(collectible).setOpacity(0);
+                BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
+            }
         }
 
         position.setObject(null);

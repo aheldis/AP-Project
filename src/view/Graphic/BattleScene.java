@@ -156,14 +156,14 @@ public class BattleScene {
                         else if (!putOrMove && transmitterForPutOrMove(card, position, BattleEnum.MOVE)) return null;
                     } else {
                         if (putOrMove) {
-                            ErrorType errorType = match.getPlayers()[0].putCardOnLand(card, position.getCoordinate(), match.getLand());
+                            ErrorType errorType = match.getPlayers()[0].putCardOnLand(card, position.getCoordinate(), match.getLand(), false);
                             if (errorType != null) {
                                 removeColorFromRectangles();
                                 errorType.printMessage();
                                 return null;
                             }
                         } else {
-                            ErrorType errorType = card.move(position.getCoordinate());
+                            ErrorType errorType = card.move(position.getCoordinate(), false);
                             if (errorType != null) {
                                 removeColorFromRectangles();
                                 errorType.printMessage();
@@ -202,9 +202,9 @@ public class BattleScene {
             return true;
         }
         if (battleEnum.equals(BattleEnum.INSERT))
-            match.getPlayers()[getPlayerNumber()].putCardOnLand(card, position.getCoordinate(), match.getLand());
+            match.getPlayers()[getPlayerNumber()].putCardOnLand(card, position.getCoordinate(), match.getLand(), false);
         else
-            card.move(position.getCoordinate());
+            card.move(position.getCoordinate(), false);
         return false;
     }
 

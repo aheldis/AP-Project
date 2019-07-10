@@ -131,7 +131,7 @@ public class TransferController {
         switch (transmitter.battleEnum) {
             case INSERT: {
                 System.out.println("put: " + card.getCardId().getCardIdAsString());
-                player.putCardOnLand(card, coordinate, battleScene.getMatch().getLand());
+                player.putCardOnLand(card, coordinate, battleScene.getMatch().getLand(), false);
                 Card finalCard = card;
                 Platform.runLater(() ->
                         battleScene.addCardToBoard(coordinate.getX(), coordinate.getY(), finalCard,
@@ -141,7 +141,7 @@ public class TransferController {
             case MOVE: {
                 System.out.println("move: " + card.getCardId().getCardIdAsString());
                 Square firstPosition = card.getPosition();
-                card.move(coordinate);
+                card.move(coordinate, false);
                 Card finalCard1 = card;
                 Platform.runLater(() -> ComputerPlayer.moveAnimation(firstPosition.getXCoordinate(),
                         firstPosition.getYCoordinate(), finalCard1));

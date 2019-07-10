@@ -590,7 +590,7 @@ public class MenuController  {
                             error.printMessage();
                             break;
                         }
-                        player.putCardOnLand(card, coordinate, match.getLand());
+                        player.putCardOnLand(card, coordinate, match.getLand(), false);
                         break;
                     case GAME_SELECT_Collectible:
                         id = request.getId();
@@ -663,7 +663,7 @@ public class MenuController  {
                             errorType.printMessage();
                             break;
                         }
-                        selectedCard.move(request.getCoordinate());
+                        selectedCard.move(request.getCoordinate(), false);
                         break;
                     case GAME_EXIT_FROM_SELECT_CARD:
                         state = StateType.BATTLE;
