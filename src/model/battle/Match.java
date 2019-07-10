@@ -1,6 +1,5 @@
 package model.battle;
 
-import com.google.gson.Gson;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -128,15 +127,16 @@ public class Match {
         this.flags.add(flag);
     }
 
-    public  void addCard(){
+    private void addCard() {
         Square[][] squares = land.getSquares();
-        for (int i=0;i<5;i++){
-            for(int j=0;j<9;j++){
-                if(squares[i][j].getObject() instanceof Card){
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (squares[i][j].getObject() instanceof Card) {
                     try {
-                        BattleScene.getSingleInstance().addCardToBoard(i,j,(Card) squares[i][j].getObject(),
-                                "Breathing",new ImageView(new Image(new
-                                        FileInputStream(((Card) squares[i][j].getObject()).getPathOfAnimation()))),true,true,true);
+                        BattleScene.getSingleInstance().addCardToBoard(i, j, (Card) squares[i][j].getObject(),
+                                "Breathing", new ImageView(new Image(new
+                                        FileInputStream(((Card) squares[i][j].getObject()).getPathOfAnimation()))),
+                                true, true, true);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -145,9 +145,13 @@ public class Match {
         }
     }
 
-    public void initPause(boolean imPlayer0){
+    public void initPause(boolean imPlayer0) {
         this.battleScene = BattleScene.getSingleInstance();
         addCard();
+        initCheck(imPlayer0);
+    }
+
+    private void initCheck(boolean imPlayer0) {
         setFlagsGraphic();
         setCollectiblesGraphic();
         if (imPlayer0 && players[0].getMainDeck().getItem() != null) {
@@ -167,15 +171,7 @@ public class Match {
                 null, imPlayer0, false, false);
         battleScene.addCardToBoard(2, 8, secondHero, "Breathing",
                 null, !imPlayer0, true, false);
-        setFlagsGraphic();
-        setCollectiblesGraphic();
-        if (imPlayer0 && players[0].getMainDeck().getItem() != null) {
-            Usable item = players[0].getMainDeck().getItem();
-            battleScene.showAlert(item.getName() + ": " + item.getDescription());
-        } else if (!imPlayer0 && players[1].getMainDeck().getItem() != null) {
-            Usable item = players[1].getMainDeck().getItem();
-            battleScene.showAlert(item.getName() + ": " + item.getDescription());
-        }
+        initCheck(imPlayer0);
     }
 
 
@@ -288,11 +284,8 @@ public class Match {
             players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
 
 
-            /**
-             *
-             Graphic:
-             *
-             **/
+//             Graphic:
+
             DragAndDrop.setWait(true);
             BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
             //your turn notification
@@ -382,7 +375,7 @@ public class Match {
         new Thread(() -> {
 
             MatchInfo matchInfo = new MatchInfo();
-            for(int i=0;i<2;i++){
+            for (int i = 0; i < 2; i++) {
                 players[i].getAccount().setCurrentlyPlaying(false);
             }
             if (winner instanceof OrdinaryPlayer)
@@ -398,7 +391,6 @@ public class Match {
 
             winner.endGame(matchInfo, reward);
             loser.endGame(matchInfo, 0);
-
 
 
         }).start();

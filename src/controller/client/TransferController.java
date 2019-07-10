@@ -31,7 +31,6 @@ public class TransferController {
             case CANCEL_START_MATCH:
             case START_MATCH:
             case GET_BIDS:
-            case BATTLE:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case SIGN_UP:
@@ -56,6 +55,8 @@ public class TransferController {
             case ALL_ACCOUNT:
             case NEW_BID:
             case BID_NEW_COST:
+            case BATTLE:
+                System.out.println("hi");
                 fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:

@@ -26,9 +26,9 @@ public class ClientIOHandler extends Thread {
                 String line = in.nextLine();
                 YaGson mapper = new YaGson();
                 Transmitter transmitter = mapper.fromJson(line, Transmitter.class);
-                System.out.println(transmitter.errorType);
-                System.out.println(transmitter.requestEnum);
-                System.out.println(transmitter.transmitterId);
+//                System.out.println(transmitter.errorType);
+//                System.out.println(transmitter.requestEnum);
+//                System.out.println(transmitter.transmitterId);
                 if(transmitter.errorType != null)
                     transmitter.errorType.printMessage();
                 new Thread(() -> {

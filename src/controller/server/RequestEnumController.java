@@ -420,6 +420,7 @@ public class RequestEnumController {
     }
 
     private static void battleCheck(Transmitter clientTransmitter, SocketClass socketClass, Transmitter transmitter) {
+        System.out.println("hi");
         Match match = socketClass.getMatch();
         Card card = clientTransmitter.card;
         BattleMessage battleMessage = clientTransmitter.battleMessage;

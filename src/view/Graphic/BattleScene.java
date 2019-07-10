@@ -134,7 +134,7 @@ public class BattleScene {
                         return null;
                     }
                     if (putOrMove && transmitterForPutOrMove(card, position, BattleEnum.INSERT)) return null;
-                    else if (transmitterForPutOrMove(card, position, BattleEnum.MOVE)) return null;
+                    else if (!putOrMove && transmitterForPutOrMove(card, position, BattleEnum.MOVE)) return null;
                     if (coloredRectangles.contains(grid)) {
                         removeColorFromRectangles();
                         selectedCard = null;
