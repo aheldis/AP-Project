@@ -2,6 +2,7 @@ package controller.server;
 
 //import controller.DBClass;
 
+import controller.DBClass;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -15,6 +16,7 @@ import javafx.stage.Stage;
 import model.account.Account;
 import model.account.AllAccount;
 import model.account.Shop;
+import model.item.Collectible;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -72,11 +74,7 @@ public class Server extends Application {
 
     public static void main(String[] args) {
 
-//        DBClass.makeDB();
-//        DBClass.putSocketClass();
-//        System.out.println(DBClass.getSocketClass());
-//        DBClass.putObject(new Collectible(),"hero");
-//        System.out.println(DBClass.getObject("hero"));
+        //DBClass.makeDB();
 
         try {
             FileWriter fileWriter = new FileWriter("src/controller/configServer");
