@@ -37,14 +37,14 @@ public class Client {
             clientIOhandler.setIn(new Scanner(socket.getInputStream()));
             clientIOhandler.setOut(new PrintWriter(socket.getOutputStream(), true));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         clientIOhandler.start();
 
         StageLauncher.main(args);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //todo at the end close everything
 
         alive = false;

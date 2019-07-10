@@ -45,7 +45,7 @@ public class Match {
     public int numberOfMap;
 
     Match(Player[] players, String mode, int numberOfFlags, int reward) {
-        //addToPausedGames();
+//        addToPausedGames();
 
         land = new LandOfGame();
         for (int i = 0; i < 2; i++) {
@@ -96,18 +96,18 @@ public class Match {
         players[1].addToCardsOfLand(players[1].getMainDeck().getHero());
     }
 
-    private void addToPausedGames() {
+    public void addToPausedGames() {
         new Thread(() -> {
             try {
                 File file = new File("PausedGames/NumberOfMap");
                 Scanner fileReader = new Scanner(file);
                 FileWriter fileWriter = new FileWriter(file, true);
-                int line = 1;
+                int line = 0;
                 while (fileReader.hasNextLine()) {
                     fileReader.nextLine();
                     line++;
                 }
-                if (line != 1)
+                if (line != 0)
                     line--;//we add \n at each writing
 
 
