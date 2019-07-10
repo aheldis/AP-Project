@@ -65,32 +65,7 @@ public class TransferController {
                     messages.remove(0);
                 }
                 return fromServerTransmitter;
-               /*
-               // try {
-                    Thread one=new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                object =(Transmitter) objectInputStream.readObject();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    one.start();
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (object != null) {
-                        fromServerTransmitter = (Transmitter) object;
-                    }
-                one.stop();
-//                } catch (IOException | ClassNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-                return fromServerTransmitter;*/
+
         }
         return fromServerTransmitter;
 
@@ -131,10 +106,10 @@ public class TransferController {
                         transmitter.numberOfMap, transmitter.battleMessage.imPlayer0);
                 break;
             case INSERT: {
-                Card card = transmitter.battleMessage.card;
-                Square position = card.getPosition();
                 BattleScene battleScene = BattleScene.getSingleInstance();
                 battleScene.setSquares(transmitter.battleMessage.squares);
+                Card card = transmitter.battleMessage.card;
+                Square position = card.getPosition();
                 Platform.runLater(() ->
                         battleScene.addCardToBoard(position.getXCoordinate(), position.getYCoordinate(), card,
                                 "Breathing", null, false, battleScene.isImPlayer1(), false));

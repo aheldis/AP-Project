@@ -23,6 +23,7 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Pair;
 import model.account.FilesType;
 import model.battle.Match;
+import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Spell;
@@ -153,7 +154,7 @@ public class BattleScene {
         Transmitter transmitter = new Transmitter();
         transmitter.requestEnum = RequestEnum.BATTLE;
         transmitter.battleMessage = new BattleMessage();
-        transmitter.battleMessage.card = card;
+        transmitter.battleMessage.cardId = card.getCardId().getCardIdAsString();
         transmitter.battleMessage.srcPosition = card.getPosition();
         transmitter.battleMessage.desPosition = position;
         transmitter.battleMessage.battleEnum = battleEnum;
@@ -838,7 +839,17 @@ public class BattleScene {
         return !imPlayer0;
     }
 
+    public int getPlayerNumber() {
+        if (imPlayer0)
+            return 0;
+        else return 1;
+    }
+
     public void setSquares(Square[][] squares) {
         match.getLand().setSquares(squares);
+    }
+
+    public Player getOpponentPlayer() {
+        return getMatch().getPlayers()[1 - getPlayerNumber()];
     }
 }

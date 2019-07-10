@@ -10,6 +10,7 @@ import model.account.*;
 import model.battle.Deck;
 import model.battle.Game;
 import model.battle.Match;
+import model.battle.Player;
 import model.card.Card;
 import model.card.makeFile.MakeNewFile;
 import model.item.Collectible;
@@ -30,6 +31,7 @@ public class RequestEnumController {
     public synchronized static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
         Transmitter transmitter = socketClass.getTransmitter();
         transmitter.requestEnum = clientTransmitter.requestEnum;
+        System.out.println(clientTransmitter.requestEnum);
         transmitter.transmitterId = clientTransmitter.transmitterId;
         AllAccount allAccount = AllAccount.getInstance();
         Account account = socketClass.getAccount();
@@ -122,26 +124,6 @@ public class RequestEnumController {
                 transmitter.collection = account.getCollection();
                 transfer(socketClass);
                 break;
-                /*
-            case COLLECTION_SHOW:
-                transmitter.cards = account.getCollection().getAllCards();
-                transmitter.items = new ArrayList<>(Arrays.asList(account.getCollection().getItems()));
-                transfer(socketClass);
-                break;
-            case COLLECTION_DECKS:
-                transmitter.decks = account.getDecks();
-                transmitter.collection = account.getCollection();
-                for (Card card : transmitter.collection.getAllCards())
-                    System.out.println(card.getName() + " " + card.getCardId());
-                transfer(socketClass);
-                break;
-            case NEW_DECK:
-                transmitter.errorType = account.getCollection().createDeck(clientTransmitter.name);
-                break;
-            case COLLECTION_DELETE_DECK:
-                transmitter.errorType = account.getCollection().deleteDeck(clientTransmitter.name);
-                break;
-                */
             case EXPORT_DECK:
                 Deck deck = clientTransmitter.deck;
                 String path = "exportedDeck/" + account.getUserName()
@@ -169,15 +151,6 @@ public class RequestEnumController {
                 }
 
                 break;
-                /*
-            case COLLECTION_ADD_CARD_TO_DECK:
-                //todo
-                break;
-            case COLLECTION_SELECT_MAIN_DECK:
-                transmitter.errorType =
-                        account.getCollection().selectADeckAsMainDeck(transmitter.deck.getName());
-                break;
-                */
             case COLLECTION_UPDATE:
                 account.setCollection(clientTransmitter.collection);
                 break;
@@ -187,28 +160,6 @@ public class RequestEnumController {
                     transmitter.errorType = ErrorType.DONT_HAVE_MAIN_DECK;
                 transfer(socketClass);
                 break;
-                /*
-            case COLLECTION_CARDS:
-                transmitter.cards = account.getCollection().getAllCards();
-                transfer(socketClass);
-                break;
-            case COLLECTION_ITEMS:
-                transmitter.items = new ArrayList<>(Arrays.asList(account.getCollection().getItems()));
-                transfer(socketClass);
-                break;
-            case COLLECTION_HELP:
-                transmitter.string = account.getCollection().helpOfCollection();
-                transfer(socketClass);
-                break;
-            case COLLECTION_SEARCH_ITEM:
-                transmitter.ids = account.getCollection().searchItemName(clientTransmitter.name);
-                transfer(socketClass);
-                break;
-            case COLLECTION_SEARCH_CARD:
-                transmitter.ids = account.getCollection().searchCardName(clientTransmitter.name);
-                transfer(socketClass);
-                break;
-                */
             case ENTER_CHAT:
                 chatPerson.add(socketClass);
                 transmitter.name = account.getUserName();
@@ -422,16 +373,24 @@ public class RequestEnumController {
     private static void battleCheck(Transmitter clientTransmitter, SocketClass socketClass, Transmitter transmitter) {
         System.out.println("hi");
         Match match = socketClass.getMatch();
-        Card card = clientTransmitter.card;
         BattleMessage battleMessage = clientTransmitter.battleMessage;
+        Player player = socketClass.getMatch().getPlayers()[socketClass.getNumberOfPlayer()];
+        String cardId = battleMessage.cardId;
         switch (battleMessage.battleEnum) {
-            case INSERT:
-                transmitter.errorType = match.getPlayers()[socketClass.getNumberOfPlayer()].putCardOnLand(card,
-                        battleMessage.desPosition.getCoordinate(), match.getLand());
+            case INSERT: {
+                Card card = Card.getCardById(cardId, player.getHand().getGameCards());
+                assert card != null;
+                clientTransmitter.battleMessage.card = card;
+                transmitter.errorType = player.putCardOnLand(card, battleMessage.desPosition.getCoordinate(), match.getLand());
                 break;
-            case MOVE:
+            }
+            case MOVE: {
+                Card card = Card.getCardById(cardId, player.getCardsOnLand());
+                assert card != null;
+                clientTransmitter.battleMessage.card = card;
                 transmitter.errorType = card.move(battleMessage.desPosition.getCoordinate());
                 break;
+            }
 
         }
         battleMessage.squares = match.getLand().getSquares();
