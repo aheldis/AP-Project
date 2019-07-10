@@ -132,24 +132,18 @@ public abstract class Card implements Serializable {
         }
     }
 
-    public boolean move(Coordinate newCoordination) {
+    public ErrorType move(Coordinate newCoordination) {
         Square newPosition = landOfGame.passSquareInThisCoordinate(newCoordination);
 
         if (player instanceof OrdinaryPlayer) {
-            if (newPosition == null) {
-                ErrorType.CAN_NOT_MOVE_IN_SQUARE.printMessage();
-                return false;
-            }
+            if (newPosition == null)
+                return ErrorType.CAN_NOT_MOVE_IN_SQUARE;
 
-            if (!canMove) {
-                ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION.printMessage();
-                return false;
-            }
+            if (!canMove)
+                return ErrorType.CAN_NOT_MOVE_BECAUSE_OF_EXHAUSTION;
 
-            if (!withinRange(newCoordination, 2) || !(canMoveToCoordination(newCoordination))) {
-                ErrorType.INVALID_TARGET.printMessage();
-                return false;
-            }
+            if (!withinRange(newCoordination, 2) || !(canMoveToCoordination(newCoordination)))
+                return ErrorType.INVALID_TARGET;
         }
 
         /*
@@ -199,7 +193,7 @@ public abstract class Card implements Serializable {
         for (Flag flag : player.getOwnFlags())
             if (flag.getOwnerCard().equalCard(cardId.getCardIdAsString()))
                 flag.setSquare(newPosition);
-        return true;
+        return null;
     }
 
     boolean withinRange(Coordinate coordinate, int range) {

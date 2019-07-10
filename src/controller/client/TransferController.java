@@ -129,15 +129,20 @@ public class TransferController {
                 SelectGameScene.startGame(transmitter.game, transmitter.match,
                         transmitter.numberOfMap, transmitter.battleMessage.imPlayer0);
                 break;
-            case INSERT:
+            case INSERT: {
                 Card card = transmitter.battleMessage.card;
                 Square position = card.getPosition();
                 BattleScene battleScene = BattleScene.getSingleInstance();
+                battleScene.setSquares(transmitter.battleMessage.squares);
                 Platform.runLater(() ->
                         battleScene.addCardToBoard(position.getXCoordinate(), position.getYCoordinate(), card,
-                                "Breathing", null, false, !battleScene.isImPlayer0(), false));
+                                "Breathing", null, false, battleScene.isImPlayer1(), false));
                 break;
-
+            }
+            case MOVE: {
+                Card card = transmitter.battleMessage.card;
+                BattleScene battleScene = BattleScene.getSingleInstance();
+            }
         }
     }
 

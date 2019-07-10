@@ -85,7 +85,7 @@ public class BattleFooterGraphic {
             makeCircleRotation(backgroundCircle, 70, 70);
             ImageView gif = addGif(group, handCardGroup, card, 0, 0);
             if (card instanceof Minion) {
-                if (!BattleScene.getSingleInstance().isImPlayer0()) {
+                if (BattleScene.getSingleInstance().isImPlayer1()) {
                     gif.setRotationAxis(Rotate.Y_AXIS);
                     gif.setRotate(180);
                 }

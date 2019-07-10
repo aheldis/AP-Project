@@ -162,7 +162,7 @@ public class ComputerPlayer extends Player {
                 RANDOM_NUMBER_FOR_MOVE = random.nextInt(squares.size());
                 Coordinate coordinate = squares.get(RANDOM_NUMBER_FOR_MOVE).getCoordinate();
                 firstPosition = card.getPosition();
-                if (card.move(coordinate)) {
+                if (card.move(coordinate) == null) {
                     moveAnimation(firstPosition.getXCoordinate(), firstPosition.getYCoordinate(), card);
                 }
             }
