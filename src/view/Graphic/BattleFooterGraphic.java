@@ -136,7 +136,7 @@ public class BattleFooterGraphic {
                         rectangle.setWidth(rectangle.getWidth() + change);
                         if (progress.getX() >= 633 - 30) {
                             this.stop();
-                            BattleScene.getSingleInstance().getMatch().changeTurn(false);
+                            BattleScene.getSingleInstance().getMatch().changeTurn(false, true);
                         }
                     }
                 }
@@ -157,7 +157,7 @@ public class BattleFooterGraphic {
         Button a = imageButton(scene, group, "pics/collection/close-deck.png", "save", 1000 + 90, 75, 30, 30);
         group.getChildren().remove(a);
 
-        endTurn.setOnMouseClicked(event -> BattleScene.getSingleInstance().getMatch().changeTurn(false));
+        endTurn.setOnMouseClicked(event -> BattleScene.getSingleInstance().getMatch().changeTurn(false, true));
         cancel.setOnMouseClicked(event -> {
             BattleScene.getSingleInstance().getMatch().setLoser(player);
             BattleScene.getSingleInstance().getMatch().setWinner(player.getOpponent());

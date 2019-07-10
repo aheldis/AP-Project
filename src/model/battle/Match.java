@@ -272,7 +272,7 @@ public class Match {
             return players[0];
     }
 
-    public void changeTurn(boolean server) {//age bazi ba computer bashe turn avaz nemishe
+    public void changeTurn(boolean server, boolean sendRequest) {//age bazi ba computer bashe turn avaz nemishe
 
         int computerPlayer = passComputerPlayer();
 
@@ -281,7 +281,7 @@ public class Match {
             controller.MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
-        if (!server) {
+        if (!server && sendRequest) {
             Transmitter transmitter = new Transmitter();
             TransferController.main(RequestEnum.CHANGE_TURN, transmitter);
             waitGraphic(computerPlayer);

@@ -308,7 +308,7 @@ public class RequestEnumController {
                 battleCheck(clientTransmitter, socketClass, transmitter);
                 break;
             case CHANGE_TURN: {
-                socketClass.getMatch().changeTurn(true);
+                socketClass.getMatch().changeTurn(true, false);
                 SocketClass opponent = waiterHashMap.get(socketClass);
                 opponent.changeTransmitter();
                 opponent.getTransmitter().requestEnum = RequestEnum.CHANGE_TURN;

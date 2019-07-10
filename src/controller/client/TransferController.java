@@ -106,7 +106,7 @@ public class TransferController {
                 Match match = BattleScene.getSingleInstance().getMatch();
                 Platform.runLater(() -> {
                     match.yourTurnAnimation(-1);
-                    match.changeTurn(false);
+                    match.changeTurn(false, false);
                 });
                 break;
         }
