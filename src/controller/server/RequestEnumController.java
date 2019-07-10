@@ -304,6 +304,11 @@ public class RequestEnumController {
             case BATTLE:
                 battleCheck(clientTransmitter, socketClass, transmitter);
                 break;
+            case CHANGE_TURN:
+                socketClass.getMatch().changeTurn(true);
+                transmitter.requestEnum = RequestEnum.CHANGE_TURN;
+                transfer(socketClass);
+                break;
             case NEW_BID: {
                 transmitter.errorType = Bid.newBid(account, clientTransmitter.cardId, 100);
                 transfer(socketClass);
@@ -366,7 +371,6 @@ public class RequestEnumController {
     }
 
     private static void battleCheck(Transmitter clientTransmitter, SocketClass socketClass, Transmitter transmitter) {
-        System.out.println("hi");
         Match match = socketClass.getMatch();
         Player player = socketClass.getMatch().getPlayers()[socketClass.getNumberOfPlayer()];
         Card card;

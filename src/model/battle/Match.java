@@ -1,5 +1,8 @@
 package model.battle;
 
+import controller.RequestEnum;
+import controller.Transmitter;
+import controller.client.TransferController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -269,67 +272,79 @@ public class Match {
             return players[0];
     }
 
-    public void changeTurn() {//age bazi ba computer bashe turn avaz nemishe
-        if (gameEnded()) {
+    public void changeTurn(boolean server) {//age bazi ba computer bashe turn avaz nemishe
+
+        int computerPlayer = passComputerPlayer();
+
+        if (gameEnded() && computerPlayer != -1) {
             endGame();
             controller.MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
-        if (passComputerPlayer() == -1) {
+        if (!server) {
+            Transmitter transmitter = new Transmitter();
+            transmitter.requestEnum = RequestEnum.CHANGE_TURN;
+            TransferController.main(RequestEnum.BATTLE, transmitter);
+            waitGraphic(computerPlayer);
+        }
+        if (computerPlayer == -1 && server) {
             players[whichPlayer].initPerTurn(whichPlayer);
             whichPlayer = 1 - whichPlayer;
-        } else {
+        } else if (!server) {
             players[whichPlayer].initPerTurn(whichPlayer);
             players[passComputerPlayer()].playTurnForComputer();
             players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
-
-
-//             Graphic:
-
-            DragAndDrop.setWait(true);
-            BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
-            //your turn notification
-            Platform.runLater(() -> {
-                Group root = (Group) Objects.requireNonNull(StageLauncher.getScene(StateType.BATTLE)).getRoot();
-                ImageView image = GeneralGraphicMethods.addImage(root,
-                        "pics/battle/notification_go@2x.png", 300, 400 - 50, 800, 200);
-                Text text = GeneralGraphicMethods.addText(root, 550, 460, "YOUR TURN",
-                        Color.rgb(225, 225, 225, 0.7), 60);
-                root.getChildren().remove(image);
-                root.getChildren().remove(text);
-                BattleFooterGraphic battleFooterGraphic = battleScene.getBattleFooter();
-                battleFooterGraphic.getEndTurnButton().setOpacity(0);
-                Button endTurn = imageButton(battleFooterGraphic.getScene(), battleFooterGraphic.getCirclesGroup(),
-                        "pics/battle/end_turn.png", "END TURN", 1000, 0, 200, 80);
-                long currentTime = System.currentTimeMillis();
-
-                AnimationTimer animationTimer = new AnimationTimer() {
-                    @Override
-                    public void handle(long now) {
-                        if (System.currentTimeMillis() - currentTime >= 4000 &&
-                                !root.getChildren().contains(image)) {
-                            root.getChildren().addAll(image, text);
-                        }
-                        if (System.currentTimeMillis() - currentTime >= 5000) {
-                            root.getChildren().removeAll(image, text);
-                            battleFooterGraphic.getCirclesGroup().getChildren().remove(endTurn);
-                            battleFooterGraphic.getEndTurnButton().setOpacity(1);
-                            DragAndDrop.setWait(false);
-                            this.stop();
-                        }
-                    }
-                };
-                animationTimer.start();
-
-            });
-
         }
 
+        waitGraphic(computerPlayer);
 
-        if (gameEnded()) {
-            endGame();
-            controller.MenuController.state = StateType.ACCOUNT_MENU;
-        }
+    }
+
+    public void waitGraphic(int computerPlayer) {
+
+        DragAndDrop.setWait(true);
+        BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
+        //your turn notification
+        Platform.runLater(() -> {
+            Group root = (Group) Objects.requireNonNull(StageLauncher.getScene(StateType.BATTLE)).getRoot();
+            BattleFooterGraphic battleFooterGraphic = battleScene.getBattleFooter();
+            battleFooterGraphic.getEndTurnButton().setOpacity(0);
+            Button endTurn = imageButton(battleFooterGraphic.getScene(), battleFooterGraphic.getCirclesGroup(),
+                    "pics/battle/end_turn.png", "END TURN", 1000, 0, 200, 80);
+            yourTurnAnimation(computerPlayer);
+            BattleScene.getSingleInstance().addToWaitNodes(endTurn);
+        });
+    }
+
+    public void yourTurnAnimation(int computerPlayer) {
+        Group root = (Group) Objects.requireNonNull(StageLauncher.getScene(StateType.BATTLE)).getRoot();
+        BattleFooterGraphic battleFooterGraphic = battleScene.getBattleFooter();
+        ImageView image = GeneralGraphicMethods.addImage(root,
+                "pics/battle/notification_go@2x.png", 300, 400 - 50, 800, 200);
+        Text text = GeneralGraphicMethods.addText(root, 550, 460, "YOUR TURN",
+                Color.rgb(225, 225, 225, 0.7), 60);
+        root.getChildren().remove(image);
+        root.getChildren().remove(text);
+
+        long currentTime = System.currentTimeMillis();
+        AnimationTimer animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if ((computerPlayer == -1 || System.currentTimeMillis() - currentTime >= 4000) &&
+                        !root.getChildren().contains(image)) {
+                    root.getChildren().addAll(image, text);
+                }
+                if ((computerPlayer != -1 && System.currentTimeMillis() - currentTime >= 5000) ||
+                        (computerPlayer == -1 && System.currentTimeMillis() - currentTime >= 1000)) {
+                    root.getChildren().removeAll(image, text);
+                    battleFooterGraphic.getCirclesGroup().getChildren().removeAll(BattleScene.getSingleInstance().getWaitNodes());
+                    battleFooterGraphic.getEndTurnButton().setOpacity(1);
+                    DragAndDrop.setWait(false);
+                    this.stop();
+                }
+            }
+        };
+        animationTimer.start();
     }
 
     private boolean gameEnded() {

@@ -439,6 +439,7 @@ public class SelectGameScene {
             StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
             BattleScene.setNewInstance();
             BattleScene battleScene = BattleScene.getSingleInstance();
+            battleScene.setImPlayer0(imPlayer0);
             //battleScene.setGame(game);
             battleScene.setMatch(match);
             int a=0;
@@ -448,7 +449,6 @@ public class SelectGameScene {
                 a= random.nextInt(12) + 1;
                 battleScene.setBattleScene(a);
             }
-            battleScene.setImPlayer0(imPlayer0);
             match.initGraphic(imPlayer0);
             match.numberOfMap = Math.max(numberOfMap,a);
         });
