@@ -106,16 +106,6 @@ public class BattleFooterGraphic {
     }
 
     private void addTimer(Group group) {
-
-//        Polygon polygon = new Polygon();
-//        polygon.setFill(Color.RED);
-//        polygon.getPoints().addAll(
-//                200.0, 670.0,
-//                20.0, 10.0,
-//                10.0, 20.0 );
-//        root.getChildren().addAll(polygon);
-        // addRectangle(group,207,0,635,15,0,0,Color.RED);
-
         addImage(group, "pics/battle_categorized/timer_background@2x.png",
                 200, 0, 650, 10);
         ImageView progress = addImage(group,
@@ -128,7 +118,8 @@ public class BattleFooterGraphic {
             private long lastUpdate = 0;
             private double change = 0.5;
             BattleScene battleScene = BattleScene.getSingleInstance();
-            private long time = battleScene.getFastForward()? 120_000_0:120_000_000;
+            private long time = battleScene.getFastForward() ? 120_000_0 : 120_000_000;
+
             @Override
             public void handle(long now) {
 
@@ -139,7 +130,8 @@ public class BattleFooterGraphic {
                         rectangle.setWidth(rectangle.getWidth() + change);
                         if (progress.getX() >= 633 - 30) {
                             this.stop();
-                            BattleScene.getSingleInstance().getMatch().changeTurn(false, true);
+                            if (BattleScene.getSingleInstance().getMatch() != null)
+                                BattleScene.getSingleInstance().getMatch().changeTurn(false, true);
                         }
                     }
                 }
