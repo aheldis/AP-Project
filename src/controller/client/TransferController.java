@@ -118,7 +118,7 @@ public class TransferController {
             SelectGameScene.startGame(transmitter.match,
                     transmitter.numberOfMap, transmitter.imPlayer0);
             if (!transmitter.imPlayer0)
-                Platform.runLater(() -> transmitter.match.waitGraphic(0));
+                Platform.runLater(() -> transmitter.match.waitGraphic(-1));
             return;
         }
         BattleScene battleScene = BattleScene.getSingleInstance();
@@ -163,6 +163,7 @@ public class TransferController {
                                 opponentCard.getPosition().getYCoordinate(), opponentCard, "ATTACK",
                                 battleScene.getCardsHashMap().get(opponentCard),
                                 false, battleScene.isImPlayer1(), true);
+                    finalCard.attack(opponentCard);
                 });
                 break;
 

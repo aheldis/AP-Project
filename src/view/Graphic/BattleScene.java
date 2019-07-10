@@ -372,11 +372,11 @@ public class BattleScene {
                 TransferController.main(RequestEnum.BATTLE, transmitter);
                 addCardToBoard(selectedCard.getPosition().getXCoordinate(),
                         selectedCard.getPosition().getYCoordinate(), selectedCard,
-                        "ATTACK", imageOfSelectedCard, false, false, false);
+                        "ATTACK", imageOfSelectedCard, false, !imPlayer0, false);
                 if (card.counterAttack(selectedCard))
                     addCardToBoard(card.getPosition().getXCoordinate(),
                             card.getPosition().getYCoordinate(), card,
-                            "ATTACK", imageOfCard, false, true, true);
+                            "ATTACK", imageOfCard, false, imPlayer0, true);
                 setCursor(battleScene, Cursor.AUTO);
                 imageOfCard.setEffect(null);
                 backToDefault();
