@@ -806,9 +806,10 @@ public class BattleScene {
                 "pics/battle/button_icon_middle@2x.png", "Pause",
                 StageLauncher.getWidth() / 2 - 160, 10, 150, 50);
         button.setOnMouseClicked(event -> {
+            match.addToPausedGames();
             new Thread(() -> {
                 match.setBattleScene(null);
-                GeneralLogicMethods.saveInFile("PausedGames/" + match.getPlayers()[0].getUserName() + "_match.json", match);
+                GeneralLogicMethods.saveInFile("PausedGames/" + match.getMatchNumber() + "_match.json", match);
             }).start();
 //           new Thread(()-> {
 //               System.out.println("hello");

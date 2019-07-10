@@ -6,10 +6,12 @@ import controller.Transmitter;
 import controller.client.TransferController;
 import controller.RequestEnum;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -23,12 +25,10 @@ import model.battle.Match;
 import model.battle.MatchInfo;
 import view.enums.StateType;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -40,6 +40,7 @@ public class ProfileScene {
     private Group leaderBoardGroup = new Group();
     private Transmitter transmitter = new Transmitter();
    private String name;
+   private Group pausedGame = new Group();
     private ProfileScene() {
     }
 
@@ -66,7 +67,7 @@ public class ProfileScene {
             if(input.equals("Leader Board"))
                showLeaderBoard();
             if(input.equals("Paused game"))
-                goToGame();
+                showPausedGame();
             matchHistoryButtonGroup.getChildren().remove(matchHistoryButton1);
             matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton2);
         });
@@ -75,6 +76,8 @@ public class ProfileScene {
                 hideMatchHistory();
             if(input.equals("Leader Board"))
                 hideLeaderBoard();
+            if(input.equals("Paused game"))
+                hidePausedGame();
             matchHistoryButtonGroup.getChildren().remove(matchHistoryButton2);
             matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton1);
         });
@@ -161,32 +164,89 @@ public class ProfileScene {
         matchHistoryGroup.relocate(350, 60);
     }
 
-    private void goToGame(){
-        new Thread(()->{
-            try {
-                String matchPath = "PausedGames/" + name + "_match.json";
-
-                YaGson yaGson = new YaGson();
-                Match match = yaGson.fromJson(new FileReader(matchPath), Match.class);
+    private void goToGame(Text text,int i){
+        text.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                new Thread(()->{
+                    try {
+                        String matchPath = "PausedGames/" + i + "_match.json";
+                        YaGson yaGson = new YaGson();
+                        Match match = yaGson.fromJson(new FileReader(matchPath), Match.class);
 //              String gamePath =  "PausedGames/" + name + "_game.json";
 //              Game game = yaGson.fromJson(new FileReader(gamePath), Game.class );
-                Platform.setImplicitExit(false);
-                Platform.runLater(() -> {
-                    StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
-                    BattleScene.setNewInstance();
-                    BattleScene battleScene = BattleScene.getSingleInstance();
-                    //battleScene.setGame(game);
-                    battleScene.setMatch(match);
+                        Platform.setImplicitExit(false);
+                        Platform.runLater(() -> {
+                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
+                            BattleScene.setNewInstance();
+                            BattleScene battleScene = BattleScene.getSingleInstance();
+                            //battleScene.setGame(game);
+                            battleScene.setMatch(match);
 
-                    battleScene.setBattleScene(match.numberOfMap);
-                    battleScene.setImPlayer0(true);
-                    match.initPause(true);
-                });
-            }catch (Exception e){
-                e.printStackTrace();
-                System.out.println("have not paused");
+                            battleScene.setBattleScene(match.numberOfMap);
+                            battleScene.setImPlayer0(true);
+                            match.initPause(true);
+                        });
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        System.out.println("have not paused");
+                    }
+                }).start();
+
             }
-        }).start();
+        });
+
+    }
+
+
+    private  void showPausedGame(){
+        pausedGame = new Group();
+        pausedGame.relocate(140, 0);
+        root.getChildren().add(pausedGame);
+
+        NewCardGraphic.addRectangleStroke(pausedGame, 925, (int) StageLauncher.getHeight() - 160, false,
+                Color.rgb(51, 51, 255, 0.9));
+
+        Text header = new Text("PAUSED GAME");
+        header.setFill(Color.rgb(153, 0, 51));
+        header.setStroke(Color.WHITE);
+        header.setStrokeWidth(0.25);
+        header.setFont(Font.font("Chalkduster", 50));
+        header.relocate(490, 100);
+        pausedGame.getChildren().add(header);
+
+        VBox vBox = new VBox();
+        pausedGame.getChildren().addAll(vBox);
+
+        File file = new File("PausedGames/NumberOfMap");
+        int line=0;
+        try {
+            Scanner fileReader = new Scanner(file);
+            while (fileReader.hasNextLine()) {
+                fileReader.nextLine();
+                line++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        for (int i=0 ;i<line;i++){
+            {
+                Text text=addText(vBox,0,0,i+"",Color.WHITE,20);
+                goToGame(text,i);
+                if(i>9)
+                    break;
+            }
+        }
+
+        vBox.relocate(300, 180);
+
+
+
+    }
+
+    private void hidePausedGame(){
+        root.getChildren().removeAll(pausedGame);
     }
 
     private void showLeaderBoard(){

@@ -2,6 +2,8 @@ package model.card.makeFile;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import com.google.gson.Gson;
+import controller.DBClass;
 import model.account.Account;
 import model.account.FilesType;
 import model.account.Shop;
@@ -189,6 +191,7 @@ public class MakeNewFile {
     }
 
     private void toJson(Object object, String path) {
+       // DBClass.putObject(object,"custom");
         try {
             YaGson altMapper = new YaGsonBuilder().setPrettyPrinting().create();
             FileWriter fileWriter = new FileWriter(path);
@@ -197,6 +200,12 @@ public class MakeNewFile {
         } catch (Exception e) {
             newCardMessages.printLine(e.getMessage());
         }
+    }
+
+    private String  getCustomGson(){
+        String  output="";
+        //output= DBClass.getObject("custom");
+        return output;
     }
 
     private void changeInFile(String path, String fieldName, String content) {
