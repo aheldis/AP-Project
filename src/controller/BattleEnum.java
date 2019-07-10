@@ -5,6 +5,6 @@ public enum BattleEnum {
     MOVE,
     ATTACK,
     SPECIAL_POWER,
-    START_GAME
+    START_GAME,
 
 }

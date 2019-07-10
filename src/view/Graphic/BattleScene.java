@@ -71,6 +71,7 @@ public class BattleScene {
     private HashMap<Pair<Integer, Integer>, ImageView> cellEffectsImageViews = new HashMap<>();
     private HashMap<Flag, ImageView> flagImageViewHashMap = new HashMap<>();
     private HashMap<Collectible, ImageView> collectibleImageViewHashMap = new HashMap<>();
+    private Node[] waitNodes;
 
     {
     /*
@@ -200,6 +201,10 @@ public class BattleScene {
             removeColorFromRectangles();
             return true;
         }
+        if (battleEnum.equals(BattleEnum.INSERT))
+            match.getPlayers()[getPlayerNumber()].putCardOnLand(card, position.getCoordinate(), match.getLand());
+        else
+            card.move(position.getCoordinate());
         return false;
     }
 
@@ -901,5 +906,13 @@ public class BattleScene {
 
     public ImageView getCollectibleView(Collectible collectible) {
         return collectibleImageViewHashMap.get(collectible);
+    }
+
+    public void addToWaitNodes(Node... nodes) {
+        waitNodes = nodes;
+    }
+
+    public Node[] getWaitNodes() {
+        return waitNodes;
     }
 }

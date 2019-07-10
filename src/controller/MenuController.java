@@ -517,7 +517,7 @@ public class MenuController  {
                         menuView.showHand(player);
                         break;
                     case GAME_END_TURN:
-                        match.changeTurn();
+                        match.changeTurn(false);
                         break;
                     case GAME_SHOW_CollECTIBLES:
                         menuView.showCollectibleItems(player);

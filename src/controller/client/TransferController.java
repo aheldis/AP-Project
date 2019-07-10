@@ -3,8 +3,9 @@ package controller.client;
 import controller.RequestEnum;
 import controller.Transmitter;
 import javafx.application.Platform;
+import model.battle.Player;
 import model.card.Card;
-import model.land.Square;
+import model.requirment.Coordinate;
 import view.Graphic.*;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class TransferController {
             case CANCEL_START_MATCH:
             case START_MATCH:
             case GET_BIDS:
+            case CHANGE_TURN:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case SIGN_UP:
@@ -96,6 +98,9 @@ public class TransferController {
                 System.out.println("ADD A BID in fromServerblah");
                 ShopScene.addABidRow(transmitter.card, transmitter.cost, transmitter.time);
                 break;
+            case CHANGE_TURN:
+                BattleScene.getSingleInstance().getMatch().yourTurnAnimation(-1);
+                break;
         }
     }
 
@@ -104,14 +109,19 @@ public class TransferController {
             case START_GAME:
                 SelectGameScene.startGame(transmitter.match,
                         transmitter.numberOfMap, transmitter.imPlayer0);
+                if (!transmitter.imPlayer0)
+                    transmitter.match.waitGraphic(0);
                 break;
             case INSERT: {
                 BattleScene battleScene = BattleScene.getSingleInstance();
                 battleScene.setSquares(transmitter.squares);
-                Card card = transmitter.card;
-                Square position = card.getPosition();
+                Player player = battleScene.getMatch().getPlayers()[1 - battleScene.getPlayerNumber()];
+                Card card = Card.getCardById(transmitter.name, player.getHand().getGameCards());
+                assert card != null;
+                Coordinate coordinate = transmitter.desPosition;
+                player.putCardOnLand(card, coordinate, battleScene.getMatch().getLand());
                 Platform.runLater(() ->
-                        battleScene.addCardToBoard(position.getXCoordinate(), position.getYCoordinate(), card,
+                        battleScene.addCardToBoard(coordinate.getX(), coordinate.getY(), card,
                                 "Breathing", null, false, battleScene.isImPlayer1(), false));
                 break;
             }
