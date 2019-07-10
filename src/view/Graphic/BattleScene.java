@@ -170,7 +170,8 @@ public class BattleScene {
         System.out.println("BattleScene.transmitterForPutOrMove");
         Transmitter transmitter = new Transmitter();
         transmitter.requestEnum = RequestEnum.BATTLE;
-        transmitter.card = card;
+//        transmitter.card = card;
+        transmitter.name = card.getCardId().getCardIdAsString();
         transmitter.srcPosition = card.getPosition().getCoordinate();
         transmitter.desPosition = position.getCoordinate();
         transmitter.battleEnum = battleEnum;

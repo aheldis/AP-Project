@@ -2,6 +2,7 @@ package controller.client;
 
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
+import controller.RequestEnum;
 import controller.Transmitter;
 
 import java.io.*;
@@ -54,6 +55,8 @@ public class ClientIOHandler extends Thread {
             try {
                 YaGson altMapper = new YaGsonBuilder().create();
                 String json = altMapper.toJson(clientTransmitter);
+                if (clientTransmitter.requestEnum == RequestEnum.BATTLE)
+                    System.out.println(json);
                 out.println(json);
                 out.flush();
             } catch (Exception e) {

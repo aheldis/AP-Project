@@ -370,16 +370,20 @@ public class RequestEnumController {
         System.out.println("hi");
         Match match = socketClass.getMatch();
         Player player = socketClass.getMatch().getPlayers()[socketClass.getNumberOfPlayer()];
-        Card card = clientTransmitter.card;
+        Card card;
         switch (clientTransmitter.battleEnum) {
             case INSERT:
+                card = Card.getCardById(clientTransmitter.name, player.getHand().getGameCards());
+                assert card != null;
                 transmitter.errorType = player.putCardOnLand(card, clientTransmitter.desPosition, match.getLand());
                 break;
             case MOVE:
+                card = Card.getCardById(clientTransmitter.name, player.getCardsOnLand());
+                assert card != null;
                 transmitter.errorType = card.move(clientTransmitter.desPosition);
                 break;
         }
-//        clientTransmitter.squares = match.getLand().getSquares();
+        clientTransmitter.squares = match.getLand().getSquares();
         transfer(socketClass);
         if (transmitter.errorType == null && socketClass.socketClasses != null) {
             socketClass.socketClasses[1].setTransmitter(clientTransmitter);

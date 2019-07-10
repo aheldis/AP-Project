@@ -108,7 +108,7 @@ public class TransferController {
                 break;
             case INSERT: {
                 BattleScene battleScene = BattleScene.getSingleInstance();
-//                battleScene.setSquares(transmitter.squares);
+                battleScene.setSquares(transmitter.squares);
                 Card card = transmitter.card;
                 Square position = card.getPosition();
                 Platform.runLater(() ->
