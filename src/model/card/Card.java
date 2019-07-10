@@ -285,33 +285,23 @@ public abstract class Card implements Serializable {
                 target.checkIsAlly(player, check)) && target.checkTheOneWhoDoesTheThing(check.getObject());
     }
 
-    public boolean attack(Card attackedCard, boolean showError) {
+    public ErrorType attack(Card attackedCard) {
         //false:
 
-        if (this instanceof Spell) {
-            return false;
-        }
-
-        if (attackedCard == null) {
-            if (showError)
-                ErrorType.INVALID_CARD_ID.printMessage();
-            return false;
-        }
-
-        if (!canAttack) {
-            if (showError)
-                ErrorType.CAN_NOT_ATTACK.printMessage();
-            return false;
-        }
+        if (this instanceof Spell)
+            return null;
 
 
-        if (!withinRange(attackedCard
-                .position
-                .getCoordinate(), attackRange) && player instanceof OrdinaryPlayer) {
-            if (showError)
-                ErrorType.UNAVAILABLE_OPPONENT.printMessage();
-            return false;
-        }
+        if (attackedCard == null)
+            return ErrorType.INVALID_CARD_ID;
+
+
+        if (!canAttack)
+            return ErrorType.CAN_NOT_ATTACK;
+
+
+        if (!withinRange(attackedCard.position.getCoordinate(), attackRange) && player instanceof OrdinaryPlayer)
+            return ErrorType.UNAVAILABLE_OPPONENT;
 
 
         //true:
@@ -332,7 +322,7 @@ public abstract class Card implements Serializable {
             player.getMainDeck().getItem().setTarget(player);
             player.getMainDeck().getItem().getChange().affect(player, player.getMainDeck().getItem().getTarget().getTargets());
         }
-        return true;
+        return null;
     }
 
     public boolean canAttack(Card opponentCard) {

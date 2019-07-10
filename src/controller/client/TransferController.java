@@ -127,11 +127,11 @@ public class TransferController {
         if (card == null && player.getMainDeck().getHero().getCardId().getCardIdAsString().equals(transmitter.name))
             card = player.getMainDeck().getHero();
         assert card != null;
+        Card finalCard = card;
         Coordinate coordinate = transmitter.desPosition;
         switch (transmitter.battleEnum) {
             case INSERT: {
                 System.out.println("put: " + card.getCardId().getCardIdAsString());
-                Card finalCard = card;
                 Platform.runLater(() -> {
                     player.putCardOnLand(finalCard, coordinate, battleScene.getMatch().getLand(), false);
                     battleScene.addCardToBoard(coordinate.getX(), coordinate.getY(), finalCard,
@@ -142,14 +142,29 @@ public class TransferController {
             case MOVE: {
                 System.out.println("move: " + card.getCardId().getCardIdAsString());
                 Square firstPosition = card.getPosition();
-                Card finalCard1 = card;
                 Platform.runLater(() -> {
-                    finalCard1.move(coordinate, false);
+                    finalCard.move(coordinate, false);
                     ComputerPlayer.moveAnimation(firstPosition.getXCoordinate(),
-                            firstPosition.getYCoordinate(), finalCard1);
+                            firstPosition.getYCoordinate(), finalCard);
                 });
                 break;
             }
+            case ATTACK:
+                System.out.println("attack");
+                Platform.runLater(() -> {
+                    battleScene.addCardToBoard(finalCard.getPosition().getXCoordinate(), finalCard.getPosition().getYCoordinate(),
+                            finalCard, "ATTACK", battleScene.getCardsHashMap().get(finalCard), false,
+                            battleScene.isImPlayer1(), false);
+                    Player me = battleScene.getMatch().getPlayers()[battleScene.getPlayerNumber()];
+                    Card opponentCard = Card.getCardById(transmitter.cardId, me.getCardsOnLand());
+                    assert opponentCard != null;
+                    battleScene.addCardToBoard(opponentCard.getPosition().getXCoordinate(),
+                            opponentCard.getPosition().getYCoordinate(), opponentCard, "ATTACK",
+                            battleScene.getCardsHashMap().get(opponentCard),
+                            false, !battleScene.isImPlayer1(), true);
+                });
+                break;
+
         }
     }
 

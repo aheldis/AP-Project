@@ -364,7 +364,7 @@ public class BattleScene {
 
         imageOfCard.setOnMouseClicked(event -> {
 
-            if (selectedCard != null && selectedCard.attack(card, true)) {
+            if (selectedCard != null && selectedCard.attack(card) == null) {
                 addCardToBoard(selectedCard.getPosition().getXCoordinate(),
                         selectedCard.getPosition().getYCoordinate(), selectedCard,
                         "ATTACK", imageOfSelectedCard, false, false, false);
@@ -375,6 +375,11 @@ public class BattleScene {
                 setCursor(battleScene, Cursor.AUTO);
                 imageOfCard.setEffect(null);
                 backToDefault();
+                Transmitter transmitter = new Transmitter();
+                transmitter.name = selectedCard.getCardId().getCardIdAsString();
+                transmitter.cardId = card.getCardId().getCardIdAsString();
+                transmitter.battleEnum = BattleEnum.ATTACK;
+                TransferController.main(RequestEnum.BATTLE, transmitter);
             } else if (isHeroSpecialPowerClicked()) {
                 //todo add for minion and hero :-?
                 /*todo yani inke negah kone age oon boolean e true bood select nakone o ina

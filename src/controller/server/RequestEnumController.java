@@ -391,6 +391,11 @@ public class RequestEnumController {
                 assert card != null;
                 transmitter.errorType = card.move(clientTransmitter.desPosition, true);
                 break;
+            case ATTACK:
+                card = Card.getCardById(clientTransmitter.name, player.getCardsOnLand());
+                Card attackedCard = Card.getCardById(clientTransmitter.name, player.getCardsOnLand());
+                assert card != null;
+                transmitter.errorType = card.attack(attackedCard);
         }
         transfer(socketClass);
         if (transmitter.errorType == null) {
@@ -402,6 +407,7 @@ public class RequestEnumController {
             opponent.getTransmitter().name = clientTransmitter.name;
             opponent.getTransmitter().srcPosition = clientTransmitter.srcPosition;
             opponent.getTransmitter().desPosition = clientTransmitter.desPosition;
+            opponent.getTransmitter().cardId = clientTransmitter.cardId;
             transfer(opponent);
         }
     }

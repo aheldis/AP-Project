@@ -569,7 +569,7 @@ public class MenuController  {
                             } else if (selectedCard instanceof Minion) {
                                 if (((Minion) selectedCard).getActivationTimeOfSpecialPower() ==
                                         ActivationTimeOfSpecialPower.COMBO)
-                                    selectedCard.attack(opponentCard, true);
+                                    selectedCard.attack(opponentCard);
                             } else {
                                 error = ErrorType.CAN_NOT_COMBO_ATTACK;
                                 error.printMessage();
@@ -677,7 +677,7 @@ public class MenuController  {
                             errorType.printMessage();
                             break;
                         }
-                        selectedCard.attack(card, true);
+                        selectedCard.attack(card);
                         break;
                 }
             }

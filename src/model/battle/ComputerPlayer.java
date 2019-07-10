@@ -132,7 +132,7 @@ public class ComputerPlayer extends Player {
         for (Card card : getCardsOnLand())
             for (Card opponentCard : getOpponent().getCardsOnLand()) {
                 Square opponentPosition = opponentCard.getPosition();
-                if (card.attack(opponentCard, false)) {
+                if (card.attack(opponentCard) == null) {
                     BattleScene battleScene = BattleScene.getSingleInstance();
                     battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
                             card, "ATTACK", battleScene.getCardsHashMap().get(card), false,
