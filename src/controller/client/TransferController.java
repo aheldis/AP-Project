@@ -154,8 +154,7 @@ public class TransferController {
                 Square firstPosition = card.getPosition();
                 Platform.runLater(() -> {
                     finalCard.move(coordinate, false);
-                    ComputerPlayer.moveAnimation(firstPosition.getXCoordinate(),
-                            firstPosition.getYCoordinate(), finalCard);
+                    ComputerPlayer.moveAnimation(firstPosition.getXCoordinate(), firstPosition.getYCoordinate(), finalCard);
                 });
                 break;
             }

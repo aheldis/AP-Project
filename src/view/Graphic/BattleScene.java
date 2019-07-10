@@ -345,8 +345,7 @@ public class BattleScene {
                 System.out.println(selectedCard.getPlayer().getUserName());
                 System.out.println(imPlayer0);
                 setCursor(battleScene, Cursor.ATTACK);
-            }
-            else
+            } else
                 setCursor(battleScene, Cursor.LIGHTEN);
             if (!drag)
                 imageOfCard.setEffect(getLighting(Color.RED));
@@ -499,7 +498,9 @@ public class BattleScene {
             ((ImageView) node).setFitWidth(mapProperties.cellWidth);
             ((ImageView) node).setFitHeight(mapProperties.cellHeight);
         }
-        board.getChildren().add(node);
+        if (!board.getChildren().contains(node))
+            board.getChildren().add(node);
+        else node.setOpacity(1);
     }
 
     public static BattleScene getSingleInstance() {
