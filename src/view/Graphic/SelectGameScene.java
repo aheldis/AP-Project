@@ -231,7 +231,7 @@ public class SelectGameScene {
         transmitter.playerNumber = 1;
         transmitter = TransferController.main(RequestEnum.START_STORY_GAME, transmitter);
         if (transmitter.errorType == null)
-            startGame(transmitter.game, transmitter.match, 0, true);
+            startGame(transmitter.match, 0, true);
     }
 
     private static void selectMode() {
@@ -312,7 +312,7 @@ public class SelectGameScene {
         transmitter.numberOfFlag = numberOfFlag;
         transmitter = TransferController.main(RequestEnum.START_CUSTOM_GAME, transmitter);
         if (transmitter.errorType == null)
-            startGame(game, match, 0, true);
+            startGame(match, 0, true);
     }
 
     private static Group makeOpponent(String name, int mode, int numberOfFlags, int reward) {
@@ -432,7 +432,7 @@ public class SelectGameScene {
     }
 
 
-    public static void startGame(Game game, Match match, int numberOfMap, boolean imPlayer0) {
+    public static void startGame(Match match, int numberOfMap, boolean imPlayer0) {
         Random random = new Random();
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {
