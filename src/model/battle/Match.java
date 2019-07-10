@@ -276,15 +276,16 @@ public class Match {
 
         int computerPlayer = passComputerPlayer();
 
-        if (gameEnded() && !server) {
-            endGame();
-            controller.MenuController.state = StateType.ACCOUNT_MENU;
-            return;
-        }
         if (!server && sendRequest) {
             Transmitter transmitter = new Transmitter();
             TransferController.main(RequestEnum.CHANGE_TURN, transmitter);
             waitGraphic(computerPlayer);
+        }
+
+        if (gameEnded() && !server) {
+            endGame();
+            controller.MenuController.state = StateType.ACCOUNT_MENU;
+            return;
         }
         players[whichPlayer].initPerTurn(whichPlayer, server);
         if (computerPlayer == -1)
@@ -410,10 +411,16 @@ public class Match {
 
         }).start();
 
+        BattleScene battleScene = BattleScene.getSingleInstance();
+
         if (winner instanceof ComputerPlayer) {
             loss();
         } else {
-            win();
+            if ((winner instanceof Player &&
+                    winner.getUserName().equals(battleScene.getMatch().getPlayers()[battleScene.getPlayerNumber()].getUserName())))
+                win();
+            else
+                loss();
         }
 
 //        BattleView battleView = BattleView.getInstance();

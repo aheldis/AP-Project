@@ -312,7 +312,7 @@ public class SelectGameScene {
         transmitter.numberOfFlag = numberOfFlag;
         transmitter = TransferController.main(RequestEnum.START_CUSTOM_GAME, transmitter);
         if (transmitter.errorType == null)
-            startGame(match, 0, true);
+            startGame(transmitter.match, 0, true);
     }
 
     private static Group makeOpponent(String name, int mode, int numberOfFlags, int reward) {
