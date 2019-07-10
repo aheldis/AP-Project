@@ -56,8 +56,8 @@ public class GraveYard implements Serializable {
                 position.addToFlags(flag);
                 flag.setOwnerCard(null);
                 BattleScene.getSingleInstance().addNodeToBoard(card.getPosition().getXCoordinate(),
-                        card.getPosition().getYCoordinate(), flag.getImageView(), false);
-                flag.getImageView().setOpacity(1);
+                        card.getPosition().getYCoordinate(), BattleScene.getSingleInstance().getFlagView(flag), false);
+                BattleScene.getSingleInstance().getFlagView(flag).setOpacity(1);
                 break;
             }
         }

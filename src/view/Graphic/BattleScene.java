@@ -27,6 +27,7 @@ import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Spell;
+import model.item.Flag;
 import model.land.LandOfGame;
 import model.land.Square;
 import model.requirment.Coordinate;
@@ -68,6 +69,7 @@ public class BattleScene {
     private boolean fastForward;
     private boolean imPlayer0 = true;
     private HashMap<Pair<Integer, Integer>, ImageView> cellEffectsImageViews = new HashMap<>();
+    private HashMap<Flag, ImageView> flagImageViewHashMap = new HashMap<>();
 
     {
     /*
@@ -864,5 +866,13 @@ public class BattleScene {
         if (imPlayer0)
             return 0;
         else return 1;
+    }
+
+    public void setImageViewForFlag(Flag flag, ImageView imageView) {
+        flagImageViewHashMap.put(flag, imageView);
+    }
+
+    public ImageView getFlagView(Flag flag) {
+        return flagImageViewHashMap.get(flag);
     }
 }

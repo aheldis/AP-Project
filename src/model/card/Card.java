@@ -166,7 +166,7 @@ public abstract class Card implements Serializable {
             for (Flag flag : newPosition.getFlags()) {
                 flag.setOwnerCard(this);
                 player.addToOwnFlags(flag);
-                flag.getImageView().setOpacity(0);
+                BattleScene.getSingleInstance().getFlagView(flag).setOpacity(0);
             }
             newPosition.clearFlags();
         }

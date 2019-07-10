@@ -201,7 +201,7 @@ public class Match {
     private void setFlagsGraphic() {
         for (Flag flag : flags) {
             ImageView flagView = GeneralGraphicMethods.createImage("pics/battle_categorized/flag.gif", 10, 10);
-            flag.setImageView(flagView);
+            BattleScene.getSingleInstance().setImageViewForFlag(flag, flagView);
             BattleScene.getSingleInstance().addNodeToBoard(flag.getSquare().getXCoordinate(),
                     flag.getSquare().getYCoordinate(), flagView, false);
         }

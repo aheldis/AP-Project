@@ -106,7 +106,7 @@ public abstract class Player implements Serializable {
             for (Flag flag : square.getFlags()) {
                 flag.setOwnerCard(playerCard);
                 playerCard.getPlayer().addToOwnFlags(flag);
-                flag.getImageView().setOpacity(0);
+                BattleScene.getSingleInstance().getFlagView(flag).setOpacity(0);
             }
             square.clearFlags();
         }
