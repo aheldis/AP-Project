@@ -231,7 +231,7 @@ public class Match {
                 squares[randomX][randomY].setObject(collectible);
                 collectible.setSquare(squares[randomX][randomY]);
                 this.collectibles.add(collectible);
-                System.out.println(collectible.getCollectibleId().getCollectibleIdAsString());
+//                System.out.println(collectible.getCollectibleId().getCollectibleIdAsString());
             }
         }
 
@@ -276,7 +276,7 @@ public class Match {
 
         int computerPlayer = passComputerPlayer();
 
-        if (gameEnded() && computerPlayer != -1) {
+        if (gameEnded() && !server) {
             endGame();
             controller.MenuController.state = StateType.ACCOUNT_MENU;
             return;
