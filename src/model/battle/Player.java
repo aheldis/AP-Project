@@ -51,7 +51,6 @@ public abstract class Player implements Serializable {
         //false:
         if (getMana() < playerCard.getMp()) {
             return ErrorType.HAVE_NOT_ENOUGH_MANA;
-
         }
 
         playerCard.setPosition(getHero().getPosition());
@@ -102,7 +101,8 @@ public abstract class Player implements Serializable {
         for (Buff buff : square.getBuffs()) {
             addBuffToPlayer(buff);
         }
-        square.clearBuffs();
+        if (!server)
+            square.clearBuffs();
 
         //flags:
         if (square.getFlags().size() > 0) {

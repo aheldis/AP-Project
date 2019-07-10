@@ -310,7 +310,8 @@ public class Match {
             battleFooterGraphic.getEndTurnButton().setOpacity(0);
             Button endTurn = imageButton(battleFooterGraphic.getScene(), battleFooterGraphic.getCirclesGroup(),
                     "pics/battle/end_turn.png", "END TURN", 1000, 0, 200, 80);
-            yourTurnAnimation(computerPlayer);
+            if (computerPlayer != -1)
+                yourTurnAnimation(computerPlayer);
             BattleScene.getSingleInstance().addToWaitNodes(endTurn);
         });
     }

@@ -131,20 +131,23 @@ public class TransferController {
         switch (transmitter.battleEnum) {
             case INSERT: {
                 System.out.println("put: " + card.getCardId().getCardIdAsString());
-                player.putCardOnLand(card, coordinate, battleScene.getMatch().getLand(), false);
                 Card finalCard = card;
-                Platform.runLater(() ->
-                        battleScene.addCardToBoard(coordinate.getX(), coordinate.getY(), finalCard,
-                                "Breathing", null, false, battleScene.isImPlayer1(), false));
+                Platform.runLater(() -> {
+                    player.putCardOnLand(finalCard, coordinate, battleScene.getMatch().getLand(), false);
+                    battleScene.addCardToBoard(coordinate.getX(), coordinate.getY(), finalCard,
+                            "Breathing", null, false, !battleScene.isImPlayer1(), false);
+                });
                 break;
             }
             case MOVE: {
                 System.out.println("move: " + card.getCardId().getCardIdAsString());
                 Square firstPosition = card.getPosition();
-                card.move(coordinate, false);
                 Card finalCard1 = card;
-                Platform.runLater(() -> ComputerPlayer.moveAnimation(firstPosition.getXCoordinate(),
-                        firstPosition.getYCoordinate(), finalCard1));
+                Platform.runLater(() -> {
+                    finalCard1.move(coordinate, false);
+                    ComputerPlayer.moveAnimation(firstPosition.getXCoordinate(),
+                            firstPosition.getYCoordinate(), finalCard1);
+                });
                 break;
             }
         }
