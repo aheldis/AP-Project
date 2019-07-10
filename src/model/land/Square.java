@@ -18,7 +18,6 @@ public class Square {
     private Object object;
     private ArrayList<Flag> flags = new ArrayList<>();
     private ArrayList<Buff> buffs = new ArrayList<>();
-    private ImageView cellEffectImageView = null;
 
     public Square(Coordinate coordinate) {
         this.coordinate = coordinate;
@@ -26,12 +25,11 @@ public class Square {
 
     public void clearBuffs(){
         buffs = null;
-        BattleScene.getSingleInstance().removeNodeFromBoard(cellEffectImageView);
+        BattleScene.getSingleInstance().removeCellEffectFromBoard(getXCoordinate(), getYCoordinate());
     }
     public void addBuffToSquare(Buff buff) {
         buffs.add(buff);
-        if(cellEffectImageView == null)
-            cellEffectImageView = BattleScene.getSingleInstance().addCellEffect(getXCoordinate(), getYCoordinate());
+        BattleScene.getSingleInstance().addCellEffect(getXCoordinate(), getYCoordinate());
     }
 
     public Minion squareHasMinionAndPassIt() {

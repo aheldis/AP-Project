@@ -62,6 +62,7 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
             case LOGOUT:
+                System.out.println("log out ");
                 AllAccount.getInstance().saveAccount(account);
                 account.setAuthToken(null);
                 account.setCurrentlyPlaying(false);

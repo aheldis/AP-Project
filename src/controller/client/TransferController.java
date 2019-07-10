@@ -15,6 +15,7 @@ public class TransferController {
     private static ArrayList<Transmitter> messages = new ArrayList<>();
 
     public static Transmitter main(RequestEnum requestEnum, Transmitter transmitter) {
+        System.out.println("sending: " + requestEnum.name());
         fromServerTransmitter = transmitter;
         transmitter.requestEnum = requestEnum;
         switch (requestEnum) {

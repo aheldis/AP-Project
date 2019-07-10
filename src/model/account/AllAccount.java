@@ -36,6 +36,8 @@ public class AllAccount {
                     Reader reader = new InputStreamReader(input);
                     YaGson mapper = new YaGson();
                     Account account = mapper.fromJson(reader, Account.class);//load the deck
+                    account.setCurrentlyPlaying(false);
+                    account.setAuthToken(null);
                     addToAccounts(account);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
