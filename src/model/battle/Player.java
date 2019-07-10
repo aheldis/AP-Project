@@ -91,7 +91,7 @@ public abstract class Player implements Serializable {
             Collectible collectible = (Collectible) square.getObject();
             getHand().addToCollectibleItem(collectible);
             collectible.setTheOneWhoCollects(playerCard);
-            collectible.getImageView().setOpacity(0);
+            BattleScene.getSingleInstance().getCollectibleView(collectible).setOpacity(0);
             BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
         }
 

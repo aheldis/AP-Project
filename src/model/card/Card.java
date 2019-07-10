@@ -176,7 +176,7 @@ public abstract class Card implements Serializable {
             Collectible collectible = (Collectible) newPosition.getObject();
             player.getHand().addToCollectibleItem(collectible);
             collectible.setTheOneWhoCollects(this);
-            collectible.getImageView().setOpacity(0);
+            BattleScene.getSingleInstance().getCollectibleView(collectible).setOpacity(0);
             BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
         }
 

@@ -27,6 +27,7 @@ import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Spell;
+import model.item.Collectible;
 import model.item.Flag;
 import model.land.LandOfGame;
 import model.land.Square;
@@ -70,6 +71,7 @@ public class BattleScene {
     private boolean imPlayer0 = true;
     private HashMap<Pair<Integer, Integer>, ImageView> cellEffectsImageViews = new HashMap<>();
     private HashMap<Flag, ImageView> flagImageViewHashMap = new HashMap<>();
+    private HashMap<Collectible, ImageView> collectibleImageViewHashMap = new HashMap<>();
 
     {
     /*
@@ -874,5 +876,13 @@ public class BattleScene {
 
     public ImageView getFlagView(Flag flag) {
         return flagImageViewHashMap.get(flag);
+    }
+
+    public void setImageViewForCollectible(Collectible collectible, ImageView imageView) {
+        collectibleImageViewHashMap.put(collectible, imageView);
+    }
+
+    public ImageView getCollectibleView(Collectible collectible) {
+        return collectibleImageViewHashMap.get(collectible);
     }
 }

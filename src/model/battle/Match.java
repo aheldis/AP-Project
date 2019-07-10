@@ -250,7 +250,7 @@ public class Match {
                     "pics/collectibles/" + collectible.getName() + ".png", 20, 20);
             BattleScene.getSingleInstance().addNodeToBoard(collectible.getSquare().getXCoordinate(),
                     collectible.getSquare().getYCoordinate(), collectibleImage, false);
-            collectible.setImageView(collectibleImage);
+            BattleScene.getSingleInstance().setImageViewForCollectible(collectible, collectibleImage);
         }
     }
 
