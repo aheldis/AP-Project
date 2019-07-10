@@ -1,7 +1,6 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
-import com.google.gson.Gson;
 import controller.BattleEnum;
 import controller.BattleMessage;
 import controller.RequestEnum;
@@ -25,7 +24,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Pair;
 import model.account.FilesType;
-import model.battle.Game;
 import model.battle.Match;
 import model.card.Card;
 import model.card.Hero;
@@ -35,6 +33,7 @@ import model.land.Square;
 import model.requirment.Coordinate;
 import model.requirment.GeneralLogicMethods;
 import view.enums.Cursor;
+import view.enums.ErrorType;
 import view.enums.StateType;
 
 import java.io.File;
@@ -138,14 +137,15 @@ public class BattleScene {
                         return null;
                     }
                     if (putOrMove) {
-                        boolean canPut = match.getPlayers()[0].putCardOnLand(card,
-                                position.getCoordinate(), match.getLand(), true);
-                        if (!canPut) {
-                            Transmitter transmitter = new Transmitter();
-                            transmitter.battleMessage = new BattleMessage();
-                            transmitter.battleMessage.card = card;
-                            transmitter.battleMessage.battleEnum = BattleEnum.INSERT;
-                            TransferController.main(RequestEnum.BATTLE, transmitter);
+                        Transmitter transmitter = new Transmitter();
+                        transmitter.requestEnum = RequestEnum.BATTLE;
+                        transmitter.battleMessage = new BattleMessage();
+                        transmitter.battleMessage.card = card;
+                        transmitter.battleMessage.desPosition = position;
+                        transmitter.battleMessage.battleEnum = BattleEnum.INSERT;
+                        ErrorType errorType = TransferController.main(RequestEnum.BATTLE, transmitter).errorType;
+                        if (errorType != null) {
+                            errorType.printMessage();
                             removeColorFromRectangles();
                             return null;
                         }
@@ -753,16 +753,16 @@ public class BattleScene {
 
     }
 
-    private void makePause(){
+    private void makePause() {
         Button button = imageButton(battleScene, root,
                 "pics/battle/button_icon_middle@2x.png", "Pause",
-                StageLauncher.getWidth() / 2-160, 10, 150, 50);
+                StageLauncher.getWidth() / 2 - 160, 10, 150, 50);
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 new Thread(() -> {
                     match.setBattleScene(null);
-            GeneralLogicMethods.saveInFile("PausedGames/"+match.getPlayers()[0].getUserName()+"_match.json",match);
+                    GeneralLogicMethods.saveInFile("PausedGames/" + match.getPlayers()[0].getUserName() + "_match.json", match);
                 }).start();
 //           new Thread(()-> {
 //               System.out.println("hello");
@@ -772,7 +772,7 @@ public class BattleScene {
                 match.getPlayers()[0].getAccount().setCurrentlyPlaying(false);
                 match.getPlayers()[1].getAccount().setCurrentlyPlaying(false);
                 StageLauncher.decorateScene(StateType.MAIN_MENU);
-                    }
+            }
         });
     }
 

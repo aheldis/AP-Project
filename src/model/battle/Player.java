@@ -46,36 +46,27 @@ public abstract class Player implements Serializable {
         avatarPath = "pics/battle_categorized/profile/" + random.nextInt(17) + ".png";
     }
 
-    public boolean putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean showError) {
+    public ErrorType putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
 
         //false:
         if (getMana() < playerCard.getMp()) {
-            if (showError)
-                ErrorType.HAVE_NOT_ENOUGH_MANA.printMessage();
-            return false;
+            return ErrorType.HAVE_NOT_ENOUGH_MANA;
+
         }
 
         playerCard.setPosition(getHero().getPosition());
         if (!(playerCard instanceof Spell) && !playerCard.canInsertToCoordination(this.getHero().getPosition().getCoordinate(), coordinate)) {
-            if (showError)
-                ErrorType.INVALID_TARGET.printMessage();
-            return false;
+            return ErrorType.INVALID_TARGET;
         }
 
         Square square = land.passSquareInThisCoordinate(coordinate);
         if (square == null) {
-            if (showError)
-                ErrorType.INVALID_SQUARE.printMessage();
-            return false;
+            return ErrorType.INVALID_SQUARE;
         }
 
         if (playerCard instanceof Spell && !(playerCard.checkTarget(square) ||
                 playerCard.getChange().getTargetType().equals("square"))) {
-            if (showError) {
-                ErrorType errorType = ErrorType.INVALID_TARGET;
-                errorType.printMessage();
-            }
-            return false;
+            return ErrorType.INVALID_TARGET;
         }
 
 
@@ -89,7 +80,7 @@ public abstract class Player implements Serializable {
             playerCard.setTarget(land.passSquareInThisCoordinate(coordinate));
             playerCard.getChange().affect(playerCard.getPlayer(), playerCard.getTarget().getTargets());
             graveYard.addCardToGraveYard(playerCard, land.passSquareInThisCoordinate(coordinate));
-            return true;
+            return null;
         }
 
         playerCard.setPosition(null);
@@ -144,7 +135,7 @@ public abstract class Player implements Serializable {
         squares[coordinate.getX()][coordinate.getY()].setObject(playerCard);
         playerCard.setCanMove(false, 0);
 
-        return true;
+        return null;
     }
 
     public int getMana() {

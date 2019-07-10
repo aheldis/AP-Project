@@ -177,7 +177,7 @@ public class ComputerPlayer extends Player {
                 randomNumberForCards = random.nextInt(squares.size());
                 if (getMana() >= card.getMp() && (card instanceof Hero || card instanceof Minion)) {
                     Coordinate coordinate = squares.get(randomNumberForCards).getCoordinate();
-                    if (putCardOnLand(card, coordinate, getMatch().getLand(), false)) {
+                    if (putCardOnLand(card, coordinate, getMatch().getLand()) == null) {
                         BattleScene.getSingleInstance().addCardToBoard(coordinate.getX(), coordinate.getY(), card,
                                 "Breathing", null, false, true, false);
                     }

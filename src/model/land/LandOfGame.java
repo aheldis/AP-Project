@@ -80,4 +80,7 @@ public class LandOfGame {
         }
     }
 
+    public void setSquares(Square[][] squares) {
+        this.squares = squares;
+    }
 }

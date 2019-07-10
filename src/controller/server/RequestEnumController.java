@@ -236,6 +236,7 @@ public class RequestEnumController {
             case START_STORY_GAME: {
                 Game game = new Game();
                 socketClass.setGame(game);
+                socketClass.setNumberOfPlayer(0);
                 ErrorType errorType = game.checkPlayerDeck(account, clientTransmitter.playerNumber);
                 transmitter.errorType = errorType;
                 if (errorType == null) {
@@ -263,6 +264,7 @@ public class RequestEnumController {
             case START_CUSTOM_GAME: { /*Custom Game*/
                 Game game = new Game();
                 socketClass.setGame(game);
+                socketClass.setNumberOfPlayer(0);
                 ErrorType errorType = game.checkPlayerDeck(account, clientTransmitter.playerNumber);
                 transmitter.errorType = errorType;
                 if (errorType == null) {
@@ -330,15 +332,15 @@ public class RequestEnumController {
                 Game game = new Game();
                 game.checkPlayerDeck(waiter.getAccount(), 1);
                 game.checkPlayerDeck(socketClass.getAccount(), 2);
-                socketClass.setGame(game);
-                Match match = socketClass.setMatch(
-                        game.makeNewMultiGame(waiter.getMode(), waiter.getNumberOfFlag(), waiter.getReward()));
+                Match match = game.makeNewMultiGame(waiter.getMode(), waiter.getNumberOfFlag(), waiter.getReward());
                 if (clientTransmitter.level == 3)
                     match.setFlagsRandomly(3);
                 if (clientTransmitter.level == 2)
                     match.setFlagsRandomly(2);
                 match.setCollectiblesRandomly();
                 int numberOfMap = new Random().nextInt(12) + 1;
+                waiter.setNumberOfPlayer(0);
+                socketClass.setNumberOfPlayer(1);
                 sendAcceptPlayForBoth(waiter, socketClass, match, game, numberOfMap, true);
                 sendAcceptPlayForBoth(socketClass, waiter, match, game, numberOfMap, false);
 
@@ -353,8 +355,7 @@ public class RequestEnumController {
                 }
                 break;
             case BATTLE:
-                socketClass.socketClasses[1].setTransmitter(clientTransmitter);
-                transfer(socketClass.socketClasses[1]);
+                battleCheck(clientTransmitter, socketClass, transmitter);
                 break;
             case NEW_BID: {
                 transmitter.errorType = Bid.newBid(account, clientTransmitter.cardId, 100);
@@ -401,28 +402,11 @@ public class RequestEnumController {
 
     }
 
-    private static void transfer(SocketClass socketClass) {
-//        System.out.println();
-//        System.out.println("RequestEnumController.transfer");
-//        Transmitter transmitter = socketClass.getTransmitter();
-//        System.out.println("transmitter = " + transmitter);
-//        System.out.println("transmitter.requestEnum = " + transmitter.requestEnum);
-//        System.out.println("transmitter.transmitterId = " + transmitter.transmitterId);
-        try {
-            YaGson altMapper = new YaGsonBuilder().create();
-            String json = altMapper.toJson(socketClass.getTransmitter());
-            socketClass.getOut().println(json);
-            socketClass.getOut().flush();
-//            System.out.println("RequestEnumController.transfer");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
     private static void sendAcceptPlayForBoth(SocketClass socketClass, SocketClass waiter,
                                               Match match, Game game, int numberOfMap, boolean imPlayer0) {
         Transmitter transmitter = socketClass.getTransmitter();
+        socketClass.setGame(game);
+        socketClass.setMatch(match);
         transmitter.transmitterId = 0;
         transmitter.requestEnum = RequestEnum.BATTLE;
         transmitter.battleMessage = new BattleMessage();
@@ -434,4 +418,36 @@ public class RequestEnumController {
         transmitter.numberOfMap = numberOfMap;
         transfer(socketClass);
     }
+
+    private static void battleCheck(Transmitter clientTransmitter, SocketClass socketClass, Transmitter transmitter) {
+        Match match = socketClass.getMatch();
+        Card card = clientTransmitter.card;
+        BattleMessage battleMessage = clientTransmitter.battleMessage;
+        switch (battleMessage.battleEnum) {
+            case INSERT:
+                ErrorType canPut = match.getPlayers()[socketClass.getNumberOfPlayer()].putCardOnLand(card,
+                        battleMessage.desPosition.getCoordinate(), match.getLand());
+                transmitter.errorType = canPut;
+                transfer(socketClass);
+                if (canPut == null && socketClass.socketClasses != null) {
+                    socketClass.socketClasses[1].setTransmitter(clientTransmitter);
+                    transfer(socketClass.socketClasses[1]);
+                }
+                break;
+        }
+    }
+
+    private static void transfer(SocketClass socketClass) {
+        try {
+            YaGson altMapper = new YaGsonBuilder().create();
+            String json = altMapper.toJson(socketClass.getTransmitter());
+            socketClass.getOut().println(json);
+            socketClass.getOut().flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }
