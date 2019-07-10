@@ -61,7 +61,7 @@ public class Match {
                 card.setPlayer(players[i]);
                 card.setLandOfGame(land);
             }
-            hero.setPlayer(players[0]);
+            hero.setPlayer(players[i]);
             hero.setLandOfGame(land);
             hero.setCanMove(true, 1);
             hero.setCanAttack(true, 1);

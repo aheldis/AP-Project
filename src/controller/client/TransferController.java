@@ -38,6 +38,7 @@ public class TransferController {
             case START_MATCH:
             case GET_BIDS:
             case CHANGE_TURN:
+            case GAME_CANCEL:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case SIGN_UP:
@@ -107,6 +108,15 @@ public class TransferController {
                 Platform.runLater(() -> {
                     match.yourTurnAnimation(-1);
                     match.changeTurn(false, false);
+                });
+                break;
+            case GAME_CANCEL:
+                BattleScene battleScene = BattleScene.getSingleInstance();
+                Player player = battleScene.getOpponentPlayer();
+                Platform.runLater(() -> {
+                    battleScene.getMatch().setLoser(player);
+                    battleScene.getMatch().setWinner(player.getOpponent());
+                    battleScene.getMatch().endGame();
                 });
                 break;
         }

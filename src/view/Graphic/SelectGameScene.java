@@ -440,7 +440,6 @@ public class SelectGameScene {
             BattleScene.setNewInstance();
             BattleScene battleScene = BattleScene.getSingleInstance();
             battleScene.setImPlayer0(imPlayer0);
-            //battleScene.setGame(game);
             battleScene.setMatch(match);
             int a = 0;
             if (numberOfMap != 0)

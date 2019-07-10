@@ -1,5 +1,8 @@
 package view.Graphic;
 
+import controller.RequestEnum;
+import controller.Transmitter;
+import controller.client.TransferController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -162,7 +165,8 @@ public class BattleFooterGraphic {
             BattleScene.getSingleInstance().getMatch().setLoser(player);
             BattleScene.getSingleInstance().getMatch().setWinner(player.getOpponent());
             BattleScene.getSingleInstance().getMatch().endGame();
-
+            if (battleScene.getMatch().passComputerPlayer() == -1)
+                TransferController.main(RequestEnum.GAME_CANCEL, new Transmitter());
         });
 
         graveYard.setOnMouseClicked(event -> {

@@ -315,6 +315,13 @@ public class RequestEnumController {
                 transfer(opponent);
                 break;
             }
+            case GAME_CANCEL: {
+                SocketClass waiter = waiterHashMap.get(socketClass);
+                waiter.changeTransmitter();
+                waiter.getTransmitter().requestEnum = RequestEnum.GAME_CANCEL;
+                transfer(waiter);
+                break;
+            }
             case NEW_BID: {
                 transmitter.errorType = Bid.newBid(account, clientTransmitter.cardId, 100);
                 transfer(socketClass);

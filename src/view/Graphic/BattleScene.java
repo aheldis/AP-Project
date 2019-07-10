@@ -340,8 +340,12 @@ public class BattleScene {
         group.relocate(imageOfCard.getLayoutX(), imageOfCard.getLayoutY() + 80);
         board.getChildren().addAll(group);
         imageOfCard.setOnMouseEntered(event -> {
-            if (selectedCard != null && selectedCard.canAttack(card))
+            if (selectedCard != null && selectedCard.canAttack(card)) {
+                System.out.println(selectedCard.getCardId().getCardIdAsString());
+                System.out.println(selectedCard.getPlayer().getUserName());
+                System.out.println(imPlayer0);
                 setCursor(battleScene, Cursor.ATTACK);
+            }
             else
                 setCursor(battleScene, Cursor.LIGHTEN);
             if (!drag)
@@ -365,11 +369,13 @@ public class BattleScene {
         imageOfCard.setOnMouseClicked(event -> {
 
             if (selectedCard != null && selectedCard.attack(card) == null) {
-                Transmitter transmitter = new Transmitter();
-                transmitter.name = selectedCard.getCardId().getCardIdAsString();
-                transmitter.cardId = card.getCardId().getCardIdAsString();
-                transmitter.battleEnum = BattleEnum.ATTACK;
-                TransferController.main(RequestEnum.BATTLE, transmitter);
+                if (match.passComputerPlayer() == -1) {
+                    Transmitter transmitter = new Transmitter();
+                    transmitter.name = selectedCard.getCardId().getCardIdAsString();
+                    transmitter.cardId = card.getCardId().getCardIdAsString();
+                    transmitter.battleEnum = BattleEnum.ATTACK;
+                    TransferController.main(RequestEnum.BATTLE, transmitter);
+                }
                 addCardToBoard(selectedCard.getPosition().getXCoordinate(),
                         selectedCard.getPosition().getYCoordinate(), selectedCard,
                         "ATTACK", imageOfSelectedCard, false, !imPlayer0, false);
