@@ -396,6 +396,7 @@ public class RequestEnumController {
             System.out.println("i sent to " + opponent.getAccount().getUserName() + "!");
             opponent.changeTransmitter();
             opponent.getTransmitter().requestEnum = clientTransmitter.requestEnum;
+            opponent.getTransmitter().battleEnum = clientTransmitter.battleEnum;
             opponent.getTransmitter().name = clientTransmitter.name;
             opponent.getTransmitter().srcPosition = clientTransmitter.srcPosition;
             opponent.getTransmitter().desPosition = clientTransmitter.desPosition;
