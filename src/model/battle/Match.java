@@ -405,7 +405,7 @@ public class Match {
 //        battleView.endGameView(this);
     }
 
-    private int passComputerPlayer() {
+    public int passComputerPlayer() {
         if (players[0] instanceof ComputerPlayer)
             return 0;
         if (players[1] instanceof ComputerPlayer)

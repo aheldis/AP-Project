@@ -150,8 +150,26 @@ public class BattleScene {
                         selectCard(card, imageView, gameGrid[i][j]);
                         return null;
                     }
-                    if (putOrMove && transmitterForPutOrMove(card, position, BattleEnum.INSERT)) return null;
-                    else if (!putOrMove && transmitterForPutOrMove(card, position, BattleEnum.MOVE)) return null;
+                    if (match.passComputerPlayer() == -1) {
+                        if (putOrMove && transmitterForPutOrMove(card, position, BattleEnum.INSERT)) return null;
+                        else if (!putOrMove && transmitterForPutOrMove(card, position, BattleEnum.MOVE)) return null;
+                    } else {
+                        if (putOrMove) {
+                            ErrorType errorType = match.getPlayers()[0].putCardOnLand(card, position.getCoordinate(), match.getLand());
+                            if (errorType != null) {
+                                removeColorFromRectangles();
+                                errorType.printMessage();
+                                return null;
+                            }
+                        } else {
+                            ErrorType errorType = card.move(position.getCoordinate());
+                            if (errorType != null) {
+                                removeColorFromRectangles();
+                                errorType.printMessage();
+                                return null;
+                            }
+                        }
+                    }
                     if (coloredRectangles.contains(grid)) {
                         removeColorFromRectangles();
                         selectedCard = null;
@@ -170,9 +188,9 @@ public class BattleScene {
         System.out.println("BattleScene.transmitterForPutOrMove");
         Transmitter transmitter = new Transmitter();
         transmitter.requestEnum = RequestEnum.BATTLE;
-//        transmitter.card = card;
         transmitter.name = card.getCardId().getCardIdAsString();
-        transmitter.srcPosition = card.getPosition().getCoordinate();
+        if (card.getPosition() != null)
+            transmitter.srcPosition = card.getPosition().getCoordinate();
         transmitter.desPosition = position.getCoordinate();
         transmitter.battleEnum = battleEnum;
         System.out.println("transmitter made");

@@ -29,7 +29,6 @@ public class RequestEnumController {
     public synchronized static void main(RequestEnum requestEnum, SocketClass socketClass, Transmitter clientTransmitter) {
         Transmitter transmitter = socketClass.getTransmitter();
         transmitter.requestEnum = clientTransmitter.requestEnum;
-        System.out.println(clientTransmitter.requestEnum);
         transmitter.transmitterId = clientTransmitter.transmitterId;
         AllAccount allAccount = AllAccount.getInstance();
         Account account = socketClass.getAccount();

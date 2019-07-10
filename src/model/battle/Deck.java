@@ -109,8 +109,8 @@ public class Deck implements Serializable {//if it is normal deck you had initia
 //    }
 
     public Card passNextCard(boolean graphic) {
-        if(graphic)
-        return cardsOfDeck.get(indexOfCards-1);
+        if (graphic)
+            return cardsOfDeck.get(indexOfCards - 1);
         else
             return cardsOfDeck.get(indexOfCards);
     }

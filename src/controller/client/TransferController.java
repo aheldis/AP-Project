@@ -57,7 +57,6 @@ public class TransferController {
             case NEW_BID:
             case BID_NEW_COST:
             case BATTLE:
-                System.out.println("hi");
                 fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
