@@ -218,9 +218,9 @@ public class RequestEnumController {
                     transmitter.match = socketClass.setMatch(
                             game.makeNewCustomGame(account, clientTransmitter.name,
                                     clientTransmitter.mode, clientTransmitter.numberOfFlag));
-                    if (clientTransmitter.level == 3)
+                    if (clientTransmitter.mode == 3)
                         transmitter.match.setFlagsRandomly(3);
-                    if (clientTransmitter.level == 2)
+                    if (clientTransmitter.mode == 2)
                         transmitter.match.setFlagsRandomly(2);
                     transmitter.match.setCollectiblesRandomly();
                     transmitter.game = game;
@@ -282,9 +282,9 @@ public class RequestEnumController {
                 game.checkPlayerDeck(waiter.getAccount(), 1);
                 game.checkPlayerDeck(socketClass.getAccount(), 2);
                 Match match = game.makeNewMultiGame(waiter.getMode(), waiter.getNumberOfFlag(), waiter.getReward());
-                if (clientTransmitter.level == 3)
+                if (waiter.getMode() == 3)
                     match.setFlagsRandomly(3);
-                if (clientTransmitter.level == 2)
+                if (waiter.getMode() == 2)
                     match.setFlagsRandomly(2);
                 match.setCollectiblesRandomly();
                 int numberOfMap = new Random().nextInt(12) + 1;
