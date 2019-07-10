@@ -308,6 +308,8 @@ public class RequestEnumController {
                 socketClass.getMatch().changeTurn(true);
                 transmitter.requestEnum = RequestEnum.CHANGE_TURN;
                 transfer(socketClass);
+                socketClass.socketClasses[1].setTransmitter(clientTransmitter);
+                transfer(socketClass.socketClasses[1]);
                 break;
             case NEW_BID: {
                 transmitter.errorType = Bid.newBid(account, clientTransmitter.cardId, 100);

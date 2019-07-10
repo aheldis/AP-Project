@@ -271,7 +271,8 @@ public abstract class Player implements Serializable {
         if (manaOfThisTurn < 9) {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
-            match.getBattleScene().getBattleHeader().makeHeaderEachTurn(numberOfPlayer, this);
+            if (!server)
+                match.getBattleScene().getBattleHeader().makeHeaderEachTurn(numberOfPlayer, this);
         }
         mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
 

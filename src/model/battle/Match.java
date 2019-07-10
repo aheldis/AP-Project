@@ -287,9 +287,9 @@ public class Match {
             waitGraphic(computerPlayer);
         }
         players[whichPlayer].initPerTurn(whichPlayer, server);
-        if (computerPlayer == -1 && server)
+        if (computerPlayer == -1)
             whichPlayer = 1 - whichPlayer;
-        else if (computerPlayer != -1 && !server) {
+        else if (!server) {
             players[passComputerPlayer()].playTurnForComputer();
             players[1 - whichPlayer].initPerTurn(1 - whichPlayer, false);//init for computer
         }

@@ -5,6 +5,7 @@ import controller.RequestEnum;
 import controller.Transmitter;
 import javafx.application.Platform;
 import model.battle.ComputerPlayer;
+import model.battle.Match;
 import model.battle.Player;
 import model.card.Card;
 import model.land.Square;
@@ -102,7 +103,11 @@ public class TransferController {
                 ShopScene.addABidRow(transmitter.card, transmitter.cost, transmitter.time);
                 break;
             case CHANGE_TURN:
-                BattleScene.getSingleInstance().getMatch().yourTurnAnimation(-1);
+                Match match = BattleScene.getSingleInstance().getMatch();
+                Platform.runLater(() -> {
+                    match.yourTurnAnimation(-1);
+                    match.changeTurn(false);
+                });
                 break;
         }
     }
@@ -112,7 +117,7 @@ public class TransferController {
             SelectGameScene.startGame(transmitter.match,
                     transmitter.numberOfMap, transmitter.imPlayer0);
             if (!transmitter.imPlayer0)
-                transmitter.match.waitGraphic(0);
+                Platform.runLater(() -> transmitter.match.waitGraphic(0));
             return;
         }
         BattleScene battleScene = BattleScene.getSingleInstance();
@@ -125,7 +130,7 @@ public class TransferController {
         Coordinate coordinate = transmitter.desPosition;
         switch (transmitter.battleEnum) {
             case INSERT: {
-                System.out.println("move: " + card.getCardId().getCardIdAsString());
+                System.out.println("put: " + card.getCardId().getCardIdAsString());
                 player.putCardOnLand(card, coordinate, battleScene.getMatch().getLand());
                 Card finalCard = card;
                 Platform.runLater(() ->
@@ -134,6 +139,7 @@ public class TransferController {
                 break;
             }
             case MOVE: {
+                System.out.println("move: " + card.getCardId().getCardIdAsString());
                 Square firstPosition = card.getPosition();
                 card.move(coordinate);
                 Card finalCard1 = card;
