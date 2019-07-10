@@ -294,7 +294,8 @@ public class Match {
             players[1 - whichPlayer].initPerTurn(1 - whichPlayer, false);//init for computer
         }
 
-        waitGraphic(computerPlayer);
+        if (!server)
+            waitGraphic(computerPlayer);
 
     }
 

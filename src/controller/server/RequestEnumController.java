@@ -276,6 +276,7 @@ public class RequestEnumController {
                 SocketClass waiter = waiterHashMap.get(socketClass);
                 waiter.changeTransmitter();
                 socketClass.changeTransmitter();
+                socketClass.opponent = waiter;
                 Game game = new Game();
                 game.checkPlayerDeck(waiter.getAccount(), 1);
                 game.checkPlayerDeck(socketClass.getAccount(), 2);
@@ -295,9 +296,10 @@ public class RequestEnumController {
                 break;
             }
             case CANCEL_START_MATCH:
-                transmitter.requestEnum = RequestEnum.CANCEL_START_MATCH;
                 if (socketClass.opponent != null) {
-                    socketClass.opponent.setTransmitter(transmitter);
+                    System.out.println("cancel");
+                    socketClass.opponent.changeTransmitter();
+                    socketClass.opponent.getTransmitter().requestEnum = RequestEnum.CANCEL_START_MATCH;
                     transfer(socketClass.opponent);
                 }
                 break;
@@ -388,11 +390,11 @@ public class RequestEnumController {
                 transmitter.errorType = card.move(clientTransmitter.desPosition);
                 break;
         }
-        clientTransmitter.squares = match.getLand().getSquares();
         transfer(socketClass);
-        if (transmitter.errorType == null && socketClass.socketClasses != null) {
-            socketClass.socketClasses[1].setTransmitter(clientTransmitter);
-            transfer(socketClass.socketClasses[1]);
+        if (transmitter.errorType == null && socketClass.opponent != null) {
+            System.out.println("i sent!");
+            socketClass.opponent.setTransmitter(clientTransmitter);
+            transfer(socketClass.opponent);
         }
     }
 
@@ -400,6 +402,8 @@ public class RequestEnumController {
         try {
             YaGson altMapper = new YaGsonBuilder().create();
             String json = altMapper.toJson(socketClass.getTransmitter());
+            if (socketClass.getTransmitter().requestEnum == RequestEnum.BATTLE)
+                System.out.println(json);
             socketClass.getOut().println(json);
             socketClass.getOut().flush();
         } catch (Exception e) {

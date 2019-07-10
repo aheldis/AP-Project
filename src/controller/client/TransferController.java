@@ -121,7 +121,6 @@ public class TransferController {
             return;
         }
         BattleScene battleScene = BattleScene.getSingleInstance();
-        battleScene.setSquares(transmitter.squares);
         Player player = battleScene.getMatch().getPlayers()[1 - battleScene.getPlayerNumber()];
         Card card = Card.getCardById(transmitter.name, player.getMainDeck().getCardsOfDeck());
         if (card == null && player.getMainDeck().getHero().getCardId().getCardIdAsString().equals(transmitter.name))
