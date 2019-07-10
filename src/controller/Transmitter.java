@@ -50,7 +50,6 @@ public class Transmitter implements Serializable { //todo check
     public String string; //help & otherThings
     public Object object;
     public Card card;
-    public boolean aBoolean;
     public Game game;
     public Match match;
     public int level;

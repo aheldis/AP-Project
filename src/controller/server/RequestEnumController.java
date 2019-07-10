@@ -375,23 +375,14 @@ public class RequestEnumController {
         Match match = socketClass.getMatch();
         BattleMessage battleMessage = clientTransmitter.battleMessage;
         Player player = socketClass.getMatch().getPlayers()[socketClass.getNumberOfPlayer()];
-        String cardId = battleMessage.cardId;
+        Card card = clientTransmitter.card;
         switch (battleMessage.battleEnum) {
-            case INSERT: {
-                Card card = Card.getCardById(cardId, player.getHand().getGameCards());
-                assert card != null;
-                clientTransmitter.battleMessage.card = card;
+            case INSERT:
                 transmitter.errorType = player.putCardOnLand(card, battleMessage.desPosition.getCoordinate(), match.getLand());
                 break;
-            }
-            case MOVE: {
-                Card card = Card.getCardById(cardId, player.getCardsOnLand());
-                assert card != null;
-                clientTransmitter.battleMessage.card = card;
+            case MOVE:
                 transmitter.errorType = card.move(battleMessage.desPosition.getCoordinate());
                 break;
-            }
-
         }
         battleMessage.squares = match.getLand().getSquares();
         transfer(socketClass);

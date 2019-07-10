@@ -154,7 +154,7 @@ public class BattleScene {
         Transmitter transmitter = new Transmitter();
         transmitter.requestEnum = RequestEnum.BATTLE;
         transmitter.battleMessage = new BattleMessage();
-        transmitter.battleMessage.cardId = card.getCardId().getCardIdAsString();
+        transmitter.battleMessage.card = card;
         transmitter.battleMessage.srcPosition = card.getPosition();
         transmitter.battleMessage.desPosition = position;
         transmitter.battleMessage.battleEnum = battleEnum;
