@@ -286,13 +286,12 @@ public class Match {
             TransferController.main(RequestEnum.CHANGE_TURN, transmitter);
             waitGraphic(computerPlayer);
         }
-        if (computerPlayer == -1 && server) {
-            players[whichPlayer].initPerTurn(whichPlayer);
+        players[whichPlayer].initPerTurn(whichPlayer, server);
+        if (computerPlayer == -1 && server)
             whichPlayer = 1 - whichPlayer;
-        } else if (!server) {
-            players[whichPlayer].initPerTurn(whichPlayer);
+        else if (computerPlayer != -1 && !server) {
             players[passComputerPlayer()].playTurnForComputer();
-            players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
+            players[1 - whichPlayer].initPerTurn(1 - whichPlayer, false);//init for computer
         }
 
         waitGraphic(computerPlayer);

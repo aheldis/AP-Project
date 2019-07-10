@@ -239,11 +239,12 @@ public abstract class Player implements Serializable {
         return buffs;
     }
 
-    void initPerTurn(int numberOfPlayer) {
+    void initPerTurn(int numberOfPlayer, boolean server) {
         hand.checkTheHandAndAddToIt();
-        match.getBattleScene().getBattleFooter().changeFooterEachTurn();
-        match.getBattleScene().getBattleHeader().makeHeaderEachTurn(numberOfPlayer, this);
-
+        if (!server) {
+            match.getBattleScene().getBattleFooter().changeFooterEachTurn();
+            match.getBattleScene().getBattleHeader().makeHeaderEachTurn(numberOfPlayer, this);
+        }
         for (Card card : cardsOnLand) {
             card.changeTurnOfCanNotAttack(-1);
             card.changeTurnOfCanNotCounterAttack(-1);
