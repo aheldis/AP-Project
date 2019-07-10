@@ -620,7 +620,7 @@ public class BattleScene {
         return battleScene;
     }
 
-    void setBattleScene(int numberOfMap) {
+    void setBattleScene(int numberOfMap, int playerNumber) {
         root.getChildren().clear();
         this.numberOfMap = numberOfMap;
         setMapProperties();
@@ -629,7 +629,7 @@ public class BattleScene {
                 numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(this, root);
-        battleFooter = new BattleFooterGraphic(this, root, match.getPlayers()[0], battleScene);
+        battleFooter = new BattleFooterGraphic(this, root, match.getPlayers()[playerNumber], battleScene);
         makeFastForwardButton();
         makePause();
 

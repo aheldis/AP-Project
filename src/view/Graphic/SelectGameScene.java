@@ -442,15 +442,15 @@ public class SelectGameScene {
             battleScene.setImPlayer0(imPlayer0);
             //battleScene.setGame(game);
             battleScene.setMatch(match);
-            int a=0;
+            int a = 0;
             if (numberOfMap != 0)
-                battleScene.setBattleScene(numberOfMap);
+                battleScene.setBattleScene(numberOfMap, battleScene.getPlayerNumber());
             else {
-                a= random.nextInt(12) + 1;
-                battleScene.setBattleScene(a);
+                a = random.nextInt(12) + 1;
+                battleScene.setBattleScene(a, 0);
             }
             match.initGraphic(imPlayer0);
-            match.numberOfMap = Math.max(numberOfMap,a);
+            match.numberOfMap = Math.max(numberOfMap, a);
         });
     }
 }
