@@ -66,7 +66,7 @@ public class BattleScene {
     private int lastWait;
     private boolean fastForward;
     private final int fastTimeDivisor = 10;
-    private boolean imPlayer0;
+    private boolean imPlayer0 = true;
 
 
     public int getFastTimeDivisor() {

@@ -102,7 +102,7 @@ public class TransferController {
     private static void battleHandler(Transmitter transmitter) {
         switch (transmitter.battleMessage.battleEnum) {
             case START_GAME:
-                SelectGameScene.startGame(transmitter.game, transmitter.match,
+                SelectGameScene.startGame(transmitter.match,
                         transmitter.numberOfMap, transmitter.battleMessage.imPlayer0);
                 break;
             case INSERT: {
