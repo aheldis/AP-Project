@@ -158,10 +158,11 @@ public class TransferController {
                     Player me = battleScene.getMatch().getPlayers()[battleScene.getPlayerNumber()];
                     Card opponentCard = Card.getCardById(transmitter.cardId, me.getCardsOnLand());
                     assert opponentCard != null;
-                    battleScene.addCardToBoard(opponentCard.getPosition().getXCoordinate(),
-                            opponentCard.getPosition().getYCoordinate(), opponentCard, "ATTACK",
-                            battleScene.getCardsHashMap().get(opponentCard),
-                            false, battleScene.isImPlayer1(), true);
+                    if (opponentCard.counterAttack(finalCard))
+                        battleScene.addCardToBoard(opponentCard.getPosition().getXCoordinate(),
+                                opponentCard.getPosition().getYCoordinate(), opponentCard, "ATTACK",
+                                battleScene.getCardsHashMap().get(opponentCard),
+                                false, battleScene.isImPlayer1(), true);
                 });
                 break;
 
