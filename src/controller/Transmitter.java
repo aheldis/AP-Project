@@ -8,6 +8,8 @@ import model.battle.Match;
 import model.battle.MatchInfo;
 import model.card.Card;
 import model.item.Item;
+import model.land.Square;
+import model.requirment.Coordinate;
 import view.enums.ErrorType;
 
 import java.io.Serializable;
@@ -61,7 +63,12 @@ public class Transmitter implements Serializable { //todo check
     public int spriteNumberCount;
     public int cost;
     public String type;
-    public BattleMessage battleMessage;
     public int numberOfMap;
     public long time;
+    public BattleEnum battleEnum;
+    public Coordinate desPosition;
+    public Coordinate srcPosition;
+    public boolean imPlayer0;
+    public Square[][] squares;
+
 }

@@ -101,15 +101,15 @@ public class TransferController {
     }
 
     private static void battleHandler(Transmitter transmitter) {
-        switch (transmitter.battleMessage.battleEnum) {
+        switch (transmitter.battleEnum) {
             case START_GAME:
                 SelectGameScene.startGame(transmitter.match,
-                        transmitter.numberOfMap, transmitter.battleMessage.imPlayer0);
+                        transmitter.numberOfMap, transmitter.imPlayer0);
                 break;
             case INSERT: {
                 BattleScene battleScene = BattleScene.getSingleInstance();
-                battleScene.setSquares(transmitter.battleMessage.squares);
-                Card card = transmitter.battleMessage.card;
+//                battleScene.setSquares(transmitter.squares);
+                Card card = transmitter.card;
                 Square position = card.getPosition();
                 Platform.runLater(() ->
                         battleScene.addCardToBoard(position.getXCoordinate(), position.getYCoordinate(), card,
@@ -117,7 +117,7 @@ public class TransferController {
                 break;
             }
             case MOVE: {
-                Card card = transmitter.battleMessage.card;
+                Card card = transmitter.card;
                 BattleScene battleScene = BattleScene.getSingleInstance();
             }
         }

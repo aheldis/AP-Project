@@ -3,7 +3,6 @@ package controller.server;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 import controller.BattleEnum;
-import controller.BattleMessage;
 import controller.RequestEnum;
 import controller.Transmitter;
 import model.account.*;
@@ -358,9 +357,8 @@ public class RequestEnumController {
         socketClass.setMatch(match);
         transmitter.transmitterId = 0;
         transmitter.requestEnum = RequestEnum.BATTLE;
-        transmitter.battleMessage = new BattleMessage();
-        transmitter.battleMessage.imPlayer0 = imPlayer0;
-        transmitter.battleMessage.battleEnum = BattleEnum.START_GAME;
+        transmitter.imPlayer0 = imPlayer0;
+        transmitter.battleEnum = BattleEnum.START_GAME;
         socketClass.socketClasses = new SocketClass[]{socketClass, waiter};
         transmitter.match = match;
         transmitter.game = game;
@@ -371,18 +369,17 @@ public class RequestEnumController {
     private static void battleCheck(Transmitter clientTransmitter, SocketClass socketClass, Transmitter transmitter) {
         System.out.println("hi");
         Match match = socketClass.getMatch();
-        BattleMessage battleMessage = clientTransmitter.battleMessage;
         Player player = socketClass.getMatch().getPlayers()[socketClass.getNumberOfPlayer()];
         Card card = clientTransmitter.card;
-        switch (battleMessage.battleEnum) {
+        switch (clientTransmitter.battleEnum) {
             case INSERT:
-                transmitter.errorType = player.putCardOnLand(card, battleMessage.desPosition.getCoordinate(), match.getLand());
+                transmitter.errorType = player.putCardOnLand(card, clientTransmitter.desPosition, match.getLand());
                 break;
             case MOVE:
-                transmitter.errorType = card.move(battleMessage.desPosition.getCoordinate());
+                transmitter.errorType = card.move(clientTransmitter.desPosition);
                 break;
         }
-        battleMessage.squares = match.getLand().getSquares();
+//        clientTransmitter.squares = match.getLand().getSquares();
         transfer(socketClass);
         if (transmitter.errorType == null && socketClass.socketClasses != null) {
             socketClass.socketClasses[1].setTransmitter(clientTransmitter);

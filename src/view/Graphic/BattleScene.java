@@ -2,7 +2,6 @@ package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
 import controller.BattleEnum;
-import controller.BattleMessage;
 import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
@@ -171,11 +170,10 @@ public class BattleScene {
         System.out.println("BattleScene.transmitterForPutOrMove");
         Transmitter transmitter = new Transmitter();
         transmitter.requestEnum = RequestEnum.BATTLE;
-        transmitter.battleMessage = new BattleMessage();
-        transmitter.battleMessage.card = card;
-        transmitter.battleMessage.srcPosition = card.getPosition();
-        transmitter.battleMessage.desPosition = position;
-        transmitter.battleMessage.battleEnum = battleEnum;
+        transmitter.card = card;
+        transmitter.srcPosition = card.getPosition().getCoordinate();
+        transmitter.desPosition = position.getCoordinate();
+        transmitter.battleEnum = battleEnum;
         System.out.println("transmitter made");
         ErrorType errorType = TransferController.main(RequestEnum.BATTLE, transmitter).errorType;
         if (errorType != null) {
