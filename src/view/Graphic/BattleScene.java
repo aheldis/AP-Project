@@ -1,7 +1,6 @@
 package view.Graphic;
 
 import com.gilecode.yagson.YaGson;
-import com.google.gson.Gson;
 import controller.BattleEnum;
 import controller.BattleMessage;
 import controller.RequestEnum;
@@ -9,7 +8,6 @@ import controller.Transmitter;
 import controller.client.TransferController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -18,15 +16,14 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Pair;
 import model.account.FilesType;
-import model.battle.Game;
 import model.battle.Match;
+import model.battle.Player;
 import model.card.Card;
 import model.card.Hero;
 import model.card.Spell;
@@ -35,6 +32,7 @@ import model.land.Square;
 import model.requirment.Coordinate;
 import model.requirment.GeneralLogicMethods;
 import view.enums.Cursor;
+import view.enums.ErrorType;
 import view.enums.StateType;
 
 import java.io.File;
@@ -53,7 +51,6 @@ public class BattleScene {
     private double height = StageLauncher.getHeight();
     private int numberOfMap;
     private Rectangle[][] gameGrid;
-    private HashMap<Rectangle, Square> positionHashMap = new HashMap<>();
     private ArrayList<Rectangle> coloredRectangles = new ArrayList<>();
     private MapProperties mapProperties;
     private Match match;
@@ -130,32 +127,15 @@ public class BattleScene {
                 double maxX = grid.getLayoutX() + grid.getWidth();
                 double minY = grid.getLayoutY();
                 double maxY = grid.getLayoutY() + grid.getHeight();
-                Square position = positionHashMap.get(gameGrid[i][j]);
+                Square position = match.getLand().getSquares()[i][j];
                 if (x <= maxX && x >= minX && y <= maxY && y >= minY) {
                     if (position.equals(onMousePressedPosition)) {
                         removeColorFromRectangles();
                         selectCard(card, imageView, gameGrid[i][j]);
                         return null;
                     }
-                    if (putOrMove) {
-                        boolean canPut = match.getPlayers()[0].putCardOnLand(card,
-                                position.getCoordinate(), match.getLand(), true);
-                        if (!canPut) {
-                            Transmitter transmitter = new Transmitter();
-                            transmitter.battleMessage = new BattleMessage();
-                            transmitter.battleMessage.card = card;
-                            transmitter.battleMessage.battleEnum = BattleEnum.INSERT;
-                            TransferController.main(RequestEnum.BATTLE, transmitter);
-                            removeColorFromRectangles();
-                            return null;
-                        }
-                    } else {
-                        boolean canMove = card.move(position.getCoordinate());
-                        if (!canMove) {
-                            removeColorFromRectangles();
-                            return null;
-                        }
-                    }
+                    if (putOrMove && transmitterForPutOrMove(card, position, BattleEnum.INSERT)) return null;
+                    else if (!putOrMove && transmitterForPutOrMove(card, position, BattleEnum.MOVE)) return null;
                     if (coloredRectangles.contains(grid)) {
                         removeColorFromRectangles();
                         selectedCard = null;
@@ -168,6 +148,23 @@ public class BattleScene {
                 }
             }
         return null;
+    }
+
+    private boolean transmitterForPutOrMove(Card card, Square position, BattleEnum battleEnum) {
+        Transmitter transmitter = new Transmitter();
+        transmitter.requestEnum = RequestEnum.BATTLE;
+        transmitter.battleMessage = new BattleMessage();
+        transmitter.battleMessage.card = card;
+        transmitter.battleMessage.srcPosition = card.getPosition();
+        transmitter.battleMessage.desPosition = position;
+        transmitter.battleMessage.battleEnum = battleEnum;
+        ErrorType errorType = TransferController.main(RequestEnum.BATTLE, transmitter).errorType;
+        if (errorType != null) {
+            errorType.printMessage();
+            removeColorFromRectangles();
+            return true;
+        }
+        return false;
     }
 
     private Pair<Integer, Integer> withinRange(Point2D point2D) {
@@ -520,7 +517,6 @@ public class BattleScene {
 
 //                setOnMouseClickedForSpecialPower(rectangle, coordinate);
 
-                positionHashMap.put(gameGrid[i][j], match.getLand().getSquares()[i][j]);
                 board.getChildren().add(rectangle);
             }
 
@@ -753,26 +749,23 @@ public class BattleScene {
 
     }
 
-    private void makePause(){
+    private void makePause() {
         Button button = imageButton(battleScene, root,
                 "pics/battle/button_icon_middle@2x.png", "Pause",
-                StageLauncher.getWidth() / 2-160, 10, 150, 50);
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                new Thread(() -> {
-                    match.setBattleScene(null);
-            GeneralLogicMethods.saveInFile("PausedGames/"+match.getPlayers()[0].getUserName()+"_match.json",match);
-                }).start();
+                StageLauncher.getWidth() / 2 - 160, 10, 150, 50);
+        button.setOnMouseClicked(event -> {
+            new Thread(() -> {
+                match.setBattleScene(null);
+                GeneralLogicMethods.saveInFile("PausedGames/" + match.getPlayers()[0].getUserName() + "_match.json", match);
+            }).start();
 //           new Thread(()-> {
 //               System.out.println("hello");
 //               GeneralLogicMethods.saveInFile("PausedGames/" + match.getPlayers()[0].getUserName() + "_game.json", game);
 //           }).start();// GeneralLogicMethods.saveInFile("PausedGames/"+match.getPlayers()[0].getUserName()+"_number.json",new Integer(numberOfMap));
 
-                match.getPlayers()[0].getAccount().setCurrentlyPlaying(false);
-                match.getPlayers()[1].getAccount().setCurrentlyPlaying(false);
-                StageLauncher.decorateScene(StateType.MAIN_MENU);
-                    }
+            match.getPlayers()[0].getAccount().setCurrentlyPlaying(false);
+            match.getPlayers()[1].getAccount().setCurrentlyPlaying(false);
+            StageLauncher.decorateScene(StateType.MAIN_MENU);
         });
     }
 
@@ -842,7 +835,21 @@ public class BattleScene {
         this.imPlayer0 = imPlayer0;
     }
 
-    public boolean isImPlayer0() {
-        return imPlayer0;
+    public boolean isImPlayer1() {
+        return !imPlayer0;
+    }
+
+    public int getPlayerNumber() {
+        if (imPlayer0)
+            return 0;
+        else return 1;
+    }
+
+    public void setSquares(Square[][] squares) {
+        match.getLand().setSquares(squares);
+    }
+
+    public Player getOpponentPlayer() {
+        return getMatch().getPlayers()[1 - getPlayerNumber()];
     }
 }

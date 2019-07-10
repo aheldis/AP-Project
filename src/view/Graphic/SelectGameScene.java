@@ -266,6 +266,7 @@ public class SelectGameScene {
         TextField reward = new TextField();
         reward.setPrefHeight(50);
         reward.relocate(605, 100);
+        reward.setPromptText("Reward");
         textFieldProperties(reward, selectModeRoot);
 
         getNumberOfFlagPage(collectFlagImage, selectModeRoot, selectModeScene, reward);
@@ -368,6 +369,7 @@ public class SelectGameScene {
             root.getChildren().addAll(vBox);
             transmitter = TransferController.main(RequestEnum.ALL_ACCOUNT, new Transmitter());
             ArrayList<Account> accounts = transmitter.accounts;
+            System.out.println("accounts.size() = " + accounts.size());
             for (int i = 0; i < accounts.size(); i++) {
                 if (valid(accounts, i, transmitter.name))
                     vBox.getChildren().add(makeOpponent(accounts.get(i).getUserName(), mode, numberOfFlags, reward));

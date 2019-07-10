@@ -25,6 +25,7 @@ public class SocketClass {
     private int reward;
     public SocketClass[] socketClasses;
     public SocketClass opponent;
+    public int numberOfPlayer;
 
     public ClientHandlerServer getClientHandlerServer() {
         return clientHandlerServer;
@@ -85,6 +86,14 @@ public class SocketClass {
         return match;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
+    public Match getMatch() {
+        return match;
+    }
+
     public PrintWriter getOut() {
         return out;
     }
@@ -119,5 +128,13 @@ public class SocketClass {
 
     public void setTransmitter(Transmitter clientTransmitter) {
         transmitter = clientTransmitter;
+    }
+
+    public void setNumberOfPlayer(int numberOfPlayer) {
+        this.numberOfPlayer = numberOfPlayer;
+    }
+
+    public int getNumberOfPlayer() {
+        return numberOfPlayer;
     }
 }

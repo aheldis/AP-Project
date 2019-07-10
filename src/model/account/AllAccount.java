@@ -2,7 +2,6 @@ package model.account;
 
 import com.gilecode.yagson.YaGson;
 import model.requirment.GeneralLogicMethods;
-import view.AccountView;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -54,30 +53,8 @@ public class AllAccount {
     }
 
     public static AllAccount getInstance() {
-        if (singleInstance == null) {
+        if (singleInstance == null)
             singleInstance = new AllAccount();
-
-//            try{
-//                Account account;
-//                FileReader fr = new FileReader("D:/project-Duelyst/Duelyst/AccountSaver/AccountUser.txt");
-//                BufferedReader br = new BufferedReader(fr);
-//                String username = br.readLine();
-//                username = br.readLine();
-//                while(username != null) {
-//                    fr = new FileReader("D:/project-Duelyst/Duelyst/AccountSaver/" + username.trim() + ".txt");
-//                    Gson gson = new GsonBuilder().create();
-//                    account= gson.fromJson(fr, Account.class);
-//                    accounts.add(account);
-//                    username = br.readLine();
-//                }
-//                fr.close();
-//                br.close();
-//            }
-//            catch (Exception e){
-//                System.out.println(e);
-/** save don't delete*/
-//            }
-        }
         return singleInstance;
     }
 

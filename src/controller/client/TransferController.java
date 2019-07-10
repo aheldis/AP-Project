@@ -31,7 +31,6 @@ public class TransferController {
             case CANCEL_START_MATCH:
             case START_MATCH:
             case GET_BIDS:
-            case BATTLE:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case SIGN_UP:
@@ -56,6 +55,8 @@ public class TransferController {
             case ALL_ACCOUNT:
             case NEW_BID:
             case BID_NEW_COST:
+            case BATTLE:
+                System.out.println("hi");
                 fromServerTransmitter = clientIOhandler.transfer(true, transmitter);
                 return fromServerTransmitter;
             case CHECK_NEW_MESSAGE:
@@ -64,32 +65,7 @@ public class TransferController {
                     messages.remove(0);
                 }
                 return fromServerTransmitter;
-               /*
-               // try {
-                    Thread one=new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                object =(Transmitter) objectInputStream.readObject();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    one.start();
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (object != null) {
-                        fromServerTransmitter = (Transmitter) object;
-                    }
-                one.stop();
-//                } catch (IOException | ClassNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-                return fromServerTransmitter;*/
+
         }
         return fromServerTransmitter;
 
@@ -129,15 +105,20 @@ public class TransferController {
                 SelectGameScene.startGame(transmitter.game, transmitter.match,
                         transmitter.numberOfMap, transmitter.battleMessage.imPlayer0);
                 break;
-            case INSERT:
+            case INSERT: {
+                BattleScene battleScene = BattleScene.getSingleInstance();
+                battleScene.setSquares(transmitter.battleMessage.squares);
                 Card card = transmitter.battleMessage.card;
                 Square position = card.getPosition();
-                BattleScene battleScene = BattleScene.getSingleInstance();
                 Platform.runLater(() ->
                         battleScene.addCardToBoard(position.getXCoordinate(), position.getYCoordinate(), card,
-                                "Breathing", null, false, !battleScene.isImPlayer0(), false));
+                                "Breathing", null, false, battleScene.isImPlayer1(), false));
                 break;
-
+            }
+            case MOVE: {
+                Card card = transmitter.battleMessage.card;
+                BattleScene battleScene = BattleScene.getSingleInstance();
+            }
         }
     }
 

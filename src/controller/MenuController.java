@@ -590,7 +590,7 @@ public class MenuController  {
                             error.printMessage();
                             break;
                         }
-                        player.putCardOnLand(card, coordinate, match.getLand(),true);
+                        player.putCardOnLand(card, coordinate, match.getLand());
                         break;
                     case GAME_SELECT_Collectible:
                         id = request.getId();

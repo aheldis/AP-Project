@@ -162,7 +162,7 @@ public class ComputerPlayer extends Player {
                 RANDOM_NUMBER_FOR_MOVE = random.nextInt(squares.size());
                 Coordinate coordinate = squares.get(RANDOM_NUMBER_FOR_MOVE).getCoordinate();
                 firstPosition = card.getPosition();
-                if (card.move(coordinate)) {
+                if (card.move(coordinate) == null) {
                     moveAnimation(firstPosition.getXCoordinate(), firstPosition.getYCoordinate(), card);
                 }
             }
@@ -177,7 +177,7 @@ public class ComputerPlayer extends Player {
                 randomNumberForCards = random.nextInt(squares.size());
                 if (getMana() >= card.getMp() && (card instanceof Hero || card instanceof Minion)) {
                     Coordinate coordinate = squares.get(randomNumberForCards).getCoordinate();
-                    if (putCardOnLand(card, coordinate, getMatch().getLand(), false)) {
+                    if (putCardOnLand(card, coordinate, getMatch().getLand()) == null) {
                         BattleScene.getSingleInstance().addCardToBoard(coordinate.getX(), coordinate.getY(), card,
                                 "Breathing", null, false, true, false);
                     }
