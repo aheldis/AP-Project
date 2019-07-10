@@ -1,10 +1,13 @@
 package controller.client;
 
+import controller.BattleEnum;
 import controller.RequestEnum;
 import controller.Transmitter;
 import javafx.application.Platform;
+import model.battle.ComputerPlayer;
 import model.battle.Player;
 import model.card.Card;
+import model.land.Square;
 import model.requirment.Coordinate;
 import view.Graphic.*;
 
@@ -105,29 +108,38 @@ public class TransferController {
     }
 
     private static void battleHandler(Transmitter transmitter) {
+        if (transmitter.battleEnum == BattleEnum.START_GAME) {
+            SelectGameScene.startGame(transmitter.match,
+                    transmitter.numberOfMap, transmitter.imPlayer0);
+            if (!transmitter.imPlayer0)
+                transmitter.match.waitGraphic(0);
+            return;
+        }
+        BattleScene battleScene = BattleScene.getSingleInstance();
+        battleScene.setSquares(transmitter.squares);
+        Player player = battleScene.getMatch().getPlayers()[1 - battleScene.getPlayerNumber()];
+        Card card = Card.getCardById(transmitter.name, player.getMainDeck().getCardsOfDeck());
+        if (card == null && player.getMainDeck().getHero().getCardId().getCardIdAsString().equals(transmitter.name))
+            card = player.getMainDeck().getHero();
+        assert card != null;
+        Coordinate coordinate = transmitter.desPosition;
         switch (transmitter.battleEnum) {
-            case START_GAME:
-                SelectGameScene.startGame(transmitter.match,
-                        transmitter.numberOfMap, transmitter.imPlayer0);
-                if (!transmitter.imPlayer0)
-                    transmitter.match.waitGraphic(0);
-                break;
             case INSERT: {
-                BattleScene battleScene = BattleScene.getSingleInstance();
-                battleScene.setSquares(transmitter.squares);
-                Player player = battleScene.getMatch().getPlayers()[1 - battleScene.getPlayerNumber()];
-                Card card = Card.getCardById(transmitter.name, player.getHand().getGameCards());
-                assert card != null;
-                Coordinate coordinate = transmitter.desPosition;
+                System.out.println("move: " + card.getCardId().getCardIdAsString());
                 player.putCardOnLand(card, coordinate, battleScene.getMatch().getLand());
+                Card finalCard = card;
                 Platform.runLater(() ->
-                        battleScene.addCardToBoard(coordinate.getX(), coordinate.getY(), card,
+                        battleScene.addCardToBoard(coordinate.getX(), coordinate.getY(), finalCard,
                                 "Breathing", null, false, battleScene.isImPlayer1(), false));
                 break;
             }
             case MOVE: {
-                Card card = transmitter.card;
-                BattleScene battleScene = BattleScene.getSingleInstance();
+                Square firstPosition = card.getPosition();
+                card.move(coordinate);
+                Card finalCard1 = card;
+                Platform.runLater(() -> ComputerPlayer.moveAnimation(firstPosition.getXCoordinate(),
+                        firstPosition.getYCoordinate(), finalCard1));
+                break;
             }
         }
     }

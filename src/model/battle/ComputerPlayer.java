@@ -68,7 +68,7 @@ public class ComputerPlayer extends Player {
 
     }
 
-    private void moveAnimation(int x1, int y1, Card card) {
+    public static void moveAnimation(int x1, int y1, Card card) {
 
         BattleScene battleScene = BattleScene.getSingleInstance();
         Pair<Double, Double> destination = battleScene.getCellPosition(card.getPosition().getXCoordinate(),

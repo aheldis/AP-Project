@@ -283,8 +283,7 @@ public class Match {
         }
         if (!server) {
             Transmitter transmitter = new Transmitter();
-            transmitter.requestEnum = RequestEnum.CHANGE_TURN;
-            TransferController.main(RequestEnum.BATTLE, transmitter);
+            TransferController.main(RequestEnum.CHANGE_TURN, transmitter);
             waitGraphic(computerPlayer);
         }
         if (computerPlayer == -1 && server) {
@@ -303,10 +302,10 @@ public class Match {
     public void waitGraphic(int computerPlayer) {
 
         DragAndDrop.setWait(true);
-        BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
+        if (BattleScene.getSingleInstance().getBattleHeader() != null)
+            BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
         //your turn notification
         Platform.runLater(() -> {
-            Group root = (Group) Objects.requireNonNull(StageLauncher.getScene(StateType.BATTLE)).getRoot();
             BattleFooterGraphic battleFooterGraphic = battleScene.getBattleFooter();
             battleFooterGraphic.getEndTurnButton().setOpacity(0);
             Button endTurn = imageButton(battleFooterGraphic.getScene(), battleFooterGraphic.getCirclesGroup(),
