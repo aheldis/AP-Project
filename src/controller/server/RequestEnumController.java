@@ -245,7 +245,7 @@ public class RequestEnumController {
                 transfer(socketClass);
                 break;
             }
-            case START_MATCH:
+            case START_MATCH: {
                 String opponent = clientTransmitter.name;
                 socketClass.setMode(clientTransmitter.mode);
                 socketClass.setNumberOfFlag(clientTransmitter.numberOfFlag);
@@ -263,6 +263,7 @@ public class RequestEnumController {
                     transfer(opponentSocketClass);
                 }
                 break;
+            }
             case DECLINE_PLAY: {
                 SocketClass waiter = waiterHashMap.get(socketClass);
                 waiter.changeTransmitter();
@@ -306,13 +307,14 @@ public class RequestEnumController {
             case BATTLE:
                 battleCheck(clientTransmitter, socketClass, transmitter);
                 break;
-            case CHANGE_TURN:
+            case CHANGE_TURN: {
                 socketClass.getMatch().changeTurn(true);
-                transmitter.requestEnum = RequestEnum.CHANGE_TURN;
-                transfer(socketClass);
-                socketClass.socketClasses[1].setTransmitter(clientTransmitter);
-                transfer(socketClass.socketClasses[1]);
+                SocketClass opponent = waiterHashMap.get(socketClass);
+                opponent.changeTransmitter();
+                opponent.getTransmitter().requestEnum = RequestEnum.CHANGE_TURN;
+                transfer(opponent);
                 break;
+            }
             case NEW_BID: {
                 transmitter.errorType = Bid.newBid(account, clientTransmitter.cardId, 100);
                 transfer(socketClass);
