@@ -113,6 +113,7 @@ public class TransferController {
     }
 
     private static void battleHandler(Transmitter transmitter) {
+        System.out.println("battleHandler");
         if (transmitter.battleEnum == BattleEnum.START_GAME) {
             SelectGameScene.startGame(transmitter.match,
                     transmitter.numberOfMap, transmitter.imPlayer0);

@@ -254,6 +254,7 @@ public class RequestEnumController {
                 socketClass.opponent = opponentSocketClass;
                 if (opponentSocketClass != null) {
                     waiterHashMap.put(opponentSocketClass, socketClass);
+                    waiterHashMap.put(socketClass, opponentSocketClass);
                     opponentSocketClass.changeTransmitter();
                     Transmitter personTransmitter = opponentSocketClass.getTransmitter();
                     personTransmitter.transmitterId = 0;
@@ -276,7 +277,6 @@ public class RequestEnumController {
                 SocketClass waiter = waiterHashMap.get(socketClass);
                 waiter.changeTransmitter();
                 socketClass.changeTransmitter();
-                socketClass.opponent = waiter;
                 Game game = new Game();
                 game.checkPlayerDeck(waiter.getAccount(), 1);
                 game.checkPlayerDeck(socketClass.getAccount(), 2);
@@ -391,10 +391,15 @@ public class RequestEnumController {
                 break;
         }
         transfer(socketClass);
-        if (transmitter.errorType == null && socketClass.opponent != null) {
-            System.out.println("i sent!");
-            socketClass.opponent.setTransmitter(clientTransmitter);
-            transfer(socketClass.opponent);
+        if (transmitter.errorType == null) {
+            SocketClass opponent = waiterHashMap.get(socketClass);
+            System.out.println("i sent to " + opponent.getAccount().getUserName() + "!");
+            opponent.changeTransmitter();
+            opponent.getTransmitter().requestEnum = clientTransmitter.requestEnum;
+            opponent.getTransmitter().name = clientTransmitter.name;
+            opponent.getTransmitter().srcPosition = clientTransmitter.srcPosition;
+            opponent.getTransmitter().desPosition = clientTransmitter.desPosition;
+            transfer(opponent);
         }
     }
 
