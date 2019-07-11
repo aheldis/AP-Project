@@ -2,16 +2,14 @@ package view.Graphic;
 
 
 import com.gilecode.yagson.YaGson;
+import controller.RequestEnum;
 import controller.Transmitter;
 import controller.client.TransferController;
-import controller.RequestEnum;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -20,7 +18,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.account.Account;
-import model.battle.Game;
 import model.battle.Match;
 import model.battle.MatchInfo;
 import view.enums.StateType;
@@ -28,7 +25,10 @@ import view.enums.StateType;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Scanner;
 
 import static view.Graphic.GeneralGraphicMethods.*;
 
@@ -39,8 +39,9 @@ public class ProfileScene {
     private Group matchHistoryGroup = new Group();
     private Group leaderBoardGroup = new Group();
     private Transmitter transmitter = new Transmitter();
-   private String name;
-   private Group pausedGame = new Group();
+    private String name;
+    private Group pausedGame = new Group();
+
     private ProfileScene() {
     }
 
@@ -49,40 +50,41 @@ public class ProfileScene {
     }
 
     void initProfileScene() {
-        playMusic("resource/music/profile.m4a",true,scene);
+        playMusic("resource/music/profile.m4a", true, scene);
         GeneralGraphicMethods.setBackground(root, "pics/other/profileBackground.jpg", false, StageLauncher.getWidth(), StageLauncher.getHeight());
         addSidebar();
         log(root, "", StateType.MAIN_MENU, 200);
     }
 
-    private void addTextToScene(VBox vBox,int x,int y,String input){
+    private void addTextToScene(VBox vBox, int x, int y, String input) {
         Group matchHistoryButtonGroup = new Group();
-        Text matchHistoryButton1 = addText(matchHistoryButtonGroup, x,y, input, Color.WHITE, 25);
-        Text matchHistoryButton2 = addText(new Group(), x,y, input, Color.WHITE, 25);
+        Text matchHistoryButton1 = addText(matchHistoryButtonGroup, x, y, input, Color.WHITE, 25);
+        Text matchHistoryButton2 = addText(new Group(), x, y, input, Color.WHITE, 25);
         setOnMouseEntered(matchHistoryButton1, scene, true);
         setOnMouseEntered(matchHistoryButton2, scene, true);
         matchHistoryButton1.setOnMouseClicked(event -> {
-            if(input.equals("Match History"))
+            if (input.equals("Match History"))
                 showMatchHistory();
-            if(input.equals("Leader Board"))
-               showLeaderBoard();
-            if(input.equals("Paused game"))
+            if (input.equals("Leader Board"))
+                showLeaderBoard();
+            if (input.equals("Paused game"))
                 showPausedGame();
             matchHistoryButtonGroup.getChildren().remove(matchHistoryButton1);
             matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton2);
         });
         matchHistoryButton2.setOnMouseClicked(event -> {
-            if(input.equals("Match History"))
+            if (input.equals("Match History"))
                 hideMatchHistory();
-            if(input.equals("Leader Board"))
+            if (input.equals("Leader Board"))
                 hideLeaderBoard();
-            if(input.equals("Paused game"))
+            if (input.equals("Paused game"))
                 hidePausedGame();
             matchHistoryButtonGroup.getChildren().remove(matchHistoryButton2);
             matchHistoryButtonGroup.getChildren().addAll(matchHistoryButton1);
         });
         vBox.getChildren().add(matchHistoryButtonGroup);
     }
+
     private void addSidebar() {
         addRectangle(root, 0, 0, 300, (int) StageLauncher.getHeight(), 0, 0, Color.gray(0, 0.7));
 
@@ -94,9 +96,9 @@ public class ProfileScene {
         name = transmitter.name;
         addTextWithShadow(vBox, 50, 280, transmitter.name, "Luminari", 30);
 
-        addTextToScene(vBox,53,350,"Match History");
-        addTextToScene(vBox,53,400,"Leader Board");
-        addTextToScene(vBox,53,450,"Paused game");
+        addTextToScene(vBox, 53, 350, "Match History");
+        addTextToScene(vBox, 53, 400, "Leader Board");
+        addTextToScene(vBox, 53, 450, "Paused game");
 //        Group matchHistoryButtonGroup = new Group();
 //        Text matchHistoryButton1 = addText(matchHistoryButtonGroup, 53, 350, "Match History", Color.WHITE, 25);
 //        Text matchHistoryButton2 = addText(new Group(), 53, 350, "Match History", Color.WHITE, 25);
@@ -119,6 +121,7 @@ public class ProfileScene {
         vBox.relocate(45, 50);
         root.getChildren().addAll(vBox);
     }
+
     private void showMatchHistory() {
         System.out.println("ProfileScene.showMatchHistory");
         matchHistoryGroup = new Group();
@@ -152,7 +155,7 @@ public class ProfileScene {
             addNodeToGridPane(gridPane, index, 1, matchInfo.loser, false);
             addNodeToGridPane(gridPane, index, 2, matchInfo.date.toString(), false);
             index++;
-            if(index > 9)
+            if (index > 9)
                 break;
         }
 
@@ -164,42 +167,36 @@ public class ProfileScene {
         matchHistoryGroup.relocate(350, 60);
     }
 
-    private void goToGame(Text text,int i){
-        text.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                new Thread(()->{
-                    try {
-                        String matchPath = "PausedGames/" + i + "_match.json";
-                        YaGson yaGson = new YaGson();
-                        Match match = yaGson.fromJson(new FileReader(matchPath), Match.class);
+    private void goToGame(Text text, int i) {
+        text.setOnMouseClicked(event -> new Thread(() -> {
+            try {
+                String matchPath = "PausedGames/" + i + "_match.json";
+                YaGson yaGson = new YaGson();
+                Match match = yaGson.fromJson(new FileReader(matchPath), Match.class);
 //              String gamePath =  "PausedGames/" + name + "_game.json";
 //              Game game = yaGson.fromJson(new FileReader(gamePath), Game.class );
-                        Platform.setImplicitExit(false);
-                        Platform.runLater(() -> {
-                            StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
-                            BattleScene.setNewInstance();
-                            BattleScene battleScene = BattleScene.getSingleInstance();
-                            //battleScene.setGame(game);
-                            battleScene.setMatch(match);
+                Platform.setImplicitExit(false);
+                Platform.runLater(() -> {
+                    StageLauncher.getPrimaryStage().setScene(StageLauncher.getScene(StateType.BATTLE));
+                    BattleScene.setNewInstance();
+                    BattleScene battleScene = BattleScene.getSingleInstance();
+                    //battleScene.setGame(game);
+                    battleScene.setMatch(match);
 
-                            battleScene.setBattleScene(match.numberOfMap);
-                            battleScene.setImPlayer0(true);
-                            match.initPause(true);
-                        });
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        System.out.println("have not paused");
-                    }
-                }).start();
-
+                    battleScene.setBattleScene(match.numberOfMap, 0);
+                    battleScene.setImPlayer0(true);
+                    match.initPause(true);
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("have not paused");
             }
-        });
+        }).start());
 
     }
 
 
-    private  void showPausedGame(){
+    private void showPausedGame() {
         pausedGame = new Group();
         pausedGame.relocate(140, 0);
         root.getChildren().add(pausedGame);
@@ -219,7 +216,7 @@ public class ProfileScene {
         pausedGame.getChildren().addAll(vBox);
 
         File file = new File("PausedGames/NumberOfMap");
-        int line=0;
+        int line = 0;
         try {
             Scanner fileReader = new Scanner(file);
             while (fileReader.hasNextLine()) {
@@ -230,11 +227,11 @@ public class ProfileScene {
             e.printStackTrace();
         }
 
-        for (int i=0 ;i<line;i++){
+        for (int i = 0; i < line; i++) {
             {
-                Text text=addText(vBox,0,0,i+"",Color.WHITE,20);
-                goToGame(text,i);
-                if(i>9)
+                Text text = addText(vBox, 0, 0, i + "", Color.WHITE, 20);
+                goToGame(text, i);
+                if (i > 9)
                     break;
             }
         }
@@ -242,14 +239,13 @@ public class ProfileScene {
         vBox.relocate(300, 180);
 
 
-
     }
 
-    private void hidePausedGame(){
+    private void hidePausedGame() {
         root.getChildren().removeAll(pausedGame);
     }
 
-    private void showLeaderBoard(){
+    private void showLeaderBoard() {
         leaderBoardGroup = new Group();
         root.getChildren().add(leaderBoardGroup);
 
@@ -274,11 +270,11 @@ public class ProfileScene {
         int index = 1;
         for (Account account : accounts) {
 
-            addNodeToGridPane(gridPane, index, 0,index+"", false);
-            addNodeToGridPane(gridPane, index, 1,account.getUserName() , false);
-            addNodeToGridPane(gridPane, index, 2, account.getWins()+"", false);
+            addNodeToGridPane(gridPane, index, 0, index + "", false);
+            addNodeToGridPane(gridPane, index, 1, account.getUserName(), false);
+            addNodeToGridPane(gridPane, index, 2, account.getWins() + "", false);
             index++;
-            if(index > 9)
+            if (index > 9)
                 break;
         }
 
@@ -290,11 +286,9 @@ public class ProfileScene {
         leaderBoardGroup.relocate(350, 60);
 
 
-
-
     }
 
-    private void hideLeaderBoard(){
+    private void hideLeaderBoard() {
         root.getChildren().remove(leaderBoardGroup);
 
     }

@@ -46,12 +46,11 @@ public abstract class Player implements Serializable {
         avatarPath = "pics/battle_categorized/profile/" + random.nextInt(17) + ".png";
     }
 
-    public ErrorType putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land) {
+    public ErrorType putCardOnLand(Card playerCard, Coordinate coordinate, LandOfGame land, boolean server) {
 
         //false:
         if (getMana() < playerCard.getMp()) {
             return ErrorType.HAVE_NOT_ENOUGH_MANA;
-
         }
 
         playerCard.setPosition(getHero().getPosition());
@@ -72,7 +71,8 @@ public abstract class Player implements Serializable {
 
         //true:
         mana -= playerCard.getMp();
-        match.getBattleScene().getBattleHeader().makeHeaderEachTurn(getNumberOfPlayer(), this);
+        if (!server)
+            match.getBattleScene().getBattleHeader().makeHeaderEachTurn(getNumberOfPlayer(), this);
         hand.removeUsedCardsFromHand(playerCard);
 
         //spell:
@@ -91,22 +91,26 @@ public abstract class Player implements Serializable {
             Collectible collectible = (Collectible) square.getObject();
             getHand().addToCollectibleItem(collectible);
             collectible.setTheOneWhoCollects(playerCard);
-            BattleScene.getSingleInstance().getCollectibleView(collectible).setOpacity(0);
-            BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
+            if (!server) {
+                BattleScene.getSingleInstance().getCollectibleView(collectible).setOpacity(0);
+                BattleScene.getSingleInstance().showAlert(collectible.getName() + ": " + collectible.getDescription());
+            }
         }
 
         //cellEffect:
         for (Buff buff : square.getBuffs()) {
             addBuffToPlayer(buff);
         }
-        square.clearBuffs();
+        if (!server)
+            square.clearBuffs();
 
         //flags:
         if (square.getFlags().size() > 0) {
             for (Flag flag : square.getFlags()) {
                 flag.setOwnerCard(playerCard);
                 playerCard.getPlayer().addToOwnFlags(flag);
-                BattleScene.getSingleInstance().getFlagView(flag).setOpacity(0);
+                if (!server)
+                    BattleScene.getSingleInstance().getFlagView(flag).setOpacity(0);
             }
             square.clearFlags();
         }
@@ -239,11 +243,12 @@ public abstract class Player implements Serializable {
         return buffs;
     }
 
-    void initPerTurn(int numberOfPlayer) {
+    void initPerTurn(int numberOfPlayer, boolean server) {
         hand.checkTheHandAndAddToIt();
-        match.getBattleScene().getBattleFooter().changeFooterEachTurn();
-        match.getBattleScene().getBattleHeader().makeHeaderEachTurn(numberOfPlayer, this);
-
+        if (!server) {
+            match.getBattleScene().getBattleFooter().changeFooterEachTurn();
+            match.getBattleScene().getBattleHeader().makeHeaderEachTurn(numberOfPlayer, this);
+        }
         for (Card card : cardsOnLand) {
             card.changeTurnOfCanNotAttack(-1);
             card.changeTurnOfCanNotCounterAttack(-1);
@@ -270,7 +275,8 @@ public abstract class Player implements Serializable {
         if (manaOfThisTurn < 9) {
             manaOfThisTurn++;
             mana = manaOfThisTurn;
-            match.getBattleScene().getBattleHeader().makeHeaderEachTurn(numberOfPlayer, this);
+            if (!server)
+                match.getBattleScene().getBattleHeader().makeHeaderEachTurn(numberOfPlayer, this);
         }
         mainDeck.getHero().addToTurnNotUsedSpecialPower(1);
 

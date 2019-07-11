@@ -61,7 +61,7 @@ public class Match {
                 card.setPlayer(players[i]);
                 card.setLandOfGame(land);
             }
-            hero.setPlayer(players[0]);
+            hero.setPlayer(players[i]);
             hero.setLandOfGame(land);
             hero.setCanMove(true, 1);
             hero.setCanAttack(true, 1);
@@ -231,7 +231,7 @@ public class Match {
                 squares[randomX][randomY].setObject(collectible);
                 collectible.setSquare(squares[randomX][randomY]);
                 this.collectibles.add(collectible);
-                System.out.println(collectible.getCollectibleId().getCollectibleIdAsString());
+//                System.out.println(collectible.getCollectibleId().getCollectibleIdAsString());
             }
         }
 
@@ -272,46 +272,47 @@ public class Match {
             return players[0];
     }
 
-    public void changeTurn(boolean server) {//age bazi ba computer bashe turn avaz nemishe
+    public void changeTurn(boolean server, boolean sendRequest) {//age bazi ba computer bashe turn avaz nemishe
 
         int computerPlayer = passComputerPlayer();
 
-        if (gameEnded() && computerPlayer != -1) {
+        if (!server && sendRequest) {
+            Transmitter transmitter = new Transmitter();
+            TransferController.main(RequestEnum.CHANGE_TURN, transmitter);
+            waitGraphic(computerPlayer);
+        }
+
+        if (gameEnded() && !server) {
             endGame();
             controller.MenuController.state = StateType.ACCOUNT_MENU;
             return;
         }
-        if (!server) {
-            Transmitter transmitter = new Transmitter();
-            transmitter.requestEnum = RequestEnum.CHANGE_TURN;
-            TransferController.main(RequestEnum.BATTLE, transmitter);
-            waitGraphic(computerPlayer);
-        }
-        if (computerPlayer == -1 && server) {
-            players[whichPlayer].initPerTurn(whichPlayer);
+        players[whichPlayer].initPerTurn(whichPlayer, server);
+        if (computerPlayer == -1)
             whichPlayer = 1 - whichPlayer;
-        } else if (!server) {
-            players[whichPlayer].initPerTurn(whichPlayer);
+        else if (!server) {
             players[passComputerPlayer()].playTurnForComputer();
-            players[1 - whichPlayer].initPerTurn(1 - whichPlayer);//init for computer
+            players[1 - whichPlayer].initPerTurn(1 - whichPlayer, false);//init for computer
         }
 
-        waitGraphic(computerPlayer);
+        if (!server)
+            waitGraphic(computerPlayer);
 
     }
 
     public void waitGraphic(int computerPlayer) {
 
         DragAndDrop.setWait(true);
-        BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
+        if (BattleScene.getSingleInstance().getBattleHeader() != null)
+            BattleScene.getSingleInstance().getBattleHeader().deactiveSpecialPower();
         //your turn notification
         Platform.runLater(() -> {
-            Group root = (Group) Objects.requireNonNull(StageLauncher.getScene(StateType.BATTLE)).getRoot();
             BattleFooterGraphic battleFooterGraphic = battleScene.getBattleFooter();
             battleFooterGraphic.getEndTurnButton().setOpacity(0);
             Button endTurn = imageButton(battleFooterGraphic.getScene(), battleFooterGraphic.getCirclesGroup(),
                     "pics/battle/end_turn.png", "END TURN", 1000, 0, 200, 80);
-            yourTurnAnimation(computerPlayer);
+            if (computerPlayer != -1)
+                yourTurnAnimation(computerPlayer);
             BattleScene.getSingleInstance().addToWaitNodes(endTurn);
         });
     }
@@ -410,10 +411,16 @@ public class Match {
 
         }).start();
 
+        BattleScene battleScene = BattleScene.getSingleInstance();
+
         if (winner instanceof ComputerPlayer) {
             loss();
         } else {
-            win();
+            if ((winner instanceof Player &&
+                    winner.getUserName().equals(battleScene.getMatch().getPlayers()[battleScene.getPlayerNumber()].getUserName())))
+                win();
+            else
+                loss();
         }
 
 //        BattleView battleView = BattleView.getInstance();

@@ -1,10 +1,14 @@
 package controller.client;
 
+import controller.BattleEnum;
 import controller.RequestEnum;
 import controller.Transmitter;
 import javafx.application.Platform;
+import model.battle.ComputerPlayer;
+import model.battle.Match;
 import model.battle.Player;
 import model.card.Card;
+import model.land.Square;
 import model.requirment.Coordinate;
 import view.Graphic.*;
 
@@ -34,6 +38,7 @@ public class TransferController {
             case START_MATCH:
             case GET_BIDS:
             case CHANGE_TURN:
+            case GAME_CANCEL:
                 fromServerTransmitter = clientIOhandler.transfer(false, transmitter);
                 return fromServerTransmitter;
             case SIGN_UP:
@@ -99,36 +104,78 @@ public class TransferController {
                 ShopScene.addABidRow(transmitter.card, transmitter.cost, transmitter.time);
                 break;
             case CHANGE_TURN:
-                BattleScene.getSingleInstance().getMatch().yourTurnAnimation(-1);
+                Match match = BattleScene.getSingleInstance().getMatch();
+                Platform.runLater(() -> {
+                    match.yourTurnAnimation(-1);
+                    match.changeTurn(false, false);
+                });
+                break;
+            case GAME_CANCEL:
+                BattleScene battleScene = BattleScene.getSingleInstance();
+                Player player = battleScene.getOpponentPlayer();
+                Platform.runLater(() -> {
+                    battleScene.getMatch().setLoser(player);
+                    battleScene.getMatch().setWinner(player.getOpponent());
+                    battleScene.getMatch().endGame();
+                });
                 break;
         }
     }
 
     private static void battleHandler(Transmitter transmitter) {
+        System.out.println("battleHandler");
+        if (transmitter.battleEnum == BattleEnum.START_GAME) {
+            SelectGameScene.startGame(transmitter.match,
+                    transmitter.numberOfMap, transmitter.imPlayer0);
+            if (!transmitter.imPlayer0)
+                Platform.runLater(() -> transmitter.match.waitGraphic(-1));
+            return;
+        }
+        BattleScene battleScene = BattleScene.getSingleInstance();
+        Player player = battleScene.getMatch().getPlayers()[1 - battleScene.getPlayerNumber()];
+        Card card = Card.getCardById(transmitter.name, player.getMainDeck().getCardsOfDeck());
+        if (card == null && player.getMainDeck().getHero().getCardId().getCardIdAsString().equals(transmitter.name))
+            card = player.getMainDeck().getHero();
+        assert card != null;
+        Card finalCard = card;
+        Coordinate coordinate = transmitter.desPosition;
         switch (transmitter.battleEnum) {
-            case START_GAME:
-                SelectGameScene.startGame(transmitter.match,
-                        transmitter.numberOfMap, transmitter.imPlayer0);
-                if (!transmitter.imPlayer0)
-                    transmitter.match.waitGraphic(0);
-                break;
             case INSERT: {
-                BattleScene battleScene = BattleScene.getSingleInstance();
-                battleScene.setSquares(transmitter.squares);
-                Player player = battleScene.getMatch().getPlayers()[1 - battleScene.getPlayerNumber()];
-                Card card = Card.getCardById(transmitter.name, player.getHand().getGameCards());
-                assert card != null;
-                Coordinate coordinate = transmitter.desPosition;
-                player.putCardOnLand(card, coordinate, battleScene.getMatch().getLand());
-                Platform.runLater(() ->
-                        battleScene.addCardToBoard(coordinate.getX(), coordinate.getY(), card,
-                                "Breathing", null, false, battleScene.isImPlayer1(), false));
+                System.out.println("put: " + card.getCardId().getCardIdAsString());
+                Platform.runLater(() -> {
+                    player.putCardOnLand(finalCard, coordinate, battleScene.getMatch().getLand(), false);
+                    battleScene.addCardToBoard(coordinate.getX(), coordinate.getY(), finalCard,
+                            "Breathing", null, false, !battleScene.isImPlayer1(), false);
+                });
                 break;
             }
             case MOVE: {
-                Card card = transmitter.card;
-                BattleScene battleScene = BattleScene.getSingleInstance();
+                System.out.println("move: " + card.getCardId().getCardIdAsString());
+                Square firstPosition = card.getPosition();
+                Platform.runLater(() -> {
+                    finalCard.move(coordinate, false);
+                    ComputerPlayer.moveAnimation(firstPosition.getXCoordinate(), firstPosition.getYCoordinate(), finalCard);
+                });
+                break;
             }
+            case ATTACK:
+                System.out.println("attack");
+                Platform.runLater(() -> {
+                    battleScene.addCardToBoard(finalCard.getPosition().getXCoordinate(), finalCard.getPosition().getYCoordinate(),
+                            finalCard, "ATTACK", battleScene.getCardsHashMap().get(finalCard), false,
+                            !battleScene.isImPlayer1(), false);
+                    Player me = battleScene.getMatch().getPlayers()[battleScene.getPlayerNumber()];
+                    Card opponentCard = Card.getCardById(transmitter.cardId, me.getCardsOnLand());
+                    assert opponentCard != null;
+                    if (opponentCard.counterAttack(finalCard))
+                        battleScene.addCardToBoard(opponentCard.getPosition().getXCoordinate(),
+                                opponentCard.getPosition().getYCoordinate(), opponentCard, "ATTACK",
+                                battleScene.getCardsHashMap().get(opponentCard),
+                                false, battleScene.isImPlayer1(), true);
+                    finalCard.attack(opponentCard);
+                });
+                break;
+
         }
     }
 

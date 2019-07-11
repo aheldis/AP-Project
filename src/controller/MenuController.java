@@ -517,7 +517,7 @@ public class MenuController  {
                         menuView.showHand(player);
                         break;
                     case GAME_END_TURN:
-                        match.changeTurn(false);
+                        match.changeTurn(false, false);
                         break;
                     case GAME_SHOW_CollECTIBLES:
                         menuView.showCollectibleItems(player);
@@ -569,7 +569,7 @@ public class MenuController  {
                             } else if (selectedCard instanceof Minion) {
                                 if (((Minion) selectedCard).getActivationTimeOfSpecialPower() ==
                                         ActivationTimeOfSpecialPower.COMBO)
-                                    selectedCard.attack(opponentCard, true);
+                                    selectedCard.attack(opponentCard);
                             } else {
                                 error = ErrorType.CAN_NOT_COMBO_ATTACK;
                                 error.printMessage();
@@ -590,7 +590,7 @@ public class MenuController  {
                             error.printMessage();
                             break;
                         }
-                        player.putCardOnLand(card, coordinate, match.getLand());
+                        player.putCardOnLand(card, coordinate, match.getLand(), false);
                         break;
                     case GAME_SELECT_Collectible:
                         id = request.getId();
@@ -663,7 +663,7 @@ public class MenuController  {
                             errorType.printMessage();
                             break;
                         }
-                        selectedCard.move(request.getCoordinate());
+                        selectedCard.move(request.getCoordinate(), false);
                         break;
                     case GAME_EXIT_FROM_SELECT_CARD:
                         state = StateType.BATTLE;
@@ -677,7 +677,7 @@ public class MenuController  {
                             errorType.printMessage();
                             break;
                         }
-                        selectedCard.attack(card, true);
+                        selectedCard.attack(card);
                         break;
                 }
             }
