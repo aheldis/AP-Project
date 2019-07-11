@@ -156,14 +156,14 @@ public class BattleScene {
                         else if (!putOrMove && transmitterForPutOrMove(card, position, BattleEnum.MOVE)) return null;
                     } else {
                         if (putOrMove) {
-                            ErrorType errorType = match.getPlayers()[0].putCardOnLand(card, position.getCoordinate(), match.getLand());
+                            ErrorType errorType = match.getPlayers()[0].putCardOnLand(card, position.getCoordinate(), match.getLand(), false);
                             if (errorType != null) {
                                 removeColorFromRectangles();
                                 errorType.printMessage();
                                 return null;
                             }
                         } else {
-                            ErrorType errorType = card.move(position.getCoordinate());
+                            ErrorType errorType = card.move(position.getCoordinate(), false);
                             if (errorType != null) {
                                 removeColorFromRectangles();
                                 errorType.printMessage();
@@ -202,9 +202,9 @@ public class BattleScene {
             return true;
         }
         if (battleEnum.equals(BattleEnum.INSERT))
-            match.getPlayers()[getPlayerNumber()].putCardOnLand(card, position.getCoordinate(), match.getLand());
+            match.getPlayers()[getPlayerNumber()].putCardOnLand(card, position.getCoordinate(), match.getLand(), false);
         else
-            card.move(position.getCoordinate());
+            card.move(position.getCoordinate(), false);
         return false;
     }
 
@@ -340,9 +340,12 @@ public class BattleScene {
         group.relocate(imageOfCard.getLayoutX(), imageOfCard.getLayoutY() + 80);
         board.getChildren().addAll(group);
         imageOfCard.setOnMouseEntered(event -> {
-            if (selectedCard != null && selectedCard.canAttack(card))
+            if (selectedCard != null && selectedCard.canAttack(card)) {
+                System.out.println(selectedCard.getCardId().getCardIdAsString());
+                System.out.println(selectedCard.getPlayer().getUserName());
+                System.out.println(imPlayer0);
                 setCursor(battleScene, Cursor.ATTACK);
-            else
+            } else
                 setCursor(battleScene, Cursor.LIGHTEN);
             if (!drag)
                 imageOfCard.setEffect(getLighting(Color.RED));
@@ -364,14 +367,21 @@ public class BattleScene {
 
         imageOfCard.setOnMouseClicked(event -> {
 
-            if (selectedCard != null && selectedCard.attack(card, true)) {
+            if (selectedCard != null && selectedCard.attack(card) == null) {
+                if (match.passComputerPlayer() == -1) {
+                    Transmitter transmitter = new Transmitter();
+                    transmitter.name = selectedCard.getCardId().getCardIdAsString();
+                    transmitter.cardId = card.getCardId().getCardIdAsString();
+                    transmitter.battleEnum = BattleEnum.ATTACK;
+                    TransferController.main(RequestEnum.BATTLE, transmitter);
+                }
                 addCardToBoard(selectedCard.getPosition().getXCoordinate(),
                         selectedCard.getPosition().getYCoordinate(), selectedCard,
-                        "ATTACK", imageOfSelectedCard, false, false, false);
+                        "ATTACK", imageOfSelectedCard, false, !imPlayer0, false);
                 if (card.counterAttack(selectedCard))
                     addCardToBoard(card.getPosition().getXCoordinate(),
                             card.getPosition().getYCoordinate(), card,
-                            "ATTACK", imageOfCard, false, true, true);
+                            "ATTACK", imageOfCard, false, imPlayer0, true);
                 setCursor(battleScene, Cursor.AUTO);
                 imageOfCard.setEffect(null);
                 backToDefault();
@@ -488,7 +498,9 @@ public class BattleScene {
             ((ImageView) node).setFitWidth(mapProperties.cellWidth);
             ((ImageView) node).setFitHeight(mapProperties.cellHeight);
         }
-        board.getChildren().add(node);
+        if (!board.getChildren().contains(node))
+            board.getChildren().add(node);
+        else node.setOpacity(1);
     }
 
     public static BattleScene getSingleInstance() {
@@ -620,7 +632,7 @@ public class BattleScene {
         return battleScene;
     }
 
-    void setBattleScene(int numberOfMap) {
+    void setBattleScene(int numberOfMap, int playerNumber) {
         root.getChildren().clear();
         this.numberOfMap = numberOfMap;
         setMapProperties();
@@ -629,7 +641,7 @@ public class BattleScene {
                 numberOfMap + ".m4a", true, battleScene);
         addGrid();
         battleHeader = new BattleHeaderGraphic(this, root);
-        battleFooter = new BattleFooterGraphic(this, root, match.getPlayers()[0], battleScene);
+        battleFooter = new BattleFooterGraphic(this, root, match.getPlayers()[playerNumber], battleScene);
         makeFastForwardButton();
         makePause();
 
