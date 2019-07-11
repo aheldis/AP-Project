@@ -20,6 +20,7 @@ import model.item.Collectible;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ class ServerThread extends Thread {
     private static int PORT = 8080;
 
     public void run() {
+
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
             Socket socket;

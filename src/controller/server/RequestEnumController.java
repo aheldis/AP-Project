@@ -42,6 +42,7 @@ public class RequestEnumController {
                     transmitter.errorType = ErrorType.USER_NAME_ALREADY_EXIST;
                 else {
                     socketClass.setAccount(allAccount.getAccountByName(clientTransmitter.name));
+                    account = socketClass.getAccount();
                     account.setAuthToken(AllAccount.getInstance().getAuthToken(account));
                 }
                 transfer(socketClass);
@@ -317,6 +318,8 @@ public class RequestEnumController {
             }
             case GAME_CANCEL: {
                 SocketClass waiter = waiterHashMap.get(socketClass);
+                //waiter.getAccount().addToWins();
+                waiter.opponent.getAccount().addToWins();
                 waiter.changeTransmitter();
                 waiter.getTransmitter().requestEnum = RequestEnum.GAME_CANCEL;
                 transfer(waiter);

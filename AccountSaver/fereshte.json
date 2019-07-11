@@ -5558,7 +5558,7 @@
                                                                     "reward": 500,
                                                                     "land": "@root.mainDeck.cardsOfDeck.0.landOfGame.squares.2.2.object.cardId.account.collection.heroes.0.cardId.account.mainDeck.cardsOfDeck.0.landOfGame",
                                                                     "whichPlayer": 0,
-                                                                    "date": "Jul 9, 2019 10:07:40 PM",
+                                                                    "date": "Jul 9, 2019, 10:07:40 PM",
                                                                     "BOUND_FOR_COLLECTIBLES": 6,
                                                                     "collectibles": [],
                                                                     "matchNumber": 0,
@@ -8498,7 +8498,7 @@
                                               "reward": 1000,
                                               "land": "@root.mainDeck.cardsOfDeck.0.landOfGame",
                                               "whichPlayer": 0,
-                                              "date": "Jul 11, 2019 4:10:48 AM",
+                                              "date": "Jul 11, 2019, 4:10:48 AM",
                                               "BOUND_FOR_COLLECTIBLES": 6,
                                               "collectibles": [
                                                 "@root.mainDeck.cardsOfDeck.0.landOfGame.squares.0.7.object",
@@ -11284,7 +11284,7 @@
       }
     },
     "decks": [],
-    "authToken": "fereshte_DOZA",
-    "currentlyPlaying": true
+    "authToken": "fereshte_FCAK",
+    "currentlyPlaying": false
   }
 }
