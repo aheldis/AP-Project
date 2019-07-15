@@ -2,7 +2,7 @@ package controller.server;
 
 //import controller.DBClass;
 
-import controller.DBClass;
+//import controller.DBClass;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -32,7 +32,7 @@ import static view.Graphic.GeneralGraphicMethods.*;
 class ServerThread extends Thread {
     private SocketClass socketClass;
     static ArrayList<SocketClass> socketClasses = new ArrayList<>();
-    private static int PORT = 8080;
+    private static int PORT = 8000;
 
     public void run() {
 
@@ -58,7 +58,7 @@ class ServerThread extends Thread {
 
 public class Server extends Application {
     static ServerThread serverThread;
-    private static int PORT = 8080;
+    private static int PORT = 8000;
     private static final String baseAddress = "http://127.0.0.1:8080/";
 
 
@@ -76,7 +76,7 @@ public class Server extends Application {
 
     public static void main(String[] args) {
 
-        //DBClass.makeDB();
+       // DBClass.makeDB();
 
         try {
             FileWriter fileWriter = new FileWriter("src/controller/configServer");

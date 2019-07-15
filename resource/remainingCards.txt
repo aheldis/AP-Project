@@ -82,3 +82,4 @@ SoulEater:5
 FeatherOfSimurgh:5
 AreaDispel:5
 salanm:5
+hero:5

@@ -111,7 +111,7 @@ public class MainMenuScene {
             setScene(StateType.COLLECTION);
         });
 
-        Label chat = newLabelButton("GLOBAL CHAT", 400);
+        Label chat = newLabelButton("GLOBAL CHAT", 390);
         AnimationTimer chatAnimation = graphAnimation(chatGraph);
         Label chatShadow = shadowAnimation(chat, chatAnimation);
         chatShadow.setOnMouseClicked(event -> {

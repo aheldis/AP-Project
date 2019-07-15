@@ -357,6 +357,7 @@ public class SelectGameScene {
 
     private static void multiPlayerPage(Group root, Scene scene, int mode, int numberOfFlags, int reward) {
         Transmitter transmitter = TransferController.main(RequestEnum.MAIN_DECK, new Transmitter());
+        playMusic("resource/music/profile.m4a",true,scene);
         System.out.println("SelectGameScene.multiPlayerPage");
         if (transmitter.errorType == null) {
             root.getChildren().clear();
