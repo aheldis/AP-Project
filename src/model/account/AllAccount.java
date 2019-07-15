@@ -117,8 +117,7 @@ public class AllAccount {
         return true;
     }
     public String getAuthToken(Account account) {
-        System.out.println( account);
-        System.out.println(account.getUserName());
+
 
         String authToken = account.getUserName() + "_" + getRandomString(4);
         return authToken;

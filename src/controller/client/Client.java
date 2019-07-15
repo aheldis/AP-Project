@@ -5,6 +5,7 @@ import view.Graphic.StageLauncher;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -32,7 +33,6 @@ public class Client {
             System.out.println(host);
             socket = new Socket(host, port);
             System.out.println("Connected to server");
-
             clientIOhandler = new ClientIOHandler();
             clientIOhandler.setIn(new Scanner(socket.getInputStream()));
             clientIOhandler.setOut(new PrintWriter(socket.getOutputStream(), true));

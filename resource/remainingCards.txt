@@ -1,4 +1,4 @@
-Rostam:5
+Rostam:3
 Esfandiar:4
 Kaveh:5
 Rakhsh:5
@@ -30,10 +30,10 @@ FierceLion:5
 Siavash:5
 SteelChainMail:5
 SpearsmanFromTooran:5
-BoarRiderBeast:5
+BoarRiderBeast:4
 aminion:5
-TwoHeadedGiant:5
-Eagle:4
+TwoHeadedGiant:4
+Eagle:3
 ClubberFromTooran:5
 ArcherFromTooran:5
 GreatGiant:5
@@ -81,3 +81,4 @@ KingWisdom:5
 SoulEater:5
 FeatherOfSimurgh:5
 AreaDispel:5
+salanm:5
