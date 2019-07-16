@@ -128,29 +128,30 @@ public class ComputerPlayer extends Player {
         Random random = new Random();
 //      attack
         ArrayList<Card> exhaustedCards = new ArrayList<>();
-        outer:
-        for (Card card : getCardsOnLand())
-            for (Card opponentCard : getOpponent().getCardsOnLand()) {
-                Square opponentPosition = opponentCard.getPosition();
-                if (card.attack(opponentCard) == null) {
-                    BattleScene battleScene = BattleScene.getSingleInstance();
-                    battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
-                            card, "ATTACK", battleScene.getCardsHashMap().get(card), false,
-                            true, false);
-                    battleScene.addCardToBoard(opponentPosition.getXCoordinate(),
-                            opponentPosition.getYCoordinate(), opponentCard, "ATTACK",
-                            battleScene.getCardsHashMap().get(opponentCard),
-                            false, false, true);
-                    exhaustedCards.add(card);
-                    if (getMainDeck().getItem() != null && getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
-                            getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
-                        getMainDeck().getItem().setTarget(this);
-                        getMainDeck().getItem().getChange().affect(this, getMainDeck().getItem().getTarget().getTargets());
+        if (random.nextInt(2) == 1) {
+            outer:
+            for (Card card : getCardsOnLand())
+                for (Card opponentCard : getOpponent().getCardsOnLand()) {
+                    Square opponentPosition = opponentCard.getPosition();
+                    if (card.attack(opponentCard) == null) {
+                        BattleScene battleScene = BattleScene.getSingleInstance();
+                        battleScene.addCardToBoard(card.getPosition().getXCoordinate(), card.getPosition().getYCoordinate(),
+                                card, "ATTACK", battleScene.getCardsHashMap().get(card), false,
+                                true, false);
+                        battleScene.addCardToBoard(opponentPosition.getXCoordinate(),
+                                opponentPosition.getYCoordinate(), opponentCard, "ATTACK",
+                                battleScene.getCardsHashMap().get(opponentCard),
+                                false, false, true);
+                        exhaustedCards.add(card);
+                        if (getMainDeck().getItem() != null && getMainDeck().getItem().getActivationTimeOfItem() == ActivationTimeOfItem.ON_ATTACK &&
+                                getMainDeck().getItem().getTarget().checkTheOneWhoDoesTheThing(this)) {
+                            getMainDeck().getItem().setTarget(this);
+                            getMainDeck().getItem().getChange().affect(this, getMainDeck().getItem().getTarget().getTargets());
+                        }
+                        break outer;
                     }
-                    break outer;
                 }
-            }
-
+        }
 //      move card
         Square firstPosition;
         int RANDOM_NUMBER_FOR_MOVE;

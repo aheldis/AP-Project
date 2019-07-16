@@ -452,13 +452,25 @@ public class Match {
                 "DEFEAT");
     }
 
-    private static void win() {
-        setWinAndLossBackGround("resource/music/sfx_victory_match_w_vo.m4a",
-                "pics/battle/general_f1@2x.png",
-                "pics/battle/scene_diamonds_background_victory@2x.png",
-                "pics/battle/scene_diamonds_middleground_victory@2x.png",
-                "pics/battle/highlight_white.png",
-                "VICTORY");
+    public static void win() {
+        long currentTime = System.currentTimeMillis();
+        AnimationTimer animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (System.currentTimeMillis() - currentTime >= 4000) {
+                    setWinAndLossBackGround("resource/music/sfx_victory_match_w_vo.m4a",
+                            "pics/battle/general_f1@2x.png",
+                            "pics/battle/scene_diamonds_background_victory@2x.png",
+                            "pics/battle/scene_diamonds_middleground_victory@2x.png",
+                            "pics/battle/highlight_white.png",
+                            "VICTORY");
+                    this.stop();
+                }
+
+            }
+        };
+        animationTimer.start();
+
     }
 
 

@@ -220,7 +220,7 @@ public abstract class Player implements Serializable {
         ArrayList<Buff> buffsToBeRemoved = new ArrayList<>();
         if (buffs != null) {
             for (Buff buff : buffs) {
-                if (!buff.isContinuous()) {
+                if (buff != null && !buff.isContinuous()) {
                     int forHowManyTurn = buff.getForHowManyTurn();
                     forHowManyTurn--;
                     buff.setForHowManyTurn(forHowManyTurn);
