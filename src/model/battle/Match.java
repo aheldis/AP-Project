@@ -276,7 +276,7 @@ public class Match {
 
         int computerPlayer = passComputerPlayer();
 
-        if (!server && sendRequest) {
+        if (!server && sendRequest && computerPlayer == -1) {
             Transmitter transmitter = new Transmitter();
             TransferController.main(RequestEnum.CHANGE_TURN, transmitter);
             waitGraphic(computerPlayer);
@@ -295,7 +295,7 @@ public class Match {
             players[1 - whichPlayer].initPerTurn(1 - whichPlayer, false);//init for computer
         }
 
-        if (!server)
+        if (!server && computerPlayer != -1)
             waitGraphic(computerPlayer);
 
     }
@@ -311,9 +311,10 @@ public class Match {
             battleFooterGraphic.getEndTurnButton().setOpacity(0);
             Button endTurn = imageButton(battleFooterGraphic.getScene(), battleFooterGraphic.getCirclesGroup(),
                     "pics/battle/end_turn.png", "END TURN", 1000, 0, 200, 80);
+            BattleScene.getSingleInstance().addToWaitNodes(endTurn);
+            System.out.println(computerPlayer);
             if (computerPlayer != -1)
                 yourTurnAnimation(computerPlayer);
-            BattleScene.getSingleInstance().addToWaitNodes(endTurn);
         });
     }
 
